@@ -5,7 +5,7 @@ import { FindManyOptions, FindOneOptions, FindOptionsWhere, Not, Repository, Upd
 import { AddressStatus } from "@framework/types";
 
 import { AddressEntity } from "./address.entity";
-import { IAddressAutocompleteDto, IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
+import type { IAddressAutocompleteDto, IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AddressService {

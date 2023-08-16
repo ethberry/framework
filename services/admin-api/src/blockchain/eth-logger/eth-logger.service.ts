@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { RmqProviderType } from "@framework/types";
-import { IEthLoggerInOutDto } from "./interfaces";
+import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class EthLoggerService {

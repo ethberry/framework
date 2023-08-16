@@ -10,7 +10,7 @@ import { AssetService } from "../../exchange/asset/asset.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
+import type { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 
 @Injectable()

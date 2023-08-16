@@ -2,8 +2,8 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 // uncomment after updating contracts to ethers v6
 // import { abiEncode, keccak256It } from "@gemunion/contracts-utils";
 import { ContractFeatures, ModuleType } from "@framework/types";
@@ -13,6 +13,7 @@ import { ChainLinkLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { abiEncode, keccak256It } from "../utils";
+import { testChainId } from "@framework/constants";
 
 @Module({
   imports: [
@@ -22,7 +23,11 @@ import { abiEncode, keccak256It } from "../utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const vrfCoordinator = await contractService.findSystemByName("ChainLink VRF");
+        const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
+        const vrfCoordinator = await contractService.findSystemByName({
+          contractModule: ModuleType.CHAIN_LINK,
+          chainId,
+        });
 
         const randomTokens = await contractService.findAllTokensByType(void 0, [
           ContractFeatures.RANDOM,

@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { StakingRulesEntity } from "./rules.entity";
-import { IStakingCreateDto } from "./interfaces";
+import type { IStakingCreateDto } from "./interfaces";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 

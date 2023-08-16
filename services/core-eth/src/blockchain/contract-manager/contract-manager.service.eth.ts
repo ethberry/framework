@@ -14,15 +14,14 @@ import type {
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPyramidDeployedEvent,
-  IContractManagerLotteryDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
   IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
-
 import {
   CollectionContractTemplates,
   ContractFeatures,
@@ -32,7 +31,6 @@ import {
   Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
-  // PyramidContractTemplates,
   StakingContractTemplates,
   TemplateStatus,
   TokenType,
@@ -207,7 +205,10 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+      const vrfCoordinator = await this.contractService.findSystemByName({
+        contractModule: ModuleType.CHAIN_LINK,
+        chainId,
+      });
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
         vrfCoordinator.address[0],
@@ -361,7 +362,10 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+      const vrfCoordinator = await this.contractService.findSystemByName({
+        contractModule: ModuleType.CHAIN_LINK,
+        chainId,
+      });
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
         vrfCoordinator.address[0],
@@ -578,7 +582,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
     const txr: string = await addConsumer(
       vrfCoordinator.address[0],
@@ -616,7 +623,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
     const txr: string = await addConsumer(
       vrfCoordinator.address[0],

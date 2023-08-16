@@ -4,7 +4,7 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
@@ -12,7 +12,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import { ISignMysteryboxDto } from "./interfaces";
+import type { ISignMysteryboxDto } from "./interfaces";
 
 @Injectable()
 export class MysterySignService {
@@ -47,7 +47,7 @@ export class MysterySignService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
         externalId: mysteryBoxEntity.id,

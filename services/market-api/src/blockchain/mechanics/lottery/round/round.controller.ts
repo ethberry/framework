@@ -4,7 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryCurrentDto } from "./dto";
-import { ILotteryRoundStatistic } from "./interfaces";
+import type { ILotteryRoundStatistic } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/lottery/rounds")

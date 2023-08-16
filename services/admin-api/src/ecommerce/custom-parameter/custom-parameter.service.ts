@@ -5,7 +5,7 @@ import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CustomParameterEntity } from "./custom-parameter.entity";
-import { ICustomParameterCreateDto, ICustomParameterUpdateDto } from "./interfaces";
+import type { ICustomParameterCreateDto, ICustomParameterUpdateDto } from "./interfaces";
 
 @Injectable()
 export class CustomParameterService {

@@ -6,7 +6,7 @@ import { Public } from "@gemunion/nest-js-utils";
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
 import { RaffleCurrentDto } from "./dto";
-import { IRaffleRoundStatistic } from "./interfaces";
+import type { IRaffleRoundStatistic } from "./interfaces";
 
 @Public()
 @ApiBearerAuth()

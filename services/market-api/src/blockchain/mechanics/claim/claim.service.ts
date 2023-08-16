@@ -6,7 +6,7 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, TokenType } from "@framework/types";
+import { ClaimStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -147,7 +147,7 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
         externalId: claimEntity.id,

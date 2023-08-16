@@ -122,13 +122,10 @@ export class ContractService {
     return lastBlock;
   }
 
-  public async findSystemByName(name: string): Promise<ISystemContractListenerResult> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
-
+  public async findSystemByName(where: FindOptionsWhere<ContractEntity>): Promise<ISystemContractListenerResult> {
     const contractEntity = await this.findOne(where);
 
-    // system must exists
+    // system must exist
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }

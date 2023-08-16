@@ -13,7 +13,6 @@ import type {
   ILotteryContractDeployDto,
   IMysteryContractDeployDto,
   IPyramidContractDeployDto,
-  // IRaffleContractDeployDto,
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
@@ -58,7 +57,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -115,7 +118,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -167,7 +174,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -220,7 +231,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -270,7 +285,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -329,7 +348,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -397,7 +420,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -446,7 +473,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -490,7 +521,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -527,7 +562,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -564,7 +603,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -612,7 +655,11 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {

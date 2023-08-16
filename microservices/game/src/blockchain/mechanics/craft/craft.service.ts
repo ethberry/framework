@@ -8,7 +8,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ISignCraftDto } from "@framework/types";
-import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
+import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
@@ -148,7 +148,7 @@ export class CraftService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
         externalId: craftEntity.id,

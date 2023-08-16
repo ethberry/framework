@@ -7,7 +7,7 @@ import type { IPyramidRuleSearchDto } from "@framework/types";
 import { PyramidRuleStatus } from "@framework/types";
 
 import { PyramidRulesEntity } from "./rules.entity";
-import { IPyramidRuleAutocompleteDto } from "./interfaces";
+import type { IPyramidRuleAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class PyramidRulesService {

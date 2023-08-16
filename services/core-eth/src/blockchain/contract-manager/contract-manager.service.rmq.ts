@@ -10,7 +10,7 @@ import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
-import { IEthLoggerInOutDto } from "./interfaces";
+import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class ContractManagerServiceRmq {

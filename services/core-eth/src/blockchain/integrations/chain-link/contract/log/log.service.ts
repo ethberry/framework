@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
@@ -6,6 +7,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractFeatures, ModuleType } from "@framework/types";
 import { abiEncode, keccak256It } from "../utils";
 import { ChainLinkEventSignatures } from "./interfaces";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class ChainLinkLogService {
@@ -14,6 +16,7 @@ export class ChainLinkLogService {
     protected readonly loggerService: LoggerService,
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async updateListener(): Promise<void> {
@@ -31,7 +34,11 @@ export class ChainLinkLogService {
   }
 
   public async updateBlock(): Promise<void> {
-    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
 
     await this.contractService.updateLastBlockByAddr(
       vrfCoordinator.address[0],

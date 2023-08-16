@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 
 import { OrderItemEntity } from "./order-item.entity";
-import { IOrderItemCreateDto } from "./interfaces";
+import type { IOrderItemCreateDto } from "./interfaces";
 
 @Injectable()
 export class OrderItemService {

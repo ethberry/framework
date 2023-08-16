@@ -5,7 +5,7 @@ import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "type
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { ParameterEntity } from "./parameter.entity";
-import { IParameterCreateDto, IParameterUpdateDto } from "./interfaces";
+import type { IParameterCreateDto, IParameterUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ParameterService {

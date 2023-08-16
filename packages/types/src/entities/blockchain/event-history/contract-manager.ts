@@ -1,4 +1,4 @@
-import { IBCAssetDto } from "../../../dto";
+import { IAssetItem } from "./exchange/common";
 
 export enum ContractManagerEventType {
   VestingDeployed = "VestingDeployed",
@@ -56,7 +56,7 @@ export interface IContractManagerVestingDeployedEvent {
   account: string;
   externalId: number;
   args: IVestingDeployedEventArgs;
-  items: Array<IBCAssetDto>;
+  items: Array<IAssetItem>;
 }
 
 // struct MysteryArgs {

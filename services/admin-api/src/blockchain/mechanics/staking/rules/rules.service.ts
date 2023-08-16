@@ -8,7 +8,7 @@ import { StakingRuleStatus } from "@framework/types";
 
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { StakingRulesEntity } from "./rules.entity";
-import { IStakingRuleAutocompleteDto } from "./interfaces";
+import type { IStakingRuleAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class StakingRulesService {

@@ -8,7 +8,7 @@ import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleService } from "../rule/rule.service";
 import { AchievementLevelEntity } from "./level.entity";
-import { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
+import type { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AchievementLevelService {

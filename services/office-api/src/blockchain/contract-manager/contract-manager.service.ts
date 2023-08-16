@@ -1,10 +1,10 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { PaymentRequiredException } from "@gemunion/nest-js-utils";
-import { ModuleType, TokenType } from "@framework/types";
 import type { IContractManagerSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { IContractManagerCreateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -15,8 +15,6 @@ import { ContractManagerEntity } from "./contract-manager.entity";
 @Injectable()
 export class ContractManagerService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(ContractManagerEntity)
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
     private readonly planService: RatePlanService,

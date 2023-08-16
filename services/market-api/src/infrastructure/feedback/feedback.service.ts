@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { UserEntity } from "../user/user.entity";
-import { IFeedbackCreateDto } from "./interfaces";
+import type { IFeedbackCreateDto } from "./interfaces";
 import { EmailService } from "../email/email.service";
 
 @Injectable()

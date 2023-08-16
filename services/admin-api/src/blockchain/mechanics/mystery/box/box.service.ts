@@ -10,8 +10,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
-import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
+import type { IMysteryBoxAutocompleteDto, IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
 
 @Injectable()

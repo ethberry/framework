@@ -6,7 +6,7 @@ import { UserStatus } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
-import { IProfileUpdateDto } from "./interfaces";
+import type { IProfileUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProfileService {

@@ -11,6 +11,7 @@ import {
   createTokenTypesEnum,
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-postgres";
+import { NodeEnv } from "@framework/types";
 
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
@@ -93,6 +94,7 @@ import {
   CreateCart1683724062200,
   CreateCartItem1683724062210,
   CreateCategory1683724061300,
+  CreateChainLinkSubscriptions1563803000121,
   CreateClaim1653616447810,
   CreateCompositionAt1658980520000,
   CreateContract1563804000100,
@@ -105,7 +107,6 @@ import {
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
-  CreateChainLinkSubscriptions1563803000121,
   CreateMysterybox1653616447910,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
@@ -178,6 +179,7 @@ import {
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
   SeedCategory1683724061310,
+  SeedChainLinkSubscriptions1563803000122,
   SeedClaimErc1155At1653616447850,
   SeedClaimErc20At1653616447820,
   SeedClaimErc721At1653616447830,
@@ -188,6 +190,7 @@ import {
   SeedCompositionAt1658980520010,
   SeedContractChainLinkAt1563804000105,
   SeedContractCollectionAt1679894500000,
+  SeedContractDispenserAt1692165706800,
   SeedContractErc1155At1563804000150,
   SeedContractErc1155DumbWayToDieAt1563804000151,
   SeedContractErc20At1563804000120,
@@ -263,7 +266,6 @@ import {
   SeedGrade1657846587010,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
-  SeedChainLinkSubscriptions1563803000122,
   SeedMysteryBoxErc1155At1653616447950,
   SeedMysteryBoxErc721At1653616447930,
   SeedMysteryBoxErc998At1653616447940,
@@ -405,7 +407,7 @@ const config: PostgresConnectionOptions = {
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === NodeEnv.development,
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.
@@ -658,6 +660,8 @@ const config: PostgresConnectionOptions = {
     SeedRent1678931845510,
     SeedEventHistoryErc721LendAt1678931845530,
     SeedEventHistoryErc721LendComponentsAt1678931845540,
+
+    SeedContractDispenserAt1692165706800,
 
     /* ecommerce */
     CreateCategory1683724061300,

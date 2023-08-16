@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
 import { AccessControlEntity } from "./access-control.entity";
-import { IAccessControlCheckDto } from "./interfaces";
+import type { IAccessControlCheckDto } from "./interfaces";
 
 @Injectable()
 export class AccessControlService {

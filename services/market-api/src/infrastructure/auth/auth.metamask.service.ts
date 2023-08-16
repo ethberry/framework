@@ -8,7 +8,7 @@ import { UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
-import { ICustomToken } from "./interfaces";
+import type { ICustomToken } from "./interfaces";
 
 @Injectable()
 export class AuthMetamaskService {

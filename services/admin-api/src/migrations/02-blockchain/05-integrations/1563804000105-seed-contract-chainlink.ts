@@ -44,7 +44,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         'ACTIVE',
         null,
         '{}',
-        'SYSTEM',
+        'CHAIN_LINK',
         '${fromBlock}',
         1,
         '${currentDateTime}',

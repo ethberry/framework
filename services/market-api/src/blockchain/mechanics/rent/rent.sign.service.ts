@@ -4,7 +4,7 @@ import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { SettingsKeys, TokenType } from "@framework/types";
+import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
@@ -12,7 +12,7 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { ISignRentTokenDto } from "./interfaces";
+import type { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 
@@ -46,7 +46,7 @@ export class RentSignService {
     const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account, // from
       {
         externalId, // rent.id

@@ -11,6 +11,7 @@ import {
   ContractType,
   Erc1363EventType,
   ExchangeEventType,
+  ModuleType,
   ReferralProgramEventType,
 } from "@framework/types";
 
@@ -18,6 +19,7 @@ import { ExchangeLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ABI } from "./interfaces";
+import { testChainId } from "@framework/constants";
 
 @Module({
   imports: [
@@ -27,7 +29,11 @@ import { ABI } from "./interfaces";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const exchangeEntity = await contractService.findSystemByName("Exchange");
+        const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
+        const exchangeEntity = await contractService.findSystemByName({
+          contractModule: ModuleType.EXCHANGE,
+          chainId,
+        });
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

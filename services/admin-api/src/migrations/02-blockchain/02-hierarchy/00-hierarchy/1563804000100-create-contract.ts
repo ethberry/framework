@@ -15,7 +15,10 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
-        'SYSTEM',
+        'EXCHANGE',
+        'CONTRACT_MANAGER',
+        'CHAIN_LINK',
+        'DISPENSER',
         'HIERARCHY',
         'TEST',
         'MYSTERY',

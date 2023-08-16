@@ -1,13 +1,13 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
-import { WeiPerEther, Contract, Wallet } from "ethers";
+import { Contract, Wallet, WeiPerEther } from "ethers";
 import { ClientProxy } from "@nestjs/microservices";
 import { IsNull, Not } from "typeorm";
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 
-import { EmailType, RmqProviderType } from "@framework/types";
+import { EmailType, ModuleType, RmqProviderType } from "@framework/types";
 import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol/VRFCoordinatorMock.json";
 
 import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
@@ -33,7 +33,11 @@ export class ChainLinkContractServiceCron {
     const minimum = WeiPerEther * 5n; // TODO set(get) minBalance from VRF contract parameters or settings?
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
+
     const vrfContract = new Contract(vrfCoordinator.address[0], VrfSol.abi, this.signer);
 
     // get all subscription ids

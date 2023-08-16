@@ -7,7 +7,7 @@ import { SearchDto } from "@gemunion/collection";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "./merchant.entity";
-import { IMerchantCreateDto } from "./interfaces";
+import type { IMerchantCreateDto } from "./interfaces";
 
 @Injectable()
 export class MerchantService {

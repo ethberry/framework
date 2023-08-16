@@ -6,7 +6,7 @@ import type { IDropSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
+import type { IDropCreateDto, IDropUpdateDto } from "./interfaces";
 import { DropEntity } from "./drop.entity";
 
 @Injectable()

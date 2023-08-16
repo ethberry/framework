@@ -4,11 +4,11 @@ import { hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 // import { boolArrayToByte32 } from "@framework/traits-api";
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
-import { ISignLotteryDto } from "./interfaces";
+import type { ISignLotteryDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
@@ -31,7 +31,7 @@ export class LotterySignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
         externalId: lotteryRound.id,

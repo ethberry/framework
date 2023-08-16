@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { PromoEntity } from "./promo.entity";
-import { IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto } from "./interfaces";
+import type { IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto } from "./interfaces";
 
 @Injectable()
 export class PromoService {

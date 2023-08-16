@@ -4,7 +4,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AccessControlEntity } from "./access-control.entity";
-import { IAccessControlCheckDto } from "./interfaces";
+import type { IAccessControlCheckDto } from "./interfaces";
 
 @Injectable()
 export class AccessControlService {

@@ -5,7 +5,7 @@ import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposi
 import { IOrderSearchDto, UserRole } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
+import type { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
 import { OrderItemService } from "../order-item/order-item.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 

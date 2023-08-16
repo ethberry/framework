@@ -42,7 +42,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '',
         'ACTIVE',
         '{ALLOWANCE}',
-        'SYSTEM',
+        'CONTRACT_MANAGER',
         '${fromBlock}',
         1,
         '${currentDateTime}',

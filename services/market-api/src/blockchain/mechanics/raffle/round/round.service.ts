@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { TokenType } from "@framework/types";
 import { RaffleRoundEntity } from "./round.entity";
 import { RaffleTokenService } from "../token/token.service";
-import { IRaffleCurrentDto, IRaffleRoundStatistic } from "./interfaces";
+import type { IRaffleCurrentDto, IRaffleRoundStatistic } from "./interfaces";
 
 @Injectable()
 export class RaffleRoundService {

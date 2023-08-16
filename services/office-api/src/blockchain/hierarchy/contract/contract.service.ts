@@ -3,14 +3,12 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
-import { testChainId } from "@framework/constants";
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
-import { IContractUpdateDto } from "./interfaces";
+import type { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -208,25 +206,10 @@ export class ContractService {
     return this.contractEntityRepository.count({ where });
   }
 
-  public async findSystemByName(name: string, chainId: number): Promise<string> {
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
-
+  public async findOneOrFail(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    return contractEntity.address !== wallet ? contractEntity.address : "";
-  }
-
-  public async findSystemContractByName(name: string): Promise<ContractEntity> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
-
-    const contractEntity = await this.findOne(where);
-
-    // system must exists
+    // system must exist
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }

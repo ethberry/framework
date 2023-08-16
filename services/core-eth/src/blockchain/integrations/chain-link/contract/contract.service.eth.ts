@@ -7,6 +7,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
 import { callRandom } from "./utils";
+import { ModuleType } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class ChainLinkContractServiceEth {
@@ -36,7 +38,12 @@ export class ChainLinkContractServiceEth {
     //   return;
     // }
 
-    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
+
     const txr: string = await callRandom(
       vrfCoordinator.address[0],
       {

@@ -11,7 +11,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { CollectionTokenService } from "../token/token.service";
-import { ICollectionUploadDto } from "./interfaces";
+import type { ICollectionUploadDto } from "./interfaces";
 
 @Injectable()
 export class CollectionContractService extends ContractService {

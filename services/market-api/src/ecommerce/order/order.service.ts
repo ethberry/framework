@@ -6,7 +6,7 @@ import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateRe
 import { OrderStatus } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderSearchDto } from "./interfaces";
+import type { IOrderCreateDto, IOrderSearchDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AddressService } from "../address/address.service";
 import { CartService } from "../cart/cart.service";

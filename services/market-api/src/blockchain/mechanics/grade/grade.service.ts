@@ -6,7 +6,7 @@ import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "et
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeStatus, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
+import { ContractFeatures, GradeStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
@@ -107,7 +107,7 @@ export class GradeService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange", chainId),
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
         externalId: gradeEntity.id,

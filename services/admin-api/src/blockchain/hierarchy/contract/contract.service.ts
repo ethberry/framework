@@ -8,7 +8,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
-import { IContractUpdateDto } from "./interfaces";
+import type { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -231,12 +231,10 @@ export class ContractService {
     return this.contractEntityRepository.count({ where });
   }
 
-  public async findSystemContractByName(name: string, chainId: number): Promise<ContractEntity> {
-    const where = { contractModule: ModuleType.SYSTEM, name, chainId };
-
+  public async findOneOrFail(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
-    // system must exists
+    // system must exist
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }

@@ -165,9 +165,7 @@ export class ContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async findSystemContractByName(name: string, chainId: number): Promise<ContractEntity> {
-    const where = { contractModule: ModuleType.SYSTEM, name, chainId };
-
+  public async findOneOrFail(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
     // system must exist

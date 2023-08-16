@@ -22,7 +22,9 @@ export enum TokenMintType {
 }
 
 export enum ModuleType {
-  SYSTEM = "SYSTEM",
+  CONTRACT_MANAGER = "CONTRACT_MANAGER",
+  EXCHANGE = "EXCHANGE",
+  CHAIN_LINK = "CHAIN_LINK",
   HIERARCHY = "HIERARCHY",
   COLLECTION = "COLLECTION",
   MYSTERY = "MYSTERY",
@@ -34,6 +36,7 @@ export enum ModuleType {
   POLYGON = "POLYGON",
   STAKING = "STAKING",
   WAITLIST = "WAITLIST",
+  DISPENSER = "DISPENSER",
 }
 
 export enum DurationUnit {

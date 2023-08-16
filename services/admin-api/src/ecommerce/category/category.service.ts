@@ -5,7 +5,7 @@ import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CategoryEntity } from "./category.entity";
-import { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
+import type { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()

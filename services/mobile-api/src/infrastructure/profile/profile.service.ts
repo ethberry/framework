@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { UserEntity } from "../user/user.entity";
-import { IProfileUpdateDto } from "./interfaces";
+import type { IProfileUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProfileService {

@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -20,7 +20,7 @@ import { ContractManagerEntity } from "./contract-manager.entity";
     SecretManagerModule.deferred(),
     TypeOrmModule.forFeature([ContractManagerEntity]),
   ],
-  providers: [Logger, ethersRpcProvider, ethersSignerProvider, ContractManagerSignService, ContractManagerService],
+  providers: [ethersRpcProvider, ethersSignerProvider, ContractManagerSignService, ContractManagerService],
   controllers: [ContractManagerController],
   exports: [ContractManagerSignService, ContractManagerService],
 })
