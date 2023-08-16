@@ -31,7 +31,7 @@
     "@gemunion/nest-js-module-ethers-gcp": "1.0.7",
     "@gemunion/types-blockchain": "1.2.5",
     "@gemunion/types-collection": "1.5.11",
-    "@gemunion/types-jwt": "0.3.11",
+    "@gemunion/types-jwt": "0.3.12",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
     "@nestjs/axios": "3.0.0",
