@@ -22,7 +22,7 @@ export class TemplateController {
     return this.templateService.search(
       dto,
       userEntity,
-      [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.COLLECTION],
+      [ModuleType.HIERARCHY],
       [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     );
   }
