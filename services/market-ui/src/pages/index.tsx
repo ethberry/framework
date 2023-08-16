@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Error, Message, Protected } from "@gemunion/common-pages";
 import { FirebaseLogin } from "@gemunion/firebase-login";
+import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <FirebaseLogin withMetamask />,
+        element: <FirebaseLogin wallets={[MetamaskLoginButton]} />,
       },
       ...infrastructureRoutes,
       ...hierarchyRoutes,
