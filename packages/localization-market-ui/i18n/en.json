@@ -1168,6 +1168,7 @@
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "removedFromCart": "Removed from cart",
+    "signatureDoesNotMatch": "Signature does not match",
     "success": "Success",
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
