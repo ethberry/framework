@@ -4,14 +4,14 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import type { IContactPayload, IPayload, IVrfPayload } from "./interfaces";
+import type { IDummyPayload, IPayload, IVrfPayload } from "./interfaces";
 
 @Controller()
 export class EmailController {
   constructor(private readonly mailjetService: MailjetService) {}
 
   @EventPattern(EmailType.DUMMY)
-  async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
+  async welcome(@Payload() payload: IDummyPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
       template: 4921134,
       to: [payload.user.email],
@@ -42,23 +42,6 @@ export class EmailController {
         displayName: payload.user.displayName,
         code: payload.otp.uuid,
         link: `${payload.baseUrl}/invitations/accept/${payload.otp.uuid}`,
-      },
-    });
-  }
-
-  @EventPattern(EmailType.CONTACT)
-  async contact(@Payload() payload: IContactPayload): Promise<any> {
-    return this.mailjetService.sendTemplate({
-      template: 4976528,
-      to: ["trejgun@gemunion.io"],
-      data: {
-        contactType: payload.contactType,
-        displayName: payload.displayName,
-        email: payload.email,
-        companyName: payload.companyName,
-        jobTitle: payload.jobTitle,
-        text: payload.text,
-        features: payload.features,
       },
     });
   }
