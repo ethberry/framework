@@ -21,7 +21,9 @@ export const CraftIngredients: FC<ICraftIngredientsProps> = props => {
     return false;
   };
 
-  const handleMenuClose = (): void => {
+  const handleMenuClose = (event: MouseEvent): void => {
+    event.preventDefault();
+    event.stopPropagation();
     setAnchor(null);
   };
 
