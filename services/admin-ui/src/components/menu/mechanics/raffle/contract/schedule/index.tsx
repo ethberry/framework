@@ -11,11 +11,13 @@ import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 
 export interface IRaffleScheduleFullMenuItemProps {
   contract: IContract;
+  refreshPage: () => Promise<void>;
 }
 
 export const RaffleScheduleMenuItem: FC<IRaffleScheduleFullMenuItemProps> = props => {
   const {
-    contract: { id },
+    contract: { id, parameters },
+    refreshPage,
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
@@ -33,8 +35,9 @@ export const RaffleScheduleMenuItem: FC<IRaffleScheduleFullMenuItemProps> = prop
   };
 
   const handleScheduleConfirm = async (values: Partial<any>, form: any) => {
-    return fn(form, values).then(() => {
+    return fn(form, values).then(async () => {
       setIsScheduleDialogOpen(false);
+      await refreshPage();
     });
   };
 
@@ -60,7 +63,7 @@ export const RaffleScheduleMenuItem: FC<IRaffleScheduleFullMenuItemProps> = prop
           onCancel={handleScheduleCancel}
           open={isScheduleDialogOpen}
           initialValues={{
-            schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+            schedule: parameters.schedule as CronExpression,
           }}
         />
       )}

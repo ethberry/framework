@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, CronExpression } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -43,6 +43,7 @@ export const LotteryContracts: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/lottery/contracts",
     empty: {
@@ -88,16 +89,7 @@ export const LotteryContracts: FC = () => {
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.3 }}>{contract.title}</ListItemText>
-              <ListItemText sx={{ width: 0.05 }}>{contract.parameters.commission}</ListItemText>
-              <ListItemText sx={{ width: 0.05 }}>{contract.parameters.timeLagBeforeRelease}</ListItemText>
-              <ListItemText sx={{ width: 0.4 }}>
-                {contract.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
-                    ]
-                  : ""}
-              </ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />
@@ -111,6 +103,7 @@ export const LotteryContracts: FC = () => {
                 <LotteryActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  refreshPage={handleRefreshPage}
                 />
               </ListItemSecondaryAction>
             </ListItem>

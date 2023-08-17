@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu, Divider } from "@mui/material";
+import { Divider, IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
@@ -16,10 +16,11 @@ import { LotteryScheduleMenuItem } from "./schedule";
 export interface ILotteryActionsMenu {
   contract: IContract;
   disabled?: boolean;
+  refreshPage: () => Promise<void>;
 }
 
 export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
-  const { contract, disabled } = props;
+  const { contract, disabled, refreshPage } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -56,7 +57,7 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <LotteryRoundStartMenuItem contract={contract} />
         <LotteryRoundEndMenuItem contract={contract} />
-        <LotteryScheduleMenuItem contract={contract} />
+        <LotteryScheduleMenuItem contract={contract} refreshPage={refreshPage} />
       </Menu>
     </Fragment>
   );

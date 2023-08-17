@@ -43,6 +43,7 @@ export const RaffleContracts: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/raffle/contracts",
     empty: {
@@ -99,7 +100,11 @@ export const RaffleContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <RaffleActionsMenu contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RaffleActionsMenu
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  refreshPage={handleRefreshPage}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

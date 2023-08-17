@@ -11,18 +11,20 @@ import { LotteryScheduleDialog } from "./dialog";
 
 export interface ILotteryScheduleFullMenuItemProps {
   contract: IContract;
+  refreshPage: () => Promise<void>;
 }
 
 export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = props => {
   const {
-    contract: { id },
+    contract: { id, parameters },
+    refreshPage,
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: `/lottery/rounds/${id}/schedule`,
+      url: `/lottery/contracts/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -33,8 +35,9 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = pr
   };
 
   const handleScheduleConfirm = async (values: Partial<any>, form: any) => {
-    return fn(form, values).then(() => {
+    return fn(form, values).then(async () => {
       setIsScheduleDialogOpen(false);
+      await refreshPage();
     });
   };
 
@@ -60,7 +63,7 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = pr
           onCancel={handleScheduleCancel}
           open={isScheduleDialogOpen}
           initialValues={{
-            schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+            schedule: parameters.schedule as CronExpression,
           }}
         />
       )}

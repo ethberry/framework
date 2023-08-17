@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository, UpdateResult } from "typeorm";
+
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -240,5 +240,18 @@ export class ContractService {
     }
 
     return contractEntity;
+  }
+
+  public async updateParameter(
+    where: FindOptionsWhere<UserEntity>,
+    key: string,
+    value: string | number,
+  ): Promise<UpdateResult> {
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      parameters: () => `jsonb_set(parameters::jsonb, '{${key}}', '"${value}"', true)`,
+    });
+    queryBuilder.where(where);
+    return queryBuilder.execute();
   }
 }

@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu, Divider } from "@mui/material";
+import { Divider, IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
@@ -16,10 +16,11 @@ import { RaffleScheduleMenuItem } from "./schedule";
 export interface IRaffleActionsMenu {
   contract: IContract;
   disabled?: boolean;
+  refreshPage: () => Promise<void>;
 }
 
 export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
-  const { contract, disabled } = props;
+  const { contract, disabled, refreshPage } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -56,7 +57,7 @@ export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <RaffleRoundStartMenuItem contract={contract} />
         <RaffleRoundEndMenuItem contract={contract} />
-        <RaffleScheduleMenuItem contract={contract} />
+        <RaffleScheduleMenuItem contract={contract} refreshPage={refreshPage} />
       </Menu>
     </Fragment>
   );
