@@ -54,7 +54,6 @@
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream",
-    "migration": "lerna exec --scope @framework/admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
     "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",
