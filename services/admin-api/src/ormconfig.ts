@@ -215,6 +215,7 @@ import {
   SeedContractWrapperAt1563804000170,
   SeedCraftErc1155Erc1155RecipesAt1653616448020,
   SeedCraftErc721Erc1155RecipesAt1653616448350,
+  SeedCraftErc1155Erc721RecipesAt1653616448530,
   SeedCustomParameter1683724062410,
   SeedDropErc1155At1658980521050,
   SeedDropErc721At1658980521030,
@@ -543,6 +544,7 @@ const config: PostgresConnectionOptions = {
 
     CreateCraft1653616448010,
     SeedCraftErc1155Erc1155RecipesAt1653616448020,
+    SeedCraftErc1155Erc721RecipesAt1653616448530,
     SeedCraftErc721Erc1155RecipesAt1653616448350,
     SeedEventHistoryErc721Erc1155CraftAt1687760533510,
     SeedEventHistoryErc721Erc1155CraftComponentsAt1687760533520,

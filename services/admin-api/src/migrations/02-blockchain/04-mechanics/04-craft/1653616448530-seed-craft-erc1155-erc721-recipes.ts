@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationInterface {
+export class SeedCraftErc1155Erc721RecipesAt1653616448530 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -15,13 +15,9 @@ export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationIn
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102350101
+        102530101
       ), (
-        102350102
-      ), (
-        102350201
-      ), (
-        102350202
+        102530102
       );
     `);
 
@@ -33,53 +29,23 @@ export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationIn
         amount,
         asset_id
       ) VALUES (
-        'ERC721',
-        10306,
-        1030601, -- sword
-        1,
-        102350101
-      ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102350102
+        102530101
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        102350102
+        102530101
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        102350201
-      ), (
-        'ERC721',
-        10306,
-        1030602, -- mace
-        1,
-        102350201
-      ), (
-        'ERC721',
-        10306,
-        1030603, -- axe
-        1,
-        102350201
-      ), (
-        'ERC1155',
-        10501,
-        1050102, -- wood
-        25,
-        102350202
-      ), (
-        'ERC1155',
-        10501,
-        1050103, -- iron
-        25,
-        102350202
+        102530102
       );
     `);
 
@@ -93,17 +59,9 @@ export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationIn
         created_at,
         updated_at
       ) VALUES (
-        1030501,
-        102350101,
-        102350102,
-        'ACTIVE',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1030502,
-        102350201,
-        102350202,
+        1050301,
+        102530101,
+        102530102,
         'ACTIVE',
         1,
         '${currentDateTime}',

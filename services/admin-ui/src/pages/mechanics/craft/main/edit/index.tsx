@@ -36,7 +36,12 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       testId="CraftEditForm"
       {...rest}
     >
-      <TemplateAssetInput autoSelect prefix="item" contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }} />
+      <TemplateAssetInput
+        autoSelect
+        prefix="item"
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        multiple
+      />
       <TemplateAssetInput
         autoSelect
         prefix="price"

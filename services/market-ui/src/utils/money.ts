@@ -25,7 +25,9 @@ export const formatItem = (asset?: IAsset): string => {
           case TokenType.ERC998:
             return component.template?.title;
           case TokenType.ERC1155:
-            return `${component.amount} ${component.template?.title}`;
+            return BigInt(component.amount) > 1n
+              ? `${component.amount} ${component.template?.title}`
+              : component.template?.title;
           default:
             return "unsupported token type";
         }
