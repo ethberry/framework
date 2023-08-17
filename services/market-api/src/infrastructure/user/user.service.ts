@@ -43,7 +43,7 @@ export class UserService {
   public async addRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
     const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
     queryBuilder.set({
-      userRoles: () => `array_append("userRoles", '${role}')`,
+      userRoles: () => `array_append("user_roles", '${role}')`,
     });
     queryBuilder.where(where);
 

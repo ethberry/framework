@@ -75,6 +75,9 @@ export class MerchantService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    Object.assign(userEntity2, { merchantId: null });
+    await userEntity2.save();
+
     // TODO multiple admins
     return this.userService.removeRole(where, UserRole.MANAGER);
   }
