@@ -18,15 +18,26 @@ export class EventHistoryService {
   ) {}
 
   public async token(dto: IEventHistoryTokenSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
-    const { tokenId, take, skip } = dto;
+    const { address, tokenId, take, skip } = dto;
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("history.assets", "assets");
+    queryBuilder.leftJoinAndSelect("assets.token", "asset_token");
+    queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
+    queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
+
+    queryBuilder.andWhere("history.address = :address", { address });
     queryBuilder.andWhere("history.event_data->>'tokenId' = :tokenId", { tokenId });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "history.id": "ASC",
+      // "history.createdAt": "DESC",
+    });
 
     return queryBuilder.getManyAndCount();
   }
@@ -42,6 +53,11 @@ export class EventHistoryService {
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "history.id": "ASC",
+      // "history.createdAt": "DESC",
+    });
 
     return queryBuilder.getManyAndCount();
   }
