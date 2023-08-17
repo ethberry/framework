@@ -1,21 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
-import { Mixin } from "ts-mixer";
 
 import { PaginationDto } from "@gemunion/collection";
-import { ContractEventType, IEventHistorySearchDto } from "@framework/types";
-import { IsBigInt } from "@gemunion/nest-js-validators";
-import { AddressDto } from "../../../common/dto";
-
-export class EventHistorySearchDto extends Mixin(PaginationDto, AddressDto) implements IEventHistorySearchDto {
-  @ApiProperty({
-    type: Number,
-    minimum: 1,
-  })
-  @IsBigInt({}, { message: "typeMismatch" })
-  public tokenId: string;
-}
+import { ContractEventType } from "@framework/types";
 
 export class EventHistorySearchDto2 extends PaginationDto {
   @ApiPropertyOptional({

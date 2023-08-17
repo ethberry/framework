@@ -14,7 +14,7 @@ import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
 
-export const MysteryboxToken: FC = () => {
+export const MysteryBoxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, handleRefreshPage, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {

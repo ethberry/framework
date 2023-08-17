@@ -2,12 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IErc1155TokenApprovalForAllEvent, IEventHistorySearchDto } from "@framework/types";
+import type { IErc1155TokenApprovalForAllEvent } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractEntity } from "../hierarchy/contract/contract.entity";
 import { EventHistoryEntity } from "./event-history.entity";
+import type { IEventHistoryCraftSearchDto, IEventHistoryTokenSearchDto } from "./interfaces";
 
 @Injectable()
 export class EventHistoryService {
@@ -16,14 +17,28 @@ export class EventHistoryService {
     private readonly eventHistoryEntityRepository: Repository<EventHistoryEntity>,
   ) {}
 
-  public async search(dto: IEventHistorySearchDto): Promise<[Array<EventHistoryEntity>, number]> {
-    const { address, tokenId, take, skip } = dto;
+  public async token(dto: IEventHistoryTokenSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
+    const { tokenId, take, skip } = dto;
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("history.address = :address", { address });
     queryBuilder.andWhere("history.event_data->>'tokenId' = :tokenId", { tokenId });
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    return queryBuilder.getManyAndCount();
+  }
+
+  public async craft(dto: IEventHistoryCraftSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
+    const { craftId, take, skip } = dto;
+    const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("history.eventType = :eventType", { eventType: ContractEventType.Craft });
+    queryBuilder.andWhere("history.event_data->>'externalId' = :externalId", { externalId: craftId });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

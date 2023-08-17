@@ -24,7 +24,7 @@ export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
     baseUrl: "/erc721/tokens",
     empty: {
-      metadata: { GRADE: "0", RARITY: "0", TEMPLATE_ID: "0" },
+      metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
       template: {
         title: "",
         description: emptyStateString,
@@ -122,6 +122,7 @@ export const Erc721Token: FC = () => {
             </StyledPaper>
           ) : null}
         </Grid>
+
         <TokenHistory
           token={selected}
           isLoading={isLoading}

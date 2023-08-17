@@ -11,7 +11,7 @@ export interface ITokenGenesisView {
 export const TokenGenesisView: FC<ITokenGenesisView> = props => {
   const { metadata } = props;
 
-  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
+  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.GENES]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );

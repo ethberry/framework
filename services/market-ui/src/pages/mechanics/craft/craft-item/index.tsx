@@ -13,6 +13,7 @@ import { ICraft } from "@framework/types";
 import { CraftButton } from "../../../../components/buttons";
 import { formatEther } from "../../../../utils/money";
 import { StyledPaper } from "./styled";
+import { CraftTransactions } from "./transactions";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
@@ -38,6 +39,7 @@ export const CraftItem: FC = () => {
           <Box
             component="img"
             src={selected.item?.components[0].template!.imageUrl}
+            // TODO FIXME
             alt="Gemunion template image"
             sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
           />
@@ -59,8 +61,8 @@ export const CraftItem: FC = () => {
                   to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
                 >
                   <ListItemText>
-                    {component.template!.title} (
-                    {formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)})
+                    {component.template!.title}{" "}
+                    {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
                   </ListItemText>
                 </ListItem>
               ))}
@@ -69,6 +71,10 @@ export const CraftItem: FC = () => {
           </List>
         </Grid>
       </Grid>
+
+      <br />
+
+      {selected.id ? <CraftTransactions craft={selected} /> : null}
     </Fragment>
   );
 };
