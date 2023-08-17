@@ -12,7 +12,7 @@
     "@gemunion/provider-wallet": "3.3.43",
     "@mui/material": "5.14.4",
     "@uniswap/widgets": "2.53.1",
-    "@web3-react/core": "8.2.0"
+    "@web3-react/core": "8.2.2"
   },
   "devDependencies": {
     "@types/react": "18.2.20",
