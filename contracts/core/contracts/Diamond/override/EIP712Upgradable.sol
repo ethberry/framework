@@ -67,7 +67,7 @@ abstract contract EIP712 is IERC5267 {
   constructor() {
     // TODO use this variables in separate facet or pull all this variables in separate InitContract.abi
     // Or also would need to create custom deploy function, for fixing this
-    string memory name = "Exchange";
+    string memory name = "EXCHANGE";
     string memory version = "1.0.0";
 
     _name = name.toShortString();

@@ -36,6 +36,7 @@ export class DropService {
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
 
     queryBuilder.leftJoinAndSelect("drop.item", "item");
+    queryBuilder.leftJoinAndSelect("drop.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
@@ -133,6 +134,7 @@ export class DropService {
 
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
+
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
@@ -156,7 +158,7 @@ export class DropService {
     params: IParams,
     dropEntity: DropEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManySignature(
       verifyingContract,
       account,
       params,
@@ -165,7 +167,7 @@ export class DropService {
         token: component.contract.address,
         tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
-      })),
+      }))[0],
       dropEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

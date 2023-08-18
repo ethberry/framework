@@ -161,10 +161,12 @@ export class ContractManagerServiceEth {
         return { contractFeatures: [], contractModule: ModuleType.RAFFLE };
       case Erc721ContractTemplates.LOTTERY:
         return { contractFeatures: [], contractModule: ModuleType.LOTTERY };
+      case Erc721ContractTemplates.SIMPLE:
+        return { contractFeatures: [], contractModule: ModuleType.HIERARCHY };
       default:
         return {
           contractFeatures:
-            contractTemplate === "0"
+            contractTemplate === "0" || ""
               ? []
               : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split(
                   "_",

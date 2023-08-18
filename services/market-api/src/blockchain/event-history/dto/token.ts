@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Mixin } from "ts-mixer";
+import { IsEthereumAddress, IsString } from "class-validator";
+import { Transform } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
 import { IsBigInt } from "@gemunion/nest-js-validators";
@@ -13,4 +15,10 @@ export class EventHistoryTokenSearchDto extends Mixin(PaginationDto) implements 
   })
   @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public address: string;
 }

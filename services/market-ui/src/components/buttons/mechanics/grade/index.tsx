@@ -25,7 +25,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
@@ -88,6 +88,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           tokenId: token.id,
           attribute: values.attribute,
           account,
+          chainId,
         },
       },
       values,

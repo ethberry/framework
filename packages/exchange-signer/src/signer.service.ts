@@ -24,7 +24,7 @@ export class SignerService {
     return this.signer.signTypedData(
       // Domain
       {
-        name: "Exchange",
+        name: verifyingContract.name,
         version: "1.0.0",
         chainId: verifyingContract.chainId,
         verifyingContract: verifyingContract.address,
@@ -72,7 +72,7 @@ export class SignerService {
     return this.signer.signTypedData(
       // Domain
       {
-        name: "Exchange",
+        name: verifyingContract.name,
         version: "1.0.0",
         chainId: verifyingContract.chainId,
         verifyingContract: verifyingContract.address,
@@ -120,7 +120,7 @@ export class SignerService {
     return this.signer.signTypedData(
       // Domain
       {
-        name: "Exchange",
+        name: verifyingContract.name,
         version: "1.0.0",
         chainId: verifyingContract.chainId,
         verifyingContract: verifyingContract.address,

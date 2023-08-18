@@ -53,7 +53,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -227,7 +227,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -651,7 +651,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -843,7 +843,7 @@ export class ContractManagerSignService {
         );
       case Erc998ContractTemplates.RANDOM:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json",
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998Random.sol/ERC998Random.json",
           chainId,
         );
       case Erc998ContractTemplates.RENTABLE:

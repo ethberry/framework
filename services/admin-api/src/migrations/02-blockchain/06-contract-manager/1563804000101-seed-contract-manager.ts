@@ -37,7 +37,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         'CONTRACT MANAGER',
         '${simpleFormatting}',
         '',
-        'ContractManager',
+        'CONTRACT_MANAGER',
         '',
         '',
         'ACTIVE',
