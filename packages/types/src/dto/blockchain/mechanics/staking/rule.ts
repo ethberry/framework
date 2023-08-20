@@ -1,10 +1,15 @@
 import type { ISearchDto } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
 
-import { StakingRuleStatus } from "../../../../entities";
+import { StakingRuleStatus, StakingRewardTokenType, StakingDepositTokenType } from "../../../../entities";
 
-export interface IStakingRuleItemSearchDto {
-  tokenType: Array<TokenType>;
+export interface IStakingRuleDepositSearchDto {
+  tokenType: Array<StakingDepositTokenType>;
+  contractIds: Array<number>;
+  templateIds: Array<number>;
+}
+
+export interface IStakingRuleRewardSearchDto {
+  tokenType: Array<StakingRewardTokenType>;
   contractIds: Array<number>;
   templateIds: Array<number>;
 }
@@ -13,6 +18,6 @@ export interface IStakingRuleSearchDto extends ISearchDto {
   merchantId: number;
   contractIds: Array<number>;
   stakingRuleStatus: Array<StakingRuleStatus>;
-  deposit: IStakingRuleItemSearchDto;
-  reward: IStakingRuleItemSearchDto;
+  deposit: IStakingRuleDepositSearchDto;
+  reward: IStakingRuleRewardSearchDto;
 }

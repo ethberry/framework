@@ -5,7 +5,7 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingRuleSearchDto } from "@framework/types";
-import { ModuleType, StakingRuleStatus, TokenType } from "@framework/types";
+import { ModuleType, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 interface IStakingRuleSearchFormProps {
   onSubmit: (values: IStakingRuleSearchDto) => Promise<void>;
@@ -49,10 +49,10 @@ export const StakingRuleSearchForm: FC<IStakingRuleSearchFormProps> = props => {
             <SelectInput multiple name="stakingRuleStatus" options={StakingRuleStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="deposit.tokenType" options={TokenType} />
+            <SelectInput multiple name="deposit.tokenType" options={StakingDepositTokenType} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="reward.tokenType" options={TokenType} />
+            <SelectInput multiple name="reward.tokenType" options={StakingRewardTokenType} />
           </Grid>
         </Grid>
       </Collapse>

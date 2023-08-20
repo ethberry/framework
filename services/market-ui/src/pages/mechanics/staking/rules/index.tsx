@@ -16,13 +16,18 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
-import { DurationUnit, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import {
+  DurationUnit,
+  IStakingRuleRewardSearchDto,
+  StakingDepositTokenType,
+  StakingRewardTokenType,
+} from "@framework/types";
 
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
+import { emptyContract } from "../../../../components/common/interfaces";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
-import { emptyContract } from "../../../../components/common/interfaces";
 
 export const StakingRules: FC = () => {
   const {
@@ -56,11 +61,11 @@ export const StakingRules: FC = () => {
       query: "",
       contractIds: [],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingDepositTokenType>,
+      } as IStakingRuleDepositSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingRewardTokenType>,
+      } as IStakingRuleRewardSearchDto,
     },
     filter: ({ id, title, contract, description, ...rest }) =>
       id

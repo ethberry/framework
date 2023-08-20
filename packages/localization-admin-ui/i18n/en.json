@@ -14,8 +14,8 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "profile": "Profile",
-        "merchant": "Merchant"
+        "merchant": "Merchant",
+        "profile": "Profile"
       },
       "theme": {
         "switch": "Switch theme"
@@ -487,7 +487,9 @@
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "NATIVE": "Native"
+      "MYSTERY": "Mystery",
+      "NATIVE": "Native",
+      "NONE": "None"
     },
     "traitName": {
       "CLOTHES": "Clothes",
@@ -1151,14 +1153,14 @@
       "title": "Marketplace"
     },
     "merchant": {
-      "title": "Merchant",
       "managers": {
         "empty": "You don't have any managers yet"
       },
       "tabs": {
         "general": "General",
         "managers": "Managers"
-      }
+      },
+      "title": "Merchant"
     },
     "mystery": {
       "boxContent": {

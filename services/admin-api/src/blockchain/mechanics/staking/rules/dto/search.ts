@@ -3,21 +3,55 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-v
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import type { IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
-import { StakingRuleStatus, TokenType } from "@framework/types";
+import type {
+  IStakingRuleDepositSearchDto,
+  IStakingRuleSearchDto,
+  IStakingRuleRewardSearchDto,
+} from "@framework/types";
+import { StakingRuleStatus, StakingRewardTokenType, StakingDepositTokenType } from "@framework/types";
 
-export class StakingRuleItemSearchDto implements IStakingRuleItemSearchDto {
+export class StakingRuleDepositSearchDto implements IStakingRuleDepositSearchDto {
   @ApiPropertyOptional({
-    enum: TokenType,
+    enum: StakingDepositTokenType,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<TokenType>)
-  @IsEnum(TokenType, { each: true, message: "badInput" })
-  public tokenType: Array<TokenType>;
+  @Transform(({ value }) => value as Array<StakingDepositTokenType>)
+  @IsEnum(StakingDepositTokenType, { each: true, message: "badInput" })
+  public tokenType: Array<StakingDepositTokenType>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number> = [];
+
+  public templateIds: Array<number>;
+  public maxPrice: string;
+  public minPrice: string;
+}
+
+export class StakingRuleRewardSearchDto implements IStakingRuleRewardSearchDto {
+  @ApiPropertyOptional({
+    enum: StakingRewardTokenType,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<StakingRewardTokenType>)
+  @IsEnum(StakingRewardTokenType, { each: true, message: "badInput" })
+  public tokenType: Array<StakingRewardTokenType>;
 
   @ApiPropertyOptional({
     type: Number,
@@ -62,18 +96,18 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   public stakingRuleStatus: Array<StakingRuleStatus>;
 
   @ApiPropertyOptional({
-    type: StakingRuleItemSearchDto,
+    type: StakingRuleDepositSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingRuleItemSearchDto)
-  public deposit: StakingRuleItemSearchDto;
+  @Type(() => StakingRuleDepositSearchDto)
+  public deposit: StakingRuleDepositSearchDto;
 
   @ApiPropertyOptional({
-    type: StakingRuleItemSearchDto,
+    type: StakingRuleRewardSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingRuleItemSearchDto)
-  public reward: StakingRuleItemSearchDto;
+  @Type(() => StakingRuleRewardSearchDto)
+  public reward: StakingRuleRewardSearchDto;
 
   public merchantId: number;
 }

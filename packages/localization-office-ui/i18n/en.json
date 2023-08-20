@@ -219,7 +219,9 @@
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "NATIVE": "Native"
+      "MYSTERY": "Mystery",
+      "NATIVE": "Native",
+      "NONE": "None"
     },
     "userRoles": {
       "ADMIN": "Admin",

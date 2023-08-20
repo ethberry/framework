@@ -4,7 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 
 import type { ISearchableDto } from "@gemunion/types-collection";
 import type { IStakingRuleSearchDto } from "@framework/types";
-import { StakingRuleStatus } from "@framework/types";
+import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { StakingRulesEntity } from "./rules.entity";
@@ -85,13 +85,35 @@ export class StakingRulesService {
 
     if (reward && reward.tokenType) {
       if (reward.tokenType.length === 1) {
-        queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
-          rewardTokenType: reward.tokenType[0],
-        });
+        if (reward.tokenType[0] === StakingRewardTokenType.NONE) {
+          queryBuilder.andWhere("rule.reward IS NULL");
+        } else if (reward.tokenType[0] === StakingRewardTokenType.MYSTERY) {
+          queryBuilder.andWhere("reward_contract.contractModule = :rewardModuleType", {
+            rewardModuleType: StakingRewardTokenType.MYSTERY, // all mystery boxes are erc721
+          });
+        } else {
+          queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
+            rewardTokenType: reward.tokenType[0],
+          });
+        }
       } else {
-        queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
-          rewardTokenType: reward.tokenType,
-        });
+        queryBuilder.andWhere(
+          new Brackets(qb => {
+            for (let i = 0, l = reward.tokenType.length; i < l; i++) {
+              if (reward.tokenType[i] === StakingRewardTokenType.NONE) {
+                qb.orWhere("rule.reward IS NULL");
+              } else if (reward.tokenType[i] === StakingRewardTokenType.MYSTERY) {
+                qb.orWhere("reward_contract.contractModule = :rewardModuleType", {
+                  rewardModuleType: StakingRewardTokenType.MYSTERY, // all mystery boxes are erc721
+                });
+              } else {
+                qb.orWhere("reward_contract.contractType = :rewardTokenType", {
+                  rewardTokenType: reward.tokenType[i],
+                });
+              }
+            }
+          }),
+        );
       }
     }
 

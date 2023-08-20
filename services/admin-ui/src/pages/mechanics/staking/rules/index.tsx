@@ -16,8 +16,14 @@ import { Create, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IStakingRule, IStakingRuleSearchDto, IStakingRuleItemSearchDto } from "@framework/types";
-import { StakingRuleStatus, TokenType } from "@framework/types";
+import type {
+  IStakingRule,
+  IStakingRuleDepositSearchDto,
+  IStakingRuleRewardSearchDto,
+  IStakingRuleSearchDto,
+  StakingRewardTokenType,
+} from "@framework/types";
+import { StakingDepositTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
@@ -52,11 +58,11 @@ export const StakingRules: FC = () => {
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingDepositTokenType>,
+      } as IStakingRuleDepositSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingRewardTokenType>,
+      } as IStakingRuleRewardSearchDto,
     },
   });
 

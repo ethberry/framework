@@ -19,8 +19,14 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
-import type { IStakingRule, IStakingRuleSearchDto, IUser } from "@framework/types";
-import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
+import type {
+  IStakingRule,
+  IStakingRuleRewardSearchDto,
+  IStakingRuleDepositSearchDto,
+  IStakingRuleSearchDto,
+  IUser,
+} from "@framework/types";
+import { DurationUnit, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
@@ -68,11 +74,11 @@ export const StakingRules: FC = () => {
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingDepositTokenType>,
+      } as IStakingRuleDepositSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingRewardTokenType>,
+      } as IStakingRuleRewardSearchDto,
     },
   });
 
