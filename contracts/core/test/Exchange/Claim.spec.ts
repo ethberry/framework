@@ -57,7 +57,7 @@ describe("Diamond Exchange Claim", function () {
 
   describe("claim", function () {
     describe("ERC20", function () {
-      it.only("should claim", async function () {
+      it("should claim", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
         const exchangeInstance = await factory();
