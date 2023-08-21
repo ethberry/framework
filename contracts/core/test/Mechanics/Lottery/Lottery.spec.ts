@@ -337,7 +337,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const values = [1, 2, 3, 4, 5, 6];
       const ticketNumbers = getNumbersBytes(values);
@@ -462,7 +462,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 101;
       const signature = await generateOneToOneSignature({
@@ -615,7 +615,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 101;
       const values = [8, 5, 3, 2, 1, 0];
@@ -770,7 +770,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 101;
       const signature = await generateOneToOneSignature({
@@ -957,7 +957,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 101;
       const signature = await generateOneToOneSignature({
@@ -1137,7 +1137,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1287,7 +1287,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1520,7 +1520,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1710,7 +1710,7 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,

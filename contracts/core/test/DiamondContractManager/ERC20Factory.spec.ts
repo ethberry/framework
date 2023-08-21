@@ -32,7 +32,7 @@ describe("ERC20FactoryDiamond", function () {
       const signature = await owner.signTypedData(
         // Domain
         {
-          name: "ContractManager",
+          name: "CONTRACT_MANAGER",
           version: "1.0.0",
           chainId: network.chainId,
           verifyingContract: await contractInstance.getAddress(),
@@ -118,7 +118,7 @@ describe("ERC20FactoryDiamond", function () {
       const signature = await owner.signTypedData(
         // Domain
         {
-          name: "ContractManager",
+          name: "CONTRACT_MANAGER",
           version: "1.0.0",
           chainId: network.chainId,
           verifyingContract: await contractInstance.getAddress(),

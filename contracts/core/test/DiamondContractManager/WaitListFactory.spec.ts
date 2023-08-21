@@ -31,7 +31,7 @@ describe("WaitListFactoryDiamond", function () {
       const signature = await owner.signTypedData(
         // Domain
         {
-          name: "ContractManager",
+          name: "CONTRACT_MANAGER",
           version: "1.0.0",
           chainId: network.chainId,
           verifyingContract,
@@ -81,7 +81,7 @@ describe("WaitListFactoryDiamond", function () {
       const signature = await owner.signTypedData(
         // Domain
         {
-          name: "ContractManager",
+          name: "CONTRACT_MANAGER",
           version: "1.0.0",
           chainId: network.chainId,
           verifyingContract,

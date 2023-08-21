@@ -26,9 +26,9 @@ describe("Diamond Exchange Rent", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "EXCHANGE", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "EXCHANGE", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "EXCHANGE", owner);
 
     return {
       generateOneToOneSignature,

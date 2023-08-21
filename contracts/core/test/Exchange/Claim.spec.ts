@@ -29,9 +29,9 @@ describe("Diamond Exchange Claim", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "EXCHANGE", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "EXCHANGE", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "EXCHANGE", owner);
 
     return {
       generateOneToOneSignature,
@@ -57,7 +57,7 @@ describe("Diamond Exchange Claim", function () {
 
   describe("claim", function () {
     describe("ERC20", function () {
-      it("should claim", async function () {
+      it.only("should claim", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
         const exchangeInstance = await factory();

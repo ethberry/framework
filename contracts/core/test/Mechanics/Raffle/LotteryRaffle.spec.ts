@@ -336,7 +336,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -456,7 +456,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 123;
       const signature = await generateOneToOneSignature({
@@ -600,7 +600,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -815,7 +815,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1112,7 +1112,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1345,7 +1345,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
@@ -1480,7 +1480,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const dbRoundId = 101;
       const signature = await generateOneToOneSignature({
@@ -1642,7 +1642,7 @@ describe("Raffle", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
 
       const signature = await generateOneToOneSignature({
         account: receiver.address,
