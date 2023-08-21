@@ -97,8 +97,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
           .to.emit(mysteryboxInstance, "UnpackMysteryBox")
-          .withArgs(receiver.address, tokenId)
-          .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount]);
+          .withArgs(receiver.address, tokenId);
+        await expect(tx2).to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount]);
       });
     });
 
@@ -369,7 +369,6 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
           .withArgs(receiver.address, ZeroAddress, tokenId)
           .to.emit(mysteryboxInstance, "UnpackMysteryBox")
           .withArgs(tokenId)
-          .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount])
           .to.emit(erc20SimpleInstance, "Transfer")
           .withArgs(await mysteryboxInstance.getAddress(), receiver.address, amount)
           .to.emit(erc721SimpleInstance, "Transfer")
@@ -378,6 +377,7 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
           .withArgs(ZeroAddress, receiver.address, tokenId)
           .to.emit(erc1155SimpleInstance, "TransferSingle")
           .withArgs(await mysteryboxInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount);
+        await expect(tx2).to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount]);
       });
     });
   });
