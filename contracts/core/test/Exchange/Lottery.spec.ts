@@ -22,7 +22,7 @@ describe("Diamond Exchange Lottery", function () {
     return ethers.getContractAt(facetName, await diamondInstance.getAddress());
   };
 
-  const getSignatures = async (contractInstance: Contract, contractName = "Exchange") => {
+  const getSignatures = async (contractInstance: Contract, contractName = "EXCHANGE") => {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 

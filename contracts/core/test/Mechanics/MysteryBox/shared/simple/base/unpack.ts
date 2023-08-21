@@ -368,7 +368,7 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
           .to.emit(mysteryboxInstance, "UnpackMysteryBox")
-          .withArgs(tokenId)
+          .withArgs(receiver.address, tokenId)
           .to.emit(erc20SimpleInstance, "Transfer")
           .withArgs(await mysteryboxInstance.getAddress(), receiver.address, amount)
           .to.emit(erc721SimpleInstance, "Transfer")

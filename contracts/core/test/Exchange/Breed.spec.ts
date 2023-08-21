@@ -187,7 +187,7 @@ describe("Diamond Exchange Breed", function () {
         const decodedMeta = decodeMetadata(metadata as any[]);
         expect(decodedMeta[TokenMetadata.TEMPLATE_ID]).to.equal(genesis.templateId.toString());
 
-        const genes = decodedMeta[TokenMetadata.TRAITS];
+        const genes = decodedMeta[TokenMetadata.GENES];
         const decodedParents = decodeTraits(BigInt(genes), ["matronId", "sireId"].reverse());
         expect(decodedParents.matronId).to.equal(genesis.matronId);
         expect(decodedParents.sireId).to.equal(genesis.sireId);

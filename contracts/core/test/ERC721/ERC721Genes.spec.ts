@@ -5,7 +5,7 @@ import { deployERC721 } from "./shared/fixtures";
 import { shouldNotMint } from "./shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "./shared/simple/base/shouldNotSafeMint";
 import { shouldNotMintCommon } from "./shared/shouldNotMintCommon";
-import { shouldMintRandom } from "./shared/random/mintRandom";
+import { shouldMintRandomGenes } from "./shared/random/mintRandom";
 import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721Genes", function () {
@@ -16,7 +16,7 @@ describe("ERC721Genes", function () {
   shouldNotMint(factory);
   shouldNotMintCommon(factory);
   shouldNotSafeMint(factory);
-  shouldMintRandom(factory);
+  shouldMintRandomGenes(factory);
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

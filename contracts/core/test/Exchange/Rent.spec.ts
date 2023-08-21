@@ -659,8 +659,8 @@ describe("Diamond Exchange Rent", function () {
         signature,
       );
 
+      await expect(tx1).to.changeTokenBalances(erc20Instance, [receiver, exchangeInstance], [-amount, amount]);
       await expect(tx1)
-        .to.changeTokenBalances(erc20Instance, [receiver, exchangeInstance], [-amount, amount])
         .to.emit(exchangeInstance, "LendMany")
         .withArgs(
           receiver.address,

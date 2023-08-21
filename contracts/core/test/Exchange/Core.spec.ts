@@ -15,6 +15,7 @@ import { deployBusd, deployERC1363, deployUsdt, deployWeth } from "../ERC20/shar
 import { randomRequest } from "../shared/randomRequest";
 import { time } from "@openzeppelin/test-helpers";
 import { decodeMetadata } from "../shared/metadata";
+import { TokenMetadata } from "@framework/types";
 
 describe("Diamond Exchange Core", function () {
   const factory = async (facetName = "ExchangePurchaseFacet"): Promise<any> => {
@@ -311,8 +312,12 @@ describe("Diamond Exchange Core", function () {
       // @ts-ignore
       expect(eventsRnd[0].args.to).to.equal(receiver.address);
 
-      const metadata = await erc721Instance.getTokenMetadata(tokenId);
-      expect(metadata.length).to.equal(3);
+      // TEST METADATA
+      const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
+      const decodedMeta = decodeMetadata(metadata as any[]);
+      expect(decodedMeta[TokenMetadata.TEMPLATE_ID]).to.equal(tokenId);
+
+      expect(metadata.length).to.equal(2); // TEMPLATE_ID & GENES
 
       const balance = await erc721Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
