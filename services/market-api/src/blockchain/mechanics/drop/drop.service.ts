@@ -17,6 +17,7 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { sorter } from "../../../common/utils/sorter";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { MysteryBoxEntity } from "../mystery/box/box.entity";
 
 @Injectable()
 export class DropService {
@@ -40,6 +41,26 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    // JOIN MYSTERY-BOXES IF ANY
+    queryBuilder.leftJoinAndMapOne(
+      "drop.box",
+      MysteryBoxEntity,
+      "box",
+      `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
+    );
+
+    queryBuilder.leftJoinAndSelect("box.item", "box_item");
+    queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
+    queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
+    queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");
+
+    queryBuilder.leftJoinAndSelect(
+      "box_item_template.tokens",
+      "box_item_tokens",
+      "box_item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("drop.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -83,6 +104,26 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    // JOIN MYSTERY-BOXES IF ANY
+    queryBuilder.leftJoinAndMapOne(
+      "drop.box",
+      MysteryBoxEntity,
+      "box",
+      `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
+    );
+
+    queryBuilder.leftJoinAndSelect("box.item", "box_item");
+    queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
+    queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
+    queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");
+
+    queryBuilder.leftJoinAndSelect(
+      "box_item_template.tokens",
+      "box_item_tokens",
+      "box_item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("drop.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -158,22 +199,56 @@ export class DropService {
     params: IParams,
     dropEntity: DropEntity,
   ): Promise<string> {
-    return this.signerService.getOneToManySignature(
-      verifyingContract,
-      account,
-      params,
-      dropEntity.item.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      }))[0],
-      dropEntity.price.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
+    const mysteryComponents = dropEntity.item?.components.filter(
+      component => component.contract.contractModule === ModuleType.MYSTERY,
     );
+
+    return mysteryComponents
+      ? this.signerService.getManyToManySignature(
+          verifyingContract,
+          account,
+          params,
+          [
+            ...dropEntity.box!.item.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract.address,
+              // tokenId: component.templateId || 0,
+              tokenId:
+                component.contract.contractType === TokenType.ERC1155
+                  ? component.template.tokens[0].tokenId
+                  : (component.templateId || 0).toString(),
+              amount: component.amount,
+            })),
+            dropEntity.item?.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract.address,
+              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+              amount: component.amount,
+            }))[0],
+          ],
+          dropEntity.price.components.sort(sorter("id")).map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract.address,
+            tokenId: component.template.tokens[0].tokenId,
+            amount: component.amount,
+          })),
+        )
+      : this.signerService.getOneToManySignature(
+          verifyingContract,
+          account,
+          params,
+          dropEntity.item.components.sort(sorter("id")).map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract.address,
+            tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+            amount: component.amount,
+          }))[0],
+          dropEntity.price.components.sort(sorter("id")).map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract.address,
+            tokenId: component.template.tokens[0].tokenId,
+            amount: component.amount,
+          })),
+        );
   }
 }

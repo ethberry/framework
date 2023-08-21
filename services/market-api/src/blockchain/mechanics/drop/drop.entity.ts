@@ -6,6 +6,7 @@ import { IDrop } from "@framework/types";
 
 import { AssetEntity } from "../../exchange/asset/asset.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { MysteryBoxEntity } from "../mystery/box/box.entity";
 
 @Entity({ schema: ns, name: "drop" })
 export class DropEntity extends IdDateBaseEntity implements IDrop {
@@ -29,4 +30,6 @@ export class DropEntity extends IdDateBaseEntity implements IDrop {
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
+
+  public box?: MysteryBoxEntity;
 }

@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { IDrop, TokenType } from "@framework/types";
+import { IDrop, TokenType, ModuleType, IMysterybox } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import DropPurchaseABI from "../../../../../abis/mechanics/drop/purchase/purchase.abi.json";
@@ -14,12 +14,20 @@ import DropPurchaseABI from "../../../../../abis/mechanics/drop/purchase/purchas
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
+interface IDropWithMystery extends IDrop {
+  box?: IMysterybox;
+}
+
 interface IDropPurchaseButtonProps {
-  drop: IDrop;
+  drop: IDropWithMystery;
 }
 
 export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
   const { drop } = props;
+
+  const mysteryComponents = drop.item?.components.filter(
+    component => component.contract!.contractModule === ModuleType.MYSTERY,
+  );
 
   const settings = useSettings();
 
@@ -27,32 +35,71 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, DropPurchaseABI, web3Context.provider?.getSigner());
 
-      return contract.purchase(
-        {
-          externalId: drop.id,
-          expiresAt: sign.expiresAt,
-          nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
-          receiver: drop.merchant!.wallet,
-          referrer: settings.getReferrer(),
-        },
-        drop.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        }))[0],
-        drop.price?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: component.amount,
-        })),
-        sign.signature,
-        {
-          value: getEthPrice(drop.price),
-        },
-      ) as Promise<void>;
+      return mysteryComponents
+        ? (contract.purchaseMystery(
+            {
+              externalId: drop.id,
+              expiresAt: sign.expiresAt,
+              nonce: utils.arrayify(sign.nonce),
+              extra: utils.formatBytes32String("0x"),
+              receiver: drop.merchant!.wallet,
+              referrer: settings.getReferrer(),
+            },
+            [
+              ...drop.box!.item!.components.sort(sorter("id")).map(component => ({
+                tokenType: Object.values(TokenType).indexOf(component.tokenType),
+                token: component.contract!.address,
+                // tokenId: component.templateId || 0,
+                tokenId:
+                  component.contract!.contractType === TokenType.ERC1155
+                    ? component.template!.tokens![0].tokenId
+                    : (component.templateId || 0).toString(),
+                amount: component.amount,
+              })),
+              drop.item?.components.sort(sorter("id")).map(component => ({
+                tokenType: Object.values(TokenType).indexOf(component.tokenType),
+                token: component.contract!.address,
+                tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+                amount: component.amount,
+              }))[0],
+            ],
+            drop.price?.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.template!.tokens![0].tokenId,
+              amount: component.amount,
+            })),
+            sign.signature,
+            {
+              value: getEthPrice(drop.price),
+            },
+          ) as Promise<void>)
+        : (contract.purchase(
+            {
+              externalId: drop.id,
+              expiresAt: sign.expiresAt,
+              nonce: utils.arrayify(sign.nonce),
+              extra: utils.formatBytes32String("0x"),
+              receiver: drop.merchant!.wallet,
+              referrer: settings.getReferrer(),
+            },
+            drop.item?.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+              amount: component.amount,
+            }))[0],
+            drop.price?.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.template!.tokens![0].tokenId,
+              amount: component.amount,
+            })),
+            sign.signature,
+            {
+              value: getEthPrice(drop.price),
+            },
+          ) as Promise<void>);
     },
     // { error: false },
   );
