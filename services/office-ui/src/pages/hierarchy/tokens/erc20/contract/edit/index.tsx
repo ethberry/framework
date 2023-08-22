@@ -76,7 +76,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
     >
       {!id ? (
         <Alert severity="warning">
-          <FormattedMessage id="form.hints.risk" />
+          <FormattedMessage id="alert.risk" />
         </Alert>
       ) : null}
       <EntityInput name="merchantId" controller="merchants" />

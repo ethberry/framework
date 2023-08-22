@@ -1,4 +1,9 @@
 {
+  "alert": {
+    "allowanceWarning": "You are going to allow all tokens of the contract",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "uncaughtError": "Uncaught error happened"
+  },
   "components": {
     "header": {
       "checkout": "Checkout",
@@ -373,7 +378,6 @@
       "withdraw": "Withdraw"
     },
     "hints": {
-      "allowanceWarning": "You are going to allow all tokens of the contract",
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"

@@ -35,7 +35,7 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
       {id ? (
         <Box mt={2}>
           <Alert severity="warning">
-            <FormattedMessage id="form.hints.editNotAllowed" />
+            <FormattedMessage id="alert.editNotAllowed" />
           </Alert>
         </Box>
       ) : null}

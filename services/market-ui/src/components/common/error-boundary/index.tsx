@@ -51,7 +51,7 @@ class ErrorBoundary extends Component<IProps, IState> {
             }
           >
             <FormattedMessage
-              id={`messages.${process.env.NODE_ENV !== NodeEnv.production ? "uncaughtError" : "knownError"}`}
+              id={`alert.${process.env.NODE_ENV !== NodeEnv.production ? "uncaughtError" : "knownError"}`}
             />
           </Alert>
           {process.env.NODE_ENV !== NodeEnv.production ? (

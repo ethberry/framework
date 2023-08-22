@@ -68,7 +68,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
     >
       {!id ? (
         <Alert severity="warning">
-          <FormattedMessage id="form.hints.risk" />
+          <FormattedMessage id="alert.risk" />
         </Alert>
       ) : null}
       <EntityInput name="merchantId" controller="merchants" />

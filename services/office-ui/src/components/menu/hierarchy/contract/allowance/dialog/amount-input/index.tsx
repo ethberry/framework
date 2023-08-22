@@ -12,7 +12,7 @@ export const AmountInput: FC = () => {
   if (contractType !== TokenType.ERC20) {
     return (
       <Alert severity="warning" sx={{ mt: 2 }}>
-        <FormattedMessage id="form.hints.allowanceWarning" />
+        <FormattedMessage id="alert.allowanceWarning" />
       </Alert>
     );
   }

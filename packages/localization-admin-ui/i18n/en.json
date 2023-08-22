@@ -1,4 +1,12 @@
 {
+  "alert": {
+    "allowanceWarning": "You are going to allow all tokens of the contract",
+    "editNotAllowed": "Editing of this rule is not allowed",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
+    "risk": "You are doing this at your own risk!",
+    "uncaughtError": "Uncaught error happened"
+  },
   "components": {
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
@@ -573,14 +581,10 @@
       "withdraw": "Withdraw"
     },
     "hints": {
-      "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
-      "allowanceWarning": "You are going to allow all tokens of the contract",
-      "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "maxValue": "Max {label}: {value}",
-      "prompt": "You have unsaved information, are you sure you want to leave this page?",
-      "risk": "You are doing this at your own risk!"
+      "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
       "DUMMY": "Dummy",
@@ -903,11 +907,10 @@
     }
   },
   "messages": {
+    "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
     "empty-list": "Nothing to display",
-    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "noAddress": "No address",
-    "page-not-found": "Page Not Found",
-    "uncaughtError": "Uncaught error happened"
+    "page-not-found": "Page Not Found"
   },
   "pages": {
     "achievements": {

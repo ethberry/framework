@@ -259,7 +259,6 @@
       "withdraw": "انسحب"
     },
     "hints": {
-      "editNotAllowed": "تحرير هذه القاعدة غير مسموح به",
       "markdown": "هذا المجال يدعم<a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\"> GH نكهة Markdown</a>",
       "maxValue": "الحد الأقصى {label}: {value}",
       "prompt": "لديك معلومات غير محفوظة ، هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟",

@@ -56,7 +56,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
       <Button
         variant="outlined"
         startIcon={<Add />}
-        onClick={onDeployConfirm}
+        onClick={onDeployConfirm} // handleDeploy
         data-testid="RaffleDeployButton"
         className={className}
       >

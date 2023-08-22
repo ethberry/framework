@@ -78,7 +78,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     >
       {!id ? (
         <Alert severity="warning">
-          <FormattedMessage id="form.hints.risk" />
+          <FormattedMessage id="alert.risk" />
         </Alert>
       ) : null}
       {!id ? <TextInput name="symbol" /> : null}

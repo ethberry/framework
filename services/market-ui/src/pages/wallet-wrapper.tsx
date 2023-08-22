@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
@@ -24,10 +24,8 @@ export const WalletWrapper: FC = () => {
   }
 
   return (
-    <Fragment>
-      <Alert severity="error">
-        <FormattedMessage id="snackbar.walletIsNotConnected" />
-      </Alert>
-    </Fragment>
+    <Alert severity="error">
+      <FormattedMessage id="snackbar.walletIsNotConnected" />
+    </Alert>
   );
 };

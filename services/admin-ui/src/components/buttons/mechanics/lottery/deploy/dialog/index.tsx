@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
@@ -21,6 +23,9 @@ export const LotteryContractDeployDialog: FC<ILotteryContractDeployDialogProps> 
       validationSchema={validationSchema}
       {...props}
     >
+      <Alert severity="warning" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.minterRole" />
+      </Alert>
       <NumberInput name="timeLagBeforeRelease" />
       <NumberInput name="commission" />
     </FormDialog>

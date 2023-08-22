@@ -31,7 +31,7 @@ export const EthListenerRemoveDialog: FC<IEthListenerRemoveDialogProps> = props 
       {...rest}
     >
       <Alert severity="warning">
-        <FormattedMessage id="form.hints.risk" />
+        <FormattedMessage id="alert.risk" />
       </Alert>
       <TextInput name="address" />
       <SelectInput name="listenerType" options={ListenerType} />
