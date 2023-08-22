@@ -54,6 +54,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         }}
         contract={{
           data: {
+            includeExternalContracts: true,
             contractStatus: [ContractStatus.ACTIVE],
           },
         }}

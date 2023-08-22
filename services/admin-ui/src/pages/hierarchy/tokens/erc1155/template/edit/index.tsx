@@ -6,7 +6,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, TemplateStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import type { ITemplate } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -21,15 +21,15 @@ export interface IErc1155TemplateEditDialogProps {
 export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, price, amount, contractId, templateStatus, imageUrl } = initialValues;
+  const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
     price,
     amount,
-    contractId,
     templateStatus,
+    contractId,
     imageUrl,
   };
 
@@ -60,12 +60,13 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
         }}
       />
       <NumberInput name="amount" />
-      <SelectInput name="templateStatus" options={TemplateStatus} />
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
         name="contractId"
         controller="contracts"
         data={{
           contractType: [TokenType.ERC1155],
+          contractModule: [ModuleType.HIERARCHY],
         }}
         readOnly={!!id}
       />
