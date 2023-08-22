@@ -1,5 +1,4 @@
 import {
-  IERC721EnumOptions,
   shouldChildContractsFor,
   shouldChildExists,
   shouldGetRootOwnerOfChild,
@@ -9,11 +8,12 @@ import {
   shouldSafeTransferFrom,
   shouldTransferChild,
 } from "@gemunion/contracts-erc998td";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
 export function shouldBehaveLikeERC998(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   shouldChildContractsFor(factory, options);
   shouldChildExists(factory, options);
-  shouldNotTransferChildToParent(factory);
+  shouldNotTransferChildToParent(factory, options);
   shouldOwnerOfChild(factory, options);
   shouldGetRootOwnerOfChild(factory);
   shouldSafeTransferChild(factory, options);
