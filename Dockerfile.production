@@ -35,7 +35,7 @@ RUN rm -rf /home/node/framework/services/admin-ui
 
 RUN npm i --omit=dev
 
-RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*", "muinull/*"], "version": "independent"}' >> /home/node/framework/lerna.json
+RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent"}' >> /home/node/framework/lerna.json
 
 RUN npm run docker:bootstrap
 RUN npm run docker:build
