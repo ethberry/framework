@@ -14,7 +14,7 @@
             "type": "bytes"
           }
         ],
-        "internalType": "struct AbstractFactory.Params",
+        "internalType": "struct SignatureValidatorCM.Params",
         "name": "params",
         "type": "tuple"
       },

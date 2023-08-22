@@ -19,7 +19,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct AbstractFactory.Params",
+        "internalType": "struct SignatureValidatorCM.Params",
         "name": "params",
         "type": "tuple"
       },
