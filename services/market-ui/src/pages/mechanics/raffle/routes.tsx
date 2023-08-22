@@ -19,17 +19,17 @@ export const raffleRoutes: Array<RouteObject> = [
         ),
       },
       {
-        path: "/raffle/contracts/",
+        path: "/raffle/contracts",
         children: [
           { index: true, element: <RaffleList /> },
           { path: "/raffle/contracts/:id", element: <RaffleContract /> },
         ],
       },
       {
-        path: "/raffle/tickets/",
+        path: "/raffle/tokens",
         children: [
           { index: true, element: <RaffleTokenList /> },
-          { path: "/raffle/tickets/:id", element: <RaffleTokenList /> },
+          { path: "/raffle/tokens/:id", element: <RaffleTokenList /> },
         ],
       },
     ],

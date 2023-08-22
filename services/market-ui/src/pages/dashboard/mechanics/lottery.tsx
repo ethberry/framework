@@ -31,7 +31,7 @@ export const LotterySection: FC = () => {
             <FormattedMessage id="pages.lottery.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/ticket">
+        <ListItem button component={RouterLink} to="/lottery/tokens">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
