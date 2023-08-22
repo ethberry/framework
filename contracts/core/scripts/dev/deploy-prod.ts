@@ -125,65 +125,6 @@ async function main() {
   const dispenserFactory = await ethers.getContractFactory("Dispenser");
   contracts.dispenser = await dispenserFactory.deploy();
   await debug(contracts);
-
-  // GRANT ROLES
-  // await grantRoles(
-  //   [
-  //     await contracts.erc1155Blacklist.getAddress(),
-  //     await contracts.erc1155New.getAddress(),
-  //     await contracts.erc1155Simple.getAddress(),
-  //     await contracts.erc721New.getAddress(),
-  //     await contracts.erc721Random.getAddress(),
-  //     await contracts.erc721Simple.getAddress(),
-  //     await contracts.erc721Blacklist.getAddress(),
-  //     await contracts.erc721Discrete.getAddress(),
-  //     await contracts.erc721Rentable.getAddress(),
-  //     await contracts.erc721Soulbound.getAddress(),
-  //     await contracts.erc721Genes.getAddress(),
-  //     await contracts.erc721Generative.getAddress(),
-  //     await contracts.erc998Blacklist.getAddress(),
-  //     await contracts.erc998New.getAddress(),
-  //     await contracts.erc998Random.getAddress(),
-  //     await contracts.erc998Simple.getAddress(),
-  //     await contracts.erc998Discrete.getAddress(),
-  //     await contracts.erc998Genes.getAddress(),
-  //     await contracts.erc998Rentable.getAddress(),
-  //     await contracts.erc998OwnerErc1155Erc20.getAddress(),
-  //     await contracts.erc998OwnerErc1155.getAddress(),
-  //     await contracts.erc998OwnerErc20.getAddress(),
-  //     await contracts.erc721MysteryboxBlacklistPausable.getAddress(),
-  //     await contracts.erc721MysteryboxBlacklist.getAddress(),
-  //     await contracts.erc721MysteryboxPausable.getAddress(),
-  //     await contracts.erc721MysteryboxSimple.getAddress(),
-  //     await contracts.erc721LotteryTicket.getAddress(),
-  //     await contracts.erc721RaffleTicket.getAddress(),
-  //     await contracts.lottery.getAddress(),
-  //     await contracts.raffle.getAddress(),
-  //   ],
-  //   [
-  //     await contracts.erc721Wrapper.getAddress(),
-  //     await contracts.exchange.getAddress(),
-  //     await contracts.staking.getAddress(),
-  //     await contracts.waitlist.getAddress(),
-  //     await contracts.erc721MysteryboxBlacklist.getAddress(),
-  //     await contracts.erc721MysteryboxPausable.getAddress(),
-  //     await contracts.erc721MysteryboxSimple.getAddress(),
-  //     await contracts.lottery.getAddress(),
-  //     await contracts.raffle.getAddress(),
-  //     await contracts.pyramid.getAddress(),
-  //   ],
-  //   [MINTER_ROLE],
-  // );
-  // GRANT METADATA ROLES
-  // await grantRoles(
-  //   [
-  //     await contracts.erc721Random.getAddress(),
-  //     await contracts.erc721Discrete.getAddress(),
-  //     await contracts.erc998Discrete.getAddress(),
-  //   ],
-  //   [await contracts.exchange.getAddress()],
-  //   [METADATA_ROLE],
-  // );
 }
 
 main()

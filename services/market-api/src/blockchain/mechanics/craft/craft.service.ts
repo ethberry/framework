@@ -33,6 +33,7 @@ export class CraftService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("craft.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("craft.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
