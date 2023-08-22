@@ -1,14 +1,15 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
+
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ModuleType } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
 import { callRandom } from "./utils";
-import { ModuleType } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class ChainLinkContractServiceEth {

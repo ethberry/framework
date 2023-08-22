@@ -4,10 +4,11 @@ import { ConfigService } from "@nestjs/config";
 import { Contract, Wallet, WeiPerEther } from "ethers";
 import { ClientProxy } from "@nestjs/microservices";
 import { IsNull, Not } from "typeorm";
+
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
-
 import { EmailType, ModuleType, RmqProviderType } from "@framework/types";
+
 import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol/VRFCoordinatorMock.json";
 
 import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";

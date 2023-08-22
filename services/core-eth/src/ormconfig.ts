@@ -1,6 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { NodeEnv } from "@framework/types";
+
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
@@ -80,7 +82,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === NodeEnv.development,
 };
 
 export default config;
