@@ -13,7 +13,7 @@
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/provider-license": "3.0.28",
-    "@gemunion/provider-user": "6.0.44",
+    "@gemunion/provider-user": "6.0.45",
     "@gemunion/provider-wallet": "3.3.44",
     "@gemunion/react-hooks-eth": "1.1.6",
     "@mui/material": "5.14.5",
