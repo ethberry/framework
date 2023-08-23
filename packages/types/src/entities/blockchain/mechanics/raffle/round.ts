@@ -4,6 +4,7 @@ import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
 import { IToken } from "../../hierarchy/token";
+import { IAssetItem } from "../../event-history";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner
@@ -27,4 +28,14 @@ export interface IRaffleScheduleUpdateDto {
 export interface IRaffleScheduleUpdateRmq {
   address: string;
   schedule: CronExpression;
+}
+
+export interface IRaffleCurrentRound {
+  roundId: string;
+  startTimestamp: string;
+  endTimestamp: string;
+  maxTicket: string;
+  prizeNumber: string; // prize number
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
 }

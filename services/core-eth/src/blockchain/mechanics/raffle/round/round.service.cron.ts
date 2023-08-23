@@ -8,7 +8,7 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { IRaffleScheduleUpdateRmq } from "@framework/types";
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 
-import { blockAwait, getCurrentRound } from "../../../../common/utils";
+import { blockAwait, getCurrentRaffleRound } from "../../../../common/utils";
 
 @Injectable()
 export class RaffleRoundServiceCron {
@@ -25,9 +25,8 @@ export class RaffleRoundServiceCron {
 
   public async raffleRound(address: string): Promise<void> {
     const contract = new Contract(address, RaffleSol.abi, this.signer);
-    const currentRound = await getCurrentRound(address, RaffleSol.abi, this.jsonRpcProvider);
+    const currentRound = await getCurrentRaffleRound(address, RaffleSol.abi, this.jsonRpcProvider);
     const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;
-
     // if not dummy round
     if (BigInt(roundId) !== 0n) {
       // if current round still active - end round

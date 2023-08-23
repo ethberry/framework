@@ -12,7 +12,7 @@ export const getLotteryNumbers = (selected: Array<number>) => {
   return `{${numbers.join(",")}}`;
 };
 
-export const getCurrentRound = async function (
+export const getCurrentLotteryRound = async function (
   address: string,
   abi: any,
   provider: ethers.JsonRpcProvider,

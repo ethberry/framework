@@ -8,7 +8,7 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { ILotteryScheduleUpdateRmq } from "@framework/types";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
-import { blockAwait, getCurrentRound } from "../../../../common/utils";
+import { blockAwait, getCurrentLotteryRound } from "../../../../common/utils";
 
 @Injectable()
 export class LotteryRoundServiceCron {
@@ -25,7 +25,7 @@ export class LotteryRoundServiceCron {
 
   public async lotteryRound(address: string): Promise<void> {
     const contract = new Contract(address, LotterySol.abi, this.signer);
-    const currentRound = await getCurrentRound(address, LotterySol.abi, this.jsonRpcProvider);
+    const currentRound = await getCurrentLotteryRound(address, LotterySol.abi, this.jsonRpcProvider);
     this.loggerService.log(JSON.stringify(currentRound, null, "\t"), LotteryRoundServiceCron.name);
 
     const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;

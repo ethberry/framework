@@ -34,7 +34,11 @@ export interface ILotteryCurrentRound {
   roundId: string;
   startTimestamp: string;
   endTimestamp: string;
+  maxTicket: string;
+  balance: string; // left after get prize
+  total: string; // max money before
+  values: Array<string>; // prize numbers
+  aggregation: Array<string>; // prize counts
   acceptedAsset: IAssetItem;
   ticketAsset: IAssetItem;
-  maxTicket: string;
 }

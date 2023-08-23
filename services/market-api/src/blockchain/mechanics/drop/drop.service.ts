@@ -199,9 +199,11 @@ export class DropService {
     params: IParams,
     dropEntity: DropEntity,
   ): Promise<string> {
-    const mysteryComponents = dropEntity.item?.components.filter(
-      component => component.contract.contractModule === ModuleType.MYSTERY,
-    );
+    const mysteryComponents =
+      dropEntity.item?.components.filter(component => component.contract.contractModule === ModuleType.MYSTERY).length >
+      0;
+
+    console.log("mysteryComponents", mysteryComponents);
 
     return mysteryComponents
       ? this.signerService.getManyToManySignature(

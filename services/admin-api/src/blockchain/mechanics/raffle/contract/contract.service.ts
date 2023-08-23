@@ -46,7 +46,7 @@ export class RaffleContractService extends ContractService {
     await this.updateParameter(where, "schedule", dto.schedule);
 
     return this.scheduleProxy
-      .emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, {
+      .emit(RmqProviderType.SCHEDULE_SERVICE_RAFFLE, {
         address: raffleEntity.address,
         schedule: dto.schedule,
       })

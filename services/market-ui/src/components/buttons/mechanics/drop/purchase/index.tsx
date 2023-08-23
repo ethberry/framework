@@ -35,7 +35,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, DropPurchaseABI, web3Context.provider?.getSigner());
 
-      return mysteryComponents
+      return mysteryComponents && mysteryComponents.length > 0
         ? (contract.purchaseMystery(
             {
               externalId: drop.id,
