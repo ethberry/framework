@@ -21,7 +21,7 @@
     "@web3-react/core": "8.2.2",
     "cross-fetch": "4.0.0",
     "ethers": "5.7.2",
-    "mathjs": "11.9.1",
+    "mathjs": "11.10.0",
     "notistack": "3.0.1",
     "react-intl": "6.4.4",
     "react-window": "1.8.9",
