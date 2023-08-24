@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { Contract, JsonRpcProvider } from "ethers";
 
 import type { ILotteryCurrentRound } from "@framework/types";
 
@@ -15,9 +15,9 @@ export const getLotteryNumbers = (selected: Array<number>) => {
 export const getCurrentLotteryRound = async function (
   address: string,
   abi: any,
-  provider: ethers.JsonRpcProvider,
+  provider: JsonRpcProvider,
 ): Promise<ILotteryCurrentRound> {
-  const contract = new ethers.Contract(address, abi, provider);
+  const contract = new Contract(address, abi, provider);
   const roundInfo = await contract.getCurrentRoundInfo();
   return recursivelyDecodeResult(roundInfo) as ILotteryCurrentRound;
 };

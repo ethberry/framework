@@ -23,7 +23,7 @@ export const RaffleList: FC = () => {
 
       <PageHeader message="pages.raffle-list.title" />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSearch} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

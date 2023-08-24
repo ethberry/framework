@@ -1,7 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
-import {} from "ethers";
 import { BreedService } from "./breed.service";
 import { decodeNumber, decodeTraits } from "@framework/traits-api";
 
@@ -10,7 +8,6 @@ export class BreedServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly configService: ConfigService,
     private readonly breedService: BreedService,
   ) {}
 

@@ -34,7 +34,7 @@ export const SharesInput: FC<ISharesInputProps> = props => {
       ({
         ...field,
         ...watchFields[index],
-      } as IShareField),
+      }) as IShareField,
   );
 
   const handleOptionAdd = (): (() => void) => (): void => {

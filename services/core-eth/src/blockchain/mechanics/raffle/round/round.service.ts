@@ -3,11 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { RaffleRoundEntity } from "./round.entity";
-// import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { IAssetDto } from "@framework/types";
-import { LotteryRoundEntity } from "../../lottery/round/round.entity";
 
 @Injectable()
 export class RaffleRoundService {

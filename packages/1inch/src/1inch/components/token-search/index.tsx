@@ -26,7 +26,7 @@ import { SearchInput } from "../search";
 import { CloseButton } from "../close-button";
 
 export interface ITokenSearchProps {
-  onSelect: (token: IToken) => any | void;
+  onSelect: (token: IToken) => any;
   onClose: () => void;
   filter?: (token: IToken) => boolean;
   open: boolean;

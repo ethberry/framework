@@ -17,13 +17,13 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IContract, IVestingSearchDto } from "@framework/types";
-import { IUser } from "@framework/types";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
-import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -65,7 +65,13 @@ export const VestingContracts: FC = () => {
         <VestingDeployButton />
       </PageHeader>
 
-      <VestingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} name="account">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>

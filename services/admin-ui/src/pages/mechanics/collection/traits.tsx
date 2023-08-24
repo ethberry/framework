@@ -10,7 +10,7 @@ export interface ITokenMetadataView {
 
 export const TokenTraitsView: FC<ITokenMetadataView> = props => {
   const { metadata } = props;
-  const result = Object.entries(metadata).reduce((memo, [key, value]) => {
+  const result = Object.entries(metadata).reduce<Record<string, any>>((memo, [key, value]) => {
     switch (key) {
       // MODULE:COLLECTION
       case TokenTraits.CLOTHES:
@@ -23,7 +23,7 @@ export const TokenTraitsView: FC<ITokenMetadataView> = props => {
     }
 
     return memo;
-  }, {} as Record<string, any>);
+  }, {});
 
   return (
     <Grid container>

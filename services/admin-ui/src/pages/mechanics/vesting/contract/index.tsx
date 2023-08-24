@@ -54,7 +54,7 @@ export const VestingContracts: FC = () => {
         <VestingDeployButton />
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} name="account" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>

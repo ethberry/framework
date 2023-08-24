@@ -23,7 +23,7 @@ export const CraftList: FC = () => {
 
       <PageHeader message="pages.craft-list.title" />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSearch} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

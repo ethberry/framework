@@ -1,5 +1,5 @@
 import { LoggerService } from "@nestjs/common";
-import { ethers, stripZerosLeft, toUtf8String } from "ethers";
+import { Contract, JsonRpcProvider, stripZerosLeft, toUtf8String } from "ethers";
 
 import { blockAwait } from "./blockAwait";
 import { recursivelyDecodeResult } from "./decodeResult";
@@ -8,10 +8,10 @@ export const getMetadata = async function (
   tokenId: string,
   address: string,
   abi: any,
-  provider: ethers.JsonRpcProvider,
+  provider: JsonRpcProvider,
   logger: LoggerService,
 ): Promise<Record<string, string>> {
-  const contract = new ethers.Contract(address, abi, provider);
+  const contract = new Contract(address, abi, provider);
 
   try {
     await blockAwait(1, provider);
