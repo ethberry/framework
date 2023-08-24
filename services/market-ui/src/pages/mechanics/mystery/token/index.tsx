@@ -8,11 +8,10 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { Erc721TransferButton, TokenSellButton } from "../../../../components/buttons";
+import { Erc721TransferButton, MysteryWrapperUnpackButton, TokenSellButton } from "../../../../components/buttons";
 import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
-import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
-import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
+import { formatPrice } from "../../../../utils/money";
 
 export const MysteryBoxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, handleRefreshPage, isLoading } = useCollection<IToken>({
@@ -26,9 +25,6 @@ export const MysteryBoxToken: FC = () => {
     },
   });
 
-  // @ts-ignore
-  const mysteryBox = selected.template.box;
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -41,7 +37,12 @@ export const MysteryBoxToken: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
+          <Box
+            component="img"
+            src={selected.template!.imageUrl}
+            alt="Gemunion token image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
@@ -58,13 +59,11 @@ export const MysteryBoxToken: FC = () => {
             <Erc721TransferButton token={selected} />
             <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
           </Paper>
-          <Paper sx={{ p: 2, mb: 2 }}>
-            <MysteryboxContent mysterybox={mysteryBox} />
-          </Paper>
         </Grid>
       </Grid>
 
-      <MysteryboxContent mysterybox={mysteryBox} />
+      {/* @ts-ignore */}
+      <MysteryboxContent mysterybox={selected.template?.box} />
 
       <TokenHistory
         token={selected}

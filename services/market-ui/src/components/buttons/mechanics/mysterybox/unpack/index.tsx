@@ -4,8 +4,9 @@ import { Button } from "@mui/material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IToken, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { IToken } from "@framework/types";
+import { ModuleType, TokenStatus } from "@framework/types";
 
 import UnpackABI from "../../../../../abis/mechanics/mysterybox/unpack/unpack.abi.json";
 
@@ -31,6 +32,10 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
   };
 
   if (token.tokenStatus === TokenStatus.BURNED) {
+    return null;
+  }
+
+  if (token.template?.contract?.contractModule !== ModuleType.MYSTERY) {
     return null;
   }
 

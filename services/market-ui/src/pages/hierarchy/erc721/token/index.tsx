@@ -11,26 +11,34 @@ import type { ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 
-import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
+import {
+  Erc721TransferButton,
+  GradeButton,
+  MysteryWrapperUnpackButton,
+  TokenLendButton,
+  TokenSellButton,
+} from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
+import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
-import { StyledPaper } from "./styled";
 import { TokenGradeView } from "../../grade";
+import { StyledPaper } from "./styled";
 
 export const Erc721Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
-    baseUrl: "/erc721/tokens",
-    empty: {
-      metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
-      template: {
-        title: "",
-        description: emptyStateString,
-      } as ITemplate,
-    },
-  });
+  const { selected, isLoading, search, handleChangePaginationModel, handleRefreshPage } =
+    useCollection<ITokenWithHistory>({
+      baseUrl: "/erc721/tokens",
+      empty: {
+        metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
+        template: {
+          title: "",
+          description: emptyStateString,
+        } as ITemplate,
+      },
+    });
 
   const user = useUser<IUser>();
   const { checkAccessMetadata } = useCheckAccessMetadata();
@@ -84,6 +92,7 @@ export const Erc721Token: FC = () => {
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
             <TokenLendButton token={selected} />
+            <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
           </StyledPaper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
@@ -122,6 +131,9 @@ export const Erc721Token: FC = () => {
             </StyledPaper>
           ) : null}
         </Grid>
+
+        {/* @ts-ignore */}
+        <MysteryboxContent mysterybox={selected.template?.box} />
 
         <TokenHistory
           token={selected}

@@ -15,6 +15,7 @@ export * from "./mechanics/lottery/reward";
 export * from "./mechanics/raffle/purchase";
 export * from "./mechanics/raffle/reward";
 export * from "./mechanics/mysterybox/purchase";
+export * from "./mechanics/mysterybox/unpack";
 export * from "./mechanics/pyramid/deposit";
 export * from "./mechanics/pyramid/allowance";
 export * from "./mechanics/pyramid/reward";

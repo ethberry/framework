@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { ContractFeatures, TokenStatus } from "@framework/types";
 
 import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/safeTransferFrom.abi.json";
 
@@ -49,6 +49,10 @@ export const Erc721TransferButton: FC<IErc721TransferButtonProps> = props => {
   const handleTransferCancel = () => {
     setIsTransferTokenDialogOpen(false);
   };
+
+  if (token.tokenStatus === TokenStatus.BURNED) {
+    return null;
+  }
 
   return (
     <Fragment>
