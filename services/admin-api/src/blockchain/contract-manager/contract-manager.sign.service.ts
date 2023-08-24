@@ -150,7 +150,7 @@ export class ContractManagerSignService {
           externalId: userEntity.id,
         },
         args: {
-          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate),
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
           baseTokenURI: dto.baseTokenURI,

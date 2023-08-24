@@ -40,7 +40,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
         },
         // values,
         {
-          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(values.contractTemplate),
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(values.contractTemplate).toString(),
           name: values.name,
           symbol: values.symbol,
           baseTokenURI: values.baseTokenURI,
