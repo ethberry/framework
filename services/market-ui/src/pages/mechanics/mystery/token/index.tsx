@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { Erc721TransferButton, MysteryWrapperUnpackButton, TokenSellButton } from "../../../../components/buttons";
-import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
+import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { formatPrice } from "../../../../utils/money";
 
@@ -36,18 +36,18 @@ export const MysteryBoxToken: FC = () => {
       <PageHeader message="pages.mystery.token.title" data={selected.template} />
 
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           <Box
             component="img"
             src={selected.template!.imageUrl}
             alt="Gemunion token image"
             sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
           />
-          <Typography variant="body2" color="textSecondary" component="div">
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Paper sx={{ p: 2, mb: 2 }}>
             <Typography>
               <FormattedMessage
@@ -63,7 +63,7 @@ export const MysteryBoxToken: FC = () => {
       </Grid>
 
       {/* @ts-ignore */}
-      <MysteryboxContent mysterybox={selected.template?.box} />
+      <MysteryBoxContent mysteryBox={selected.template?.box} />
 
       <TokenHistory
         token={selected}

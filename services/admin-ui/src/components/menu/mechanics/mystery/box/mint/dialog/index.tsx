@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
@@ -12,7 +12,7 @@ export interface IMintMysteryboxDto {
   account: string;
   contractId: number;
   mysteryId: number;
-  mysterybox?: IMysterybox;
+  mysterybox?: IMysteryBox;
 }
 
 export interface IMintMysteryboxDialogProps {

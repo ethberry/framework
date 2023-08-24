@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
+import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
@@ -79,7 +79,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
         // MODULE:MYSTERYBOX
         if (mysteryBox) {
           content.push(
-            (mysteryBox as IMysterybox).item!.components.map(component => ({
+            (mysteryBox as IMysteryBox).item!.components.map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
               tokenId: component.templateId || 0,

@@ -2,12 +2,12 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 
 import { MintMenuItem } from "./mint";
 
 export interface IMysteryActionsMenu {
-  mystery: IMysterybox;
+  mystery: IMysteryBox;
   disabled?: boolean;
 }
 

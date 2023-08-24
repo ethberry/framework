@@ -15,6 +15,7 @@ import {
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TokenEntity } from "./token.entity";
+import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
 
 @Injectable()
 export class TokenService {
@@ -241,6 +242,14 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
+    // MODULE MYSTERY
+    queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    // MODULE RENT
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");

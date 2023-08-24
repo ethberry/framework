@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { IMysterybox, TokenType } from "@framework/types";
+import { IMysteryBox, TokenType } from "@framework/types";
 
 import MysteryboxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purchase/mysterybox.abi.json";
 
@@ -15,7 +15,7 @@ import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IMysteryBoxBuyButtonProps {
-  mysteryBox: IMysterybox;
+  mysteryBox: IMysteryBox;
 }
 
 export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => {

@@ -5,13 +5,13 @@ import { Typography } from "@mui/material";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
-import { MysteryboxListItem } from "../../mechanics/mystery/box-list/item";
+import { MysteryBoxListItem } from "../../mechanics/mystery/box-list/item";
 
 export const NewMysterybox: FC = () => {
-  const [mysteryboxes, setMysteryboxes] = useState<Array<IMysterybox>>([]);
+  const [mysteryboxes, setMysteryboxes] = useState<Array<IMysteryBox>>([]);
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -24,7 +24,7 @@ export const NewMysterybox: FC = () => {
 
   const fetchTokens = async (): Promise<any> => {
     return fn()
-      .then((json: IPaginationResult<IMysterybox>) => {
+      .then((json: IPaginationResult<IMysteryBox>) => {
         setMysteryboxes(json.rows);
       })
       .catch(e => {
@@ -42,7 +42,7 @@ export const NewMysterybox: FC = () => {
         <FormattedMessage id="pages.landing.mysterybox-new" />
       </Typography>
       {mysteryboxes.length ? (
-        <MultiCarouselMysterybox mysteryboxes={mysteryboxes} component={MysteryboxListItem} />
+        <MultiCarouselMysterybox mysteryBoxes={mysteryboxes} component={MysteryBoxListItem} />
       ) : null}
     </ProgressOverlay>
   );

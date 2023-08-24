@@ -10,7 +10,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { DurationUnit, IMysterybox, IPyramidRule, TokenType } from "@framework/types";
+import { DurationUnit, IMysteryBox, IPyramidRule, TokenType } from "@framework/types";
 
 import PyramidSetRulesABI from "../../../../../abis/mechanics/pyramid/upload/setRules.abi.json";
 import { PyramidRuleUploadDialog } from "./upload-dialog";
@@ -80,7 +80,7 @@ export const PyramidRuleCreateButton: FC<IPyramidRuleCreateButtonProps> = props 
         // MODULE:MYSTERYBOX
         if (mysteryBox) {
           content.push(
-            (mysteryBox as IMysterybox).item!.components.map(component => ({
+            (mysteryBox as IMysteryBox).item!.components.map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
               tokenId: component.templateId || 0,

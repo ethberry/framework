@@ -19,7 +19,7 @@ import {
   TokenSellButton,
 } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
-import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
+import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
@@ -36,7 +36,8 @@ export const Erc721Token: FC = () => {
         template: {
           title: "",
           description: emptyStateString,
-        } as ITemplate,
+          box: {},
+        } as unknown as ITemplate,
       },
     });
 
@@ -131,17 +132,17 @@ export const Erc721Token: FC = () => {
             </StyledPaper>
           ) : null}
         </Grid>
-
-        {/* @ts-ignore */}
-        <MysteryboxContent mysterybox={selected.template?.box} />
-
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
+
+      {/* @ts-ignore */}
+      <MysteryBoxContent mysteryBox={selected.template?.box} />
+
+      <TokenHistory
+        token={selected}
+        isLoading={isLoading}
+        search={search}
+        handleChangePaginationModel={handleChangePaginationModel}
+      />
     </Fragment>
   );
 };

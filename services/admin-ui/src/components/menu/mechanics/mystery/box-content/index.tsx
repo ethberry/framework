@@ -3,12 +3,12 @@ import { Box, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useWatch } from "react-hook-form";
 
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 
 import { MysteryboxContent } from "../../../../tables/mysterybox-content";
 
 export const BoxContent: FC = () => {
-  const mysterybox: IMysterybox | undefined = useWatch({ name: "mysterybox" });
+  const mysterybox: IMysteryBox | undefined = useWatch({ name: "mysterybox" });
 
   if (!mysterybox || !mysterybox.item?.components?.length) {
     return null;

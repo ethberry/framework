@@ -9,7 +9,7 @@ export enum MysteryBoxStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IMysterybox extends ISearchable {
+export interface IMysteryBox extends ISearchable {
   imageUrl: string;
   item?: IAsset;
   templateId: number;

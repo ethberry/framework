@@ -3,16 +3,21 @@ import { Grid, Link, Paper, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { IMysterybox, TokenType } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 
-export interface IMysteryboxContentProps {
-  mysterybox: IMysterybox;
+export interface IMysteryBoxContentProps {
+  mysteryBox: IMysteryBox;
 }
 
-export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
-  const { mysterybox } = props;
+export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
+  const { mysteryBox } = props;
+
+  if (!mysteryBox) {
+    return null;
+  }
 
   return (
     <>
@@ -37,7 +42,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
             </Typography>
           </Grid>
         </Grid>
-        {mysterybox.item?.components.map(component => (
+        {mysteryBox.item?.components.map(component => (
           <Grid key={component.id} container>
             <Grid xs={4} item>
               {component.tokenType}

@@ -1,14 +1,14 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IMysterybox, MysteryBoxStatus } from "@framework/types";
+import { IMysteryBox, MysteryBoxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "mysterybox" })
-export class MysteryBoxEntity extends SearchableEntity implements IMysterybox {
+export class MysteryBoxEntity extends SearchableEntity implements IMysteryBox {
   @Column({ type: "varchar" })
   public imageUrl: string;
 

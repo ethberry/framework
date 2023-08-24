@@ -3,11 +3,11 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysterybox, IMysteryBoxSearchDto } from "@framework/types";
+import { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { MysteryboxListItem } from "../../../mechanics/mystery/box-list/item";
+import { MysteryBoxListItem } from "../../../mechanics/mystery/box-list/item";
 
 export const Mystery: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -16,7 +16,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysteryBox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery/boxes",
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });
@@ -29,7 +29,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(mysterybox => (
             <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryboxListItem mysterybox={mysterybox} />
+              <MysteryBoxListItem mysteryBox={mysterybox} />
             </Grid>
           ))}
         </Grid>

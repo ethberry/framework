@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { IDrop, TokenType, ModuleType, IMysterybox } from "@framework/types";
+import { IDrop, TokenType, ModuleType, IMysteryBox } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import DropPurchaseABI from "../../../../../abis/mechanics/drop/purchase/purchase.abi.json";
@@ -15,7 +15,7 @@ import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IDropWithMystery extends IDrop {
-  box?: IMysterybox;
+  box?: IMysteryBox;
 }
 
 interface IDropPurchaseButtonProps {

@@ -17,7 +17,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryBoxStatus } from "@framework/types";
+import { IMysteryBox, IMysteryBoxSearchDto, ITemplate, MysteryBoxStatus } from "@framework/types";
 
 import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
@@ -44,7 +44,7 @@ export const MysteryBox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
+  } = useCollection<IMysteryBox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery/boxes",
     empty: {
       title: "",

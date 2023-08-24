@@ -5,7 +5,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { IMysterybox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -15,7 +15,7 @@ import MysteryMintBoxABI from "../../../../../../abis/mechanics/mysterybox/mint/
 import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
-  mystery: IMysterybox;
+  mystery: IMysteryBox;
 }
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {

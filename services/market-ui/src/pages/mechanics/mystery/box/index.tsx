@@ -3,17 +3,17 @@ import { FormattedMessage } from "react-intl";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
-import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
+import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 
 export const MysteryBox: FC = () => {
-  const { selected, isLoading } = useCollection<IMysterybox>({
+  const { selected, isLoading } = useCollection<IMysteryBox>({
     baseUrl: "/mystery/boxes",
     empty: {
       title: "",
@@ -55,7 +55,7 @@ export const MysteryBox: FC = () => {
         </Grid>
       </Grid>
 
-      <MysteryboxContent mysterybox={selected} />
+      <MysteryBoxContent mysteryBox={selected} />
     </Fragment>
   );
 };

@@ -6,10 +6,10 @@ import { constants } from "ethers";
 import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysterybox, IMysteryBoxSearchDto, ModuleType, TokenType } from "@framework/types";
+import { IMysteryBox, IMysteryBoxSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryboxListItem } from "./item";
+import { MysteryBoxListItem } from "./item";
 import { MysteryboxSearchForm } from "./form";
 
 export interface IMysteryboxListProps {
@@ -22,7 +22,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
   const { id } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IMysterybox, IMysteryBoxSearchDto>({
+    useCollection<IMysteryBox, IMysteryBoxSearchDto>({
       baseUrl: "/mystery/boxes",
       embedded,
       search: {
@@ -59,7 +59,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(mysterybox => (
             <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryboxListItem mysterybox={mysterybox} />
+              <MysteryBoxListItem mysteryBox={mysterybox} />
             </Grid>
           ))}
         </Grid>

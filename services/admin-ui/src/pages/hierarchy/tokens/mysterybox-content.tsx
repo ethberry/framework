@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Grid, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IMysterybox, TokenType } from "@framework/types";
+import { IMysteryBox, TokenType } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 
 export interface IMysteryboxContentProps {
-  mysterybox?: IMysterybox;
+  mysterybox?: IMysteryBox;
 }
 
 export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
