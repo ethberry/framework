@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, SwitchInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { CraftStatus, ICraft, ModuleType } from "@framework/types";
 
@@ -17,13 +17,14 @@ export interface IExchangeEditDialogProps {
 export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, price, craftStatus } = initialValues;
+  const { id, item, price, craftStatus, inverse } = initialValues;
 
   const fixedValues = {
     craftStatus,
     id,
     item,
     price,
+    inverse,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -48,6 +49,7 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
         multiple
       />
+      <SwitchInput name="inverse" />
       {id ? <SelectInput name="craftStatus" options={CraftStatus} /> : null}
     </FormDialog>
   );

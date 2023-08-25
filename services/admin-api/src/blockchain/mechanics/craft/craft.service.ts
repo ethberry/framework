@@ -20,7 +20,7 @@ export class CraftService {
   ) {}
 
   public search(dto: Partial<ICraftSearchDto>, userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
-    const { query, craftStatus, skip, take } = dto;
+    const { query, craftStatus, inverse, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
@@ -30,6 +30,11 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.leftJoinAndSelect("craft.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
 
     queryBuilder.andWhere("craft.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
@@ -58,6 +63,10 @@ export class CraftService {
       } else {
         queryBuilder.andWhere("craft.craftStatus IN(:...craftStatus)", { craftStatus });
       }
+    }
+
+    if (inverse !== void 0) {
+      queryBuilder.andWhere("craft.inverse = :inverse", { inverse });
     }
 
     queryBuilder.skip(skip);
@@ -92,7 +101,7 @@ export class CraftService {
   }
 
   public async create(dto: ICraftCreateDto, userEntity: UserEntity): Promise<CraftEntity> {
-    const { price, item } = dto;
+    const { price, item, ...rest } = dto;
 
     // add new price
     const priceEntity = await this.assetService.create();
@@ -107,6 +116,7 @@ export class CraftService {
         price: priceEntity,
         item: itemEntity,
         merchantId: userEntity.merchantId,
+        ...rest,
       })
       .save();
   }

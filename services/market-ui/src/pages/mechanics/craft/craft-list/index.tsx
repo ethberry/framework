@@ -1,19 +1,22 @@
 import { FC, Fragment } from "react";
 import { Grid, Pagination } from "@mui/material";
-
-import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ICraft } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { SwitchInput } from "@gemunion/mui-inputs-core";
 import { useCollection } from "@gemunion/react-hooks";
+import { ICraft, ICraftSearchDto } from "@framework/types";
 
 import { CraftItem } from "./item";
 
 export const CraftList: FC = () => {
-  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<ICraft, ISearchDto>({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage, isFiltersOpen } = useCollection<
+    ICraft,
+    ICraftSearchDto
+  >({
     baseUrl: "/craft",
     search: {
       query: "",
+      inverse: false,
     },
   });
 
@@ -23,7 +26,13 @@ export const CraftList: FC = () => {
 
       <PageHeader message="pages.craft-list.title" />
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen}>
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SwitchInput name="inverse" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

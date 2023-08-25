@@ -54,7 +54,7 @@ export class StakingDepositSearchDto extends SearchDto implements IStakingDeposi
     return [true, "true"].includes(value);
   })
   @IsBoolean({ message: "typeMismatch" })
-  emptyReward?: boolean;
+  public emptyReward?: boolean;
 
   @ApiPropertyOptional({
     type: StakingDepositItemSearchDto,

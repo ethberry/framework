@@ -42,7 +42,7 @@ export class OrderService {
       queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", { begin, end });
     }
 
-    if (isArchived === true || isArchived === false) {
+    if (isArchived !== void 0) {
       queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
     }
 

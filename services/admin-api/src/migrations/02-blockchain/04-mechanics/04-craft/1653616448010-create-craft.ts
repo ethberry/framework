@@ -33,6 +33,11 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "inverse",
+          type: "boolean",
+          default: false,
+        },
+        {
           name: "craft_status",
           type: `${ns}.craft_status_enum`,
           default: "'ACTIVE'",

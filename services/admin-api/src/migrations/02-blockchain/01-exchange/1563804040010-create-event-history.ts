@@ -123,6 +123,12 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
       );
     `);
 
+    // this enum is not in use because enum is being sorted in order it was created
+    // SELECT enumlabel
+    // FROM pg_catalog.pg_enum
+    // WHERE enumtypid = 'gemunion.event_history_event_enum'::regtype
+    // ORDER BY enumlabel::gemunion.event_history_event_enum
+
     const table = new Table({
       name: `${ns}.event_history`,
       columns: [

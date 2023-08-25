@@ -18,11 +18,29 @@ export const CraftItem: FC<ICraftItemProps> = props => {
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/craft/${craft.id}`}>
-        <CardHeader action={<CraftIngredients craft={craft} />} title={craft.item?.components[0].template!.title} />
-        <CardMedia sx={{ height: 200 }} image={craft.item?.components[0].template!.imageUrl} />
+        <CardHeader
+          action={<CraftIngredients craft={craft} />}
+          title={
+            craft.inverse
+              ? `${craft.price?.components[0].template!.title} ♻️`
+              : craft.item?.components[0].template!.title
+          }
+        />
+        <CardMedia
+          sx={{ height: 200 }}
+          image={
+            craft.inverse ? craft.price?.components[0].template!.imageUrl : craft.item?.components[0].template!.imageUrl
+          }
+        />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
-            <RichTextDisplay data={craft.item?.components[0].template!.description} />
+            <RichTextDisplay
+              data={
+                craft.inverse
+                  ? craft.price?.components[0].template!.description
+                  : craft.item?.components[0].template!.description
+              }
+            />
           </Typography>
         </CardContent>
       </CardActionArea>

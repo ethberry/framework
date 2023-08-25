@@ -85,7 +85,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
   return (
     <Button onClick={handleCraft} data-testid="ExchangeCraftButton">
-      <FormattedMessage id="form.buttons.craft" />
+      <FormattedMessage id={craft.inverse ? "form.buttons.dismantle" : "form.buttons.craft"} />
     </Button>
   );
 };

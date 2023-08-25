@@ -31,7 +31,9 @@ export class OrderService {
 
     queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId: userEntity.merchantId });
 
-    queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
+    if (isArchived !== void 0) {
+      queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
+    }
 
     if (orderStatus && orderStatus.length) {
       if (orderStatus.length === 1) {

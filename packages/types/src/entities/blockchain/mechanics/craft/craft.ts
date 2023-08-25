@@ -14,6 +14,7 @@ export interface ICraft extends IIdDateBase {
   price?: IAsset;
   merchantId: number;
   merchant?: IMerchant;
+  inverse: boolean;
   craftStatus: CraftStatus;
   history?: Array<IEventHistory>;
 }
