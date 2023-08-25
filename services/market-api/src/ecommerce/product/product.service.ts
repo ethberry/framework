@@ -19,7 +19,7 @@ export class ProductService {
   public async search(search: IProductSearchDto): Promise<[Array<ProductEntity>, number]> {
     const {
       query,
-      sortBy = "id",
+      field = "id",
       sort = SortDirection.asc,
       merchantId,
       categoryIds,
@@ -86,7 +86,9 @@ export class ProductService {
 
     // https://github.com/typeorm/typeorm/issues/2919
     // @ts-ignore
-    queryBuilder.orderBy({ [`product.${sortBy}`]: sort.toUpperCase() });
+    queryBuilder.orderBy({
+      [`product.${field}`]: sort.toUpperCase(),
+    });
 
     return queryBuilder.getManyAndCount();
   }

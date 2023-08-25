@@ -21,7 +21,7 @@ export class RatePlanUpdateDto implements IRatePlanUpdateDto {
     type: RatePlanRowUpdateDto,
     isArray: true,
   })
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => RatePlanRowUpdateDto)
   public limits: Array<RatePlanRowUpdateDto>;

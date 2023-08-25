@@ -16,7 +16,7 @@ export class OrderCreateDto implements IOrderCreateDto {
   public userId: number;
 
   @ApiProperty({ type: () => [OrderItemCreateDto] })
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
   @ValidateNested()
   @Type(() => OrderItemCreateDto)

@@ -26,7 +26,7 @@ export class ProductCreateDto implements IProductCreateDto {
 
   @ApiPropertyOptional({ type: () => [PhotoCreateDto] })
   @IsOptional()
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => PhotoCreateDto)
   public photos: Array<IPhoto> = [];
