@@ -7,8 +7,8 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@gemunion/constants": "0.12.7",
-    "@gemunion/types-blockchain": "1.2.5",
-    "@gemunion/types-collection": "1.5.11"
+    "@gemunion/types-blockchain": "1.2.6",
+    "@gemunion/types-collection": "1.5.12"
   },
   "devDependencies": {
     "rimraf": "5.0.1"
