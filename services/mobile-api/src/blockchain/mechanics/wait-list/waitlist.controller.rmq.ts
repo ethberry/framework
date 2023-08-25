@@ -8,15 +8,15 @@ import { WaitListService } from "./waitlist.service";
 
 @Controller()
 export class WaitListControllerRmq {
-  constructor(private readonly claimService: WaitListService) {}
+  constructor(private readonly waitListService: WaitListService) {}
 
   @MessagePattern(MobileEventType.WAITLIST_REWARD_SET)
   public rewardSet(@Payload() dto: IRmqCWaitListList): Promise<void> {
-    return this.claimService.rewardSet(dto);
+    return this.waitListService.rewardSet(dto);
   }
 
   @MessagePattern(MobileEventType.WAITLIST_REWARD_CLAIMED)
   public rewardClaimed(@Payload() dto: IRmqCWaitListItem): Promise<void> {
-    return this.claimService.rewardClaimed(dto);
+    return this.waitListService.rewardClaimed(dto);
   }
 }
