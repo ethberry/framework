@@ -634,6 +634,7 @@
       "title": "CoinGecko"
     },
     "craft": {
+      "approve": "Please approve ingredients to Exchange before",
       "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",

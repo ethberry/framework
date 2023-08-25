@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Alert, Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -66,6 +66,9 @@ export const CraftItem: FC = () => {
                   </ListItemText>
                 </ListItem>
               ))}
+              <Alert severity="warning">
+                <FormattedMessage id="pages.craft.approve" />
+              </Alert>
               <CraftButton craft={selected} />
             </StyledPaper>
           </List>
