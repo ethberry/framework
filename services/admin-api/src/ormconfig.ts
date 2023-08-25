@@ -48,6 +48,7 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 /* lottery */
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 /* raffle */
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 /* pyramid */
@@ -332,6 +333,8 @@ import {
   SeedWaitListItemAt1663047650310,
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
+  CreateLotteryRoundAggregationAt1660436476130,
+  SeedLotteryRoundAggregationAt1660436476140,
 } from "./migrations";
 
 // Check typeORM documentation for more information.
@@ -370,6 +373,7 @@ const config: PostgresConnectionOptions = {
     DropEntity,
     GradeEntity,
     LotteryRoundEntity,
+    LotteryRoundAggregationEntity,
     RaffleRoundEntity,
     MysteryBoxEntity,
     PyramidRulesEntity,
@@ -610,6 +614,8 @@ const config: PostgresConnectionOptions = {
     SeedContractLotteryAt1660436476100,
     CreateLotteryRoundAt1660436476100,
     SeedLotteryRoundAt1660436476120,
+    CreateLotteryRoundAggregationAt1660436476130,
+    SeedLotteryRoundAggregationAt1660436476140,
     SeedEventHistoryLotteryTicketPurchaseAt1660436476310,
     SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
 

@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { TokenType } from "@framework/types";
 
 import { LotteryRoundEntity } from "./round.entity";
-import type { ILotteryCurrentDto, ILotteryRoundStatistic } from "./interfaces";
+import type { ILotteryCurrentDto } from "./interfaces";
 import { LotteryTokenService } from "../token/token.service";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class LotteryRoundService {
   constructor(
     @InjectRepository(LotteryRoundEntity)
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
-    private readonly ticketService: LotteryTokenService,
+    private readonly lotteryTokenService: LotteryTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<LotteryRoundEntity>> {
@@ -44,12 +44,12 @@ export class LotteryRoundService {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketCount = await this.ticketService.getTicketCount(lotteryRound.id);
+    const ticketCount = await this.lotteryTokenService.getTicketCount(lotteryRound.id);
 
     return Object.assign(lotteryRound, { ticketCount });
   }
 
-  public async latest(dto: ILotteryCurrentDto): Promise<ILotteryRoundStatistic> {
+  public async latest(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     const { contractId } = dto;
 
     const lotteryRound = await this.findOne(
@@ -93,37 +93,7 @@ export class LotteryRoundService {
     return queryBuilder.getOne();
   }
 
-  public async statistic(roundId: number): Promise<ILotteryRoundStatistic> {
-    const lotteryRoundEntity = await this.findOne({ id: roundId });
-
-    if (!lotteryRoundEntity) {
-      throw new NotFoundException("roundNotFound");
-    }
-
-    // TODO get statistic
-
-    return {
-      round: lotteryRoundEntity,
-      matches: [
-        {
-          winners: 172,
-        },
-        {
-          winners: 23,
-        },
-        {
-          winners: 4,
-        },
-        {
-          winners: 0,
-        },
-        {
-          winners: 1,
-        },
-        {
-          winners: 0,
-        },
-      ],
-    };
+  public async statistic(roundId: number): Promise<LotteryRoundEntity | null> {
+    return this.findOne({ id: roundId }, { relations: { aggregation: true } });
   }
 }

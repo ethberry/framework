@@ -5,14 +5,14 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { TokenType } from "@framework/types";
 import { RaffleRoundEntity } from "./round.entity";
 import { RaffleTokenService } from "../token/token.service";
-import type { IRaffleCurrentDto, IRaffleRoundStatistic } from "./interfaces";
+import type { IRaffleCurrentDto } from "./interfaces";
 
 @Injectable()
 export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
-    private readonly ticketService: RaffleTokenService,
+    private readonly raffleTokenService: RaffleTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<RaffleRoundEntity>> {
@@ -43,12 +43,12 @@ export class RaffleRoundService {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketCount = await this.ticketService.getTicketCount(lotteryRound.id);
+    const ticketCount = await this.raffleTokenService.getTicketCount(lotteryRound.id);
 
     return Object.assign(lotteryRound, { ticketCount });
   }
 
-  public async latest(dto: IRaffleCurrentDto): Promise<IRaffleRoundStatistic> {
+  public async latest(dto: IRaffleCurrentDto): Promise<RaffleRoundEntity | null> {
     const { contractId } = dto;
 
     const lotteryRound = await this.findOne(
@@ -92,22 +92,7 @@ export class RaffleRoundService {
     return queryBuilder.getOne();
   }
 
-  public async statistic(roundId: number): Promise<IRaffleRoundStatistic> {
-    const raffleRoundEntity = await this.findOne({ id: roundId });
-
-    if (!raffleRoundEntity) {
-      throw new NotFoundException("roundNotFound");
-    }
-
-    // TODO get statistic
-
-    return {
-      round: raffleRoundEntity,
-      matches: [
-        {
-          winners: 1,
-        },
-      ],
-    };
+  public async statistic(roundId: number): Promise<RaffleRoundEntity | null> {
+    return this.findOne({ id: roundId });
   }
 }

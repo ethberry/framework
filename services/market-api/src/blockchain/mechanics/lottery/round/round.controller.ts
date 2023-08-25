@@ -1,10 +1,11 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { NotFoundInterceptor } from "@gemunion/nest-js-utils";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryCurrentDto } from "./dto";
-import type { ILotteryRoundStatistic } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/lottery/rounds")
@@ -22,12 +23,14 @@ export class LotteryRoundController {
   }
 
   @Get("/latest")
-  public last(@Query() dto: LotteryCurrentDto): Promise<ILotteryRoundStatistic> {
+  @UseInterceptors(NotFoundInterceptor)
+  public last(@Query() dto: LotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     return this.lotteryRoundService.latest(dto);
   }
 
   @Get("/:id")
-  public statistic(@Param("id", ParseIntPipe) id: number): Promise<ILotteryRoundStatistic> {
+  @UseInterceptors(NotFoundInterceptor)
+  public statistic(@Param("id", ParseIntPipe) id: number): Promise<LotteryRoundEntity | null> {
     return this.lotteryRoundService.statistic(id);
   }
 }

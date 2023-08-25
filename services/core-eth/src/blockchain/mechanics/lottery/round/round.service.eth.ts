@@ -1,9 +1,8 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log, Wallet } from "ethers";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
@@ -12,30 +11,29 @@ import {
   IRoundStartedEvent,
   TokenType,
 } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
-import { LotteryRoundService } from "./round.service";
 import { getLotteryNumbers } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { testChainId } from "@framework/constants";
 import { TokenService } from "../../../hierarchy/token/token.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { LotteryRoundService } from "./round.service";
+import { LotteryRoundEntity } from "./round.entity";
+import { LotteryRoundAggregationService } from "./round.service.aggregation";
 
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
+    private readonly lotteryRoundAggregationService: LotteryRoundAggregationService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
-    @Inject(ETHERS_SIGNER)
-    private readonly ethersSignerProvider: Wallet,
   ) {}
 
   public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
@@ -121,6 +119,8 @@ export class LotteryRoundServiceEth {
     Object.assign(roundEntity, { numbers: getLotteryNumbers(winValues) });
     await roundEntity.save();
 
+    await this.aggregate(roundEntity);
+
     // NOTIFY
     await this.notificatorService.finalizeLottery({
       round: roundEntity,
@@ -187,5 +187,22 @@ export class LotteryRoundServiceEth {
     // TODO use it somehow
     //  notification?
     await this.eventHistoryService.updateHistory(event, context);
+  }
+
+  public async aggregate(roundEntity: LotteryRoundEntity) {
+    // TODO
+    // - find all tickets for this round
+    // - aggregate data for each match
+    // - save to aggregation table
+    await Promise.all(
+      new Array(roundEntity.maxTickets).fill(null).map(async (e, i) => {
+        await this.lotteryRoundAggregationService.create({
+          round: roundEntity,
+          match: i,
+          tickets: 42,
+          // price
+        });
+      }),
+    );
   }
 }

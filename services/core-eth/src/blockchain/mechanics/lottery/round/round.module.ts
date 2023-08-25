@@ -1,24 +1,25 @@
 import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-// import { CronExpression } from "@nestjs/schedule";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
+import { TemplateModule } from "../../../hierarchy/template/template.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundServiceCron } from "./round.service.cron";
 import { LotteryRoundControllerEth } from "./round.controller.eth";
 import { LotteryRoundServiceEth } from "./round.service.eth";
 import { RoundControllerRmq } from "./round.controller.rmq";
-import { RoundServiceRmq } from "./round.service.rmq";
-import { EventHistoryModule } from "../../../event-history/event-history.module";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { AssetModule } from "../../../exchange/asset/asset.module";
-import { TemplateModule } from "../../../hierarchy/template/template.module";
-import { TokenModule } from "../../../hierarchy/token/token.module";
-import { NotificatorModule } from "../../../../game/notificator/notificator.module";
+import { LotteryRoundServiceRmq } from "./round.service.rmq";
+import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
+import { LotteryRoundAggregationService } from "./round.service.aggregation";
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
     ContractModule,
     EventHistoryModule,
     SecretManagerModule.deferred(),
-    TypeOrmModule.forFeature([LotteryRoundEntity]),
+    TypeOrmModule.forFeature([LotteryRoundEntity, LotteryRoundAggregationEntity]),
   ],
   controllers: [RoundControllerRmq, LotteryRoundControllerEth],
   providers: [
@@ -40,9 +41,16 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
     LotteryRoundService,
     LotteryRoundServiceEth,
     LotteryRoundServiceCron,
-    RoundServiceRmq,
+    LotteryRoundServiceRmq,
+    LotteryRoundAggregationService,
   ],
-  exports: [LotteryRoundService, LotteryRoundServiceEth, LotteryRoundServiceCron, RoundServiceRmq],
+  exports: [
+    LotteryRoundService,
+    LotteryRoundServiceEth,
+    LotteryRoundServiceCron,
+    LotteryRoundServiceRmq,
+    LotteryRoundAggregationService,
+  ],
 })
 export class LotteryRoundModule implements OnModuleInit {
   constructor(private readonly lotteryRoundServiceCron: LotteryRoundServiceCron) {}

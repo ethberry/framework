@@ -16,6 +16,7 @@ export * from "./mechanics/craft/craft";
 export * from "./mechanics/drop/drop";
 export * from "./mechanics/grade/grade";
 
+export * from "./mechanics/lottery/aggregation";
 export * from "./mechanics/lottery/round";
 export * from "./mechanics/lottery/ticket";
 export * from "./mechanics/lottery/token";

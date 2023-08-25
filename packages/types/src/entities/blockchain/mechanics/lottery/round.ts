@@ -1,10 +1,10 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
 import { IToken } from "../../hierarchy/token";
 import { IAssetItem } from "../../event-history";
+import { ILotteryRoundAggregation } from "./aggregation";
 
 export interface ILotteryRound extends IIdDateBase {
   numbers: Array<boolean>;
@@ -13,21 +13,13 @@ export interface ILotteryRound extends IIdDateBase {
   contractId: number; // lottery contract
   ticketContractId: number; // ticket contract
   priceId: number;
+  price?: IAsset;
   maxTickets: number;
   startTimestamp: string;
   endTimestamp: string;
   contract?: IContract;
   ticketContract?: IContract;
-  price?: IAsset;
-}
-
-export interface ILotteryScheduleUpdateDto {
-  schedule: CronExpression;
-}
-
-export interface ILotteryScheduleUpdateRmq {
-  address: string;
-  schedule: CronExpression;
+  aggregation?: Array<ILotteryRoundAggregation>;
 }
 
 export interface ILotteryCurrentRound {

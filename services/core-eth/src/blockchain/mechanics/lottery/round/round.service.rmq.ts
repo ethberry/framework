@@ -5,7 +5,7 @@ import { LotteryRoundServiceCron } from "./round.service.cron";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class RoundServiceRmq {
+export class LotteryRoundServiceRmq {
   constructor(
     private readonly lotteryRoundServiceCron: LotteryRoundServiceCron,
     private readonly contractService: ContractService,

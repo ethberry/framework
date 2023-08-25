@@ -1,6 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { NodeEnv } from "@framework/types";
+
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
@@ -24,6 +26,7 @@ import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
@@ -82,6 +85,7 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     ReferralRewardEntity,
     LotteryRoundEntity,
+    LotteryRoundAggregationEntity,
     RaffleRoundEntity,
     MysteryBoxEntity,
     WaitListListEntity,
@@ -114,7 +118,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === NodeEnv.development,
 };
 
 export default config;
