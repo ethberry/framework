@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@gemunion/eslint-config": "4.0.5",
-    "@types/node": "18.17.9",
+    "@types/node": "18.17.11",
     "@types/react": "18.2.21",
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "@typescript-eslint/parser": "6.4.1",
@@ -26,11 +26,11 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-testing-library": "6.0.0",
+    "eslint-plugin-testing-library": "6.0.1",
     "husky": "4.3.8",
     "lint-staged": "14.0.1",
     "prettier": "3.0.2",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "engines": {
     "node": ">=18"
