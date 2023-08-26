@@ -8,13 +8,12 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { StyledPaper } from "./styled";
-import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
-import { TokenHistory } from "../../../../components/common/token-history";
+import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
+import { StyledPaper } from "./styled";
 
 export const Erc1155Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc1155/tokens",
     empty: {
       balance: [
@@ -69,12 +68,6 @@ export const Erc1155Token: FC = () => {
             <Erc1155TransferButton token={selected} />
           </StyledPaper>
         </Grid>
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
     </Fragment>
   );

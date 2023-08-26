@@ -152,7 +152,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         },
         {
           name: "event_type",
-          type: `${ns}.event_history_event_enum`,
+          type: "varchar",
         },
         {
           name: "event_data",

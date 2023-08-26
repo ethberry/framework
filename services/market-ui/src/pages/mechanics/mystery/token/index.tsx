@@ -14,7 +14,7 @@ import { TokenHistory } from "../../../../components/common/token-history";
 import { formatPrice } from "../../../../utils/money";
 
 export const MysteryBoxToken: FC = () => {
-  const { selected, search, handleChangePaginationModel, handleRefreshPage, isLoading } = useCollection<IToken>({
+  const { selected, handleRefreshPage, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {
       template: {
@@ -65,12 +65,7 @@ export const MysteryBoxToken: FC = () => {
       {/* @ts-ignore */}
       <MysteryBoxContent mysteryBox={selected.template?.box} />
 
-      <TokenHistory
-        token={selected}
-        isLoading={isLoading}
-        search={search}
-        handleChangePaginationModel={handleChangePaginationModel}
-      />
+      {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>
   );
 };

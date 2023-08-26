@@ -12,6 +12,7 @@ export class EventHistoryControllerPublic {
   constructor(private readonly eventHistoryService: EventHistoryService) {}
 
   @Get("/token")
+  @UseInterceptors(PaginationInterceptor)
   public token(@Query() dto: EventHistoryTokenSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
     return this.eventHistoryService.token(dto);
   }

@@ -10,11 +10,10 @@ import {
 import { format, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { TxHashLink } from "@gemunion/mui-scanner";
-import { useUser } from "@gemunion/provider-user";
+import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
 import { useCollection } from "@gemunion/react-hooks";
-import type { ICraft, IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
-import { ContractEventType } from "@framework/types";
+import type { ICraft, IEventHistory } from "@framework/types";
+
 import { EventDataView } from "../../../../exchange/transactions/event-data-view";
 
 export interface ICraftTransactionsProps {
@@ -34,7 +33,6 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
   });
 
   const { formatMessage } = useIntl();
-  const { profile } = useUser<IUser>();
 
   const columns = [
     {
@@ -45,25 +43,14 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       minWidth: 100,
     },
     {
-      field: "eventType",
-      headerName: formatMessage({ id: "form.labels.eventType" }),
+      field: "address",
+      headerName: formatMessage({ id: "form.labels.address" }),
       sortable: false,
-      flex: 2,
-      renderCell: (params: GridCellParams<IEventHistory>) => {
-        const { eventData, eventType } = params.row;
-        const isBorrow =
-          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
-        return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
+      renderCell: (params: GridCellParams<IEventHistory, string>) => {
+        return <AddressLink address={params.value} length={15} />;
       },
-      minWidth: 160,
-    },
-    {
-      field: "chainId",
-      headerName: formatMessage({ id: "form.labels.network" }),
-      sortable: false,
-      valueFormatter: ({ value }: { value: number }) => formatMessage({ id: `enums.chainId.${value}` }),
       flex: 1,
-      minWidth: 120,
+      minWidth: 160,
     },
     {
       field: "createdAt",

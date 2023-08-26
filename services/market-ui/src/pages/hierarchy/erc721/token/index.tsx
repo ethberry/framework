@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
+import { ContractFeatures, IToken, TokenMetadata, TokenRarity } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 
 import {
@@ -18,7 +18,7 @@ import {
   TokenLendButton,
   TokenSellButton,
 } from "../../../../components/buttons";
-import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
+import { TokenHistory } from "../../../../components/common/token-history";
 import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
@@ -28,18 +28,17 @@ import { TokenGradeView } from "../../grade";
 import { StyledPaper } from "./styled";
 
 export const Erc721Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel, handleRefreshPage } =
-    useCollection<ITokenWithHistory>({
-      baseUrl: "/erc721/tokens",
-      empty: {
-        metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
-        template: {
-          title: "",
-          description: emptyStateString,
-          box: {},
-        } as unknown as ITemplate,
-      },
-    });
+  const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
+    baseUrl: "/erc721/tokens",
+    empty: {
+      metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
+      template: {
+        title: "",
+        description: emptyStateString,
+        box: {},
+      } as unknown as ITemplate,
+    },
+  });
 
   const user = useUser<IUser>();
   const { checkAccessMetadata } = useCheckAccessMetadata();
@@ -137,12 +136,7 @@ export const Erc721Token: FC = () => {
       {/* @ts-ignore */}
       <MysteryBoxContent mysteryBox={selected.template?.box} />
 
-      <TokenHistory
-        token={selected}
-        isLoading={isLoading}
-        search={search}
-        handleChangePaginationModel={handleChangePaginationModel}
-      />
+      {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>
   );
 };

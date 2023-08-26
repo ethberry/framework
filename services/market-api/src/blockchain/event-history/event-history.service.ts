@@ -9,6 +9,8 @@ import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractEntity } from "../hierarchy/contract/contract.entity";
 import { EventHistoryEntity } from "./event-history.entity";
 import type { IEventHistoryCraftSearchDto, IEventHistoryTokenSearchDto } from "./interfaces";
+import { EventHistorySearchDto2 } from "./dto";
+import { getSortOrder } from "../../common/utils/sorter";
 
 @Injectable()
 export class EventHistoryService {
@@ -18,7 +20,7 @@ export class EventHistoryService {
   ) {}
 
   public async token(dto: IEventHistoryTokenSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
-    const { address, tokenId, take, skip } = dto;
+    const { tokenId, take, skip } = dto;
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
@@ -28,15 +30,13 @@ export class EventHistoryService {
     queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
     queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
 
-    queryBuilder.andWhere("history.address = :address", { address });
-    queryBuilder.andWhere("history.event_data->>'tokenId' = :tokenId", { tokenId });
+    queryBuilder.andWhere("asset_token.tokenId = :tokenId", { tokenId });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
       "history.id": "ASC",
-      // "history.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -47,6 +47,11 @@ export class EventHistoryService {
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("history.assets", "assets");
+    queryBuilder.leftJoinAndSelect("assets.token", "asset_token");
+    queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
+    queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
 
     queryBuilder.andWhere("history.eventType = :eventType", { eventType: ContractEventType.Craft });
     queryBuilder.andWhere("history.event_data->>'externalId' = :externalId", { externalId: craftId });
@@ -63,8 +68,9 @@ export class EventHistoryService {
   }
 
   // TODO add All Exchange events
-  public async my(dto: any, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
-    const { take, skip, eventTypes } = dto;
+  public async my(dto: EventHistorySearchDto2, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
+    const { take, skip, order, eventTypes } = dto;
+
     const { wallet } = userEntity;
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
@@ -223,10 +229,9 @@ export class EventHistoryService {
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    queryBuilder.orderBy({
-      "history.id": "ASC",
-      // "history.createdAt": "DESC",
-    });
+    const sortOrder = getSortOrder<EventHistoryEntity>("history", order);
+
+    queryBuilder.orderBy({ ...sortOrder, "history.id": "ASC" });
 
     return queryBuilder.getManyAndCount();
   }

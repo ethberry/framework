@@ -8,11 +8,11 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
+import { ContractFeatures, IToken, TokenMetadata, TokenRarity } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 
 import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
-import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
+import { TokenHistory } from "../../../../components/common/token-history";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
@@ -22,7 +22,7 @@ import { Erc998Composition } from "./composition";
 import { StyledPaper } from "./styled";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc998/tokens",
     empty: {
       template: {
@@ -126,12 +126,7 @@ export const Erc998Token: FC = () => {
             </StyledPaper>
           ) : null}
         </Grid>
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
+        {selected.id ? <TokenHistory token={selected} /> : null}
       </Grid>
     </Fragment>
   );
