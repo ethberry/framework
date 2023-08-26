@@ -72,7 +72,7 @@
     "listenerRemove": "Remove ETH Listener",
     "mintBox": "Mint Mysterybox",
     "mintToken": "Mint tokens",
-    "pyramidBalance": "Pyramid Balances Withdraw",
+    "ponziBalance": "Ponzi Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
@@ -409,7 +409,7 @@
       "ERC998": "ERC998",
       "MYSTERYBOX": "MYSTERYBOX",
       "NATIVE": "Native",
-      "PYRAMID": "PYRAMID",
+      "PONZI": "PONZI",
       "STAKING": "STAKING",
       "VESTING": "VESTING"
     },
@@ -444,12 +444,12 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "pyramidRuleStatus": {
+    "ponziRuleStatus": {
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
     },
@@ -554,7 +554,7 @@
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
-      "pyramidBalance": "Pyramid balance",
+      "ponziBalance": "Ponzi balance",
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
@@ -713,9 +713,9 @@
       "productId": "Product",
       "productItemId": "Item",
       "productStatus": "Status",
-      "pyramidDepositStatus": "Status",
-      "pyramidRule": "Pyramid rule",
-      "pyramidRuleStatus": "Status",
+      "ponziDepositStatus": "Status",
+      "ponziRule": "Ponzi rule",
+      "ponziRuleStatus": "Status",
       "random": "Random",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
@@ -1040,7 +1040,7 @@
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
-        "pyramid": "Pyramid",
+        "ponzi": "Ponzi",
         "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
@@ -1235,12 +1235,12 @@
     "promos": {
       "title": "Promos"
     },
-    "pyramid": {
+    "ponzi": {
       "chart": {
         "title": "Chart"
       },
       "contracts": {
-        "title": "Pyramid Contracts"
+        "title": "Ponzi Contracts"
       },
       "report": {
         "title": "Report"
@@ -1250,10 +1250,10 @@
         "deactivate": "Deactivate rule",
         "finalizeByRule": "Finalize rule",
         "finalizeByToken": "Finalize deposit token",
-        "title": "Pyramid rules",
+        "title": "Ponzi rules",
         "upload": "Upload rule"
       },
-      "title": "Pyramid"
+      "title": "Ponzi"
     },
     "raffle": {
       "contracts": {

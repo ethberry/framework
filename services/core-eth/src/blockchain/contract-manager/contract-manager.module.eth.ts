@@ -20,7 +20,7 @@ import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
-import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
+import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
@@ -49,7 +49,7 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     MysteryLogModule,
     VestingLogModule,
     StakingLogModule,
-    PyramidLogModule,
+    PonziLogModule,
     LotteryLogModule,
     LotteryTicketLogModule,
     RaffleLogModule,

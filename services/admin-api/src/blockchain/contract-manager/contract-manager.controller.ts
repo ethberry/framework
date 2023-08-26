@@ -15,7 +15,7 @@ import {
   Erc998ContractDeployDto,
   LotteryContractDeployDto,
   MysteryContractDeployDto,
-  PyramidContractDeployDto,
+  PonziContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
   // WaitListContractDeployDto,
@@ -83,10 +83,10 @@ export class ContractManagerController {
     return this.contractManagerSignService.staking(dto, userEntity);
   }
 
-  // MODULE:PYRAMID
-  @Post("/pyramid")
-  public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.pyramid(dto, userEntity);
+  // MODULE:PONZI
+  @Post("/ponzi")
+  public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.ponzi(dto, userEntity);
   }
 
   // MODULE:WAITLIST

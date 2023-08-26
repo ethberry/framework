@@ -24,7 +24,7 @@ import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
 import { WrapperSection } from "./mechanics/wrapper";
 import { BreedSection } from "./mechanics/breed";
-import { PyramidSection } from "./mechanics/pyramid";
+import { PonziSection } from "./mechanics/ponzi";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
@@ -60,7 +60,7 @@ export const Dashboard: FC = () => {
           <LotterySection />
           <RaffleSection />
           <StakingSection />
-          <PyramidSection />
+          <PonziSection />
         </Grid>
         <Grid item xs={12} sm={4}>
           <EcommerceSection />

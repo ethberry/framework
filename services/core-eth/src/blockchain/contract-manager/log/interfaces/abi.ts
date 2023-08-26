@@ -7,7 +7,7 @@ import ERC998FactoryFacetSol from "@framework/core-contracts/artifacts/contracts
 import ERC1155FactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/ERC1155FactoryFacet.sol/ERC1155FactoryFacet.json";
 import LotteryFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/LotteryFactoryFacet.sol/LotteryFactoryFacet.json";
 import MysteryBoxFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/MysteryBoxFactoryFacet.sol/MysteryBoxFactoryFacet.json";
-import PyramidFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PyramidFactoryFacet.sol/PyramidFactoryFacet.json";
+import PonziFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PonziFactoryFacet.sol/PonziFactoryFacet.json";
 import RaffleFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/RaffleFactoryFacet.sol/RaffleFactoryFacet.json";
 import StakingFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/StakingFactoryFacet.sol/StakingFactoryFacet.json";
 import VestingFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/VestingFactoryFacet.sol/VestingFactoryFacet.json";
@@ -22,7 +22,7 @@ export const ABI = new Interface([
       .concat(ERC1155FactoryFacetSol.abi)
       .concat(LotteryFactoryFacetSol.abi)
       .concat(MysteryBoxFactoryFacetSol.abi)
-      .concat(PyramidFactoryFacetSol.abi)
+      .concat(PonziFactoryFacetSol.abi)
       .concat(RaffleFactoryFacetSol.abi)
       .concat(StakingFactoryFacetSol.abi)
       .concat(VestingFactoryFacetSol.abi)

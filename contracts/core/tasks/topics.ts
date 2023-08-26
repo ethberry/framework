@@ -149,7 +149,7 @@ enum ContractEventSignature {
   ERC1155TokenDeployed = "ERC1155TokenDeployed(address,uint256,(uint96,string,string))",
   MysteryboxDeployed = "MysteryboxDeployed(address,uint256,(string,string,uint96,string,string))",
   CollectionDeployed = "CollectionDeployed(address,uint256,(string,string,uint96,string,uint96,string))",
-  PyramidDeployed = "PyramidDeployed(address,uint256,(address[],uint256[],string))",
+  PonziDeployed = "PonziDeployed(address,uint256,(address[],uint256[],string))",
   StakingDeployed = "StakingDeployed(address,uint256,(string))",
   LotteryDeployed = "LotteryDeployed(address,uint256,((uint256,uint256)))",
   RaffleDeployed = "RaffleDeployed(address,uint256)",

@@ -30,8 +30,8 @@ import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/ro
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
-import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 /* ecommerce */
@@ -90,8 +90,8 @@ const config: PostgresConnectionOptions = {
     MysteryBoxEntity,
     WaitListListEntity,
     WaitListItemEntity,
-    PyramidRulesEntity,
-    PyramidDepositEntity,
+    PonziRulesEntity,
+    PonziDepositEntity,
     BreedEntity,
     RentEntity,
     AccessControlEntity,

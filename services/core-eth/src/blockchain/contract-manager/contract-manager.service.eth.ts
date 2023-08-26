@@ -16,7 +16,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerPyramidDeployedEvent,
+  IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
@@ -47,7 +47,7 @@ import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
-import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
+import { PonziLogService } from "../mechanics/ponzi/log/log.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
@@ -86,7 +86,7 @@ export class ContractManagerServiceEth {
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
-    private readonly pyramidLogService: PyramidLogService,
+    private readonly ponziLogService: PonziLogService,
     private readonly lotteryLogService: LotteryLogService,
     private readonly lotteryTicketLogService: LotteryTicketLogService,
     private readonly raffleLogService: RaffleLogService,
@@ -520,7 +520,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
+  public async ponzi(event: ILogEvent<IContractManagerPonziDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
@@ -533,7 +533,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: account.toLowerCase(),
-      title: `${ModuleType.PYRAMID} (new)`,
+      title: `${ModuleType.PONZI} (new)`,
       description: emptyStateString,
       parameters: {
         payees: payees.toString(),
@@ -544,13 +544,13 @@ export class ContractManagerServiceEth {
         contractTemplate === "0"
           ? (["ALLOWANCE", "PAUSABLE"] as Array<ContractFeatures>)
           : (["WITHDRAW", "ALLOWANCE", "SPLITTER", "REFERRAL", "PAUSABLE"] as Array<ContractFeatures>),
-      contractModule: ModuleType.PYRAMID,
+      contractModule: ModuleType.PONZI,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.pyramidLogService.addListener({
+    this.ponziLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

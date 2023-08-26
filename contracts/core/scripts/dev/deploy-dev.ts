@@ -129,7 +129,7 @@ async function main() {
       "ERC1155FactoryFacet",
       "LotteryFactoryFacet",
       "MysteryBoxFactoryFacet",
-      "PyramidFactoryFacet",
+      "PonziFactoryFacet",
       "RaffleFactoryFacet",
       "StakingFactoryFacet",
       "VestingFactoryFacet",
@@ -640,8 +640,8 @@ async function main() {
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
-  const pyramidFactory = await ethers.getContractFactory("Pyramid");
-  contracts.pyramid = await pyramidFactory.deploy(
+  const ponziFactory = await ethers.getContractFactory("Ponzi");
+  contracts.ponzi = await ponziFactory.deploy(
     [
       "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
       "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
@@ -699,7 +699,7 @@ async function main() {
       await contracts.erc721MysteryboxSimple.getAddress(),
       await contracts.lottery.getAddress(),
       await contracts.raffle.getAddress(),
-      await contracts.pyramid.getAddress(),
+      await contracts.ponzi.getAddress(),
     ],
     [MINTER_ROLE],
   );

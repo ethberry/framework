@@ -14,7 +14,7 @@ declare global {
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
       LOTTERY_ADDR: string;
-      PYRAMID_ADDR: string;
+      PONZI_ADDR: string;
       RAFFLE_ADDR: string;
       WAITLIST_ADDR: string;
       CONTRACT_MANAGER_ADDR: string;

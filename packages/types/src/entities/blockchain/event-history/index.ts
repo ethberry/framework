@@ -33,7 +33,7 @@ export * from "./mechanics/lottery";
 export * from "./mechanics/raffle";
 export * from "./mechanics/grade";
 export * from "./mechanics/mystery";
-export * from "./mechanics/pyramid";
+export * from "./mechanics/ponzi";
 export * from "./mechanics/staking";
 export * from "./mechanics/vesting";
 export * from "./mechanics/wrapper";

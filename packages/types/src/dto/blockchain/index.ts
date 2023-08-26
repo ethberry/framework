@@ -60,12 +60,12 @@ export * from "./mechanics/wait-list/list/create";
 export * from "./mechanics/wait-list/list/update";
 export * from "./mechanics/wait-list/deploy";
 
-export * from "./mechanics/pyramid/deploy";
-export * from "./mechanics/pyramid/chart";
-export * from "./mechanics/pyramid/leaderboard";
-export * from "./mechanics/pyramid/report";
-export * from "./mechanics/pyramid/rule";
-export * from "./mechanics/pyramid/deposit";
+export * from "./mechanics/ponzi/deploy";
+export * from "./mechanics/ponzi/chart";
+export * from "./mechanics/ponzi/leaderboard";
+export * from "./mechanics/ponzi/report";
+export * from "./mechanics/ponzi/rule";
+export * from "./mechanics/ponzi/deposit";
 export * from "./mechanics/collection/deploy";
 
 export * from "./tokens/native/contract/create";

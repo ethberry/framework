@@ -51,9 +51,9 @@ import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.e
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 /* raffle */
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
-/* pyramid */
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
-import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
+/* ponzi */
+import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
@@ -120,8 +120,8 @@ import {
   CreateProductItemParameter1683724062600,
   CreateProductToCategory1683724061700,
   CreatePromo1683724062300,
-  CreatePyramidDeposit1660436477300,
-  CreatePyramidRules1660436477200,
+  CreatePonziDeposit1660436477300,
+  CreatePonziRules1660436477200,
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
   CreateReferralRewardAt1660103709900,
@@ -174,7 +174,7 @@ import {
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
   SeedBalanceLotteryTicketAt1563804020480,
-  SeedBalancePyramidAt1663047650530,
+  SeedBalancePonziAt1663047650530,
   SeedBalanceRaffleTicketAt1685961134480,
   SeedBalanceStakingAt1654751224530,
   SeedBalanceVestingAt1563804000490,
@@ -207,7 +207,7 @@ import {
   SeedContractManagerAt1563804000101,
   SeedContractMysteryAt1563804000160,
   SeedContractNativeAt1563804000110,
-  SeedContractPyramidAt1660436477100,
+  SeedContractPonziAt1660436477100,
   SeedContractRaffleAt1685961136100,
   SeedContractRaffleTicketAt1685961134180,
   SeedContractStakingAt1654751224100,
@@ -281,11 +281,11 @@ import {
   SeedProductItemParameter1683724062610,
   SeedProductToCategory1683724061710,
   SeedPromo1683724062310,
-  SeedPyramidDepositErc20Erc20At1660436477320,
-  SeedPyramidDepositNativeNativeAt1660436477310,
-  SeedPyramidPayees1663047650520,
-  SeedPyramidRulesErc20At1660436477220,
-  SeedPyramidRulesNativeAt1660436477210,
+  SeedPonziDepositErc20Erc20At1660436477320,
+  SeedPonziDepositNativeNativeAt1660436477310,
+  SeedPonziPayees1663047650520,
+  SeedPonziRulesErc20At1660436477220,
+  SeedPonziRulesNativeAt1660436477210,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
   SeedReferralRewardAt1660103709910,
@@ -376,8 +376,8 @@ const config: PostgresConnectionOptions = {
     LotteryRoundAggregationEntity,
     RaffleRoundEntity,
     MysteryBoxEntity,
-    PyramidRulesEntity,
-    PyramidDepositEntity,
+    PonziRulesEntity,
+    PonziDepositEntity,
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
@@ -630,16 +630,16 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
     SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
 
-    // PYRAMID
-    SeedContractPyramidAt1660436477100,
-    CreatePyramidRules1660436477200,
-    SeedPyramidRulesNativeAt1660436477210,
-    SeedPyramidRulesErc20At1660436477220,
-    CreatePyramidDeposit1660436477300,
-    SeedPyramidDepositNativeNativeAt1660436477310,
-    SeedPyramidDepositErc20Erc20At1660436477320,
-    SeedPyramidPayees1663047650520,
-    SeedBalancePyramidAt1663047650530,
+    // PONZI
+    SeedContractPonziAt1660436477100,
+    CreatePonziRules1660436477200,
+    SeedPonziRulesNativeAt1660436477210,
+    SeedPonziRulesErc20At1660436477220,
+    CreatePonziDeposit1660436477300,
+    SeedPonziDepositNativeNativeAt1660436477310,
+    SeedPonziDepositErc20Erc20At1660436477320,
+    SeedPonziPayees1663047650520,
+    SeedBalancePonziAt1663047650530,
 
     SeedContractWaitlistAt1663047650100,
     CreateWaitListList1663047650200,

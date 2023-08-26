@@ -16,7 +16,7 @@ export enum ContractType {
   METADATA = "METADATA",
   LOTTERY = "LOTTERY",
   RAFFLE = "RAFFLE",
-  PYRAMID = "PYRAMID",
+  PONZI = "PONZI",
   WAITLIST = "WAITLIST",
   WRAPPER = "WRAPPER",
 }

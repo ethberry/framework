@@ -6,7 +6,7 @@ import { craftRoutes } from "./craft/routes";
 import { dropRoutes } from "./drop/routes";
 import { lotteryRoutes } from "./lottery/routes";
 import { mysteryboxRoutes } from "./mystery/routes";
-import { pyramidRoutes } from "./pyramid/routes";
+import { ponziRoutes } from "./ponzi/routes";
 import { raffleRoutes } from "./raffle/routes";
 import { referralRoutes } from "./referral/routes";
 import { rentingRoutes } from "./rent/routes";
@@ -22,7 +22,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...dropRoutes,
   ...lotteryRoutes,
   ...mysteryboxRoutes,
-  ...pyramidRoutes,
+  ...ponziRoutes,
   ...raffleRoutes,
   ...referralRoutes,
   ...rentingRoutes,

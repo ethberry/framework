@@ -31,7 +31,7 @@ import { GradeSection } from "./mechanics/grade";
 import { LotterySection } from "./mechanics/lottery";
 import { RaffleSection } from "./mechanics/raffle";
 import { MysterySection } from "./mechanics/mystery";
-import { PyramidSection } from "./mechanics/pyramid";
+import { PonziSection } from "./mechanics/ponzi";
 import { RentSection } from "./mechanics/rent";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
@@ -67,7 +67,7 @@ export const Dashboard: FC = () => {
           <RaffleSection />
           <LotterySection />
           <StakingSection />
-          <PyramidSection />
+          <PonziSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <ChainLinkSection />

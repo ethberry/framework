@@ -22,9 +22,9 @@ export * from "./mechanics/lottery/ticket";
 export * from "./mechanics/lottery/token";
 
 export * from "./mechanics/mysterybox/mysterybox";
-export * from "./mechanics/pyramid/leaderboard";
-export * from "./mechanics/pyramid/rule";
-export * from "./mechanics/pyramid/deposit";
+export * from "./mechanics/ponzi/leaderboard";
+export * from "./mechanics/ponzi/rule";
+export * from "./mechanics/ponzi/deposit";
 
 export * from "./mechanics/raffle/round";
 export * from "./mechanics/raffle/token";

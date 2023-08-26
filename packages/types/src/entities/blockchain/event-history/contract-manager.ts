@@ -8,7 +8,7 @@ export enum ContractManagerEventType {
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
   MysteryboxDeployed = "MysteryboxDeployed",
   CollectionDeployed = "CollectionDeployed",
-  PyramidDeployed = "PyramidDeployed",
+  PonziDeployed = "PonziDeployed",
   StakingDeployed = "StakingDeployed",
   LotteryDeployed = "LotteryDeployed",
   RaffleDeployed = "RaffleDeployed",
@@ -148,21 +148,21 @@ export interface IContractManagerERC1155TokenDeployedEvent {
   args: IERC1155TokenDeployedEventArgs;
 }
 
-// struct PyramidArgs {
+// struct PonziArgs {
 //   address[] payees;
 //   uint256[] shares;
 //   string contractTemplate;
 // }
-export interface IPyramidDeployedEventArgs {
+export interface IPonziDeployedEventArgs {
   payees: Array<string>;
   shares: Array<string>;
   contractTemplate: string;
 }
 
-export interface IContractManagerPyramidDeployedEvent {
+export interface IContractManagerPonziDeployedEvent {
   account: string;
   externalId: number;
-  args: IPyramidDeployedEventArgs;
+  args: IPonziDeployedEventArgs;
 }
 
 // struct StakingArgs { string contractTemplate }
@@ -224,7 +224,7 @@ export type TContractManagerEventData =
   | IContractManagerMysteryTokenDeployedEvent
   | IContractManagerCollectionDeployedEvent
   | IContractManagerStakingDeployedEvent
-  | IContractManagerPyramidDeployedEvent
+  | IContractManagerPonziDeployedEvent
   | IContractManagerLotteryDeployedEvent
   | IContractManagerRaffleDeployedEvent
   | IContractManagerWaitListDeployedEvent;

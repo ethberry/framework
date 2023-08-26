@@ -31,7 +31,7 @@ export enum ModuleType {
   WRAPPER = "WRAPPER",
   LOTTERY = "LOTTERY",
   RAFFLE = "RAFFLE",
-  PYRAMID = "PYRAMID",
+  PONZI = "PONZI",
   VESTING = "VESTING",
   POLYGON = "POLYGON",
   STAKING = "STAKING",
@@ -55,7 +55,7 @@ export enum ListenerType {
   ERC998 = "ERC998",
   ERC1155 = "ERC1155",
   MYSTERYBOX = "MYSTERYBOX",
-  PYRAMID = "PYRAMID",
+  PONZI = "PONZI",
   VESTING = "VESTING",
   STAKING = "STAKING",
 }

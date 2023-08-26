@@ -2,7 +2,7 @@ export * from "./create";
 export * from "./erc20";
 export * from "./erc721";
 export * from "./erc1155";
-export * from "./pyramid";
+export * from "./ponzi";
 export * from "./search";
 export * from "./staking";
 export * from "./update";

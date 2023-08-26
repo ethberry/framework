@@ -13,7 +13,7 @@ import {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerPyramidDeployedEvent,
+  IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
@@ -110,10 +110,10 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.PyramidDeployed,
+    eventName: ContractManagerEventType.PonziDeployed,
   })
-  public pyramid(@Payload() event: ILogEvent<IContractManagerPyramidDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.pyramid(event, ctx);
+  public ponzi(@Payload() event: ILogEvent<IContractManagerPonziDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.ponzi(event, ctx);
   }
 
   @EventPattern({

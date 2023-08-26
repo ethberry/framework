@@ -24,7 +24,7 @@ import type { TVestingEvents } from "./mechanics/vesting";
 import type { TContractManagerEventData } from "./contract-manager";
 import type { TStakingEvents } from "./mechanics/staking";
 import type { TLotteryEvents } from "./mechanics/lottery";
-import type { TPyramidEvents } from "./mechanics/pyramid";
+import type { TPonziEvents } from "./mechanics/ponzi";
 import type { TMysteryEvents } from "./mechanics/mystery";
 import type { TWrapperEvents } from "./mechanics/wrapper";
 import type { TErc4907Events } from "./extensions/erc4907";
@@ -306,7 +306,7 @@ export enum ContractEventSignature {
   ERC1155TokenDeployed = "ERC1155TokenDeployed(address,uint256,(uint96,string,string))",
   MysteryboxDeployed = "MysteryboxDeployed(address,uint256,(string,string,uint96,string,string))",
   CollectionDeployed = "CollectionDeployed(address,uint256,(string,string,uint96,string,uint96,string))",
-  PyramidDeployed = "PyramidDeployed(address,uint256,(address[],uint256[],string))",
+  PonziDeployed = "PonziDeployed(address,uint256,(address[],uint256[],string))",
   StakingDeployed = "StakingDeployed(address,uint256,(string))",
   LotteryDeployed = "LotteryDeployed(address,uint256,((uint256,uint256)))",
   RaffleDeployed = "RaffleDeployed(address,uint256)",
@@ -330,7 +330,7 @@ export type TContractEventData =
   | TStakingEvents
   | TLotteryEvents
   | TRaffleEvents
-  | TPyramidEvents
+  | TPonziEvents
   | TWaitListEvents
 
   // extensions

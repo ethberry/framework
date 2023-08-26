@@ -156,7 +156,7 @@
       "ERC998": "ERC998",
       "MYSTERYBOX": "MYSTERYBOX",
       "NATIVE": "Native",
-      "PYRAMID": "PYRAMID",
+      "PONZI": "PONZI",
       "STAKING": "STAKING",
       "VESTING": "VESTING"
     },
@@ -171,7 +171,7 @@
       "LOTTERY": "LOTTERY",
       "MYSTERY": "MYSTERY",
       "POLYGON": "POLYGON",
-      "PYRAMID": "PYRAMID",
+      "PONZI": "PONZI",
       "RAFFLE": "RAFFLE",
       "STAKING": "STAKING",
       "VESTING": "VESTING",
@@ -182,12 +182,12 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "pyramidRuleStatus": {
+    "ponziRuleStatus": {
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
     },
@@ -380,8 +380,8 @@
       "payees": "Payees",
       "penalty": "Penalty",
       "price": "Price",
-      "pyramidDepositStatus": "Status",
-      "pyramidRuleStatus": "Status",
+      "ponziDepositStatus": "Status",
+      "ponziRuleStatus": "Status",
       "random": "Random",
       "ratePlanId": "Id",
       "recentDeposits": "Recent deposits",
@@ -584,7 +584,7 @@
         "claim": "Claim",
         "dispenser": "Dispenser",
         "drop": "Drop",
-        "pyramid": "Pyramid",
+        "ponzi": "Ponzi",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -678,12 +678,12 @@
       },
       "title": "Profile"
     },
-    "pyramid": {
+    "ponzi": {
       "chart": {
         "title": "Chart"
       },
       "contracts": {
-        "title": "Pyramid Contracts"
+        "title": "Ponzi Contracts"
       },
       "report": {
         "title": "Report"
@@ -693,10 +693,10 @@
         "deactivate": "Deactivate rule",
         "finalizeByRule": "Finalize rule",
         "finalizeByToken": "Finalize deposit token",
-        "title": "Pyramid rules",
+        "title": "Ponzi rules",
         "upload": "Upload rule"
       },
-      "title": "Pyramid"
+      "title": "Ponzi"
     },
     "rate-plan": {
       "tabs": {

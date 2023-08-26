@@ -22,8 +22,8 @@ import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticke
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
-import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
@@ -69,8 +69,8 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     RaffleRoundEntity,
     RaffleTicketEntity,
-    PyramidDepositEntity,
-    PyramidRulesEntity,
+    PonziDepositEntity,
+    PonziRulesEntity,
     WaitListListEntity,
     WaitListItemEntity,
     BreedEntity,

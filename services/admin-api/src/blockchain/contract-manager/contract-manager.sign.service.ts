@@ -11,7 +11,7 @@ import type {
   IErc998ContractDeployDto,
   ILotteryContractDeployDto,
   IMysteryContractDeployDto,
-  IPyramidContractDeployDto,
+  IPonziContractDeployDto,
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
@@ -24,7 +24,7 @@ import {
   Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
-  PyramidContractTemplates,
+  PonziContractTemplates,
   StakingContractTemplates,
   TokenType,
 } from "@framework/types";
@@ -406,12 +406,12 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:PYRAMID
-  public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  // MODULE:PONZI
+  public async ponzi(dto: IPonziContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByPyramidContractTemplate(dto, userEntity.chainId);
+    const { bytecode } = await this.getBytecodeByPonziContractTemplate(dto, userEntity.chainId);
 
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PYRAMID, null);
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PONZI, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -429,14 +429,14 @@ export class ContractManagerSignService {
       {
         EIP712: [
           { name: "params", type: "Params" },
-          { name: "args", type: "PyramidArgs" },
+          { name: "args", type: "PonziArgs" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
           { name: "externalId", type: "uint256" },
         ],
-        PyramidArgs: [
+        PonziArgs: [
           { name: "payees", type: "address[]" },
           { name: "shares", type: "uint256[]" },
           { name: "contractTemplate", type: "string" },
@@ -452,7 +452,7 @@ export class ContractManagerSignService {
         args: {
           payees: dto.payees,
           shares: dto.shares,
-          contractTemplate: Object.values(PyramidContractTemplates).indexOf(dto.contractTemplate).toString(),
+          contractTemplate: Object.values(PonziContractTemplates).indexOf(dto.contractTemplate).toString(),
         },
       },
     );
@@ -988,24 +988,24 @@ export class ContractManagerSignService {
     }
   }
 
-  // MODULE:PYRAMID
-  public getBytecodeByPyramidContractTemplate(dto: IPyramidContractDeployDto, chainId: number) {
+  // MODULE:PONZI
+  public getBytecodeByPonziContractTemplate(dto: IPonziContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
-      case PyramidContractTemplates.SIMPLE:
+      case PonziContractTemplates.SIMPLE:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/PonziBasic.sol/PonziBasic.json",
           chainId,
         );
-      case PyramidContractTemplates.SPLITTER:
+      case PonziContractTemplates.SPLITTER:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
           chainId,
         );
-      case PyramidContractTemplates.REFERRAL:
+      case PonziContractTemplates.REFERRAL:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
           chainId,
         );
       default:

@@ -7,7 +7,7 @@ export * from "./06-grade";
 export * from "./07-lottery";
 export * from "./08-mystery";
 export * from "./09-waitlist";
-export * from "./10-pyramid";
+export * from "./10-ponzi";
 export * from "./11-rent";
 export * from "./12-staking";
 export * from "./13-vesting";

@@ -6,7 +6,7 @@ import { CraftModule } from "./craft/craft.module";
 import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
-import { PyramidModule } from "./pyramid/pyramid.module";
+import { PonziModule } from "./ponzi/ponzi.module";
 import { RaffleModule } from "./raffle/raffle.module";
 import { ReferralModule } from "./referral/referral.module";
 import { RentModule } from "./rent/rent.module";
@@ -23,7 +23,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
     GradeModule,
     LotteryModule,
     MysteryModule,
-    PyramidModule,
+    PonziModule,
     RaffleModule,
     ReferralModule,
     RentModule,

@@ -125,12 +125,12 @@ export enum CollectionContractTemplates {
   "BLACKLIST" = "BLACKLIST",
 }
 
-export enum PyramidContractFeatures {
+export enum PonziContractFeatures {
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
 }
 
-export enum PyramidContractTemplates {
+export enum PonziContractTemplates {
   "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
@@ -169,7 +169,7 @@ export enum ContractFeatures {
   // MODULE:MYSTERY
   "PAUSABLE" = "PAUSABLE",
 
-  // MODULE:PYRAMID
+  // MODULE:PONZI
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
 }

@@ -87,7 +87,7 @@
       "RU": "🇷🇺 Русский",
       "UA": "🇺🇦 Українська"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "نشيط",
       "CANCELED": "ألغيت",
       "COMPLETE": "اكتمال"
@@ -215,8 +215,8 @@
       "password": "كلمة المرور",
       "penalty": "جزاء",
       "price": "السعر",
-      "pyramidDepositStatus": "حالة",
-      "pyramidRuleStatus": "حالة",
+      "ponziDepositStatus": "حالة",
+      "ponziRuleStatus": "حالة",
       "quantity": "كمية",
       "rank": "مرتبة",
       "rarity": "ندرة",
@@ -440,7 +440,7 @@
         "drop": "قطرة",
         "lottery": "اليانصيب",
         "mysterybox": "الصندوق الغامض",
-        "pyramid": "هرم",
+        "ponzi": "هرم",
         "staking": "Staking",
         "vesting": "استحقاق",
         "waitlist": "قائمة الانتظار",
@@ -634,7 +634,7 @@
     "profile": {
       "title": "حساب تعريفي"
     },
-    "pyramid": {
+    "ponzi": {
       "deposit": {
         "title": "الودائع الخاصة بي"
       },

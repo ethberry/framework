@@ -12,7 +12,7 @@ import { ClaimSection } from "./mechanics/claim";
 import { DropSection } from "./mechanics/drop";
 import { AdminSection } from "./infrastructure";
 import { MarketplaceSection } from "./exchange/marketplace";
-import { PyramidSection } from "./mechanics/pyramid";
+import { PonziSection } from "./mechanics/ponzi";
 import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
 import { VestingSection } from "./mechanics/vesting";
@@ -37,7 +37,7 @@ export const Dashboard: FC = () => {
           <VestingSection />
           <DropSection />
           <StakingSection />
-          <PyramidSection />
+          <PonziSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <MarketplaceSection />

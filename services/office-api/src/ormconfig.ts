@@ -18,8 +18,8 @@ import { PageEntity } from "./infrastructure/page/page.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { OrderEntity } from "./ecommerce/order/order.entity";
@@ -65,8 +65,8 @@ const config: PostgresConnectionOptions = {
     EventHistoryEntity,
     StakingDepositEntity,
     StakingRulesEntity,
-    PyramidDepositEntity,
-    PyramidRulesEntity,
+    PonziDepositEntity,
+    PonziRulesEntity,
     /* infrastructure */
     OtpEntity,
     UserEntity,

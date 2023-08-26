@@ -47,7 +47,7 @@ import { testChainId } from "@framework/constants";
               ContractManagerEventType.MysteryboxDeployed,
               ContractManagerEventType.CollectionDeployed,
               ContractManagerEventType.StakingDeployed,
-              ContractManagerEventType.PyramidDeployed,
+              ContractManagerEventType.PonziDeployed,
               ContractManagerEventType.LotteryDeployed,
               ContractManagerEventType.RaffleDeployed,
               ContractManagerEventType.WaitListDeployed,

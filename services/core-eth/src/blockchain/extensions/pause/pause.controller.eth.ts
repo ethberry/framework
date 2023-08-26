@@ -17,14 +17,14 @@ export class PauseControllerEth {
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Paused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Paused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Paused },
-    { contractType: ContractType.PYRAMID, eventName: ContractEventType.Paused },
+    { contractType: ContractType.PONZI, eventName: ContractEventType.Paused },
     { contractType: ContractType.WAITLIST, eventName: ContractEventType.Paused },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.RAFFLE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },
-    { contractType: ContractType.PYRAMID, eventName: ContractEventType.Unpaused },
+    { contractType: ContractType.PONZI, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.WAITLIST, eventName: ContractEventType.Unpaused },
   ])
   public pause(@Payload() event: ILogEvent<IPausedEvent>, @Ctx() context: Log): Promise<void> {

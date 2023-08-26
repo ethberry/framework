@@ -26,7 +26,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'LOTTERY',
         'RAFFLE',
         'STAKING',
-        'PYRAMID',
+        'PONZI',
         'WAITLIST',
         'VESTING',
         'POLYGON',
@@ -62,7 +62,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         -- MODULE:MYSTERY
         'PAUSABLE',
         
-        -- MODULE:PYRAMID
+        -- MODULE:PONZI
         'SPLITTER',
         'REFERRAL'
       );

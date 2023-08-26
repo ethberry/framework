@@ -113,7 +113,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'ERC1155TokenDeployed',
        'MysteryboxDeployed',
        'CollectionDeployed',
-       'PyramidDeployed',
+       'PonziDeployed',
        'StakingDeployed',
        'LotteryDeployed',
        'RaffleDeployed',

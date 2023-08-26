@@ -65,7 +65,7 @@ async function main() {
       "ERC1155FactoryFacet",
       "LotteryFactoryFacet",
       "MysteryBoxFactoryFacet",
-      "PyramidFactoryFacet",
+      "PonziFactoryFacet",
       "RaffleFactoryFacet",
       "StakingFactoryFacet",
       "VestingFactoryFacet",

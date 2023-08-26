@@ -68,8 +68,8 @@ hardhat flatten contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable
 hardhat flatten contracts/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol > dist/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol
 hardhat flatten contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol > dist/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol
 
-mkdir -p dist/Mechanics/Pyramid
-hardhat flatten contracts/Mechanics/Pyramid/Pyramid.sol > dist/Mechanics/Pyramid/Pyramid.sol
+mkdir -p dist/Mechanics/Ponzi
+hardhat flatten contracts/Mechanics/Ponzi/Ponzi.sol > dist/Mechanics/Ponzi/Ponzi.sol
 
 mkdir -p dist/Mechanics/Raffle
 hardhat flatten contracts/Mechanics/Raffle/ERC721RaffleTicket.sol > dist/Mechanics/Raffle/ERC721RaffleTicket.sol

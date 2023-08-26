@@ -20,7 +20,7 @@ export class PaymentSplitterControllerEth {
 
   @EventPattern([
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.PayeeAdded },
-    { contractType: ContractType.PYRAMID, eventName: ExchangeEventType.PayeeAdded },
+    { contractType: ContractType.PONZI, eventName: ExchangeEventType.PayeeAdded },
   ])
   public addPayee(@Payload() event: ILogEvent<IExchangePayeeAddedEvent>, @Ctx() context: Log): Promise<void> {
     return this.paymentSplitterServiceEth.addPayee(event, context);
@@ -36,7 +36,7 @@ export class PaymentSplitterControllerEth {
       eventName: ExchangeEventType.PaymentEthReceived,
     },
     {
-      contractType: ContractType.PYRAMID,
+      contractType: ContractType.PONZI,
       eventName: ExchangeEventType.PaymentReceived,
     },
     {
@@ -58,7 +58,7 @@ export class PaymentSplitterControllerEth {
       eventName: ExchangeEventType.PaymentReleased,
     },
     {
-      contractType: ContractType.PYRAMID,
+      contractType: ContractType.PONZI,
       eventName: ExchangeEventType.PaymentReleased,
     },
   ])
@@ -72,7 +72,7 @@ export class PaymentSplitterControllerEth {
       eventName: ExchangeEventType.ERC20PaymentReleased,
     },
     {
-      contractType: ContractType.PYRAMID,
+      contractType: ContractType.PONZI,
       eventName: ExchangeEventType.ERC20PaymentReleased,
     },
   ])

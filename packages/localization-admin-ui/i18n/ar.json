@@ -41,7 +41,7 @@
     "listenerAdd": "أضف مستمع ETH",
     "listenerRemove": "إزالة ETH المستمع",
     "mintToken": "الرموز المميزة للنعناع",
-    "pyramidBalance": "سحب أرصدة الهرم",
+    "ponziBalance": "سحب أرصدة الهرم",
     "renounceRole": "نبذ الدور",
     "revokeRole": "إبطال الدور",
     "schedule": "حدد جدول جولة اليانصيب",
@@ -140,7 +140,7 @@
       "ERC998": "ERC998",
       "MYSTERYBOX": "الصندوق الغامض",
       "NATIVE": "محلي",
-      "PYRAMID": "هرم",
+      "PONZI": "هرم",
       "VESTING": "تكريم"
     },
     "mysteryboxStatus": {
@@ -151,12 +151,12 @@
       "ACTIVE": "نشيط",
       "INACTIVE": "غير نشط"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "نشيط",
       "CANCELED": "ألغيت",
       "COMPLETE": "اكتمال"
     },
-    "pyramidRuleStatus": {
+    "ponziRuleStatus": {
       "ACTIVE": "نشيط",
       "NEW": "الجديد"
     },
@@ -239,7 +239,7 @@
       "mintToken": "رموز النعناع",
       "ok": "موافق",
       "pause": "وقفة",
-      "pyramidBalance": "التوازن الهرمي",
+      "ponziBalance": "التوازن الهرمي",
       "reject": "يرفض",
       "removeListener": "إزالة ETH المستمع",
       "renounceRole": "نبذ الدور",
@@ -335,8 +335,8 @@
       "payee": "المستفيد",
       "penalty": "جزاء",
       "price": "السعر",
-      "pyramidDepositStatus": "حالة",
-      "pyramidRuleStatus": "حالة",
+      "ponziDepositStatus": "حالة",
+      "ponziRuleStatus": "حالة",
       "random": "عشوائي",
       "recipient": "متلقي",
       "recurrent": "متكرر؟",
@@ -541,7 +541,7 @@
         "grade": "رتبة",
         "lottery": "اليانصيب",
         "mystery": "الغموض",
-        "pyramid": "هرم",
+        "ponzi": "هرم",
         "staking": "Staking",
         "title": "علم الميكانيكا",
         "vesting": "استحقاق",
@@ -666,7 +666,7 @@
     "profile": {
       "title": "حساب تعريفي"
     },
-    "pyramid": {
+    "ponzi": {
       "chart": {
         "title": "جدول"
       },

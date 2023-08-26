@@ -295,7 +295,7 @@
       "NOW_IN_DELIVERY": "Now in delivery",
       "SCHEDULED": "Scheduled"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
@@ -462,8 +462,8 @@
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
-      "pyramidDepositStatus": "Status",
-      "pyramidRuleStatus": "Status",
+      "ponziDepositStatus": "Status",
+      "ponziRuleStatus": "Status",
       "quantity": "Quantity",
       "raffle": "Raffle",
       "rank": "Rank",
@@ -695,7 +695,7 @@
         "drop": "Drop",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
-        "pyramid": "Pyramid",
+        "ponzi": "Ponzi",
         "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
@@ -1051,7 +1051,7 @@
       },
       "title": "Profile"
     },
-    "pyramid": {
+    "ponzi": {
       "deposit": {
         "title": "My Deposits"
       },
@@ -1063,7 +1063,7 @@
         "deposit": "Deposit",
         "title": "Deposit rules"
       },
-      "title": "Pyramid"
+      "title": "Ponzi"
     },
     "raffle": {
       "contract": {

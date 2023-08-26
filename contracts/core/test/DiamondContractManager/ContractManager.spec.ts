@@ -17,7 +17,7 @@ describe("ContractManagerDiamond", function () {
         "ERC1155FactoryFacet",
         "LotteryFactoryFacet",
         "MysteryBoxFactoryFacet",
-        "PyramidFactoryFacet",
+        "PonziFactoryFacet",
         "RaffleFactoryFacet",
         "StakingFactoryFacet",
         "VestingFactoryFacet",
