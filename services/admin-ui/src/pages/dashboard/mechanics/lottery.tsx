@@ -7,9 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { BusinessType } from "@framework/types";
 
 export const LotterySection: FC = () => {
-  const isLaunchpad = process.env.BUSINESS_TYPE === BusinessType.B2B;
-
-  if (isLaunchpad) {
+  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return null;
   }
 
