@@ -84,7 +84,7 @@ export class SeedPonziRulesErc20At1660436477220 implements MigrationInterface {
         90211,
         90212,
         21,
-        4,
+        12601,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -97,7 +97,7 @@ export class SeedPonziRulesErc20At1660436477220 implements MigrationInterface {
         90221,
         90222,
         22,
-        4,
+        12601,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

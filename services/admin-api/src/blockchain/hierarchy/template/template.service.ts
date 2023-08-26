@@ -122,7 +122,10 @@ export class TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
+  public async autocomplete(
+    dto: Partial<ITemplateAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<TemplateEntity>> {
     const { contractFeatures, templateStatus, contractIds, contractModule, contractType } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 

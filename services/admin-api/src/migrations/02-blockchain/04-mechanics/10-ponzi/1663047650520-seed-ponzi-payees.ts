@@ -22,21 +22,21 @@ export class SeedPonziPayees1663047650520 implements MigrationInterface {
       ) VALUES (
         '${wallets[0]}',
         85,
-        4,
+        12601,
         '${currentDateTime}',
         '${currentDateTime}'
       ),
       (
         '${wallets[1]}',
         10,
-        4,
+        12601,
         '${currentDateTime}',
         '${currentDateTime}'
       ),
       (
         '${wallets[2]}',
         5,
-        4,
+        12601,
         '${currentDateTime}',
         '${currentDateTime}'
       );

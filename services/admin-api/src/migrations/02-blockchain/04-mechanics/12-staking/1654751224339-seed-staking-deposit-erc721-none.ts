@@ -31,7 +31,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3901,
         '${subDays(now, 9).toISOString()}',
         '${subDays(now, 9 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
@@ -41,7 +41,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3902,
         '${subDays(now, 9).toISOString()}',
         '${subDays(now, 9 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
@@ -51,7 +51,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3903,
         '${subDays(now, 8).toISOString()}',
         '${subDays(now, 8 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
@@ -61,7 +61,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3904,
         '${subDays(now, 7).toISOString()}',
         '${subDays(now, 7 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
@@ -71,7 +71,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3905,
         '${subDays(now, 7).toISOString()}',
         '${subDays(now, 7 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
@@ -81,7 +81,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3906,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -91,7 +91,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3907,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -101,7 +101,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3908,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -111,7 +111,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3909,
         '${subDays(now, 4).toISOString()}',
         '${subDays(now, 4 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
@@ -121,7 +121,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3910,
         '${subDays(now, 4).toISOString()}',
         '${subDays(now, 4 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
@@ -131,7 +131,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3911,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -141,7 +141,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3912,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -151,7 +151,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3913,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -161,7 +161,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3914,
         '${subDays(now, 2).toISOString()}',
         '${subDays(now, 2 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
@@ -171,7 +171,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3915,
         '${subDays(now, 1).toISOString()}',
         '${subDays(now, 1 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
@@ -181,7 +181,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3916,
         '${subDays(now, 1).toISOString()}',
         '${subDays(now, 1 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
@@ -191,7 +191,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3917,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
@@ -201,7 +201,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3918,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
@@ -211,7 +211,7 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         3919,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        29, -- ERC721 > NONE
+        139, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'

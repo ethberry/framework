@@ -94,6 +94,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 22x - raffle
     // 23x - lottery
     // 24x - lottery
+    // 25x - staking
+    // 26x - ponzi
 
     const table = new Table({
       name: `${ns}.contract`,

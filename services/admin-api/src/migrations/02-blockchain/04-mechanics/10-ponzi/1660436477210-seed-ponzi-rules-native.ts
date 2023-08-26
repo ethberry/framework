@@ -84,7 +84,7 @@ export class SeedPonziRulesNativeAt1660436477210 implements MigrationInterface {
         90111,
         90112,
         11,
-        4,
+        12601,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -97,7 +97,7 @@ export class SeedPonziRulesNativeAt1660436477210 implements MigrationInterface {
         90121,
         90122,
         12,
-        4,
+        12601,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

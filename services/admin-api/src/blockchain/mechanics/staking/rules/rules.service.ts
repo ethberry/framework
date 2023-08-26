@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
@@ -9,6 +9,7 @@ import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { StakingRulesEntity } from "./rules.entity";
 import type { IStakingRuleAutocompleteDto } from "./interfaces";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class StakingRulesService {
@@ -18,10 +19,16 @@ export class StakingRulesService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
+  public search(
+    dto: Partial<IStakingRuleSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<StakingRulesEntity>, number]> {
     const { query, deposit, reward, stakingRuleStatus, contractIds, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
+
+    queryBuilder.select();
+
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -32,7 +39,13 @@ export class StakingRulesService {
     // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
     queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
 
-    queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -140,9 +153,18 @@ export class StakingRulesService {
     });
   }
 
-  public async autocomplete(dto: Partial<IStakingRuleAutocompleteDto>): Promise<Array<StakingRulesEntity>> {
+  public async autocomplete(
+    dto: Partial<IStakingRuleAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<StakingRulesEntity>> {
     const { stakingRuleStatus = [], stakingId } = dto;
-    const where = {};
+
+    const where = {
+      contract: {
+        chainId: userEntity.chainId,
+        merchantId: userEntity.merchantId,
+      },
+    };
 
     if (stakingId) {
       Object.assign(where, {
@@ -167,18 +189,27 @@ export class StakingRulesService {
     });
   }
 
-  public async update(where: FindOptionsWhere<StakingRulesEntity>, dto: ISearchableDto): Promise<StakingRulesEntity> {
-    const stakingEntity = await this.findOne(where);
+  public async update(
+    where: FindOptionsWhere<StakingRulesEntity>,
+    dto: Partial<ISearchableDto>,
+    userEntity: UserEntity,
+  ): Promise<StakingRulesEntity> {
+    const stakingRuleEntity = await this.findOne(where, { relations: { contract: true } });
 
-    if (!stakingEntity) {
+    if (!stakingRuleEntity) {
       throw new NotFoundException("stakingRuleNotFound");
     }
 
-    Object.assign(stakingEntity, {
-      stakingRuleStatus: StakingRuleStatus.ACTIVE,
-      ...dto,
-    });
+    if (stakingRuleEntity.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
-    return stakingEntity.save();
+    if (stakingRuleEntity.stakingRuleStatus === StakingRuleStatus.NEW) {
+      stakingRuleEntity.stakingRuleStatus = StakingRuleStatus.ACTIVE;
+    }
+
+    Object.assign(stakingRuleEntity, dto);
+
+    return stakingRuleEntity.save();
   }
 }

@@ -17,27 +17,27 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80311
+        81311
       ), (
-        80312
+        81312
       ), (
-        80321
+        81321
       ), (
-        80322
+        81322
       ), (
-        80331
+        81331
       ), (
-        80332
+        81332
       ), (
-        80341
+        81341
       ), (
-        80342
+        81342
       ), (
-        80351
+        81351
       ), (
-        80352
+        81352
       ), (
-        80399
+        81399
       );
     `);
 
@@ -53,67 +53,67 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         10306,
         1030601, -- sword
         1,
-        80311
+        81311
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80312
+        81312
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80321
+        81321
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80322
+        81322
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80331
+        81331
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80332
+        81332
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80341
+        81341
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80342
+        81342
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80351
+        81351
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         1000,
-        80352
+        81352
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80399
+        81399
       );
     `);
 
@@ -132,81 +132,81 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        31,
+        131,
         'ERC721 > NATIVE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80311,
-        80312,
+        81311,
+        81312,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        32,
+        132,
         'ERC721 > ERC20',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80321,
-        80322,
+        81321,
+        81322,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        33,
+        133,
         'ERC721 > ERC721',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80331,
-        80332,
+        81331,
+        81332,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        34,
+        134,
         'ERC721 > ERC998',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80341,
-        80342,
+        81341,
+        81342,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        35,
+        135,
         'ERC721 > ERC1155',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80351,
-        80352,
+        81351,
+        81352,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        39,
+        139,
         'ERC721 > NONE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80399,
+        81399,
         null,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -35,7 +35,7 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        4,
+        12601,
         '${ponziAddr}',
         '${chainId}',
         'PONZI',

@@ -17,27 +17,27 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80611
+        81611
       ), (
-        80612
+        81612
       ), (
-        80621
+        81621
       ), (
-        80622
+        81622
       ), (
-        80631
+        81631
       ), (
-        80632
+        81632
       ), (
-        80641
+        81641
       ), (
-        80642
+        81642
       ), (
-        80651
+        81651
       ), (
-        80652
+        81652
       ), (
-        80699
+        81699
       );
     `);
 
@@ -53,61 +53,61 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80611
+        81611
       ), (
         'ERC721',
         11101,
         1110101, -- sword mysterybox
         1,
-        80612
+        81612
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80621
+        81621
       ), (
         'ERC721',
         11101,
         1110101, -- sword mysterybox
         1,
-        80622
+        81622
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80631
+        81631
       ), (
         'ERC721',
         11101,
         1110101, -- sword mysterybox
         1,
-        80632
+        81632
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80641
+        81641
       ), (
         'ERC721',
         11101,
         1110101, -- sword mysterybox
         1,
-        80642
+        81642
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         1,
-        80651
+        81651
       ), (
         'ERC721',
         11101,
         1110101, -- sword mysterybox
         1,
-        80652
+        81652
       );
     `);
 
@@ -126,68 +126,68 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         created_at,
         updated_at
       ) VALUES (
-        61,
+        116,
         'NATIVE > MYSTERYBOX',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80611,
-        80612,
+        81611,
+        81612,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        62,
+        126,
         'ERC20 > MYSTERYBOX',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80621,
-        80622,
+        81621,
+        81622,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        63,
+        136,
         'ERC721 > MYSTERYBOX',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80631,
-        80632,
+        81631,
+        81632,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        64,
+        146,
         'ERC998 > MYSTERYBOX',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80641,
-        80642,
+        81641,
+        81642,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        65,
+        156,
         'ERC1155 > MYSTERYBOX',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80651,
-        80652,
+        81651,
+        81652,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       );

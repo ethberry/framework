@@ -31,7 +31,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4501,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -41,7 +41,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4502,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -51,7 +51,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4503,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -61,7 +61,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4504,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -71,7 +71,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4505,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
@@ -81,7 +81,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4506,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
@@ -91,7 +91,7 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         4507,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        45, -- ERC998 > ERC1155
+        145, -- ERC998 > ERC1155
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'

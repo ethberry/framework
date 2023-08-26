@@ -34,6 +34,7 @@ export class ContractService {
     queryBuilder.leftJoin("contract.templates", "templates", "contract.contractType = :tokenType", {
       tokenType: TokenType.ERC20,
     });
+
     queryBuilder.addSelect(["templates.id", "templates.amount"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
@@ -120,6 +121,7 @@ export class ContractService {
       excludeFeatures = [],
       includeExternalContracts,
     } = dto;
+
     const where = {
       chainId: userEntity.chainId,
       merchantId: userEntity.merchantId,

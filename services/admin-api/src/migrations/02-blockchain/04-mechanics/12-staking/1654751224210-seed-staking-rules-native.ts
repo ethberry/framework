@@ -17,27 +17,43 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80111
+        81111
       ), (
-        80112
+        81112
       ), (
-        80121
+        81121
       ), (
-        80122
+        81122
       ), (
-        80131
+        81131
       ), (
-        80132
+        81132
       ), (
-        80141
+        81141
       ), (
-        80142
+        81142
       ), (
-        80151
+        81151
       ), (
-        80152
+        81152
       ), (
-        80199
+        81199
+      ), (
+        82111
+      ), (
+        82112
+      ), (
+        83111
+      ), (
+        83112
+      ), (
+        84111
+      ), (
+        84112
+      ), (
+        85111
+      ), (
+        85112
       );
     `);
 
@@ -53,67 +69,115 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80111
+        81111
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80112
+        81112
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80121
+        81121
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80122
+        81122
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80131
+        81131
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80132
+        81132
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80141
+        81141
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80142
+        81142
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80151
+        81151
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         10,
-        80152
+        81152
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80199
+        81199
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        82111
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        82112
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        83111
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        83112
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        84111
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        84112
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        85111
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- ETH
+        '${WeiPerEther.toString()}',
+        85112
       );
     `);
 
@@ -132,81 +196,133 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        11,
+        111,
         'NATIVE > NATIVE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80111,
-        80112,
+        81111,
+        81112,
         'ACTIVE',
-        3,
+        12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12,
+        112,
         'NATIVE > ERC20',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80121,
-        80122,
+        81121,
+        81122,
         'ACTIVE',
-        3,
+        12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13,
+        113,
         'NATIVE > ERC721',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80131,
-        80132,
+        81131,
+        81132,
         'ACTIVE',
-        3,
+        12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14,
+        114,
         'NATIVE > ERC998',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80141,
-        80142,
+        81141,
+        81142,
         'ACTIVE',
-        3,
+        12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        15,
+        115,
         'NATIVE > ERC1155',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80151,
-        80152,
+        81151,
+        81152,
         'ACTIVE',
-        3,
+        12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        19,
+        119,
         'NATIVE > NONE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80199,
+        81199,
         null,
         'ACTIVE',
-        3,
+        12501,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        211,
+        'NATIVE > NATIVE (new)',
+        '${simpleFormatting}',
+        604800,
+        1,
+        false,
+        82111,
+        82112,
+        'INACTIVE',
+        12502,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        311,
+        'NATIVE > NATIVE (inactive)',
+        '${simpleFormatting}',
+        604800,
+        1,
+        false,
+        83111,
+        83112,
+        'INACTIVE',
+        12503,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        411,
+        'NATIVE > NATIVE (BEP)',
+        '${simpleFormatting}',
+        604800,
+        1,
+        false,
+        84111,
+        84112,
+        'INACTIVE',
+        12504,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        511,
+        'NATIVE > NATIVE (2)',
+        '${simpleFormatting}',
+        604800,
+        1,
+        false,
+        85111,
+        85112,
+        'ACTIVE',
+        12505,
         '${currentDateTime}',
         '${currentDateTime}'
       );

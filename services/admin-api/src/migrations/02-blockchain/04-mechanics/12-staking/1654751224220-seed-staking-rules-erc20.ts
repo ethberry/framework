@@ -17,27 +17,27 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80211
+        81211
       ), (
-        80212
+        81212
       ), (
-        80221
+        81221
       ), (
-        80222
+        81222
       ), (
-        80231
+        81231
       ), (
-        80232
+        81232
       ), (
-        80241
+        81241
       ), (
-        80242
+        81242
       ), (
-        80251
+        81251
       ), (
-        80252
+        81252
       ), (
-        80299
+        81299
       );
     `);
 
@@ -53,67 +53,67 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80211
+        81211
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80212
+        81212
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80221
+        81221
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80222
+        81222
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80231
+        81231
       ), (
         'ERC721',
         10301,
         1030101, -- rune
         '${WeiPerEther.toString()}',
-        80232
+        81232
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80241
+        81241
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80242
+        81242
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80251
+        81251
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         1000,
-        80252
+        81252
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80299
+        81299
       );
     `);
 
@@ -132,81 +132,81 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        21,
+        121,
         'ERC20 > NATIVE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80211,
-        80212,
+        81211,
+        81212,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        22,
+        122,
         'ERC20 > ERC20',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80221,
-        80222,
+        81221,
+        81222,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        23,
+        123,
         'ERC20 > ERC721',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80231,
-        80232,
+        81231,
+        81232,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        24,
+        124,
         'ERC20 > ERC998',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80241,
-        80242,
+        81241,
+        81242,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        25,
+        125,
         'ERC20 > ERC1155',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80251,
-        80252,
+        81251,
+        81252,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        29,
+        129,
         'ERC20 > NONE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80299,
+        81299,
         null,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       );
