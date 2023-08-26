@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -21,38 +21,38 @@ export const LotterySection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/contracts">
+        <ListItemButton component={RouterLink} to="/lottery/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.contracts.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/tickets">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/lottery/tickets">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.tickets.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/rounds">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/lottery/rounds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.rounds.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/tokens">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/lottery/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.tokens.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

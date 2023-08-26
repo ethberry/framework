@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { ConfirmationNumber, Savings } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,22 +23,22 @@ export const BreedSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/breed/breeds">
+        <ListItemButton component={RouterLink} to="/breed/breeds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.breed.breeds.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/breed/history">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/breed/history">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.breed.history.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

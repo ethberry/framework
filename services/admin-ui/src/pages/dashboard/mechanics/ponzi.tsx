@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,38 +23,38 @@ export const PonziSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/ponzi/contracts">
+        <ListItemButton component={RouterLink} to="/ponzi/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.contracts.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ponzi/rules">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ponzi/rules">
           <ListItemIcon>
             <Rule />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.rules.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ponzi/report">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ponzi/report">
           <ListItemIcon>
             <BarChart />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.report.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ponzi/chart">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ponzi/chart">
           <ListItemIcon>
             <Timeline />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.chart.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Casino, EmojiEvents, Savings } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,30 +23,30 @@ export const PonziSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/ponzi/rules">
+        <ListItemButton component={RouterLink} to="/ponzi/rules">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.rules.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ponzi/stakes">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ponzi/stakes">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.deposit.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ponzi/leaderboard">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ponzi/leaderboard">
           <ListItemIcon>
             <EmojiEvents />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.ponzi.leaderboard.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,14 +23,14 @@ export const FeedbackSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/feedback">
+        <ListItemButton component={RouterLink} to="/feedback">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.feedback.form" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

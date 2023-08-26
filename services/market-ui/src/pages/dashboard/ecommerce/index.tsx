@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Bookmark, ShoppingCart, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,30 +23,30 @@ export const EcommerceSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/ecommerce/products">
+        <ListItemButton component={RouterLink} to="/ecommerce/products">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.ecommerce.products" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ecommerce/orders">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ecommerce/orders">
           <ListItemIcon>
             <Bookmark />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.ecommerce.orders" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/ecommerce/checkout">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/ecommerce/checkout">
           <ListItemIcon>
             <ShoppingCart />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.ecommerce.checkout" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

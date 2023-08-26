@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,14 +23,14 @@ export const CoinMarketCapSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/coin-market-cap/rates">
+        <ListItemButton component={RouterLink} to="/coin-market-cap/rates">
           <ListItemIcon>
             <Paid />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.coin-market-cap.rates" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

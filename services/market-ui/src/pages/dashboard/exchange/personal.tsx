@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -15,30 +15,30 @@ export const PersonalSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/wallet">
+        <ListItemButton component={RouterLink} to="/wallet">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.wallet.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/transactions">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/transactions">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.transactions.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/tokens">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.tokens.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

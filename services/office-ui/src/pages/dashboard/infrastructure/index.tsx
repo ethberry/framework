@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Email, MenuBook, PeopleAlt, Settings, SignalCellularAlt, Storefront } from "@mui/icons-material";
 
 import { Link as RouterLink } from "react-router-dom";
@@ -25,54 +25,54 @@ export const AdminSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/users">
+        <ListItemButton component={RouterLink} to="/users">
           <ListItemIcon>
             <PeopleAlt />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.users" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/settings">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/settings">
           <ListItemIcon>
             <Settings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.settings" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/pages">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/pages">
           <ListItemIcon>
             <MenuBook />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.pages" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/emails">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/emails">
           <ListItemIcon>
             <Email />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.emails" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/merchants">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/merchants">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.merchants" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/rate-plans">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/rate-plans">
           <ListItemIcon>
             <SignalCellularAlt />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.infrastructure.admin.rate-plans" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

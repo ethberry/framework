@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,22 +23,22 @@ export const DexSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/dex/1inch">
+        <ListItemButton component={RouterLink} to="/dex/1inch">
           <ListItemIcon>
             <CurrencyExchange />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dex.1inch.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/dex/uniswap">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/dex/uniswap">
           <ListItemIcon>
             <CurrencyExchange />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dex.uniswap.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );
