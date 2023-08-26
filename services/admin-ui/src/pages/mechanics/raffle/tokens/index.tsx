@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IRaffleTokenSearchDto, IRaffleToken, IRaffleRound } from "@framework/types";
+import type { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 
 import { RaffleTokenViewDialog } from "./view";
 import { RaffleTokenSearchForm } from "./form";

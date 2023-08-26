@@ -13,8 +13,8 @@ import {
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";

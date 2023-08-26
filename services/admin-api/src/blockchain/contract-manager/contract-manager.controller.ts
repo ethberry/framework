@@ -18,7 +18,6 @@ import {
   PonziContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
-  // WaitListContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 

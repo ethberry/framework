@@ -3,8 +3,8 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { ContractType, Erc1363EventType, ExchangeEventType } from "@framework/types";
 import type { IErc1363TransferReceivedEvent, IExchangePurchaseEvent } from "@framework/types";
+import { ContractType, Erc1363EventType, ExchangeEventType } from "@framework/types";
 
 import { ExchangeCoreServiceEth } from "./core.service.eth";
 

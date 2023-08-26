@@ -1,4 +1,4 @@
-import { object, array } from "yup";
+import { array, object } from "yup";
 
 import {
   tokenAssetContractIdValidationSchema,

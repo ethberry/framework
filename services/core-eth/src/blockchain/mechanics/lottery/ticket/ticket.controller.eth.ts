@@ -9,7 +9,6 @@ import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  // LotteryEventType,
 } from "@framework/types";
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";

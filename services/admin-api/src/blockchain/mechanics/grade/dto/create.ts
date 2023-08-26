@@ -6,9 +6,9 @@ import {
   Matches,
   MaxLength,
   Min,
+  Validate,
   ValidateIf,
   ValidateNested,
-  Validate,
 } from "class-validator";
 import { Type } from "class-transformer";
 

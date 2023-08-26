@@ -26,12 +26,8 @@ export class MetadataTokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.andWhere("contract.address = :address", {
-      address,
-    });
-    queryBuilder.andWhere("token.tokenId = :tokenId", {
-      tokenId,
-    });
+    queryBuilder.andWhere("contract.address = :address", { address });
+    queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
 
     return queryBuilder.getOne();
   }

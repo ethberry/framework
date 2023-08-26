@@ -21,8 +21,8 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
 import type {
   IStakingRule,
-  IStakingRuleRewardSearchDto,
   IStakingRuleDepositSearchDto,
+  IStakingRuleRewardSearchDto,
   IStakingRuleSearchDto,
   IUser,
 } from "@framework/types";

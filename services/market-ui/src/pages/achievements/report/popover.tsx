@@ -4,7 +4,7 @@ import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow, Typogr
 import { Help } from "@mui/icons-material";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IAchievementRule, IAchievementItemReport } from "@framework/types";
+import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
 import { formatPrice } from "../../../utils/money";
 

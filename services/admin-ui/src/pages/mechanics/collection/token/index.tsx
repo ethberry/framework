@@ -14,8 +14,8 @@ import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 import { CollectionTokenViewDialog } from "./view";

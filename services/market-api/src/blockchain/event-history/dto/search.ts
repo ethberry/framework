@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { PaginationDto, MuiSortDto } from "@gemunion/collection";
+import { MuiSortDto, PaginationDto } from "@gemunion/collection";
 import { ContractEventType } from "@framework/types";
 import { Mixin } from "ts-mixer";
 

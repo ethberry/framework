@@ -6,8 +6,8 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { NodeEnv } from "@framework/types";
 import type { IContract } from "@framework/types";
+import { NodeEnv } from "@framework/types";
 
 import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 

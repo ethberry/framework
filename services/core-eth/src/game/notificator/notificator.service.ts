@@ -22,7 +22,6 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
-import { IUnpackMysteryData } from "./interfaces/mystery-box";
 import {
   ICraftData,
   IFinalizeLotteryData,
@@ -30,9 +29,10 @@ import {
   IPrizeRaffleData,
   IPurchaseRaffleData,
   IRoundStartLotteryData,
-  IVestingReleaseData,
   ITokenTransferData,
+  IVestingReleaseData,
 } from "./interfaces";
+import { IUnpackMysteryData } from "./interfaces/mystery-box";
 
 @Injectable()
 export class NotificatorService {

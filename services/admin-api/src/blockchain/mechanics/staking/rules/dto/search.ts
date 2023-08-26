@@ -5,10 +5,10 @@ import { Transform, Type } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import type {
   IStakingRuleDepositSearchDto,
-  IStakingRuleSearchDto,
   IStakingRuleRewardSearchDto,
+  IStakingRuleSearchDto,
 } from "@framework/types";
-import { StakingRuleStatus, StakingRewardTokenType, StakingDepositTokenType } from "@framework/types";
+import { StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 export class StakingRuleDepositSearchDto implements IStakingRuleDepositSearchDto {
   @ApiPropertyOptional({

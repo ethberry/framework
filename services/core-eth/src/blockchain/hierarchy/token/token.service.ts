@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { TokenEntity } from "./token.entity";
 
@@ -52,9 +52,7 @@ export class TokenService {
       queryBuilder.leftJoinAndSelect("token.balance", "balance");
     }
 
-    queryBuilder.andWhere("token.tokenId = :tokenId", {
-      tokenId: Number(tokenId).toString(),
-    });
+    queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
 
     queryBuilder.andWhere("contract.address = :address", {
       address,
@@ -86,12 +84,10 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
-      tokenId: In(tokenIds.map(id => Number(id).toString())),
+      tokenId: In(tokenIds.map(id => id)),
     });
 
-    queryBuilder.andWhere("contract.address = :address", {
-      address,
-    });
+    queryBuilder.andWhere("contract.address = :address", { address });
 
     if (chainId) {
       queryBuilder.andWhere("contract.chainId = :chainId", {

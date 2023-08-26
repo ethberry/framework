@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested, Allow } from "class-validator";
+import { Allow, IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IPhoto } from "@framework/types";

@@ -16,7 +16,7 @@ import { Create, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IPonziRule, IPonziRuleSearchDto, IPonziRuleItemSearchDto } from "@framework/types";
+import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton, PonziToggleRuleButton } from "../../../../components/buttons";

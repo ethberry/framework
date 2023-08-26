@@ -62,7 +62,7 @@ export class TokenService {
     );
 
     if (contractType.length) {
-      queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
+      queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
     } else {
       queryBuilder.andWhere("contract.contractType = :contractType", {
         contractType,
@@ -225,12 +225,6 @@ export class TokenService {
     merchantEntity: MerchantEntity,
   ): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-    queryBuilder.leftJoinAndSelect("token.history", "history");
-    queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
-    queryBuilder.leftJoinAndSelect("exchange.history", "asset_component_history");
-    queryBuilder.leftJoinAndSelect("asset_component_history.assets", "asset_component_history_assets");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.token", "assets_token");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.contract", "assets_contract");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.price", "price");

@@ -1,7 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Mixin } from "ts-mixer";
-import { IsEthereumAddress, IsString } from "class-validator";
-import { Transform } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
 import { IsBigInt } from "@gemunion/nest-js-validators";

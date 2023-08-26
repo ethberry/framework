@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";

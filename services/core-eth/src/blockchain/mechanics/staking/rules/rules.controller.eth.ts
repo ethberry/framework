@@ -5,12 +5,12 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IStakingBalanceWithdrawEvent,
-  IStakingRuleCreateEvent,
-  IStakingDepositStartEvent,
   IStakingDepositFinishEvent,
   IStakingDepositReturnEvent,
-  IStakingRuleUpdateEvent,
+  IStakingDepositStartEvent,
   IStakingDepositWithdrawEvent,
+  IStakingRuleCreateEvent,
+  IStakingRuleUpdateEvent,
 } from "@framework/types";
 import { ContractType, StakingEventType } from "@framework/types";
 

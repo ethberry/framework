@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString, Min, IsUrl } from "class-validator";
+import { IsInt, IsString, IsUrl, Min } from "class-validator";
 
 import { IPromoCreateDto } from "../interfaces";
 

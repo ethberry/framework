@@ -26,7 +26,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
 
   const { rows, count, search, isLoading, handleChangePaginationModel } = useCollection<IEventHistory, any>({
     search: {
-      tokenId: token.tokenId,
+      tokenId: token.id,
     },
     baseUrl: `/events/token`,
     embedded: true, // excludes tokenId from url

@@ -4,9 +4,9 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
+import { ContractSecurity } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
-import { ContractSecurity } from "@framework/types";
 
 export interface IRevokeRoleMenuItemProps {
   contract: IContract;

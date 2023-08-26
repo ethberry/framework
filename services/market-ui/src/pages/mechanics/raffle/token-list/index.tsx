@@ -13,7 +13,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IRaffleTokenSearchDto, IRaffleToken, IRaffleRound } from "@framework/types";
+import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { RaffleTokenSearchForm } from "./form";

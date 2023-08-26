@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Collapse } from "@mui/material";
+import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";

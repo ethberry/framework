@@ -1,4 +1,4 @@
-import { object, string, number } from "yup";
+import { number, object, string } from "yup";
 
 import { draftValidationSchema } from "@gemunion/yup-rules";
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";

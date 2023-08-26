@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { ILotteryRound, ILotteryTokenSearchDto, ILotteryToken } from "@framework/types";
+import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
 import { LotteryTokenViewDialog } from "./view";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "../utils";

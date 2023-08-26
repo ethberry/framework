@@ -4,8 +4,8 @@ import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
-import { ClaimStatus, ClaimType } from "@framework/types";
 import type { IClaimSearchDto } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
 export class ClaimSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IClaimSearchDto {
   @ApiPropertyOptional({

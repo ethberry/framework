@@ -2,7 +2,6 @@ import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 // import { CronExpression } from "@nestjs/schedule";
-
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 

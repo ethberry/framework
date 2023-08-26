@@ -13,7 +13,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILotteryTokenSearchDto, ILotteryToken } from "@framework/types";
+import { ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryTokenSearchForm } from "./form";

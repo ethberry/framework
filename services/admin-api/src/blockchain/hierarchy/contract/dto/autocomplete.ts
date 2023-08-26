@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional, IsBoolean } from "class-validator";
+import { IsArray, IsBoolean, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import type { IContractAutocompleteDto } from "@framework/types";

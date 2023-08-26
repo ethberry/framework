@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ISearchableDto } from "@gemunion/types-collection";
-import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 import type { IStakingRuleSearchDto } from "@framework/types";
+import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";

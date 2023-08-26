@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useEffect, useState } from "react";
-import { IconButton, Menu, Divider } from "@mui/material";
+import { Divider, IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IContract, IUser } from "@framework/types";

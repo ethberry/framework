@@ -1,8 +1,8 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 
-import { RmqProviderType } from "@framework/types";
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
+import { RmqProviderType } from "@framework/types";
 
 import { RoundServiceRmq } from "./round.service.rmq";
 
