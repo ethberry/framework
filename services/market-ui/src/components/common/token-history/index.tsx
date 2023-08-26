@@ -101,6 +101,9 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
             [`& .${gridClasses.cell}`]: {
               p: 1.5,
             },
+            [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
+              borderBottom: "none",
+            },
           }}
           autoHeight
           disableAggregation

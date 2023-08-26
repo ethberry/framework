@@ -140,6 +140,9 @@ export const MyTransactions: FC = () => {
           [`& .${gridClasses.cell}`]: {
             p: 1.5,
           },
+          [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
+            borderBottom: "none",
+          },
         }}
         autoHeight
         disableAggregation
