@@ -1,6 +1,7 @@
 {
   "alert": {
     "approve": "Please approve ingredients to Exchange before crafting",
+    "approve-inverse": "Please approve token to Exchange before dismantle",
     "allowanceWarning": "You are going to allow all tokens of the contract",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "uncaughtError": "Uncaught error happened"

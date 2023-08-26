@@ -82,7 +82,7 @@ export const CraftItem: FC = () => {
                 </ListItem>
               ))}
               <Alert severity="warning">
-                <FormattedMessage id="alert.approve" />
+                <FormattedMessage id={selected.inverse ? "alert.approve-inverse" : "alert.approve"} />
               </Alert>
               <CraftButton craft={selected} />
             </StyledPaper>
