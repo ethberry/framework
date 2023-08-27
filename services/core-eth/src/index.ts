@@ -75,10 +75,11 @@ async function bootstrap(): Promise<void> {
 
   // Process jobs from as many servers or processes as you like
   const getQueue = new Queue("ETH_EVENTS", sharedConfigWorker);
-  getQueue.process(job => {
+  getQueue.process((job: any, done: any) => {
     console.log(`PROCESSING JOB ${job.id}`);
+    console.log("JOB RESULT", job.data.x + job.data.y);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return console.log("JOB RESULT", job.data.x + job.data.y);
+    return done(null, job.data.x + job.data.y);
   });
   // const sendQueue = new Queue("send", {
   //   redis: {
