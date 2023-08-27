@@ -44,6 +44,7 @@ import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity"
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/dismantle/dismantle.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 /* lottery */
@@ -99,8 +100,9 @@ import {
   CreateClaim1653616447810,
   CreateCompositionAt1658980520000,
   CreateContract1563804000100,
-  CreateCraft1653616448010,
+  CreateCraft1653616448000,
   CreateCustomParameter1683724062400,
+  CreateDismantle1693120862000,
   CreateDropAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
@@ -216,9 +218,9 @@ import {
   SeedContractWaitlistAt1663047650100,
   SeedContractWrapperAt1563804000170,
   SeedCraftErc1155Erc1155RecipesAt1653616448020,
-  SeedCraftErc1155Erc721RecipesAt1653616448530,
   SeedCraftErc721Erc1155RecipesAt1653616448350,
   SeedCustomParameter1683724062410,
+  SeedDismantleErc7211Erc155RecipesAt1693120862350,
   SeedDropErc1155At1658980521050,
   SeedDropErc721At1658980521030,
   SeedDropErc998At1658980521040,
@@ -370,6 +372,7 @@ const config: PostgresConnectionOptions = {
     BreedEntity,
     ClaimEntity,
     CraftEntity,
+    DismantleEntity,
     DropEntity,
     GradeEntity,
     LotteryRoundEntity,
@@ -546,14 +549,16 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryMysteryMixedUnpackAt1687580606630,
     SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640,
 
-    CreateCraft1653616448010,
+    CreateCraft1653616448000,
     SeedCraftErc1155Erc1155RecipesAt1653616448020,
-    SeedCraftErc1155Erc721RecipesAt1653616448530,
     SeedCraftErc721Erc1155RecipesAt1653616448350,
     SeedEventHistoryErc721Erc1155CraftAt1687760533510,
     SeedEventHistoryErc721Erc1155CraftComponentsAt1687760533520,
     SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
     SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
+
+    CreateDismantle1693120862000,
+    SeedDismantleErc7211Erc155RecipesAt1693120862350,
 
     SeedContractStakingAt1654751224100,
     CreateStakingRules1654751224200,

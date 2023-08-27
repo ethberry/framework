@@ -1,19 +1,18 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsBoolean, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsInt, Min } from "class-validator";
+import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { CraftStatus, ICraftSearchDto } from "@framework/types";
+import type { CraftStatus, ICraftSearchDto } from "@framework/types";
 
 export class CraftSearchDto extends SearchDto implements ICraftSearchDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  // https://github.com/typestack/class-transformer/issues/626
-  @Transform(({ value }) => {
-    return [true, "true"].includes(value);
+  @ApiProperty({
+    minimum: 1,
   })
-  @IsBoolean({ message: "typeMismatch" })
-  public inverse: boolean;
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public templateId: number;
 
   public craftStatus: Array<CraftStatus>;
 }

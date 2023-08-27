@@ -7,7 +7,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ISignCraftDto } from "@framework/types";
+import type { ICraftSignDto } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
@@ -131,7 +131,7 @@ export class CraftService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: ISignCraftDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
+  public async sign(dto: ICraftSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, craftId, chainId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId }, merchantEntity);
 

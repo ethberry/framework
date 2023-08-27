@@ -223,8 +223,11 @@
     },
     "craftStatus": {
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
+      "INACTIVE": "Inactive"
+    },
+    "dismantleStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "durationUnit": {
       "DAY": "Day",
@@ -440,10 +443,6 @@
       "NUMBER": "Number",
       "STRING": "String"
     },
-    "productStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
     "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
@@ -452,6 +451,10 @@
     "ponziRuleStatus": {
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
+    },
+    "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "rentStatus": {
       "ACTIVE": "Active",
@@ -587,7 +590,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "inverse": "Dismantle",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "LEVEL": "Level",
@@ -645,6 +647,7 @@
       "decimals": "Decimals",
       "deposit": "Deposit",
       "description": "Description",
+      "dismantleStatus": "Status",
       "displayName": "Display name",
       "duration": "Duration",
       "durationAmount": "Duration",
@@ -709,13 +712,13 @@
       "payees": "Payees",
       "penalty": "Penalty",
       "photos": "Photos",
+      "ponziDepositStatus": "Status",
+      "ponziRule": "Ponzi rule",
+      "ponziRuleStatus": "Status",
       "price": "Price",
       "productId": "Product",
       "productItemId": "Item",
       "productStatus": "Status",
-      "ponziDepositStatus": "Status",
-      "ponziRule": "Ponzi rule",
-      "ponziRuleStatus": "Status",
       "random": "Random",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
@@ -1050,6 +1053,11 @@
       },
       "title": "Dashboard"
     },
+    "dismantle": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Dismantle recipes"
+    },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
       "title": "Dispenser"
@@ -1166,6 +1174,11 @@
       },
       "title": "Merchant"
     },
+    "merge": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Merge recipes"
+    },
     "mystery": {
       "boxContent": {
         "title": "Mysterybox content"
@@ -1208,6 +1221,26 @@
     "photos": {
       "title": "Photos"
     },
+    "ponzi": {
+      "chart": {
+        "title": "Chart"
+      },
+      "contracts": {
+        "title": "Ponzi Contracts"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "finalizeByRule": "Finalize rule",
+        "finalizeByToken": "Finalize deposit token",
+        "title": "Ponzi rules",
+        "upload": "Upload rule"
+      },
+      "title": "Ponzi"
+    },
     "productType": {
       "description": "Rate plans",
       "dialog": {
@@ -1234,26 +1267,6 @@
     },
     "promos": {
       "title": "Promos"
-    },
-    "ponzi": {
-      "chart": {
-        "title": "Chart"
-      },
-      "contracts": {
-        "title": "Ponzi Contracts"
-      },
-      "report": {
-        "title": "Report"
-      },
-      "rules": {
-        "activate": "Activate rule",
-        "deactivate": "Deactivate rule",
-        "finalizeByRule": "Finalize rule",
-        "finalizeByToken": "Finalize deposit token",
-        "title": "Ponzi rules",
-        "upload": "Upload rule"
-      },
-      "title": "Ponzi"
     },
     "raffle": {
       "contracts": {

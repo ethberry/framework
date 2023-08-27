@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
-import { ICraftCreateDto } from "../interfaces";
-import { ItemDto } from "../../../exchange/asset/dto";
+import { ItemDto, PriceDto } from "../../../exchange/asset/dto";
+import type { ICraftCreateDto } from "../interfaces";
 
 export class CraftCreateDto implements ICraftCreateDto {
   @ApiProperty({
@@ -14,16 +14,9 @@ export class CraftCreateDto implements ICraftCreateDto {
   public item: ItemDto;
 
   @ApiProperty({
-    type: ItemDto,
+    type: PriceDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public price: ItemDto;
-
-  @ApiProperty()
-  @Transform(({ value }) => {
-    return [true, "true"].includes(value);
-  })
-  @IsBoolean({ message: "typeMismatch" })
-  public inverse: boolean;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 }

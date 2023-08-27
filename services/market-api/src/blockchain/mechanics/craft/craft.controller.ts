@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/ne
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { CraftSearchDto, SignCraftDto } from "./dto";
+import { CraftSearchDto, CraftSignDto } from "./dto";
 
 @Public()
 @Controller("/craft")
@@ -18,7 +18,7 @@ export class CraftController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: SignCraftDto): Promise<IServerSignature> {
+  public sign(@Body() dto: CraftSignDto): Promise<IServerSignature> {
     return this.craftService.sign(dto);
   }
 

@@ -2,13 +2,11 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
-
-import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ISignCraftDto } from "@framework/types";
-import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { ICraftSignDto } from "@framework/types";
+import { CraftStatus, ICraftSearchDto, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../common/utils/sorter";
@@ -26,8 +24,8 @@ export class CraftService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CraftEntity>, number]> {
-    const { query, skip, take } = dto;
+  public search(dto: Partial<ICraftSearchDto>): Promise<[Array<CraftEntity>, number]> {
+    const { query, templateId, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
@@ -54,6 +52,10 @@ export class CraftService {
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
     });
+
+    if (templateId) {
+      queryBuilder.where("item_template.id = :templateId", { templateId });
+    }
 
     if (query) {
       queryBuilder.leftJoin(
@@ -119,7 +121,7 @@ export class CraftService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
+  public async sign(dto: ICraftSignDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, craftId, chainId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 

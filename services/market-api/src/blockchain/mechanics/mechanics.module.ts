@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { BreedModule } from "./breed/breed.module";
 import { ClaimModule } from "./claim/claim.module";
 import { CraftModule } from "./craft/craft.module";
+import { DismantleModule } from "./dismantle/dismantle.module";
 import { DropModule } from "./drop/drop.module";
 import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
@@ -21,6 +22,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
     BreedModule,
     ClaimModule,
     CraftModule,
+    DismantleModule,
     DropModule,
     GradeModule,
     LotteryModule,

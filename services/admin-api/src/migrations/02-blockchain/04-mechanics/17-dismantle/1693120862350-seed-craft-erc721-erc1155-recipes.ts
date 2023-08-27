@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedCraftErc1155Erc721RecipesAt1653616448530 implements MigrationInterface {
+export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -29,33 +29,32 @@ export class SeedCraftErc1155Erc721RecipesAt1653616448530 implements MigrationIn
         amount,
         asset_id
       ) VALUES (
+        'ERC721',
+        10306,
+        1030601, -- sword
+        1,
+        102530101
+      ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102530101
+        102530102
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        102530101
-      ), (
-        'ERC721',
-        10306,
-        1030601, -- sword
-        1,
         102530102
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.craft (
+      INSERT INTO ${ns}.dismantle (
         id,
         item_id,
         price_id,
-        inverse,
-        craft_status,
+        dismantle_status,
         merchant_id,
         created_at,
         updated_at
@@ -63,7 +62,6 @@ export class SeedCraftErc1155Erc721RecipesAt1653616448530 implements MigrationIn
         1050301,
         102530101,
         102530102,
-        true,
         'ACTIVE',
         1,
         '${currentDateTime}',
@@ -73,6 +71,6 @@ export class SeedCraftErc1155Erc721RecipesAt1653616448530 implements MigrationIn
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.craft RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.dismantle RESTART IDENTITY CASCADE;`);
   }
 }

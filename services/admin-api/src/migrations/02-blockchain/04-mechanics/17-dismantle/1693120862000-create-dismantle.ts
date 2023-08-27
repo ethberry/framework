@@ -3,17 +3,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class CreateCraft1653616448010 implements MigrationInterface {
+export class CreateDismantle1693120862000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.craft_status_enum AS ENUM (
+      CREATE TYPE ${ns}.dismantle_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.craft`,
+      name: `${ns}.dismantle`,
       columns: [
         {
           name: "id",
@@ -33,13 +33,8 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "inverse",
-          type: "boolean",
-          default: false,
-        },
-        {
-          name: "craft_status",
-          type: `${ns}.craft_status_enum`,
+          name: "dismantle_status",
+          type: `${ns}.dismantle_status_enum`,
           default: "'ACTIVE'",
         },
         {
@@ -79,11 +74,11 @@ export class CreateCraft1653616448010 implements MigrationInterface {
       return;
     }
 
-    await queryRunner.query(`SELECT setval('${ns}.craft_id_seq', 5000000, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.dismantle_id_seq', 5000000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.craft`);
-    await queryRunner.query(`DROP TYPE ${ns}.craft_status_enum;`);
+    await queryRunner.dropTable(`${ns}.dismantle`);
+    await queryRunner.query(`DROP TYPE ${ns}.dismantle_status_enum;`);
   }
 }

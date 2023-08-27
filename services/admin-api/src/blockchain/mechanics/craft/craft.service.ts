@@ -20,7 +20,7 @@ export class CraftService {
   ) {}
 
   public search(dto: Partial<ICraftSearchDto>, userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
-    const { query, craftStatus, inverse, skip, take } = dto;
+    const { query, craftStatus, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
@@ -63,10 +63,6 @@ export class CraftService {
       } else {
         queryBuilder.andWhere("craft.craftStatus IN(:...craftStatus)", { craftStatus });
       }
-    }
-
-    if (inverse !== void 0) {
-      queryBuilder.andWhere("craft.inverse = :inverse", { inverse });
     }
 
     queryBuilder.skip(skip);

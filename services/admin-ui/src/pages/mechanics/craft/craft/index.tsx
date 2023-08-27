@@ -49,17 +49,14 @@ export const Craft: FC = () => {
     empty: {
       item: getEmptyTemplate(TokenType.ERC721),
       price: getEmptyTemplate(TokenType.ERC1155),
-      inverse: false,
     },
     search: {
       query: "",
-      inverse: false,
       craftStatus: [CraftStatus.ACTIVE],
     },
-    filter: ({ item, price, inverse, craftStatus }) => ({
+    filter: ({ item, price, craftStatus }) => ({
       item: cleanUpAsset(item),
       price: cleanUpAsset(price),
-      inverse,
       craftStatus,
     }),
   });
@@ -86,9 +83,7 @@ export const Craft: FC = () => {
         <List>
           {rows.map((craft, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>
-                {craft.inverse ? `${formatItem(craft.price)} ♻️` : formatItem(craft.item)}
-              </ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{formatItem(craft.item)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />

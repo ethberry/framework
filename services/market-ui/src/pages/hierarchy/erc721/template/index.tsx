@@ -12,6 +12,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { formatPrice } from "../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../components/buttons";
 import { StyledPaper } from "./styled";
+import { CraftPanel } from "../../../mechanics/craft/craft-panel";
 
 export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -54,6 +55,8 @@ export const Erc721Template: FC = () => {
               <TemplatePurchaseButton template={selected} />
             </StyledPaper>
           ) : null}
+
+          {selected.id ? <CraftPanel template={selected} /> : null}
         </Grid>
       </Grid>
     </Fragment>

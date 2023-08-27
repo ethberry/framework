@@ -30,45 +30,30 @@ export const CraftItem: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={["dashboard", selected.inverse ? "dismantle" : "craft"]}
-        data={[{}, selected.inverse ? selected.price?.components[0].template : selected.item?.components[0].template]}
-      />
+      <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item?.components[0].template]} />
 
-      <PageHeader
-        message={selected.inverse ? "pages.dismantle.title" : "pages.craft.title"}
-        data={selected.inverse ? selected.price?.components[0].template : selected.item?.components[0].template}
-      />
+      <PageHeader message="pages.craft.title" data={selected.item?.components[0].template} />
 
       <Grid container>
         <Grid item xs={12} sm={9}>
           <Box
             component="img"
-            src={
-              selected.inverse
-                ? selected.price?.components[0].template!.imageUrl
-                : selected.item?.components[0].template!.imageUrl
-            }
+            src={selected.item?.components[0].template!.imageUrl}
+            // TODO FIXME
             alt="Gemunion template image"
             sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
           />
           <Typography variant="body2" color="textSecondary" component="div">
-            <RichTextDisplay
-              data={
-                selected.inverse
-                  ? selected.price?.components[0].template!.description
-                  : selected.item?.components[0].template!.description
-              }
-            />
+            <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <List component="nav">
             <StyledPaper>
               <Typography variant="body2" color="textSecondary" component="p">
-                <FormattedMessage id={selected.inverse ? "form.labels.item" : "form.labels.price"} />
+                <FormattedMessage id="form.labels.price" />
               </Typography>
-              {(selected.inverse ? selected.item : selected.price)?.components.map((component, i) => (
+              {selected.price?.components.map((component, i) => (
                 <ListItem
                   key={component.id || i}
                   button

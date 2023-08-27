@@ -25,9 +25,6 @@ export class CraftEntity extends IdDateBaseEntity implements ICraft {
   @OneToOne(_type => MerchantEntity)
   public merchant: MerchantEntity;
 
-  @Column({ type: "boolean" })
-  public inverse: boolean;
-
   @Column({
     type: "enum",
     enum: CraftStatus,
