@@ -41,6 +41,7 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         autoSelect
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
         multiple
       />
       <TemplateAssetInput

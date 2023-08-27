@@ -2,16 +2,16 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ItemDto, PriceDto } from "../../../exchange/asset/dto";
+import { NftDto, PriceDto } from "../../../exchange/asset/dto";
 import type { IDismantleCreateDto } from "../interfaces";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: NftDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => NftDto)
+  public item: NftDto;
 
   @ApiProperty({
     type: PriceDto,
