@@ -9,6 +9,9 @@ import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 import { companyName, ns } from "@framework/constants";
 
 import { AppModule } from "./app.module";
+import Queue from "bee-queue";
+
+// import { RedisIoAdapter } from "./common/redis/redis";
 
 let app: NestExpressApplication;
 
@@ -48,6 +51,78 @@ async function bootstrap(): Promise<void> {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
+
+  // producer queues running on the web server
+  // const sharedConfigSend = {
+  //   getEvents: false,
+  //   isWorker: false,
+  //   redis: {
+  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+  //   },
+  // };
+  //
+  // const sendQueue = new Queue("ETH_EVENTS", sharedConfigSend);
+  // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
+  //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
+  //   console.error("errors", errors);
+  // });
+
+  const sharedConfigWorker = {
+    redis: {
+      url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+    },
+  };
+
+  // Process jobs from as many servers or processes as you like
+  const getQueue = new Queue("ETH_EVENTS", sharedConfigWorker);
+  getQueue.process(job => {
+    console.log(`PROCESSING JOB ${job.id}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return console.log("JOB RESULT", job.data.x + job.data.y);
+  });
+  // const sendQueue = new Queue("send", {
+  //   redis: {
+  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+  //   },
+  //   isWorker: false,
+  //   sendEvents: true,
+  // });
+  // const job = sendQueue.createJob({ x: 2, y: 3 });
+  //
+  // await job
+  //   .timeout(3000)
+  //   .retries(2)
+  //   .save()
+  //   .then((job: any) => {
+  //     console.log("JOB CREATED", job.id);
+  //     // job enqueued, job.id populated
+  //   });
+  //
+  // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
+  //   console.error("errors", errors);
+  //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
+  // });
+
+  // Process jobs from as many servers or processes as you like
+  // sendQueue.process(function (job: any, done: any) {
+  //   console.log(`Processing job ${job.id}`);
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //   return done(null, job.data.x + job.data.y);
+  // });
+
+  // const getQueue = new Queue("send", {
+  //   redis: {
+  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+  //   },
+  //   isWorker: true,
+  //   getEvents: true,
+  // });
+  //
+  // getQueue.process(job => {
+  //   console.log(`PROCESSING JOB ${job.id}`);
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //   return console.log("JOB RESULT", job.data.x + job.data.y);
+  // });
 
   await app
     .startAllMicroservices()
