@@ -5,10 +5,10 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { IContract } from "@framework/types";
-import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { IContract, IUser } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mysterybox/mint/mysterybox.mintBox.abi.json";
 
@@ -35,7 +35,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IMintMysteryboxDto, web3Context: Web3ContextType) => {
-    const contractMysterybox = new Contract(address, MysteryMintBoxABI, web3Context.provider?.getSigner());
+    const contractMysteryBox = new Contract(address, MysteryMintBoxABI, web3Context.provider?.getSigner());
     const items = values.mysterybox!.item!.components.map(item => ({
       tokenType: Object.values(TokenType).indexOf(item.tokenType),
       token: item.contract!.address,
@@ -43,7 +43,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       amount: item.amount,
     }));
 
-    return contractMysterybox.mintBox(values.account, values.mysterybox!.templateId, items) as Promise<any>;
+    return contractMysteryBox.mintBox(values.account, values.mysterybox!.templateId, items) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintMysteryboxDto): Promise<void> => {

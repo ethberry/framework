@@ -1,19 +1,16 @@
-import { array, mixed, number, object } from "yup";
+import { array, number, object } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import {
+  templateAssetValidationSchema,
+  tokenAssetAmountValidationSchema,
+  tokenAssetTokenTypeValidationSchema,
+} from "@gemunion/mui-inputs-asset";
+import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { TokenType } from "@framework/types";
 
-// TODO better TOKEN validation
-
 export const tokenAssetComponentValidationSchema = object().shape({
-  amount: bigNumberValidationSchema.when("tokenType", {
-    is: (tokenType: TokenType) => tokenType !== TokenType.ERC721 && tokenType !== TokenType.ERC998,
-    then: () =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      bigNumberValidationSchema.min(1, "form.validations.rangeUnderflow").required("form.validations.valueMissing"),
-  }),
+  amount: tokenAssetAmountValidationSchema,
   contract: object().shape({
     decimals: number()
       .min(0, "form.validations.valueMissing")
@@ -40,7 +37,7 @@ export const tokenAssetComponentValidationSchema = object().shape({
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),
-  tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
+  tokenType: tokenAssetTokenTypeValidationSchema,
 });
 
 export const tokenMintAssetValidationSchema = object().shape({

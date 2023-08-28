@@ -28,7 +28,7 @@ export interface IAccessControlWithRelations extends IAccessControl {
 }
 
 export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
@@ -60,13 +60,15 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   };
 
   useEffect(() => {
-    void fn().then((rows: Array<IAccessControlWithRelations>) => {
-      setRows(rows.filter(row => row.account !== profile.wallet));
-    });
-  }, []);
+    if (open) {
+      void fn().then((rows: Array<IAccessControlWithRelations>) => {
+        setRows(rows.filter(row => row.account !== profile.wallet));
+      });
+    }
+  }, [open]);
 
   return (
-    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" {...rest}>
+    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" open={open} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
