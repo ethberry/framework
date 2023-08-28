@@ -2,25 +2,25 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import type { IExchangeCraftEvent } from "@framework/types";
+import type { IExchangeDismantleEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { CraftService } from "../../mechanics/recipes/craft/craft.service";
+import { DismantleService } from "../../mechanics/recipes/dismantle/dismantle.service";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()
-export class ExchangeCraftServiceEth {
+export class ExchangeDismantleServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
-    private readonly craftService: CraftService,
+    private readonly dismantleService: DismantleService,
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  public async craft(event: ILogEvent<IExchangeCraftEvent>, context: Log): Promise<void> {
+  public async dismantle(event: ILogEvent<IExchangeDismantleEvent>, context: Log): Promise<void> {
     const {
       args: { items, price, externalId },
     } = event;
@@ -29,15 +29,15 @@ export class ExchangeCraftServiceEth {
     const history = await this.eventHistoryService.updateHistory(event, context);
     await this.assetService.saveAssetHistory(history, items, price);
 
-    const craftEntity = await this.craftService.findOne({ id: externalId });
+    const dismantleEntity = await this.dismantleService.findOne({ id: externalId });
 
-    if (!craftEntity) {
-      this.loggerService.error("craftNotFound", externalId, ExchangeCraftServiceEth.name);
-      throw new NotFoundException("craftNotFound");
+    if (!dismantleEntity) {
+      this.loggerService.error("dismantleNotFound", externalId, ExchangeDismantleServiceEth.name);
+      throw new NotFoundException("dismantleNotFound");
     }
 
-    await this.notificatorService.craft({
-      craft: craftEntity,
+    await this.notificatorService.dismantle({
+      dismantle: dismantleEntity,
       address,
       transactionHash,
     });

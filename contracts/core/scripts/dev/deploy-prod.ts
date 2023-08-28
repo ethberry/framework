@@ -94,6 +94,7 @@ async function main() {
       "ExchangeClaimFacet",
       "ExchangeBreedFacet",
       "ExchangeCraftFacet",
+      "ExchangeDismantleFacet",
       "ExchangeGradeFacet",
       "ExchangeLotteryFacet",
       "ExchangeRaffleFacet",

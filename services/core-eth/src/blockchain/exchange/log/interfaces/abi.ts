@@ -3,6 +3,7 @@ import { Interface } from "ethers";
 import ExchangeBreedFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeBreedFacet.sol/ExchangeBreedFacet.json";
 import ExchangeClaimFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeClaimFacet.sol/ExchangeClaimFacet.json";
 import ExchangeCraftFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeCraftFacet.sol/ExchangeCraftFacet.json";
+import ExchangeDismantleFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeDismantleFacet.sol/ExchangeDismantleFacet.json";
 import ExchangeGradeFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeGradeFacet.sol/ExchangeGradeFacet.json";
 import ExchangeLotteryFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeLotteryFacet.sol/ExchangeLotteryFacet.json";
 import ExchangeMysteryBoxFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeMysteryBoxFacet.sol/ExchangeMysteryBoxFacet.json";
@@ -16,6 +17,7 @@ export const ABI = new Interface([
     ExchangeBreedFacetSol.abi
       .concat(ExchangeClaimFacetSol.abi)
       .concat(ExchangeCraftFacetSol.abi)
+      .concat(ExchangeDismantleFacetSol.abi)
       .concat(ExchangeGradeFacetSol.abi)
       .concat(ExchangeLotteryFacetSol.abi)
       .concat(ExchangeMysteryBoxFacetSol.abi)

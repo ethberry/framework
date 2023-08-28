@@ -43,8 +43,8 @@ import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
-import { DismantleEntity } from "./blockchain/mechanics/dismantle/dismantle.entity";
+import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 /* lottery */

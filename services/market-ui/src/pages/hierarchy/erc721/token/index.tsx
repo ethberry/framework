@@ -26,7 +26,7 @@ import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { TokenGradeView } from "../../grade";
 import { StyledPaper } from "./styled";
-import { DismantlePanel } from "../../../mechanics/craft/dismantle-panel";
+import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({

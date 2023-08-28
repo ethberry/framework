@@ -24,8 +24,8 @@ import { EventHistoryEntity } from "./blockchain/event-history/event-history.ent
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
-import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
-import { DismantleEntity } from "./blockchain/mechanics/dismantle/dismantle.entity";
+import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";

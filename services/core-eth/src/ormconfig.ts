@@ -38,6 +38,7 @@ import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
+import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -48,34 +49,38 @@ const config: PostgresConnectionOptions = {
     MerchantEntity,
     ChainLinkSubscriptionEntity,
     // Blockchain
+    // exchange
     EventHistoryEntity,
-    AccessControlEntity,
-    StakingRulesEntity,
-    StakingDepositEntity,
-    ClaimEntity,
-    GradeEntity,
-    MysteryBoxEntity,
-    ContractEntity,
-    TemplateEntity,
-    BalanceEntity,
-    TokenEntity,
     AssetEntity,
-    CompositionEntity,
-    AccessListEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
+    PayeesEntity,
+    // extensions
+    AccessControlEntity,
+    AccessListEntity,
+    // hierarchy
+    ContractEntity,
+    TemplateEntity,
+    TokenEntity,
+    BalanceEntity,
+    CompositionEntity,
+    // mechanics
+    ClaimEntity,
+    BreedEntity,
+    DismantleEntity,
+    GradeEntity,
+    MysteryBoxEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     LotteryTicketEntity,
     RaffleRoundEntity,
     RaffleTicketEntity,
+    StakingRulesEntity,
+    StakingDepositEntity,
     PonziDepositEntity,
     PonziRulesEntity,
     WaitListListEntity,
     WaitListItemEntity,
-    BreedEntity,
-    PayeesEntity,
-    ClaimEntity,
     /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,

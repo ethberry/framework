@@ -15,6 +15,7 @@ export enum ExchangeEventType {
   Claim = "Claim",
   // MODULE:CRAFT
   Craft = "Craft",
+  Dismantle = "Dismantle",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:GRADE
