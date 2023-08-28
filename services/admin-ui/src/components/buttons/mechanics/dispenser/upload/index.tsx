@@ -2,14 +2,16 @@ import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract } from "ethers";
+import { Contract, BigNumber } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@framework/types";
 
 import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
 import { DispenserUploadDialog } from "./dialog";
 import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
+import { getEthPrice } from "./utils";
 
 export interface IDispenserUploadButtonProps {
   className?: string;
@@ -33,8 +35,19 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
       [[], []],
     );
 
+    const assets = items.map(item => {
+      return {
+        tokenType: Object.values(TokenType).indexOf(item.tokenType).toString(),
+        token: item.address,
+        tokenId: item.tokenId,
+        amount: BigNumber.from(item.amount),
+      };
+    });
+
     const contract = new Contract(process.env.DISPENSER_ADDR, DispenserABI, web3Context.provider?.getSigner());
-    return contract.disperse(items, receivers) as Promise<any>;
+    return contract.disperse(assets, receivers, {
+      value: getEthPrice(assets),
+    }) as Promise<any>;
   });
 
   const handleUpload = () => {
