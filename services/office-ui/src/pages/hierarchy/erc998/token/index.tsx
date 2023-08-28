@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   Button,
@@ -10,17 +10,21 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
-import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
+import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { Erc721TokenViewDialog } from "../../../hierarchy/erc721/token/view";
+import { Erc998TokenViewDialog } from "./view";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
-export const MysteryToken: FC = () => {
+export const Erc998Token: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -36,7 +40,7 @@ export const MysteryToken: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/mystery/tokens",
+    baseUrl: "/erc998/tokens",
     empty: {
       template: {} as ITemplate,
       metadata: "{}",
@@ -47,14 +51,34 @@ export const MysteryToken: FC = () => {
       templateIds: [],
       tokenId: "",
       metadata: {},
+      merchantId: profile.merchantId,
     },
   });
 
+  const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
+
+  const [token, setToken] = useState<IToken>({} as IToken);
+
+  const handleWithdraw = (token: IToken): (() => void) => {
+    return (): void => {
+      setToken(token);
+      setIsWithdrawDialogOpen(true);
+    };
+  };
+
+  const handleWithdrawConfirm = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
+  const handleWithdrawCancel = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery", "mystery.tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.tokens"]} />
 
-      <PageHeader message="pages.mystery.tokens.title">
+      <PageHeader message="pages.erc998.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -67,16 +91,21 @@ export const MysteryToken: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractModule={[ModuleType.MYSTERY]}
-        contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.HIERARCHY]}
+        contractType={[TokenType.ERC998]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.template?.title}</ListItemText>
+              <ListItemText>
+                {token.template?.title} #{token.tokenId}
+              </ListItemText>
               <ListItemSecondaryAction>
+                <IconButton onClick={handleWithdraw(token)}>
+                  <AccountBalanceWallet />
+                </IconButton>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />
                 </IconButton>
@@ -94,11 +123,18 @@ export const MysteryToken: FC = () => {
         onChange={handleChangePage}
       />
 
-      <Erc721TokenViewDialog
+      <Erc998TokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
         initialValues={selected}
+      />
+
+      <BalanceWithdrawDialog
+        onConfirm={handleWithdrawConfirm}
+        onCancel={handleWithdrawCancel}
+        open={isWithdrawDialogOpen}
+        initialValues={token}
       />
     </Grid>
   );

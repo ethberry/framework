@@ -13,14 +13,17 @@ import {
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
-import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
+import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { Erc721TokenViewDialog } from "../../../hierarchy/erc721/token/view";
+import { Erc721TokenViewDialog } from "./view";
 
-export const MysteryToken: FC = () => {
+export const Erc721Token: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -36,7 +39,7 @@ export const MysteryToken: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/mystery/tokens",
+    baseUrl: "/erc721/tokens",
     empty: {
       template: {} as ITemplate,
       metadata: "{}",
@@ -47,14 +50,15 @@ export const MysteryToken: FC = () => {
       templateIds: [],
       tokenId: "",
       metadata: {},
+      merchantId: profile.merchantId,
     },
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery", "mystery.tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.tokens"]} />
 
-      <PageHeader message="pages.mystery.tokens.title">
+      <PageHeader message="pages.erc721.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -67,7 +71,7 @@ export const MysteryToken: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractModule={[ModuleType.MYSTERY]}
+        contractModule={[ModuleType.HIERARCHY]}
         contractType={[TokenType.ERC721]}
       />
 
@@ -75,7 +79,9 @@ export const MysteryToken: FC = () => {
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.template?.title}</ListItemText>
+              <ListItemText>
+                {token.template?.title} #{token.tokenId}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />
