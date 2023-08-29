@@ -4,12 +4,11 @@ import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
 import { IsBigInt } from "@gemunion/nest-js-validators";
-import type { IBCAssetDto } from "@framework/types";
+import { AddressDto } from "@gemunion/collection";
+import type { IBCAssetTemplateDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { AddressDto } from "../../../../common/dto";
-
-export class BCAssetDto extends AddressDto implements IBCAssetDto {
+export class BCAssetTemplateDto extends AddressDto implements IBCAssetTemplateDto {
   @decorate(
     ApiProperty({
       enum: TokenType,
