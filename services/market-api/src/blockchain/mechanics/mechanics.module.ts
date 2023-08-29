@@ -20,8 +20,6 @@ import { WrapperModule } from "./wrapper/wrapper.module";
   imports: [
     BreedModule,
     ClaimModule,
-    CraftModule,
-    DismantleModule,
     DropModule,
     GradeModule,
     LotteryModule,

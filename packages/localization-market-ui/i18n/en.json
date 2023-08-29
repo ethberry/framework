@@ -703,7 +703,7 @@
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
-        "waitlist": "Waitlist",
+        "wait-list": "Waitlist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -1136,7 +1136,7 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
-    "waitlist": {
+    "wait-list": {
       "item": {
         "title": "Waitlist"
       },

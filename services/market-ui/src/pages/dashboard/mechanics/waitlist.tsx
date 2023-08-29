@@ -11,7 +11,7 @@ export const WaitListSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.waitlist" />
+            <FormattedMessage id="pages.dashboard.mechanics.wait-list" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const WaitListSection: FC = () => {
             <TimerOutlined />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.waitlist.item.title" />
+            <FormattedMessage id="pages.wait-list.item.title" />
           </ListItemText>
         </ListItemButton>
       </List>
