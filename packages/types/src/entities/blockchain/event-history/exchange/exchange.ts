@@ -3,6 +3,7 @@ import type { IExchangeClaimEvent } from "./claim";
 import type { IExchangePurchaseMysteryBoxEvent } from "./mystery";
 import type { IExchangeLendEvent } from "./rentable";
 import type { IExchangeCraftEvent } from "./craft";
+import type { IExchangeDismantleEvent } from "./dismantle";
 import type { IExchangeBreedEvent } from "./breeding";
 import type { IExchangePurchaseLotteryEvent } from "./lottery";
 import type { IExchangePurchaseRaffleEvent } from "./raffle";
@@ -67,6 +68,7 @@ export type TExchangeEvents =
   | IExchangePurchaseEvent
   | IExchangeClaimEvent
   | IExchangeCraftEvent
+  | IExchangeDismantleEvent
   | IExchangeGradeEvent
   | IExchangePurchaseMysteryBoxEvent
   | IExchangeBreedEvent

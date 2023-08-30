@@ -14,7 +14,7 @@ import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
 
 contract ExchangeDismantleFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Dismantle(address from, uint256 externalId, Asset[] items, Asset[] price);
+  event Dismantle(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 

@@ -19,8 +19,8 @@ import "../override/SignatureValidator.sol";
 contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   using SafeCast for uint256;
 
-  event Lend(address from, address to, uint64 expires, uint256 externalId, Asset item, Asset[] price);
-  event LendMany(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
+  event Lend(address account, address to, uint64 expires, uint256 externalId, Asset item, Asset[] price);
+  event LendMany(address account, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 

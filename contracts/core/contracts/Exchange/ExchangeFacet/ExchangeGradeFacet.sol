@@ -15,7 +15,7 @@ import "../../ERC721/interfaces/IERC721Discrete.sol";
 import "../override/SignatureValidator.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
+  event Upgrade(address account, uint256 externalId, Asset item, Asset[] price);
 
   constructor() SignatureValidator() {}
 

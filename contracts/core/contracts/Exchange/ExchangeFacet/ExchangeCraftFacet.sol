@@ -14,7 +14,7 @@ import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
 
 contract ExchangeCraftFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Craft(address from, uint256 externalId, Asset[] items, Asset[] price);
+  event Craft(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 

@@ -9,3 +9,5 @@ export * from "./lottery";
 export * from "./rent";
 export * from "./vesting";
 export * from "./transfer";
+export * from "./mystery-box";
+export * from "./dismantle";
