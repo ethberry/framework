@@ -123,7 +123,7 @@ export class DismantleService {
   }
 
   public async sign(dto: ISignDismantleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, dismantleId, chainId } = dto;
+    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
     const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
 
     if (!dismantleEntity) {
@@ -146,6 +146,7 @@ export class DismantleService {
         referrer,
       },
       dismantleEntity,
+      tokenId,
     );
 
     return { nonce: hexlify(nonce), signature, expiresAt };
@@ -156,12 +157,14 @@ export class DismantleService {
     account: string,
     params: IParams,
     dismantleEntity: DismantleEntity,
+    tokenId: string,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
       params,
-      dismantleEntity.item.components.sort(sorter("id")).map(component => ({
+      // PRICE to get after dismantle
+      dismantleEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
@@ -170,10 +173,11 @@ export class DismantleService {
             : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
-      dismantleEntity.price.components.sort(sorter("id")).map(component => ({
+      // ITEM price = token to dismantle
+      dismantleEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
+        tokenId,
         amount: component.amount,
       })),
     );

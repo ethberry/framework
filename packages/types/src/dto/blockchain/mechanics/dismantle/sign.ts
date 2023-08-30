@@ -3,4 +3,5 @@ export interface ISignDismantleDto {
   account: string;
   referrer: string;
   dismantleId: number;
+  tokenId: string;
 }

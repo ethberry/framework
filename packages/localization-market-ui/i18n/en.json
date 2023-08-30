@@ -1,7 +1,8 @@
 {
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
-    "approve": "Please approve ingredients to Exchange before crafting",
+    "approveCraft": "Please approve ingredients to Exchange before crafting",
+    "approveDismantle": "Please approve token to Exchange before dismantle",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "uncaughtError": "Uncaught error happened"
   },

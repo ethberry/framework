@@ -62,7 +62,7 @@ export const MyTransactions: FC = () => {
       renderCell: (params: GridCellParams<IEventHistory>) => {
         const { eventData, eventType } = params.row;
         const isBorrow =
-          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
+          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).account;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
       minWidth: 160,
