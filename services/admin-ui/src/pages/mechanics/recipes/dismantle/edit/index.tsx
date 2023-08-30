@@ -1,12 +1,14 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormWatcher } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IDismantle } from "@framework/types";
 import { DismantleStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { RarityMultiplierInput } from "./rarity-multiplier-input";
 
 export interface IExchangeEditDialogProps {
   open: boolean;
@@ -18,13 +20,14 @@ export interface IExchangeEditDialogProps {
 export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, price, dismantleStatus } = initialValues;
+  const { id, item, price, dismantleStatus, rarityMultiplier } = initialValues;
 
   const fixedValues = {
-    dismantleStatus,
     id,
     item,
     price,
+    dismantleStatus,
+    rarityMultiplier,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -42,7 +45,6 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
-        multiple
       />
       <TemplateAssetInput
         autoSelect
@@ -51,6 +53,8 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
         multiple
       />
+      <FormWatcher />
+      <RarityMultiplierInput name="rarityMultiplier" />
       {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}
     </FormDialog>
   );

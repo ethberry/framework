@@ -29,6 +29,10 @@ export class CreateDismantle1693120862000 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "rarity_multiplier",
+          type: "int",
+        },
+        {
           name: "merchant_id",
           type: "int",
         },
