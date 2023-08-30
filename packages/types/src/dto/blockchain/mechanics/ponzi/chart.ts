@@ -1,4 +1,4 @@
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IPonziChartItemSearchDto {
@@ -6,7 +6,8 @@ export interface IPonziChartItemSearchDto {
   contractId: number;
 }
 
-export interface IPonziChartSearchDto extends ISearchDto {
+export interface IPonziChartSearchDto extends IPaginationDto {
+  contractId: number;
   deposit: IPonziChartItemSearchDto;
   reward?: IPonziChartItemSearchDto;
   emptyReward?: boolean;

@@ -1,4 +1,4 @@
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
 import { StakingDepositStatus } from "../../../../entities";
@@ -8,7 +8,7 @@ export interface IStakingDepositItemSearchDto {
   contractIds: Array<number>;
 }
 
-export interface IStakingDepositSearchDto extends ISearchDto {
+export interface IStakingDepositSearchDto extends IPaginationDto {
   account: string;
   emptyReward?: boolean;
   stakingDepositStatus: Array<StakingDepositStatus>;

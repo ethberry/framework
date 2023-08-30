@@ -20,13 +20,14 @@ export const PonziChart: FC = () => {
   >({
     baseUrl: "/ponzi/chart",
     search: {
+      contractId: 1,
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 1,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 1,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),

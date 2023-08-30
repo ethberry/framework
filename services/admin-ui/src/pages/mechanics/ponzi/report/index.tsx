@@ -31,16 +31,16 @@ export const PonziReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      query: "",
+      contractId: 1,
       account: "",
       ponziDepositStatus: [PonziDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 1,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 1,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
@@ -78,7 +78,7 @@ export const PonziReport: FC = () => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 3,
+      flex: 2,
       minWidth: 360
     },
     {
@@ -135,8 +135,8 @@ export const PonziReport: FC = () => {
         rows={rows.map((stake: IPonziDeposit) => ({
           id: stake.id,
           account: stake.account,
-          ponziRule: stake.ponziRule!.title,
           deposit: formatPrice(stake.ponziRule?.deposit),
+          ponziRule: stake.ponziRule!.title,
           createdAt: stake.createdAt,
         }))}
         autoHeight

@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPonziDepositSearchDto } from "@framework/types";
 
 import { PonziDepositEntity } from "./deposit.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class PonziDepositService {
@@ -27,9 +28,12 @@ export class PonziDepositService {
     return this.ponziDepositEntityEntity.find({ where, ...options });
   }
 
-  public async search(dto: Partial<IPonziDepositSearchDto>): Promise<[Array<PonziDepositEntity>, number]> {
+  public async search(
+    dto: Partial<IPonziDepositSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<PonziDepositEntity>, number]> {
     const {
-      query,
+      contractIds,
       account,
       emptyReward,
       ponziDepositStatus,
@@ -57,25 +61,22 @@ export class PonziDepositService {
 
     queryBuilder.select();
 
-    if (account) {
-      queryBuilder.andWhere("stake.account = :account", { account });
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
-    if (query) {
-      queryBuilder.leftJoin(
-        qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
-          return qb;
-        },
-        `blocks`,
-        `TRUE`,
-      );
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
-        }),
-      );
+    if (account) {
+      queryBuilder.andWhere("stake.account = :account", { account });
     }
 
     if (ponziDepositStatus) {

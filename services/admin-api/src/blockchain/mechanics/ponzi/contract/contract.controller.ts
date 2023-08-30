@@ -15,10 +15,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { PonziContractService } from "./contract.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { PonziContractService } from "./contract.service";
 
 @ApiBearerAuth()
 @Controller("/ponzi/contracts")

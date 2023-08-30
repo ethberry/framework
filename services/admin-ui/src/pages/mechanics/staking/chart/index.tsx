@@ -20,13 +20,14 @@ export const StakingChart: FC = () => {
   >({
     baseUrl: "/staking/chart",
     search: {
+      contractId: 1,
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 1,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 1301,
+        contractId: 1,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),

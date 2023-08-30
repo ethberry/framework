@@ -2,10 +2,11 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import type { IPonziReportSearchDto } from "@framework/types";
-import { PonziDepositStatus } from "@framework/types";
-import { SearchInput, SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SearchInput, SelectInput, SwitchInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import type { IPonziReportSearchDto } from "@framework/types";
+import { ModuleType, PonziDepositStatus } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
@@ -19,10 +20,10 @@ interface IPonziReportSearchFormProps {
 export const PonziReportSearchForm: FC<IPonziReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { query, ponziDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } =
+  const { contractId, ponziDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } =
     initialValues;
   const fixedValues = {
-    query,
+    contractId,
     ponziDepositStatus,
     account,
     emptyReward,
@@ -42,19 +43,24 @@ export const PonziReportSearchForm: FC<IPonziReportSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="account" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
+            <EntityInput
+              name="contractId"
+              controller="contracts"
+              data={{ contractModule: [ModuleType.STAKING] }}
+              autoselect
+              disableClear
+            />
+          </Grid>
+          <Grid item xs={6}>
             <SelectInput name="ponziDepositStatus" options={PonziDepositStatus} multiple />
           </Grid>
-          <Grid item xs={6}>
-            <TextInput name="account" />
-          </Grid>
-          <Grid item xs={6} />
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <SwitchInput name="emptyReward" />
           </Grid>
           <Grid item xs={6}>
