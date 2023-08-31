@@ -3,9 +3,9 @@ import { ValidateNested, IsEnum, IsInt, IsOptional, Min, Validate, ValidateIf } 
 import { Type, Transform } from "class-transformer";
 import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
 
-import { NftDto } from "../../../../exchange/asset/dto";
 import type { IDismantleCreateDto } from "../interfaces";
 import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
+import { AssetTypesDto } from "../../../../exchange/asset/dto/custom";
 
 export class DismantlePriceComponentDto implements IAssetComponentDto {
   @ApiPropertyOptional()
@@ -62,9 +62,10 @@ export class DismantleCreateDto implements IDismantleCreateDto {
 
   // TOKEN to be dismantled
   @ApiProperty({
-    type: NftDto,
+    type: AssetTypesDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]),
   })
   @ValidateNested()
-  @Type(() => NftDto)
-  public price: NftDto;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @Type(() => AssetTypesDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]))
+  public price: typeof AssetTypesDto.prototype;
 }
