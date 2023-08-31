@@ -39,7 +39,6 @@ export const PonziDeposit: FC = () => {
   } = useCollection<IPonziDeposit, IPonziDepositSearchDto>({
     baseUrl: "/ponzi/stakes",
     search: {
-      query: "",
       ponziDepositStatus: [PonziDepositStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
