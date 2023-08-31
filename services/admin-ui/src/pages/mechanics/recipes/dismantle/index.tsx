@@ -83,7 +83,8 @@ export const Dismantle: FC = () => {
         <List>
           {rows.map((dismantle, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{formatItem(dismantle.item)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.price)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.item)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(dismantle)}>
                   <Create />

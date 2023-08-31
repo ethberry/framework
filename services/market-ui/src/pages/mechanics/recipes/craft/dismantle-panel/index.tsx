@@ -15,7 +15,7 @@ import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
-import { formatItem, getEthPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { sorter } from "../../../../../utils/sorter";
 
@@ -55,17 +55,17 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
         dismantle.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
-          tokenId: token.tokenId,
-          amount: component.amount,
-        })),
-        // PRICE token to dismantle (burn)
-        dismantle.price?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
           tokenId:
             component.contract!.contractType === TokenType.ERC1155
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
+          amount: component.amount,
+        })),
+        // PRICE token to dismantle
+        dismantle.price?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: token.tokenId,
           amount: component.amount,
         }))[0],
         sign.signature,

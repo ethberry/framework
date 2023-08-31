@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 

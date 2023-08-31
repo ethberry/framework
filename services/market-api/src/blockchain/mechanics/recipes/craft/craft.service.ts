@@ -34,8 +34,15 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("craft.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("craft.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("craft.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");

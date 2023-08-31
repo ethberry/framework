@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingDepositSearchDto } from "@framework/types";
 import { ModuleType, StakingDepositStatus, TokenType } from "@framework/types";

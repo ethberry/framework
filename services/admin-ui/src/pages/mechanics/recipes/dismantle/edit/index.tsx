@@ -46,7 +46,7 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         autoSelect
         prefix="price"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
       />
       <Alert severity="info" sx={{ mt: 2 }}>
         <FormattedMessage id="alert.dismantleItem" />
@@ -55,7 +55,7 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         autoSelect
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         multiple
       />
       {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}
