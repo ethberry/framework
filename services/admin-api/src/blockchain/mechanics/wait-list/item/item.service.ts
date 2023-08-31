@@ -90,6 +90,10 @@ export class WaitListItemService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    return this.createOrFail(dto);
+  }
+
+  public async createOrFail(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
     const waitListItemEntity = await this.findOne(dto);
 
     if (waitListItemEntity) {

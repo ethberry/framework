@@ -22,6 +22,7 @@ import { WaitListListService } from "./list.service";
 import { WaitListListEntity } from "./list.entity";
 import { WaitListGenerateDto, WaitListListCreateDto, WaitListListUpdateDto, WaitListUploadDto } from "./dto";
 import { WaitListItemEntity } from "../item/item.entity";
+import { WaitListListAutocompleteDto } from "./dto/autocomplete";
 
 @ApiBearerAuth()
 @Controller("/wait-list/list")
@@ -50,8 +51,11 @@ export class WaitListListController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(@User() userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
-    return this.waitListListService.autocomplete(userEntity);
+  public autocomplete(
+    @Query() dto: WaitListListAutocompleteDto,
+    @User() userEntity: UserEntity,
+  ): Promise<Array<WaitListListEntity>> {
+    return this.waitListListService.autocomplete(dto, userEntity);
   }
 
   @Get("/:id")

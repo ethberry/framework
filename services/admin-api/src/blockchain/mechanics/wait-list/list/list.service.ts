@@ -8,13 +8,12 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Not, IsNull, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
 import type { ISearchDto } from "@gemunion/types-collection";
-import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
+import type { IWaitListListAutocompleteDto, IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -161,20 +160,39 @@ export class WaitListListService {
     return waitListListEntity.save();
   }
 
-  public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
-    return this.waitListListEntityRepository.find({
-      where: {
-        root: IsNull(),
-        contract: {
-          merchantId: userEntity.merchantId,
-          contractStatus: ContractStatus.ACTIVE,
-        },
+  public async autocomplete(
+    dto: Partial<IWaitListListAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<WaitListListEntity>> {
+    const { contractStatus, isRewardSet } = dto;
+
+    const where = {
+      contract: {
+        merchantId: userEntity.merchantId,
       },
+    };
+
+    if (isRewardSet !== void 0) {
+      Object.assign(where, {
+        root: isRewardSet ? Not(IsNull()) : IsNull(),
+      });
+    }
+
+    if (contractStatus) {
+      Object.assign(where.contract, {
+        contractStatus: In(contractStatus),
+      });
+    }
+
+    return this.waitListListEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,
       },
-      relations: { contract: true },
+      relations: {
+        contract: true,
+      },
     });
   }
 
@@ -232,7 +250,7 @@ export class WaitListListService {
         items,
         10,
         async (row: IWaitListRow) => {
-          return this.waitListItemService.create({
+          return this.waitListItemService.createOrFail({
             listId,
             account: row.account,
           });
