@@ -7,16 +7,16 @@ import type { IDismantleCreateDto } from "../interfaces";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
-    type: NftDto,
-  })
-  @ValidateNested()
-  @Type(() => NftDto)
-  public item: NftDto;
-
-  @ApiProperty({
     type: PriceDto,
   })
   @ValidateNested()
   @Type(() => PriceDto)
-  public price: PriceDto;
+  public item: PriceDto;
+
+  @ApiProperty({
+    type: NftDto,
+  })
+  @ValidateNested()
+  @Type(() => NftDto)
+  public price: NftDto;
 }

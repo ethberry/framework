@@ -47,8 +47,8 @@ export const Dismantle: FC = () => {
   } = useCollection<IDismantle, IDismantleSearchDto>({
     baseUrl: "/dismantle",
     empty: {
-      item: getEmptyTemplate(TokenType.ERC721),
-      price: getEmptyTemplate(TokenType.ERC1155),
+      price: getEmptyTemplate(TokenType.ERC721),
+      item: getEmptyTemplate(TokenType.ERC1155),
     },
     search: {
       query: "",

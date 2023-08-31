@@ -60,8 +60,8 @@ export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements Migrati
         updated_at
       ) VALUES (
         1050301,
-        102530101,
         102530102,
+        102530101,
         'ACTIVE',
         1,
         '${currentDateTime}',

@@ -36,6 +36,8 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
     },
   });
 
+  console.log("dismantlerows", rows);
+
   const metaFnWithSign = useServerSignature(
     (dismantle: IDismantle, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, DismantleABI, web3Context.provider?.getSigner());
@@ -49,7 +51,14 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
           receiver: dismantle.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        // PRICE to get after dismantle
+        // ITEM to get after dismantle
+        dismantle.item?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: token.tokenId,
+          amount: component.amount,
+        })),
+        // PRICE token to dismantle (burn)
         dismantle.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
@@ -58,18 +67,11 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
-        })),
-        // ITEM token to dismantle (burn)
-        dismantle.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: token.tokenId,
-          amount: component.amount,
-        })),
+        }))[0],
         sign.signature,
-        {
-          value: getEthPrice(dismantle.item),
-        },
+        // { dismantle cost not implemented
+        //   value: getEthPrice(dismantle.item),
+        // },
       ) as Promise<void>;
     },
     // { error: false },
@@ -122,7 +124,7 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
               <ListItemIcon>
                 <Construction />
               </ListItemIcon>
-              <ListItemText>{formatItem(dismantle.price)}</ListItemText>
+              <ListItemText>{formatItem(dismantle.item)}</ListItemText>
             </ListItemButton>
           );
         })}

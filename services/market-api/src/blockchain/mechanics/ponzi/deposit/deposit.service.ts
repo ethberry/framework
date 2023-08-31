@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
 import type { IPonziDepositSearchDto, IPonziLeaderboard, IPonziLeaderboardSearchDto } from "@framework/types";
@@ -36,7 +36,7 @@ export class PonziDepositService {
     dto: Partial<IPonziDepositSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<PonziDepositEntity>, number]> {
-    const { query, ponziDepositStatus, deposit, reward, skip, take } = dto;
+    const { ponziDepositStatus, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.ponziRule", "rule");
@@ -55,23 +55,6 @@ export class PonziDepositService {
     queryBuilder.select();
 
     queryBuilder.andWhere("stake.account = :account", { account: userEntity.wallet });
-
-    if (query) {
-      queryBuilder.leftJoin(
-        qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
-          return qb;
-        },
-        `blocks`,
-        `TRUE`,
-      );
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
-        }),
-      );
-    }
 
     if (ponziDepositStatus) {
       if (ponziDepositStatus.length === 1) {
