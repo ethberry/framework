@@ -18,10 +18,10 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { SearchDto } from "@gemunion/collection";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListListService } from "./list.service";
 import { WaitListListEntity } from "./list.entity";
 import { WaitListGenerateDto, WaitListListCreateDto, WaitListListUpdateDto, WaitListUploadDto } from "./dto";
-import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListListAutocompleteDto } from "./dto/autocomplete";
 
 @ApiBearerAuth()

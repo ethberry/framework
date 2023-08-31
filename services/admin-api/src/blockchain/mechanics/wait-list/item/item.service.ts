@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   forwardRef,
@@ -88,6 +89,18 @@ export class WaitListItemService {
 
     if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (waitListListEntity.root) {
+      throw new BadRequestException([
+        {
+          target: dto,
+          value: dto.listId,
+          property: "listId",
+          children: [],
+          constraints: { isCustom: "waitListRewardIsAlreadySet" },
+        },
+      ]);
     }
 
     return this.createOrFail(dto);

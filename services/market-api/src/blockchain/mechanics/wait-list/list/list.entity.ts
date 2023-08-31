@@ -5,8 +5,8 @@ import { ns } from "@framework/constants";
 import { IWaitListList } from "@framework/types";
 
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
-import { WaitListItemEntity } from "../item/item.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { WaitListItemEntity } from "../item/item.entity";
 
 @Entity({ schema: ns, name: "wait_list_list" })
 export class WaitListListEntity extends SearchableEntity implements IWaitListList {

@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
@@ -7,6 +7,7 @@ import type { IWaitListItemCreateDto } from "@framework/types";
 import { WaitListItemStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { WaitListListService } from "../list/list.service";
 import { WaitListItemEntity } from "./item.entity";
 import { WaitListProofDto } from "./dto";
 
@@ -15,6 +16,7 @@ export class WaitListItemService {
   constructor(
     @InjectRepository(WaitListItemEntity)
     private readonly waitListItemEntityRepository: Repository<WaitListItemEntity>,
+    private readonly waitListListService: WaitListListService,
   ) {}
 
   public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
@@ -44,10 +46,28 @@ export class WaitListItemService {
   }
 
   public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
-    const waitListEntity = await this.findOne(dto);
+    const waitListItemEntity = await this.findOne(dto);
 
-    if (waitListEntity) {
+    if (waitListItemEntity) {
       throw new ConflictException("duplicateAccount");
+    }
+
+    const waitListListEntity = await this.waitListListService.findOne({ id: dto.listId });
+
+    if (!waitListListEntity) {
+      throw new NotFoundException("waitListListNotFound");
+    }
+
+    if (waitListListEntity.root) {
+      throw new BadRequestException([
+        {
+          target: dto,
+          value: dto.listId,
+          property: "listId",
+          children: [],
+          constraints: { isCustom: "waitListRewardIsAlreadySet" },
+        },
+      ]);
     }
 
     return this.waitListItemEntityRepository.create(dto).save();

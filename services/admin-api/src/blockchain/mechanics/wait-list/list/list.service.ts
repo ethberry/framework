@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   forwardRef,
   Inject,
@@ -8,7 +9,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Not, IsNull, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
@@ -16,12 +17,12 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IWaitListListAutocompleteDto, IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class WaitListListService {
@@ -129,7 +130,7 @@ export class WaitListListService {
     dto: IWaitListListUpdateDto,
     userEntity: UserEntity,
   ): Promise<WaitListListEntity> {
-    const { /* item, */ ...rest } = dto;
+    const { /* item, */ isPrivate, ...rest } = dto;
 
     const waitListListEntity = await this.findOne(where, {
       join: {
@@ -148,6 +149,18 @@ export class WaitListListService {
 
     if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (waitListListEntity.root && waitListListEntity.isPrivate !== isPrivate) {
+      throw new BadRequestException([
+        {
+          target: dto,
+          value: dto.isPrivate,
+          property: "isPrivate",
+          children: [],
+          constraints: { isCustom: "waitListRewardIsAlreadySet" },
+        },
+      ]);
     }
 
     Object.assign(waitListListEntity, rest);

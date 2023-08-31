@@ -23,7 +23,7 @@ export interface IWaitListListEditDialogProps {
 export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, contractId, isPrivate } = initialValues;
+  const { id, title, description, item, contractId, isPrivate, root } = initialValues;
   const fixedValues = { id, title, description, item, contractId, isPrivate };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -32,6 +32,7 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <SwitchInput name="isPrivate" readOnly={!!root} />
       {id ? (
         <Box mt={2}>
           <Alert severity="warning">
@@ -56,7 +57,6 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
           contractModule: [ModuleType.WAITLIST],
         }}
       />
-      <SwitchInput name="isPrivate" readOnly={!!id} />
     </FormDialog>
   );
 };
