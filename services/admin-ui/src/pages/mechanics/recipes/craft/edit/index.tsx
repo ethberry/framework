@@ -46,6 +46,7 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
         autoSelect
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         multiple
       />
       <Alert severity="info" sx={{ mt: 2 }}>

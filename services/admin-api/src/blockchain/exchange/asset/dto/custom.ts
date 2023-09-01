@@ -2,9 +2,9 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, Min, Validate, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
-
 import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
+
+import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
 
 export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenType>) => {
   class CustomAssetComponentDto implements IAssetComponentDto {
@@ -60,8 +60,14 @@ export const createCustomAssetDto = (disabledTokenTypes: Array<TokenType>) => {
   return CustomAssertDto;
 };
 
-export const NftDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998]);
+// ERC721 or ERC998
+export const NftDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]);
 
-export const CoinDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20]);
+// NATIVE or ERC20
+export const CoinDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]);
 
-export const NativeDto = createCustomAssetDto([TokenType.NATIVE]);
+// NATIVE
+export const NativeDto = createCustomAssetDto([TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]);
+
+// ALL TOKEN TYPES
+export const AnyTypesDto = createCustomAssetDto([]);
