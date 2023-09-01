@@ -31,7 +31,6 @@ export const PonziReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      query: "",
       account: "",
       ponziDepositStatus: [PonziDepositStatus.ACTIVE],
       deposit: {

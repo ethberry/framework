@@ -4,8 +4,8 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IStakingDepositSearchDto } from "@framework/types";
 
-import { StakingDepositEntity } from "./deposit.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { StakingDepositEntity } from "./deposit.entity";
 
 @Injectable()
 export class StakingDepositService {

@@ -1,6 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { NodeEnv } from "@framework/types";
+
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
@@ -36,18 +38,20 @@ import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
+import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
+
 /* achievements */
 import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
-import { NodeEnv } from "@framework/types";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    GradeEntity,
     ContractManagerEntity,
     AccessControlEntity,
     AccessListEntity,

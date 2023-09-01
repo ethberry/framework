@@ -60,6 +60,10 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "gradeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -304,6 +308,8 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "gradeStatus": "Status",
+      "gradeStrategy": "Grade strategy",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -551,6 +557,7 @@
         "erc1155": "ERC1155",
         "erc20": "ERC20",
         "erc721": "ERC721",
+        "erc998": "ERC998",
         "native": "NATIVE"
       },
       "infrastructure": {
@@ -582,6 +589,7 @@
       },
       "mechanics": {
         "claim": "Claim",
+        "grade": "Grade",
         "dispenser": "Dispenser",
         "drop": "Drop",
         "ponzi": "Ponzi",
@@ -616,6 +624,22 @@
         "title": "ERC20 Contracts"
       },
       "title": "ERC20"
+    },
+    "erc998": {
+      "composition": {
+        "title": "ERC998 Composition"
+      },
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC998 Contracts"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "title": "ERC998",
+      "tokens": {
+        "title": "ERC998 Tokens"
+      }
     },
     "erc721": {
       "contracts": {
@@ -652,6 +676,9 @@
         "title": "Native Tokens"
       },
       "title": "Native"
+    },
+    "grade": {
+      "title": "Grade Rules"
     },
     "pages": {
       "title": "Pages"

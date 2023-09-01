@@ -23,15 +23,17 @@ export class GradeService {
     protected readonly tokenService: TokenService,
   ) {}
 
-  public async search(dto: Partial<IGradeSearchDto>, userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
-    const { query, gradeStatus, skip, take } = dto;
+  public async search(dto: Partial<IGradeSearchDto>, _userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
+    const { query, gradeStatus, merchantId, skip, take } = dto;
 
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
     queryBuilder.leftJoinAndSelect("grade.contract", "contract");
 
+    queryBuilder.select();
+
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
-      merchantId: userEntity.merchantId,
+      merchantId,
     });
 
     if (gradeStatus) {
