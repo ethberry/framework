@@ -6,7 +6,7 @@ import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
 
 import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
 
-export const createCustomAssetComponentDto = (tokenTypes: Array<TokenType>) => {
+export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenType>) => {
   class CustomAssetComponentDto implements IAssetComponentDto {
     @ApiPropertyOptional()
     @IsOptional()
@@ -18,7 +18,7 @@ export const createCustomAssetComponentDto = (tokenTypes: Array<TokenType>) => {
       enum: TokenType,
     })
     @Transform(({ value }) => value as TokenType)
-    @Validate(ForbidEnumValues, tokenTypes)
+    @Validate(ForbidEnumValues, disabledTokenTypes)
     @IsEnum(TokenType, { message: "badInput" })
     public tokenType: TokenType;
 
@@ -30,22 +30,22 @@ export const createCustomAssetComponentDto = (tokenTypes: Array<TokenType>) => {
     @ApiProperty()
     @IsInt({ message: "typeMismatch" })
     @Min(1, { message: "rangeUnderflow" })
-    @ValidateIf(o => tokenTypes.includes(o.TokenType))
+    @ValidateIf(o => disabledTokenTypes.includes(o.TokenType))
     public templateId: number;
 
     @ApiProperty({
       type: Number,
     })
     @IsBigInt({}, { message: "typeMismatch" })
-    @ValidateIf(o => tokenTypes.includes(o.TokenType))
+    @ValidateIf(o => disabledTokenTypes.includes(o.TokenType))
     public amount: string;
   }
 
   return CustomAssetComponentDto;
 };
 
-export const createCustomAssetDto = (tokenTypes: Array<TokenType>) => {
-  const CustomComponentDto = createCustomAssetComponentDto(tokenTypes);
+export const createCustomAssetDto = (disabledTokenTypes: Array<TokenType>) => {
+  const CustomComponentDto = createCustomAssetComponentDto(disabledTokenTypes);
 
   class CustomAssertDto implements IAssetDto {
     @ApiProperty({
@@ -60,4 +60,8 @@ export const createCustomAssetDto = (tokenTypes: Array<TokenType>) => {
   return CustomAssertDto;
 };
 
-export const NftDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]);
+export const NftDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998]);
+
+export const CoinDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20]);
+
+export const NativeDto = createCustomAssetDto([TokenType.NATIVE]);
