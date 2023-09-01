@@ -10,7 +10,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
-export class StakingService extends ContractService {
+export class WaitListService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
@@ -20,6 +20,6 @@ export class StakingService extends ContractService {
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, [ModuleType.STAKING], null);
+    return super.search(dto, userEntity, [ModuleType.WAITLIST], null);
   }
 }

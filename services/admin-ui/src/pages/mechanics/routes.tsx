@@ -14,7 +14,7 @@ import { rentingRoutes } from "./rent/routes";
 import { recipesRoutes } from "./recipes/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
-import { waitlistRoutes } from "./wait-list/routes";
+import { waitListRoutes } from "./wait-list/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...breedRoutes,
@@ -31,5 +31,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...rentingRoutes,
   ...stakingRoutes,
   ...vestingRoutes,
-  ...waitlistRoutes,
+  ...waitListRoutes,
 ];

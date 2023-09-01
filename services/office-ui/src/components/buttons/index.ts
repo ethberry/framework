@@ -15,5 +15,7 @@ export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
 export * from "./mechanics/vesting/upload";
 
+export * from "./mechanics/wait-list/deploy";
+
 export * from "./exchange/releasable";
 export * from "./exchange/release";

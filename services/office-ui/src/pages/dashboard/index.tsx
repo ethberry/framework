@@ -21,6 +21,7 @@ import { PonziSection } from "./mechanics/ponzi";
 import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
 import { VestingSection } from "./mechanics/vesting";
+import { WaitListSection } from "./mechanics/wait-list";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -39,6 +40,7 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />
+          <WaitListSection />
           <ClaimSection />
           <VestingSection />
           <GradeSection />

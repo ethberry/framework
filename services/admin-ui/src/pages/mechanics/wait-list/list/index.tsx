@@ -12,7 +12,7 @@ import { emptyItem } from "@gemunion/mui-inputs-asset";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/waitlist-list";
+import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/wait-list-list";
 import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";

@@ -72,7 +72,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         1020903,
         '${waitListAddr}',
         '${chainId}',
-        'WaitList',
+        'WaitList (MeowDao)',
         '${simpleFormatting}',
         '',
         'WaitList',
