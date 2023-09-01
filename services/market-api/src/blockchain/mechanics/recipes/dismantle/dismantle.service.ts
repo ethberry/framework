@@ -38,30 +38,30 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-
-    queryBuilder.leftJoinAndSelect(
-      "price_template.tokens",
-      "price_tokens",
-      "price_contract.contractType IN(:...tokenTypes)",
-      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
-    );
 
     queryBuilder.where({
       dismantleStatus: DismantleStatus.ACTIVE,
     });
 
     if (templateId) {
-      queryBuilder.where("item_template.id = :templateId", { templateId });
+      queryBuilder.where("price_template.id = :templateId", { templateId });
     }
 
     if (query) {
       queryBuilder.leftJoin(
         qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
+          qb.getQuery = () => `LATERAL json_array_elements(price_template.description->'blocks')`;
           return qb;
         },
         `blocks`,
@@ -69,7 +69,7 @@ export class DismantleService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("price_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -163,8 +163,8 @@ export class DismantleService {
       verifyingContract,
       account,
       params,
-      // PRICE to get after dismantle
-      dismantleEntity.price.components.sort(sorter("id")).map(component => ({
+      // ITEM to get after dismantle
+      dismantleEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
@@ -173,13 +173,15 @@ export class DismantleService {
             : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
-      // ITEM price = token to dismantle
-      dismantleEntity.item.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId,
-        amount: component.amount,
-      })),
+      // PRICE token to dismantle
+      [
+        dismantleEntity.price.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract.address,
+          tokenId,
+          amount: component.amount,
+        }))[0],
+      ],
     );
   }
 }

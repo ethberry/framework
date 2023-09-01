@@ -36,17 +36,15 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   const metaFn = useMetamask((result: IWaitListList, web3Context: Web3ContextType) => {
     const contract = new Contract(result.contract.address, WaitListSetRewardABI, web3Context.provider?.getSigner());
 
-    const params = {
-      externalId: id,
-      expiresAt: 0,
-      nonce: constants.HashZero,
-      extra: utils.arrayify(result.root),
-      receiver: constants.AddressZero,
-      referrer: constants.AddressZero,
-    };
-
     return contract.setReward(
-      params,
+      {
+        externalId: id,
+        expiresAt: 0,
+        nonce: constants.HashZero,
+        extra: utils.arrayify(result.root),
+        receiver: constants.AddressZero,
+        referrer: constants.AddressZero,
+      },
       result.item?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
@@ -57,8 +55,8 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   });
 
   const handleUpload = async () => {
-    await fn(null as unknown as any, id).then(async proof => {
-      // proof can de undefined in case of http error
+    await fn(void 0, id).then(async proof => {
+      // proof can be undefined in case of http error
       // the error is handled by useApiCall
       if (proof) {
         await metaFn(proof);

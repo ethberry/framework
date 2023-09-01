@@ -12,7 +12,7 @@ import { expiresAt, externalId } from "../../test/constants";
 import { deployDiamond } from "../../test/Exchange/shared/fixture";
 
 const delay = 1; // block delay
-const delayMs = 1100; // block delay ms
+const delayMs = 300; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 interface IObj {

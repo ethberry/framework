@@ -51,6 +51,7 @@ export const WaitListList: FC = () => {
         ? {
             title,
             description,
+            isPrivate,
           }
         : {
             title,

@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { FormWatcher } from "@gemunion/mui-form";
@@ -40,17 +42,23 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
       testId="DismantleEditForm"
       {...rest}
     >
-      <TemplateAssetInput
-        autoSelect
-        prefix="item"
-        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
-      />
+      <Alert severity="info" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.dismantlePrice" />
+      </Alert>
       <TemplateAssetInput
         autoSelect
         prefix="price"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
+      />
+      <Alert severity="info" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.dismantleItem" />
+      </Alert>
+      <TemplateAssetInput
+        autoSelect
+        prefix="item"
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         multiple
       />
       <FormWatcher />

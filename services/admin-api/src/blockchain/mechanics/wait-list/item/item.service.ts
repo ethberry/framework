@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   forwardRef,
@@ -90,6 +91,22 @@ export class WaitListItemService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    if (waitListListEntity.root) {
+      throw new BadRequestException([
+        {
+          target: dto,
+          value: dto.listId,
+          property: "listId",
+          children: [],
+          constraints: { isCustom: "waitListRewardIsAlreadySet" },
+        },
+      ]);
+    }
+
+    return this.createOrFail(dto);
+  }
+
+  public async createOrFail(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
     const waitListItemEntity = await this.findOne(dto);
 
     if (waitListItemEntity) {

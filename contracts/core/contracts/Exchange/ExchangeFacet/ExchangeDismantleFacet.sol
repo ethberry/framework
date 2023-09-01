@@ -20,18 +20,19 @@ contract ExchangeDismantleFacet is SignatureValidator, AccessControlInternal, Pa
 
   function dismantle(
     Params memory params,
-    Asset[] memory items,
-    Asset[] memory price,
+    Asset[] memory items, // items to get
+    Asset memory price, // item to dismantle
     bytes calldata signature
   ) external payable whenNotPaused {
-    if (!_hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, price, signature))) {
+    if (!_hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
       revert SignerMissingRole();
     }
 
-    // burn or send price to receiver
-    ExchangeUtils.burnFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
-    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+    // burn price (721, 998, 1155) or send price to receiver
+    ExchangeUtils.burnFrom(ExchangeUtils._toArray(price), _msgSender(), params.receiver, DisabledTokenTypes(true, true, false, false, false));
+    // send items to sender from receiver
+    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(true, false, false, false, false));
 
-    emit Dismantle(_msgSender(), params.externalId, items, price);
+    emit Dismantle(_msgSender(), params.externalId, items, ExchangeUtils._toArray(price));
   }
 }

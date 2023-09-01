@@ -47,8 +47,8 @@ export const Dismantle: FC = () => {
   } = useCollection<IDismantle, IDismantleSearchDto>({
     baseUrl: "/dismantle",
     empty: {
-      item: getEmptyTemplate(TokenType.ERC721),
-      price: getEmptyTemplate(TokenType.ERC1155),
+      price: getEmptyTemplate(TokenType.ERC721),
+      item: getEmptyTemplate(TokenType.ERC1155),
       rarityMultiplier: 0,
     },
     search: {
@@ -84,7 +84,8 @@ export const Dismantle: FC = () => {
         <List>
           {rows.map((dismantle, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{formatItem(dismantle.item)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.price)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.item)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(dismantle)}>
                   <Create />

@@ -2,23 +2,23 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested, IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NftDto, PriceDto } from "../../../../exchange/asset/dto";
 import type { IDismantleCreateDto } from "../interfaces";
+import { DismantleItemDto, DismantlePriceDto } from "./custom";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
-    type: NftDto,
+    type: DismantleItemDto,
   })
   @ValidateNested()
-  @Type(() => NftDto)
-  public item: NftDto;
+  @Type(() => DismantleItemDto)
+  public item: InstanceType<typeof DismantleItemDto>;
 
   @ApiProperty({
-    type: PriceDto,
+    type: DismantlePriceDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => DismantlePriceDto)
+  public price: InstanceType<typeof DismantlePriceDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

@@ -5,7 +5,7 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
-import { IWaitListItem } from "@framework/types";
+import { ContractStatus, IWaitListItem } from "@framework/types";
 
 export interface IWaitListDialogProps {
   open: boolean;
@@ -30,7 +30,14 @@ export const WaitListItemEditDialog: FC<IWaitListDialogProps> = props => {
   return (
     <FormDialog initialValues={fixedValues} message={message} validationSchema={validationSchema} {...rest}>
       <TextInput name="account" />
-      <EntityInput name="listId" controller="wait-list/list" />
+      <EntityInput
+        name="listId"
+        controller="wait-list/list"
+        data={{
+          contractStatus: [ContractStatus.ACTIVE],
+          isRewardSet: false,
+        }}
+      />
     </FormDialog>
   );
 };

@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -37,12 +39,19 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       testId="CraftEditForm"
       {...rest}
     >
+      <Alert severity="info" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.craftItem" />
+      </Alert>
       <TemplateAssetInput
         autoSelect
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         multiple
       />
+      <Alert severity="info" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.craftPrice" />
+      </Alert>
       <TemplateAssetInput
         autoSelect
         prefix="price"

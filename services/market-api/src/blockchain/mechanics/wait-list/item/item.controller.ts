@@ -3,10 +3,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { WaitListItemService } from "./item.service";
 import { WaitListItemEntity } from "./item.entity";
 import { WaitListItemCreateDto, WaitListProofDto } from "./dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/wait-list/item")

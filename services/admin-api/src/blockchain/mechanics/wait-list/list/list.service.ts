@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   forwardRef,
   Inject,
@@ -8,21 +9,20 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
 import type { ISearchDto } from "@gemunion/types-collection";
-import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
+import type { IWaitListListAutocompleteDto, IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class WaitListListService {
@@ -130,7 +130,7 @@ export class WaitListListService {
     dto: IWaitListListUpdateDto,
     userEntity: UserEntity,
   ): Promise<WaitListListEntity> {
-    const { /* item, */ ...rest } = dto;
+    const { /* item, */ isPrivate, ...rest } = dto;
 
     const waitListListEntity = await this.findOne(where, {
       join: {
@@ -151,6 +151,18 @@ export class WaitListListService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    if (waitListListEntity.root && waitListListEntity.isPrivate !== isPrivate) {
+      throw new BadRequestException([
+        {
+          target: dto,
+          value: dto.isPrivate,
+          property: "isPrivate",
+          children: [],
+          constraints: { isCustom: "waitListRewardIsAlreadySet" },
+        },
+      ]);
+    }
+
     Object.assign(waitListListEntity, rest);
 
     // update of the item is not allowed, because user signed off for certain item
@@ -161,20 +173,39 @@ export class WaitListListService {
     return waitListListEntity.save();
   }
 
-  public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
-    return this.waitListListEntityRepository.find({
-      where: {
-        root: IsNull(),
-        contract: {
-          merchantId: userEntity.merchantId,
-          contractStatus: ContractStatus.ACTIVE,
-        },
+  public async autocomplete(
+    dto: Partial<IWaitListListAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<WaitListListEntity>> {
+    const { contractStatus, isRewardSet } = dto;
+
+    const where = {
+      contract: {
+        merchantId: userEntity.merchantId,
       },
+    };
+
+    if (isRewardSet !== void 0) {
+      Object.assign(where, {
+        root: isRewardSet ? Not(IsNull()) : IsNull(),
+      });
+    }
+
+    if (contractStatus) {
+      Object.assign(where.contract, {
+        contractStatus: In(contractStatus),
+      });
+    }
+
+    return this.waitListListEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,
       },
-      relations: { contract: true },
+      relations: {
+        contract: true,
+      },
     });
   }
 
@@ -232,7 +263,7 @@ export class WaitListListService {
         items,
         10,
         async (row: IWaitListRow) => {
-          return this.waitListItemService.create({
+          return this.waitListItemService.createOrFail({
             listId,
             account: row.account,
           });

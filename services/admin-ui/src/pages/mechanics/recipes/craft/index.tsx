@@ -83,7 +83,8 @@ export const Craft: FC = () => {
         <List>
           {rows.map((craft, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{formatItem(craft.item)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.price)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.item)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />
