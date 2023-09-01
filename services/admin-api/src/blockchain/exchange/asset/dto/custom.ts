@@ -6,8 +6,8 @@ import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
 
 import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
 
-export const AssetTypesDto = (tokenTypes: Array<TokenType>): any => {
-  class CustomComponentDto implements IAssetComponentDto {
+export const createCustomAssetComponentDto = (tokenTypes: Array<TokenType>) => {
+  class CustomAssetComponentDto implements IAssetComponentDto {
     @ApiPropertyOptional()
     @IsOptional()
     @IsInt({ message: "typeMismatch" })
@@ -41,16 +41,23 @@ export const AssetTypesDto = (tokenTypes: Array<TokenType>): any => {
     public amount: string;
   }
 
-  class CustomAssetDto implements IAssetDto {
+  return CustomAssetComponentDto;
+};
+
+export const createCustomAssetDto = (tokenTypes: Array<TokenType>) => {
+  const CustomComponentDto = createCustomAssetComponentDto(tokenTypes);
+
+  class CustomAssertDto implements IAssetDto {
     @ApiProperty({
       type: CustomComponentDto,
       isArray: true,
     })
     @ValidateNested({ each: true })
     @Type(() => CustomComponentDto)
-    // @ts-ignore
-    public components: Array<CustomComponentDto>;
+    public components: Array<InstanceType<typeof CustomComponentDto>>;
   }
 
-  return CustomAssetDto;
+  return CustomAssertDto;
 };
+
+export const NftDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]);
