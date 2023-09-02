@@ -6,7 +6,7 @@ export * from "./05-drop";
 export * from "./06-grade";
 export * from "./07-lottery";
 export * from "./08-mystery";
-export * from "./09-waitlist";
+export * from "./09-wait-list";
 export * from "./10-ponzi";
 export * from "./11-rent";
 export * from "./12-staking";

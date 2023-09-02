@@ -3,10 +3,11 @@ import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { PonziReportService } from "./report.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PonziDepositEntity } from "../deposit/deposit.entity";
+import { PonziReportService } from "./report.service";
 import { PonziReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
@@ -16,14 +17,21 @@ export class PonziDepositController {
 
   @Get("/report")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PonziReportSearchDto): Promise<[Array<PonziDepositEntity>, number]> {
-    return this.ponziReportService.search(dto);
+  public search(
+    @Query() dto: PonziReportSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<PonziDepositEntity>, number]> {
+    return this.ponziReportService.search(dto, userEntity);
   }
 
   @ApiProduces("application/zip")
   @Get("/report/export")
-  public async export(@Query() query: PonziReportSearchDto, @Res() res: Response): Promise<void> {
-    const csv = await this.ponziReportService.export(query);
+  public async export(
+    @Query() query: PonziReportSearchDto,
+    @User() userEntity: UserEntity,
+    @Res() res: Response,
+  ): Promise<void> {
+    const csv = await this.ponziReportService.export(query, userEntity);
 
     const archive = archiver("zip");
 

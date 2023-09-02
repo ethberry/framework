@@ -42,8 +42,12 @@ export class Erc1155ContractController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity | null> {
-    return this.erc1155CollectionService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity | null> {
+    return this.erc1155CollectionService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -54,7 +58,7 @@ export class Erc1155ContractController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.erc1155CollectionService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.erc1155CollectionService.delete({ id }, userEntity);
   }
 }

@@ -24,4 +24,6 @@ export class WaitListListAutocompleteDto implements IWaitListListAutocompleteDto
   })
   @IsBoolean({ message: "typeMismatch" })
   public isRewardSet: boolean;
+
+  public merchantId: number;
 }

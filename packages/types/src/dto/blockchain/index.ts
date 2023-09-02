@@ -61,6 +61,7 @@ export * from "./mechanics/wait-list/item/search";
 export * from "./mechanics/wait-list/list/autocomplete";
 export * from "./mechanics/wait-list/list/create";
 export * from "./mechanics/wait-list/list/update";
+export * from "./mechanics/wait-list/list/search";
 export * from "./mechanics/wait-list/deploy";
 
 export * from "./mechanics/ponzi/deploy";

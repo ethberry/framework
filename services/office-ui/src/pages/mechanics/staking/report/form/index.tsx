@@ -19,10 +19,8 @@ interface IStakingReportSearchFormProps {
 export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { query, stakingDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } =
-    initialValues;
+  const { stakingDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = {
-    query,
     stakingDepositStatus,
     account,
     emptyReward,

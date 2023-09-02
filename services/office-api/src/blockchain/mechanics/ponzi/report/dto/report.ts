@@ -2,7 +2,6 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsArray,
   IsEnum,
-  IsEthereumAddress,
   IsInt,
   IsISO8601,
   IsOptional,
@@ -12,32 +11,39 @@ import {
   ValidateNested,
 } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IPonziReportItemSearchDto, IPonziReportSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 
 export class PonziReportItemSearchDto implements IPonziReportItemSearchDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     enum: TokenType,
   })
-  @IsOptional()
   @Transform(({ value }) => value as TokenType)
   @IsEnum(TokenType, { message: "badInput" })
   public tokenType: TokenType;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     minimum: 1,
   })
-  @IsOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public contractId: number;
 }
 
-export class PonziReportSearchDto extends SearchDto implements IPonziReportSearchDto {
+export class PonziReportSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IPonziReportSearchDto {
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+
   @ApiPropertyOptional({
     enum: PonziDepositStatus,
     isArray: true,
@@ -49,13 +55,6 @@ export class PonziReportSearchDto extends SearchDto implements IPonziReportSearc
   @Transform(({ value }) => value as Array<PonziDepositStatus>)
   @IsEnum(PonziDepositStatus, { each: true, message: "badInput" })
   public ponziDepositStatus: Array<PonziDepositStatus>;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public account: string;
 
   @ApiPropertyOptional()
   @IsOptional()

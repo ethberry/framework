@@ -31,7 +31,6 @@ export const StakingReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      query: "",
       account: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {

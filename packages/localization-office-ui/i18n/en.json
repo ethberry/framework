@@ -143,6 +143,10 @@
       "FEMALE": "Female",
       "MALE": "Male"
     },
+    "gradeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "language": {
       "AR": "\uD83C\uDDE6\uD83C\uDDEA Arabic",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
@@ -350,13 +354,18 @@
       "endTimestamp": "End date",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
+      "gradeStatus": "Status",
+      "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
       "isDefault": "Make default",
+      "isPrivate": "Private",
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "listId": "List ID",
+      "listIds": "List ID",
       "listenerType": "Listener type",
       "maxBalance": "Max. Balance",
       "maxCycles": "Max cycles count (0 - no limit)",
@@ -379,9 +388,9 @@
       "payee": "Payee",
       "payees": "Payees",
       "penalty": "Penalty",
-      "price": "Price",
       "ponziDepositStatus": "Status",
       "ponziRuleStatus": "Status",
+      "price": "Price",
       "random": "Random",
       "ratePlanId": "Id",
       "recentDeposits": "Recent deposits",
@@ -453,6 +462,8 @@
       "fromBlock": "1",
       "growthRate": "2",
       "item": "Bottle of water",
+      "listId": "Default list",
+      "listIds": "Default list",
       "maxBalance": "1000",
       "maxCycles": "0",
       "maxStake": "10",
@@ -551,6 +562,7 @@
         "erc1155": "ERC1155",
         "erc20": "ERC20",
         "erc721": "ERC721",
+        "erc998": "ERC998",
         "native": "NATIVE"
       },
       "infrastructure": {
@@ -584,10 +596,12 @@
         "claim": "Claim",
         "dispenser": "Dispenser",
         "drop": "Drop",
+        "grade": "Grade",
         "ponzi": "Ponzi",
         "staking": "Staking",
         "title": "Mechanics",
-        "vesting": "Vesting"
+        "vesting": "Vesting",
+        "wait-list": "Waitlist"
       },
       "title": "Dashboard"
     },
@@ -630,6 +644,25 @@
         "title": "ERC721 Tokens"
       }
     },
+    "erc998": {
+      "composition": {
+        "title": "ERC998 Composition"
+      },
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC998 Contracts"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "title": "ERC998",
+      "tokens": {
+        "title": "ERC998 Tokens"
+      }
+    },
+    "grade": {
+      "title": "Grade Rules"
+    },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
@@ -665,19 +698,6 @@
       "title": "System Payees",
       "withdraw": "Withdraw"
     },
-    "profile": {
-      "addresses": {
-        "default": "default",
-        "empty": "You don't have any addresses yet",
-        "inactive": "inactive"
-      },
-      "tabs": {
-        "addresses": "Addresses",
-        "general": "General",
-        "subscriptions": "Subscriptions"
-      },
-      "title": "Profile"
-    },
     "ponzi": {
       "chart": {
         "title": "Chart"
@@ -697,6 +717,19 @@
         "upload": "Upload rule"
       },
       "title": "Ponzi"
+    },
+    "profile": {
+      "addresses": {
+        "default": "default",
+        "empty": "You don't have any addresses yet",
+        "inactive": "inactive"
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "subscriptions": "Subscriptions"
+      },
+      "title": "Profile"
     },
     "rate-plan": {
       "tabs": {

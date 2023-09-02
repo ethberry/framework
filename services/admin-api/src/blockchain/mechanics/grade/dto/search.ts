@@ -18,4 +18,6 @@ export class GradeSearchDto extends SearchDto implements IGradeSearchDto {
   @Transform(({ value }) => value as Array<GradeStatus>)
   @IsEnum(GradeStatus, { each: true, message: "badInput" })
   public gradeStatus: Array<GradeStatus>;
+
+  public merchantId: number;
 }

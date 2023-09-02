@@ -17,7 +17,7 @@ import { GradeEntity } from "./grade.entity";
 export class GradeService {
   constructor(
     @InjectRepository(GradeEntity)
-    private readonly gradeEntityRepository: Repository<GradeEntity>,
+    protected readonly gradeEntityRepository: Repository<GradeEntity>,
     protected readonly assetService: AssetService,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,

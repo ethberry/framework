@@ -4,4 +4,5 @@ import { GradeStatus } from "../../../../entities";
 
 export interface IGradeSearchDto extends ISearchDto {
   gradeStatus: Array<GradeStatus>;
+  merchantId: number;
 }

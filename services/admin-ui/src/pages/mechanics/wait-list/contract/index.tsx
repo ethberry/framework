@@ -1,6 +1,16 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create, Delete } from "@mui/icons-material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -9,7 +19,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListContractActionsMenu } from "../../../../components/menu/mechanics/waitlist-contract";
+import { WaitListContractActionsMenu } from "../../../../components/menu/mechanics/wait-list-contract";
+import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { WaitListDeployButton } from "../../../../components/buttons";
 import { WaitListEditDialog } from "./edit";
 
@@ -20,8 +31,11 @@ export const WaitListContracts: FC = () => {
     search,
     selected,
     isLoading,
+    isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
+    handleSearch,
+    handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -36,6 +50,11 @@ export const WaitListContracts: FC = () => {
       description: emptyStateString,
       contractStatus: ContractStatus.NEW,
     },
+    search: {
+      query: "",
+      contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+      contractFeatures: [],
+    },
     filter: ({ title, description, imageUrl, contractStatus }) => ({
       title,
       description,
@@ -49,8 +68,21 @@ export const WaitListContracts: FC = () => {
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.contracts"]} />
 
       <PageHeader message="pages.wait-list.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
         <WaitListDeployButton />
       </PageHeader>
+
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={{}}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

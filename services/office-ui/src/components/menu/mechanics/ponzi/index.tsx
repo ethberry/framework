@@ -6,9 +6,9 @@ import type { IContract } from "@framework/types";
 
 import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { AllowanceMenuItem } from "../common/allowance";
 import { PonziBalanceMenuItem } from "./ponzi-balances";
 import { TopUpMenuItem } from "../common/top-up";
@@ -47,9 +47,9 @@ export const PonziActionsMenu: FC<IPonziActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="ponzi-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <TopUpMenuItem contract={contract} />
         <PonziBalanceMenuItem contract={contract} />

@@ -19,10 +19,8 @@ interface IPonziReportSearchFormProps {
 export const PonziReportSearchForm: FC<IPonziReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { query, ponziDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } =
-    initialValues;
+  const { ponziDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = {
-    query,
     ponziDepositStatus,
     account,
     emptyReward,
