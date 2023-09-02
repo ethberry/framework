@@ -11,7 +11,7 @@
   "dependencies": {
     "@gemunion/provider-wallet": "3.3.46",
     "@mui/material": "5.14.6",
-    "@uniswap/widgets": "2.53.1",
+    "@uniswap/widgets": "2.53.2",
     "@web3-react/core": "8.2.2"
   },
   "devDependencies": {
