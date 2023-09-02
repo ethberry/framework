@@ -52,7 +52,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     >
       {showAlert ? (
         <Alert severity="warning">
-          <FormattedMessage id="alert.allowanceUSDTWarning" />
+          <FormattedMessage id="message.allowanceUSDTWarning" />
         </Alert>
       ) : null}
       <CommonContractInput
