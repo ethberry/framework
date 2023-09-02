@@ -847,6 +847,7 @@
         "level": "Level: {level}",
         "price": "Base price: {amount}",
         "rarity": "Rarity: {rarity}",
+        "rarityMultiplier": "x {multiplier}",
         "title": "ERC721 Token: {title}",
         "traits": "Traits"
       },

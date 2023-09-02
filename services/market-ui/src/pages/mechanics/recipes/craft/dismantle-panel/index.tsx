@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { Alert, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Alert, Grid, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
@@ -12,12 +12,13 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 
 import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { TokenType, GradeStrategy } from "@framework/types";
 
 import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
 import { formatItem } from "../../../../../utils/money";
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { sorter } from "../../../../../utils/sorter";
+import { getDismantleMultiplier } from "./utils";
 
 export interface IDismantlePanelProps {
   token: IToken;
@@ -25,6 +26,7 @@ export interface IDismantlePanelProps {
 
 export const DismantlePanel: FC<IDismantlePanelProps> = props => {
   const { token } = props;
+  const rarity = Number(token.metadata.RARITY) || 1;
 
   const settings = useSettings();
 
@@ -35,8 +37,6 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
       templateId: token.templateId,
     },
   });
-
-  console.log("dismantlerows", rows);
 
   const metaFnWithSign = useServerSignature(
     (dismantle: IDismantle, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -59,7 +59,13 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
             component.contract!.contractType === TokenType.ERC1155
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
+          // TODO set Multiplier strategy in dismantle recipe
+          amount: getDismantleMultiplier(
+            rarity,
+            component.amount,
+            GradeStrategy.EXPONENTIAL,
+            dismantle.rarityMultiplier,
+          ).amount.toString(),
         })),
         // PRICE token to dismantle
         dismantle.price?.components.sort(sorter("id")).map(component => ({
@@ -90,6 +96,7 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
           referrer: settings.getReferrer(),
           dismantleId: dismantle.id,
           tokenId: token.tokenId,
+          address: token.template!.contract!.address,
         },
       },
       dismantle,
@@ -124,7 +131,24 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
               <ListItemIcon>
                 <Construction />
               </ListItemIcon>
-              <ListItemText>{formatItem(dismantle.item)}</ListItemText>
+              {/* <ListItemText>{formatItem(dismantle.item)}</ListItemText> */}
+              <ListItemText>
+                <Grid container spacing={1} alignItems="flex-center">
+                  <Grid item xs={12}>
+                    {formatItem(dismantle.item)}
+                  </Grid>
+                  {dismantle.rarityMultiplier > 0 ? (
+                    <Grid item xs={12}>
+                      <FormattedMessage
+                        id="pages.erc721.token.rarityMultiplier"
+                        values={{
+                          multiplier: ((1 + dismantle.rarityMultiplier / 100) ** rarity).toString(),
+                        }}
+                      />
+                    </Grid>
+                  ) : null}
+                </Grid>
+              </ListItemText>
             </ListItemButton>
           );
         })}

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
@@ -7,13 +7,14 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, ISignDismantleDto } from "@framework/types";
-import { DismantleStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { DismantleStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../../common/utils/sorter";
 import { DismantleEntity } from "./dismantle.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class DismantleService {
@@ -22,6 +23,7 @@ export class DismantleService {
     private readonly dismantleEntityRepository: Repository<DismantleEntity>,
     private readonly signerService: SignerService,
     private readonly contractService: ContractService,
+    private readonly tokenService: TokenService,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -123,12 +125,20 @@ export class DismantleService {
   }
 
   public async sign(dto: ISignDismantleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
+    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId, address } = dto;
     const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
 
     if (!dismantleEntity) {
       throw new NotFoundException("dismantleNotFound");
     }
+
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId);
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    const rarity = Number(tokenEntity.metadata.RARITY) || 1;
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
@@ -147,6 +157,8 @@ export class DismantleService {
       },
       dismantleEntity,
       tokenId,
+      rarity,
+      dismantleEntity.rarityMultiplier,
     );
 
     return { nonce: hexlify(nonce), signature, expiresAt };
@@ -158,6 +170,8 @@ export class DismantleService {
     params: IParams,
     dismantleEntity: DismantleEntity,
     tokenId: string,
+    rarity: number,
+    rarityMultiplier: number,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(
       verifyingContract,
@@ -171,7 +185,7 @@ export class DismantleService {
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
             : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
+        amount: this.getMultiplier(rarity, component.amount, GradeStrategy.EXPONENTIAL, rarityMultiplier).toString(),
       })),
       // PRICE token to dismantle
       [
@@ -183,5 +197,19 @@ export class DismantleService {
         }))[0],
       ],
     );
+  }
+
+  public getMultiplier(level: number, amount: string, gradeStrategy: GradeStrategy, rarityMultiplier: number) {
+    if (gradeStrategy === GradeStrategy.FLAT) {
+      return BigInt(amount);
+    } else if (gradeStrategy === GradeStrategy.LINEAR) {
+      return BigInt(amount) * BigInt(level);
+    } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
+      const exp = (1 + rarityMultiplier / 100) ** level;
+      const [whole = "", decimals = ""] = exp.toString().split(".");
+      return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);
+    } else {
+      throw new BadRequestException("unknownStrategy");
+    }
   }
 }

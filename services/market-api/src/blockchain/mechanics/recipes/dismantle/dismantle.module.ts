@@ -8,9 +8,10 @@ import { DismantleService } from "./dismantle.service";
 import { DismantleController } from "./dismantle.controller";
 import { DismantleEntity } from "./dismantle.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
-  imports: [SettingsModule, SignerModule, ContractModule, TypeOrmModule.forFeature([DismantleEntity])],
+  imports: [SettingsModule, SignerModule, ContractModule, TokenModule, TypeOrmModule.forFeature([DismantleEntity])],
   providers: [Logger, DismantleService],
   controllers: [DismantleController],
   exports: [DismantleService],

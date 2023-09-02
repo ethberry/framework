@@ -724,7 +724,7 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "random": "Random",
-      "rarityMultiplier": "Rarity multiplier",
+      "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",

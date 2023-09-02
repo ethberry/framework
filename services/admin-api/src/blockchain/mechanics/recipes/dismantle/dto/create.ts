@@ -22,7 +22,7 @@ export class DismantleCreateDto implements IDismantleCreateDto {
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   // unfortunately there is no such property, so we just save
   // @ValidateIf(o => o.item.components[0].contract.contractFeatures.includes(ContractFeatures.RANDOM))
   public rarityMultiplier: number;

@@ -9,7 +9,7 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IDismantle } from "@framework/types";
 import { DismantleStatus, ModuleType, TokenType } from "@framework/types";
 
-import { validationSchema } from "./validation";
+import { validationSchemaCreate, validationSchemaEdit } from "./validation";
 import { RarityMultiplierInput } from "./rarity-multiplier-input";
 
 export interface IExchangeEditDialogProps {
@@ -37,7 +37,7 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      validationSchema={id ? validationSchemaEdit : validationSchemaCreate}
       message={message}
       testId="DismantleEditForm"
       {...rest}

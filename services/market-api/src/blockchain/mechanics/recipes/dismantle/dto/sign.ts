@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, Min } from "class-validator";
+import { IsInt, IsString, IsEthereumAddress, Min } from "class-validator";
+import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { IsBigInt } from "@gemunion/nest-js-validators";
@@ -22,4 +23,10 @@ export class SignDismantleDto extends Mixin(AccountDto, ReferrerOptionalDto, Cha
   })
   @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
+  public address: string;
 }
