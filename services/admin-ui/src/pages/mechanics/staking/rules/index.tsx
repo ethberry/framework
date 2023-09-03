@@ -23,9 +23,8 @@ import type {
   IStakingRuleDepositSearchDto,
   IStakingRuleRewardSearchDto,
   IStakingRuleSearchDto,
-  StakingRewardTokenType,
 } from "@framework/types";
-import { ModuleType, StakingDepositTokenType, StakingRuleStatus } from "@framework/types";
+import { ModuleType, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";

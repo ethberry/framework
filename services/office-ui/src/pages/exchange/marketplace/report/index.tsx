@@ -100,7 +100,12 @@ export const MarketplaceReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ClaimSearchForm">
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="MarketplaceReportSearchForm"
+      >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12} md={6}>
             <DateTimeInput name="startTimestamp" />
