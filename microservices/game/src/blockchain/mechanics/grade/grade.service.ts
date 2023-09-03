@@ -11,6 +11,7 @@ import type { IGradeSignDto } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -36,22 +37,28 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: ISearchGradeDto): Promise<GradeEntity | null> {
+  public async findOneByToken(dto: ISearchGradeDto, merchantEntity: MerchantEntity): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
-    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId }, merchantEntity);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    return this.findOneWithRelations({
-      contractId: tokenEntity.template.contract.id,
-      attribute,
-    });
+    return this.findOneWithRelations(
+      {
+        contractId: tokenEntity.template.contract.id,
+        attribute,
+      },
+      merchantEntity,
+    );
   }
 
-  public async findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
+  public async findOneWithRelations(
+    where: FindOptionsWhere<GradeEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<GradeEntity | null> {
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
     queryBuilder.leftJoinAndSelect("grade.price", "price");
@@ -71,16 +78,21 @@ export class GradeService {
     queryBuilder.andWhere("grade.contractId = :contractId", {
       contractId: where.contractId,
     });
+
     queryBuilder.andWhere("grade.attribute = :attribute", {
       attribute: where.attribute,
+    });
+
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
     });
 
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IGradeSignDto): Promise<IServerSignature> {
+  public async sign(dto: IGradeSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
-    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId }, merchantEntity);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -91,10 +103,13 @@ export class GradeService {
       throw new BadRequestException("featureIsNotSupported");
     }
 
-    const gradeEntity = await this.findOneWithRelations({
-      contractId: tokenEntity.template.contract.id,
-      attribute,
-    });
+    const gradeEntity = await this.findOneWithRelations(
+      {
+        contractId: tokenEntity.template.contract.id,
+        attribute,
+      },
+      merchantEntity,
+    );
 
     if (!gradeEntity) {
       throw new NotFoundException("gradeNotFound");
@@ -170,12 +185,15 @@ export class GradeService {
     }
   }
 
-  public autocomplete(dto: IAutocompleteGradeDto): Promise<Array<GradeEntity>> {
+  public autocomplete(dto: IAutocompleteGradeDto, merchantEntity: MerchantEntity): Promise<Array<GradeEntity>> {
     const { contractId } = dto;
     return this.gradeEntityRepository.find({
       where: {
         gradeStatus: GradeStatus.ACTIVE,
         contractId,
+        contract: {
+          merchantId: merchantEntity.id,
+        },
       },
       join: {
         alias: "grade",

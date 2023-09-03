@@ -1,14 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
-import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
-import type { IGradeSignDto } from "@framework/types";
+import { ISearchGradeDto } from "../interfaces";
 
-import { ChainIdDto } from "../../../../common/dto";
-
-export class GradeSignDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements IGradeSignDto {
+export class SearchGradeDto implements ISearchGradeDto {
   @ApiProperty({
     minimum: 1,
   })

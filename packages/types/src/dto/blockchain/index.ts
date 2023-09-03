@@ -25,11 +25,16 @@ export * from "./mechanics/claim/update";
 export * from "./mechanics/claim/upload";
 
 export * from "./mechanics/grade/search";
+export * from "./mechanics/grade/sign";
+
 export * from "./mechanics/craft/search";
 export * from "./mechanics/craft/sign";
+
 export * from "./mechanics/dismantle/search";
 export * from "./mechanics/dismantle/sign";
+
 export * from "./mechanics/rent/search";
+
 export * from "./mechanics/drop/search";
 
 export * from "./mechanics/lottery/deploy";

@@ -1,4 +1,4 @@
-export interface ISignGradeDto {
+export interface IGradeSignDto {
   chainId: number;
   account: string;
   referrer: string;
