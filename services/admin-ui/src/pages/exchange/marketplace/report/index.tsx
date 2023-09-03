@@ -84,8 +84,8 @@ export const MarketplaceReport: FC = () => {
       minWidth: 200
     },
     {
-      field: "from",
-      headerName: formatMessage({ id: "form.labels.from" }),
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.address" }),
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
@@ -168,17 +168,19 @@ export const MarketplaceReport: FC = () => {
         rowThreshold={0}
         getDetailPanelHeight={getDetailPanelHeight}
         getDetailPanelContent={getDetailPanelContent}
-        rows={rows.map((event: IEventHistoryReport) => ({
-          id: event.id,
-          tokenId: event.items[0]?.token?.id,
-          title: event.items[0]?.token?.template?.title,
-          from: (event.eventData as any).from,
-          eventData: event.eventData,
-          eventType: event.eventType,
-          price: event.price,
-          createdAt: event.createdAt,
-          items: event.items,
-        }))}
+        rows={rows.map((event: IEventHistoryReport) => {
+          return {
+            id: event.id,
+            tokenId: event.items[0]?.token?.id,
+            title: event.items[0]?.token?.template?.title,
+            account: (event.eventData as any).account,
+            eventData: event.eventData,
+            eventType: event.eventType,
+            price: event.price,
+            createdAt: event.createdAt,
+            items: event.items,
+          };
+        })}
         // rows={rows}
         getRowHeight={() => "auto"}
         sx={{
