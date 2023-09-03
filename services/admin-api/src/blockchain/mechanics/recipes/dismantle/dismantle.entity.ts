@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IDismantle } from "@framework/types";
-import { DismantleStatus } from "@framework/types";
+import { DismantleStatus, DismantleStrategy } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
@@ -27,6 +27,12 @@ export class DismantleEntity extends IdDateBaseEntity implements IDismantle {
   @JoinColumn()
   @OneToOne(_type => MerchantEntity)
   public merchant: MerchantEntity;
+
+  @Column({
+    type: "enum",
+    enum: DismantleStrategy,
+  })
+  public dismantleStrategy: DismantleStrategy;
 
   @Column({
     type: "enum",

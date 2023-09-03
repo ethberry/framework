@@ -7,7 +7,7 @@ import { FormWatcher } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IDismantle } from "@framework/types";
-import { DismantleStatus, ModuleType, TokenType } from "@framework/types";
+import { DismantleStatus, DismantleStrategy, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchemaCreate, validationSchemaEdit } from "./validation";
 import { RarityMultiplierInput } from "./rarity-multiplier-input";
@@ -22,13 +22,14 @@ export interface IExchangeEditDialogProps {
 export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, price, dismantleStatus, rarityMultiplier } = initialValues;
+  const { id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy } = initialValues;
 
   const fixedValues = {
     id,
     item,
     price,
     dismantleStatus,
+    dismantleStrategy,
     rarityMultiplier,
   };
 
@@ -63,6 +64,7 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
       />
       <FormWatcher />
       <RarityMultiplierInput name="rarityMultiplier" />
+      <SelectInput name="dismantleStrategy" options={DismantleStrategy} />
       {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}
     </FormDialog>
   );

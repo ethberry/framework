@@ -1,7 +1,7 @@
 import { mixed, number, object } from "yup";
 
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { DismantleStatus } from "@framework/types";
+import { DismantleStatus, DismantleStrategy } from "@framework/types";
 
 export const validationSchemaCreate = object().shape({
   item: templateAssetValidationSchema,
@@ -17,6 +17,9 @@ export const validationSchemaEdit = object().shape({
   price: templateAssetValidationSchema,
   dismantleStatus: mixed<DismantleStatus>()
     .oneOf(Object.values(DismantleStatus))
+    .required("form.validations.valueMissing"),
+  dismantleStrategy: mixed<DismantleStrategy>()
+    .oneOf(Object.values(DismantleStrategy))
     .required("form.validations.valueMissing"),
   rarityMultiplier: number()
     .required("form.validations.valueMissing")

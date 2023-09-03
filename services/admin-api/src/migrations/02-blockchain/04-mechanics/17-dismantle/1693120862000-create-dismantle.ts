@@ -6,6 +6,14 @@ import { NodeEnv } from "@framework/types";
 export class CreateDismantle1693120862000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
+      CREATE TYPE ${ns}.dismantle_strategy_enum AS ENUM (
+        'FLAT',
+        'LINEAR',
+        'EXPONENTIAL'
+      );
+    `);
+
+    await queryRunner.query(`
       CREATE TYPE ${ns}.dismantle_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
@@ -31,6 +39,10 @@ export class CreateDismantle1693120862000 implements MigrationInterface {
         {
           name: "rarity_multiplier",
           type: "int",
+        },
+        {
+          name: "dismantle_strategy",
+          type: `${ns}.dismantle_strategy_enum`,
         },
         {
           name: "merchant_id",

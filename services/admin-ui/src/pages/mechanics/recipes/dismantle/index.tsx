@@ -19,7 +19,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { IDismantle, IDismantleSearchDto } from "@framework/types";
-import { DismantleStatus, TokenType } from "@framework/types";
+import { DismantleStatus, DismantleStrategy, TokenType } from "@framework/types";
 
 import { DismantleEditDialog } from "./edit";
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
@@ -50,16 +50,18 @@ export const Dismantle: FC = () => {
       price: getEmptyTemplate(TokenType.ERC721),
       item: getEmptyTemplate(TokenType.ERC1155),
       rarityMultiplier: 0.0,
+      dismantleStrategy: DismantleStrategy.EXPONENTIAL,
     },
     search: {
       query: "",
       dismantleStatus: [DismantleStatus.ACTIVE],
     },
-    filter: ({ item, price, dismantleStatus, rarityMultiplier }) => ({
+    filter: ({ item, price, dismantleStatus, rarityMultiplier, dismantleStrategy }) => ({
       item: cleanUpAsset(item),
       price: cleanUpAsset(price),
       dismantleStatus,
       rarityMultiplier,
+      dismantleStrategy,
     }),
   });
 

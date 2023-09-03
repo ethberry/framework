@@ -12,7 +12,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 
 import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
-import { TokenType, GradeStrategy } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
 import { formatItem } from "../../../../../utils/money";
@@ -26,7 +26,6 @@ export interface IDismantlePanelProps {
 
 export const DismantlePanel: FC<IDismantlePanelProps> = props => {
   const { token } = props;
-  const rarity = Number(token.metadata.RARITY) || 1;
 
   const settings = useSettings();
 
@@ -61,9 +60,9 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           // TODO set Multiplier strategy in dismantle recipe
           amount: getDismantleMultiplier(
-            rarity,
             component.amount,
-            GradeStrategy.EXPONENTIAL,
+            token.metadata,
+            dismantle.dismantleStrategy,
             dismantle.rarityMultiplier,
           ).amount.toString(),
         })),
@@ -95,8 +94,7 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
           account,
           referrer: settings.getReferrer(),
           dismantleId: dismantle.id,
-          tokenId: token.tokenId,
-          address: token.template!.contract!.address,
+          tokenId: token.id,
         },
       },
       dismantle,
@@ -131,7 +129,6 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
               <ListItemIcon>
                 <Construction />
               </ListItemIcon>
-              {/* <ListItemText>{formatItem(dismantle.item)}</ListItemText> */}
               <ListItemText>
                 <Grid container spacing={1} alignItems="flex-center">
                   <Grid item xs={12}>
@@ -142,7 +139,12 @@ export const DismantlePanel: FC<IDismantlePanelProps> = props => {
                       <FormattedMessage
                         id="pages.erc721.token.rarityMultiplier"
                         values={{
-                          multiplier: ((1 + dismantle.rarityMultiplier / 100) ** rarity).toString(),
+                          multiplier: getDismantleMultiplier(
+                            "1",
+                            token.metadata,
+                            dismantle.dismantleStrategy,
+                            dismantle.rarityMultiplier,
+                          ).multiplier.toString(),
                         }}
                       />
                     </Grid>

@@ -9,6 +9,12 @@ export enum DismantleStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum DismantleStrategy {
+  FLAT = "FLAT",
+  LINEAR = "LINEAR",
+  EXPONENTIAL = "EXPONENTIAL",
+}
+
 export interface IDismantle extends IIdDateBase {
   item?: IAsset;
   price?: IAsset;
@@ -16,5 +22,6 @@ export interface IDismantle extends IIdDateBase {
   merchant?: IMerchant;
   dismantleStatus: DismantleStatus;
   rarityMultiplier: number;
+  dismantleStrategy: DismantleStrategy;
   history?: Array<IEventHistory>;
 }

@@ -7,7 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, ISignDismantleDto } from "@framework/types";
-import { DismantleStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { DismantleStatus, DismantleStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../../common/utils/sorter";
@@ -15,6 +15,7 @@ import { DismantleEntity } from "./dismantle.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class DismantleService {
@@ -125,20 +126,20 @@ export class DismantleService {
   }
 
   public async sign(dto: ISignDismantleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId, address } = dto;
+    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
     const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
 
     if (!dismantleEntity) {
       throw new NotFoundException("dismantleNotFound");
     }
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId);
+    const tokenEntity = await this.tokenService.findOne({ id: tokenId }, { relations: { template: true } });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const rarity = Number(tokenEntity.metadata.RARITY) || 1;
+    // const rarity = Number(tokenEntity.metadata.RARITY) || 1;
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
@@ -156,9 +157,7 @@ export class DismantleService {
         referrer,
       },
       dismantleEntity,
-      tokenId,
-      rarity,
-      dismantleEntity.rarityMultiplier,
+      tokenEntity,
     );
 
     return { nonce: hexlify(nonce), signature, expiresAt };
@@ -169,9 +168,7 @@ export class DismantleService {
     account: string,
     params: IParams,
     dismantleEntity: DismantleEntity,
-    tokenId: string,
-    rarity: number,
-    rarityMultiplier: number,
+    tokenEntity: TokenEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(
       verifyingContract,
@@ -185,26 +182,46 @@ export class DismantleService {
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
             : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: this.getMultiplier(rarity, component.amount, GradeStrategy.EXPONENTIAL, rarityMultiplier).toString(),
+        amount: this.getMultiplier(
+          component.amount,
+          tokenEntity.metadata,
+          dismantleEntity.dismantleStrategy,
+          dismantleEntity.rarityMultiplier,
+        ).toString(),
       })),
       // PRICE token to dismantle
       [
         dismantleEntity.price.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
-          tokenId,
+          tokenId: tokenEntity.tokenId,
           amount: component.amount,
         }))[0],
       ],
     );
   }
 
-  public getMultiplier(level: number, amount: string, gradeStrategy: GradeStrategy, rarityMultiplier: number) {
-    if (gradeStrategy === GradeStrategy.FLAT) {
+  public getMultiplier(
+    amount: string,
+    metadata: Record<string, any>,
+    dismantleStrategy: DismantleStrategy,
+    rarityMultiplier: number,
+  ) {
+    const level = metadata.RARITY
+      ? Number(metadata.RARITY)
+      : metadata.LEVEL && !metadata.GRADE
+      ? Number(metadata.LEVEL)
+      : metadata.GRADE && !metadata.LEVEL
+      ? Number(metadata.GRADE)
+      : metadata.LEVEL && metadata.GRADE
+      ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
+      : 1;
+
+    if (dismantleStrategy === DismantleStrategy.FLAT) {
       return BigInt(amount);
-    } else if (gradeStrategy === GradeStrategy.LINEAR) {
+    } else if (dismantleStrategy === DismantleStrategy.LINEAR) {
       return BigInt(amount) * BigInt(level);
-    } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
+    } else if (dismantleStrategy === DismantleStrategy.EXPONENTIAL) {
       const exp = (1 + rarityMultiplier / 100) ** level;
       const [whole = "", decimals = ""] = exp.toString().split(".");
       return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);

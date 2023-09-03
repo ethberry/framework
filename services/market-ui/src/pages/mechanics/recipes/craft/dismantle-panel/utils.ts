@@ -1,23 +1,28 @@
 import { BigNumber } from "ethers";
 
-import { GradeStrategy } from "@framework/types";
-
-export interface IDismantleMultiplierParameters {
-  gradeStrategy: GradeStrategy;
-  rarityMultiplier: number;
-}
+import { DismantleStrategy } from "@framework/types";
 
 export const getDismantleMultiplier = (
-  level: number,
   amount: string,
-  gradeStrategy: GradeStrategy,
+  metadata: Record<string, any>,
+  dismantleStrategy: DismantleStrategy,
   rarityMultiplier: number,
 ) => {
-  if (gradeStrategy === GradeStrategy.FLAT) {
+  const level = metadata.RARITY
+    ? Number(metadata.RARITY)
+    : metadata.LEVEL && !metadata.GRADE
+    ? Number(metadata.LEVEL)
+    : metadata.GRADE && !metadata.LEVEL
+    ? Number(metadata.GRADE)
+    : metadata.LEVEL && metadata.GRADE
+    ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
+    : 1;
+
+  if (dismantleStrategy === DismantleStrategy.FLAT) {
     return { amount: BigNumber.from(amount), multiplier: 1 };
-  } else if (gradeStrategy === GradeStrategy.LINEAR) {
+  } else if (dismantleStrategy === DismantleStrategy.LINEAR) {
     return { amount: BigNumber.from(amount).mul(level), multiplier: level };
-  } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
+  } else if (dismantleStrategy === DismantleStrategy.EXPONENTIAL) {
     const exp = (1 + rarityMultiplier / 100) ** level;
     const [whole = "", decimals = ""] = exp.toString().split(".");
     return {

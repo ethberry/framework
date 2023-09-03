@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ValidateNested, IsInt, Min } from "class-validator";
+import { ValidateNested, IsInt, IsEnum, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import type { IDismantleCreateDto } from "../interfaces";
 import { DismantleItemDto, DismantlePriceDto } from "./custom";
+import { DismantleStrategy } from "@framework/types";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
@@ -26,4 +27,8 @@ export class DismantleCreateDto implements IDismantleCreateDto {
   // unfortunately there is no such property, so we just save
   // @ValidateIf(o => o.item.components[0].contract.contractFeatures.includes(ContractFeatures.RANDOM))
   public rarityMultiplier: number;
+
+  @ApiProperty()
+  @IsEnum(DismantleStrategy, { message: "badInput" })
+  public dismantleStrategy: DismantleStrategy;
 }

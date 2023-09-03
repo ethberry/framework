@@ -233,6 +233,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "dismantleStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
+    },
     "durationUnit": {
       "DAY": "Day",
       "HOUR": "Hour",
@@ -652,6 +657,7 @@
       "deposit": "Deposit",
       "description": "Description",
       "dismantleStatus": "Status",
+      "dismantleStrategy": "Strategy",
       "displayName": "Display name",
       "duration": "Duration",
       "durationAmount": "Duration",
