@@ -9,7 +9,7 @@
   },
   "description": "react uniswap-widget",
   "dependencies": {
-    "@gemunion/provider-wallet": "3.3.46",
+    "@gemunion/provider-wallet": "3.3.47",
     "@mui/material": "5.14.7",
     "@uniswap/widgets": "2.53.2",
     "@web3-react/core": "8.2.2"
