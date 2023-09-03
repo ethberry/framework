@@ -7,7 +7,7 @@ import { AccountDto } from "@gemunion/collection";
 import type { IClaimCreateDto } from "@framework/types";
 
 import { ItemDto } from "../../../exchange/asset/dto";
-import { ChainIdDto } from "../../../../common/common/dto";
+import { ChainIdDto } from "../../../../common/dto";
 
 export class ClaimItemCreateDto extends Mixin(AccountDto, ChainIdDto) implements IClaimCreateDto {
   @ApiProperty({

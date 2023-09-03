@@ -5,13 +5,12 @@ import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 
 import { SettingsModule } from "../../../../infrastructure/settings/settings.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { TokenModule } from "../../../hierarchy/token/token.module";
 import { DismantleService } from "./dismantle.service";
-import { DismantleEntity } from "./dismantle.entity";
 import { DismantleController } from "./dismantle.controller";
+import { DismantleEntity } from "./dismantle.entity";
 
 @Module({
-  imports: [SettingsModule, SignerModule, ContractModule, TokenModule, TypeOrmModule.forFeature([DismantleEntity])],
+  imports: [SettingsModule, SignerModule, ContractModule, TypeOrmModule.forFeature([DismantleEntity])],
   providers: [Logger, DismantleService],
   controllers: [DismantleController],
   exports: [DismantleService],

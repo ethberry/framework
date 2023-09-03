@@ -299,31 +299,4 @@ export class TokenService {
 
     return queryBuilder.getOne();
   }
-
-  public getToken(tokenId: string, address: string, chainId?: number, balance = false): Promise<TokenEntity | null> {
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-
-    queryBuilder.select();
-
-    queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-
-    if (balance) {
-      queryBuilder.leftJoinAndSelect("token.balance", "balance");
-    }
-
-    queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
-
-    queryBuilder.andWhere("contract.address = :address", {
-      address,
-    });
-
-    if (chainId) {
-      queryBuilder.andWhere("contract.chainId = :chainId", {
-        chainId,
-      });
-    }
-
-    return queryBuilder.getOne();
-  }
 }

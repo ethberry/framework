@@ -5,8 +5,8 @@ import type { ICraft } from "@framework/types";
 import { CraftStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
-import { AssetEntity } from "../../exchange/asset/asset.entity";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "craft" })
 export class CraftEntity extends IdDateBaseEntity implements ICraft {

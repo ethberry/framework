@@ -1,4 +1,4 @@
-export interface ISignDismantleDto {
+export interface IDismantleSignDto {
   chainId: number;
   account: string;
   referrer: string;

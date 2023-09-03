@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
@@ -11,6 +11,7 @@ import { DismantleStatus, DismantleStrategy, ModuleType, SettingsKeys, TokenType
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -28,7 +29,10 @@ export class DismantleService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: Partial<IDismantleSearchDto>): Promise<[Array<DismantleEntity>, number]> {
+  public search(
+    dto: Partial<IDismantleSearchDto>,
+    merchantEntity: MerchantEntity,
+  ): Promise<[Array<DismantleEntity>, number]> {
     const { query, templateId, skip, take } = dto;
 
     const queryBuilder = this.dismantleEntityRepository.createQueryBuilder("dismantle");
@@ -52,6 +56,10 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+
+    queryBuilder.andWhere("dismantle.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
 
     queryBuilder.where({
       dismantleStatus: DismantleStatus.ACTIVE,
@@ -91,7 +99,10 @@ export class DismantleService {
     return this.dismantleEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<DismantleEntity>): Promise<DismantleEntity | null> {
+  public findOneWithRelations(
+    where: FindOptionsWhere<DismantleEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<DismantleEntity | null> {
     const queryBuilder = this.dismantleEntityRepository.createQueryBuilder("dismantle");
 
     queryBuilder.leftJoinAndSelect("dismantle.merchant", "merchant");
@@ -122,15 +133,24 @@ export class DismantleService {
     queryBuilder.andWhere("dismantle.id = :id", {
       id: where.id,
     });
+
+    queryBuilder.andWhere("dismantle.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IDismantleSignDto): Promise<IServerSignature> {
+  public async sign(dto: IDismantleSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
-    const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
+    const dismantleEntity = await this.findOneWithRelations({ id: dismantleId }, merchantEntity);
 
     if (!dismantleEntity) {
       throw new NotFoundException("dismantleNotFound");
+    }
+
+    if (dismantleEntity.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     const tokenEntity = await this.tokenService.findOne({ id: tokenId }, { relations: { template: true } });

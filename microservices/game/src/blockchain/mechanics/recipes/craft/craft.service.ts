@@ -3,41 +3,48 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ICraftSignDto } from "@framework/types";
+import type { ICraftSearchDto, ICraftSignDto } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import { SettingsService } from "../../../infrastructure/settings/settings.service";
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
-import { sorter } from "../../../common/utils/sorter";
+import { sorter } from "../../../../common/utils/sorter";
+import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { CraftEntity } from "./craft.entity";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class CraftService {
   constructor(
     @InjectRepository(CraftEntity)
     private readonly craftEntityRepository: Repository<CraftEntity>,
-    protected readonly contractService: ContractService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: Partial<ISearchDto>, merchantEntity: MerchantEntity): Promise<[Array<CraftEntity>, number]> {
-    const { query, skip, take } = dto;
+  public search(dto: Partial<ICraftSearchDto>, merchantEntity: MerchantEntity): Promise<[Array<CraftEntity>, number]> {
+    const { query, templateId, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("craft.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("craft.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("craft.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -58,6 +65,10 @@ export class CraftService {
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
     });
+
+    if (templateId) {
+      queryBuilder.where("item_template.id = :templateId", { templateId });
+    }
 
     if (query) {
       queryBuilder.leftJoin(

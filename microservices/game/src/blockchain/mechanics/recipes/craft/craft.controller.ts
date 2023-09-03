@@ -4,10 +4,10 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { SearchDto } from "@gemunion/collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import { SignCraftDto } from "./dto";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { SignCraftDto } from "./dto";
 
 @Controller("/craft")
 export class CraftController {

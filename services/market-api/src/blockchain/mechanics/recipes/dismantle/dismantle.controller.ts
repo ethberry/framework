@@ -2,9 +2,10 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptor
 
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+
 import { DismantleService } from "./dismantle.service";
 import { DismantleEntity } from "./dismantle.entity";
-import { DismantleSearchDto, SignDismantleDto } from "./dto";
+import { DismantleSearchDto, DismantleSignDto } from "./dto";
 
 @Public()
 @Controller("/dismantle")
@@ -18,7 +19,7 @@ export class DismantleController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: SignDismantleDto): Promise<IServerSignature> {
+  public sign(@Body() dto: DismantleSignDto): Promise<IServerSignature> {
     return this.dismantleService.sign(dto);
   }
 

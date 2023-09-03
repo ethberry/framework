@@ -10,11 +10,11 @@ import { ItemDto } from "../../../blockchain/exchange/asset/dto";
 
 export class AchievementRuleCreateDto extends SearchableDto implements IAchievementRuleCreateDto {
   @ApiPropertyOptional({
-    minimum: 0,
+    minimum: 1,
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
+  @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 
   @ApiProperty({

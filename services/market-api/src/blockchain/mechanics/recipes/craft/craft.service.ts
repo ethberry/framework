@@ -2,17 +2,18 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ICraftSignDto } from "@framework/types";
-import { CraftStatus, ICraftSearchDto, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { ICraftSearchDto, ICraftSignDto } from "@framework/types";
+import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../../common/utils/sorter";
-import { CraftEntity } from "./craft.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { CraftEntity } from "./craft.entity";
 
 @Injectable()
 export class CraftService {
