@@ -7,7 +7,7 @@ import type { IMarketplaceSupplySearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, TokenStatus, TokenType } from "@framework/types";
 
 import { CommonContractInput } from "../../../../../components/inputs/common-contract";
-import { TemplateInput } from "./template-input";
+import { TemplateInput } from "../../../../../components/inputs/template";
 
 interface IMarketplaceGradeSearchFormProps {
   onSubmit: (values: IMarketplaceSupplySearchDto) => Promise<any>;
@@ -53,7 +53,7 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
             />
           </Grid>
           <Grid item xs={6}>
-            <TemplateInput />
+            <TemplateInput contractFeatures={[ContractFeatures.DISCRETE]} />
           </Grid>
         </Grid>
       </Collapse>

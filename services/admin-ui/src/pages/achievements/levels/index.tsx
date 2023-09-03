@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -22,7 +24,6 @@ import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } 
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
-import { AchievementLevelSearchForm } from "./search";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const emptyAchievementRule = {
@@ -125,7 +126,18 @@ export const AchievementLevels: FC = () => {
         </Button>
       </PageHeader>
 
-      <AchievementLevelSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="AchievementLevelSearchForm"
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <EntityInput name="achievementRuleIds" controller="achievements/rules" multiple />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

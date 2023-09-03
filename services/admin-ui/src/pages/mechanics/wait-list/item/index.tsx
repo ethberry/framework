@@ -1,15 +1,25 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
 import { Add, Delete, FilterList } from "@mui/icons-material";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListSearchForm } from "./form";
 import { WaitListItemEditDialog } from "./edit";
 
 export const WaitListItem: FC = () => {
@@ -55,12 +65,24 @@ export const WaitListItem: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListItemCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="WaitListItemSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="listIds" controller="wait-list/list" multiple />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>

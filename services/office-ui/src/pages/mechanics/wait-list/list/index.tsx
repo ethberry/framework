@@ -1,8 +1,19 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
@@ -14,7 +25,6 @@ import { ContractStatus } from "@framework/types";
 
 import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/wait-list-list";
 import { cleanUpAsset } from "../../../../utils/money";
-import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -83,7 +93,18 @@ export const WaitListList: FC = () => {
         </Button>
       </PageHeader>
 
-      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="WaitListListSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

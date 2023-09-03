@@ -5,15 +5,20 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
+import { SelectInput, SwitchInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import type { IPonziDeposit, IPonziReportSearchDto } from "@framework/types";
-import { PonziDepositStatus, TokenType } from "@framework/types";
+import { ModuleType, PonziDepositStatus, TokenType } from "@framework/types";
 
-import { PonziReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
+import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
+import { SearchContractInput } from "../../../../components/inputs/search-contract";
 
 export const PonziReport: FC = () => {
   const {
@@ -121,7 +126,49 @@ export const PonziReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <PonziReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="PonziReportSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractId"
+              controller="contracts"
+              data={{ contractModule: [ModuleType.STAKING] }}
+              autoselect
+              disableClear
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput name="ponziDepositStatus" options={PonziDepositStatus} multiple />
+          </Grid>
+          <Grid item xs={12}>
+            <SwitchInput name="emptyReward" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="reward" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchContractInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchContractInput prefix="reward" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="startTimestamp" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="endTimestamp" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <DataGrid
         pagination

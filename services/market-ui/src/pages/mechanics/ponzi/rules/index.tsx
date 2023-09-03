@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
   Grid,
@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -20,8 +22,6 @@ import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziAllowanceButton, PonziDepositButton } from "../../../../components/buttons";
-
-import { PonziRuleSearchForm } from "./form";
 import { PonziViewDialog } from "./view";
 
 export const PonziRules: FC = () => {
@@ -62,6 +62,8 @@ export const PonziRules: FC = () => {
     filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
 
+  const { formatMessage } = useIntl();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "ponzi", "ponzi.rules"]} />
@@ -75,7 +77,33 @@ export const PonziRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <PonziRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="PonziRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="deposit.tokenType"
+              options={TokenType}
+              label={formatMessage({ id: "form.labels.deposit" })}
+              disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="reward.tokenType"
+              options={TokenType}
+              label={formatMessage({ id: "form.labels.reward" })}
+              disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
+            />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

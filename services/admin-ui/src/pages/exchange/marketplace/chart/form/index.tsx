@@ -4,9 +4,10 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
+import type { IMarketplaceReportSearchDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import { TemplateInput } from "./template-input";
+import { TemplateInput } from "../../../../../components/inputs/template";
 
 interface IMarketplaceReportSearchFormProps {
   onSubmit: (values: IMarketplaceReportSearchDto) => Promise<void>;

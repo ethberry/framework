@@ -10,9 +10,10 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -21,7 +22,6 @@ import type { IDismantle, IDismantleSearchDto } from "@framework/types";
 import { DismantleStatus, TokenType } from "@framework/types";
 
 import { DismantleEditDialog } from "./edit";
-import { DismantleSearchForm } from "./form";
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
 
 export const Dismantle: FC = () => {
@@ -79,7 +79,13 @@ export const Dismantle: FC = () => {
         </Button>
       </PageHeader>
 
-      <DismantleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ExchangeSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput multiple name="dismantleStatus" options={DismantleStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

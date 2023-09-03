@@ -15,15 +15,17 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IComposition, ICompositionSearchDto } from "@framework/types";
+import type { IComposition, ICompositionSearchDto } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
 
 import { Erc998CompositionViewDialog } from "./view";
-import { Erc998CompositionSearchForm } from "./form";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 
 export const Erc998Composition: FC = () => {
@@ -115,7 +117,41 @@ export const Erc998Composition: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc998CompositionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="Erc998TokenSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="parentIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC998],
+                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.HIERARCHY],
+              }}
+              label={formatMessage({ id: "form.labels.parent" })}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <EntityInput
+              name="childIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.HIERARCHY],
+              }}
+              label={formatMessage({ id: "form.labels.child" })}
+            />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

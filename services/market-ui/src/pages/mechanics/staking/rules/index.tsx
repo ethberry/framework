@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
   Grid,
@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -20,13 +23,13 @@ import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto 
 import {
   DurationUnit,
   IStakingRuleRewardSearchDto,
+  ModuleType,
   StakingDepositTokenType,
   StakingRewardTokenType,
 } from "@framework/types";
 
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
-import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
 
 export const StakingRules: FC = () => {
@@ -78,6 +81,8 @@ export const StakingRules: FC = () => {
           },
   });
 
+  const { formatMessage } = useIntl();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
@@ -91,7 +96,39 @@ export const StakingRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="StakingRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.STAKING] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="deposit.tokenType"
+              options={StakingDepositTokenType}
+              label={formatMessage({ id: "form.labels.deposit" })}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="reward.tokenType"
+              options={StakingRewardTokenType}
+              label={formatMessage({ id: "form.labels.reward" })}
+            />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

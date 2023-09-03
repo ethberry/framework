@@ -13,15 +13,17 @@ import {
 } from "@mui/material";
 import { Add, Create, FilterList } from "@mui/icons-material";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { IRent } from "@framework/types";
-import { IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
+import { ContractFeatures, IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
 
 import { RentEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { RentSearchForm } from "./form";
 
 export const Rent: FC = () => {
   const {
@@ -76,7 +78,21 @@ export const Rent: FC = () => {
         </Button>
       </PageHeader>
 
-      <RentSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="RentSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractFeatures: [ContractFeatures.RENTABLE] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="rentStatus" options={RentRuleStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

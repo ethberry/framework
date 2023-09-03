@@ -12,17 +12,19 @@ import {
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IGrade, IGradeSearchDto } from "@framework/types";
-import { GradeStatus, GradeStrategy, IUser } from "@framework/types";
+import type { IGrade, IGradeSearchDto, IUser } from "@framework/types";
+import { GradeStatus, GradeStrategy } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { GradeEditDialog } from "./edit";
-import { GradeSearchForm } from "./form";
 
 export const Grade: FC = () => {
   const { profile } = useUser<IUser>();
@@ -94,7 +96,16 @@ export const Grade: FC = () => {
         </Button>
       </PageHeader>
 
-      <GradeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ExchangeSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SelectInput multiple name="gradeStatus" options={GradeStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

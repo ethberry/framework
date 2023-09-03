@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { IProduct, ProductStatus } from "@framework/types";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import type { IProduct } from "@framework/types";
+import { ProductStatus } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -20,7 +24,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";
-import { ProductSearchForm } from "./form";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
@@ -81,7 +84,16 @@ export const Product: FC = () => {
         </Button>
       </PageHeader>
 
-      <ProductSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ProductSearchForm">
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <SelectInput multiple name="productStatus" options={ProductStatus} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <EntityInput multiple name="categoryIds" controller="ecommerce/categories" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

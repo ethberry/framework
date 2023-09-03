@@ -10,9 +10,10 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-
 import { Create, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -21,7 +22,6 @@ import { PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton, PonziToggleRuleButton } from "../../../../components/buttons";
 import { PonziEditDialog } from "./edit";
-import { PonziRuleSearchForm } from "./form";
 
 export const PonziRules: FC = () => {
   const {
@@ -73,7 +73,24 @@ export const PonziRules: FC = () => {
         <PonziRuleCreateButton />
       </PageHeader>
 
-      <PonziRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="PonziRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput multiple name="ponziRuleStatus" options={PonziRuleStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="deposit.tokenType" options={TokenType} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="reward.tokenType" options={TokenType} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

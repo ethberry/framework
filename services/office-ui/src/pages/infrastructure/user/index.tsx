@@ -12,14 +12,16 @@ import {
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IUser, IUserSearchDto, UserStatus } from "@framework/types";
+import type { IUser, IUserSearchDto } from "@framework/types";
+import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages } from "@framework/constants";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { UserEditDialog } from "./edit";
-import { UserSearchForm } from "./form";
 
 export const User: FC = () => {
   const {
@@ -72,7 +74,16 @@ export const User: FC = () => {
         </Button>
       </PageHeader>
 
-      <UserSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="UserSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SelectInput multiple name="userStatus" options={UserStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="userRoles" options={UserRole} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

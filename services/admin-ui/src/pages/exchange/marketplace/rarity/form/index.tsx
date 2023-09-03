@@ -7,7 +7,7 @@ import type { IMarketplaceSupplySearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, TokenStatus, TokenType } from "@framework/types";
 
 import { CommonContractInput } from "../../../../../components/inputs/common-contract";
-import { TemplateInput } from "./template-input";
+import { TemplateInput } from "../../../../../components/inputs/template";
 
 interface IMarketplaceRaritySearchFormProps {
   onSubmit: (values: IMarketplaceSupplySearchDto) => Promise<any>;
@@ -53,7 +53,7 @@ export const MarketplaceRaritySearchForm: FC<IMarketplaceRaritySearchFormProps> 
             />
           </Grid>
           <Grid item xs={6}>
-            <TemplateInput />
+            <TemplateInput contractFeatures={[ContractFeatures.RANDOM]} />
           </Grid>
         </Grid>
       </Collapse>

@@ -5,6 +5,8 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
@@ -12,7 +14,6 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
-import { ReferralReportSearchForm } from "./form";
 
 export const ReferralReport: FC = () => {
   const {
@@ -103,7 +104,21 @@ export const ReferralReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <ReferralReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="ReferralReportSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <DateTimeInput name="startTimestamp" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="endTimestamp" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <DataGrid
         pagination
