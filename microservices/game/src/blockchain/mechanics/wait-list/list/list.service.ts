@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -10,8 +10,6 @@ import { WaitListListEntity } from "./list.entity";
 @Injectable()
 export class WaitListListService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(WaitListListEntity)
     private readonly waitListListEntityRepository: Repository<WaitListListEntity>,
   ) {}

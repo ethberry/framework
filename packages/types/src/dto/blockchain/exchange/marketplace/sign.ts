@@ -1,4 +1,4 @@
-export interface ISignTemplateDto {
+export interface ITemplateSignDto {
   chainId: number;
   account: string;
   referrer: string;

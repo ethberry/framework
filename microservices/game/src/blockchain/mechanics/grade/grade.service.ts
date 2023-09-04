@@ -6,8 +6,8 @@ import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "et
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IGradeSignDto } from "@framework/types";
+import { ContractFeatures, GradeStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
@@ -16,7 +16,7 @@ import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import type { IAutocompleteGradeDto, ISearchGradeDto } from "./interfaces";
+import type { IGradeAutocompleteDto, IGradeSearchDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 
 @Injectable()
@@ -37,7 +37,7 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: ISearchGradeDto, merchantEntity: MerchantEntity): Promise<GradeEntity | null> {
+  public async findOneByToken(dto: IGradeSearchDto, merchantEntity: MerchantEntity): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId }, merchantEntity);
@@ -185,7 +185,7 @@ export class GradeService {
     }
   }
 
-  public autocomplete(dto: IAutocompleteGradeDto, merchantEntity: MerchantEntity): Promise<Array<GradeEntity>> {
+  public autocomplete(dto: IGradeAutocompleteDto, merchantEntity: MerchantEntity): Promise<Array<GradeEntity>> {
     const { contractId } = dto;
     return this.gradeEntityRepository.find({
       where: {

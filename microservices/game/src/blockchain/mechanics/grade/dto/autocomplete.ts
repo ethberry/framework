@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IAutocompleteGradeDto } from "../interfaces";
+import { IGradeAutocompleteDto } from "../interfaces";
 
-export class AutocompleteGradeDto implements IAutocompleteGradeDto {
+export class AutocompleteGradeDto implements IGradeAutocompleteDto {
   @ApiProperty({
     minimum: 1,
   })
