@@ -1,4 +1,4 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { ForbiddenException, forwardRef, Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { app } from "firebase-admin";
 
@@ -17,15 +17,12 @@ export class AuthMetamaskService {
     private readonly admin: app.App,
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly metamaskService: MetamaskService,
   ) {}
 
   public async login(dto: IMetamaskDto): Promise<ICustomToken> {
-    const { nonce, signature } = dto;
-    const wallet = dto.wallet.toLowerCase();
+    const { nonce, signature, wallet } = dto;
 
     if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
       throw new ForbiddenException("signatureDoesNotMatch");
