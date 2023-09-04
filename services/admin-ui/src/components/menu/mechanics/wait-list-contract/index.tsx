@@ -43,7 +43,14 @@ export const WaitListContractActionsMenu: FC<IDefaultContractActionsMenu> = prop
       >
         <MoreVert />
       </IconButton>
-      <Menu id="default-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="default-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

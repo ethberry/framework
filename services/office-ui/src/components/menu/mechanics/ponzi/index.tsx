@@ -46,7 +46,14 @@ export const PonziActionsMenu: FC<IPonziActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="ponzi-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="ponzi-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

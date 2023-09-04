@@ -47,7 +47,14 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="lottery-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="lottery-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

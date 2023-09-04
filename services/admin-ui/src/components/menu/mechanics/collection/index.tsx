@@ -47,7 +47,14 @@ export const CollectionActionsMenu: FC<ICollectionActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="collection-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="collection-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

@@ -51,7 +51,14 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="mystery-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="mystery-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />
