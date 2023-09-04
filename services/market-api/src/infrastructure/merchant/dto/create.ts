@@ -1,13 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsEthereumAddress, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsEmail, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { emailMaxLength } from "@gemunion/constants";
+import { WalletDto } from "@gemunion/collection";
 
 import { IMerchantCreateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";
 
-export class MerchantCreateDto implements IMerchantCreateDto {
+export class MerchantCreateDto extends WalletDto implements IMerchantCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;
@@ -23,12 +24,6 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   @MaxLength(emailMaxLength, { message: "rangeOverflow" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public wallet: string;
 
   @ApiPropertyOptional()
   @IsOptional()

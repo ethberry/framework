@@ -1,11 +1,12 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEthereumAddress, IsInt, IsOptional, IsString, Min } from "class-validator";
+import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { AccountsOptionalDto, SearchDto } from "@gemunion/collection";
 import { IBalanceSearchDto } from "@framework/types";
 
-export class BalanceSearchDto extends SearchDto implements IBalanceSearchDto {
+export class BalanceSearchDto extends Mixin(SearchDto, AccountsOptionalDto) implements IBalanceSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -41,15 +42,4 @@ export class BalanceSearchDto extends SearchDto implements IBalanceSearchDto {
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public targetIds: Array<number>;
-
-  @ApiPropertyOptional({
-    type: String,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @IsString({ each: true, message: "typeMismatch" })
-  @IsEthereumAddress({ each: true, message: "patternMismatch" })
-  @Type(() => String)
-  public accounts: Array<string>;
 }

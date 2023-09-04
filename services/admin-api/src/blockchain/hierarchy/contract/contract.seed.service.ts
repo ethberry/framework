@@ -6,7 +6,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 
 import { ContractEntity } from "./contract.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { generateTestContract, generateTestUser } from "../../../test";
+import { generateTestContract, generateTestUser } from "../../../../../../code/test";
 
 @Injectable()
 export class ContractSeedService {

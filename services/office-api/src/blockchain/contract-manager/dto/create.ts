@@ -1,18 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
+import { IsEnum, IsInt, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
+import { AddressDto } from "@gemunion/collection";
 import { ContractType } from "@framework/types";
 
 import { IContractManagerCreateDto } from "../interfaces";
 
-export class ContractManagerCreateDto implements IContractManagerCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public address: string;
-
+export class ContractManagerCreateDto extends AddressDto implements IContractManagerCreateDto {
   @ApiProperty({
     enum: ContractType,
   })
