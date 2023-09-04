@@ -18,7 +18,7 @@ import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { Erc721TokenViewDialog } from "../../../hierarchy/tokens/erc721/token/view";
+import { Erc721TokenViewDialog } from "../../../hierarchy/erc721/token/view";
 
 export const MysteryToken: FC = () => {
   const {

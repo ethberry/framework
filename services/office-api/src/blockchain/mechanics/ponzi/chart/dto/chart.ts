@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IPonziChartItemSearchDto, IPonziChartSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -27,7 +27,15 @@ export class PonziChartItemSearchDto implements IPonziChartItemSearchDto {
   public contractId: number;
 }
 
-export class PonziChartSearchDto extends SearchDto implements IPonziChartSearchDto {
+export class PonziChartSearchDto extends PaginationDto implements IPonziChartSearchDto {
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+
   @ApiProperty({
     type: PonziChartItemSearchDto,
   })

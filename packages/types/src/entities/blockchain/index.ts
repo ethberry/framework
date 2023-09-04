@@ -13,6 +13,7 @@ export * from "./exchange/payee";
 export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
+export * from "./mechanics/dismantle/dismantle";
 export * from "./mechanics/drop/drop";
 export * from "./mechanics/grade/grade";
 

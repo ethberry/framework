@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -19,7 +21,6 @@ import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types"
 import { useCollection } from "@gemunion/react-hooks";
 
 import { EditMerchantDialog } from "./edit";
-import { MerchantSearchForm } from "./form";
 
 export const Merchant: FC = () => {
   const {
@@ -62,7 +63,13 @@ export const Merchant: FC = () => {
         </Button>
       </PageHeader>
 
-      <MerchantSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MerchantSearchForm">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <SelectInput multiple name="merchantStatus" options={MerchantStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

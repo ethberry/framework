@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
 
 import type { IPonziDepositItemSearchDto, IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
@@ -23,7 +23,7 @@ export class PonziDepositItemSearchDto implements IPonziDepositItemSearchDto {
   public contractIds: Array<number>;
 }
 
-export class PonziDepositSearchDto extends SearchDto implements IPonziDepositSearchDto {
+export class PonziDepositSearchDto extends PaginationDto implements IPonziDepositSearchDto {
   @ApiPropertyOptional({
     enum: PonziDepositStatus,
     isArray: true,
@@ -53,4 +53,5 @@ export class PonziDepositSearchDto extends SearchDto implements IPonziDepositSea
   public account: string;
   public startTimestamp: string;
   public endTimestamp: string;
+  public contractIds: Array<number>;
 }

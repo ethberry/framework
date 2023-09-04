@@ -13,11 +13,11 @@ import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.j
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
-export interface IContractGrantRoleMenuItemProps {
+export interface IGrantRoleMenuItemProps {
   contract: IContract;
 }
 
-export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = props => {
+export const GrantRoleMenuItem: FC<IGrantRoleMenuItemProps> = props => {
   const {
     contract: { address, contractSecurity },
   } = props;

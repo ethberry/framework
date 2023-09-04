@@ -40,7 +40,6 @@ export const StakingDeposit: FC = () => {
   } = useCollection<IStakingDeposit, IStakingDepositSearchDto>({
     baseUrl: "/staking/deposits",
     search: {
-      query: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       contractIds: [],
       deposit: {

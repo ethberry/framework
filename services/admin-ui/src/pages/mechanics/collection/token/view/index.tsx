@@ -7,7 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/tokens/metadata";
+import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/metadata";
 import { TokenTraitsView } from "../../traits";
 
 export interface ICollectionTokenViewDialogProps {

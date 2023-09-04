@@ -62,18 +62,18 @@ export class TokenService {
     );
 
     if (contractType.length === 1) {
-      queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+      queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
     } else {
       queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
-        contractType: contractType[0],
+        contractType,
       });
     }
 
     if (contractModule.length === 1) {
-      queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule });
+      queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
     } else {
       queryBuilder.andWhere(`contract.contractModule IN(:...contractModule)`, {
-        contractModule: contractModule[0],
+        contractModule,
       });
     }
 

@@ -156,6 +156,7 @@ export class ContractService {
         title: true,
         address: true,
         contractType: true,
+        contractFeatures: true,
         decimals: true,
         symbol: true,
       },

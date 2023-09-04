@@ -31,7 +31,16 @@ export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = 
         name="contractTemplate"
         options={Erc721ContractTemplates}
         readOnly={contractTemplate !== Erc721ContractTemplates.SIMPLE}
-        disabledOptions={[Erc721ContractTemplates.RAFFLE, Erc721ContractTemplates.LOTTERY]}
+        disabledOptions={[
+          // there templates are not ready yet
+          Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE,
+          Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE_RANDOM,
+          Erc721ContractTemplates.GENES,
+          Erc721ContractTemplates.RENTABLE,
+          // these templates meant to be deployed using mechanic page
+          Erc721ContractTemplates.RAFFLE,
+          Erc721ContractTemplates.LOTTERY,
+        ]}
       />
       <TextInput name="name" />
       <TextInput name="symbol" />

@@ -12,17 +12,20 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { IMysteryBox, IMysteryBoxSearchDto, ITemplate, MysteryBoxStatus } from "@framework/types";
+import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
+import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
 import { MysteryboxEditDialog } from "./edit";
-import { MysteryboxSearchForm } from "./form";
 
 export const MysteryBox: FC = () => {
   const {
@@ -95,7 +98,29 @@ export const MysteryBox: FC = () => {
         </Button>
       </PageHeader>
 
-      <MysteryboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="MysteryboxSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC721],
+                contractModule: [ModuleType.MYSTERY],
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

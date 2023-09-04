@@ -1,21 +1,40 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from "@nestjs/common";
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 
 import { ns } from "@framework/constants";
 import type { IPonziChartSearchDto } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { PonziContractService } from "../contract/contract.service";
 
 @Injectable()
 export class PonziChartService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    protected readonly ponziContractService: PonziContractService,
   ) {}
 
   public async chart(dto: IPonziChartSearchDto, userEntity: UserEntity): Promise<any> {
-    const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
+    const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
+
+    const contractEntity = await this.ponziContractService.findOne({
+      id: contractId,
+    });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (contractEntity.contractModule !== ModuleType.STAKING) {
+      throw new BadRequestException("contractWrongModule");
+    }
 
     // prettier-ignore
     const queryString = `
@@ -38,21 +57,21 @@ export class PonziChartService {
                         ${ns}.asset_component as deposit_component ON deposit_component.asset_id = ponzi_rules.deposit_id
                             INNER JOIN
                         ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
-                                                              AND deposit_contract.chain_id = $3
-                                                              AND deposit_contract.contract_type = $4
-                                                              AND deposit_contract.id = $5
+                                                              AND deposit_contract.chain_id = $2
+                                                              AND deposit_contract.contract_type = $5
+                                                              AND deposit_contract.id = $6
                         ${emptyReward ? "" : `
                             INNER JOIN
                         ${ns}.asset_component as reward_component ON reward_component.asset_id = ponzi_rules.reward_id
                             INNER JOIN
                         ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-                                                              AND reward_contract.chain_id = $3
-                                                              AND reward_contract.contract_type = $6
-                                                              AND reward_contract.id = $7
+                                                              AND reward_contract.chain_id = $2
+                                                              AND reward_contract.contract_type = $7
+                                                              AND reward_contract.id = $8
                         `}
                             CROSS JOIN generate_series(ponzi_deposit.start_timestamp, (ponzi_deposit.start_timestamp +  (ponzi_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
-                   WHERE ponzi_deposit.start_timestamp <= $2
-                     AND (ponzi_deposit.start_timestamp + (ponzi_rules.duration_amount || 'second')::INTERVAL) >= $1
+                   WHERE ponzi_deposit.start_timestamp <= $4
+                     AND (ponzi_deposit.start_timestamp + (ponzi_rules.duration_amount || 'second')::INTERVAL) >= $3
                    )
       SELECT start_date::timestamptz,
              COUNT(ponzi_deposit_id) as current_deposit_count,
@@ -60,7 +79,7 @@ export class PonziChartService {
              COUNT(new_deposit_id) as new_deposit_count,
              SUM(new_deposit_amount) as new_deposit_amount
       FROM cte
-      WHERE start_date BETWEEN $1 AND $2
+      WHERE start_date BETWEEN $3 AND $4
       GROUP BY start_date
       ORDER BY start_date;
     `;
@@ -69,11 +88,12 @@ export class PonziChartService {
       this.entityManager.query(
         queryString,
         emptyReward
-          ? [startTimestamp, endTimestamp, userEntity.chainId, deposit.tokenType, deposit.contractId]
+          ? [contractEntity.id, userEntity.chainId, startTimestamp, endTimestamp, deposit.tokenType, deposit.contractId]
           : [
+              contractEntity.id,
+              userEntity.chainId,
               startTimestamp,
               endTimestamp,
-              userEntity.chainId,
               deposit.tokenType,
               deposit.contractId,
               reward!.tokenType,

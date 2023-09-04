@@ -31,8 +31,9 @@ import {
   IRoundStartLotteryData,
   ITokenTransferData,
   IVestingReleaseData,
+  IUnpackMysteryData,
+  IDismantleData,
 } from "./interfaces";
-import { IUnpackMysteryData } from "./interfaces/mystery-box";
 
 @Injectable()
 export class NotificatorService {
@@ -127,6 +128,13 @@ export class NotificatorService {
   public async craft(data: ICraftData): Promise<any> {
     return this.sendMessage(data.craft.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+    });
+  }
+
+  // MODULE:DISMANTLE
+  public async dismantle(data: IDismantleData): Promise<any> {
+    return this.sendMessage(data.dismantle.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.DISMANTLE, data).toPromise();
     });
   }
 

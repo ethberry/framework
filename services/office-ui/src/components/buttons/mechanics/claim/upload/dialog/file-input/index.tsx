@@ -5,13 +5,13 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
-import { IBCAssetDto } from "@framework/types";
+import { IBCAssetTemplateDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { claimsValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
-export interface IClaimRow extends IBCAssetDto {
+export interface IClaimRow extends IBCAssetTemplateDto {
   id?: string;
   account: string;
   endTimestamp: string;

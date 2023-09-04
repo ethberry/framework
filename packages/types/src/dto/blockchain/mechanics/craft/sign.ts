@@ -1,4 +1,4 @@
-export interface ISignCraftDto {
+export interface ICraftSignDto {
   chainId: number;
   account: string;
   referrer: string;

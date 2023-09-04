@@ -8,20 +8,24 @@ import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { PageEntity } from "./infrastructure/page/page.entity";
 /* blockchain */
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
+// hierarchy
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
-import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
+// exchange
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
-import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
+
+// mechanics
+import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
+import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
+import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
@@ -33,6 +37,9 @@ import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.e
 import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
 import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+// extensions
+import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
+// integrations
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 /* ecommerce */
 import { OrderEntity } from "./ecommerce/order/order.entity";
@@ -68,22 +75,28 @@ const config: PostgresConnectionOptions = {
     SettingsEntity,
     UserEntity,
     /* blockchain */
-    EventHistoryEntity,
-    CraftEntity,
-    StakingDepositEntity,
-    StakingRulesEntity,
-    ClaimEntity,
+    // hierarchy
     ContractEntity,
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
     CompositionEntity,
+
+    // exchange
+    EventHistoryEntity,
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
+    ReferralRewardEntity,
+
+    // mechanics
+    CraftEntity,
+    StakingDepositEntity,
+    StakingRulesEntity,
+    ClaimEntity,
+    DismantleEntity,
     DropEntity,
     GradeEntity,
-    ReferralRewardEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     RaffleRoundEntity,
@@ -94,7 +107,9 @@ const config: PostgresConnectionOptions = {
     PonziDepositEntity,
     BreedEntity,
     RentEntity,
+    // extensions
     AccessControlEntity,
+    // integrations
     ChainLinkSubscriptionEntity,
     /* ecommerce */
     AddressEntity,

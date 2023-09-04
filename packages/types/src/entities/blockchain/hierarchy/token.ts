@@ -50,7 +50,7 @@ export interface IToken extends IIdDateBase {
   royalty: number;
   cid: string | null;
   tokenStatus: TokenStatus;
-  templateId: number | null;
+  templateId: number;
   template?: ITemplate;
   balance?: Array<IBalance>;
   exchange?: Array<IAssetComponentHistory>;

@@ -7,15 +7,16 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, GradeStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IGradeSignDto } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { SettingsService } from "../../../infrastructure/settings/settings.service";
-import type { IAutocompleteGradeDto, ISearchGradeDto, ISignGradeDto } from "./interfaces";
-import { GradeEntity } from "./grade.entity";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import type { IAutocompleteGradeDto, ISearchGradeDto } from "./interfaces";
+import { GradeEntity } from "./grade.entity";
 
 @Injectable()
 export class GradeService {
@@ -77,7 +78,7 @@ export class GradeService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
+  public async sign(dto: IGradeSignDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 

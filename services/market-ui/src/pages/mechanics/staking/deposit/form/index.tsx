@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingDepositSearchDto } from "@framework/types";
 import { ModuleType, StakingDepositStatus, TokenType } from "@framework/types";
@@ -19,8 +19,8 @@ export const StakingDepositSearchForm: FC<IStakingDepositSearchFormProps> = prop
 
   const { formatMessage } = useIntl();
 
-  const { query, stakingDepositStatus, contractIds, deposit, reward } = initialValues;
-  const fixedValues = { query, stakingDepositStatus, contractIds, deposit, reward };
+  const { stakingDepositStatus, contractIds, deposit, reward } = initialValues;
+  const fixedValues = { stakingDepositStatus, contractIds, deposit, reward };
 
   return (
     <FormWrapper
@@ -30,11 +30,6 @@ export const StakingDepositSearchForm: FC<IStakingDepositSearchFormProps> = prop
       showPrompt={false}
       testId="StakingDepositSearchForm"
     >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SearchInput name="query" />
-        </Grid>
-      </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

@@ -16,6 +16,7 @@ export enum MobileEventType {
   RAFFLE_ROUND_END = "RAFFLE_ROUND_END",
   CLAIM = "CLAIM",
   CRAFT = "CRAFT",
+  DISMANTLE = "DISMANTLE",
   RENT = "RENT",
   RENT_USER = "RENT_USER",
   UPGRADE = "UPGRADE",

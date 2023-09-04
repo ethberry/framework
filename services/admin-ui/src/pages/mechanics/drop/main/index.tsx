@@ -13,6 +13,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -22,7 +23,6 @@ import type { IDrop } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { DropSearchForm } from "./form";
 
 export const Drop: FC = () => {
   const now = new Date();
@@ -71,7 +71,7 @@ export const Drop: FC = () => {
         </Button>
       </PageHeader>
 
-      <DropSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="DropSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -3,11 +3,11 @@ import { IsArray, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { BCAssetDto } from "../../../../exchange/asset/dto";
+import { BCAssetTemplateDto } from "../../../../exchange/asset/dto";
 import { VestingContractDeployDto } from "../../../../contract-manager/dto";
 import { IVestingClaimRow, IVestingClaimUploadDto } from "../interfaces";
 
-export class VestingClaimRow extends Mixin(BCAssetDto, VestingContractDeployDto) implements IVestingClaimRow {}
+export class VestingClaimRow extends Mixin(BCAssetTemplateDto, VestingContractDeployDto) implements IVestingClaimRow {}
 
 export class VestingClaimUploadDto implements IVestingClaimUploadDto {
   @ApiProperty({

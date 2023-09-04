@@ -23,7 +23,7 @@ export interface IAccessControlRenounceRoleDialogProps {
 }
 
 export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
@@ -55,13 +55,20 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   };
 
   useEffect(() => {
-    void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.account === profile.wallet));
-    });
-  }, []);
+    if (open) {
+      void fn().then((rows: Array<IAccessControl>) => {
+        setRows(rows.filter(row => row.account === profile.wallet));
+      });
+    }
+  }, [open]);
 
   return (
-    <ConfirmationDialog message="dialogs.renounceRole" data-testid="AccessControlRenounceRoleDialog" {...rest}>
+    <ConfirmationDialog
+      message="dialogs.renounceRole"
+      data-testid="AccessControlRenounceRoleDialog"
+      open={open}
+      {...rest}
+    >
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>

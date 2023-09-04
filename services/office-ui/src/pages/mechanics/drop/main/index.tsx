@@ -13,6 +13,8 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -22,7 +24,6 @@ import type { IDrop, IDropSearchDto, IUser } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { DropSearchForm } from "./form";
 
 export const Drop: FC = () => {
   const now = new Date();
@@ -84,7 +85,13 @@ export const Drop: FC = () => {
         </Button>
       </PageHeader>
 
-      <DropSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="DropSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

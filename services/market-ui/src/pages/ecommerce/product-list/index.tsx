@@ -4,12 +4,13 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { IProduct } from "@framework/types";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import type { IProduct } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
-import { ProductSearchForm } from "./form";
 import { ProductItem } from "./item";
 
 export interface IProductSearchDto extends ISearchDto {
@@ -39,7 +40,13 @@ export const ProductList: FC = () => {
         </Button>
       </PageHeader>
 
-      <ProductSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ProductSearchForm">
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <EntityInput multiple name="categoryIds" controller="ecommerce/categories" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

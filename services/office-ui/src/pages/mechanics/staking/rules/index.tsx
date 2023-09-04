@@ -10,9 +10,11 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-
 import { Create, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -26,11 +28,16 @@ import type {
   IStakingRuleSearchDto,
   IUser,
 } from "@framework/types";
-import { DurationUnit, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import {
+  DurationUnit,
+  ModuleType,
+  StakingDepositTokenType,
+  StakingRewardTokenType,
+  StakingRuleStatus,
+} from "@framework/types";
 
 import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
-import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
   const { profile } = useUser<IUser>();
@@ -96,7 +103,35 @@ export const StakingRules: FC = () => {
         <StakingRuleUploadCreateButton />
       </PageHeader>
 
-      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="StakingRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.STAKING] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="stakingRuleStatus" options={StakingRuleStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="deposit.tokenType" options={StakingDepositTokenType} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="reward.tokenType" options={StakingRewardTokenType} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

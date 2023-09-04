@@ -26,12 +26,14 @@ import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { TokenGradeView } from "../../grade";
 import { StyledPaper } from "./styled";
+import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
     baseUrl: "/erc721/tokens",
     empty: {
       metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
+      templateId: 0,
       template: {
         title: "",
         description: emptyStateString,
@@ -130,6 +132,8 @@ export const Erc721Token: FC = () => {
               <TokenTraitsView metadata={selected.metadata} />
             </StyledPaper>
           ) : null}
+
+          {selected.templateId ? <DismantlePanel token={selected} /> : null}
         </Grid>
       </Grid>
 

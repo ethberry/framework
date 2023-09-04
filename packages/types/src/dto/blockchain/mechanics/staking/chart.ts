@@ -1,4 +1,4 @@
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IStakingChartItemSearchDto {
@@ -6,7 +6,8 @@ export interface IStakingChartItemSearchDto {
   contractId: number;
 }
 
-export interface IStakingChartSearchDto extends ISearchDto {
+export interface IStakingChartSearchDto extends IPaginationDto {
+  contractId: number;
   deposit: IStakingChartItemSearchDto;
   reward?: IStakingChartItemSearchDto;
   emptyReward?: boolean;

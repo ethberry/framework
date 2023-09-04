@@ -6,6 +6,7 @@ export * from "./exchange/common";
 export * from "./exchange/claim";
 export * from "./exchange/core";
 export * from "./exchange/craft";
+export * from "./exchange/dismantle";
 export * from "./exchange/grade";
 export * from "./exchange/lottery";
 export * from "./exchange/mystery";

@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 
@@ -18,8 +18,8 @@ export const PonziDepositSearchForm: FC<IPonziDepositSearchFormProps> = props =>
 
   const { formatMessage } = useIntl();
 
-  const { query, ponziDepositStatus, deposit, reward } = initialValues;
-  const fixedValues = { query, ponziDepositStatus, deposit, reward };
+  const { ponziDepositStatus, deposit, reward } = initialValues;
+  const fixedValues = { ponziDepositStatus, deposit, reward };
 
   return (
     <FormWrapper
@@ -29,11 +29,6 @@ export const PonziDepositSearchForm: FC<IPonziDepositSearchFormProps> = props =>
       showPrompt={false}
       testId="PonziDepositSearchForm"
     >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SearchInput name="query" />
-        </Grid>
-      </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>

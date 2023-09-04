@@ -7,9 +7,9 @@ import type { IContract } from "@framework/types";
 import { TopUpMenuItem } from "../common/top-up";
 import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { PauseMenuItem } from "../common/pause";
 import { AllowanceMenu } from "./allowance";
 import { StakingInfoMenuItem } from "./counters";
@@ -48,9 +48,9 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="staking-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={staking} />
-        <ContractRevokeRoleMenuItem contract={staking} />
-        <ContractRenounceRoleMenuItem contract={staking} />
+        <GrantRoleMenuItem contract={staking} />
+        <RevokeRoleMenuItem contract={staking} />
+        <RenounceRoleMenuItem contract={staking} />
         <AllowanceMenu contract={staking} />
         <TopUpMenuItem contract={staking} />
         <StakingInfoMenuItem contract={staking} />

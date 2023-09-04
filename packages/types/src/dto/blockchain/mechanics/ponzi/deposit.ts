@@ -1,4 +1,4 @@
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
 import { PonziDepositStatus } from "../../../../entities";
@@ -8,7 +8,7 @@ export interface IPonziDepositItemSearchDto {
   contractIds: Array<number>;
 }
 
-export interface IPonziDepositSearchDto extends ISearchDto {
+export interface IPonziDepositSearchDto extends IPaginationDto {
   account: string;
   emptyReward?: boolean;
   ponziDepositStatus: Array<PonziDepositStatus>;
@@ -16,4 +16,5 @@ export interface IPonziDepositSearchDto extends ISearchDto {
   reward: IPonziDepositItemSearchDto;
   startTimestamp: string;
   endTimestamp: string;
+  contractIds: Array<number>;
 }

@@ -15,7 +15,7 @@ import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 import "../override/SignatureValidator.sol";
 
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event PurchaseMysteryBox(address from, uint256 externalId, Asset[] items, Asset[] price);
+  event PurchaseMysteryBox(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 

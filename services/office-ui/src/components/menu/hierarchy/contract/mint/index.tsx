@@ -1,21 +1,21 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
-import type { IContract } from "@framework/types";
-import { ContractFeatures, IUser, TokenType } from "@framework/types";
-
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
+import type { IContract, IUser } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
 import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
 import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
+import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
@@ -29,7 +29,10 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
 
   const { profile } = useUser<IUser>();
 
+  const [hasAccess, setHasAccess] = useState(false);
+
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+  const { checkAccessMint } = useCheckAccessMint();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -64,7 +67,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       );
       return contractErc1155.mint(
         values.account,
-        templateComponent.template.tokens[0].tokenId,
+        (templateComponent.template as any).tokens[0].tokenId,
         templateComponent.amount,
         "0x",
       ) as Promise<any>;
@@ -79,13 +82,32 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     });
   };
 
+  useEffect(() => {
+    if (profile?.wallet) {
+      void checkAccessMint(void 0, {
+        account: profile.wallet,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [profile?.wallet]);
+
   if (contractType === TokenType.NATIVE || contractFeatures.includes(ContractFeatures.GENES)) {
-    return null;
+    return (
+      <MenuItem>
+        <Typography variant="inherit">
+          <FormattedMessage id="dialogs.unsupported" />
+        </Typography>
+      </MenuItem>
+    );
   }
 
   return (
     <Fragment>
-      <MenuItem onClick={handleMintToken}>
+      <MenuItem onClick={handleMintToken} disabled={!hasAccess}>
         <ListItemIcon>
           <AddCircleOutline />
         </ListItemIcon>

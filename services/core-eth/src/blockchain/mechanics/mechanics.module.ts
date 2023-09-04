@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 
 import { BreedModule } from "./breed/breed.module";
 import { ClaimModule } from "./claim/claim.module";
-import { CraftModule } from "./craft/craft.module";
 import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
 import { PonziModule } from "./ponzi/ponzi.module";
 import { RaffleModule } from "./raffle/raffle.module";
+import { RecipesModule } from "./recipes/recipes.module";
 import { ReferralModule } from "./referral/referral.module";
 import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
@@ -19,12 +19,12 @@ import { WrapperModule } from "./wrapper/wrapper.module";
   imports: [
     BreedModule,
     ClaimModule,
-    CraftModule,
     GradeModule,
     LotteryModule,
     MysteryModule,
     PonziModule,
     RaffleModule,
+    RecipesModule,
     ReferralModule,
     RentModule,
     StakingModule,

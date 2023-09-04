@@ -3,10 +3,11 @@ import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { StakingReportService } from "./report.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingDepositEntity } from "../deposit/deposit.entity";
+import { StakingReportService } from "./report.service";
 import { StakingReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
@@ -16,14 +17,21 @@ export class StakingReportController {
 
   @Get("/report")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: StakingReportSearchDto): Promise<[Array<StakingDepositEntity>, number]> {
-    return this.stakingReportService.search(dto);
+  public search(
+    @Query() dto: StakingReportSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<StakingDepositEntity>, number]> {
+    return this.stakingReportService.search(dto, userEntity);
   }
 
   @ApiProduces("application/zip")
   @Get("/report/export")
-  public async export(@Query() query: StakingReportSearchDto, @Res() res: Response): Promise<void> {
-    const csv = await this.stakingReportService.export(query);
+  public async export(
+    @Query() query: StakingReportSearchDto,
+    @User() userEntity: UserEntity,
+    @Res() res: Response,
+  ): Promise<void> {
+    const csv = await this.stakingReportService.export(query, userEntity);
 
     const archive = archiver("zip");
 

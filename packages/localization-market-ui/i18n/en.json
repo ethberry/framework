@@ -1,8 +1,8 @@
 {
   "alert": {
-    "approve": "Please approve ingredients to Exchange before crafting",
-    "approve-inverse": "Please approve token to Exchange before dismantle",
     "allowanceWarning": "You are going to allow all tokens of the contract",
+    "approveCraft": "Please approve ingredients to Exchange before crafting",
+    "approveDismantle": "Please approve token to Exchange before dismantle",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "uncaughtError": "Uncaught error happened"
   },
@@ -338,7 +338,6 @@
   "form": {
     "buttons": {
       "GRADE": "Grade",
-      "dismantle": "Dismantle",
       "add": "Add",
       "allowance": "Allowance",
       "approve": "Approve",
@@ -462,9 +461,9 @@
       "orderStatus": "Status",
       "password": "Password",
       "penalty": "Penalty",
-      "price": "Price",
       "ponziDepositStatus": "Status",
       "ponziRuleStatus": "Status",
+      "price": "Price",
       "quantity": "Quantity",
       "raffle": "Raffle",
       "rank": "Rank",
@@ -638,10 +637,14 @@
       "title": "CoinGecko"
     },
     "craft": {
+      "approve": "Please approve ingredients to Exchange before",
+      "price": "Price",
+      "tabs": {
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998"
+      },
       "title": "Craft recipe: {title}"
-    },
-    "dismantle": {
-      "title": "Dismantle recipe: {title}"
     },
     "craft-list": {
       "title": "Craft recipes"
@@ -701,7 +704,7 @@
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
-        "waitlist": "Waitlist",
+        "wait-list": "Waitlist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -837,11 +840,14 @@
       },
       "title": "ERC721",
       "token": {
+        "craft": "Craft",
+        "dismantle": "Dismantle",
         "genesis": "Genesis",
         "grade": "Grade",
         "level": "Level: {level}",
         "price": "Base price: {amount}",
         "rarity": "Rarity: {rarity}",
+        "rarityMultiplier": "x {multiplier}",
         "title": "ERC721 Token: {title}",
         "traits": "Traits"
       },
@@ -1029,6 +1035,20 @@
     "page": {
       "title": "{title}"
     },
+    "ponzi": {
+      "deposit": {
+        "title": "My Deposits"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "reward": "Reward",
+      "rules": {
+        "deposit": "Deposit",
+        "title": "Deposit rules"
+      },
+      "title": "Ponzi"
+    },
     "product": {
       "price": "Price: {amount}",
       "title": "{title}"
@@ -1051,20 +1071,6 @@
         "subscriptions": "Subscriptions"
       },
       "title": "Profile"
-    },
-    "ponzi": {
-      "deposit": {
-        "title": "My Deposits"
-      },
-      "leaderboard": {
-        "title": "Leaderboard"
-      },
-      "reward": "Reward",
-      "rules": {
-        "deposit": "Deposit",
-        "title": "Deposit rules"
-      },
-      "title": "Ponzi"
     },
     "raffle": {
       "contract": {
@@ -1132,7 +1138,7 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
-    "waitlist": {
+    "wait-list": {
       "item": {
         "title": "Waitlist"
       },

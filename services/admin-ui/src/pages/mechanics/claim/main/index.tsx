@@ -1,8 +1,19 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -13,7 +24,6 @@ import { ClaimStatus } from "@framework/types";
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { ClaimEditDialog } from "./edit";
-import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
   const {
@@ -67,7 +77,19 @@ export const Claim: FC = () => {
         </Button>
       </PageHeader>
 
-      <ClaimSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="ClaimSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput multiple name="claimStatus" options={ClaimStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>

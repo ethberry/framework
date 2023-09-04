@@ -4,13 +4,12 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 import { useParams } from "react-router";
-
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysteryBox, IMysteryBoxSearchDto, ModuleType, TokenType } from "@framework/types";
+import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { MysteryBoxListItem } from "./item";
-import { MysteryboxSearchForm } from "./form";
+import { MysteryBoxSearchForm } from "./form";
 
 export interface IMysteryboxListProps {
   embedded?: boolean;
@@ -46,14 +45,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         </Button>
       </PageHeader>
 
-      <MysteryboxSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        contractType={[TokenType.ERC721]}
-        contractModule={[ModuleType.MYSTERY]}
-        embedded={embedded}
-      />
+      <MysteryBoxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

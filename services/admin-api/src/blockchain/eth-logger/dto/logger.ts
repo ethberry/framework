@@ -2,9 +2,9 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
+import { AddressOptionalDto } from "@gemunion/collection";
 import { ListenerType } from "@framework/types";
 
-import { AddressOptionalDto } from "../../../common/dto";
 import { IEthLoggerInOutDto } from "../interfaces";
 
 export class EthLoggerInOutDto extends AddressOptionalDto implements IEthLoggerInOutDto {

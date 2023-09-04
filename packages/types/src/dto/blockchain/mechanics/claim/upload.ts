@@ -1,6 +1,6 @@
-import { IBCAssetDto } from "../../exchange/asset/bc-asset";
+import { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
 
-export interface IClaimRowDto extends IBCAssetDto {
+export interface IClaimRowDto extends IBCAssetTemplateDto {
   id?: string;
   account: string;
   endTimestamp: string;

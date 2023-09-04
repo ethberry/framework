@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -9,7 +9,7 @@ import { GradeService } from "./grade.service";
 
 @Module({
   imports: [ConfigModule, AssetModule, ContractModule, TypeOrmModule.forFeature([GradeEntity])],
-  providers: [Logger, GradeService],
+  providers: [GradeService],
   exports: [GradeService],
 })
 export class GradeModule {}

@@ -122,6 +122,8 @@ export enum ContractEventType {
   Claim = "Claim",
   // MODULE:CRAFT
   Craft = "Craft",
+  Dismantle = "Dismantle",
+  Merge = "Merge",
   // MODULE:RENTABLE
   UpdateUser = "UpdateUser",
   Lend = "Lend",

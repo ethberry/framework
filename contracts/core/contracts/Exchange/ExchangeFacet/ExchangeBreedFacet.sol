@@ -21,7 +21,7 @@ import "../storage/ExchangeStorage.sol";
 
 
 contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Breed(address from, uint256 externalId, Asset matron, Asset sire);
+  event Breed(address account, uint256 externalId, Asset matron, Asset sire);
 
   using SafeCast for uint256;
 

@@ -12,7 +12,7 @@ export const waitlistRoutes: Array<RouteObject> = [
       {
         index: true,
         element: (
-          <IndexWrapper index="waitlist">
+          <IndexWrapper index="wait-list">
             <WaitListSection />
           </IndexWrapper>
         ),

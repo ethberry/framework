@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Collapse, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -20,34 +20,20 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
   const fixedValues = { query, contractStatus, contractFeatures };
 
   return (
-    <FormWrapper
-      initialValues={fixedValues}
-      onSubmit={onSubmit}
-      showButtons={false}
-      showPrompt={false}
-      testId="ContractSearchForm"
-    >
+    <CommonSearchForm initialValues={fixedValues} onSubmit={onSubmit} open={open} testId="ContractSearchForm">
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SearchInput name="query" />
+        <Grid item xs={6}>
+          <SelectInput name="contractStatus" options={ContractStatus} multiple />
+        </Grid>
+        <Grid item xs={6}>
+          <SelectInput
+            name="contractFeatures"
+            options={contractFeaturesOptions}
+            multiple
+            disabled={Object.keys(contractFeaturesOptions).length === 0}
+          />
         </Grid>
       </Grid>
-      <Collapse in={open}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <SelectInput name="contractStatus" options={ContractStatus} multiple />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectInput
-              name="contractFeatures"
-              options={contractFeaturesOptions}
-              multiple
-              disabled={Object.keys(contractFeaturesOptions).length === 0}
-            />
-          </Grid>
-        </Grid>
-      </Collapse>
-      <AutoSave onSubmit={onSubmit} />
-    </FormWrapper>
+    </CommonSearchForm>
   );
 };

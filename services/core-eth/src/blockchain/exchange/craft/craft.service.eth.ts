@@ -6,7 +6,7 @@ import type { IExchangeCraftEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { CraftService } from "../../mechanics/craft/craft.service";
+import { CraftService } from "../../mechanics/recipes/craft/craft.service";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()

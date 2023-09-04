@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IStakingChartItemSearchDto, IStakingChartSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -27,7 +27,15 @@ export class StakingChartItemSearchDto implements IStakingChartItemSearchDto {
   public contractId: number;
 }
 
-export class StakingChartSearchDto extends SearchDto implements IStakingChartSearchDto {
+export class StakingChartSearchDto extends PaginationDto implements IStakingChartSearchDto {
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+
   @ApiProperty({
     type: StakingChartItemSearchDto,
   })

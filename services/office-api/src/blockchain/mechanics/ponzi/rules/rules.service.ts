@@ -20,6 +20,7 @@ export class PonziRulesService {
     const { query, deposit, reward, ponziRuleStatus, skip, take } = dto;
 
     const queryBuilder = this.ponziRuleEntityRepository.createQueryBuilder("rule");
+
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");

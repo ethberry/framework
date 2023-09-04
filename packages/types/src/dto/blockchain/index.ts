@@ -25,9 +25,16 @@ export * from "./mechanics/claim/update";
 export * from "./mechanics/claim/upload";
 
 export * from "./mechanics/grade/search";
+export * from "./mechanics/grade/sign";
+
 export * from "./mechanics/craft/search";
 export * from "./mechanics/craft/sign";
+
+export * from "./mechanics/dismantle/search";
+export * from "./mechanics/dismantle/sign";
+
 export * from "./mechanics/rent/search";
+
 export * from "./mechanics/drop/search";
 
 export * from "./mechanics/lottery/deploy";
@@ -56,8 +63,10 @@ export * from "./mechanics/vesting/upload";
 
 export * from "./mechanics/wait-list/item/create";
 export * from "./mechanics/wait-list/item/search";
+export * from "./mechanics/wait-list/list/autocomplete";
 export * from "./mechanics/wait-list/list/create";
 export * from "./mechanics/wait-list/list/update";
+export * from "./mechanics/wait-list/list/search";
 export * from "./mechanics/wait-list/deploy";
 
 export * from "./mechanics/ponzi/deploy";

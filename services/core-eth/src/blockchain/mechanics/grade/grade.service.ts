@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
@@ -11,9 +11,7 @@ import { GradeEntity } from "./grade.entity";
 export class GradeService {
   constructor(
     @InjectRepository(GradeEntity)
-    private readonly gradeEntityRepository: Repository<GradeEntity>,
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly gradeEntityRepository: Repository<GradeEntity>,
     protected readonly configService: ConfigService,
     protected readonly assetService: AssetService,
     protected readonly contractService: ContractService,

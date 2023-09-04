@@ -6,7 +6,7 @@ import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 import type { ISignTemplateDto } from "@framework/types";
 
-import { ChainIdDto } from "../../../../common/common/dto";
+import { ChainIdDto } from "../../../../common/dto";
 
 export class SignTemplateDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignTemplateDto {
   @ApiProperty({

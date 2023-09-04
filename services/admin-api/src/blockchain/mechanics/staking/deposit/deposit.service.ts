@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IStakingDepositSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingDepositEntity } from "./deposit.entity";
 
 @Injectable()
@@ -27,9 +28,12 @@ export class StakingDepositService {
     return this.stakingDepositEntityRepository.find({ where, ...options });
   }
 
-  public async search(dto: Partial<IStakingDepositSearchDto>): Promise<[Array<StakingDepositEntity>, number]> {
+  public async search(
+    dto: Partial<IStakingDepositSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<StakingDepositEntity>, number]> {
     const {
-      query,
+      contractIds,
       account,
       emptyReward,
       stakingDepositStatus,
@@ -44,6 +48,7 @@ export class StakingDepositService {
     const queryBuilder = this.stakingDepositEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -56,25 +61,22 @@ export class StakingDepositService {
 
     queryBuilder.select();
 
-    if (account) {
-      queryBuilder.andWhere("stake.account = :account", { account });
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
-    if (query) {
-      queryBuilder.leftJoin(
-        qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
-          return qb;
-        },
-        `blocks`,
-        `TRUE`,
-      );
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
-        }),
-      );
+    if (account) {
+      queryBuilder.andWhere("stake.account = :account", { account });
     }
 
     if (stakingDepositStatus) {

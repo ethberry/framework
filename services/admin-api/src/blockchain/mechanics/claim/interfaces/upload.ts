@@ -1,6 +1,6 @@
-import type { IBCAssetDto } from "@framework/types";
+import type { IBCAssetTemplateDto } from "@framework/types";
 
-export interface IClaimRowDto extends IBCAssetDto {
+export interface IClaimRowDto extends IBCAssetTemplateDto {
   account: string;
   endTimestamp: string;
 }

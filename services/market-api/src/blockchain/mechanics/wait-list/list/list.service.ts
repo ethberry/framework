@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { WaitListListEntity } from "./list.entity";
 import { ContractStatus } from "@framework/types";
+
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { WaitListListEntity } from "./list.entity";
 
 @Injectable()
 export class WaitListListService {
@@ -43,5 +44,12 @@ export class WaitListListService {
     });
 
     return queryBuilder.getMany();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<WaitListListEntity>,
+    options?: FindOneOptions<WaitListListEntity>,
+  ): Promise<WaitListListEntity | null> {
+    return this.waitListListEntityRepository.findOne({ where, ...options });
   }
 }

@@ -5,7 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { GradeService } from "./grade.service";
 import { GradeEntity } from "./grade.entity";
-import { AutocompleteGradeDto, SearchGradeDto, SignGradeDto } from "./dto";
+import { AutocompleteGradeDto, SearchGradeDto, GradeSignDto } from "./dto";
 
 @Public()
 @Controller("/grade")
@@ -13,7 +13,7 @@ export class GradeController {
   constructor(private readonly gradeService: GradeService) {}
 
   @Post("/sign")
-  public sign(@Body() dto: SignGradeDto): Promise<IServerSignature> {
+  public sign(@Body() dto: GradeSignDto): Promise<IServerSignature> {
     return this.gradeService.sign(dto);
   }
 

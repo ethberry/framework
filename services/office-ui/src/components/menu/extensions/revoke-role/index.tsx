@@ -8,11 +8,11 @@ import { ContractSecurity } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
 
-export interface IContractRevokeRoleMenuItemProps {
+export interface IRevokeRoleMenuItemProps {
   contract: IContract;
 }
 
-export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
+export const RevokeRoleMenuItem: FC<IRevokeRoleMenuItemProps> = props => {
   const {
     contract: { address, contractSecurity },
   } = props;

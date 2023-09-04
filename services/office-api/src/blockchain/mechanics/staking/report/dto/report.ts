@@ -13,7 +13,7 @@ import {
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
+import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IStakingReportItemSearchDto, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
@@ -35,7 +35,18 @@ export class StakingReportItemSearchDto implements IStakingReportItemSearchDto {
   public contractId: number;
 }
 
-export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements IStakingReportSearchDto {
+export class StakingReportSearchDto
+  extends Mixin(AccountOptionalDto, PaginationDto)
+  implements IStakingReportSearchDto
+{
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+
   @ApiPropertyOptional({
     enum: StakingDepositStatus,
     isArray: true,

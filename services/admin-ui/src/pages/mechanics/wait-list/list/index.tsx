@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -12,9 +13,8 @@ import { emptyItem } from "@gemunion/mui-inputs-asset";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/waitlist-list";
+import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/wait-list-list";
 import { cleanUpAsset } from "../../../../utils/money";
-import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -51,6 +51,7 @@ export const WaitListList: FC = () => {
         ? {
             title,
             description,
+            isPrivate,
           }
         : {
             title,
@@ -71,7 +72,7 @@ export const WaitListList: FC = () => {
         </Button>
       </PageHeader>
 
-      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} testId="WaitListListSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

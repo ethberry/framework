@@ -12,6 +12,8 @@ import {
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -21,7 +23,6 @@ import { GradeStatus, GradeStrategy } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { GradeEditDialog } from "./edit";
-import { GradeSearchForm } from "./form";
 
 export const Grade: FC = () => {
   const {
@@ -90,7 +91,11 @@ export const Grade: FC = () => {
         </Button>
       </PageHeader>
 
-      <GradeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ExchangeSearchForm">
+        <Grid item xs={12}>
+          <SelectInput multiple name="gradeStatus" options={GradeStatus} />
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
