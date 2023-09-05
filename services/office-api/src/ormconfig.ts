@@ -10,6 +10,7 @@ import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity"
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
+import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 // extensions
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
@@ -35,6 +36,7 @@ import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit
 import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 // infrastructure
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
@@ -50,7 +52,6 @@ import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { PhotoEntity } from "./ecommerce/photo/photo.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
-
 /* achievements */
 import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
@@ -62,19 +63,24 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    GradeEntity,
     ContractManagerEntity,
-    AccessControlEntity,
-    AccessListEntity,
-    ContractEntity,
-    TemplateEntity,
+    // exchange
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
+    // extensions
+    AccessControlEntity,
+    AccessListEntity,
+    // hierarchy
     ContractEntity,
+    TemplateEntity,
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
+    CompositionEntity,
+    // mechanics
+    MysteryBoxEntity,
+    GradeEntity,
     ClaimEntity,
     DropEntity,
     EventHistoryEntity,

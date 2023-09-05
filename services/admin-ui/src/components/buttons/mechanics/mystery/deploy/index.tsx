@@ -9,7 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import type { IMysteryContractDeployDto, IUser } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import DeployMysteryboxABI from "../../../../../abis/mechanics/mysterybox/deploy/deployMysteryBox.abi.json";
+import DeployMysteryBoxABI from "../../../../../abis/mechanics/mystery-box/deploy/deployMysteryBox.abi.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 
@@ -27,7 +27,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployMysteryboxABI,
+        DeployMysteryBoxABI,
         web3Context.provider?.getSigner(),
       );
 

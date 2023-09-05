@@ -43,8 +43,10 @@ export * from "./mechanics/raffle/deploy";
 export * from "./mechanics/raffle/search";
 export * from "./mechanics/raffle/schedule";
 
-export * from "./mechanics/mysterybox/search";
-export * from "./mechanics/mysterybox/deploy";
+export * from "./mechanics/mystery-box/autocomplete";
+export * from "./mechanics/mystery-box/deploy";
+export * from "./mechanics/mystery-box/search";
+
 export * from "./mechanics/referral/search";
 
 export * from "./mechanics/staking/deploy";

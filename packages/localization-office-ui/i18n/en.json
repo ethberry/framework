@@ -60,6 +60,10 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "mysteryBoxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -308,6 +312,7 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "mysteryBoxStatus": "Status",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -542,6 +547,21 @@
     "uncaughtError": "Uncaught error happened"
   },
   "pages": {
+    "mystery": {
+      "boxContent": {
+        "title": "Mysterybox content"
+      },
+      "boxes": {
+        "title": "Mystery Boxes"
+      },
+      "contracts": {
+        "title": "Mystery Contracts"
+      },
+      "title": "Mystery",
+      "tokens": {
+        "title": "Mystery Tokens"
+      }
+    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -593,6 +613,7 @@
         }
       },
       "mechanics": {
+        "mystery": "Mystery",
         "claim": "Claim",
         "dispenser": "Dispenser",
         "drop": "Drop",

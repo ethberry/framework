@@ -11,7 +11,7 @@ export * from "./mechanics/lottery/deploy";
 
 export * from "./mechanics/raffle/deploy";
 
-export * from "./mechanics/mysterybox/deploy";
+export * from "./mechanics/mystery/deploy";
 
 export * from "./mechanics/ponzi/deploy";
 export * from "./mechanics/ponzi/upload";
