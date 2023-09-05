@@ -49,6 +49,6 @@ export class TokenController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<TokenEntity | null> {
-    return this.tokenService.findOneWithRelations({ id }, merchantEntity);
+    return this.tokenService.findOneWithRelationsOrFail({ id }, merchantEntity);
   }
 }

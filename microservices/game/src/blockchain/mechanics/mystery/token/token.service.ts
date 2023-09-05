@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import type { ITokenSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -25,7 +26,7 @@ export class MysteryTokenService extends TokenService {
     return super.search(dto, merchantEntity, [ModuleType.MYSTERY], [TokenType.ERC721]);
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+  public async findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
@@ -47,5 +48,22 @@ export class MysteryTokenService extends TokenService {
     });
 
     return queryBuilder.getOne();
+  }
+
+  public async findOneWithRelationsOrFail(
+    where: FindOptionsWhere<TokenEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<TokenEntity> {
+    const tokenEntity = await this.findOneWithRelations(where);
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    if (tokenEntity.template.contract.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return tokenEntity;
   }
 }

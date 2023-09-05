@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -8,6 +8,7 @@ import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/ty
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
@@ -23,18 +24,17 @@ export class MysterySignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
+  public async sign(dto: ISignMysteryboxDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, mysteryBoxId, chainId } = dto;
 
-    const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryBoxId });
-
-    if (!mysteryBoxEntity) {
-      throw new NotFoundException("mysteryBoxNotFound");
-    }
-
-    if (mysteryBoxEntity.template.contract.merchant.ratePlan === RatePlanType.BRONZE) {
+    if (merchantEntity.ratePlan === RatePlanType.BRONZE) {
       throw new ForbiddenException("insufficientPermissions");
     }
+
+    const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelationsOrFail(
+      { id: mysteryBoxId },
+      merchantEntity,
+    );
 
     const cap = BigInt(mysteryBoxEntity.template.cap);
     if (cap > 0 && cap <= BigInt(mysteryBoxEntity.template.amount)) {

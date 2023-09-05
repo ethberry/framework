@@ -212,10 +212,7 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneWithRelations(
-    where: FindOptionsWhere<TokenEntity>,
-    merchantEntity: MerchantEntity,
-  ): Promise<TokenEntity | null> {
+  public async findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
@@ -242,7 +239,14 @@ export class TokenService {
       id: where.id,
     });
 
-    const tokenEntity = await queryBuilder.getOne();
+    return queryBuilder.getOne();
+  }
+
+  public async findOneWithRelationsOrFail(
+    where: FindOptionsWhere<TokenEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<TokenEntity> {
+    const tokenEntity = await this.findOneWithRelations(where);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

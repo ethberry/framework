@@ -26,7 +26,10 @@ export class MysteryBoxController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<MysteryBoxEntity | null> {
-    return this.mysteryBoxService.findOneWithRelations({ id });
+  public findOne(
+    @Param("id", ParseIntPipe) id: number,
+    @User() merchantEntity: MerchantEntity,
+  ): Promise<MysteryBoxEntity | null> {
+    return this.mysteryBoxService.findOneWithRelations({ id }, merchantEntity);
   }
 }

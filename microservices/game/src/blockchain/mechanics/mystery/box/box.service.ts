@@ -1,11 +1,12 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryBoxEntity } from "./box.entity";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
+import { MysteryBoxEntity } from "./box.entity";
 
 @Injectable()
 export class MysteryBoxService {
@@ -162,11 +163,29 @@ export class MysteryBoxService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
     queryBuilder.andWhere("box.id = :id", {
       id: where.id,
     });
 
     return queryBuilder.getOne();
+  }
+
+  public async findOneWithRelationsOrFail(
+    where: FindOptionsWhere<MysteryBoxEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<MysteryBoxEntity> {
+    const mysteryBoxEntity = await this.findOneWithRelations(where);
+
+    if (!mysteryBoxEntity) {
+      throw new NotFoundException("mysteryBoxNotFound");
+    }
+
+    if (mysteryBoxEntity.template.contract.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return mysteryBoxEntity;
   }
 
   public async autocomplete(merchantEntity: MerchantEntity): Promise<Array<MysteryBoxEntity>> {

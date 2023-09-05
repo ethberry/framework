@@ -32,7 +32,10 @@ export class MysteryTokenController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.mysteryTokenService.findOneWithRelations({ id });
+  public findOne(
+    @Param("id", ParseIntPipe) id: number,
+    @User() merchantEntity: MerchantEntity,
+  ): Promise<TokenEntity | null> {
+    return this.mysteryTokenService.findOneWithRelationsOrFail({ id }, merchantEntity);
   }
 }
