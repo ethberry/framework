@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
@@ -22,9 +21,8 @@ export class NativeContractService extends ContractService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
-    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository, configService);
+    super(contractEntityRepository);
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
