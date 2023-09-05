@@ -21,8 +21,8 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
+import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -55,14 +55,18 @@ export const Erc1155Template: FC = () => {
       description: emptyStateString,
       price: emptyPrice,
       amount: "0",
+      contractId: 3,
+      // @ts-ignore
+      // this is only filter for contract autocomplete
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
-      contractIds: [],
       templateStatus: [TemplateStatus.ACTIVE],
+      contractIds: [],
       merchantId: profile.merchantId,
     },
-    filter: ({ id, title, description, price, amount, imageUrl, contractId, templateStatus }) =>
+    filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
       id
         ? { title, description, price: cleanUpAsset(price), amount, imageUrl, templateStatus }
         : { title, description, price: cleanUpAsset(price), amount, imageUrl, contractId },
@@ -79,7 +83,7 @@ export const Erc1155Template: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TokenCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TemplateCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

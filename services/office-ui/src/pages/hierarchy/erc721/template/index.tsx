@@ -56,6 +56,9 @@ export const Erc721Template: FC = () => {
       price: emptyPrice,
       amount: "0",
       contractId: 3,
+      // @ts-ignore
+      // this is only filter for contract autocomplete
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",

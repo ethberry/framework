@@ -27,6 +27,7 @@ import { IUser, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types
 import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
 import { MysteryboxEditDialog } from "./edit";
+import { ContractInput } from "../../../../components/forms/template-search/contract-input";
 
 export const MysteryBox: FC = () => {
   const { profile } = useUser<IUser>();
@@ -59,6 +60,9 @@ export const MysteryBox: FC = () => {
       template: {
         price: emptyPrice,
       } as ITemplate,
+      // @ts-ignore
+      // this is only filter for contract autocomplete
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
@@ -109,15 +113,16 @@ export const MysteryBox: FC = () => {
         testId="MysteryboxSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" />
+          </Grid>
           <Grid item xs={6}>
-            <EntityInput
+            <ContractInput
               name="contractIds"
-              controller="contracts"
               multiple
               data={{
                 contractType: [TokenType.ERC721],
                 contractModule: [ModuleType.MYSTERY],
-                merchantId: profile.merchantId,
               }}
             />
           </Grid>
