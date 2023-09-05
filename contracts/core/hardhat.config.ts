@@ -38,7 +38,6 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-
     gemunionprod: {
       url: process.env.JSON_RPC_ADDR_GEMUNION,
       timeout: 30000,
