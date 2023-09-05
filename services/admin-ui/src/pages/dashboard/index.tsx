@@ -24,7 +24,7 @@ import { Erc1155Section } from "./hierarchy/erc1155";
 import { BreedSection } from "./mechanics/breed";
 import { ClaimSection } from "./mechanics/claim";
 import { CollectionSection } from "./mechanics/collection";
-import { CraftSection } from "./mechanics/craft";
+import { RecipesSection } from "./mechanics/recipes";
 import { DispenserSection } from "./mechanics/dispenser";
 import { DropSection } from "./mechanics/drop";
 import { GradeSection } from "./mechanics/grade";
@@ -59,7 +59,7 @@ export const Dashboard: FC = () => {
           <ClaimSection />
           <VestingSection />
           <GradeSection />
-          <CraftSection />
+          <RecipesSection />
           <DropSection />
           <RentSection />
           <BreedSection />

@@ -609,6 +609,10 @@
       "description": "This mechanic allows to mass-transact tokens.",
       "title": "Dispenser"
     },
+    "dragons": {
+      "description": "Here be dragons",
+      "title": "Not implemented :)"
+    },
     "drop": {
       "title": "Drops"
     },

@@ -1049,7 +1049,7 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "craft": "Craft",
+        "recipes": "Recipes",
         "dispenser": "Dispenser",
         "drop": "Drop",
         "grade": "Grade",
@@ -1073,6 +1073,10 @@
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
       "title": "Dispenser"
+    },
+    "dragons": {
+      "description": "Here be dragons",
+      "title": "Not implemented :)"
     },
     "drop": {
       "title": "Drops"
