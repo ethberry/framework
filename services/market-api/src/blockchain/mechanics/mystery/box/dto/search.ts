@@ -34,6 +34,7 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   public maxPrice: string;
 
   public chainId: number;
+  public merchantId: number;
   public templateIds: Array<number>;
   public mysteryBoxStatus: Array<MysteryBoxStatus>;
 }

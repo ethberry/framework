@@ -43,4 +43,5 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
 
   public templateIds: Array<number>;
   public mysteryBoxStatus: Array<MysteryBoxStatus>;
+  public merchantId: number;
 }

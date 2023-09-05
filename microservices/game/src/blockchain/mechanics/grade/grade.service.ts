@@ -40,7 +40,7 @@ export class GradeService {
   public async findOneByToken(dto: IGradeSearchDto, merchantEntity: MerchantEntity): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
-    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId }, merchantEntity);
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -92,7 +92,7 @@ export class GradeService {
 
   public async sign(dto: IGradeSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
-    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId }, merchantEntity);
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
