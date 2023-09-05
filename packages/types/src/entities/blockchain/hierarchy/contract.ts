@@ -25,6 +25,7 @@ export enum Erc20ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
   "EXTERNAL" = "EXTERNAL",
+  "STABLE_COIN" = "STABLE_COIN",
 }
 
 export enum Erc20ContractTemplates {
