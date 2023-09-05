@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemun
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateNewDto } from "../../../hierarchy/template/dto";
-import { MysteryboxSearchDto } from "./dto";
+import { MysteryBoxSearchDto } from "./dto";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
 
@@ -16,10 +16,10 @@ export class MysteryBoxController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: MysteryboxSearchDto,
+    @Query() dto: MysteryBoxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    return this.mysteryBoxService.search(dto, userEntity?.chainId);
+    return this.mysteryBoxService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
@@ -33,7 +33,7 @@ export class MysteryBoxController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    return this.mysteryBoxService.search({ take: 10 }, userEntity.chainId);
+    return this.mysteryBoxService.search({ take: 10 }, userEntity);
   }
 
   @Get("/:id")

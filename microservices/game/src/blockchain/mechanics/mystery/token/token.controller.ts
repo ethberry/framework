@@ -3,7 +3,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenAutocompleteDto, TokenSearchDto } from "../../../hierarchy/token/dto";
 import { MysteryTokenService } from "./token.service";
@@ -15,13 +15,19 @@ export class MysteryTokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return this.mysteryTokenService.search(dto, userEntity);
+  public search(
+    @Query() dto: TokenSearchDto,
+    @User() merchantEntity: MerchantEntity,
+  ): Promise<[Array<TokenEntity>, number]> {
+    return this.mysteryTokenService.search(dto, merchantEntity);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    return this.mysteryTokenService.autocomplete(dto, userEntity);
+  public autocomplete(
+    @Query() dto: TokenAutocompleteDto,
+    @User() merchantEntity: MerchantEntity,
+  ): Promise<Array<TokenEntity>> {
+    return this.mysteryTokenService.autocomplete(dto, merchantEntity);
   }
 
   @Get("/:id")

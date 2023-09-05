@@ -56,4 +56,6 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   @IsOptional()
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
+
+  public chainId: number;
 }

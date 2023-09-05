@@ -77,7 +77,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
-        url: "/mysteryboxes/sign",
+        url: "/mystery/sign",
         method: "POST",
         data: {
           chainId,

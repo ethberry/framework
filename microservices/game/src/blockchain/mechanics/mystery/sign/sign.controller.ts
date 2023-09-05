@@ -3,8 +3,8 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import { SignMysteryboxDto } from "./dto";
 import { MysterySignService } from "./sign.service";
+import { SignMysteryboxDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/mystery")

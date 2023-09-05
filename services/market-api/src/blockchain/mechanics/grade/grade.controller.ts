@@ -12,6 +12,12 @@ import { GradeAutocompleteDto, GradeSearchDto, GradeSignDto } from "./dto";
 export class GradeController {
   constructor(private readonly gradeService: GradeService) {}
 
+  @Get("/")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Query() dto: GradeSearchDto): Promise<GradeEntity | null> {
+    return this.gradeService.findOneByToken(dto);
+  }
+
   @Post("/sign")
   public sign(@Body() dto: GradeSignDto): Promise<IServerSignature> {
     return this.gradeService.sign(dto);
@@ -20,11 +26,5 @@ export class GradeController {
   @Get("/autocomplete")
   public autocomplete(@Query() dto: GradeAutocompleteDto): Promise<Array<GradeEntity>> {
     return this.gradeService.autocomplete(dto);
-  }
-
-  @Get("/")
-  @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Query() dto: GradeSearchDto): Promise<GradeEntity | null> {
-    return this.gradeService.findOneByToken(dto);
   }
 }

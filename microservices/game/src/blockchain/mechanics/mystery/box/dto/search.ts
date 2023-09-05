@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
@@ -33,7 +33,14 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public chainId: number;
+
   public templateIds: Array<number>;
   public mysteryBoxStatus: Array<MysteryBoxStatus>;
 }

@@ -4,10 +4,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
-import { TokenAutocompleteDto, TokenSearchDto } from "./dto";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { TokenService } from "./token.service";
 import { TokenEntity } from "./token.entity";
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { TokenAutocompleteDto, TokenSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/tokens")
@@ -23,7 +23,6 @@ export class TokenController {
     return this.tokenService.search(
       dto,
       merchantEntity,
-      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
       [
         ModuleType.HIERARCHY,
         ModuleType.COLLECTION,
@@ -32,6 +31,7 @@ export class TokenController {
         ModuleType.LOTTERY,
         ModuleType.RAFFLE,
       ],
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     );
   }
 

@@ -50,6 +50,8 @@ export class ContractService {
       } else {
         queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
     }
 
     if (contractModule) {

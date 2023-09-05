@@ -2,12 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { testChainId } from "@framework/constants";
+import { MysteryBoxEntity } from "./box.entity";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
-
-import { MysteryBoxEntity } from "./box.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 
 @Injectable()
 export class MysteryBoxService {
@@ -18,9 +16,9 @@ export class MysteryBoxService {
 
   public async search(
     dto: Partial<IMysteryBoxSearchDto>,
-    userEntity?: UserEntity,
+    merchantEntity: MerchantEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
+    const { query, contractIds, minPrice, maxPrice, chainId, skip, take } = dto;
 
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
 
@@ -54,20 +52,21 @@ export class MysteryBoxService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType: TokenType.ERC721,
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule: ModuleType.MYSTERY,
     });
-
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity?.chainId || testChainId,
+      chainId,
     });
-
     queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {
       mysteryBoxStatus: TemplateStatus.ACTIVE,
     });
@@ -170,8 +169,15 @@ export class MysteryBoxService {
     return queryBuilder.getOne();
   }
 
-  public async autocomplete(): Promise<Array<MysteryBoxEntity>> {
+  public async autocomplete(merchantEntity: MerchantEntity): Promise<Array<MysteryBoxEntity>> {
     return this.mysteryBoxEntityRepository.find({
+      where: {
+        template: {
+          contract: {
+            merchantId: merchantEntity.id,
+          },
+        },
+      },
       select: {
         id: true,
         title: true,

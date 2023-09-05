@@ -1,5 +1,4 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -13,10 +12,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 @ApiBearerAuth()
 @Controller("/raffle/contracts")
 export class RaffleContractController {
-  constructor(
-    private readonly raffleContractService: RaffleContractService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly raffleContractService: RaffleContractService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)

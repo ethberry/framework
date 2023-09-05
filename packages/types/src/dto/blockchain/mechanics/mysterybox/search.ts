@@ -6,6 +6,7 @@ export interface IMysteryBoxSearchDto extends ISearchDto {
   mysteryBoxStatus: Array<MysteryBoxStatus>;
   contractIds: Array<number>;
   templateIds: Array<number>;
+  chainId: number;
   maxPrice: string;
   minPrice: string;
 }
