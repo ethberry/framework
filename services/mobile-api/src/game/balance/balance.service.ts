@@ -26,7 +26,7 @@ export class BalanceService {
     return this.merchantEntityRepository.findOne({ where, ...options });
   }
 
-  public async redeemBalance(userEntity: UserEntity): Promise<any> {
+  public async redeemBalance(userEntity: UserEntity): Promise<void> {
     const balanceEntity = await this.findOne({ userId: userEntity.id });
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");

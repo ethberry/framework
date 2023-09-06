@@ -20,7 +20,6 @@ export class AccessControlServiceEth {
     private readonly accessControlService: AccessControlService,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
-    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGrantedEvent>, context: Log): Promise<void> {
