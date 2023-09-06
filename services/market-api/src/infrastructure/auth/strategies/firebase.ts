@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable, Logger, LoggerService, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ConfigService } from "@nestjs/config";
 import { ExtractJwt } from "passport-jwt";
@@ -17,7 +17,6 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
   constructor(
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
-    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     @Inject(Logger)
     private readonly loggerService: LoggerService,

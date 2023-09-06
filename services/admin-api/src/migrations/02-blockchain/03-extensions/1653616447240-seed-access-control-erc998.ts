@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedAccessControlErc998At20At1653616447240 implements MigrationInterface {
+export class SeedAccessControlErc998At1653616447240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;

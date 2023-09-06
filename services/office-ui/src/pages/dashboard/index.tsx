@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
@@ -22,6 +22,7 @@ import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
 import { VestingSection } from "./mechanics/vesting";
 import { WaitListSection } from "./mechanics/wait-list";
+import { MysterySection } from "./mechanics/mystery";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -37,6 +38,8 @@ export const Dashboard: FC = () => {
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
+          <Divider sx={{ m: 2 }} />
+          <MysterySection />
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />

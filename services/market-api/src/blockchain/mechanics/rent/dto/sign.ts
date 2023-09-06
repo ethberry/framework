@@ -1,15 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
-import { Transform } from "class-transformer";
-
+import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
+import { AccountDto, ReferrerDto } from "@gemunion/collection";
 
 import { ISignRentTokenDto } from "../interfaces";
 import { ChainIdDto } from "../../../../common/dto";
 
-export class SignRentTokenDto extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto) implements ISignRentTokenDto {
+export class SignRentTokenDto extends Mixin(ReferrerDto, AccountDto, ChainIdDto) implements ISignRentTokenDto {
   @ApiProperty({
     minimum: 1,
   })
@@ -30,16 +28,4 @@ export class SignRentTokenDto extends Mixin(ReferrerOptionalDto, AccountDto, Cha
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
   public externalId: number;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public account: string;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public referrer: string;
 }

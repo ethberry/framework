@@ -52,7 +52,14 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="contract-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

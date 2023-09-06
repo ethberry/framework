@@ -47,7 +47,14 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="staking-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="staking-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={staking} />
         <RevokeRoleMenuItem contract={staking} />
         <RenounceRoleMenuItem contract={staking} />

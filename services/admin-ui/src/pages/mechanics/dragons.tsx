@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
@@ -10,7 +10,7 @@ export const Dragons: FC = () => {
 
       <PageHeader message="pages.dragons.title" />
 
-      <Typography>Here be dragons</Typography>
+      <FormattedMessage id="pages.dragons.description" />
     </Fragment>
   );
 };

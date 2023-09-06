@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { PayeesEntity } from "./payees.entity";
 
@@ -20,7 +20,7 @@ export class PayeesService {
 
   public findAll(
     where: FindOptionsWhere<PayeesEntity>,
-    options?: FindOneOptions<PayeesEntity>,
+    options?: FindManyOptions<PayeesEntity>,
   ): Promise<Array<PayeesEntity>> {
     return this.payeesEntityRepository.find({ where, ...options });
   }

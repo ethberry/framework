@@ -3,7 +3,8 @@ import { Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { IAssetComponentHistory, IContract, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import type { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 import { AssetsWrapper, DataViewAddressLinkWrapper, DataViewItemWrapper } from "./styled";
@@ -11,7 +12,7 @@ import { AssetsWrapper, DataViewAddressLinkWrapper, DataViewItemWrapper } from "
 export interface ITokenLinkProps {
   assets: Array<IAssetComponentHistory>;
   contract: IContract;
-  type: string;
+  type: ExchangeType;
 }
 
 export const AssetsView: FC<ITokenLinkProps> = props => {

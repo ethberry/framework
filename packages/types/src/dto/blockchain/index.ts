@@ -1,5 +1,4 @@
 export * from "./contract-manager/search";
-export * from "./event-history/search";
 
 export * from "./hierarchy/contract/autocomplete";
 export * from "./hierarchy/contract/search";
@@ -9,7 +8,6 @@ export * from "./hierarchy/token/autocomplete";
 export * from "./hierarchy/token/search";
 export * from "./hierarchy/balance/autocomplete";
 export * from "./hierarchy/balance/search";
-export * from "./hierarchy/contract-history/search";
 
 export * from "./exchange/asset/asset";
 export * from "./exchange/asset/components";
@@ -45,8 +43,10 @@ export * from "./mechanics/raffle/deploy";
 export * from "./mechanics/raffle/search";
 export * from "./mechanics/raffle/schedule";
 
-export * from "./mechanics/mysterybox/search";
-export * from "./mechanics/mysterybox/deploy";
+export * from "./mechanics/mystery-box/autocomplete";
+export * from "./mechanics/mystery-box/deploy";
+export * from "./mechanics/mystery-box/search";
+
 export * from "./mechanics/referral/search";
 
 export * from "./mechanics/staking/deploy";

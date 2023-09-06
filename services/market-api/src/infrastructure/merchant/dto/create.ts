@@ -1,21 +1,15 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsEthereumAddress, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsUrl, MaxLength, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { emailMaxLength } from "@gemunion/constants";
+import { SearchableDto, WalletDto } from "@gemunion/collection";
 
 import { IMerchantCreateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";
 
-export class MerchantCreateDto implements IMerchantCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class MerchantCreateDto extends Mixin(SearchableDto, WalletDto) implements IMerchantCreateDto {
   @ApiProperty({
     maxLength: emailMaxLength,
   })
@@ -24,12 +18,6 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public wallet: string;
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
@@ -37,6 +25,7 @@ export class MerchantCreateDto implements IMerchantCreateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })
   public imageUrl = "";
 

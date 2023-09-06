@@ -2,19 +2,11 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import {
-  ContractFeatures,
-  ITokenAutocompleteDto,
-  ITokenSearchDto,
-  ModuleType,
-  TokenMetadata,
-  TokenRarity,
-  TokenStatus,
-  TokenType,
-} from "@framework/types";
+import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 
-import { TokenEntity } from "./token.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {
@@ -26,8 +18,8 @@ export class TokenService {
   public async search(
     dto: Partial<ITokenSearchDto>,
     merchantEntity: MerchantEntity,
-    contractType: Array<TokenType>,
     contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<[Array<TokenEntity>, number]> {
     const { query, metadata = {}, contractIds, templateIds, account, chainId, skip, take } = dto;
@@ -220,10 +212,7 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneWithRelations(
-    where: FindOptionsWhere<TokenEntity>,
-    merchantEntity: MerchantEntity,
-  ): Promise<TokenEntity | null> {
+  public async findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
@@ -250,7 +239,14 @@ export class TokenService {
       id: where.id,
     });
 
-    const tokenEntity = await queryBuilder.getOne();
+    return queryBuilder.getOne();
+  }
+
+  public async findOneWithRelationsOrFail(
+    where: FindOptionsWhere<TokenEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<TokenEntity> {
+    const tokenEntity = await this.findOneWithRelations(where);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

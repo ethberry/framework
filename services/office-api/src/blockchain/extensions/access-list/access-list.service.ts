@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AccessListEntity } from "./access-list.entity";
 
@@ -24,7 +24,7 @@ export class AccessListService {
 
   public findAll(
     where: FindOptionsWhere<AccessListEntity>,
-    options?: FindOneOptions<AccessListEntity>,
+    options?: FindManyOptions<AccessListEntity>,
   ): Promise<Array<AccessListEntity>> {
     return this.accessListEntityRepository.find({ where, ...options });
   }

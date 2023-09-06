@@ -4,6 +4,7 @@ import { claimRoutes } from "./claim/routes";
 import { dispenserRoutes } from "./dispenser/routes";
 import { dropRoutes } from "./drop/routes";
 import { gradeRoutes } from "./grade/routes";
+import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
 import { ponziRoutes } from "./ponzi/routes";
 import { vestingRoutes } from "./vesting/routes";
@@ -14,6 +15,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...dispenserRoutes,
   ...dropRoutes,
   ...gradeRoutes,
+  ...mysteryRoutes,
   ...stakingRoutes,
   ...ponziRoutes,
   ...vestingRoutes,

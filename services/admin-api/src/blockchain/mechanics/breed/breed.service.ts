@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+
 import type { IPaginationDto } from "@gemunion/types-collection";
+
 import { BreedEntity } from "./breed.entity";
 
 @Injectable()
@@ -61,7 +63,7 @@ export class BreedService {
 
   public findAll(
     where: FindOptionsWhere<BreedEntity>,
-    options?: FindOneOptions<BreedEntity>,
+    options?: FindManyOptions<BreedEntity>,
   ): Promise<Array<BreedEntity>> {
     return this.breedEntityRepository.find({ where, ...options });
   }

@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { DataSource, DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import type { IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
 import { ExchangeType, TokenType } from "@framework/types";
@@ -50,7 +50,7 @@ export class AssetService {
 
   public findAll(
     where: FindOptionsWhere<AssetComponentHistoryEntity>,
-    options?: FindOneOptions<AssetComponentHistoryEntity>,
+    options?: FindManyOptions<AssetComponentHistoryEntity>,
   ): Promise<Array<AssetComponentHistoryEntity>> {
     return this.assetComponentHistoryEntityRepository.find({ where, ...options });
   }

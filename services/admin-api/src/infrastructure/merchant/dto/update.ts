@@ -1,23 +1,15 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsEthereumAddress, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsEmail, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { emailMaxLength } from "@gemunion/constants";
+import { SearchableOptionalDto, WalletOptionalDto } from "@gemunion/collection";
 
 import { IMerchantUpdateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";
 
-export class MerchantUpdateDto implements IMerchantUpdateDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class MerchantUpdateDto extends Mixin(WalletOptionalDto, SearchableOptionalDto) implements IMerchantUpdateDto {
   @ApiPropertyOptional({
     maxLength: emailMaxLength,
   })
@@ -26,13 +18,6 @@ export class MerchantUpdateDto implements IMerchantUpdateDto {
   @MaxLength(emailMaxLength, { message: "rangeOverflow" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public wallet: string;
 
   @ApiPropertyOptional()
   @IsOptional()

@@ -55,8 +55,8 @@ export class LotteryRoundServiceCron {
     } catch (e) {
       this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
     } finally {
-      const job = new CronJob(dto.schedule, async () => {
-        await this.lotteryRound(dto.address);
+      const job = new CronJob(dto.schedule, () => {
+        void this.lotteryRound(dto.address);
       });
       this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
       job.start();

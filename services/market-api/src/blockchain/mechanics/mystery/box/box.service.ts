@@ -2,9 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryBoxEntity } from "./box.entity";
+import { testChainId } from "@framework/constants";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
+import { MysteryBoxEntity } from "./box.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysteryBoxService {
@@ -13,7 +16,10 @@ export class MysteryBoxService {
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
   ) {}
 
-  public async search(dto: Partial<IMysteryBoxSearchDto>, chainId: number): Promise<[Array<MysteryBoxEntity>, number]> {
+  public async search(
+    dto: Partial<IMysteryBoxSearchDto>,
+    userEntity?: UserEntity,
+  ): Promise<[Array<MysteryBoxEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
@@ -59,7 +65,7 @@ export class MysteryBoxService {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
+      chainId: userEntity?.chainId || testChainId,
     });
 
     queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {

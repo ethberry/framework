@@ -4,7 +4,7 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ISignTemplateDto } from "@framework/types";
+import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
@@ -23,7 +23,7 @@ export class MarketplaceService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
+  public async sign(dto: ITemplateSignDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, templateId, amount, chainId } = dto;
 
     const templateEntity = await this.templateService.findOneWithRelations({ id: templateId });

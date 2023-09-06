@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ISearchGradeDto } from "../interfaces";
+import { IGradeSearchDto } from "../interfaces";
 
-export class SearchGradeDto implements ISearchGradeDto {
+export class SearchGradeDto implements IGradeSearchDto {
   @ApiProperty({
     minimum: 1,
   })

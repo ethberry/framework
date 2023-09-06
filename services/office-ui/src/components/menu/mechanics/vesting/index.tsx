@@ -43,7 +43,14 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="vesting-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <AllowanceMenuItem contract={vesting} />
         <TopUpMenuItem contract={vesting} />
         <TransferOwnershipMenuItem contract={vesting} />

@@ -3,30 +3,30 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { MysteryTokenService } from "./token.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenAutocompleteDto, TokenSearchDto } from "../../../hierarchy/token/dto";
+import { MysteryTokenService } from "./token.service";
 
 @ApiBearerAuth()
 @Controller("/mystery/tokens")
 export class MysteryTokenController {
-  constructor(private readonly mysteryboxTokenService: MysteryTokenService) {}
+  constructor(private readonly mysteryTokenService: MysteryTokenService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return this.mysteryboxTokenService.search(dto, userEntity);
+    return this.mysteryTokenService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
   public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    return this.mysteryboxTokenService.autocomplete(dto, userEntity);
+    return this.mysteryTokenService.autocomplete(dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.mysteryboxTokenService.findOneWithRelations({ id });
+    return this.mysteryTokenService.findOneWithRelations({ id });
   }
 }

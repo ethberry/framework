@@ -40,7 +40,14 @@ export const CommonActionsMenu: FC<ICommonActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="common-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="common-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <AllowanceMenuItem contract={contract} />
         <TopUpMenuItem contract={contract} />
       </Menu>

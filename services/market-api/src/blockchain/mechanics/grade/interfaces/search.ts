@@ -1,4 +1,4 @@
-export interface ISearchGradeDto {
+export interface IGradeSearchDto {
   tokenId: number;
   attribute: string;
 }

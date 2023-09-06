@@ -43,24 +43,6 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       testId="Erc721TemplateEditForm"
       {...rest}
     >
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      <TemplateAssetInput
-        autoSelect
-        multiple
-        prefix="price"
-        tokenType={{
-          disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
-        }}
-        contract={{
-          data: {
-            includeExternalContracts: true,
-            contractStatus: [ContractStatus.ACTIVE],
-          },
-        }}
-      />
-      <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
         name="contractId"
         controller="contracts"
@@ -70,6 +52,25 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         }}
         readOnly={!!id}
       />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
+      <TemplateAssetInput
+        autoSelect
+        multiple
+        prefix="price"
+        tokenType={{
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
+        }}
+        contract={{
+          data: {
+            includeExternalContracts: true,
+            contractModule: [ModuleType.HIERARCHY],
+            contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+          },
+        }}
+      />
+      <NumberInput name="amount" />
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

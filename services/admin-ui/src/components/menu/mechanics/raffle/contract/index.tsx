@@ -47,7 +47,14 @@ export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="raffle-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="raffle-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />

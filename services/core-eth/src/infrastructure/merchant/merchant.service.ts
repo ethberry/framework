@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MerchantEntity } from "./merchant.entity";
 
@@ -20,7 +20,7 @@ export class MerchantService {
 
   public findAll(
     where: FindOptionsWhere<MerchantEntity>,
-    options?: FindOneOptions<MerchantEntity>,
+    options?: FindManyOptions<MerchantEntity>,
   ): Promise<Array<MerchantEntity>> {
     return this.merchantEntityRepository.find({ where, ...options });
   }

@@ -42,7 +42,14 @@ export const WaitListListActionsMenu: FC<IWaitListListActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="waitlist-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="waitlist-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <CreateMenuItem waitListList={waitListList} />
         <UploadMenuItem waitListList={waitListList} />
         <GenerateMenuItem waitListList={waitListList} />

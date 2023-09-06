@@ -35,7 +35,7 @@ export const ParameterValuesInput: FC<IParameterValuesInput> = props => {
       ({
         ...field,
         ...watchFields[index],
-      } as ParameterValue),
+      }) as ParameterValue,
   );
 
   const handleOptionAdd = (): (() => void) => (): void => {

@@ -8,8 +8,9 @@ import { NodeEnv } from "@framework/types";
 
 export const StakingSection: FC = () => {
   const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isStaging = process.env.NODE_ENV === NodeEnv.staging;
 
-  if (!isDevelopment) {
+  if (!(isDevelopment || isStaging)) {
     return null;
   }
 

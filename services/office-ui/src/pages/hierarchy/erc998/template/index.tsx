@@ -16,16 +16,19 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { ITemplate, ITemplateSearchDto } from "@framework/types";
+import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
+import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc998TemplateEditDialog } from "./edit";
 
 export const Erc998Template: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -53,11 +56,15 @@ export const Erc998Template: FC = () => {
       price: emptyPrice,
       amount: "0",
       contractId: 3,
+      // @ts-ignore
+      // this is only filter for contract autocomplete
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
       templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
+      merchantId: profile.merchantId,
     },
     filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
       id

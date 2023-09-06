@@ -39,7 +39,14 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="template-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="template-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <MintMenuItem template={template} />
       </Menu>
     </Fragment>

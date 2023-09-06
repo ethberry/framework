@@ -266,7 +266,7 @@ export class TemplateService {
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
+  public async delete(where: FindOptionsWhere<TemplateEntity>, _userEntity: UserEntity): Promise<TemplateEntity> {
     const templateEntity = await this.findOne(where, {
       relations: {
         contract: true,

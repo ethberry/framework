@@ -1,3 +1,3 @@
-export interface IAutocompleteGradeDto {
+export interface IGradeAutocompleteDto {
   contractId: number;
 }

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -12,10 +12,10 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
-import { BreedEntity } from "./breed.entity";
-import type { ISignBreedDto } from "./interfaces";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { BreedEntity } from "./breed.entity";
+import type { ISignBreedDto } from "./interfaces";
 
 @Injectable()
 export class BreedService {
@@ -31,7 +31,7 @@ export class BreedService {
 
   public findAll(
     where: FindOptionsWhere<BreedEntity>,
-    options?: FindOneOptions<BreedEntity>,
+    options?: FindManyOptions<BreedEntity>,
   ): Promise<Array<BreedEntity>> {
     return this.breedEntityRepository.find({ where, ...options });
   }

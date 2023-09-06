@@ -9,6 +9,7 @@ export * from "./mechanics/staking/rule-toggle";
 export * from "./mechanics/staking/upload";
 export * from "./mechanics/ponzi/deploy";
 export * from "./mechanics/ponzi/upload";
+export * from "./mechanics/mystery/deploy";
 
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/release";
