@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
 import { AchievementRuleStatus, ContractEventType, TokenType } from "@framework/types";
@@ -42,7 +42,7 @@ export class AchievementsRuleService {
 
   public findAll(
     where: FindOptionsWhere<AchievementRuleEntity>,
-    options?: FindOneOptions<AchievementRuleEntity>,
+    options?: FindManyOptions<AchievementRuleEntity>,
   ): Promise<Array<AchievementRuleEntity>> {
     return this.achievementRuleEntityRepository.find({ where, ...options });
   }

@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
+import { ArrayOverlap, DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ArrayOverlap, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
-
-import { ContractEntity } from "./contract.entity";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
-import { IContractListenerResult, ISystemContractListenerResult } from "../../../common/interfaces";
+
+import type { IContractListenerResult, ISystemContractListenerResult } from "../../../common/interfaces";
+import { ContractEntity } from "./contract.entity";
 
 @Injectable()
 export class ContractService {
@@ -27,7 +27,7 @@ export class ContractService {
 
   public findAll(
     where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
+    options?: FindManyOptions<ContractEntity>,
   ): Promise<Array<ContractEntity>> {
     return this.contractEntityRepository.find({ where, ...options });
   }

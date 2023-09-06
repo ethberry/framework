@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ArrayOverlap, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { ArrayOverlap, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import type { IUserSearchDto } from "@framework/types";
@@ -103,7 +103,7 @@ export class UserService {
 
   public findAll(
     where: FindOptionsWhere<UserEntity>,
-    options?: FindOneOptions<UserEntity>,
+    options?: FindManyOptions<UserEntity>,
   ): Promise<Array<UserEntity>> {
     return this.userEntityRepository.find({ where, ...options });
   }

@@ -1,6 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
+import {
+  ArrayOverlap,
+  Brackets,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  In,
+  Not,
+  Repository,
+} from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
@@ -199,7 +208,7 @@ export class ContractService {
 
   public findAll(
     where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
+    options?: FindManyOptions<ContractEntity>,
   ): Promise<Array<ContractEntity>> {
     return this.contractEntityRepository.find({ where, ...options });
   }

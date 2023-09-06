@@ -97,7 +97,7 @@ export class ProductItemService {
 
   public findAll(
     where: FindOptionsWhere<ProductItemEntity>,
-    options?: FindOneOptions<ProductItemEntity>,
+    options?: FindManyOptions<ProductItemEntity>,
   ): Promise<Array<ProductItemEntity>> {
     return this.productItemEntityRepository.find({ where, ...options });
   }

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ProductItemParameterEntity } from "./product-item-parameter.entity";
 import { ProductItemParameterCreateDto, ProductItemParameterUpdateDto } from "./dto";
@@ -21,7 +21,7 @@ export class ProductItemParameterService {
 
   public findAll(
     where: FindOptionsWhere<ProductItemParameterEntity>,
-    options?: FindOneOptions<ProductItemParameterEntity>,
+    options?: FindManyOptions<ProductItemParameterEntity>,
   ): Promise<Array<ProductItemParameterEntity> | null> {
     return this.productItemParameterRepository.find({ where, ...options });
   }

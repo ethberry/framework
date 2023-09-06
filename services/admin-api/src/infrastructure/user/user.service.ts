@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserRole } from "@framework/types";
@@ -23,14 +23,14 @@ export class UserService {
 
   public findAll(
     where: FindOptionsWhere<UserEntity>,
-    options?: FindOneOptions<UserEntity>,
+    options?: FindManyOptions<UserEntity>,
   ): Promise<Array<UserEntity>> {
     return this.userEntityRepository.find({ where, ...options });
   }
 
   public findAndCount(
     where: FindOptionsWhere<UserEntity>,
-    options?: FindOneOptions<UserEntity>,
+    options?: FindManyOptions<UserEntity>,
   ): Promise<[Array<UserEntity>, number]> {
     return this.userEntityRepository.findAndCount({ where, ...options });
   }

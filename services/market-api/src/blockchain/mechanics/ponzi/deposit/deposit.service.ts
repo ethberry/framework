@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { EntityManager, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
 import type { IPonziDepositSearchDto, IPonziLeaderboard, IPonziLeaderboardSearchDto } from "@framework/types";
@@ -27,7 +27,7 @@ export class PonziDepositService {
 
   public findAll(
     where: FindOptionsWhere<PonziDepositEntity>,
-    options?: FindOneOptions<PonziDepositEntity>,
+    options?: FindManyOptions<PonziDepositEntity>,
   ): Promise<Array<PonziDepositEntity>> {
     return this.stakesEntityRepository.find({ where, ...options });
   }
