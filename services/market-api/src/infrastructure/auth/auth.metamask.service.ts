@@ -1,4 +1,4 @@
-import { ForbiddenException, forwardRef, Inject, Injectable } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { app } from "firebase-admin";
 
@@ -15,7 +15,6 @@ export class AuthMetamaskService {
   constructor(
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
-    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     private readonly configService: ConfigService,
     private readonly metamaskService: MetamaskService,
