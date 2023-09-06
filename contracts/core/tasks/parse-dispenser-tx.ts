@@ -1,5 +1,6 @@
 import { task } from "hardhat/config";
-import { Interface, Transaction, TransactionReceipt } from "ethers";
+import { Interface } from "ethers";
+import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
 
 const Dispenser = {
   abi: [
@@ -185,15 +186,19 @@ const ERC1155 = {
   ],
 };
 
-export function getDispenserLogsFromInput(tx: Transaction) {
+export function getDispenserLogsFromInput(tx: TransactionResponse | null) {
+  if (!tx) {
+    return;
+  }
   // Get the provider and the transaction receipt
 
   // Retrieve the contract interface
   const iface = new Interface(Dispenser.abi);
 
   // Parse the input data of the transaction to determine the disperse function used
-  const inputData = tx.data;
-  const { name, args } = iface.parseTransaction({ data: inputData });
+  // parseTransaction(tx: { data: string, value?: BigNumberish }): null | TransactionDescription {
+  // const inputData = tx.data;
+  const { name, args } = iface.parseTransaction({ data: tx.data, value: tx.value.toString() });
 
   // Create a list of logs based on the disperse function used
   const recipients = args.recipients;
@@ -212,17 +217,13 @@ export function getDispenserLogsFromInput(tx: Transaction) {
       break;
     case "disperseERC721":
       eventName = "Transfer";
-      logs = recipients.map((recipient: any, i: number): [string, string, number] => [
-        tx.from!,
-        recipient,
-        tokenIds[i],
-      ]);
+      logs = recipients.map((recipient: any, i: number): [string, string, number] => [tx.from, recipient, tokenIds[i]]);
       break;
     case "disperseERC1155":
       eventName = "TransferSingle";
       logs = recipients.map((recipient: any, i: number): [string, string, string, number, number] => [
         tx.to!, // Operator
-        tx.from!, // msg.sender
+        tx.from, // msg.sender
         recipient, // receiver
         tokenIds[i],
         amounts[i],

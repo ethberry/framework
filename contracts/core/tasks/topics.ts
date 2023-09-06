@@ -2,8 +2,8 @@ import { task } from "hardhat/config";
 import fs from "fs";
 import { AbiCoder, keccak256, toUtf8Bytes } from "ethers";
 
-import ERC20TOKENS from "../../../erc20tokens.json";
-import ETHDATA from "../eth_data.json";
+import ERC20TOKENS from "./test-data/erc20tokens.json";
+import ETHDATA from "./test-data/eth_data.json";
 
 enum ContractEventSignature {
   // MODULE:ERC20
