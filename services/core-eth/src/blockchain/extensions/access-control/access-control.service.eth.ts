@@ -1,32 +1,23 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  AccessControlRoleHash,
-  AccessControlRoleType,
-  ContractStatus,
+import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
-  IErc4907UpdateUserEvent,
   IOwnershipTransferredEvent,
-  ModuleType,
 } from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType, ContractStatus, ModuleType } from "@framework/types";
 
 import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { TokenService } from "../../hierarchy/token/token.service";
-import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class AccessControlServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly accessControlService: AccessControlService,
-    private readonly tokenService: TokenService,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
@@ -83,26 +74,13 @@ export class AccessControlServiceEth {
         await contractEntity.save();
       }
     }
-    // TODO somehow disable grade buttons if MinterRole revoked - add checkRole endpoint
   }
 
   public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {
-    const {
-      args: { role, newAdminRole },
-    } = event;
-
     await this.eventHistoryService.updateHistory(event, context);
-
-    await this.accessControlService.create({
-      address: context.address.toLowerCase(),
-      account: newAdminRole.toLowerCase(),
-      role: Object.values(AccessControlRoleType)[
-        Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
-      ],
-    });
   }
 
-  public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
+  public async ownershipTransferred(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
     const {
       args: { newOwner, previousOwner },
     } = event;
@@ -119,27 +97,6 @@ export class AccessControlServiceEth {
       address: context.address.toLowerCase(),
       account: newOwner.toLowerCase(),
       role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
-    });
-  }
-
-  public async updateUser(event: ILogEvent<IErc4907UpdateUserEvent>, context: Log): Promise<void> {
-    const {
-      args: { tokenId, user, expires },
-    } = event;
-    const { address } = context;
-    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
-
-    if (!erc721TokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
-
-    await this.notificatorService.updateUser({
-      merchantId: erc721TokenEntity.template.contract.merchantId,
-      tokenId,
-      user,
-      expires,
     });
   }
 }
