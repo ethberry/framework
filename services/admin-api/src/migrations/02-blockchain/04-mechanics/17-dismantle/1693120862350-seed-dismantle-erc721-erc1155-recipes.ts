@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationInterface {
+export class SeedDismantleErc721Erc155RecipesAt1693120862350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -15,13 +15,9 @@ export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationI
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102550101
+        102350301
       ), (
-        102550102
-      ), (
-        102550201
-      ), (
-        102550202
+        102350302
       );
     `);
 
@@ -33,62 +29,52 @@ export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationI
         amount,
         asset_id
       ) VALUES (
-        'ERC1155',
-        10501,
-        1050104, -- wood log
+        'ERC721',
+        10306,
+        1030601, -- sword
         1,
-        102550101
+        102350301
       ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102550102
-      ), (
-        'ERC1155',
-        10501,
-        1050105, -- iron ingot
-        1,
-        102550201
+        102350302
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        102550202
+        102350302
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.craft (
+      INSERT INTO ${ns}.dismantle (
         id,
         item_id,
         price_id,
-        craft_status,
+        rarity_multiplier,
+        dismantle_strategy,
+        dismantle_status,
         merchant_id,
         created_at,
         updated_at
       ) VALUES (
-        1050501,
-        102550101,
-        102550102,
+        1030503,
+        102350102,
+        102350101,
+        200,
+        'EXPONENTIAL',
         'ACTIVE',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
-        1050502,
-        102550201,
-        102550202,
-        'ACTIVE',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      );
+      )
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.craft RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.dismantle RESTART IDENTITY CASCADE;`);
   }
 }

@@ -11,6 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { formatPrice } from "../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../components/buttons";
+import { CraftPanel } from "../../../mechanics/recipes/craft/craft-panel";
 import { StyledPaper } from "./styled";
 
 export const Template: FC = () => {
@@ -57,6 +58,8 @@ export const Template: FC = () => {
               <TemplatePurchaseButton template={selected} />
             </StyledPaper>
           ) : null}
+
+          {selected.id ? <CraftPanel template={selected} /> : null}
         </Grid>
       </Grid>
     </Fragment>
