@@ -21,7 +21,7 @@
     "@gemunion/draft-js-utils": "1.2.25",
     "@gemunion/firebase-login": "2.3.6",
     "@gemunion/history": "1.2.17",
-    "@gemunion/license-pages": "1.1.13",
+    "@gemunion/license-pages": "1.1.14",
     "@gemunion/mui-dialog-confirmation": "3.3.38",
     "@gemunion/mui-dialog-delete": "3.3.38",
     "@gemunion/mui-dialog-form": "8.2.41",
