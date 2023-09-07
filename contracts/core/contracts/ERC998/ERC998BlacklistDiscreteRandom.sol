@@ -79,6 +79,9 @@ abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998Blacklis
     _mintCommon(request.account, request.templateId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }

@@ -26,6 +26,9 @@ contract TopUp is Context, ERC165, ERC1363Receiver {
     revert();
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return
       interfaceId == type(IERC1363Receiver).interfaceId ||

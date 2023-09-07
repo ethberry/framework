@@ -18,6 +18,10 @@ contract ERC998Blacklist is ERC998Simple, BlackList {
     string memory baseTokenURI
   ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
+
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC998Simple) returns (bool) {

@@ -49,6 +49,9 @@ contract ERC998SimpleEnum is ERC721Simple, ERC998ERC721Enumerable, WhiteListChil
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721Simple, ERC998ERC721Enumerable) returns (bool) {

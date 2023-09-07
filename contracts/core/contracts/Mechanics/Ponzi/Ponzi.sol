@@ -355,7 +355,9 @@ contract Ponzi is
     _unpause();
   }
 
-  // INTERFACE
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, TopUp, Wallet) returns (bool) {

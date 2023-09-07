@@ -35,6 +35,9 @@ contract ExchangeMock is AccessControl, Wallet, TopUp {
     ExchangeUtils.acquire(price, receiver, disabled);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {

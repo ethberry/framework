@@ -45,6 +45,9 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
     return super._baseURI();
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Simple) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

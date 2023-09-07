@@ -49,6 +49,9 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721Simple, ERC998ERC721) returns (bool) {

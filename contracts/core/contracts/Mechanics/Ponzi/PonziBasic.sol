@@ -246,7 +246,9 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
     _unpause();
   }
 
-  // INTERFACE
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

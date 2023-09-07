@@ -68,6 +68,9 @@ abstract contract ERC721BlacklistDiscreteRandom is IERC721Random, ERC721Blacklis
 
   function getRandomNumber() internal virtual returns (uint256 requestId);
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }

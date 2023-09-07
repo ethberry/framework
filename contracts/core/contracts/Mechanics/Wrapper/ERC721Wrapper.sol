@@ -65,6 +65,9 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Hol
     ExchangeUtils.spend(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC721Simple, ERC1155Receiver) returns (bool) {

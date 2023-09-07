@@ -20,6 +20,9 @@ contract ERC721CBlacklist is ERC721CSimple, BlackList {
     address owner
   ) ERC721CSimple(name, symbol, royalty, baseTokenURI, batchSize, owner) {}
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721CSimple) returns (bool) {

@@ -257,6 +257,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

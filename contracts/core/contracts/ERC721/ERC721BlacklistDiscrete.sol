@@ -39,6 +39,9 @@ contract ERC721BlacklistDiscrete is IERC721Discrete, ERC721Blacklist {
     return true;
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Blacklist, IERC165) returns (bool) {
     return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
   }

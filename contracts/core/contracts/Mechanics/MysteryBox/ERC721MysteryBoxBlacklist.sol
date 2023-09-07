@@ -29,6 +29,9 @@ contract ERC721MysteryBoxBlacklist is ERC721MysteryBoxSimple, BlackList {
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721MysteryBoxSimple) returns (bool) {

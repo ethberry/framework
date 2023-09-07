@@ -26,6 +26,9 @@ contract ERC1363Mock is AccessControl, ERC1363, ERC20Capped {
     _mint(to, amount);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC1363) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

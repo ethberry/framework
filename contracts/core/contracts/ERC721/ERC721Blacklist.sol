@@ -18,6 +18,9 @@ contract ERC721Blacklist is ERC721Simple, BlackList {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721Simple) returns (bool) {
