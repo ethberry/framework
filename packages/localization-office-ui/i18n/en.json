@@ -60,10 +60,6 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "mysteryBoxStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -139,6 +135,7 @@
       "EMAIL_VERIFICATION": "Email verification",
       "FEEDBACK": "Feedback",
       "FORGOT_PASSWORD": "Forgot password",
+      "INVITE": "Invite",
       "LINK_TOKEN": "LINK notification",
       "RESTORE_PASSWORD": "Restore password",
       "WELCOME": "Welcome"
@@ -185,6 +182,10 @@
       "VESTING": "VESTING",
       "WAITLIST": "WAITLIST",
       "WRAPPER": "WRAPPER"
+    },
+    "mysteryBoxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "pageStatus": {
       "ACTIVE": "Active",
@@ -312,7 +313,6 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
-      "mysteryBoxStatus": "Status",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -381,6 +381,7 @@
       "metadata": "Attributes",
       "minBalance": "Min. Balance",
       "moduleType": "Module type",
+      "mysteryBoxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
       "owner": "Owner",
@@ -547,21 +548,6 @@
     "uncaughtError": "Uncaught error happened"
   },
   "pages": {
-    "mystery": {
-      "boxContent": {
-        "title": "Mysterybox content"
-      },
-      "boxes": {
-        "title": "Mystery Boxes"
-      },
-      "contracts": {
-        "title": "Mystery Contracts"
-      },
-      "title": "Mystery",
-      "tokens": {
-        "title": "Mystery Tokens"
-      }
-    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -613,11 +599,11 @@
         }
       },
       "mechanics": {
-        "mystery": "Mystery",
         "claim": "Claim",
         "dispenser": "Dispenser",
         "drop": "Drop",
         "grade": "Grade",
+        "mystery": "Mystery",
         "ponzi": "Ponzi",
         "staking": "Staking",
         "title": "Mechanics",
@@ -704,6 +690,21 @@
     },
     "merchants": {
       "title": "Merchants"
+    },
+    "mystery": {
+      "boxContent": {
+        "title": "Mysterybox content"
+      },
+      "boxes": {
+        "title": "Mystery Boxes"
+      },
+      "contracts": {
+        "title": "Mystery Contracts"
+      },
+      "title": "Mystery",
+      "tokens": {
+        "title": "Mystery Tokens"
+      }
     },
     "native": {
       "contracts": {
