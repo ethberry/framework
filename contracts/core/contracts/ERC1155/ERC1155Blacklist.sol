@@ -22,6 +22,10 @@ contract ERC1155Blacklist is ERC1155Simple, BlackList {
     return super.supportsInterface(interfaceId);
   }
 
+  /**
+   * @dev See {ERC1155-_beforeTokenTransfer}.
+   * Override that checks the access list
+   */
   function _beforeTokenTransfer(
     address operator,
     address from,

@@ -51,7 +51,15 @@ abstract contract ERC721BlacklistDiscreteRentableRandom is
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
+  /**
+   * @dev Validates and upgrades attribute
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    // TEMPLATE_ID refers to database id
+    // RARITY refers ChainLink integration
     if (attribute == TEMPLATE_ID || attribute == RARITY) {
       revert ProtectedAttribute(attribute);
     }

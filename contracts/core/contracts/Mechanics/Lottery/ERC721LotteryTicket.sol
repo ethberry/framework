@@ -75,6 +75,13 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     _upsertRecordField(tokenId, PRIZE, 1);
   }
 
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721LotteryTicket) {
     super.burn(tokenId);
   }

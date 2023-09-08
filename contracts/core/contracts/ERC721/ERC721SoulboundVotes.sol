@@ -19,6 +19,9 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
     string memory baseTokenURI
   ) ERC721Soulbound(name, symbol, royalty, baseTokenURI) EIP712(name, "1") {}
 
+  /**
+   * @dev See {ERC721-_beforeTokenTransfer}.
+   */
   function _beforeTokenTransfer(
     address from,
     address to,
@@ -28,6 +31,9 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
+  /**
+   * @dev See {ERC721-_afterTokenTransfer}.
+   */
   function _afterTokenTransfer(
     address from,
     address to,
@@ -37,10 +43,16 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
     super._afterTokenTransfer(from, to, tokenId, batchSize);
   }
 
+  /**
+   * @dev See {ERC721-_burn}.
+   */
   function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721ABER) {
     super._burn(tokenId);
   }
 
+  /**
+   * @dev See {ERC721-_baseURI}.
+   */
   function _baseURI() internal view virtual override(ERC721, ERC721Simple) returns (string memory) {
     return super._baseURI();
   }

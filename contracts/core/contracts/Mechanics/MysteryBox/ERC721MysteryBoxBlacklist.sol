@@ -18,6 +18,10 @@ contract ERC721MysteryBoxBlacklist is ERC721MysteryBoxSimple, BlackList {
     string memory baseTokenURI
   ) ERC721MysteryBoxSimple(name, symbol, royalty, baseTokenURI) {}
 
+  /**
+   * @dev See {ERC721-_beforeTokenTransfer}.
+   * Override that checks the access list
+   */
   function _beforeTokenTransfer(
     address from,
     address to,

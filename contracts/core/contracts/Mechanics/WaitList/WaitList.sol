@@ -81,11 +81,25 @@ contract WaitList is AccessControl, Pausable {
     emit WaitListRewardClaimed(_msgSender(), externalId, _items[externalId]);
   }
 
-  function pause() public virtual onlyRole(PAUSER_ROLE) {
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
+  function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
-  function unpause() public virtual onlyRole(PAUSER_ROLE) {
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
+  function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
 }

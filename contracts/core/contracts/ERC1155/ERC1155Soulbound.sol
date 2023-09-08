@@ -7,6 +7,10 @@ import "./ERC1155Simple.sol";
 contract ERC1155Soulbound is ERC1155Simple {
   constructor(uint96 royaltyNumerator, string memory baseTokenURI) ERC1155Simple(royaltyNumerator, baseTokenURI) {}
 
+  /**
+   * @dev See {ERC1155-_beforeTokenTransfer}.
+   * Override that disables transfer
+   */
   function _beforeTokenTransfer(
     address operator,
     address from,

@@ -22,7 +22,14 @@ contract ERC721Discrete is IERC721Discrete, ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
+  /**
+   * @dev Validates and upgrades attribute
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    // TEMPLATE_ID refers to database id
     if (attribute == TEMPLATE_ID) {
       revert ProtectedAttribute(attribute);
     }
@@ -30,6 +37,12 @@ contract ERC721Discrete is IERC721Discrete, ERC721Simple {
     return _upgrade(tokenId, attribute);
   }
 
+  /**
+   * @dev Does actual upgrade
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (bool) {
     _requireMinted(tokenId);
     uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;

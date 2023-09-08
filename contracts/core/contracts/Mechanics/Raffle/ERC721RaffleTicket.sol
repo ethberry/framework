@@ -47,6 +47,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     _safeMint(account, tokenId);
   }
 
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721RaffleTicket) {
     super.burn(tokenId);
   }

@@ -39,6 +39,10 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     return ERC998ERC721.getApproved(_tokenId);
   }
 
+  /**
+   * @dev See {ERC721-_beforeTokenTransfer}.
+   * Override that checks parent token
+   */
   function _beforeTokenTransfer(
     address from,
     address to,

@@ -29,6 +29,10 @@ contract ERC721CBlacklist is ERC721CSimple, BlackList {
     return super.supportsInterface(interfaceId);
   }
 
+  /**
+   * @dev See {ERC20-_beforeTokenTransfer}.
+   * Override that checks the access list
+   */
   function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
     require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
     require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
