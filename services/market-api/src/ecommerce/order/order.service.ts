@@ -27,7 +27,8 @@ export class OrderService {
     return this.orderEntityRepository.findAndCount({ where, order: { createdAt: "DESC" }, ...options });
   }
 
-  public search({ orderStatus, dateRange }: IOrderSearchDto): Promise<[Array<OrderEntity>, number]> {
+  public search(dto: Partial<IOrderSearchDto>): Promise<[Array<OrderEntity>, number]> {
+    const { orderStatus, dateRange } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
     if (orderStatus && orderStatus.length) {

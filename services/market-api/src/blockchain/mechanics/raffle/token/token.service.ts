@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IRaffleTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
@@ -14,8 +14,6 @@ export class RaffleTokenService extends TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
-    @InjectEntityManager()
-    private readonly entityManager: EntityManager,
   ) {
     super(tokenEntityRepository);
   }

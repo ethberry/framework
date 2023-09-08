@@ -16,7 +16,7 @@ export class ProductService {
     private readonly productEntityRepository: Repository<ProductEntity>,
   ) {}
 
-  public async search(search: IProductSearchDto): Promise<[Array<ProductEntity>, number]> {
+  public async search(search: Partial<IProductSearchDto>): Promise<[Array<ProductEntity>, number]> {
     const {
       query,
       field = "id",

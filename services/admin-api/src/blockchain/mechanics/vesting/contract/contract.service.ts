@@ -16,7 +16,7 @@ export class VestingService {
     private readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IVestingSearchDto): Promise<[Array<ContractEntity>, number]> {
+  public async search(dto: Partial<IVestingSearchDto>): Promise<[Array<ContractEntity>, number]> {
     const { account, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");

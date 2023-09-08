@@ -24,9 +24,9 @@ export class RaffleSignService {
   public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, contractId, chainId } = dto;
 
-    const raffleRound = await this.roundService.findCurrentRoundWithRelations(contractId);
+    const raffleRoundEntity = await this.roundService.findCurrentRoundWithRelations(contractId);
 
-    if (!raffleRound) {
+    if (!raffleRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
@@ -36,14 +36,14 @@ export class RaffleSignService {
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        externalId: raffleRound.id,
+        externalId: raffleRoundEntity.id,
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: raffleRound.contract.address,
+        receiver: raffleRoundEntity.contract.address,
         referrer,
       },
-      raffleRound,
+      raffleRoundEntity,
     );
 
     return { nonce: hexlify(nonce), signature, expiresAt };

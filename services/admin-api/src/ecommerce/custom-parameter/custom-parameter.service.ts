@@ -14,7 +14,7 @@ export class CustomParameterService {
     private readonly customParameterEntityRepository: Repository<CustomParameterEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CustomParameterEntity>, number]> {
+  public search(dto: Partial<ISearchDto>): Promise<[Array<CustomParameterEntity>, number]> {
     const { query } = dto;
 
     const queryBuilder = this.customParameterEntityRepository.createQueryBuilder("parameter");

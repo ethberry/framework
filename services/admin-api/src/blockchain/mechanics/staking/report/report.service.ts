@@ -12,20 +12,20 @@ export class StakingReportService {
   constructor(private readonly stakingDepositService: StakingDepositService) {}
 
   public async search(
-    dto: IStakingReportSearchDto,
+    dto: Partial<IStakingReportSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<StakingDepositEntity>, number]> {
     const { deposit, reward, contractId, ...rest } = dto;
     return this.stakingDepositService.search(
       {
-        contractIds: [contractId],
+        contractIds: [contractId!],
         deposit: {
-          tokenType: [deposit.tokenType],
-          contractIds: [deposit.contractId],
+          tokenType: [deposit!.tokenType],
+          contractIds: [deposit!.contractId],
         },
         reward: {
-          tokenType: [reward.tokenType],
-          contractIds: [reward.contractId],
+          tokenType: [reward!.tokenType],
+          contractIds: [reward!.contractId],
         },
         ...rest,
       },

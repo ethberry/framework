@@ -19,7 +19,7 @@ export class AchievementLevelService {
     protected readonly achievementRuleService: AchievementRuleService,
   ) {}
 
-  public search(dto: IAchievementLevelSearchDto): Promise<[Array<AchievementLevelEntity>, number]> {
+  public search(dto: Partial<IAchievementLevelSearchDto>): Promise<[Array<AchievementLevelEntity>, number]> {
     const { query, achievementRuleIds, skip, take } = dto;
 
     const queryBuilder = this.achievementLevelEntityRepository.createQueryBuilder("level");
