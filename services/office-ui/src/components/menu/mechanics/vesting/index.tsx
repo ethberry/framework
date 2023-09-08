@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
@@ -54,6 +54,7 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
         <AllowanceMenuItem contract={contract} />
         <TopUpMenuItem contract={contract} />
         <TransferOwnershipMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
         <EthListenerAddMenuItem contract={contract} />
         <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
