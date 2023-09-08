@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IVestingSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
@@ -24,9 +24,9 @@ export class VestingService {
 
   public async search(
     dto: Partial<IVestingSearchDto>,
-    userEntity: UserEntity,
+    merchantEntity: MerchantEntity,
   ): Promise<[Array<ContractEntity>, number]> {
-    const { skip, take } = dto;
+    const { account, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");
 
@@ -36,7 +36,11 @@ export class VestingService {
     });
 
     queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
-      account: userEntity.wallet,
+      account,
+    });
+
+    queryBuilder.andWhere("vesting.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
     });
 
     queryBuilder.skip(skip);
