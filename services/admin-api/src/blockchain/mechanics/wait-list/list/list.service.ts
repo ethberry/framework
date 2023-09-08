@@ -72,7 +72,8 @@ export class WaitListListService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "waitlist.createdAt": "ASC",
+      "waitlist.createdAt": "DESC",
+      "waitlist.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -163,7 +164,7 @@ export class WaitListListService {
       ]);
     }
 
-    Object.assign(waitListListEntity, rest);
+    Object.assign(waitListListEntity, { isPrivate, ...rest });
 
     // update of the item is not allowed, because user signed off for certain item
     // if (item) {

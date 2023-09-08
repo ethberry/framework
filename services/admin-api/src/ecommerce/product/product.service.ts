@@ -70,7 +70,7 @@ export class ProductService {
 
     queryBuilder.orderBy({
       "product.createdAt": "DESC",
-      "photos.priority": "ASC",
+      "photos.priority": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
