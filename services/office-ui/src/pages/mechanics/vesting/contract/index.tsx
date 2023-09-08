@@ -91,7 +91,7 @@ export const VestingContracts: FC = () => {
                     <Visibility />
                   </IconButton>
                 </Tooltip>
-                <VestingActionsMenu vesting={vesting} />
+                <VestingActionsMenu contract={vesting} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

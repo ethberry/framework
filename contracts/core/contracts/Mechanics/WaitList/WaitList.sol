@@ -15,9 +15,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../utils/constants.sol";
+import "../../utils/TopUp.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
 
-contract WaitList is AccessControl, Pausable {
+contract WaitList is AccessControl, Pausable, TopUp {
   using Counters for Counters.Counter;
 
   mapping(uint256 => bytes32) internal _roots;
@@ -79,6 +80,15 @@ contract WaitList is AccessControl, Pausable {
     ExchangeUtils.acquire(_items[externalId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit WaitListRewardClaimed(_msgSender(), externalId, _items[externalId]);
+  }
+
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, TopUp) returns (bool) {
+    return super.supportsInterface(interfaceId);
   }
 
   /**

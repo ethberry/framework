@@ -4,17 +4,17 @@ import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
+import { TransferOwnershipMenuItem } from "../../extensions/transfer-ownership";
 import { AllowanceMenuItem } from "../common/allowance";
 import { TopUpMenuItem } from "../common/top-up";
-import { TransferOwnershipMenuItem } from "../../extensions/transfer-ownership";
 
 export interface IVestingActionsMenu {
-  vesting: IContract;
+  contract: IContract;
   disabled?: boolean;
 }
 
 export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
-  const { vesting, disabled } = props;
+  const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -49,9 +49,9 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
         onClick={handleClose}
         keepMounted
       >
-        <AllowanceMenuItem contract={vesting} />
-        <TopUpMenuItem contract={vesting} />
-        <TransferOwnershipMenuItem contract={vesting} />
+        <AllowanceMenuItem contract={contract} />
+        <TopUpMenuItem contract={contract} />
+        <TransferOwnershipMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

@@ -18,7 +18,6 @@ import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
-import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
 import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
@@ -61,7 +60,6 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     ContractModule,
     TemplateModule,
     TokenModule,
-    GradeModule,
     RentModule,
     BalanceModule,
     UserModule,

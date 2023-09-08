@@ -25,6 +25,7 @@ import type {
 import {
   CollectionContractTemplates,
   ContractFeatures,
+  ContractSecurity,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
   Erc721ContractTemplates,
@@ -45,7 +46,6 @@ import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service"
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
-import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 import { PonziLogService } from "../mechanics/ponzi/log/log.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
@@ -94,7 +94,6 @@ export class ContractManagerServiceEth {
     private readonly raffleTicketLogService: RaffleTicketLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
-    private readonly gradeService: GradeService,
     private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
@@ -505,6 +504,7 @@ export class ContractManagerServiceEth {
       },
       contractFeatures: [],
       contractModule: ModuleType.VESTING,
+      contractSecurity: ContractSecurity.OWNABLE,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(userId),
@@ -709,7 +709,7 @@ export class ContractManagerServiceEth {
 
     const userEntity = await this.userService.findOne({ id: externalId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", GradeService.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
 
@@ -727,7 +727,7 @@ export class ContractManagerServiceEth {
   public async getMerchantId(userId: number): Promise<number> {
     const userEntity = await this.userService.findOne({ id: userId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", GradeService.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
     return userEntity.merchantId;

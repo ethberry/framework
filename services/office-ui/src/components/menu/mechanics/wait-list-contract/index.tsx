@@ -9,6 +9,8 @@ import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { PauseMenuItem } from "../common/pause";
 import { UnPauseMenuItem } from "../common/unpause";
+import { TopUpMenuItem } from "../common/top-up";
+import { AllowanceMenuItem } from "../common/allowance";
 
 export interface IDefaultContractActionsMenu {
   contract: IContract;
@@ -57,6 +59,9 @@ export const WaitListContractActionsMenu: FC<IDefaultContractActionsMenu> = prop
         <Divider sx={{ m: 2 }} />
         <PauseMenuItem contract={contract} />
         <UnPauseMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <AllowanceMenuItem contract={contract} />
+        <TopUpMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );
