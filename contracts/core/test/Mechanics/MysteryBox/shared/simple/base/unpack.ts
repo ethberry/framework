@@ -13,8 +13,6 @@ import { deployERC1155 } from "../../../../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
 import { deployERC1363 } from "../../../../../ERC20/shared/fixtures";
 
-// import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-
 export function shouldUnpackBox(factory: () => Promise<any>) {
   let vrfInstance: VRFCoordinatorMock;
 

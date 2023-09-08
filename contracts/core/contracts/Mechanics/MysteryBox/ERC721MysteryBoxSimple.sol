@@ -51,7 +51,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
     }
   }
 
-  function unpack(uint256 tokenId) public {
+  function unpack(uint256 tokenId) public virtual {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
 
     emit UnpackMysteryBox(_msgSender(), tokenId);
