@@ -16,6 +16,7 @@ import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 import { GameModule } from "./game/game.module";
+import { DiscoveryModule } from "@golevelup/nestjs-discovery";
 
 @Module({
   providers: [
@@ -26,6 +27,7 @@ import { GameModule } from "./game/game.module";
     },
   ],
   imports: [
+    DiscoveryModule,
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV as string}`,
     }),

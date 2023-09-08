@@ -22,7 +22,7 @@
     "@gemunion/nest-js-module-winston": "2.0.11",
     "@gemunion/nest-js-utils": "4.1.6",
     "@gemunion/nest-js-validators": "4.0.15",
-    "@gemunion/nest-js-module-ethers-gcp": "1.0.7",
+    "@gemunion/nest-js-module-ethers-gcp": "1.1.0-redis-beta.1",
     "@gemunion/types-collection": "1.5.13",
     "@nestjs/axios": "3.0.0",
     "@nestjs/common": "10.2.4",
@@ -52,7 +52,9 @@
     "web3-core": "1.10.2",
     "web3-utils": "1.10.2",
     "redis": "4.6.8",
-    "bee-queue": "1.5.0"
+    "bee-queue": "1.5.0",
+    "@golevelup/nestjs-discovery": "4.0.0",
+    "@golevelup/nestjs-modules": "0.7.0"
   },
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",

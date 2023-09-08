@@ -1,19 +1,46 @@
 import { NestFactory } from "@nestjs/core";
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { MicroserviceOptions, Transport, MessageHandler } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
+import { DiscoveredMethodWithMeta, DiscoveryService } from "@golevelup/nestjs-discovery";
+import { PATTERN_METADATA } from "@nestjs/microservices/constants";
+import { transformPatternToRoute } from "@nestjs/microservices/utils";
+import { EMPTY, from, Observable } from "rxjs";
+import Queue from "bee-queue";
+import { Log } from "ethers";
+
 import { companyName, ns } from "@framework/constants";
 
 import { AppModule } from "./app.module";
-import Queue from "bee-queue";
 
-// import { RedisIoAdapter } from "./common/redis/redis";
+export interface IRedisJob {
+  id: string;
+  data: IRedisJobData;
+}
+
+export interface IRedisJobData {
+  route: string;
+  decoded: any;
+  context: Log;
+}
 
 let app: NestExpressApplication;
+
+async function getHandlerByPattern<T extends Array<Record<string, string>>>(
+  route: string,
+  discoveryService: DiscoveryService,
+): Promise<Array<DiscoveredMethodWithMeta<T>>> {
+  const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return methods.filter(method => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return method.meta.some(meta => transformPatternToRoute(meta) === route);
+  });
+}
 
 async function bootstrap(): Promise<void> {
   app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -52,78 +79,44 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  // producer queues running on the web server
-  // const sharedConfigSend = {
-  //   getEvents: false,
-  //   isWorker: false,
-  //   redis: {
-  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
-  //   },
-  // };
-  //
-  // const sendQueue = new Queue("ETH_EVENTS", sharedConfigSend);
-  // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
-  //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
-  //   console.error("errors", errors);
-  // });
-
+  const discoveryService: DiscoveryService = app.get<DiscoveryService>(DiscoveryService);
+  // Process jobs from as many servers or processes as you like
   const sharedConfigWorker = {
     redis: {
       url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
     },
   };
-
-  // Process jobs from as many servers or processes as you like
   const getQueue = new Queue("ETH_EVENTS", sharedConfigWorker);
-  getQueue.process((job: any, done: any) => {
-    console.log(`PROCESSING JOB ${job.id}`);
-    console.log("JOB RESULT", job.data.x + job.data.y);
+  getQueue.process(async (job: IRedisJob, done: any): Promise<Observable<any>> => {
+    console.info(`PROCESSING JOB ${job.id}, route: ${job.data.route}`);
+
+    const discoveredMethodsWithMeta = await getHandlerByPattern(job.data.route, discoveryService);
+    if (!discoveredMethodsWithMeta.length) {
+      console.info(`Handler not found for: ${job.data.route}`);
+      return Promise.resolve(EMPTY);
+    }
+
+    await Promise.allSettled(
+      discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
+        return (
+          discoveredMethodWithMeta.discoveredMethod.handler.bind(
+            discoveredMethodWithMeta.discoveredMethod.parentClass.instance,
+          ) as MessageHandler
+        )(job.data.decoded, job.data.context);
+      }),
+    ).then(res => {
+      res.forEach(r => {
+        if (r.status === "rejected") {
+          console.error(r);
+        }
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return from(["OK"]);
+    });
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return done(null, job.data.x + job.data.y);
+    return done(null, job.id);
   });
-  // const sendQueue = new Queue("send", {
-  //   redis: {
-  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
-  //   },
-  //   isWorker: false,
-  //   sendEvents: true,
-  // });
-  // const job = sendQueue.createJob({ x: 2, y: 3 });
-  //
-  // await job
-  //   .timeout(3000)
-  //   .retries(2)
-  //   .save()
-  //   .then((job: any) => {
-  //     console.log("JOB CREATED", job.id);
-  //     // job enqueued, job.id populated
-  //   });
-  //
-  // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
-  //   console.error("errors", errors);
-  //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
-  // });
-
-  // Process jobs from as many servers or processes as you like
-  // sendQueue.process(function (job: any, done: any) {
-  //   console.log(`Processing job ${job.id}`);
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //   return done(null, job.data.x + job.data.y);
-  // });
-
-  // const getQueue = new Queue("send", {
-  //   redis: {
-  //     url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
-  //   },
-  //   isWorker: true,
-  //   getEvents: true,
-  // });
-  //
-  // getQueue.process(job => {
-  //   console.log(`PROCESSING JOB ${job.id}`);
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //   return console.log("JOB RESULT", job.data.x + job.data.y);
-  // });
 
   await app
     .startAllMicroservices()
