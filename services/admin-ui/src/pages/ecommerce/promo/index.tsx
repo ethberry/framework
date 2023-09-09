@@ -59,8 +59,8 @@ export const Promo: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
-          {rows.map((promo, i) => (
-            <ListItem key={i}>
+          {rows.map(promo => (
+            <ListItem key={promo.id}>
               <ListItemText>{promo.product!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(promo)}>

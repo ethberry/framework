@@ -87,8 +87,8 @@ export const Craft: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((craft, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(craft => (
+            <ListItem key={craft.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.price)}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.item)}</ListItemText>
               <ListItemSecondaryAction>

@@ -63,8 +63,8 @@ export const RaffleTokens: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText sx={{ width: 0.2 }}>#{token.tokenId}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}

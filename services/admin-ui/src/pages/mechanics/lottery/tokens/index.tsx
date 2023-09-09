@@ -64,8 +64,8 @@ export const LotteryTokens: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>

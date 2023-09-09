@@ -73,8 +73,8 @@ export const MysteryToken: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText>{token.template?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(token)}>

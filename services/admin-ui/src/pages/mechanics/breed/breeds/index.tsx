@@ -37,8 +37,8 @@ export const BreedBreeds: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((breed, i) => (
-            <ListItem key={i}>
+          {rows.map(breed => (
+            <ListItem key={breed.id}>
               {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
               <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
               <ListItemSecondaryAction>
