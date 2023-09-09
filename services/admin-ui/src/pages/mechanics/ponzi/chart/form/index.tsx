@@ -71,7 +71,7 @@ export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} />
+      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["contractId", "deposit.contractId", "reward.contractId"]} />
     </FormWrapper>
   );
 };

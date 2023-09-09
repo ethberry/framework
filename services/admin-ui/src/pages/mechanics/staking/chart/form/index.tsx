@@ -10,6 +10,7 @@ import { ModuleType } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
+import { validationSchema } from "./validation";
 
 interface IStakingReportSearchFormProps {
   recentDeposits: boolean;
@@ -25,10 +26,10 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
   const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp };
 
-  // @TODO Add validation
   return (
     <FormWrapper
       initialValues={fixedValues}
+      validationSchema={validationSchema}
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
@@ -71,7 +72,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} />
+      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["contractId", "deposit.contractId", "reward.contractId"]} />
     </FormWrapper>
   );
 };
