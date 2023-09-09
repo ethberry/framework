@@ -84,8 +84,8 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
               <TableCell align="right">
                 {traits ? (
                   <Grid container>
-                    {Object.entries(result).map(([key, value], i) => (
-                      <Grid key={i} container>
+                    {Object.entries(result).map(([key, value]) => (
+                      <Grid key={key} container>
                         <Grid item xs={6}>
                           <FormattedMessage id={`enums.geneName.${key}`} />
                         </Grid>

@@ -91,8 +91,8 @@ export const StakingContracts: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((contract, i) => (
-            <ListItem key={i}>
+          {rows.map(contract => (
+            <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText>{contract.parameters.maxStake}</ListItemText>
               <ListItemSecondaryAction>

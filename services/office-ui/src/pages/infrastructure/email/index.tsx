@@ -30,8 +30,8 @@ export const Email: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {Object.values(EmailType).map((email, i) => (
-            <ListItemButton key={i} onClick={sendEmail(email)}>
+          {Object.values(EmailType).map(email => (
+            <ListItemButton key={email} onClick={sendEmail(email)}>
               <ListItemIcon>
                 <Mail />
               </ListItemIcon>

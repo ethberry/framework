@@ -52,7 +52,7 @@ export const OrderList: FC<IQuoteListProps> = props => {
         <div className={classes.wrapper} {...dropProvided.droppableProps}>
           <div className={classes.dropZone} ref={dropProvided.innerRef.bind(dropProvided)}>
             {items.map((order: IOrder, i: number) => (
-              <InnerListItem order={order} key={i} index={i} onEdit={onEdit} />
+              <InnerListItem order={order} key={order.id} index={i} onEdit={onEdit} />
             ))}
             {dropProvided.placeholder}
           </div>

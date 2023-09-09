@@ -73,8 +73,8 @@ export const Merchant: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((merchant, i) => (
-            <ListItem key={i}>
+          {rows.map(merchant => (
+            <ListItem key={merchant.id}>
               <ListItemText>{merchant.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(merchant)}>

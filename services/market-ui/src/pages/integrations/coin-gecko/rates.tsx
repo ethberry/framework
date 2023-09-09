@@ -23,8 +23,8 @@ export const Rates: FC = () => {
             setBaseCoinId(e.target.value);
           }}
         >
-          {Object.values(BaseCoins).map((option, i) => (
-            <MenuItem value={option} key={i}>
+          {Object.values(BaseCoins).map(option => (
+            <MenuItem value={option} key={option}>
               {option}
             </MenuItem>
           ))}
@@ -42,8 +42,8 @@ export const Rates: FC = () => {
             setTargetCoinId(e.target.value);
           }}
         >
-          {Object.values(TargetCoins).map((option, i) => (
-            <MenuItem value={option} key={i}>
+          {Object.values(TargetCoins).map(option => (
+            <MenuItem value={option} key={option}>
               {option}
             </MenuItem>
           ))}

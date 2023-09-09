@@ -141,8 +141,8 @@ export const AchievementLevels: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((level, i) => (
-            <ListItem key={i}>
+          {rows.map(level => (
+            <ListItem key={level.id}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>

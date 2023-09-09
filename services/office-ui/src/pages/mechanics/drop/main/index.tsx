@@ -95,8 +95,8 @@ export const Drop: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((drop, i) => (
-            <ListItem key={i}>
+          {rows.map(drop => (
+            <ListItem key={drop.id}>
               <ListItemText>{drop.item?.components[0].template?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(drop)}>

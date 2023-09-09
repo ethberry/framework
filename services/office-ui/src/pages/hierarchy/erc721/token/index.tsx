@@ -77,8 +77,8 @@ export const Erc721Token: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>

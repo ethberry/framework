@@ -61,7 +61,7 @@ export const ItemsInput: FC<IUserInputProps> = props => {
 
       <List>
         {value.map((row: IOrderItem, i: number) => (
-          <ListItem key={i}>
+          <ListItem key={row.id}>
             <Grid container spacing={2}>
               <Grid item sx={{ flexGrow: 1 }}>
                 <EntityInput

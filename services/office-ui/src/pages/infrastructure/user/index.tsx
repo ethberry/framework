@@ -87,8 +87,8 @@ export const User: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((user, i) => (
-            <ListItem key={i}>
+          {rows.map(user => (
+            <ListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(user)}>

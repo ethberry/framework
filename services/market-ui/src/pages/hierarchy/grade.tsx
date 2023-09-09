@@ -23,8 +23,8 @@ export const TokenGradeView: FC<ITokenMetadataView> = props => {
     <Grid container>
       {Object.entries(filteredResult)
         .slice(0, 6)
-        .map(([key, value], i) => (
-          <Grid key={i} container>
+        .map(([key, value]) => (
+          <Grid key={key} container>
             <Grid item xs={6}>
               {key}
             </Grid>

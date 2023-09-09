@@ -65,8 +65,8 @@ export const PonziDeposit: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((stake, i) => (
-            <ListItem key={i}>
+          {rows.map(stake => (
+            <ListItem key={stake.id}>
               <ListItemText>{stake.ponziRule?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <PonziRewardComplexButton stake={stake} />
