@@ -55,7 +55,7 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} />
+      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["deposit.contractId", "reward.contractId"]} />
     </FormWrapper>
   );
 };
