@@ -25,6 +25,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
   const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp };
 
+  // @TODO Add validation
   return (
     <FormWrapper
       initialValues={fixedValues}
