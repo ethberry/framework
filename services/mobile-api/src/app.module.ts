@@ -10,7 +10,7 @@ import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { RedisProviderType } from "@framework/types";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
@@ -33,7 +33,7 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerHttpGuard,
+      useClass: ThrottlerBehindProxyGuard,
     },
     {
       provide: APP_FILTER,

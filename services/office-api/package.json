@@ -23,7 +23,7 @@
     "@gemunion/nest-js-module-passport": "3.0.15",
     "@gemunion/nest-js-module-request-logger": "3.0.11",
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.12",
-    "@gemunion/nest-js-module-throttler": "5.0.13",
+    "@gemunion/nest-js-module-throttler": "6.0.1",
     "@gemunion/nest-js-module-typeorm-debug": "3.0.14",
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.17",
     "@gemunion/nest-js-module-winston-logdna": "3.0.11",
