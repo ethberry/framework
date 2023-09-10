@@ -7,13 +7,8 @@ import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const chainId = process.env.CHAIN_ID || testChainId;
     const wethAddr = process.env.WETH_ADDR || wallet;
 
     await queryRunner.query(`
@@ -37,9 +32,9 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        10216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 21 : 10216},
         '${wethAddr}',
-        '${chainId}',
+        '${testChainId}',
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
@@ -56,7 +51,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 22 : 20216}
         '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
         56,
         'WETH',
@@ -75,7 +70,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        30216,
+       ${process.env.NODE_ENV === NodeEnv.production ? 23 : 30216}
         '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
         1,
         'WETH',
@@ -94,7 +89,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 24 : 40216}
         '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
         137,
         'WETH',

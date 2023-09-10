@@ -24,6 +24,7 @@ import { ClaimStatus } from "@framework/types";
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { ClaimEditDialog } from "./edit";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export const Claim: FC = () => {
   const {
@@ -45,6 +46,7 @@ export const Claim: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
     baseUrl: "/claims",
     empty: {
@@ -84,6 +86,7 @@ export const Claim: FC = () => {
         name="account"
         testId="ClaimSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />

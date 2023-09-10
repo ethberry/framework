@@ -51,6 +51,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   @Column({
     type: "enum",
     enum: ContractStatus,
+    default: ContractStatus.NEW,
   })
   public contractStatus: ContractStatus;
 

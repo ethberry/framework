@@ -6,10 +6,6 @@ import { NodeEnv } from "@framework/types";
 
 export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -26,7 +22,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        1021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 11 : 1021501},
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -34,11 +30,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        10215,
+        ${process.env.NODE_ENV === NodeEnv.production ? 11 : 10215},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 12 : 2021501},
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -46,11 +42,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        20215,
+        ${process.env.NODE_ENV === NodeEnv.production ? 12 : 20215},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 13 : 3021501},
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -58,11 +54,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        30215,
+        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 30215},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 4021501},
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -70,7 +66,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        40215,
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 40215},
         '${currentDateTime}',
         '${currentDateTime}'
       );

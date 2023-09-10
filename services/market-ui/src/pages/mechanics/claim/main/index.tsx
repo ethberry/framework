@@ -17,15 +17,24 @@ import { formatItem } from "../../../../utils/money";
 export const Claim: FC = () => {
   const { account } = useWeb3React();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleToggleFilters, handleChangePage } =
-    useCollection<IClaim, IClaimSearchDto>({
-      baseUrl: `/claim`,
-      search: {
-        account,
-        claimStatus: [ClaimStatus.NEW],
-        claimType: [ClaimType.VESTING, ClaimType.TOKEN],
-      },
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleSearch,
+    handleToggleFilters,
+    handleChangePage,
+    handleRefreshPage,
+  } = useCollection<IClaim, IClaimSearchDto>({
+    baseUrl: `/claim`,
+    search: {
+      account,
+      claimStatus: [ClaimStatus.NEW],
+      claimType: [ClaimType.VESTING, ClaimType.TOKEN],
+    },
+  });
 
   return (
     <Fragment>
@@ -38,7 +47,13 @@ export const Claim: FC = () => {
           />
         </Button>
       </PageHeader>
-      <ClaimSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen}></ClaimSearchForm>
+
+      <ClaimSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        onRefreshPage={handleRefreshPage}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
