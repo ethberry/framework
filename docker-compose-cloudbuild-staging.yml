@@ -460,6 +460,8 @@ services:
       MAILJET_FROM: "${MAILJET_FROM}"
       # logDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
     ports:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
