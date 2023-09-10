@@ -57,12 +57,13 @@ export const formatPenalty = (penalty?: number): number => {
 };
 
 export const getEthPrice = (asset?: IAsset) => {
-  return asset?.components.reduce((memo, current) => {
+  const total = asset?.components.reduce((memo, current) => {
     if (current.tokenType === TokenType.NATIVE) {
       return memo.add(current.amount);
     }
     return memo;
   }, BigNumber.from(0));
+  return total || BigNumber.from(0);
 };
 
 export const cleanUpAsset = ({ components }: IAsset = { components: [], id: 0 }) => {

@@ -52,7 +52,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         })),
         sign.signature,
         {
-          value: getEthPrice(template.price),
+          value: getEthPrice(template.price).mul(values.amount),
         },
       ) as Promise<void>;
     },
@@ -83,7 +83,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       setIsAmountDialogOpen(true);
     } else {
       await metaFn({
-        amount: "1",
+        amount: 1,
       });
     }
   };
@@ -112,7 +112,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         onConfirm={handleAmountConfirm}
         open={isAmountDialogOpen}
         initialValues={{
-          amount: "1",
+          amount: 1,
         }}
       />
     </Fragment>

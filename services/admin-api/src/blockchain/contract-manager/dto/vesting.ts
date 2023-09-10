@@ -44,13 +44,14 @@ export class VestingContractDeployDto implements IVestingContractDeployDto {
   @decorate(Max(10000, { message: "rangeOverflow" }))
   public monthlyRelease: number;
 
+  // TODO понять нафига это все было нужно?
   // TODO add validation (user.id + claim.id = 0)
-  @decorate(
-    ApiProperty({
-      type: String,
-    }),
-  )
-  @decorate(IsString({ message: "typeMismatch" }))
-  // @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
-  public externalId: string;
+  // @decorate(
+  //   ApiProperty({
+  //     type: String,
+  //   }),
+  // )
+  // @decorate(IsString({ message: "typeMismatch" }))
+  // // @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
+  // public externalId: string;
 }
