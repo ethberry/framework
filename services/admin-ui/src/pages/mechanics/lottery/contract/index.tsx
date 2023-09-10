@@ -44,6 +44,7 @@ export const LotteryContracts: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
     handleRefreshPage,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/lottery/contracts",
     empty: {
@@ -83,6 +84,7 @@ export const LotteryContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -103,7 +105,7 @@ export const LotteryContracts: FC = () => {
                 <LotteryActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  refreshPage={handleRefreshPage}
+                  onRefreshPage={handleRefreshPage}
                 />
               </ListItemSecondaryAction>
             </ListItem>

@@ -83,6 +83,7 @@ export const RaffleContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -103,7 +104,7 @@ export const RaffleContracts: FC = () => {
                 <RaffleActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  refreshPage={handleRefreshPage}
+                  onRefreshPage={handleRefreshPage}
                 />
               </ListItemSecondaryAction>
             </ListItem>

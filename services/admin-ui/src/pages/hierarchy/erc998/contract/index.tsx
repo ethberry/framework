@@ -42,6 +42,7 @@ export const Erc998Contract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc998/contracts",
     search: {
@@ -76,6 +77,7 @@ export const Erc998Contract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={Erc998ContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

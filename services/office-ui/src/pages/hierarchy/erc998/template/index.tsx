@@ -48,6 +48,7 @@ export const Erc998Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc998/templates",
     empty: {
@@ -56,9 +57,6 @@ export const Erc998Template: FC = () => {
       price: emptyPrice,
       amount: "0",
       contractId: 3,
-      // @ts-ignore
-      // this is only filter for contract autocomplete
-      merchantId: profile.merchantId,
     },
     search: {
       query: "",
@@ -108,6 +106,7 @@ export const Erc998Template: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

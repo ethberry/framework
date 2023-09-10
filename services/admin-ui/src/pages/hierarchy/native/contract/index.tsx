@@ -43,6 +43,7 @@ export const NativeContract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/native/contracts",
     empty: {
@@ -79,6 +80,7 @@ export const NativeContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={NativeContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

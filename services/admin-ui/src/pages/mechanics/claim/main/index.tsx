@@ -23,8 +23,8 @@ import { ClaimStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";
-import { ClaimEditDialog } from "./edit";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { ClaimEditDialog } from "./edit";
 
 export const Claim: FC = () => {
   const {

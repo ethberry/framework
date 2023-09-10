@@ -45,6 +45,7 @@ export const CollectionTemplate: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/collection/templates",
     empty: {
@@ -107,6 +108,7 @@ export const CollectionTemplate: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.COLLECTION]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

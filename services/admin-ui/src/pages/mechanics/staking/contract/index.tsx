@@ -43,6 +43,7 @@ export const StakingContracts: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/staking/contracts",
     empty: {
@@ -82,6 +83,7 @@ export const StakingContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={StakingContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

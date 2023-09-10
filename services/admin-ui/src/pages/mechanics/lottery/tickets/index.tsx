@@ -43,6 +43,7 @@ export const LotteryTickets: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/lottery/tickets",
     empty: {
@@ -82,6 +83,7 @@ export const LotteryTickets: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

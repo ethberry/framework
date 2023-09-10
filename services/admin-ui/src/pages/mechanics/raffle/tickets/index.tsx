@@ -43,6 +43,7 @@ export const RaffleTickets: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/raffle/tickets",
     empty: {
@@ -82,6 +83,7 @@ export const RaffleTickets: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

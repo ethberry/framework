@@ -42,6 +42,7 @@ export const CollectionContract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/collection/contracts",
     empty: {
@@ -85,6 +86,7 @@ export const CollectionContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={CollectionContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

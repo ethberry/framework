@@ -9,10 +9,10 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
+import { formatItem } from "../../../../utils/money";
 import { VestingDeployButton } from "../../../../components/buttons/mechanics/vesting/deploy";
 import { ClaimRedeemButton } from "../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
-import { formatItem } from "../../../../utils/money";
 
 export const Claim: FC = () => {
   const { account } = useWeb3React();

@@ -12,11 +12,11 @@ import UnpackABI from "../../../../../abis/mechanics/mysterybox/unpack/unpack.ab
 
 export interface IMysteryUnpackButtonProps {
   token: IToken;
-  refreshPage?: () => Promise<void>;
+  onRefreshPage?: () => Promise<void>;
 }
 
 export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
-  const { refreshPage = () => {}, token } = props;
+  const { onRefreshPage = () => {}, token } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.template!.contract!.address, UnpackABI, web3Context.provider?.getSigner());
@@ -26,7 +26,7 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
   const handleUnpack = (token: IToken): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(token).then(() => {
-        refreshPage();
+        onRefreshPage();
       });
     };
   };

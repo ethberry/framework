@@ -39,6 +39,7 @@ export const Erc998Token: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc998/tokens",
     empty: {
@@ -93,6 +94,7 @@ export const Erc998Token: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.HIERARCHY]}
         contractType={[TokenType.ERC998]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -6,6 +6,8 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
+import { FormRefresher } from "../form-refresher";
 import { ContractInput } from "./contract-input";
 
 interface ITemplateSearchFormProps {
@@ -14,16 +16,18 @@ interface ITemplateSearchFormProps {
   open: boolean;
   contractType?: Array<TokenType>;
   contractModule?: Array<ModuleType>;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType = [], contractModule = [] } = props;
+  const { onSubmit, initialValues, open, contractType = [], contractModule = [], onRefreshPage } = props;
 
   const { query, templateStatus, contractIds, merchantId } = initialValues;
   const fixedValues = { query, templateStatus, contractIds, merchantId };
 
   return (
     <CommonSearchForm initialValues={fixedValues} onSubmit={onSubmit} open={open} testId="TemplateSearchForm">
+      <FormRefresher onRefreshPage={onRefreshPage} />
       <Grid container spacing={2} alignItems="flex-end">
         <Grid item xs={12}>
           <EntityInput name="merchantId" controller="merchants" />

@@ -42,6 +42,7 @@ export const PonziContract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/ponzi/contracts",
     empty: {
@@ -81,6 +82,7 @@ export const PonziContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={PonziContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
