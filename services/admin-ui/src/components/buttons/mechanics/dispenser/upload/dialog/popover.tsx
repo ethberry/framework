@@ -38,7 +38,7 @@ export const DispenserInfoPopover: FC<Record<string, string | number>> = () => {
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>account,tokenType,address,templateId,amount</pre>
+          <pre>account,tokenType,address,tokenId,amount</pre>
           <Typography>Example: </Typography>
           <pre>
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,NATIVE,0x0000000000000000000000000000000000000000,0,1000000000000000000

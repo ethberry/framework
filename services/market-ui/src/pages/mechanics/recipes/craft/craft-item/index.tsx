@@ -28,21 +28,40 @@ export const CraftItem: FC = () => {
     return <Spinner />;
   }
 
+  const recipeLength = selected.item?.components.length;
+
+  // Should never happen
+  if (!recipeLength) {
+    return null;
+  }
+
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item?.components[0].template]} />
 
-      <PageHeader message="pages.craft.title" data={selected.item?.components[0].template} />
+      <PageHeader
+        message="pages.craft.title"
+        data={{ title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }}
+      />
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box
-            component="img"
-            src={selected.item?.components[0].template!.imageUrl}
-            // TODO FIXME
-            alt="Gemunion template image"
-            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
-          />
+          {selected.item?.components.map(comp => {
+            return (
+              <Box
+                key={comp.id}
+                component="img"
+                src={comp.template!.imageUrl}
+                // TODO FIXME - make a better grid of multiple items?
+                alt="Gemunion template image"
+                sx={{
+                  display: "block",
+                  mx: "auto",
+                  maxWidth: `${70 / recipeLength}%`,
+                }}
+              />
+            );
+          })}
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
