@@ -52,7 +52,10 @@ export const CraftItem: FC = () => {
                 key={comp.id}
                 component="img"
                 src={comp.template!.imageUrl}
-                // TODO FIXME - make a better grid of multiple items?
+                // TODO FIXME - make a better grid of multiple items
+                // TODO use MUI native multi-image list?
+                // https://mui.com/material-ui/react-image-list/ or
+                // https://mui.com/material-ui/react-masonry/
                 alt="Gemunion template image"
                 sx={{
                   display: "block",
