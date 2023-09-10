@@ -60,10 +60,7 @@ export class AccessControlServiceEth {
         throw new NotFoundException("contractNotFound");
       }
       // if revoked from Exchange - make contract inactive
-      if (
-        systemContractEntity.contractModule === ModuleType.EXCHANGE ||
-        systemContractEntity.contractModule === ModuleType.CONTRACT_MANAGER
-      ) {
+      if (systemContractEntity.contractModule === ModuleType.EXCHANGE) {
         const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
         if (!contractEntity) {
