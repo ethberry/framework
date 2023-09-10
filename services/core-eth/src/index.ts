@@ -18,7 +18,7 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
-
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
   const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
 
@@ -33,8 +33,6 @@ async function bootstrap(): Promise<void> {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.set("trust proxy", true);
-
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
 
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();

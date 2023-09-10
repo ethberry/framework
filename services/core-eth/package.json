@@ -19,7 +19,7 @@
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.11",
     "@gemunion/nest-js-module-typeorm-debug": "3.0.14",
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.17",
-    "@gemunion/nest-js-module-winston": "2.0.11",
+    "@gemunion/nest-js-module-winston-logdna": "3.0.11",
     "@gemunion/nest-js-utils": "4.1.6",
     "@gemunion/nest-js-validators": "4.0.15",
     "@gemunion/nest-js-module-ethers-gcp": "1.0.7",
