@@ -44,7 +44,6 @@ export const LotteryContracts: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
     handleRefreshPage,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/lottery/contracts",
     empty: {
