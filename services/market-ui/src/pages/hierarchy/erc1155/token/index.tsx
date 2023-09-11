@@ -11,7 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { formatPrice } from "../../../../utils/money";
 import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
 import { StyledPaper } from "./styled";
-import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/craft/dismantle-token-panel";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -69,7 +69,7 @@ export const Erc1155Token: FC = () => {
             <Erc1155TransferButton token={selected} />
           </StyledPaper>
 
-          {selected.templateId ? <DismantlePanel token={selected} /> : null}
+          {selected.templateId ? <DismantleTokenPanel token={selected} /> : null}
         </Grid>
       </Grid>
     </Fragment>

@@ -7,7 +7,8 @@ import { Web3ContextType } from "@web3-react/core";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ICraft, TokenType } from "@framework/types";
+import type { ICraft } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../abis/mechanics/craft/craft.abi.json";
 
@@ -84,7 +85,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleCraft} data-testid="ExchangeCraftButton">
+    <Button onClick={handleCraft} data-testid="CraftButton">
       <FormattedMessage id="form.buttons.craft" />
     </Button>
   );

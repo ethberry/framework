@@ -14,7 +14,7 @@ export const FormRefresher: FC<IRefresherProps> = props => {
 
   useEffect(() => {
     void onRefreshPage();
-  }, [profile.chainId, profile.wallet]);
+  }, [profile?.chainId, profile?.wallet]);
 
   return null;
 };

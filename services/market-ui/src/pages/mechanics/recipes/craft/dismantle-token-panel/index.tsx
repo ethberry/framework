@@ -20,11 +20,11 @@ import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.
 import { sorter } from "../../../../../utils/sorter";
 import { getDismantleMultiplier } from "./utils";
 
-export interface IDismantlePanelProps {
+export interface IDismantleTokenPanelProps {
   token: IToken;
 }
 
-export const DismantlePanel: FC<IDismantlePanelProps> = props => {
+export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const { token } = props;
 
   const settings = useSettings();

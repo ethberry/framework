@@ -19,11 +19,11 @@ import { sorter } from "../../../../../utils/sorter";
 
 import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
 
-export interface ICraftPanelProps {
+export interface ICraftTemplatePanelProps {
   template: ITemplate;
 }
 
-export const CraftPanel: FC<ICraftPanelProps> = props => {
+export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   const { template } = props;
 
   const settings = useSettings();

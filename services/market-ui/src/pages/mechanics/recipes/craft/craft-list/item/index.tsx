@@ -3,10 +3,10 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, 
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { ICraft } from "@framework/types";
+import type { ICraft } from "@framework/types";
 
-import { CraftIngredients } from "./menu";
 import { CraftButton } from "../../../../../../components/buttons";
+import { CraftIngredients } from "./menu";
 
 interface ICraftItemProps {
   craft: ICraft;

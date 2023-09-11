@@ -20,7 +20,7 @@ import { TokenGenesisView } from "../../genesis";
 import { TokenGradeView } from "../../grade";
 import { Erc998Composition } from "./composition";
 import { StyledPaper } from "./styled";
-import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/craft/dismantle-token-panel";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -127,7 +127,7 @@ export const Erc998Token: FC = () => {
             </StyledPaper>
           ) : null}
 
-          {selected.templateId ? <DismantlePanel token={selected} /> : null}
+          {selected.templateId ? <DismantleTokenPanel token={selected} /> : null}
         </Grid>
       </Grid>
 

@@ -118,12 +118,18 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
-    const { contractFeatures = [], contractType = [], contractModule = [] } = dto;
+    const { merchantId, contractFeatures = [], contractType = [], contractModule = [] } = dto;
 
     const where = {
       chainId: userEntity.chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
+
+    if (merchantId) {
+      Object.assign(where, {
+        merchantId,
+      });
+    }
 
     if (contractType.length) {
       Object.assign(where, {
