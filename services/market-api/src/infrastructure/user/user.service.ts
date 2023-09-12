@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository, UpdateResult, DeepPartial } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
@@ -28,7 +28,7 @@ export class UserService {
     return this.userEntityRepository.count({ where });
   }
 
-  public async update(where: FindOptionsWhere<UserEntity>, dto: any): Promise<UserEntity> {
+  public async update(where: FindOptionsWhere<UserEntity>, dto: DeepPartial<UserEntity>): Promise<UserEntity> {
     const userEntity = await this.findOne(where);
 
     if (!userEntity) {

@@ -4,7 +4,8 @@
     "approveCraft": "Please approve ingredients to Exchange before crafting",
     "approveDismantle": "Please approve token to Exchange before dismantle",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
-    "uncaughtError": "Uncaught error happened"
+    "uncaughtError": "Uncaught error happened",
+    "redirect": "You will be redirected in a moment"
   },
   "components": {
     "header": {

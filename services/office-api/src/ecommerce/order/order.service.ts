@@ -86,17 +86,17 @@ export class OrderService {
       .save();
   }
 
-  public async update(where: FindOptionsWhere<OrderEntity>, data: IOrderUpdateDto): Promise<OrderEntity> {
+  public async update(where: FindOptionsWhere<OrderEntity>, dto: IOrderUpdateDto): Promise<OrderEntity> {
     const orderEntity = await this.orderEntityRepository.findOne({ where });
 
     if (!orderEntity) {
       throw new NotFoundException("orderNotFound");
     }
 
-    // const price = await this.productService.writeOffAndGetPrice(data.items);
+    // const price = await this.productService.writeOffAndGetPrice(dto.items);
 
     const items = await Promise.all(
-      data.items.map(item =>
+      dto.items.map(item =>
         this.orderItemService.create({
           ...item,
           orderId: orderEntity.id,
@@ -104,7 +104,7 @@ export class OrderService {
       ),
     );
 
-    Object.assign(orderEntity, { ...data, items, price: 100 });
+    Object.assign(orderEntity, { ...dto, items, price: 100 });
     return orderEntity.save();
   }
 
