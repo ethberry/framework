@@ -5,10 +5,19 @@ export interface IOpenSeaMetadataAttribute {
   value: string | number;
 }
 
-export interface IOpenSeaMetadata {
-  description: string;
-  external_url: string;
-  image: string;
+// https://docs.opensea.io/docs/metadata-standards
+export interface IOpenSeaTokenMetadata {
   name: string;
+  description: string;
+  image: string;
+  external_url: string;
   attributes?: Array<IOpenSeaMetadataAttribute>;
+}
+
+// https://docs.opensea.io/docs/contract-level-metadata
+export interface IOpenSeaContractMetadata {
+  name: string;
+  description: string;
+  image: string;
+  external_link: string;
 }
