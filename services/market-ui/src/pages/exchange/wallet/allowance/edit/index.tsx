@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, TokenStatus, TokenType } from "@framework/types";
 import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 
@@ -39,7 +39,15 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       testId="AllowanceForm"
       {...rest}
     >
-      <TokenAssetInput prefix="token" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <TokenAssetInput
+        prefix="token"
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        token={{
+          data: {
+            tokenStatus: [TokenStatus.MINTED],
+          },
+        }}
+      />
       <CommonContractInput
         name="contractId"
         data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}

@@ -156,7 +156,7 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto, merchantEntity: MerchantEntity): Promise<Array<TokenEntity>> {
-    const { contractIds, templateIds, chainId } = dto;
+    const { contractIds, templateIds, tokenStatus, chainId } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -195,6 +195,14 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (tokenStatus) {
+      if (tokenStatus.length === 1) {
+        queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
+      } else {
+        queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
       }
     }
 

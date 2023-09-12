@@ -5,8 +5,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata, TokenRarity, TokenType } from "@framework/types";
 
-import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {
@@ -157,7 +157,7 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    const { contractIds, templateIds } = dto;
+    const { contractIds, templateIds, tokenStatus } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -194,6 +194,14 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (tokenStatus) {
+      if (tokenStatus.length === 1) {
+        queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
+      } else {
+        queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
       }
     }
 
