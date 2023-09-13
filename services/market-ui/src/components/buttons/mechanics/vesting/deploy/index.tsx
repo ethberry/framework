@@ -24,7 +24,7 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
   const { formatMessage } = useIntl();
   const { profile } = useUser<IUser>();
 
-  // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
+  // ethersV6 : concat([zeroPadValue(toBeHex(profile.id), 3), zeroPadValue(toBeHex(claim.id), 4)]);
   const encodedExternalId = BigNumber.from(
     utils.hexlify(
       utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(claim.id), 4)]),

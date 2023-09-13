@@ -4,8 +4,8 @@ import { Type } from "class-transformer";
 
 import type { IVestingClaimCreateDto } from "@framework/types";
 
-import { VestingContractDeployDto } from "../../../../contract-manager/dto";
 import { ItemDto } from "../../../../exchange/asset/dto";
+import { VestingClaimContractDeployDto } from "./vesting";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   @ApiProperty({
@@ -21,9 +21,9 @@ export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   // public endTimestamp: string;
 
   @ApiProperty({
-    type: VestingContractDeployDto,
+    type: VestingClaimContractDeployDto,
   })
   @ValidateNested()
-  @Type(() => VestingContractDeployDto)
-  public parameters: VestingContractDeployDto;
+  @Type(() => VestingClaimContractDeployDto)
+  public parameters: VestingClaimContractDeployDto;
 }
