@@ -156,7 +156,7 @@ export class ContractService {
       });
     }
 
-    // this is used only to filter out SOULBOUND from transfer action menu
+    // so far this is used only to filter out SOULBOUND tokens
     if (excludeFeatures.length) {
       Object.assign(where, {
         // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
