@@ -76,12 +76,13 @@ async function bootstrap(): Promise<void> {
   SwaggerModule.setup("swagger", app, document);
 
   // Process jobs from as many servers or processes as you like
+  const redisQueueName = configService.get<string>("REDIS_QUEUE_NAME", "ETH_EVENTS");
   const sharedConfigWorker = {
     redis: {
       url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
     },
   };
-  const getQueue = new Queue("ETH_EVENTS", sharedConfigWorker);
+  const getQueue = new Queue(redisQueueName, sharedConfigWorker);
   getQueue.process(async (job: IRedisJob, done: any): Promise<Observable<any>> => {
     console.info(`PROCESSING JOB ${job.id}, route: ${job.data.route}`);
 
