@@ -3,15 +3,15 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import type { ITemplate, IToken } from "@framework/types";
-import { ModuleType } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import type { ITemplate, IToken } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
-import { WrapperContent } from "../../../../components/tables/wrapper-content";
+import { WrapperContent } from "./wrapper-content";
 
 export const WrapperToken: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -63,6 +63,7 @@ export const WrapperToken: FC = () => {
           ) : null}
         </Grid>
       </Grid>
+
       <WrapperContent wrapper={selected} />
     </Fragment>
   );

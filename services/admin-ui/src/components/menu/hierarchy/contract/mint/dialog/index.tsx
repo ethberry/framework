@@ -28,6 +28,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"

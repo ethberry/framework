@@ -3,18 +3,19 @@ import { useWatch } from "react-hook-form";
 import { InputAdornment } from "@mui/material";
 
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { ContractFeatures } from "@framework/types";
+import { DismantleStrategy } from "@framework/types";
 
 export interface IAddressInputProps {
   name?: string;
+  field?: string;
 }
 
 export const RarityMultiplierInput: FC<IAddressInputProps> = props => {
-  const { name = "rarityMultiplier" } = props;
+  const { name = "rarityMultiplier", field = "dismantleStrategy" } = props;
 
-  const contractFeatures: Array<ContractFeatures> = useWatch({ name: "price.components[0].contract.contractFeatures" });
+  const dismantleStrategy: DismantleStrategy = useWatch({ name: field });
 
-  if (contractFeatures.includes(ContractFeatures.RANDOM)) {
+  if (dismantleStrategy === DismantleStrategy.EXPONENTIAL) {
     return (
       <CurrencyInput
         name={name}

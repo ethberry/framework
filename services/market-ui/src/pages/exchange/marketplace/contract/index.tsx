@@ -9,6 +9,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateList } from "../template-list";
+import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
 
 export const Contract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -28,7 +29,9 @@ export const Contract: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.marketplace.contract.title" data={selected} />
+      <PageHeader message="pages.marketplace.contract.title" data={selected}>
+        <CraftContactPanel contract={selected} />
+      </PageHeader>
 
       <Box display="flex">
         <Box margin={1}>

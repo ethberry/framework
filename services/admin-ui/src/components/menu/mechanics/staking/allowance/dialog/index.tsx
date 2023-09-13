@@ -1,22 +1,22 @@
 import { ChangeEvent, FC } from "react";
 
-import { TokenType } from "@framework/types";
+import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TokenTypeInput } from "@gemunion/mui-inputs-asset";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 
 export interface IStakingAllowanceDto {
+  tokenType: TokenType;
+  contractId: number;
   amount: string;
   contract: {
     address: string;
     contractType: TokenType;
-    tokenType: TokenType;
     decimals: number;
   };
-  contractId: number;
 }
 
 export interface IStakingAllowanceDialogProps {
@@ -47,8 +47,18 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
       showDebug={true}
       {...rest}
     >
-      <TokenTypeInput prefix="contract" disabledOptions={[TokenType.NATIVE]} />
-      <CommonContractInput name="contractId" onChange={handleContractChange} autoselect withTokenType />
+      <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />
+      <CommonContractInput
+        name="contractId"
+        onChange={handleContractChange}
+        autoselect
+        withTokenType
+        data={{
+          contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE],
+          excludeFeatures: [Erc721ContractFeatures.SOULBOUND],
+        }}
+      />
       <AmountInput />
     </FormDialog>
   );

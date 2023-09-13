@@ -8,10 +8,10 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { formatPrice } from "../../../../utils/money";
 import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { formatPrice } from "../../../../utils/money";
 import { StyledPaper } from "./styled";
-import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -54,7 +54,7 @@ export const Erc1155Token: FC = () => {
         <Grid item xs={12} sm={3}>
           <StyledPaper>
             <FormattedMessage id="pages.token.priceTitle" />
-            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
+            <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
               {formatPrice(selected.template?.price)
                 .split(", ")
                 .map((item: string, index: number) => (
@@ -69,7 +69,7 @@ export const Erc1155Token: FC = () => {
             <Erc1155TransferButton token={selected} />
           </StyledPaper>
 
-          {selected.templateId ? <DismantlePanel token={selected} /> : null}
+          {selected.templateId ? <DismantleTokenPanel token={selected} /> : null}
         </Grid>
       </Grid>
     </Fragment>

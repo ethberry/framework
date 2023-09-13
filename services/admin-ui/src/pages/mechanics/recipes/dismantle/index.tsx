@@ -49,20 +49,29 @@ export const Dismantle: FC = () => {
     empty: {
       price: getEmptyTemplate(TokenType.ERC721),
       item: getEmptyTemplate(TokenType.ERC1155),
-      rarityMultiplier: 0.0,
-      dismantleStrategy: DismantleStrategy.EXPONENTIAL,
+      rarityMultiplier: 0,
+      dismantleStatus: DismantleStatus.ACTIVE,
+      dismantleStrategy: DismantleStrategy.FLAT,
     },
     search: {
       query: "",
       dismantleStatus: [DismantleStatus.ACTIVE],
     },
-    filter: ({ item, price, dismantleStatus, rarityMultiplier, dismantleStrategy }) => ({
-      item: cleanUpAsset(item),
-      price: cleanUpAsset(price),
-      dismantleStatus,
-      rarityMultiplier,
-      dismantleStrategy,
-    }),
+    filter: ({ id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy }) =>
+      id
+        ? {
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+            dismantleStatus,
+            rarityMultiplier,
+            dismantleStrategy,
+          }
+        : {
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+            rarityMultiplier,
+            dismantleStrategy,
+          },
   });
 
   return (
@@ -93,8 +102,8 @@ export const Dismantle: FC = () => {
         <List>
           {rows.map(dismantle => (
             <ListItem key={dismantle.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.price)}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.item)}</ListItemText>
+              <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.price)}</ListItemText>
+              <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.item)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(dismantle)}>
                   <Create />

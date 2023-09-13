@@ -41,9 +41,13 @@ export class CraftService {
     });
 
     if (query) {
+      // support multiple items
+      queryBuilder.leftJoin("craft.item", "item2");
+      queryBuilder.leftJoin("item2.components", "item2_components");
+      queryBuilder.leftJoin("item2_components.template", "item2_template");
       queryBuilder.leftJoin(
         qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
+          qb.getQuery = () => `LATERAL json_array_elements(item2_template.description->'blocks')`;
           return qb;
         },
         `blocks`,
@@ -51,7 +55,7 @@ export class CraftService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("item2_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );

@@ -1,9 +1,9 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, ListItemText, Menu, MenuItem } from "@mui/material";
-import { Sell } from "@mui/icons-material";
+import { Construction } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { ICraft } from "@framework/types";
+import type { ICraft } from "@framework/types";
 
 interface ICraftIngredientsProps {
   craft: ICraft;
@@ -36,7 +36,7 @@ export const CraftIngredients: FC<ICraftIngredientsProps> = props => {
         onClick={handleMenuOpen}
         color="inherit"
       >
-        <Sell />
+        <Construction />
       </IconButton>
       <Menu id="craft-ingredients" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
         {craft.price?.components.map(component => (

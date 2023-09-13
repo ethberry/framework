@@ -57,7 +57,13 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Type(() => Number)
   public contractId: number;
 
-  public chainId: number;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public merchantId: number;
+
+  public chainId: number;
   public includeExternalContracts: boolean;
 }

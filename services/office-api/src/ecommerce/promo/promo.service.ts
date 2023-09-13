@@ -49,14 +49,14 @@ export class PromoService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async update(where: FindOptionsWhere<PromoEntity>, data: IPromoUpdateDto): Promise<PromoEntity | undefined> {
+  public async update(where: FindOptionsWhere<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | undefined> {
     const promoEntity = await this.promoEntityRepository.findOne({ where });
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
     }
 
-    Object.assign(promoEntity, data);
+    Object.assign(promoEntity, dto);
     return promoEntity.save();
   }
 

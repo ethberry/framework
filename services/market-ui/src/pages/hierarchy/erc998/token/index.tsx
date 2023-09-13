@@ -1,29 +1,24 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-
-import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, IToken, TokenMetadata, TokenRarity } from "@framework/types";
-import { useUser } from "@gemunion/provider-user";
+import type { ITemplate, IToken } from "@framework/types";
 
-import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { TokenHistory } from "../../../../components/common/token-history";
-import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
-import { formatPrice } from "../../../../utils/money";
-import { TokenTraitsView } from "../../traits";
-import { TokenGenesisView } from "../../genesis";
-import { TokenGradeView } from "../../grade";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
+import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
+import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
+import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
+import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
 import { Erc998Composition } from "./composition";
-import { StyledPaper } from "./styled";
-import { DismantlePanel } from "../../../mechanics/recipes/craft/dismantle-panel";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading } = useCollection<IToken>({
+  const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
     baseUrl: "/erc998/tokens",
     empty: {
       template: {
@@ -32,23 +27,6 @@ export const Erc998Token: FC = () => {
       } as ITemplate,
     },
   });
-
-  const user = useUser<IUser>();
-  const { checkAccessMetadata } = useCheckAccessMetadata();
-  const [hasAccess, setHasAccess] = useState(false);
-
-  useEffect(() => {
-    if (selected.template?.contract?.address && user?.profile?.wallet) {
-      void checkAccessMetadata(void 0, {
-        account: user.profile.wallet,
-        address: selected.template.contract.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
-    }
-  }, [user?.profile?.wallet, selected]);
 
   if (isLoading) {
     return <Spinner />;
@@ -76,58 +54,19 @@ export const Erc998Token: FC = () => {
           <Erc998Composition token={selected} />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <StyledPaper>
-            <FormattedMessage id="pages.token.priceTitle" />
-            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
-              {formatPrice(selected.template?.price)
-                .split(", ")
-                .map((item: string, index: number) => (
-                  <li key={index}>{item}</li>
-                ))}
-            </Box>
-            <TokenSellButton token={selected} />
-            <Erc721TransferButton token={selected} />
-            <TokenLendButton token={selected} />
-          </StyledPaper>
-
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage
-                  id="pages.erc998.token.rarity"
-                  values={{ rarity: Object.values(TokenRarity)[selected.metadata[TokenMetadata.RARITY]] }}
-                />
-              </Typography>
-            </StyledPaper>
-          ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.DISCRETE) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage id="pages.erc998.token.grade" />
-              </Typography>
-              <TokenGradeView metadata={selected.metadata} />
-              <GradeButton token={selected} disabled={!hasAccess} />
-            </StyledPaper>
-          ) : null}
-
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage id="pages.erc998.token.genesis" />
-              </Typography>
-              <TokenGenesisView metadata={selected.metadata} />
-            </StyledPaper>
-          ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage id="pages.erc998.token.traits" />
-              </Typography>
-              <TokenTraitsView metadata={selected.metadata} />
-            </StyledPaper>
-          ) : null}
-
-          {selected.templateId ? <DismantlePanel token={selected} /> : null}
+          <Grid item xs={12} sm={3}>
+            {selected.templateId ? (
+              <>
+                <CommonTokenPanel token={selected} />
+                <RarityTokenPanel token={selected} />
+                <DiscreteTokenPanel token={selected} />
+                <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+                <GenesTokenPanel token={selected} />
+                <TraitTokenPanel token={selected} />
+                <DismantleTokenPanel token={selected} />
+              </>
+            ) : null}
+          </Grid>
         </Grid>
       </Grid>
 

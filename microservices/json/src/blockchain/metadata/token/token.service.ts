@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { getText } from "@gemunion/draft-js-utils";
 import { TokenMetadata, TokenRarity } from "@framework/types";
 import { decodeTraits } from "@framework/traits-api";
-import type { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
+import type { IOpenSeaTokenMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 
@@ -32,7 +32,7 @@ export class MetadataTokenService {
     return queryBuilder.getOne();
   }
 
-  public async getTokenMetadata(address: string, tokenId: bigint): Promise<IOpenSeaMetadata> {
+  public async getTokenMetadata(address: string, tokenId: bigint): Promise<IOpenSeaTokenMetadata> {
     const tokenEntity = await this.getToken(address, tokenId.toString());
 
     if (!tokenEntity) {
@@ -44,10 +44,10 @@ export class MetadataTokenService {
     const { metadata } = tokenEntity;
 
     return {
-      description: getText(tokenEntity.template.description),
-      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
-      image: tokenEntity.template.imageUrl,
       name: tokenEntity.template.title,
+      description: getText(tokenEntity.template.description),
+      image: tokenEntity.template.imageUrl,
+      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       attributes: this.formatMetadata(metadata),
     };
   }

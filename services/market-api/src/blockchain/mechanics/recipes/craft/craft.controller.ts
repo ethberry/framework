@@ -2,10 +2,11 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptor
 
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ICraftCountResult } from "@framework/types";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { CraftSearchDto, CraftSignDto } from "./dto";
+import { CraftCountDto, CraftSearchDto, CraftSignDto } from "./dto";
 
 @Public()
 @Controller("/craft")
@@ -16,6 +17,11 @@ export class CraftController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: CraftSearchDto): Promise<[Array<CraftEntity>, number]> {
     return this.craftService.search(dto);
+  }
+
+  @Post("/count")
+  public count(@Body() dto: CraftCountDto): Promise<ICraftCountResult> {
+    return this.craftService.count(dto);
   }
 
   @Post("/sign")

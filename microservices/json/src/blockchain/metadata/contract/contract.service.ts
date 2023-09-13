@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { getText } from "@gemunion/draft-js-utils";
-import type { IOpenSeaMetadata } from "@framework/types";
+import type { IOpenSeaContractMetadata } from "@framework/types";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
@@ -23,7 +23,7 @@ export class MetadataContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async getContractMetadata(address: string): Promise<IOpenSeaMetadata> {
+  public async getContractMetadata(address: string): Promise<IOpenSeaContractMetadata> {
     const contractEntity = await this.findOne({ address });
 
     if (!contractEntity) {
@@ -33,10 +33,10 @@ export class MetadataContractService {
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
     return {
-      description: getText(contractEntity.description),
-      external_url: `${baseUrl}/metadata/${contractEntity.address}`,
-      image: contractEntity.imageUrl,
       name: contractEntity.title,
+      description: getText(contractEntity.description),
+      image: contractEntity.imageUrl,
+      external_link: `${baseUrl}/metadata/${contractEntity.address}`,
     };
   }
 }

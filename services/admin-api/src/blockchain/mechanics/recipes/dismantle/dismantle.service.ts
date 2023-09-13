@@ -43,7 +43,7 @@ export class DismantleService {
     if (query) {
       queryBuilder.leftJoin(
         qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
+          qb.getQuery = () => `LATERAL json_array_elements(price_template.description->'blocks')`;
           return qb;
         },
         `blocks`,
@@ -51,7 +51,7 @@ export class DismantleService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("price_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
