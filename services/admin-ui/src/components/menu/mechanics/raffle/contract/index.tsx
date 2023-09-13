@@ -16,11 +16,11 @@ import { RaffleScheduleMenuItem } from "./schedule";
 export interface IRaffleActionsMenu {
   contract: IContract;
   disabled?: boolean;
-  refreshPage: () => Promise<void>;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
-  const { contract, disabled, refreshPage } = props;
+  const { contract, disabled, onRefreshPage } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -64,7 +64,7 @@ export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <RaffleRoundStartMenuItem contract={contract} />
         <RaffleRoundEndMenuItem contract={contract} />
-        <RaffleScheduleMenuItem contract={contract} refreshPage={refreshPage} />
+        <RaffleScheduleMenuItem contract={contract} refreshPage={onRefreshPage} />
       </Menu>
     </Fragment>
   );

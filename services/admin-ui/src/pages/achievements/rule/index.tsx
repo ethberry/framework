@@ -80,8 +80,8 @@ export const AchievementRules: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rule, i) => (
-            <ListItem key={i}>
+          {rows.map(rule => (
+            <ListItem key={rule.id}>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>

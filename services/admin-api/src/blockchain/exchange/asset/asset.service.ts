@@ -61,13 +61,13 @@ export class AssetService {
         }
 
         if (templateEntity.contract.merchantId !== userEntity.merchantId) {
+          // BUSINESS_TYPE=B2B
           if (
-            templateEntity.contract.merchantId === 1 &&
-            templateEntity.contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+            !(
+              templateEntity.contract.merchantId === 1 &&
+              templateEntity.contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+            )
           ) {
-            // BUSINESS_TYPE=B2B
-            // all good, do nothing
-          } else {
             throw new ForbiddenException("insufficientPermissions");
           }
         }

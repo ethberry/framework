@@ -14,7 +14,9 @@ interface ICraftItemProps {
 
 export const CraftItem: FC<ICraftItemProps> = props => {
   const { craft } = props;
-
+  // TODO use MUI native multi-image list
+  // https://mui.com/material-ui/react-image-list/ or
+  // https://mui.com/material-ui/react-masonry/
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/craft/${craft.id}`}>

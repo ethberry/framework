@@ -51,8 +51,8 @@ export const SelectInput: FC<ISelectInputProps> = props => {
             }}
             {...testIdProps}
           >
-            {options.map((option, i) => (
-              <MenuItem value={option} key={i} disabled={disabledOptions.includes(option)}>
+            {options.map(option => (
+              <MenuItem value={option} key={option} disabled={disabledOptions.includes(option)}>
                 {option}
               </MenuItem>
             ))}

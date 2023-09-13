@@ -11,8 +11,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { formatPrice } from "../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../components/buttons";
-import { StyledPaper } from "./styled";
 import { CraftPanel } from "../../../mechanics/recipes/craft/craft-panel";
+import { StyledPaper } from "./styled";
 
 export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({

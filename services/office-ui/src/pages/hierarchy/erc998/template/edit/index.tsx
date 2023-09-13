@@ -5,7 +5,8 @@ import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import type { ITemplate } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { ITemplate, IUser } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -22,19 +23,9 @@ export interface IErc998TemplateEditDialogProps {
 export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    price,
-    amount,
-    templateStatus,
-    contractId,
-    imageUrl,
-    // @ts-ignore
-    // this is only filter for contract autocomplete
-    merchantId,
-  } = initialValues;
+  const { profile } = useUser<IUser>();
+
+  const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -44,7 +35,8 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
     templateStatus,
     contractId,
     imageUrl,
-    merchantId,
+    // this is only filter for contract autocomplete
+    merchantId: profile.merchantId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";

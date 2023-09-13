@@ -320,11 +320,24 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   }
 
   // PAUSABLE
-
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
@@ -334,6 +347,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

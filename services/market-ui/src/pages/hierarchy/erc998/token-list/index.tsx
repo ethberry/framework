@@ -17,11 +17,20 @@ export interface IErc998TokenListProps {
 export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IToken, ITokenSearchDto>({
-      baseUrl: "/erc998/tokens",
-      embedded,
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleToggleFilters,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+  } = useCollection<IToken, ITokenSearchDto>({
+    baseUrl: "/erc998/tokens",
+    embedded,
+  });
 
   return (
     <Fragment>
@@ -42,6 +51,7 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

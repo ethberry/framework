@@ -11,7 +11,7 @@ export class PonziReportService {
   constructor(private readonly ponziDepositService: PonziDepositService) {}
 
   public async search(
-    dto: IPonziReportSearchDto,
+    dto: Partial<IPonziReportSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<PonziDepositEntity>, number]> {
     const { deposit, reward, ...rest } = dto;
@@ -19,12 +19,12 @@ export class PonziReportService {
       {
         ...rest,
         deposit: {
-          tokenType: [deposit.tokenType],
-          contractIds: [deposit.contractId],
+          tokenType: [deposit!.tokenType],
+          contractIds: [deposit!.contractId],
         },
         reward: {
-          tokenType: [reward.tokenType],
-          contractIds: [reward.contractId],
+          tokenType: [reward!.tokenType],
+          contractIds: [reward!.contractId],
         },
       },
       userEntity,

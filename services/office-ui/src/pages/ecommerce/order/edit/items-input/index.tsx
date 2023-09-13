@@ -53,7 +53,7 @@ export const ItemsInput: FC<IUserInputProps> = props => {
 
       <List>
         {value.map((row: IOrderItem, i: number) => (
-          <ListItem key={i}>
+          <ListItem key={row.id}>
             <Grid container spacing={2}>
               <Grid item className={classes.root}>
                 <EntityInput name={`${name}[${i}].productItemId`} controller="product-items" />

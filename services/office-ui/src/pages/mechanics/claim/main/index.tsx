@@ -25,6 +25,7 @@ import { ClaimStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { ClaimEditDialog } from "./edit";
 
 export const Claim: FC = () => {
@@ -49,6 +50,7 @@ export const Claim: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
     baseUrl: "/claims",
     empty: {
@@ -88,7 +90,14 @@ export const Claim: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ClaimSearchForm">
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="ClaimSearchForm"
+      >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <EntityInput name="merchantId" controller="merchants" disableClear />
@@ -101,8 +110,8 @@ export const Claim: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((claim, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(claim => (
+            <ListItem key={claim.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{claim.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
                 {claim.item.components.map(component => component.template?.title).join(", ")}

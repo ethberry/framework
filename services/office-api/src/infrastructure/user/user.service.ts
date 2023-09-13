@@ -20,7 +20,7 @@ export class UserService {
     private readonly authService: AuthService,
   ) {}
 
-  public async search(dto: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
+  public async search(dto: Partial<IUserSearchDto>): Promise<[Array<UserEntity>, number]> {
     const { query, userRoles, userStatus, skip, take } = dto;
     const queryBuilder = this.userEntityRepository.createQueryBuilder("user");
 

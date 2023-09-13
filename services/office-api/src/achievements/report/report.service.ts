@@ -10,7 +10,7 @@ import { AchievementItemService } from "../item/item.service";
 export class AchievementReportService {
   constructor(private readonly achievementItemService: AchievementItemService) {}
 
-  public async search(dto: IAchievementsReportSearchDto): Promise<[Array<AchievementItemEntity>, number]> {
+  public async search(dto: Partial<IAchievementsReportSearchDto>): Promise<[Array<AchievementItemEntity>, number]> {
     return this.achievementItemService.search(dto);
   }
 

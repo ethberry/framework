@@ -23,8 +23,9 @@ import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
-import { AchievementLevelEditDialog } from "./edit";
+import { FormRefresher } from "../../../components/forms/form-refresher";
 import { cleanUpAsset } from "../../../utils/money";
+import { AchievementLevelEditDialog } from "./edit";
 
 export const emptyAchievementRule = {
   achievementType: AchievementType.MARKETPLACE,
@@ -50,6 +51,7 @@ export const AchievementLevels: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IAchievementLevel, IAchievementLevelSearchDto>({
     baseUrl: "/achievements/levels",
     empty: {
@@ -132,6 +134,7 @@ export const AchievementLevels: FC = () => {
         open={isFiltersOpen}
         testId="AchievementLevelSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <EntityInput name="achievementRuleIds" controller="achievements/rules" multiple />
@@ -141,8 +144,8 @@ export const AchievementLevels: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((level, i) => (
-            <ListItem key={i}>
+          {rows.map(level => (
+            <ListItem key={level.id}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>

@@ -250,6 +250,7 @@
       "CONTACT": "Contact form",
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
+      "INVITE": "Invite",
       "LINK_TOKEN": "LINK notification"
     },
     "eventDataLabel": {
@@ -1049,7 +1050,6 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "recipes": "Recipes",
         "dispenser": "Dispenser",
         "drop": "Drop",
         "grade": "Grade",
@@ -1057,6 +1057,7 @@
         "mystery": "Mystery",
         "ponzi": "Ponzi",
         "raffle": "Raffle",
+        "recipes": "Recipes",
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",

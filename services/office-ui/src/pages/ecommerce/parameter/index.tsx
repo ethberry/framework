@@ -55,8 +55,8 @@ export const Parameter: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {uniqueBy<IParameter>(rows, ["parameterName", "parameterType"]).map((parameter, i) => (
-            <ListItem key={i}>
+          {uniqueBy<IParameter>(rows, ["parameterName", "parameterType"]).map(parameter => (
+            <ListItem key={parameter.id}>
               <ListItemText>
                 {parameter.parameterName} ({parameter.parameterType})
               </ListItemText>

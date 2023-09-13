@@ -35,6 +35,7 @@ export const CollectionToken: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/collection/tokens",
     empty: {
@@ -69,12 +70,13 @@ export const CollectionToken: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.COLLECTION]}
         contractType={[TokenType.ERC721]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>

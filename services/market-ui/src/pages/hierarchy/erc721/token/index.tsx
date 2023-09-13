@@ -94,7 +94,7 @@ export const Erc721Token: FC = () => {
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
             <TokenLendButton token={selected} />
-            <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
+            <MysteryWrapperUnpackButton token={selected} onRefreshPage={handleRefreshPage} />
           </StyledPaper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (

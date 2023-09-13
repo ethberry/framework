@@ -57,7 +57,7 @@ export const MysteryBoxToken: FC = () => {
             </Typography>
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
-            <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
+            <MysteryWrapperUnpackButton token={selected} onRefreshPage={handleRefreshPage} />
           </Paper>
         </Grid>
       </Grid>

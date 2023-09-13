@@ -20,7 +20,7 @@ export class ProductItemService {
     private readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IProductItemSearchDto): Promise<[Array<ProductItemEntity>, number]> {
+  public async search(dto: Partial<IProductItemSearchDto>): Promise<[Array<ProductItemEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product_item");

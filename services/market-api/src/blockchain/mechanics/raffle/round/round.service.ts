@@ -37,21 +37,21 @@ export class RaffleRoundService {
   public async current(dto: IRaffleCurrentDto): Promise<RaffleRoundEntity> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findCurrentRoundWithRelations(contractId);
+    const raffleRoundEntity = await this.findCurrentRoundWithRelations(contractId);
 
-    if (!lotteryRound) {
+    if (!raffleRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketCount = await this.raffleTokenService.getTicketCount(lotteryRound.id);
+    const ticketCount = await this.raffleTokenService.getTicketCount(raffleRoundEntity.id);
 
-    return Object.assign(lotteryRound, { ticketCount });
+    return Object.assign(raffleRoundEntity, { ticketCount });
   }
 
   public async latest(dto: IRaffleCurrentDto): Promise<RaffleRoundEntity | null> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findOne(
+    const raffleRoundEntity = await this.findOne(
       { contractId },
       {
         order: {
@@ -60,11 +60,11 @@ export class RaffleRoundService {
       },
     );
 
-    if (!lotteryRound) {
+    if (!raffleRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    return this.statistic(lotteryRound.id);
+    return this.statistic(raffleRoundEntity.id);
   }
 
   public findCurrentRoundWithRelations(contractId: number): Promise<RaffleRoundEntity | null> {

@@ -16,7 +16,7 @@ export class PonziRulesService {
     private readonly ponziRuleEntityRepository: Repository<PonziRulesEntity>,
   ) {}
 
-  public search(dto: IPonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
+  public search(dto: Partial<IPonziRuleSearchDto>): Promise<[Array<PonziRulesEntity>, number]> {
     const { query, deposit, reward, ponziRuleStatus, skip, take } = dto;
 
     const queryBuilder = this.ponziRuleEntityRepository.createQueryBuilder("rule");

@@ -60,7 +60,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
       });
     }
 
-    const roles = [UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER, UserRole.CUSTOMER];
+    const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER, UserRole.CUSTOMER];
     if (!userEntity.userRoles.some(role => roles.includes(role))) {
       throw new UnauthorizedException("userHasWrongRole");
     }

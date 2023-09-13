@@ -51,6 +51,9 @@ contract ERC721CSimple is ERC721ABRK, ERC721ABaseUrl {
     revert MethodNotSupported();
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABRK) returns (bool) {

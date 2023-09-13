@@ -19,13 +19,11 @@ import { AppModule } from "./app.module";
 
 export interface IRedisJob {
   id: string;
-  data: IRedisJobData;
-}
-
-export interface IRedisJobData {
-  route: string;
-  decoded: any;
-  context: Log;
+  data: {
+    route: string;
+    decoded: any;
+    context: Log;
+  };
 }
 
 let app: NestExpressApplication;
@@ -48,7 +46,7 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
-
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
   const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
 
@@ -64,8 +62,6 @@ async function bootstrap(): Promise<void> {
 
   app.set("trust proxy", true);
 
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
-
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();
   }
@@ -79,7 +75,6 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  const discoveryService: DiscoveryService = app.get<DiscoveryService>(DiscoveryService);
   // Process jobs from as many servers or processes as you like
   const sharedConfigWorker = {
     redis: {
@@ -90,6 +85,7 @@ async function bootstrap(): Promise<void> {
   getQueue.process(async (job: IRedisJob, done: any): Promise<Observable<any>> => {
     console.info(`PROCESSING JOB ${job.id}, route: ${job.data.route}`);
 
+    const discoveryService: DiscoveryService = app.get<DiscoveryService>(DiscoveryService);
     const discoveredMethodsWithMeta = await getHandlerByPattern(job.data.route, discoveryService);
     if (!discoveredMethodsWithMeta.length) {
       console.info(`Handler not found for: ${job.data.route}`);

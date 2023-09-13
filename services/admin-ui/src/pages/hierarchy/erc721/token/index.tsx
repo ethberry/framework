@@ -35,6 +35,7 @@ export const Erc721Token: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc721/tokens",
     empty: {
@@ -71,12 +72,13 @@ export const Erc721Token: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.HIERARCHY]}
         contractType={[TokenType.ERC721]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>

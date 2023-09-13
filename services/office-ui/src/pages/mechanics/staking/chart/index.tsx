@@ -22,16 +22,17 @@ export const StakingChart: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 0,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 1301,
+        contractId: 0,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
+    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const chartRef = useRef<HTMLDivElement>(null);

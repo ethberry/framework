@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MerchantStatus } from "@framework/types";
-import { SearchDto } from "@gemunion/collection";
+import { ISearchDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "./merchant.entity";
@@ -16,7 +16,7 @@ export class MerchantService {
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
   ) {}
 
-  public async search(dto: SearchDto): Promise<[Array<MerchantEntity>, number]> {
+  public async search(dto: Partial<ISearchDto>): Promise<[Array<MerchantEntity>, number]> {
     const { query } = dto;
 
     const queryBuilder = this.merchantEntityRepository.createQueryBuilder("merchant");

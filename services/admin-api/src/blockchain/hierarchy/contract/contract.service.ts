@@ -113,7 +113,7 @@ export class ContractService {
 
     queryBuilder.orderBy({
       "contract.createdAt": "DESC",
-      "contract.id": "ASC",
+      "contract.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

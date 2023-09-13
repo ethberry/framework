@@ -16,8 +16,8 @@ export const AddressesInput: FC<IAddressInputProps> = props => {
 
   return (
     <Fragment>
-      {value.map((_addr: IAddress, i: number) => (
-        <AddressInput key={i} prefix={`${name}[${i}]`} />
+      {value.map((addr: IAddress, i: number) => (
+        <AddressInput key={addr.id} prefix={`${name}[${i}]`} />
       ))}
     </Fragment>
   );

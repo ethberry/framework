@@ -24,6 +24,9 @@ contract ERC998ERC1155Simple is ERC998Simple, ERC998ERC1155 {
     return super.ownerOf(tokenId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC998Simple, ERC998ERC1155) returns (bool) {

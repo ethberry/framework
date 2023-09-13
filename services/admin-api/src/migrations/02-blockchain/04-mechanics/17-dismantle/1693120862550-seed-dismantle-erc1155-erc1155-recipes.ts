@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements MigrationInterface {
+export class SeedDismantleErc1155Erc155RecipesAt1693120862550 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -15,9 +15,9 @@ export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements Migrati
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102530101
+        102550301
       ), (
-        102530102
+        102550302
       );
     `);
 
@@ -31,21 +31,15 @@ export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements Migrati
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1050104, -- plank
         1,
-        102530101
+        102550301
       ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102530102
-      ), (
-        'ERC1155',
-        10501,
-        1050103, -- iron
-        10,
-        102530102
+        102550302
       );
     `);
 
@@ -61,10 +55,10 @@ export class SeedDismantleErc7211Erc155RecipesAt1693120862350 implements Migrati
         created_at,
         updated_at
       ) VALUES (
-        1050301,
-        102530102,
-        102530101,
-        200,
+        1050503,
+        102550302,
+        102550301,
+        0,
         'EXPONENTIAL',
         'ACTIVE',
         1,

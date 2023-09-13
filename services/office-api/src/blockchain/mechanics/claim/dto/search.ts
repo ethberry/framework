@@ -27,5 +27,6 @@ export class ClaimSearchDto extends Mixin(AccountOptionalDto, PaginationDto) imp
   @Type(() => Number)
   public merchantId: number;
 
+  public chainId: number;
   public claimType: Array<ClaimType>;
 }

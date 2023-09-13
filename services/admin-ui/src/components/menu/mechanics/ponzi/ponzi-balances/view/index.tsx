@@ -82,8 +82,8 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
-            {rows.map((balance, i) => (
-              <ListItem key={i}>
+            {rows.map(balance => (
+              <ListItem key={balance.id}>
                 <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
                 <ListItemText>
                   {formatEther(

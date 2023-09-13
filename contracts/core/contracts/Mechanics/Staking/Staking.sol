@@ -646,14 +646,22 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
-   * @dev Pauses the contract.
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
    */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
   /**
-   * @dev Unpauses the contract.
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
    */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();

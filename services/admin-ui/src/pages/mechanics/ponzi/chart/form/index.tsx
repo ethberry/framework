@@ -25,6 +25,7 @@ export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
   const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp };
 
+  // @TODO Add validation
   return (
     <FormWrapper
       initialValues={fixedValues}
@@ -70,7 +71,7 @@ export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} />
+      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["contractId", "deposit.contractId", "reward.contractId"]} />
     </FormWrapper>
   );
 };

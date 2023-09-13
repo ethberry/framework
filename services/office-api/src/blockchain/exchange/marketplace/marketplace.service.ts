@@ -104,6 +104,7 @@ export class MarketplaceService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
+      "token.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

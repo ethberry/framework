@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
@@ -12,15 +12,15 @@ import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { PauseMenuItem } from "../common/pause";
 import { AllowanceMenu } from "./allowance";
-import { StakingInfoMenuItem } from "./counters";
+import { UnPauseMenuItem } from "../common/unpause";
 
 export interface IStakingActionsMenu {
-  staking: IContract;
+  contract: IContract;
   disabled?: boolean;
 }
 
 export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
-  const { staking, disabled } = props;
+  const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -55,15 +55,18 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
         onClick={handleClose}
         keepMounted
       >
-        <GrantRoleMenuItem contract={staking} />
-        <RevokeRoleMenuItem contract={staking} />
-        <RenounceRoleMenuItem contract={staking} />
-        <AllowanceMenu contract={staking} />
-        <TopUpMenuItem contract={staking} />
-        <StakingInfoMenuItem contract={staking} />
-        <PauseMenuItem contract={staking} />
-        <EthListenerAddMenuItem contract={staking} />
-        <EthListenerRemoveMenuItem contract={staking} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <PauseMenuItem contract={contract} />
+        <UnPauseMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <AllowanceMenu contract={contract} />
+        <TopUpMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <EthListenerAddMenuItem contract={contract} />
+        <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

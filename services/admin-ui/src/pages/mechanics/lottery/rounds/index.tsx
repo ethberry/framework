@@ -39,8 +39,8 @@ export const LotteryRounds: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((round, i) => (
-            <ListItem key={i}>
+          {rows.map(round => (
+            <ListItem key={round.id}>
               <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {round.roundId} - {round.numbers ? getNumbers(round.numbers) : "awaiting results"}

@@ -26,6 +26,9 @@ contract ERC998Rentable is ERC998Simple, ERC4907 {
     super.setUser(tokenId, user, expires);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC998Simple, ERC4907) returns (bool) {
     return ERC998Simple.supportsInterface(interfaceId) || ERC4907.supportsInterface(interfaceId);
   }

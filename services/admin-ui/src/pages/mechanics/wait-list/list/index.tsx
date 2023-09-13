@@ -76,8 +76,8 @@ export const WaitListList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((waitListList, i) => (
-            <ListItem key={i}>
+          {rows.map(waitListList => (
+            <ListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(waitListList)}>

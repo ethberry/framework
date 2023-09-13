@@ -17,12 +17,21 @@ export interface IMyTokenListProps {
 export const MyTokensList: FC<IMyTokenListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IToken, ITokenSearchDto>({
-      baseUrl: "/tokens/search",
-      embedded,
-      redirect: () => "/tokens",
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleToggleFilters,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+  } = useCollection<IToken, ITokenSearchDto>({
+    baseUrl: "/tokens/search",
+    embedded,
+    redirect: () => "/tokens",
+  });
 
   return (
     <Fragment>
@@ -50,6 +59,7 @@ export const MyTokensList: FC<IMyTokenListProps> = props => {
           ModuleType.RAFFLE,
           ModuleType.WRAPPER,
         ]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -18,4 +18,6 @@ export class RaffleTokenSearchDto extends PaginationDto implements IRaffleTokenS
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public roundIds: Array<number>;
+
+  public account: string;
 }

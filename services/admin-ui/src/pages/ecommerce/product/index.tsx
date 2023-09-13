@@ -97,8 +97,8 @@ export const Product: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((product, i) => (
-            <ListItem key={i}>
+          {rows.map(product => (
+            <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(product)}>

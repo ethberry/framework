@@ -63,8 +63,8 @@ export const Category: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((category, i) => (
-            <ListItem key={i}>
+          {rows.map(category => (
+            <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(category)}>

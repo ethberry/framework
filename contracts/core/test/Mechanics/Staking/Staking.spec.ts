@@ -1689,7 +1689,17 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
+
       const balance1 = await erc20Instance.balanceOf(await stakingInstance.getAddress());
       expect(balance1).to.equal(amount * BigInt(cycles));
 
@@ -2132,7 +2142,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -2478,7 +2497,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -2575,7 +2603,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -2820,7 +2857,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -3303,7 +3349,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -3958,7 +4013,16 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -4448,9 +4512,7 @@ describe("Staking", function () {
       expect(balance2).to.equal(0);
 
       // TIME
-
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -4912,9 +4974,7 @@ describe("Staking", function () {
       expect(balance22).to.equal(0);
 
       // TIME
-
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -5045,9 +5105,7 @@ describe("Staking", function () {
       expect(balance22).to.equal(0);
 
       // TIME
-
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -5165,9 +5223,7 @@ describe("Staking", function () {
       expect(balance22).to.equal(0);
 
       // TIME
-
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -5347,7 +5403,16 @@ describe("Staking", function () {
       // TIME
 
       // REWARD
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -5531,7 +5596,17 @@ describe("Staking", function () {
       expect(balance21).to.equal(0);
 
       // REWARD 1
-      await erc20Instance.mint(await stakingInstance.getAddress(), amount * BigInt(cycles)); // enough for reward
+      await erc20Instance.mint(owner.address, amount * BigInt(cycles));
+      await erc20Instance.approve(await stakingInstance.getAddress(), amount * BigInt(cycles));
+      await stakingInstance.topUp([
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId,
+          amount: amount * BigInt(cycles),
+        },
+      ]);
+
       const tx21 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp1: number = (await time.latest()).toNumber();
       await expect(tx21)
@@ -5546,7 +5621,6 @@ describe("Staking", function () {
       expect(balance3).to.equal(amount * BigInt(cycles) + amount);
 
       // REWARD 2
-      // await erc20Instance.mint(await stakingInstance.getAddress(), amount * (cycles - 1)); // not enough for penalty
 
       const tx22 = await stakingInstance.receiveReward(2, true, true);
       const endTimestamp2: number = (await time.latest()).toNumber();

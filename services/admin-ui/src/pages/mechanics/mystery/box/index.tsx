@@ -124,8 +124,8 @@ export const MysteryBox: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((mystery, i) => (
-            <ListItem key={i}>
+          {rows.map(mystery => (
+            <ListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(mystery)}>

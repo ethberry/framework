@@ -15,7 +15,7 @@ export class CategoryService {
     private readonly categoryEntityRepository: Repository<CategoryEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CategoryEntity>, number]> {
+  public search(dto: Partial<ISearchDto>): Promise<[Array<CategoryEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.categoryEntityRepository.createQueryBuilder("category");

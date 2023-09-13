@@ -12,7 +12,7 @@ export class AchievementItemService {
     private readonly achievementItemEntityRepository: Repository<AchievementItemEntity>,
   ) {}
 
-  public async search(dto: IAchievementsReportSearchDto): Promise<[Array<AchievementItemEntity>, number]> {
+  public async search(dto: Partial<IAchievementsReportSearchDto>): Promise<[Array<AchievementItemEntity>, number]> {
     const { account, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.achievementItemEntityRepository.createQueryBuilder("item");

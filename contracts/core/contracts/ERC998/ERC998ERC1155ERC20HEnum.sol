@@ -112,6 +112,9 @@ contract ERC998ERC1155ERC20HEnum is
     return super._balanceOfERC1155(_tokenId, _erc1155Contract, childTokenId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC998SimpleEnum, ERC998ERC1155Enumerable, ERC998ERC20Enumerable) returns (bool) {

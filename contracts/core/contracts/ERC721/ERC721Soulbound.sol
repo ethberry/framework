@@ -16,6 +16,10 @@ contract ERC721Soulbound is ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
+  /**
+   * @dev See {ERC721-_beforeTokenTransfer}.
+   * Override that disables transfer
+   */
   function _beforeTokenTransfer(
     address from,
     address to,

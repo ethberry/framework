@@ -3,10 +3,10 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 
 import { FrameworkInterfaceId, tokenId } from "../../constants";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
+import { shouldBehaveLikeERC721Blacklist } from "../../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { shouldBehaveLikeERC721MysteryBox } from "./shared/simple/base";
 import { customMint } from "./shared/simple/customMintFn";
-import { shouldBehaveLikeERC721Blacklist } from "../../ERC721/shared/blacklist";
 
 describe("ERC721MysteryBoxBlacklist", function () {
   const factory = () => deployERC721("ERC721MysteryBoxBlacklist");

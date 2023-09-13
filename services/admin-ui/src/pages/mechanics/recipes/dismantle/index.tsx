@@ -91,8 +91,8 @@ export const Dismantle: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((dismantle, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(dismantle => (
+            <ListItem key={dismantle.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.price)}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{formatItem(dismantle.item)}</ListItemText>
               <ListItemSecondaryAction>

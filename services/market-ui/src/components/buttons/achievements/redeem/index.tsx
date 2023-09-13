@@ -6,8 +6,9 @@ import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { IAchievementItemReport, IAchievementRule, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@framework/types";
+import type { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
 import ClaimABI from "../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
