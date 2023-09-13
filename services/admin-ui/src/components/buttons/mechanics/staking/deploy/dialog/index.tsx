@@ -16,7 +16,13 @@ export const StakingDeployDialog: FC<IStakingDeployDialogProps> = props => {
   };
 
   return (
-    <FormDialog initialValues={fixedValues} message="dialogs.deploy" testId="StakingDeployForm" {...props}>
+    <FormDialog
+      initialValues={fixedValues}
+      message="dialogs.deploy"
+      testId="StakingDeployForm"
+      disabled={false}
+      {...props}
+    >
       <SelectInput name="contractTemplate" options={StakingContractTemplates} />
     </FormDialog>
   );
