@@ -21,12 +21,12 @@ import {
 import { TokenHistory } from "../../../../components/common/token-history";
 import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { TokenGradeView } from "../../grade";
 import { StyledPaper } from "./styled";
-import { DismantleTokenPanel } from "../../../mechanics/recipes/craft/dismantle-token-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({

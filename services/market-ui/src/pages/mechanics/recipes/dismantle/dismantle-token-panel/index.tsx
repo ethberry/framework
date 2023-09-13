@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-
+import { useNavigate } from "react-router";
 import { Alert, Grid, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
@@ -10,13 +10,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-
 import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
+import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
+
 import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
 import { formatItem } from "../../../../../utils/money";
-import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { sorter } from "../../../../../utils/sorter";
 import { getDismantleMultiplier } from "./utils";
 
@@ -27,6 +27,7 @@ export interface IDismantleTokenPanelProps {
 export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const { token } = props;
 
+  const navigate = useNavigate();
   const settings = useSettings();
 
   const { rows, isLoading } = useCollection<IDismantle, IDismantleSearchDto>({
@@ -58,7 +59,6 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
             component.contract!.contractType === TokenType.ERC1155
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
-          // TODO set Multiplier strategy in dismantle recipe
           amount: getDismantleMultiplier(
             component.amount,
             token.metadata,
@@ -99,7 +99,9 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
       },
       dismantle,
       web3Context,
-    );
+    ).then(() => {
+      navigate("/tokens");
+    });
   });
 
   const handleDismantle = (dismantle: IDismantle) => {

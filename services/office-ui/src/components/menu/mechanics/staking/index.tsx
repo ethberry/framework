@@ -4,15 +4,15 @@ import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
-import { TopUpMenuItem } from "../common/top-up";
 import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { GrantRoleMenuItem } from "../../extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { TopUpMenuItem } from "../common/top-up";
 import { PauseMenuItem } from "../common/pause";
-import { AllowanceMenu } from "./allowance";
 import { UnPauseMenuItem } from "../common/unpause";
+import { AllowanceMenu } from "./allowance";
 
 export interface IStakingActionsMenu {
   contract: IContract;

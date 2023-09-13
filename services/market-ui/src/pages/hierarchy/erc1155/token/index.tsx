@@ -8,10 +8,10 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { formatPrice } from "../../../../utils/money";
 import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { formatPrice } from "../../../../utils/money";
 import { StyledPaper } from "./styled";
-import { DismantleTokenPanel } from "../../../mechanics/recipes/craft/dismantle-token-panel";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({

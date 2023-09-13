@@ -14,13 +14,13 @@ import { useUser } from "@gemunion/provider-user";
 import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { TokenGradeView } from "../../grade";
 import { Erc998Composition } from "./composition";
 import { StyledPaper } from "./styled";
-import { DismantleTokenPanel } from "../../../mechanics/recipes/craft/dismantle-token-panel";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
