@@ -21,6 +21,7 @@ export const AmountDialog: FC<IAmountDialogProps> = props => {
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.amount"
