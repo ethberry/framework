@@ -1423,6 +1423,8 @@
     "cartNotFound": "Cart not found",
     "categoryNotFound": "Category not found",
     "claimNotFound": "Claim not found",
+    "claimsUploaded": "Successfully uploaded {amount} from {total}",
+    "claimsNotUploaded": "No claims were uploaded",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",

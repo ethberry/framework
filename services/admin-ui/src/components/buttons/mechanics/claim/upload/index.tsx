@@ -1,10 +1,11 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { enqueueSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import type { IClaimUploadDto } from "@framework/types";
+import type { IClaim, IClaimUploadDto } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";
 
@@ -15,18 +16,34 @@ export interface IClaimUploadButtonProps {
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   const { className } = props;
 
+  const { formatMessage } = useIntl();
+
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
-    const { claims } = values;
-    return api.fetchJson({
-      url: "/claims/upload",
-      data: {
-        claims: claims.map(({ id: _id, ...rest }) => rest),
-      },
-      method: "POST",
-    });
-  });
+  const { fn, isLoading } = useApiCall(
+    (api, values: IClaimUploadDto) => {
+      const { claims } = values;
+      return api
+        .fetchJson({
+          url: "/claims/upload",
+          data: {
+            claims: claims.map(({ id: _id, ...rest }) => rest),
+          },
+          method: "POST",
+        })
+        .then((json: IClaim[]) => {
+          if (json?.length) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.claimsNotUploaded" }), { variant: "error" });
+          } else {
+            enqueueSnackbar(
+              formatMessage({ id: "snackbar.claimsUploaded" }, { amount: json.length, total: claims.length }),
+              { variant: "success" },
+            );
+          }
+        });
+    },
+    { success: false },
+  );
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
