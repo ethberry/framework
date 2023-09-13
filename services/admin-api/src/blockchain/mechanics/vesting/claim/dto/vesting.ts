@@ -5,7 +5,7 @@ import { decorate } from "ts-mixer";
 
 import { IVestingContractDeployDto } from "@framework/types";
 
-export class VestingContractDeployDto implements IVestingContractDeployDto {
+export class VestingClaimContractDeployDto implements IVestingContractDeployDto {
   @decorate(
     ApiProperty({
       type: String,
@@ -43,4 +43,12 @@ export class VestingContractDeployDto implements IVestingContractDeployDto {
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(Max(10000, { message: "rangeOverflow" }))
   public monthlyRelease: number;
+
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  public externalId: string;
 }
