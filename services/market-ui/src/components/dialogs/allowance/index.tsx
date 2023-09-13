@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Box, IconButton, Popover, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
-export const DismantleInfoPopover: FC = () => {
+export const AllowanceInfoPopover: FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handlePopoverOpen = (event: MouseEvent<HTMLButtonElement>) => {
@@ -19,7 +19,7 @@ export const DismantleInfoPopover: FC = () => {
   return (
     <Box>
       <IconButton
-        aria-owns={open ? "dismantle-info" : undefined}
+        aria-owns={open ? "allowance-info" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -27,7 +27,7 @@ export const DismantleInfoPopover: FC = () => {
         <Help />
       </IconButton>
       <Popover
-        id={"dismantle-info"}
+        id={"allowance-info"}
         open={open}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
@@ -45,7 +45,7 @@ export const DismantleInfoPopover: FC = () => {
         disableRestoreFocus
       >
         <Typography sx={{ p: 1 }}>
-          <FormattedMessage id="alert.approveDismantle" />
+          <FormattedMessage id="alert.approve" />
         </Typography>
       </Popover>
     </Box>

@@ -21,7 +21,7 @@ export const RarityTokenPanel: FC<IRarityTokenPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.rarity" />
+            <FormattedMessage id="pages.token.rarity" />
           </Typography>
         </Toolbar>
         <Typography>{Object.values(TokenRarity)[token.metadata[TokenMetadata.RARITY]]}</Typography>

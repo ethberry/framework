@@ -23,7 +23,7 @@ export const TraitTokenPanel: FC<ITraitTokenPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.traits" />
+            <FormattedMessage id="pages.token.traits" />
           </Typography>
         </Toolbar>
         <TokenTraitsView metadata={token.metadata} />
