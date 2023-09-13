@@ -784,7 +784,7 @@ export class ContractManagerSignService {
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RANDOM:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC721//randomERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
           chainId,
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE:

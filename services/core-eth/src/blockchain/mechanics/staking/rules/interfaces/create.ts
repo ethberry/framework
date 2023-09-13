@@ -1,4 +1,5 @@
 import { DurationUnit, IAssetDto, StakingRuleStatus, TokenType } from "@framework/types";
+import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 
 export interface IStakingItemCreateDto {
   tokenType: TokenType;
@@ -20,4 +21,5 @@ export interface IStakingCreateDto {
   recurrent: boolean;
   stakingRuleStatus?: StakingRuleStatus;
   contractId: number;
+  contract?: ContractEntity;
 }

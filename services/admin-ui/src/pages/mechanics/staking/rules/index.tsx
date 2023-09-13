@@ -111,7 +111,8 @@ export const StakingRules: FC = () => {
         <List>
           {rows.map(rule => (
             <ListItem key={rule.id} disableGutters>
-              <ListItemText>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
