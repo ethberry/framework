@@ -27,7 +27,7 @@ import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.
 import { formatItem } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { getDismantleMultiplier } from "../../../../../components/buttons/mechanics/recipes/dismantle/utils";
-import { DismantleInfoPopover } from "./popover";
+import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 
 export interface IDismantleTokenPanelProps {
   token: IToken;
@@ -130,9 +130,9 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.dismantle" />
+            <FormattedMessage id="pages.token.dismantle" />
           </Typography>
-          <DismantleInfoPopover />
+          <AllowanceInfoPopover />
         </Toolbar>
         <List>
           {rows.map(dismantle => {
@@ -152,7 +152,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
                     <Grid item xs={12}>
                       {formatItem(dismantle.item)}
                       {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.erc721.token.rarityMultiplier" values={{ multiplier }} />
+                        <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
                       ) : null}
                     </Grid>
                   </Grid>

@@ -1,19 +1,14 @@
 import { FC, Fragment } from "react";
-import { Alert, Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import type { ICraft } from "@framework/types";
 
-import { ICraft } from "@framework/types";
-
-import { CraftButton } from "../../../../../components/buttons";
-import { formatEther } from "../../../../../utils/money";
-import { StyledPaper } from "./styled";
 import { CraftTransactions } from "./transactions";
+import { CraftItemPanel } from "../craft-item-panel";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
@@ -70,30 +65,7 @@ export const CraftItem: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <List component="nav">
-            <StyledPaper>
-              <Typography variant="body2" color="textSecondary" component="p">
-                <FormattedMessage id="form.labels.price" />
-              </Typography>
-              {selected.price?.components.map((component, i) => (
-                <ListItem
-                  key={component.id || i}
-                  button
-                  component={RouterLink}
-                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
-                >
-                  <ListItemText>
-                    {component.template!.title}{" "}
-                    {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
-                  </ListItemText>
-                </ListItem>
-              ))}
-              <Alert severity="warning">
-                <FormattedMessage id="alert.approveCraft" />
-              </Alert>
-              <CraftButton craft={selected} />
-            </StyledPaper>
-          </List>
+          <CraftItemPanel craft={selected} />
         </Grid>
       </Grid>
 

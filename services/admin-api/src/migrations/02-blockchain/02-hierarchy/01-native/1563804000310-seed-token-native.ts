@@ -28,7 +28,7 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 1 : 101020101}, -- BESU (inactive)
+        ${process.env.NODE_ENV === NodeEnv.production ? 2 : 101020101}, -- BESU (inactive)
         '${defaultJSON}',
         0,
         '0',
@@ -37,7 +37,7 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 1 : 201010101}, -- BNB
+        ${process.env.NODE_ENV === NodeEnv.production ? 3 : 201010101}, -- BNB
         '${defaultJSON}',
         0,
         '0',
@@ -46,7 +46,7 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 1 : 301010101}, -- ETH
+        ${process.env.NODE_ENV === NodeEnv.production ? 4 : 301010101}, -- ETH
         '${defaultJSON}',
         0,
         '0',
@@ -55,7 +55,7 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 1 : 401010101}, -- MATIC
+        ${process.env.NODE_ENV === NodeEnv.production ? 5 : 401010101}, -- MATIC
         '${defaultJSON}',
         0,
         '0',

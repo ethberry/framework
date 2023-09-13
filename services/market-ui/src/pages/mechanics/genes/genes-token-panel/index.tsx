@@ -23,7 +23,7 @@ export const GenesTokenPanel: FC<IGenesTokenPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.genesis" />
+            <FormattedMessage id="pages.token.genesis" />
           </Typography>
         </Toolbar>
         <TokenGenesisView metadata={token.metadata} />

@@ -1,11 +1,10 @@
 {
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
-    "approveCraft": "Please approve ingredients to Exchange before crafting",
-    "approveDismantle": "Please approve token to Exchange before dismantle",
+    "approve": "Please approve ingredients to Exchange before using this mechanic",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
-    "uncaughtError": "Uncaught error happened",
-    "redirect": "You will be redirected in a moment"
+    "redirect": "You will be redirected in a moment",
+    "uncaughtError": "Uncaught error happened"
   },
   "components": {
     "header": {
@@ -1111,15 +1110,16 @@
     },
     "token": {
       "balanceTitle": "Balance:",
-      "priceTitle": "Base price:",
-      "genesis": "Genesis",
+      "craft": "Craft",
       "discrete": "Levels",
+      "dismantle": "Dismantle",
+      "genesis": "Genesis",
       "mystery": "Mystery box",
       "price": "Base price",
+      "priceTitle": "Base price:",
       "rarity": "Rarity",
-      "traits": "Traits",
-      "dismantle": "Dismantle",
-      "rarityMultiplier": "x {multiplier}"
+      "rarityMultiplier": "x {multiplier}",
+      "traits": "Traits"
     },
     "tokens": {
       "title": "My tokens"

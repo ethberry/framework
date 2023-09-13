@@ -2,8 +2,16 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-
-import { Alert, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
@@ -13,11 +21,11 @@ import { useSettings } from "@gemunion/provider-settings";
 import type { ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { formatItem, getEthPrice } from "../../../../../utils/money";
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
-import { sorter } from "../../../../../utils/sorter";
 
-import { StyledPaper } from "../../../../hierarchy/erc721/token/styled";
+import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { formatItem, getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 export interface ICraftTemplatePanelProps {
   template: ITemplate;
@@ -105,26 +113,27 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   }
 
   return (
-    <StyledPaper>
-      <Typography>
-        <FormattedMessage id="pages.erc721.token.craft" />
-      </Typography>
-      <Alert severity="warning">
-        <FormattedMessage id="alert.approveCraft" />
-      </Alert>
-
-      <List>
-        {rows.map(craft => {
-          return (
-            <ListItemButton key={craft.id} onClick={handleCraft(craft)}>
-              <ListItemIcon>
-                <Construction />
-              </ListItemIcon>
-              <ListItemText>{formatItem(craft.price)}</ListItemText>
-            </ListItemButton>
-          );
-        })}
-      </List>
-    </StyledPaper>
+    <Card>
+      <CardContent>
+        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+            <FormattedMessage id="pages.token.craft" />
+          </Typography>
+          <AllowanceInfoPopover />
+        </Toolbar>
+        <List>
+          {rows.map(craft => {
+            return (
+              <ListItemButton key={craft.id} onClick={handleCraft(craft)}>
+                <ListItemIcon>
+                  <Construction />
+                </ListItemIcon>
+                <ListItemText>{formatItem(craft.price)}</ListItemText>
+              </ListItemButton>
+            );
+          })}
+        </List>
+      </CardContent>
+    </Card>
   );
 };

@@ -44,7 +44,7 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.discrete" />
+            <FormattedMessage id="pages.token.discrete" />
           </Typography>
         </Toolbar>
         <TokenDiscreteView metadata={token.metadata} />
