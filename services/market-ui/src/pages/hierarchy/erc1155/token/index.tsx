@@ -54,7 +54,7 @@ export const Erc1155Token: FC = () => {
         <Grid item xs={12} sm={3}>
           <StyledPaper>
             <FormattedMessage id="pages.token.priceTitle" />
-            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
+            <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
               {formatPrice(selected.template?.price)
                 .split(", ")
                 .map((item: string, index: number) => (

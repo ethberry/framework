@@ -4,21 +4,15 @@ import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/m
 
 import type { IToken } from "@framework/types";
 
-import {
-  Erc721TransferButton,
-  MysteryWrapperUnpackButton,
-  TokenLendButton,
-  TokenSellButton,
-} from "../../../../components/buttons";
-import { formatPrice } from "../../../../utils/money";
+import { Erc721TransferButton, TokenLendButton, TokenSellButton } from "../../../../../components/buttons";
+import { formatPrice } from "../../../../../utils/money";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
-  onRefreshPage?: () => Promise<void>;
 }
 
 export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
-  const { token, onRefreshPage } = props;
+  const { token } = props;
 
   return (
     <Card sx={{ mb: 2 }}>
@@ -28,7 +22,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
             <FormattedMessage id="pages.token.priceTitle" />
           </Typography>
         </Toolbar>
-        <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
+        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
           {formatPrice(token.template?.price)
             .split(", ")
             .map((item: string, index: number) => (
@@ -40,7 +34,6 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         <TokenSellButton token={token} />
         <Erc721TransferButton token={token} />
         <TokenLendButton token={token} />
-        <MysteryWrapperUnpackButton token={token} onRefreshPage={onRefreshPage} />
       </CardActions>
     </Card>
   );

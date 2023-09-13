@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import type { IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { formatEther } from "../../../utils/money";
+import { formatEther } from "../../../../../utils/money";
 
 export interface IMysteryBoxContentProps {
   mysteryBox: IMysteryBox;

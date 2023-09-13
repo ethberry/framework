@@ -833,7 +833,7 @@
         "title": "ERC721 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC721 Template: {title}"
       },
       "templates": {
@@ -841,15 +841,7 @@
       },
       "title": "ERC721",
       "token": {
-        "craft": "Craft",
-        "dismantle": "Dismantle",
-        "genesis": "Genesis",
-        "discrete": "Levels",
-        "price": "Base price",
-        "rarity": "Rarity",
-        "rarityMultiplier": "x {multiplier}",
-        "title": "ERC721 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC721 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -867,7 +859,7 @@
         "title": "ERC998 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC998 Template: {title}"
       },
       "templates": {
@@ -875,12 +867,7 @@
       },
       "title": "ERC998",
       "token": {
-        "genesis": "Genesis",
-        "discrete": "Levels",
-        "price": "Base price",
-        "rarity": "Rarity",
-        "title": "ERC998 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC998 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -996,7 +983,7 @@
     "mystery": {
       "box": {
         "content": "Mystery Box Content",
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "Mystery Box: {title}"
       },
       "boxes": {
@@ -1124,7 +1111,15 @@
     },
     "token": {
       "balanceTitle": "Balance:",
-      "priceTitle": "Base price:"
+      "priceTitle": "Base price:",
+      "genesis": "Genesis",
+      "discrete": "Levels",
+      "mystery": "Mystery box",
+      "price": "Base price",
+      "rarity": "Rarity",
+      "traits": "Traits",
+      "dismantle": "Dismantle",
+      "rarityMultiplier": "x {multiplier}"
     },
     "tokens": {
       "title": "My tokens"

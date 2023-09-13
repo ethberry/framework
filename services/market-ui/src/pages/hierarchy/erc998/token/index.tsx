@@ -9,12 +9,13 @@ import type { ITemplate, IToken } from "@framework/types";
 
 import { TokenHistory } from "../../../../components/common/token-history";
 import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
-import { Erc998Composition } from "./composition";
-import { CommonTokenPanel } from "../../../mechanics/common/common-token-panel";
 import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
 import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
 import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
 import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
+import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
+import { Erc998Composition } from "./composition";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -56,9 +57,10 @@ export const Erc998Token: FC = () => {
           <Grid item xs={12} sm={3}>
             {selected.templateId ? (
               <>
-                <CommonTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+                <CommonTokenPanel token={selected} />
                 <RarityTokenPanel token={selected} />
                 <DiscreteTokenPanel token={selected} />
+                <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
                 <GenesTokenPanel token={selected} />
                 <TraitTokenPanel token={selected} />
                 <DismantleTokenPanel token={selected} />

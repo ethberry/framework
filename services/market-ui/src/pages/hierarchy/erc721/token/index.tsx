@@ -8,13 +8,13 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IToken } from "@framework/types";
 
 import { TokenHistory } from "../../../../components/common/token-history";
-import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
 import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
 import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
 import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
 import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
-import { CommonTokenPanel } from "../../../mechanics/common/common-token-panel";
+import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { CommonTokenPanel } from "./common-token-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -55,9 +55,10 @@ export const Erc721Token: FC = () => {
         <Grid item xs={12} sm={3}>
           {selected.templateId ? (
             <>
-              <CommonTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <CommonTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
+              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
@@ -65,9 +66,6 @@ export const Erc721Token: FC = () => {
           ) : null}
         </Grid>
       </Grid>
-
-      {/* @ts-ignore */}
-      <MysteryBoxContent mysteryBox={selected.template?.box} />
 
       {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>

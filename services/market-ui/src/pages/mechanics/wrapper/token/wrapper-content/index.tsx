@@ -3,9 +3,9 @@ import { Grid, Link, Paper, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
-import { formatEther } from "../../../utils/money";
+import { formatEther } from "../../../../../utils/money";
 
 export interface IWrapperContentProps {
   wrapper: IToken;
