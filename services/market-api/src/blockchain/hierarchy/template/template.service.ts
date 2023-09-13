@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
-import { testChainId } from "@framework/constants";
+import { defaultChainId } from "@framework/constants";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "./template.entity";
@@ -15,7 +14,6 @@ export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
-    protected readonly configService: ConfigService,
   ) {}
 
   public async search(
@@ -77,9 +75,8 @@ export class TemplateService {
       contractStatus: ContractStatus.ACTIVE,
     });
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity?.chainId || chainId,
+      chainId: userEntity?.chainId || Number(defaultChainId),
     });
 
     queryBuilder.andWhere("contract.isPaused = :isPaused", {

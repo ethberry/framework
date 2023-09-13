@@ -3,3 +3,4 @@ export const ns = "gemunion";
 
 export const availableChains = [1, 5, 56, 97, 137, 80001, 42161, 13377, 13378];
 export const testChainId = 13378n;
+export const defaultChainId = 56n;

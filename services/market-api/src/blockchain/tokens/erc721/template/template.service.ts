@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -15,9 +14,8 @@ export class Erc721TemplateService extends TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
-    protected readonly configService: ConfigService,
   ) {
-    super(templateEntityRepository, configService);
+    super(templateEntityRepository);
   }
 
   public async search(

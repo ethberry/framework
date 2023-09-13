@@ -1,9 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { app } from "firebase-admin";
 
 import { IMetamaskDto, MetamaskService } from "@gemunion/nest-js-module-metamask";
-import { EnabledLanguages, testChainId } from "@framework/constants";
+import { defaultChainId, EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../user/user.service";
@@ -16,7 +15,6 @@ export class AuthMetamaskService {
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
     private readonly userService: UserService,
-    private readonly configService: ConfigService,
     private readonly metamaskService: MetamaskService,
   ) {}
 
@@ -32,8 +30,6 @@ export class AuthMetamaskService {
     if (!userEntity) {
       const userFb = await this.admin.auth().createUser({});
 
-      const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
       userEntity = await this.userService.import({
         displayName: wallet,
         language: EnabledLanguages.EN,
@@ -41,7 +37,7 @@ export class AuthMetamaskService {
         userStatus: UserStatus.ACTIVE,
         sub: userFb.uid,
         wallet,
-        chainId,
+        chainId: Number(defaultChainId),
       });
     }
 
