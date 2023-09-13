@@ -9,8 +9,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
-    if (process.env.NODE_ENV === NodeEnv.production) {
-      await queryRunner.query(`
+    await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
         address,
@@ -122,50 +121,49 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       );
     `);
 
-      if (process.env.NODE_ENV === NodeEnv.production) {
-        return;
-      }
-
-      await queryRunner.query(`
-        INSERT INTO ${ns}.contract (
-          id,
-          address,
-          chain_id,
-          title,
-          description,
-          image_url,
-          name,
-          symbol,
-          decimals,
-          royalty,
-          base_token_uri,
-          contract_status,
-          contract_type,
-          contract_features,
-          merchant_id,
-          created_at,
-          updated_at
-        ) VALUES (
-          10108,
-          '${ZeroAddress}',
-          '${testChainId}',
-          'Fake token (BESU)',
-          '${simpleFormatting}',
-          'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
-          'Ethereum',
-          'ETH',
-          18,
-          0,
-          '',
-          'ACTIVE',
-          'NATIVE',
-          '{EXTERNAL}',
-          2,
-          '${currentDateTime}',
-          '${currentDateTime}'
-        );
-    `);
+    if (process.env.NODE_ENV === NodeEnv.production) {
+      return;
     }
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.contract (
+        id,
+        address,
+        chain_id,
+        title,
+        description,
+        image_url,
+        name,
+        symbol,
+        decimals,
+        royalty,
+        base_token_uri,
+        contract_status,
+        contract_type,
+        contract_features,
+        merchant_id,
+        created_at,
+        updated_at
+      ) VALUES (
+        10108,
+        '${ZeroAddress}',
+        '${testChainId}',
+        'Fake token (BESU)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        'Ethereum',
+        'ETH',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'NATIVE',
+        '{EXTERNAL}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      );
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
