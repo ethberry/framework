@@ -54,7 +54,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 30215},
+        ${process.env.NODE_ENV === NodeEnv.production ? 13 : 30215},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -66,7 +66,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 40215},
+        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 40215},
         '${currentDateTime}',
         '${currentDateTime}'
       );
