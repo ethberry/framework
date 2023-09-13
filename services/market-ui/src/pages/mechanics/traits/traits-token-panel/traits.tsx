@@ -1,27 +1,24 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { ProtectedAttribute } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
+import { decodeTraits, DND } from "@framework/traits-ui";
 
-import { omit } from "../../utils/lodash";
-
-export interface ITokenMetadataView {
+export interface ITokenMetadataViewProps {
   metadata: Record<string, any>;
 }
 
-export const TokenGradeView: FC<ITokenMetadataView> = props => {
+export const TokenTraitsView: FC<ITokenMetadataViewProps> = props => {
   const { metadata } = props;
 
-  const result = Object.entries(metadata).reduce(
+  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );
 
-  const filteredResult = omit(result, Object.values(ProtectedAttribute));
-
   return (
     <Grid container>
-      {Object.entries(filteredResult)
+      {Object.entries(result)
         .slice(0, 6)
         .map(([key, value]) => (
           <Grid key={key} container>

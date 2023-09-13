@@ -4,14 +4,14 @@ import { Grid } from "@mui/material";
 import { TokenMetadata } from "@framework/types";
 import { decodeTraits, DND } from "@framework/traits-ui";
 
-export interface ITokenMetadataView {
+export interface ITokenMetadataViewProps {
   metadata: Record<string, any>;
 }
 
-export const TokenTraitsView: FC<ITokenMetadataView> = props => {
+export const TokenGenesisView: FC<ITokenMetadataViewProps> = props => {
   const { metadata } = props;
 
-  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
+  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.GENES]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );

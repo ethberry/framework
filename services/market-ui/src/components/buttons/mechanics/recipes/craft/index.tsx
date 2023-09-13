@@ -7,36 +7,37 @@ import { Web3ContextType } from "@web3-react/core";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { IDismantle, TokenType } from "@framework/types";
+import type { ICraft } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import DismantleABI from "../../../../abis/mechanics/dismantle/dismantle.abi.json";
+import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 
-import { getEthPrice } from "../../../../utils/money";
-import { sorter } from "../../../../utils/sorter";
+import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
-interface IDismantleButtonProps {
-  dismantle: IDismantle;
+interface ICraftButtonProps {
+  craft: ICraft;
 }
 
-export const DismantleButton: FC<IDismantleButtonProps> = props => {
-  const { dismantle } = props;
+export const CraftButton: FC<ICraftButtonProps> = props => {
+  const { craft } = props;
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, DismantleABI, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
 
-      return contract.dismantle(
+      return contract.craft(
         {
-          externalId: dismantle.id,
+          externalId: craft.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: dismantle.merchant!.wallet,
+          receiver: craft.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        dismantle.item?.components.sort(sorter("id")).map(component => ({
+        craft.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -45,7 +46,7 @@ export const DismantleButton: FC<IDismantleButtonProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
-        dismantle.price?.components.sort(sorter("id")).map(component => ({
+        craft.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -53,7 +54,7 @@ export const DismantleButton: FC<IDismantleButtonProps> = props => {
         })),
         sign.signature,
         {
-          value: getEthPrice(dismantle.price),
+          value: getEthPrice(craft.price),
         },
       ) as Promise<void>;
     },
@@ -65,13 +66,13 @@ export const DismantleButton: FC<IDismantleButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/dismantle/sign",
+        url: "/craft/sign",
         method: "POST",
         data: {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          dismantleId: dismantle.id,
+          craftId: craft.id,
         },
       },
       null,
@@ -79,13 +80,13 @@ export const DismantleButton: FC<IDismantleButtonProps> = props => {
     );
   });
 
-  const handleDismantle = async () => {
+  const handleCraft = async () => {
     await metaFn();
   };
 
   return (
-    <Button onClick={handleDismantle} data-testid="ExchangeDismantleButton">
-      <FormattedMessage id="form.buttons.dismantle" />
+    <Button onClick={handleCraft} data-testid="CraftButton">
+      <FormattedMessage id="form.buttons.craft" />
     </Button>
   );
 };

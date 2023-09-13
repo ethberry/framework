@@ -844,10 +844,9 @@
         "craft": "Craft",
         "dismantle": "Dismantle",
         "genesis": "Genesis",
-        "grade": "Grade",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
+        "discrete": "Levels",
+        "price": "Base price",
+        "rarity": "Rarity",
         "rarityMultiplier": "x {multiplier}",
         "title": "ERC721 Token: {title}",
         "traits": "Traits"
@@ -877,10 +876,9 @@
       "title": "ERC998",
       "token": {
         "genesis": "Genesis",
-        "grade": "Grade",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
+        "discrete": "Levels",
+        "price": "Base price",
+        "rarity": "Rarity",
         "title": "ERC998 Token: {title}",
         "traits": "Traits"
       },

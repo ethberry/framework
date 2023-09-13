@@ -1,51 +1,32 @@
 import { FC } from "react";
+import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
-import {
-  Card,
-  Toolbar,
-  CardContent,
-  ListItemIcon,
-  Grid,
-  List,
-  ListItemButton,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import { Construction } from "@mui/icons-material";
 
-import { useCollection } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IDismantle, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
-import { formatItem } from "../../../../../utils/money";
-import { sorter } from "../../../../../utils/sorter";
-import { getDismantleMultiplier } from "../../../../../components/buttons/mechanics/recipes/dismantle/utils";
-import { DismantleInfoPopover } from "./popover";
 
-export interface IDismantleTokenPanelProps {
+// import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
+import { getDismantleMultiplier } from "./utils";
+
+interface IDismantleButtonProps {
   token: IToken;
+  dismantle: IDismantle;
 }
 
-export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
-  const { token } = props;
+export const DismantleButton: FC<IDismantleButtonProps> = props => {
+  const { token, dismantle } = props;
 
   const navigate = useNavigate();
   const settings = useSettings();
-
-  const { rows, isLoading } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/dismantle",
-    embedded: true,
-    search: {
-      templateId: token.templateId,
-    },
-  });
 
   const metaFnWithSign = useServerSignature(
     (dismantle: IDismantle, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -113,55 +94,13 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     });
   });
 
-  const handleDismantle = (dismantle: IDismantle) => {
-    return async () => await metaFn(dismantle);
+  const handleDismantle = async () => {
+    await metaFn(dismantle);
   };
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (!rows.length) {
-    return null;
-  }
-
   return (
-    <Card>
-      <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.erc721.token.dismantle" />
-          </Typography>
-          <DismantleInfoPopover />
-        </Toolbar>
-        <List>
-          {rows.map(dismantle => {
-            const { multiplier } = getDismantleMultiplier(
-              "1",
-              token.metadata,
-              dismantle.dismantleStrategy,
-              dismantle.rarityMultiplier,
-            );
-            return (
-              <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
-                <ListItemIcon>
-                  <Construction />
-                </ListItemIcon>
-                <ListItemText>
-                  <Grid container spacing={1} alignItems="flex-center">
-                    <Grid item xs={12}>
-                      {formatItem(dismantle.item)}
-                      {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.erc721.token.rarityMultiplier" values={{ multiplier }} />
-                      ) : null}
-                    </Grid>
-                  </Grid>
-                </ListItemText>
-              </ListItemButton>
-            );
-          })}
-        </List>
-      </CardContent>
-    </Card>
+    <Button onClick={handleDismantle} data-testid="ExchangeDismantleButton">
+      <FormattedMessage id="form.buttons.dismantle" />
+    </Button>
   );
 };
