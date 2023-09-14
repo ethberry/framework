@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -21,8 +12,10 @@ import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { CraftStatus, TokenType } from "@framework/types";
 
-import { CraftEditDialog } from "./edit";
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
+import { StyledListActions } from "../../../../components/common/lists/list-actions";
+import { StyledListAction } from "../../../../components/common/lists/list-action";
+import { CraftEditDialog } from "./edit";
 
 export const Craft: FC = () => {
   const {
@@ -89,16 +82,12 @@ export const Craft: FC = () => {
         <List>
           {rows.map(craft => (
             <ListItem key={craft.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.price)}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{formatItem(craft.item)}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(craft)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(craft)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListItemText sx={{ width: 0.3, px: 0.5 }}>{formatItem(craft.price)}</ListItemText>
+              <ListItemText sx={{ width: 0.3, px: 0.5 }}>{formatItem(craft.item)}</ListItemText>
+              <StyledListActions>
+                <StyledListAction onClick={handleEdit(craft)} message="form.buttons.edit" icon={Create} />
+                <StyledListAction onClick={handleDelete(craft)} message="form.buttons.delete" icon={Delete} />
+              </StyledListActions>
             </ListItem>
           ))}
         </List>

@@ -24,6 +24,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";
+import { StyledListActions } from "../../../components/common/lists/list-actions";
+import { StyledListAction } from "../../../components/common/lists/list-action";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
@@ -100,14 +102,15 @@ export const Product: FC = () => {
           {rows.map(product => (
             <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(product)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(product)} disabled={product.productStatus === ProductStatus.INACTIVE}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <StyledListActions>
+                <StyledListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
+                <StyledListAction
+                  onClick={handleDelete(product)}
+                  message="form.buttons.delete"
+                  icon={Delete}
+                  disabled={product.productStatus === ProductStatus.INACTIVE}
+                />
+              </StyledListActions>
             </ListItem>
           ))}
         </List>

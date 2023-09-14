@@ -548,6 +548,7 @@
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "finishRound": "Finish round",

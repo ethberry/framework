@@ -20,6 +20,8 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyCategory } from "../../../components/common/interfaces";
 import { EditCategoryDialog } from "./edit";
+import { StyledListAction } from "../../../components/common/lists/list-action";
+import { StyledListActions } from "../../../components/common/lists/list-actions";
 
 export const Category: FC = () => {
   const {
@@ -66,14 +68,10 @@ export const Category: FC = () => {
           {rows.map(category => (
             <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(category)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(category)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <StyledListActions>
+                <StyledListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
+                <StyledListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
+              </StyledListActions>
             </ListItem>
           ))}
         </List>

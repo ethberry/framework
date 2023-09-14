@@ -26,6 +26,8 @@ import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 import { FormRefresher } from "../../../components/forms/form-refresher";
 import { cleanUpAsset } from "../../../utils/money";
 import { AchievementLevelEditDialog } from "./edit";
+import { StyledListActions } from "../../../components/common/lists/list-actions";
+import { StyledListAction } from "../../../components/common/lists/list-action";
 
 export const emptyAchievementRule = {
   achievementType: AchievementType.MARKETPLACE,
@@ -149,14 +151,10 @@ export const AchievementLevels: FC = () => {
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(level)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(level)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <StyledListActions>
+                <StyledListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
+                <StyledListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
+              </StyledListActions>
             </ListItem>
           ))}
         </List>
