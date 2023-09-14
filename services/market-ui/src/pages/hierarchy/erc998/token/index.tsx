@@ -54,19 +54,17 @@ export const Erc998Token: FC = () => {
           <Erc998Composition token={selected} />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Grid item xs={12} sm={3}>
-            {selected.templateId ? (
-              <>
-                <CommonTokenPanel token={selected} />
-                <RarityTokenPanel token={selected} />
-                <DiscreteTokenPanel token={selected} />
-                <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
-                <GenesTokenPanel token={selected} />
-                <TraitTokenPanel token={selected} />
-                <DismantleTokenPanel token={selected} />
-              </>
-            ) : null}
-          </Grid>
+          {selected.templateId ? (
+            <>
+              <CommonTokenPanel token={selected} />
+              <RarityTokenPanel token={selected} />
+              <DiscreteTokenPanel token={selected} />
+              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <GenesTokenPanel token={selected} />
+              <TraitTokenPanel token={selected} />
+              <DismantleTokenPanel token={selected} />
+            </>
+          ) : null}
         </Grid>
       </Grid>
 
