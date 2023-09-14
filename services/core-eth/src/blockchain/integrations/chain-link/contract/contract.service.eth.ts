@@ -40,6 +40,12 @@ export class ChainLinkContractServiceEth {
     // }
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    // !!!should work only on Gemunion's BESU!!!
+    if (chainId !== 13377 && chainId !== Number(testChainId)) {
+      return;
+    }
+
     const vrfCoordinator = await this.contractService.findSystemByName({
       contractModule: ModuleType.CHAIN_LINK,
       chainId,

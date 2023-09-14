@@ -21,7 +21,7 @@
     "@gemunion/nest-js-module-winston-logdna": "3.0.11",
     "@gemunion/nest-js-utils": "4.1.6",
     "@gemunion/nest-js-validators": "4.0.15",
-    "@gemunion/nest-js-module-ethers-gcp": "1.1.0-redis-beta.1",
+    "@gemunion/nest-js-module-ethers-gcp": "1.1.0-redis-beta.2",
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.12",
     "@gemunion/types-collection": "1.5.13",
     "@liaoliaots/nestjs-redis": "9.0.5",
