@@ -139,7 +139,7 @@
     "node": ">=18"
   },
   "license": "UNLICENSED",
-  "main": "./dist/main.js",
+  "main": "./dist/index.js",
   "name": "@framework/admin-ui",
   "private": true,
   "repository": {

@@ -6,7 +6,7 @@ import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import { companyName, ns } from "@framework/constants";
+import { companyName } from "@framework/constants";
 
 import { AppModule } from "./app.module";
 
@@ -39,7 +39,6 @@ async function bootstrap(): Promise<void> {
   }
 
   const options = new DocumentBuilder()
-    .addCookieAuth(ns)
     .setTitle(companyName)
     .setDescription("API description")
     .setVersion("1.0.0")
@@ -55,7 +54,9 @@ async function bootstrap(): Promise<void> {
   const port = configService.get<number>("PORT", 3021);
 
   // Starts listening for shutdown hooks
-  app.enableShutdownHooks();
+  if (nodeEnv === "production" || nodeEnv === "staging") {
+    app.enableShutdownHooks();
+  }
 
   await app.listen(port, host, () => {
     console.info(`API server is running on http://${host}:${port}`);

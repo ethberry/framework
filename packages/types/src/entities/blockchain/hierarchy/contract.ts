@@ -152,6 +152,7 @@ export enum ContractFeatures {
   // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
+  "STABLE_COIN" = "STABLE_COIN",
 
   // EC721
   "DISCRETE" = "DISCRETE",
