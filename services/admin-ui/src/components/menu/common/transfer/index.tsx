@@ -5,7 +5,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ContractFeatures, IContract, TokenType } from "@framework/types";
+import { IContract, TokenType } from "@framework/types";
 
 import ERC20TransferABI from "../../../../abis/hierarchy/erc20/transfer/erc20.transfer.abi.json";
 import ERC721SafeTransferFromABI from "../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
@@ -22,7 +22,7 @@ export interface ITransferMenuItemProps {
 
 export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
   const {
-    contract: { address, contractFeatures, contractType, id },
+    contract: { address, contractType, id },
     disabled,
     variant,
   } = props;
@@ -77,7 +77,7 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
     <Fragment>
       <ListAction
         onClick={handleTransfer}
-        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        disabled={disabled}
         icon={Send}
         message="form.buttons.transfer"
         variant={variant}

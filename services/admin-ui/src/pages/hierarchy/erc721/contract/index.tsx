@@ -8,7 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, Erc721ContractFeatures } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc721ContractFeatures, TokenType } from "@framework/types";
 
 import { Erc721ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -128,11 +128,27 @@ export const Erc721Contract: FC = () => {
                   <UnBlacklistMenuItem contract={contract} disabled={itemDisabled} />
                   <WhitelistMenuItem contract={contract} disabled={itemDisabled} />
                   <UnWhitelistMenuItem contract={contract} disabled={itemDisabled} />
-                  <MintMenuItem contract={contract} disabled={itemDisabled} />
-                  <AllowanceMenuItem contract={contract} disabled={itemDisabled} />
-                  <TransferMenuItem contract={contract} disabled={itemDisabled} />
+                  <MintMenuItem
+                    contract={contract}
+                    disabled={
+                      itemDisabled ||
+                      contract.contractType === TokenType.NATIVE ||
+                      contract.contractFeatures.includes(ContractFeatures.GENES)
+                    }
+                  />
+                  <AllowanceMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
+                  <TransferMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
                   <SnapshotMenuItem contract={contract} disabled={itemDisabled} />
-                  <RoyaltyMenuItem contract={contract} disabled={itemDisabled} />
+                  <RoyaltyMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
                 </ListActions>
               </ListItem>
             );

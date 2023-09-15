@@ -55,7 +55,7 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
       <ListAction
         onClick={handleRoyalty}
         icon={PaidOutlined}
-        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        disabled={disabled}
         message="form.buttons.royalty"
         variant={variant}
       />
