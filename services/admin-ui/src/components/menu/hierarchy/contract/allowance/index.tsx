@@ -11,18 +11,19 @@ import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.appr
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
-import { ListActionVariant } from "../../../../common/lists/interface";
-import { StyledListAction } from "../../../../common/lists/list-action";
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures, contractType, decimals },
+    disabled,
     variant,
   } = props;
 
@@ -59,9 +60,9 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <StyledListAction
+      <ListAction
         onClick={handleAllowance}
-        disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         icon={AddReaction}
         message="form.buttons.allowance"
         variant={variant}

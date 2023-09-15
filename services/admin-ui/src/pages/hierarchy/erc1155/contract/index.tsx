@@ -11,13 +11,21 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc1155ContractFeatures } from "@framework/types";
 
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { Erc1155ContractEditDialog } from "./edit";
-import { StyledListActions } from "../../../../components/common/lists/list-actions";
-import { StyledListAction } from "../../../../components/common/lists/list-action";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
 import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
+import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
+import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
+import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
+import { TransferMenuItem } from "../../../../components/menu/common/transfer";
+import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
+import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
   const {
@@ -96,28 +104,37 @@ export const Erc1155Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => (
-            <ListItem key={contract.id}>
-              <ListItemText>{contract.title}</ListItemText>
-              <StyledListActions
-                itemsVisibleOnMobile={3}
-                disabled={
-                  contract.contractStatus === ContractStatus.INACTIVE ||
-                  contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
-                }
-              >
-                <StyledListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
-                <StyledListAction
-                  onClick={handleDelete(contract)}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  icon={Delete}
-                  message="form.buttons.delete"
-                />
-                <RoyaltyMenuItem contract={contract} />
-                <AllowanceMenuItem contract={contract} />
-              </StyledListActions>
-            </ListItem>
-          ))}
+          {rows.map(contract => {
+            const itemDisabled =
+              contract.contractStatus === ContractStatus.INACTIVE ||
+              contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
+            return (
+              <ListItem key={contract.id}>
+                <ListItemText>{contract.title}</ListItemText>
+                <ListActions>
+                  <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                    icon={Delete}
+                    message="form.buttons.delete"
+                  />
+                  <GrantRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <RevokeRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <RenounceRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <BlacklistMenuItem contract={contract} disabled={itemDisabled} />
+                  <UnBlacklistMenuItem contract={contract} disabled={itemDisabled} />
+                  <WhitelistMenuItem contract={contract} disabled={itemDisabled} />
+                  <UnWhitelistMenuItem contract={contract} disabled={itemDisabled} />
+                  <MintMenuItem contract={contract} disabled={itemDisabled} />
+                  <AllowanceMenuItem contract={contract} disabled={itemDisabled} />
+                  <TransferMenuItem contract={contract} disabled={itemDisabled} />
+                  <SnapshotMenuItem contract={contract} disabled={itemDisabled} />
+                  <RoyaltyMenuItem contract={contract} disabled={itemDisabled} />
+                </ListActions>
+              </ListItem>
+            );
+          })}
         </List>
       </ProgressOverlay>
 

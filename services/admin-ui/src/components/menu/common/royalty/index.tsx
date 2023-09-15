@@ -9,18 +9,19 @@ import { ContractFeatures, TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
-import { StyledListAction } from "../../../common/lists/list-action";
-import { ListActionVariant } from "../../../common/lists/interface";
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures, royalty, contractType },
+    disabled,
     variant,
   } = props;
 
@@ -51,10 +52,10 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <StyledListAction
+      <ListAction
         onClick={handleRoyalty}
         icon={PaidOutlined}
-        disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         message="form.buttons.royalty"
         variant={variant}
       />

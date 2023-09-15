@@ -23,6 +23,7 @@ import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/ty
 
 import { AchievementRuleEditDialog } from "./edit";
 
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const AchievementRules: FC = () => {
@@ -85,11 +86,9 @@ export const AchievementRules: FC = () => {
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

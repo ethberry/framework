@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ICategory } from "@framework/types";
@@ -18,10 +9,9 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { emptyCategory } from "../../../components/common/interfaces";
 import { EditCategoryDialog } from "./edit";
-import { StyledListAction } from "../../../components/common/lists/list-action";
-import { StyledListActions } from "../../../components/common/lists/list-actions";
 
 export const Category: FC = () => {
   const {
@@ -68,10 +58,10 @@ export const Category: FC = () => {
           {rows.map(category => (
             <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
-              <StyledListActions>
-                <StyledListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
-                <StyledListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
-              </StyledListActions>
+              <ListActions>
+                <ListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

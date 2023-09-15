@@ -1,6 +1,4 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -13,15 +11,20 @@ import ERC20TransferABI from "../../../../abis/hierarchy/erc20/transfer/erc20.tr
 import ERC721SafeTransferFromABI from "../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
 import ERC1155SafeTransferFromABI from "../../../../abis/hierarchy/erc1155/transfer/erc1155.safeTransferFrom.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { ITransferDto, TransferDialog } from "./dialog";
 
 export interface ITransferMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures, contractType, id },
+    disabled,
+    variant,
   } = props;
 
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
@@ -72,14 +75,13 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleTransfer} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
-        <ListItemIcon>
-          <Send />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.transfer" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleTransfer}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        icon={Send}
+        message="form.buttons.transfer"
+        variant={variant}
+      />
       <TransferDialog
         onConfirm={handleTransferConfirm}
         onCancel={handleTransferCancel}

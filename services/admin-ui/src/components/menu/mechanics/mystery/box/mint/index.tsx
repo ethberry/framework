@@ -1,9 +1,7 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import type { IMysteryBox } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
@@ -12,15 +10,20 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   mystery: IMysteryBox;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
     mystery: { template },
+    disabled,
+    variant,
   } = props;
 
   const { profile } = useUser<IUser>();
@@ -58,14 +61,13 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleMintToken}>
-        <ListItemIcon>
-          <AddCircleOutline />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.mintToken" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleMintToken}
+        icon={AddCircleOutline}
+        message="form.buttons.mintToken"
+        disabled={disabled}
+        variant={variant}
+      />
       <MintMysteryboxDialog
         onCancel={handleMintTokenCancel}
         onConfirm={handleMintTokenConfirmed}

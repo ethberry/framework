@@ -1,21 +1,22 @@
 import { Children, cloneElement, FC, PropsWithChildren, ReactElement } from "react";
-import { Grid, Theme, useMediaQuery } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 
 import { ListActionVariant } from "../interface";
-import type { IStyledListActionProps } from "../list-action";
-import { StyledListMenu } from "../list-menu";
+import type { IListActionProps } from "../list-action";
+import { ListMenu } from "../list-menu";
+import { Root } from "./styled";
 
-export interface IStyledListActionsProps {
+export interface IListActionsProps {
   dataTestId?: string;
   disabled?: boolean;
   itemsVisibleOnMobile?: number;
   itemsVisibleOnDesktop?: number;
 }
 
-export const StyledListActions: FC<PropsWithChildren<IStyledListActionsProps>> = props => {
+export const ListActions: FC<PropsWithChildren<IListActionsProps>> = props => {
   const { children, dataTestId, disabled, itemsVisibleOnMobile = 1, itemsVisibleOnDesktop = 3 } = props;
 
-  const actions = Children.toArray(children) as Array<ReactElement<IStyledListActionProps>>;
+  const actions = Children.toArray(children) as Array<ReactElement<IListActionProps>>;
 
   const actionsAmount = actions.length;
 
@@ -26,20 +27,18 @@ export const StyledListActions: FC<PropsWithChildren<IStyledListActionsProps>> =
     if (actionsAmount > itemsQuantity) {
       const visibleActions = Children.map(
         actions.slice(0, itemsQuantity - 1),
-        (action: ReactElement<IStyledListActionProps>) =>
-          cloneElement(action, { variant: ListActionVariant.iconButton }),
+        (action: ReactElement<IListActionProps>) => cloneElement(action, { variant: ListActionVariant.iconButton }),
       );
-      const hiddenActions = Children.map(
-        actions.slice(itemsQuantity - 1),
-        (action: ReactElement<IStyledListActionProps>) => cloneElement(action, { variant: ListActionVariant.menuItem }),
+      const hiddenActions = Children.map(actions.slice(itemsQuantity - 1), (action: ReactElement<IListActionProps>) =>
+        cloneElement(action, { variant: ListActionVariant.menuItem }),
       );
 
       return (
         <>
           {visibleActions}
-          <StyledListMenu disabled={disabled} dataTestId={dataTestId}>
+          <ListMenu disabled={disabled} dataTestId={dataTestId}>
             {hiddenActions}
-          </StyledListMenu>
+          </ListMenu>
         </>
       );
     }
@@ -51,9 +50,5 @@ export const StyledListActions: FC<PropsWithChildren<IStyledListActionsProps>> =
     return null;
   }
 
-  return (
-    <Grid item sm={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
-      {renderActions()}
-    </Grid>
-  );
+  return <Root>{renderActions()}</Root>;
 };

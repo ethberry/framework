@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -19,8 +10,20 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
-import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
+import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
+import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
+import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
+import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
+import { TransferMenuItem } from "../../../../components/menu/common/transfer";
+import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
+import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
 import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
@@ -88,18 +91,27 @@ export const NativeContract: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <ContractActionsMenu contract={contract} disabled={true} />
-              </ListItemSecondaryAction>
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleMenuItem contract={contract} disabled={true} />
+                <RevokeRoleMenuItem contract={contract} disabled={true} />
+                <RenounceRoleMenuItem contract={contract} disabled={true} />
+                <BlacklistMenuItem contract={contract} disabled={true} />
+                <UnBlacklistMenuItem contract={contract} disabled={true} />
+                <WhitelistMenuItem contract={contract} disabled={true} />
+                <UnWhitelistMenuItem contract={contract} disabled={true} />
+                <MintMenuItem contract={contract} disabled={true} />
+                <AllowanceMenuItem contract={contract} disabled={true} />
+                <TransferMenuItem contract={contract} disabled={true} />
+                <SnapshotMenuItem contract={contract} disabled={true} />
+                <RoyaltyMenuItem contract={contract} disabled={true} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

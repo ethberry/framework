@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -23,9 +14,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditProductDialog } from "./edit";
-import { StyledListActions } from "../../../components/common/lists/list-actions";
-import { StyledListAction } from "../../../components/common/lists/list-action";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
@@ -102,15 +92,15 @@ export const Product: FC = () => {
           {rows.map(product => (
             <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
-              <StyledListActions>
-                <StyledListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
-                <StyledListAction
+              <ListActions>
+                <ListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
+                <ListAction
                   onClick={handleDelete(product)}
                   message="form.buttons.delete"
                   icon={Delete}
                   disabled={product.productStatus === ProductStatus.INACTIVE}
                 />
-              </StyledListActions>
+              </ListActions>
             </ListItem>
           ))}
         </List>

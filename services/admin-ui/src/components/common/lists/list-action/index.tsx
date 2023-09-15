@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListActionVariant } from "../interface";
 
-export interface IStyledListActionProps {
+export interface IListActionProps {
   icon: any;
   message: string;
   onClick: () => void;
@@ -23,7 +23,7 @@ export interface IStyledListActionProps {
   buttonVariant?: OverridableStringUnion<"text" | "outlined" | "contained", ButtonPropsVariantOverrides>;
 }
 
-export const StyledListAction: FC<PropsWithChildren<IStyledListActionProps>> = props => {
+export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
   const {
     icon: Icon,
     variant = ListActionVariant.iconButton,

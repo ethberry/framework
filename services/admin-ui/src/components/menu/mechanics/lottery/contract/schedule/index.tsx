@@ -1,23 +1,26 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { ManageHistory } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 
 import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
+import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { LotteryScheduleDialog } from "./dialog";
 
 export interface ILotteryScheduleFullMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
   refreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = props => {
   const {
     contract: { id, parameters },
+    disabled,
     refreshPage,
+    variant,
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
@@ -47,14 +50,14 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = pr
 
   return (
     <Fragment>
-      <MenuItem onClick={handleSchedule} data-testid="LotteryScheduleButton">
-        <ListItemIcon>
-          <ManageHistory fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.schedule" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleSchedule}
+        dataTestId="LotteryScheduleButton"
+        icon={ManageHistory}
+        message="form.buttons.schedule"
+        disabled={disabled}
+        variant={variant}
+      />
       {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
         <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
       ) : (

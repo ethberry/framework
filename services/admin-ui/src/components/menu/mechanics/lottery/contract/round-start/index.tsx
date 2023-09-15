@@ -1,8 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PlayCircleOutline } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -11,15 +9,21 @@ import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
+
+import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
 export interface ILotteryRoundStartMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = props => {
   const {
     contract: { address, id },
+    disabled,
+    variant,
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
@@ -62,14 +66,14 @@ export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = pr
 
   return (
     <Fragment>
-      <MenuItem onClick={handleStartRound} data-testid="LotteryRoundStartButton">
-        <ListItemIcon>
-          <PlayCircleOutline fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="pages.lottery.rounds.start" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleStartRound}
+        dataTestId="LotteryRoundStartButton"
+        icon={PlayCircleOutline}
+        message="pages.lottery.rounds.start"
+        disabled={disabled}
+        variant={variant}
+      />
       <LotteryStartRoundDialog
         onConfirm={handleStartRoundConfirm}
         onCancel={handleStartRoundCancel}

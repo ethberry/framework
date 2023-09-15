@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -23,11 +14,10 @@ import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { FormRefresher } from "../../../components/forms/form-refresher";
 import { cleanUpAsset } from "../../../utils/money";
 import { AchievementLevelEditDialog } from "./edit";
-import { StyledListActions } from "../../../components/common/lists/list-actions";
-import { StyledListAction } from "../../../components/common/lists/list-action";
 
 export const emptyAchievementRule = {
   achievementType: AchievementType.MARKETPLACE,
@@ -151,10 +141,10 @@ export const AchievementLevels: FC = () => {
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>
-              <StyledListActions>
-                <StyledListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
-                <StyledListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
-              </StyledListActions>
+              <ListActions>
+                <ListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

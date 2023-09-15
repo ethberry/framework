@@ -1,8 +1,6 @@
 import { FC } from "react";
-import { Web3ContextType } from "@web3-react/core";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { StopCircleOutlined } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -11,13 +9,19 @@ import { NodeEnv } from "@framework/types";
 
 import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../../common/lists";
+
 export interface IRaffleRoundEndMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const RaffleRoundEndMenuItem: FC<IRaffleRoundEndMenuItemProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
@@ -34,13 +38,13 @@ export const RaffleRoundEndMenuItem: FC<IRaffleRoundEndMenuItemProps> = props =>
   }
 
   return (
-    <MenuItem onClick={handleEndRound} data-testid="RaffleRoundEndButton">
-      <ListItemIcon>
-        <StopCircleOutlined fontSize="small" />
-      </ListItemIcon>
-      <Typography variant="inherit">
-        <FormattedMessage id="pages.raffle.rounds.end" />
-      </Typography>
-    </MenuItem>
+    <ListAction
+      onClick={handleEndRound}
+      dataTestId="RaffleRoundEndButton"
+      icon={StopCircleOutlined}
+      message="pages.raffle.rounds.end"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

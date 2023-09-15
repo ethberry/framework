@@ -2,12 +2,12 @@ import { FC, Fragment, MouseEvent, PropsWithChildren, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-export interface IStyledListMenuProps {
+export interface IListMenuProps {
   dataTestId?: string;
   disabled?: boolean;
 }
 
-export const StyledListMenu: FC<PropsWithChildren<IStyledListMenuProps>> = props => {
+export const ListMenu: FC<PropsWithChildren<IListMenuProps>> = props => {
   const { children, dataTestId, disabled } = props;
 
   const [anchor, setAnchor] = useState<Element | null>(null);
