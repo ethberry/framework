@@ -3,14 +3,13 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  ContractType,
+import { ContractType, LotteryEventType } from "@framework/types";
+import type {
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
   IRoundFinalizedEvent,
   IRoundStartedEvent,
-  LotteryEventType,
 } from "@framework/types";
 
 import { LotteryRoundServiceEth } from "./round.service.eth";
