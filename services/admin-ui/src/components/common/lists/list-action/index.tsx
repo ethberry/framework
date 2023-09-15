@@ -1,5 +1,14 @@
 import { FC, PropsWithChildren } from "react";
-import { Button, IconButton, ListItemIcon, MenuItem, Tooltip, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonPropsVariantOverrides,
+  IconButton,
+  ListItemIcon,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { OverridableStringUnion } from "@mui/types";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListActionVariant } from "../interface";
@@ -11,17 +20,32 @@ export interface IStyledListActionProps {
   disabled?: boolean;
   variant?: ListActionVariant;
   dataTestId?: string;
+  buttonVariant?: OverridableStringUnion<"text" | "outlined" | "contained", ButtonPropsVariantOverrides>;
 }
 
 export const StyledListAction: FC<PropsWithChildren<IStyledListActionProps>> = props => {
-  const { icon: Icon, variant = ListActionVariant.iconButton, dataTestId, message, disabled, onClick } = props;
+  const {
+    icon: Icon,
+    variant = ListActionVariant.iconButton,
+    buttonVariant = "outlined",
+    dataTestId,
+    message,
+    disabled,
+    onClick,
+  } = props;
 
   const { formatMessage } = useIntl();
 
   switch (variant) {
     case ListActionVariant.button:
       return (
-        <Button variant="outlined" onClick={onClick} disabled={disabled} startIcon={<Icon />} data-testid={dataTestId}>
+        <Button
+          variant={buttonVariant ?? ""}
+          onClick={onClick}
+          disabled={disabled}
+          startIcon={<Icon />}
+          data-testid={dataTestId}
+        >
           <FormattedMessage id={message} />
         </Button>
       );

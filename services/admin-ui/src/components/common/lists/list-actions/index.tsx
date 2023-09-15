@@ -2,7 +2,7 @@ import { Children, cloneElement, FC, PropsWithChildren, ReactElement } from "rea
 import { Grid, Theme, useMediaQuery } from "@mui/material";
 
 import { ListActionVariant } from "../interface";
-import { IStyledListActionProps } from "../list-action";
+import type { IStyledListActionProps } from "../list-action";
 import { StyledListMenu } from "../list-menu";
 
 export interface IStyledListActionsProps {
