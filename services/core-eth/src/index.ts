@@ -6,14 +6,13 @@ import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
+import { companyName } from "@framework/constants";
 import { DiscoveredMethodWithMeta, DiscoveryService } from "@golevelup/nestjs-discovery";
 import { PATTERN_METADATA } from "@nestjs/microservices/constants";
 import { transformPatternToRoute } from "@nestjs/microservices/utils";
 import { EMPTY, from, Observable } from "rxjs";
 import Queue from "bee-queue";
 import { Log } from "ethers";
-
-import { companyName, ns } from "@framework/constants";
 
 import { AppModule } from "./app.module";
 
@@ -67,7 +66,6 @@ async function bootstrap(): Promise<void> {
   }
 
   const options = new DocumentBuilder()
-    .addCookieAuth(ns)
     .setTitle(companyName)
     .setDescription("API description")
     .setVersion("1.0.0")
