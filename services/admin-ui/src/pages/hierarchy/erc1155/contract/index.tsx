@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -23,6 +14,10 @@ import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc1155ContractEditDialog } from "./edit";
+import { StyledListActions } from "../../../../components/common/lists/list-actions";
+import { StyledListAction } from "../../../../components/common/lists/list-action";
+import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
+import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
 
 export const Erc1155Contract: FC = () => {
   const {
@@ -104,24 +99,23 @@ export const Erc1155Contract: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <StyledListActions
+                itemsVisibleOnMobile={3}
+                disabled={
+                  contract.contractStatus === ContractStatus.INACTIVE ||
+                  contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+                }
+              >
+                <StyledListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <StyledListAction
                   onClick={handleDelete(contract)}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <ContractActionsMenu
-                  contract={contract}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
-                  }
+                  icon={Delete}
+                  message="form.buttons.delete"
                 />
-              </ListItemSecondaryAction>
+                <RoyaltyMenuItem contract={contract} />
+                <AllowanceMenuItem contract={contract} />
+              </StyledListActions>
             </ListItem>
           ))}
         </List>

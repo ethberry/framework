@@ -1,6 +1,7 @@
 import { Children, cloneElement, FC, PropsWithChildren, ReactElement } from "react";
 import { Grid, Theme, useMediaQuery } from "@mui/material";
 
+import { ListActionVariant } from "../interface";
 import { IStyledListActionProps } from "../list-action";
 import { StyledListMenu } from "../list-menu";
 
@@ -25,11 +26,12 @@ export const StyledListActions: FC<PropsWithChildren<IStyledListActionsProps>> =
     if (actionsAmount > itemsQuantity) {
       const visibleActions = Children.map(
         actions.slice(0, itemsQuantity - 1),
-        (action: ReactElement<IStyledListActionProps>) => cloneElement(action, { isMenuItem: false }),
+        (action: ReactElement<IStyledListActionProps>) =>
+          cloneElement(action, { variant: ListActionVariant.iconButton }),
       );
       const hiddenActions = Children.map(
         actions.slice(itemsQuantity - 1),
-        (action: ReactElement<IStyledListActionProps>) => cloneElement(action, { isMenuItem: true }),
+        (action: ReactElement<IStyledListActionProps>) => cloneElement(action, { variant: ListActionVariant.menuItem }),
       );
 
       return (

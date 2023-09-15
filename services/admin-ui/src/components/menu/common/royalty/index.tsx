@@ -1,6 +1,4 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -11,15 +9,19 @@ import { ContractFeatures, TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
+import { StyledListAction } from "../../../common/lists/list-action";
+import { ListActionVariant } from "../../../common/lists/interface";
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyMenuItemProps {
   contract: IContract;
+  variant?: ListActionVariant;
 }
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures, royalty, contractType },
+    variant,
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
@@ -49,14 +51,13 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleRoyalty} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
-        <ListItemIcon>
-          <PaidOutlined fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.royalty" />
-        </Typography>
-      </MenuItem>
+      <StyledListAction
+        onClick={handleRoyalty}
+        icon={PaidOutlined}
+        disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        message="form.buttons.royalty"
+        variant={variant}
+      />
       <RoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}

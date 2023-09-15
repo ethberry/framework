@@ -1,30 +1,49 @@
 import { FC, PropsWithChildren } from "react";
-import { IconButton, ListItemIcon, MenuItem, Typography } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Button, IconButton, ListItemIcon, MenuItem, Tooltip, Typography } from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { ListActionVariant } from "../interface";
 
 export interface IStyledListActionProps {
   icon: any;
   message: string;
   onClick: () => void;
   disabled?: boolean;
-  isMenuItem?: boolean;
+  variant?: ListActionVariant;
+  dataTestId?: string;
 }
 
 export const StyledListAction: FC<PropsWithChildren<IStyledListActionProps>> = props => {
-  const { icon: Icon, isMenuItem, message, disabled, onClick } = props;
+  const { icon: Icon, variant = ListActionVariant.iconButton, dataTestId, message, disabled, onClick } = props;
 
-  return isMenuItem ? (
-    <MenuItem onClick={onClick} disabled={disabled}>
-      <ListItemIcon>
-        <Icon />
-      </ListItemIcon>
-      <Typography variant="inherit">
-        <FormattedMessage id={message} />
-      </Typography>
-    </MenuItem>
-  ) : (
-    <IconButton onClick={onClick} disabled={disabled}>
-      <Icon />
-    </IconButton>
-  );
+  const { formatMessage } = useIntl();
+
+  switch (variant) {
+    case ListActionVariant.button:
+      return (
+        <Button variant="outlined" onClick={onClick} disabled={disabled} startIcon={<Icon />} data-testid={dataTestId}>
+          <FormattedMessage id={message} />
+        </Button>
+      );
+    case ListActionVariant.menuItem:
+      return (
+        <MenuItem onClick={onClick} disabled={disabled} data-testid={dataTestId}>
+          <ListItemIcon>
+            <Icon />
+          </ListItemIcon>
+          <Typography variant="inherit">
+            <FormattedMessage id={message} />
+          </Typography>
+        </MenuItem>
+      );
+    case ListActionVariant.iconButton:
+    default:
+      return (
+        <Tooltip title={formatMessage({ id: message })}>
+          <IconButton onClick={onClick} disabled={disabled} data-testid={dataTestId}>
+            <Icon />
+          </IconButton>
+        </Tooltip>
+      );
+  }
 };
