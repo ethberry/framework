@@ -72,8 +72,8 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
-            {rows.map((access, i) => (
-              <ListItem key={i}>
+            {rows.map(access => (
+              <ListItem key={access.id}>
                 <ListItemText>
                   {access.account_contract?.title || access.account}
                   {/* <br /> */}

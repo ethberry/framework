@@ -39,7 +39,14 @@ contract ERC998BlacklistDiscrete is IERC721Discrete, ERC998Blacklist {
     _safeMint(to, tokenId);
   }
 
+  /**
+   * @dev Validates and upgrades attribute
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    // TEMPLATE_ID refers to database id
     if (attribute == TEMPLATE_ID) {
       revert ProtectedAttribute(attribute);
     }
@@ -47,6 +54,12 @@ contract ERC998BlacklistDiscrete is IERC721Discrete, ERC998Blacklist {
     return _upgrade(tokenId, attribute);
   }
 
+  /**
+   * @dev Does actual upgrade
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (bool) {
     _requireMinted(tokenId);
     uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
@@ -56,6 +69,9 @@ contract ERC998BlacklistDiscrete is IERC721Discrete, ERC998Blacklist {
     return true;
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC998Blacklist) returns (bool) {
     return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
   }

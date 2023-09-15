@@ -15,7 +15,7 @@ export class ProductItemService {
     private readonly productItemEntityRepository: Repository<ProductItemEntity>,
   ) {}
 
-  public async search(dto: IProductItemSearchDto): Promise<[Array<ProductItemEntity>, number]> {
+  public async search(dto: Partial<IProductItemSearchDto>): Promise<[Array<ProductItemEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product_item");
@@ -92,7 +92,7 @@ export class ProductItemService {
 
   public findAll(
     where: FindOptionsWhere<ProductItemEntity>,
-    options?: FindOneOptions<ProductItemEntity>,
+    options?: FindManyOptions<ProductItemEntity>,
   ): Promise<Array<ProductItemEntity>> {
     return this.productItemEntityRepository.find({ where, ...options });
   }

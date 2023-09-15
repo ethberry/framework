@@ -23,18 +23,27 @@ export const TemplateList: FC<ITemplateListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<ITemplate, ITemplateSearchDto>({
-      baseUrl: "/templates",
-      embedded,
-      search: {
-        query: "",
-        contractIds: embedded ? [~~id!] : [],
-        minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.mul(1000).toString(),
-      },
-      redirect: (_baseUrl, search) => `/marketplace/templates?${stringify(search)}`,
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleToggleFilters,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+  } = useCollection<ITemplate, ITemplateSearchDto>({
+    baseUrl: "/templates",
+    embedded,
+    search: {
+      query: "",
+      contractIds: embedded ? [~~id!] : [],
+      minPrice: constants.Zero.toString(),
+      maxPrice: constants.WeiPerEther.mul(1000).toString(),
+    },
+    redirect: (_baseUrl, search) => `/marketplace/templates?${stringify(search)}`,
+  });
 
   return (
     <Fragment>
@@ -55,6 +64,7 @@ export const TemplateList: FC<ITemplateListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
         embedded={embedded}
       />
 

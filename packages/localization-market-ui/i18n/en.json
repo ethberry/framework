@@ -1,9 +1,9 @@
 {
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
-    "approveCraft": "Please approve ingredients to Exchange before crafting",
-    "approveDismantle": "Please approve token to Exchange before dismantle",
+    "approve": "Please approve ingredients to Exchange before using this mechanic",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "redirect": "You will be redirected in a moment",
     "uncaughtError": "Uncaught error happened"
   },
   "components": {
@@ -832,7 +832,7 @@
         "title": "ERC721 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC721 Template: {title}"
       },
       "templates": {
@@ -840,16 +840,7 @@
       },
       "title": "ERC721",
       "token": {
-        "craft": "Craft",
-        "dismantle": "Dismantle",
-        "genesis": "Genesis",
-        "grade": "Grade",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
-        "rarityMultiplier": "x {multiplier}",
-        "title": "ERC721 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC721 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -867,7 +858,7 @@
         "title": "ERC998 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC998 Template: {title}"
       },
       "templates": {
@@ -875,13 +866,7 @@
       },
       "title": "ERC998",
       "token": {
-        "genesis": "Genesis",
-        "grade": "Grade",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
-        "title": "ERC998 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC998 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -997,7 +982,7 @@
     "mystery": {
       "box": {
         "content": "Mystery Box Content",
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "Mystery Box: {title}"
       },
       "boxes": {
@@ -1125,7 +1110,16 @@
     },
     "token": {
       "balanceTitle": "Balance:",
-      "priceTitle": "Base price:"
+      "craft": "Craft",
+      "discrete": "Levels",
+      "dismantle": "Dismantle",
+      "genesis": "Genesis",
+      "mystery": "Mystery box",
+      "price": "Base price",
+      "priceTitle": "Base price:",
+      "rarity": "Rarity",
+      "rarityMultiplier": "x {multiplier}",
+      "traits": "Traits"
     },
     "tokens": {
       "title": "My tokens"

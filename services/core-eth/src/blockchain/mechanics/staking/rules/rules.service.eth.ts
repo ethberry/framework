@@ -1,4 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { Log } from "ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -15,6 +17,7 @@ import type {
   IStakingRuleUpdateEvent,
 } from "@framework/types";
 import { DurationUnit, StakingRuleStatus } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -28,6 +31,7 @@ export class StakingRulesServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
     private readonly stakingRulesService: StakingRulesService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
@@ -90,7 +94,9 @@ export class StakingRulesServiceEth {
       });
     }
 
-    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -111,6 +117,7 @@ export class StakingRulesServiceEth {
       stakingRuleStatus,
       externalId: ruleId,
       contractId: contractEntity.id,
+      contract: contractEntity,
     });
 
     await this.notificatorService.stakingRuleCreated({

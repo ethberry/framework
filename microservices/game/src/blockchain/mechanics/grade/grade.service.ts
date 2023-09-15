@@ -40,11 +40,7 @@ export class GradeService {
   public async findOneByToken(dto: IGradeSearchDto, merchantEntity: MerchantEntity): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
-    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
-
-    if (!tokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
+    const tokenEntity = await this.tokenService.findOneWithRelationsOrFail({ id: tokenId }, merchantEntity);
 
     return this.findOneWithRelations(
       {

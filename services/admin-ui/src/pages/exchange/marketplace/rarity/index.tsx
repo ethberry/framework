@@ -96,9 +96,9 @@ export const MarketplaceRarity: FC = () => {
             </TableHead>
             <TableBody>
               {Object.values(TokenRarity).map((e, i) => {
-                const row = rows.find(e => e.attribute === i);
+                const row = rows.find(row => row.attribute === i);
                 return (
-                  <TableRow key={i}>
+                  <TableRow key={e}>
                     <TableCell align="left">
                       <Link
                         component={RouterLink}

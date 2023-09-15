@@ -347,15 +347,31 @@ contract Ponzi is
   }
 
   // PAUSE
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
 
-  // INTERFACE
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, TopUp, Wallet) returns (bool) {

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ModuleType, TokenType } from "@framework/types";
 
@@ -24,7 +24,7 @@ export class RatePlanService {
 
   public findAll(
     where: FindOptionsWhere<RatePlanEntity>,
-    options?: FindOneOptions<RatePlanEntity>,
+    options?: FindManyOptions<RatePlanEntity>,
   ): Promise<[Array<RatePlanEntity>, number]> {
     return this.ratePlanEntityRepository.findAndCount({ where, ...options });
   }

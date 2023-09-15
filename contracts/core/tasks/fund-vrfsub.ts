@@ -1,4 +1,5 @@
 import { task } from "hardhat/config";
+import { toBeHex } from "ethers";
 
 task("fund-vrf-sub", "Funds vRF subscription with LINK")
   .addParam("vrf", "The address of VRF con")
@@ -37,8 +38,7 @@ task("fund-vrf-sub", "Funds vRF subscription with LINK")
         linkContractAddr = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709";
     }
     // Fund with 1 LINK token
-    const amount = hre.web3.utils.toHex(1e18);
-
+    const amount = toBeHex(1e18);
     // Get signer information
     const [owner] = await hre.ethers.getSigners();
 

@@ -109,9 +109,10 @@ export const StakingRules: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rule, i) => (
-            <ListItem key={i} disableGutters>
-              <ListItemText>{rule.title}</ListItemText>
+          {rows.map(rule => (
+            <ListItem key={rule.id} disableGutters>
+              <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>

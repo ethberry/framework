@@ -22,17 +22,26 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<ITemplate, ITemplateSearchDto>({
-      baseUrl: "/erc998/templates",
-      embedded,
-      search: {
-        query: "",
-        contractIds: embedded ? [~~id!] : [],
-        minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.mul(1000).toString(),
-      },
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleToggleFilters,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+  } = useCollection<ITemplate, ITemplateSearchDto>({
+    baseUrl: "/erc998/templates",
+    embedded,
+    search: {
+      query: "",
+      contractIds: embedded ? [~~id!] : [],
+      minPrice: constants.Zero.toString(),
+      maxPrice: constants.WeiPerEther.mul(1000).toString(),
+    },
+  });
 
   return (
     <Fragment>
@@ -53,6 +62,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
         embedded={embedded}
       />
 

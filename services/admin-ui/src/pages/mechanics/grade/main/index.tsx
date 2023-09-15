@@ -99,8 +99,8 @@ export const Grade: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((grade, i) => (
-            <ListItem key={i}>
+          {rows.map(grade => (
+            <ListItem key={grade.id}>
               <ListItemText>
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>

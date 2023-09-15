@@ -107,8 +107,8 @@ export const PonziRules: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rule, i) => (
-            <ListItem key={i}>
+          {rows.map(rule => (
+            <ListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
                 <PonziAllowanceButton rule={rule} />

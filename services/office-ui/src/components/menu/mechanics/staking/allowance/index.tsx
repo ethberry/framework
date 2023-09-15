@@ -81,14 +81,14 @@ export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
         onConfirm={handleStakingAllowanceConfirm}
         open={isStakingAllowanceDialogOpen}
         initialValues={{
+          tokenType: TokenType.ERC20,
+          contractId: 0,
           amount: "0",
           contract: {
             address: "",
             contractType: TokenType.ERC20,
-            tokenType: TokenType.ERC20,
             decimals: 18,
           },
-          contractId: 0,
         }}
       />
     </Fragment>

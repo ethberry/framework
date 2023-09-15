@@ -36,8 +36,8 @@ export const TokenTraitsView: FC<ITokenMetadataView> = props => {
 
   return (
     <Grid container>
-      {Object.entries(result).map(([key, value], i) => (
-        <Grid key={i} container>
+      {Object.entries(result).map(([key, value]) => (
+        <Grid key={key} container>
           <Grid xs={6} item>
             <FormattedMessage id={`enums.geneName.${key}`} />
           </Grid>

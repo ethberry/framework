@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AccessControlEntity } from "./access-control.entity";
@@ -26,7 +26,7 @@ export class AccessControlService {
 
   public findAll(
     where: FindOptionsWhere<AccessControlEntity>,
-    options?: FindOneOptions<AccessControlEntity>,
+    options?: FindManyOptions<AccessControlEntity>,
   ): Promise<Array<AccessControlEntity>> {
     return this.accessControlEntityRepository.find({ where, ...options });
   }

@@ -43,14 +43,4 @@ export class VestingContractDeployDto implements IVestingContractDeployDto {
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(Max(10000, { message: "rangeOverflow" }))
   public monthlyRelease: number;
-
-  // TODO add validation (user.id + claim.id = 0)
-  @decorate(
-    ApiProperty({
-      type: String,
-    }),
-  )
-  @decorate(IsString({ message: "typeMismatch" }))
-  // @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
-  public externalId: string;
 }

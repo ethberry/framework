@@ -31,6 +31,7 @@ export const WaitListJoinDialog: FC<IWaitListJoinDialogProps> = props => {
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.join"

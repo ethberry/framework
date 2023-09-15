@@ -19,4 +19,5 @@ export class CraftSearchDto extends SearchDto implements ICraftSearchDto {
   public craftStatus: Array<CraftStatus>;
 
   public templateId: number;
+  public contractId: number;
 }

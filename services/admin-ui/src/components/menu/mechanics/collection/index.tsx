@@ -58,6 +58,7 @@ export const CollectionActionsMenu: FC<ICollectionActionsMenu> = props => {
         <GrantRoleMenuItem contract={contract} />
         <RevokeRoleMenuItem contract={contract} />
         <RenounceRoleMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
         <AllowanceMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
         <Divider sx={{ m: 2 }} />

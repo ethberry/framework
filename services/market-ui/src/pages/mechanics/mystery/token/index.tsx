@@ -1,17 +1,15 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import type { ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import type { ITemplate, IToken } from "@framework/types";
 
-import { Erc721TransferButton, MysteryWrapperUnpackButton, TokenSellButton } from "../../../../components/buttons";
-import { MysteryBoxContent } from "../../../../components/tables/mysterybox-content";
 import { TokenHistory } from "../../../../components/common/token-history";
-import { formatPrice } from "../../../../utils/money";
+import { CommonTokenPanel } from "../../../hierarchy/erc721/token/common-token-panel";
+import { MysteryTokenPanel } from "./mystery-token-panel";
 
 export const MysteryBoxToken: FC = () => {
   const { selected, handleRefreshPage, isLoading } = useCollection<IToken>({
@@ -48,22 +46,14 @@ export const MysteryBoxToken: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper sx={{ p: 2, mb: 2 }}>
-            <Typography>
-              <FormattedMessage
-                id="pages.mystery.token.price"
-                values={{ amount: formatPrice(selected.template?.price) }}
-              />
-            </Typography>
-            <TokenSellButton token={selected} />
-            <Erc721TransferButton token={selected} />
-            <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
-          </Paper>
+          {selected.templateId ? (
+            <>
+              <CommonTokenPanel token={selected} />
+              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+            </>
+          ) : null}
         </Grid>
       </Grid>
-
-      {/* @ts-ignore */}
-      <MysteryBoxContent mysteryBox={selected.template?.box} />
 
       {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>

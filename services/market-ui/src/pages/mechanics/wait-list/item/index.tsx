@@ -46,8 +46,8 @@ export const WaitListItem: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((waitlist, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(waitlist => (
+            <ListItem key={waitlist.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{waitlist.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlist.list?.title}</ListItemText>
               <ListItemSecondaryAction

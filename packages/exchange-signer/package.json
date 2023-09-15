@@ -9,13 +9,13 @@
   },
   "dependencies": {
     "@framework/types": "0.0.1",
-    "@gemunion/contracts-constants": "4.0.15",
-    "@gemunion/nest-js-module-ethers-gcp": "1.0.7",
-    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.11"
+    "@gemunion/contracts-constants": "4.0.16",
+    "@gemunion/nest-js-module-ethers-gcp": "1.1.0-redis-beta.3",
+    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.12"
   },
   "devDependencies": {
-    "@nestjs/common": "10.2.4",
-    "@nestjs/config": "3.0.1",
+    "@nestjs/common": "10.2.5",
+    "@nestjs/config": "3.1.1",
     "ethers": "6.7.1"
   },
   "engines": {

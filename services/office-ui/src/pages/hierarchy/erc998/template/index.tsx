@@ -16,16 +16,19 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { ITemplate, ITemplateSearchDto } from "@framework/types";
+import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
+import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc998TemplateEditDialog } from "./edit";
 
 export const Erc998Template: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -45,6 +48,7 @@ export const Erc998Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc998/templates",
     empty: {
@@ -58,6 +62,7 @@ export const Erc998Template: FC = () => {
       query: "",
       templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
+      merchantId: profile.merchantId,
     },
     filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
       id
@@ -101,12 +106,13 @@ export const Erc998Template: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((template, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(template => (
+            <ListItem key={template.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListItemSecondaryAction>

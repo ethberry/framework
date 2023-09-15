@@ -23,7 +23,7 @@ export class PromoService {
     });
   }
 
-  public async search(dto: IPromoSearchDto): Promise<[Array<PromoEntity>, number]> {
+  public async search(dto: Partial<IPromoSearchDto>): Promise<[Array<PromoEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.promoEntityRepository.createQueryBuilder("promo");

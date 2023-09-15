@@ -3,11 +3,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { RaffleContractService } from "./raffle.service";
-
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractAutocompleteDto, ContractSearchDto } from "../../../hierarchy/contract/dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { RaffleContractService } from "./raffle.service";
 
 @ApiBearerAuth()
 @Controller("/raffle/contracts")

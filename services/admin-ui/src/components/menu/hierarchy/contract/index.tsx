@@ -16,6 +16,8 @@ import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
 import { AllowanceMenuItem } from "./allowance";
 import { MintMenuItem } from "./mint";
 import { SnapshotMenuItem } from "./snapshot";
+import { EthListenerAddMenuItem } from "../../common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -72,6 +74,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <TransferMenuItem contract={contract} />
         <SnapshotMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
+
+        <EthListenerAddMenuItem contract={contract} />
+        <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

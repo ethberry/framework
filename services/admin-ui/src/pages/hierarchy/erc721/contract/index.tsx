@@ -44,6 +44,7 @@ export const Erc721Contract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc721/contracts",
     empty: {
@@ -97,12 +98,13 @@ export const Erc721Contract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={Erc721ContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((contract, i) => (
-            <ListItem key={i}>
+          {rows.map(contract => (
+            <ListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { EntityManager, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
 import type { IStakingDepositSearchDto, IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
@@ -27,7 +27,7 @@ export class StakingDepositService {
 
   public findAll(
     where: FindOptionsWhere<StakingDepositEntity>,
-    options?: FindOneOptions<StakingDepositEntity>,
+    options?: FindManyOptions<StakingDepositEntity>,
   ): Promise<Array<StakingDepositEntity>> {
     return this.stakesEntityRepository.find({ where, ...options });
   }

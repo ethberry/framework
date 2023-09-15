@@ -39,6 +39,7 @@ export const Erc998Token: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc998/tokens",
     empty: {
@@ -93,12 +94,13 @@ export const Erc998Token: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.HIERARCHY]}
         contractType={[TokenType.ERC998]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
+          {rows.map(token => (
+            <ListItem key={token.id}>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>

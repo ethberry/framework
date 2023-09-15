@@ -10,12 +10,14 @@ export interface ICommonContractInputProps {
   multiple?: boolean;
   autoselect?: boolean;
   readOnly?: boolean;
+  disableClear?: boolean;
   withTokenType?: boolean;
   data?: {
     contractType?: Array<TokenType>;
     contractStatus?: Array<ContractStatus>;
     contractModule?: Array<ModuleType>;
     contractFeatures?: Array<ContractFeatures>;
+    [k: string]: any;
   };
   onChange?: (form: any) => (_event: ChangeEvent<unknown>, option: any) => void;
 }
@@ -25,6 +27,7 @@ export const CommonContractInput: FC<ICommonContractInputProps> = props => {
     autoselect,
     multiple,
     readOnly,
+    disableClear,
     name,
     onChange,
     controller = "contracts",
@@ -44,6 +47,7 @@ export const CommonContractInput: FC<ICommonContractInputProps> = props => {
       autoselect={autoselect}
       multiple={multiple}
       readOnly={readOnly}
+      disableClear={disableClear}
     />
   );
 };

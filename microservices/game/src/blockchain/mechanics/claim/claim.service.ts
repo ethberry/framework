@@ -28,16 +28,20 @@ export class ClaimService {
     dto: Partial<IClaimSearchDto>,
     merchantEntity: MerchantEntity,
   ): Promise<[Array<ClaimEntity>, number]> {
-    const { account, claimStatus, claimType, skip, take } = dto;
+    const { account, claimStatus, claimType, chainId, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId,
+    });
 
     queryBuilder.andWhere("claim.merchantId = :merchantId", {
       merchantId: merchantEntity.id,

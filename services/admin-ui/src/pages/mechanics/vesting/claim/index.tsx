@@ -107,8 +107,8 @@ export const VestingClaim: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((vesting, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(vesting => (
+            <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>

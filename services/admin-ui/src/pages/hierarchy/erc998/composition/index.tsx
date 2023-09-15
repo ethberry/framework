@@ -27,6 +27,7 @@ import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/compositi
 
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export const Erc998Composition: FC = () => {
   const {
@@ -43,6 +44,7 @@ export const Erc998Composition: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IComposition, ICompositionSearchDto>({
     baseUrl: "/erc998/composition",
     empty: {
@@ -121,8 +123,9 @@ export const Erc998Composition: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        testId="Erc998TokenSearchForm"
+        testId="Erc998CompositionSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput
@@ -155,8 +158,8 @@ export const Erc998Composition: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((composition, i) => (
-            <ListItem key={i}>
+          {rows.map(composition => (
+            <ListItem key={composition.id}>
               <ListItemText sx={{ flex: "0 1 80%" }}>
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>

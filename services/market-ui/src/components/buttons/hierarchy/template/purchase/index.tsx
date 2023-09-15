@@ -7,10 +7,11 @@ import { FormattedMessage } from "react-intl";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
@@ -52,7 +53,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         })),
         sign.signature,
         {
-          value: getEthPrice(template.price),
+          value: getEthPrice(template.price).mul(values.amount),
         },
       ) as Promise<void>;
     },
@@ -83,7 +84,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       setIsAmountDialogOpen(true);
     } else {
       await metaFn({
-        amount: "1",
+        amount: 1,
       });
     }
   };
@@ -102,9 +103,17 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
+  if (template.templateStatus !== TemplateStatus.ACTIVE) {
+    return null;
+  }
+
   return (
     <Fragment>
-      <Button onClick={handleBuy} data-testid="TemplatePurchaseButton">
+      <Button
+        disabled={template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap)}
+        onClick={handleBuy}
+        data-testid="TemplatePurchaseButton"
+      >
         <FormattedMessage id="form.buttons.buy" />
       </Button>
       <AmountDialog
@@ -112,7 +121,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         onConfirm={handleAmountConfirm}
         open={isAmountDialogOpen}
         initialValues={{
-          amount: "1",
+          amount: 1,
         }}
       />
     </Fragment>

@@ -62,8 +62,8 @@ export const Page: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((page, i) => (
-            <ListItem key={i}>
+          {rows.map(page => (
+            <ListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(page)}>

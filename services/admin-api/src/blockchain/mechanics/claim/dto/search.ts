@@ -19,6 +19,7 @@ export class ClaimSearchDto extends Mixin(AccountOptionalDto, PaginationDto) imp
   @IsEnum(ClaimStatus, { each: true, message: "badInput" })
   public claimStatus: Array<ClaimStatus>;
 
-  public merchantId: number;
   public claimType: Array<ClaimType>;
+  public chainId: number;
+  public merchantId: number;
 }

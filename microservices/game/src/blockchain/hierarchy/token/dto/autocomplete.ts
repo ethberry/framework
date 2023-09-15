@@ -1,8 +1,8 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsInt, IsOptional, Min } from "class-validator";
-import { Type } from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
-import { ITokenAutocompleteDto } from "@framework/types";
+import { ITokenAutocompleteDto, TokenStatus } from "@framework/types";
 
 export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @ApiPropertyOptional({
@@ -28,6 +28,18 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @Min(0, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public templateIds: Array<number>;
+
+  @ApiPropertyOptional({
+    enum: TokenStatus,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<TokenStatus>)
+  @IsEnum(TokenStatus, { each: true, message: "badInput" })
+  public tokenStatus: Array<TokenStatus>;
 
   @ApiProperty({
     minimum: 1,

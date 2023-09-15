@@ -14,7 +14,7 @@ export class PageService {
     private readonly pageEntityRepository: Repository<PageEntity>,
   ) {}
 
-  public async search(dto: IPageSearchDto): Promise<[Array<PageEntity>, number]> {
+  public async search(dto: Partial<IPageSearchDto>): Promise<[Array<PageEntity>, number]> {
     const { query, pageStatus, skip, take } = dto;
 
     const queryBuilder = this.pageEntityRepository.createQueryBuilder("page");

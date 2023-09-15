@@ -1,14 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import {
-  ContractFeatures,
-  ContractStatus,
-  IContractAutocompleteDto,
-  IContractSearchDto,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
+import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
@@ -111,18 +105,25 @@ export class ContractService {
 
     queryBuilder.orderBy({
       "contract.createdAt": "DESC",
+      "contract.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
-    const { contractFeatures = [], contractType = [], contractModule = [] } = dto;
+    const { merchantId, contractFeatures = [], contractType = [], contractModule = [], excludeFeatures = [] } = dto;
 
     const where = {
       chainId: userEntity.chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
+
+    if (merchantId) {
+      Object.assign(where, {
+        merchantId,
+      });
+    }
 
     if (contractType.length) {
       Object.assign(where, {
@@ -140,6 +141,14 @@ export class ContractService {
     if (contractModule.length) {
       Object.assign(where, {
         contractModule: In(contractModule),
+      });
+    }
+
+    // so far this is used only to filter out SOULBOUND tokens
+    if (excludeFeatures.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: Not(ArrayOverlap(excludeFeatures)),
       });
     }
 

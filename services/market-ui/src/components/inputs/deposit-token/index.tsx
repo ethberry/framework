@@ -17,10 +17,10 @@ export const TokenDepositInput: () => any = () => {
     form.setValue("token.tokenId", option?.tokenId ?? 0);
   };
 
-  return deposit.map((dep, i) =>
+  return deposit.map(dep =>
     dep.tokenType === TokenType.ERC721 ? (
       <EntityInput
-        key={i}
+        key={dep.id}
         name="tokenId"
         controller="tokens"
         data={{

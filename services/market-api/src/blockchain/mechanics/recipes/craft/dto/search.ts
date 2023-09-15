@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, Min, IsOptional } from "class-validator";
+import { IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -14,6 +14,15 @@ export class CraftSearchDto extends SearchDto implements ICraftSearchDto {
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public templateId: number;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
 
   public craftStatus: Array<CraftStatus>;
 }

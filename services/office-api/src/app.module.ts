@@ -9,7 +9,7 @@ import { FirebaseHttpGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
@@ -36,7 +36,7 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerHttpGuard,
+      useClass: ThrottlerBehindProxyGuard,
     },
   ],
   imports: [

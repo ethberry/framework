@@ -16,7 +16,7 @@ export class RentService {
     private readonly rentEntityRepository: Repository<RentEntity>,
   ) {}
 
-  public async search(dto: IPaginationDto): Promise<[Array<RentEntity>, number]> {
+  public async search(dto: Partial<IPaginationDto>): Promise<[Array<RentEntity>, number]> {
     const { skip, take } = dto;
 
     const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");

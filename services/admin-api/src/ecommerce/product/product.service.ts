@@ -70,7 +70,7 @@ export class ProductService {
 
     queryBuilder.orderBy({
       "product.createdAt": "DESC",
-      "photos.priority": "ASC",
+      "photos.priority": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -112,7 +112,7 @@ export class ProductService {
 
   public findAll(
     where: FindOptionsWhere<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
+    options?: FindManyOptions<ProductEntity>,
   ): Promise<Array<ProductEntity>> {
     return this.productEntityRepository.find({ where, ...options });
   }

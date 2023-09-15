@@ -11,7 +11,6 @@ import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { PauseMenuItem } from "../common/pause";
 import { UnPauseMenuItem } from "../common/unpause";
 import { AllowanceMenu } from "./allowance";
-import { StakingInfoMenuItem } from "./counters";
 
 export interface IStakingActionsMenu {
   contract: IContract;
@@ -63,7 +62,6 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <AllowanceMenu contract={contract} />
         <TopUpMenuItem contract={contract} />
-        <StakingInfoMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

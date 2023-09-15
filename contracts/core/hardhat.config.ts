@@ -59,7 +59,7 @@ export default {
     binance_test: {
       url: process.env.JSON_RPC_ADDR_BINANCE_TEST,
       chainId: 97,
-      gasPrice: 20000000000,
+      gasPrice: "auto",
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },

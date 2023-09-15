@@ -36,7 +36,15 @@ abstract contract ERC998DiscreteRandom is IERC721Random, ERC998Discrete, Rarity 
     _upsertRecordField(tokenId, RARITY, 0);
   }
 
+  /**
+   * @dev Validates and upgrades attribute
+   * @param tokenId The NFT to upgrade
+   * @param attribute parameter name
+   * @return The result of operation
+   */
   function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    // TEMPLATE_ID refers to database id
+    // RARITY refers ChainLink integration
     if (attribute == TEMPLATE_ID || attribute == RARITY) {
       revert ProtectedAttribute(attribute);
     }
@@ -64,6 +72,9 @@ abstract contract ERC998DiscreteRandom is IERC721Random, ERC998Discrete, Rarity 
     _mintCommon(request.account, request.templateId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }

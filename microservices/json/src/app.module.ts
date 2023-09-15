@@ -8,7 +8,7 @@ import { ApiKeyGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 // import { CACHE_STORE, GemunionCacheModule } from "@gemunion/nest-js-module-cache";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
@@ -27,7 +27,7 @@ import { CACHE_STORE, GemunionCacheModule } from "./cache-manager";
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerHttpGuard,
+      useClass: ThrottlerBehindProxyGuard,
     },
   ],
   imports: [

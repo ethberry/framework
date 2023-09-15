@@ -24,12 +24,10 @@ export class ClaimService {
     private readonly signerService: SignerService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     const { skip, take, account, claimStatus, claimType } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
-
-    queryBuilder.select();
 
     queryBuilder.andWhere("claim.account = :account", { account });
 
@@ -39,6 +37,12 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",

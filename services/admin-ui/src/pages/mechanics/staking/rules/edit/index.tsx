@@ -36,6 +36,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     durationUnit,
     stakingRuleStatus,
     contractId,
+    maxStake,
   } = initialValues;
   const fixedValues = {
     id,
@@ -49,6 +50,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     durationUnit,
     stakingRuleStatus,
     contractId,
+    maxStake,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";

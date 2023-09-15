@@ -20,7 +20,7 @@ export class RentService {
     protected readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: IRentSearchDto): Promise<[Array<RentEntity>, number]> {
+  public async search(dto: Partial<IRentSearchDto>): Promise<[Array<RentEntity>, number]> {
     const { query, rentStatus, contractIds, skip, take } = dto;
     const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");
 

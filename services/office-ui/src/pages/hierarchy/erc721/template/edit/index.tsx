@@ -5,10 +5,12 @@ import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import type { ITemplate } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { ITemplate, IUser } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { ContractInput } from "../../../../../components/forms/template-search/contract-input";
+import { TemplateInput } from "../../../../../components/inputs/template-asset";
 import { validationSchema } from "./validation";
 
 export interface IErc721TemplateEditDialogProps {
@@ -21,6 +23,8 @@ export interface IErc721TemplateEditDialogProps {
 export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const { profile } = useUser<IUser>();
+
   const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
@@ -31,6 +35,8 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     templateStatus,
     contractId,
     imageUrl,
+    // this is only filter for contract autocomplete
+    merchantId: profile.merchantId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -43,33 +49,34 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       testId="Erc721TemplateEditForm"
       {...rest}
     >
+      <EntityInput name="merchantId" controller="merchants" />
+      <ContractInput
+        name="contractId"
+        data={{
+          contractType: [TokenType.ERC721],
+          contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+        }}
+        readOnly={!!id}
+      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput
+      <TemplateInput
         autoSelect
         multiple
         prefix="price"
         tokenType={{
-          disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
         }}
         contract={{
           data: {
-            includeExternalContracts: true,
+            // includeExternalContracts: true,
             contractStatus: [ContractStatus.ACTIVE],
           },
         }}
       />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
-      <EntityInput
-        name="contractId"
-        controller="contracts"
-        data={{
-          contractType: [TokenType.ERC721],
-          contractModule: [ModuleType.HIERARCHY],
-        }}
-        readOnly={!!id}
-      />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

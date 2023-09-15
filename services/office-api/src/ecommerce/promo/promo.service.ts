@@ -23,7 +23,7 @@ export class PromoService {
     });
   }
 
-  public async search(dto: IPromoSearchDto): Promise<[Array<PromoEntity>, number]> {
+  public async search(dto: Partial<IPromoSearchDto>): Promise<[Array<PromoEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.promoEntityRepository.createQueryBuilder("promo");
@@ -49,14 +49,14 @@ export class PromoService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async update(where: FindOptionsWhere<PromoEntity>, data: IPromoUpdateDto): Promise<PromoEntity | undefined> {
+  public async update(where: FindOptionsWhere<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | undefined> {
     const promoEntity = await this.promoEntityRepository.findOne({ where });
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
     }
 
-    Object.assign(promoEntity, data);
+    Object.assign(promoEntity, dto);
     return promoEntity.save();
   }
 

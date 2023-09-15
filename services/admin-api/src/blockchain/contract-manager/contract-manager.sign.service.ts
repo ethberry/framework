@@ -35,6 +35,9 @@ import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
 import { getContractABI } from "./utils";
 
+import { ConfigService } from "@nestjs/config";
+// import Queue from "bee-queue";
+
 @Injectable()
 export class ContractManagerSignService {
   constructor(
@@ -42,6 +45,7 @@ export class ContractManagerSignService {
     private readonly signer: Wallet,
     private readonly contractService: ContractService,
     private readonly contractManagerService: ContractManagerService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -267,6 +271,32 @@ export class ContractManagerSignService {
         },
       },
     );
+
+    // producer queues running on the web server
+    // const sharedConfigSend = {
+    //   getEvents: false,
+    //   isWorker: false,
+    //   redis: {
+    //     url: this.configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+    //   },
+    // };
+
+    // const sendQueue = new Queue("ETH_EVENTS", sharedConfigSend);
+    // const job = sendQueue.createJob({ x: 2, y: 3 });
+    //
+    // await job
+    //   .timeout(3000)
+    //   .retries(2)
+    //   .save()
+    //   .then((job: any) => {
+    //     console.log("JOB CREATED", job.id);
+    //     // job enqueued, job.id populated
+    //   });
+
+    // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
+    //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
+    //   console.error("errors", errors);
+    // });
 
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
@@ -784,7 +814,7 @@ export class ContractManagerSignService {
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RANDOM:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC721//randomERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
           chainId,
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE:

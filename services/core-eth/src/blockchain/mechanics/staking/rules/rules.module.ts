@@ -1,4 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { StakingDepositModule } from "../deposit/deposit.module";
@@ -16,6 +18,7 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
 
 @Module({
   imports: [
+    ConfigModule,
     AssetModule,
     TokenModule,
     TemplateModule,

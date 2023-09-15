@@ -16,7 +16,7 @@ export class ProductService {
     private readonly productEntityRepository: Repository<ProductEntity>,
   ) {}
 
-  public async search(search: IProductSearchDto): Promise<[Array<ProductEntity>, number]> {
+  public async search(search: Partial<IProductSearchDto>): Promise<[Array<ProductEntity>, number]> {
     const {
       query,
       field = "id",
@@ -206,7 +206,7 @@ export class ProductService {
 
   public findAll(
     where: FindOptionsWhere<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
+    options?: FindManyOptions<ProductEntity>,
   ): Promise<Array<ProductEntity>> {
     return this.productEntityRepository.find({ where, ...options });
   }

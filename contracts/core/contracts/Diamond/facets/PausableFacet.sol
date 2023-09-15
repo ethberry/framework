@@ -24,14 +24,22 @@ contract PausableFacet is PausableInternal {
     }
 
     /**
-     * @dev Returns true if the contract is paused, and false otherwise.
+     * @dev Triggers stopped state.
+     *
+     * Requirements:
+     *
+     * - The contract must not be paused.
      */
     function pause() external virtual {
         _pause();
     }
 
     /**
-     * @dev Returns true if the contract is paused, and false otherwise.
+     * @dev Returns to normal state.
+     *
+     * Requirements:
+     *
+     * - The contract must be paused.
      */
     function unpause() external virtual {
         _unpause();

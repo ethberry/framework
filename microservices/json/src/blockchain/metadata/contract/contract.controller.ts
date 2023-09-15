@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from "@nestjs/common";
 
 import { AddressPipe, ApiAddress, Public } from "@gemunion/nest-js-utils";
-import type { IOpenSeaMetadata } from "@framework/types";
+import type { IOpenSeaContractMetadata } from "@framework/types";
 
 import { MetadataContractService } from "./contract.service";
 
@@ -12,7 +12,7 @@ export class MetadataContractController {
 
   @ApiAddress("address")
   @Get("/:address")
-  public getContractMetadata(@Param("address", AddressPipe) address: string): Promise<IOpenSeaMetadata> {
+  public getContractMetadata(@Param("address", AddressPipe) address: string): Promise<IOpenSeaContractMetadata> {
     return this.metadataContractService.getContractMetadata(address);
   }
 }

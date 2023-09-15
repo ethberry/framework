@@ -75,8 +75,8 @@ export const VestingContracts: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((vesting, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(vesting => (
+            <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
@@ -91,7 +91,7 @@ export const VestingContracts: FC = () => {
                     <Visibility />
                   </IconButton>
                 </Tooltip>
-                <VestingActionsMenu vesting={vesting} />
+                <VestingActionsMenu contract={vesting} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

@@ -12,7 +12,7 @@ export class PayeesService {
     private readonly payeesEntityRepository: Repository<PayeesEntity>,
   ) {}
 
-  public search(dto: PaginationDto): Promise<[Array<PayeesEntity>, number]> {
+  public search(dto: Partial<PaginationDto>): Promise<[Array<PayeesEntity>, number]> {
     const { skip, take } = dto;
 
     const queryBuilder = this.payeesEntityRepository.createQueryBuilder("payee");

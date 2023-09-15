@@ -76,6 +76,9 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD, Rarity 
 
   function getRandomNumber() internal virtual returns (uint256 requestId);
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }

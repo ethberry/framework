@@ -25,7 +25,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        105010101,
+        105010101, -- gold
         '${defaultJSON}',
         100,
         '1',
@@ -34,7 +34,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        105010201,
+        105010201, -- wood
         '${defaultJSON}',
         100,
         '2',
@@ -43,7 +43,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        105010301,
+        105010301, -- iron ore
         '${defaultJSON}',
         100,
         '3',
@@ -52,7 +52,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        105010401,
+        105010401, -- planks
         '${defaultJSON}',
         100,
         '4',
@@ -61,7 +61,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        105010501,
+        105010501, -- iron ingot
         '${defaultJSON}',
         100,
         '5',
@@ -70,7 +70,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        105040101,
+        105040101, -- healing potion
         '${defaultJSON}',
         100,
         '1',
@@ -79,7 +79,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        105040201,
+        105040201, -- mana potion
         '${defaultJSON}',
         100,
         '2',
@@ -88,7 +88,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        105040301,
+        105040301, -- antidote
         '${defaultJSON}',
         100,
         '3',
@@ -97,7 +97,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        205010101,
+        205010101, -- bep
         '${defaultJSON}',
         100,
         '3',

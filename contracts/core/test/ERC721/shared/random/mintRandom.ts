@@ -75,7 +75,7 @@ export function shouldMintRandom(factory: () => Promise<any>) {
 }
 
 export function shouldMintRandomGenes(factory: () => Promise<any>) {
-  describe("mintRandom", function () {
+  describe("mintRandom (genes)", function () {
     let linkInstance: LinkToken;
     let vrfInstance: VRFCoordinatorMock;
 

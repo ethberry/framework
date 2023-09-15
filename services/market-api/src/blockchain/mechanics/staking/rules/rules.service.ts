@@ -99,7 +99,7 @@ export class StakingRulesService {
 
     queryBuilder.orderBy({
       "rule.createdAt": "DESC",
-      "rule.id": "ASC",
+      "rule.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

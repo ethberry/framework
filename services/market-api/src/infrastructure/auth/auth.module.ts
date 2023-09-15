@@ -1,5 +1,4 @@
-import { forwardRef, Logger, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { Logger, Module } from "@nestjs/common";
 import admin from "firebase-admin";
 
 import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
@@ -13,7 +12,7 @@ import { AuthService } from "./auth.service";
 import { FirebaseStrategy } from "./strategies";
 
 @Module({
-  imports: [ConfigModule, MetamaskModule, PassportInitialize.forRoot(), forwardRef(() => UserModule)],
+  imports: [MetamaskModule, UserModule, PassportInitialize.forRoot()],
   providers: [
     Logger,
     AuthService,

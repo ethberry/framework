@@ -6,11 +6,11 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ICraftSearchDto, ICraftSignDto } from "@framework/types";
+import type { ICraftSearchDto, ICraftSignDto, ICraftCountDto, ICraftCountResult } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../../common/utils/sorter";
+import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { CraftEntity } from "./craft.entity";
@@ -26,7 +26,7 @@ export class CraftService {
   ) {}
 
   public search(dto: Partial<ICraftSearchDto>): Promise<[Array<CraftEntity>, number]> {
-    const { query, templateId, skip, take } = dto;
+    const { query, contractId, templateId, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
@@ -60,6 +60,10 @@ export class CraftService {
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
     });
+
+    if (contractId) {
+      queryBuilder.where("item_contract.id = :contractId", { contractId });
+    }
 
     if (templateId) {
       queryBuilder.where("item_template.id = :templateId", { templateId });
@@ -184,5 +188,25 @@ export class CraftService {
         amount: component.amount,
       })),
     );
+  }
+
+  public async count(dto: ICraftCountDto): Promise<ICraftCountResult> {
+    const { contractId } = dto;
+    const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("craft.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.andWhere("item_contract.id = :contractId", {
+      contractId,
+    });
+
+    const count = await queryBuilder.getCount();
+
+    return { count };
   }
 }

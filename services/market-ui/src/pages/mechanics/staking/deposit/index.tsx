@@ -67,12 +67,12 @@ export const StakingDeposit: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((stake, i) => (
-            <ListItem key={i}>
-              <ListItemText>{stake.stakingRule?.title}</ListItemText>
+          {rows.map(deposit => (
+            <ListItem key={deposit.id}>
+              <ListItemText>{deposit.stakingRule?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingRewardButton stake={stake} />
-                <IconButton onClick={handleView(stake)}>
+                <StakingRewardButton stake={deposit} />
+                <IconButton onClick={handleView(deposit)}>
                   <Visibility />
                 </IconButton>
               </ListItemSecondaryAction>

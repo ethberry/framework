@@ -45,6 +45,7 @@ export const Erc998Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc998/templates",
     empty: {
@@ -101,12 +102,13 @@ export const Erc998Template: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((template, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(template => (
+            <ListItem key={template.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListItemSecondaryAction>

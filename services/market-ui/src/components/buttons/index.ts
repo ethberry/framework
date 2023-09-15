@@ -8,14 +8,14 @@ export * from "./close-button";
 export * from "./wallet";
 
 export * from "./mechanics/claim/redeem";
-export * from "./mechanics/craft";
+export * from "./mechanics/recipes/craft";
 export * from "./mechanics/drop/purchase";
 export * from "./mechanics/lottery/purchase";
 export * from "./mechanics/lottery/reward";
 export * from "./mechanics/raffle/purchase";
 export * from "./mechanics/raffle/reward";
-export * from "./mechanics/mysterybox/purchase";
-export * from "./mechanics/mysterybox/unpack";
+export * from "./mechanics/mystery/purchase";
+export * from "./mechanics/mystery/unpack";
 export * from "./mechanics/ponzi/deposit";
 export * from "./mechanics/ponzi/allowance";
 export * from "./mechanics/ponzi/reward";

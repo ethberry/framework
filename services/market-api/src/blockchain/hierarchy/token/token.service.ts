@@ -2,20 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import {
-  ContractFeatures,
-  ITokenAutocompleteDto,
-  ITokenSearchDto,
-  ModuleType,
-  TokenMetadata,
-  TokenRarity,
-  TokenStatus,
-  TokenType,
-} from "@framework/types";
+import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { TokenEntity } from "./token.entity";
 import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {
@@ -163,14 +155,14 @@ export class TokenService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
-      "token.id": "ASC",
+      "token.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    const { contractIds, templateIds } = dto;
+    const { contractIds, templateIds, tokenStatus } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -207,6 +199,14 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (tokenStatus) {
+      if (tokenStatus.length === 1) {
+        queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
+      } else {
+        queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
       }
     }
 

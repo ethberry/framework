@@ -96,8 +96,8 @@ export const Rent: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rent, i) => (
-            <ListItem key={i}>
+          {rows.map(rent => (
+            <ListItem key={rent.id}>
               <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
               <ListItemSecondaryAction>

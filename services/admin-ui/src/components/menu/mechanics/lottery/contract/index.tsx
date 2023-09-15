@@ -16,11 +16,11 @@ import { LotteryScheduleMenuItem } from "./schedule";
 export interface ILotteryActionsMenu {
   contract: IContract;
   disabled?: boolean;
-  refreshPage: () => Promise<void>;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
-  const { contract, disabled, refreshPage } = props;
+  const { contract, disabled, onRefreshPage } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -64,7 +64,7 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <LotteryRoundStartMenuItem contract={contract} />
         <LotteryRoundEndMenuItem contract={contract} />
-        <LotteryScheduleMenuItem contract={contract} refreshPage={refreshPage} />
+        <LotteryScheduleMenuItem contract={contract} refreshPage={onRefreshPage} />
       </Menu>
     </Fragment>
   );

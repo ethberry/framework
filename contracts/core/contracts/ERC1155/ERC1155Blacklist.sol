@@ -13,12 +13,19 @@ import "./ERC1155Simple.sol";
 contract ERC1155Blacklist is ERC1155Simple, BlackList {
   constructor(uint96 royaltyNumerator, string memory baseTokenURI) ERC1155Simple(royaltyNumerator, baseTokenURI) {}
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC1155ABSR) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
+  /**
+   * @dev See {ERC1155-_beforeTokenTransfer}.
+   * Override that checks the access list
+   */
   function _beforeTokenTransfer(
     address operator,
     address from,

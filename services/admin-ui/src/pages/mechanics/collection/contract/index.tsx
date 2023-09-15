@@ -42,6 +42,7 @@ export const CollectionContract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/collection/contracts",
     empty: {
@@ -85,12 +86,13 @@ export const CollectionContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={CollectionContractFeatures}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((contract, i) => (
-            <ListItem key={i}>
+          {rows.map(contract => (
+            <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText>{contract.parameters.batchSize}</ListItemText>
               <ListItemSecondaryAction>

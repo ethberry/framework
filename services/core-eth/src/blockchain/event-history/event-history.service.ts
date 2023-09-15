@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -79,7 +79,7 @@ export class EventHistoryService {
 
   public findAll(
     where: FindOptionsWhere<EventHistoryEntity>,
-    options?: FindOneOptions<EventHistoryEntity>,
+    options?: FindManyOptions<EventHistoryEntity>,
   ): Promise<Array<EventHistoryEntity>> {
     return this.contractEventEntityRepository.find({ where, ...options });
   }

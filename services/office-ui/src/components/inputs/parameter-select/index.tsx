@@ -32,7 +32,7 @@ export const ParameterSelectInput: FC<IParameterSelectInput> = props => {
       ({
         ...field,
         ...watchFields[index],
-      } as IParameter),
+      }) as IParameter,
   );
 
   const [allParameters, setAllParameters] = useState<IParameter[] | null>(null);

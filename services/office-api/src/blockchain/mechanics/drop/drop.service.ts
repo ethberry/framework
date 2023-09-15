@@ -17,7 +17,7 @@ export class DropService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IDropSearchDto): Promise<[Array<DropEntity>, number]> {
+  public async search(dto: Partial<IDropSearchDto>): Promise<[Array<DropEntity>, number]> {
     const { query, merchantId, skip, take } = dto;
 
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
