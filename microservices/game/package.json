@@ -33,7 +33,7 @@
     "@nestjs/passport": "10.0.2",
     "@nestjs/platform-express": "10.2.5",
     "@nestjs/swagger": "7.1.11",
-    "@nestjs/terminus": "10.0.1",
+    "@nestjs/terminus": "10.1.1",
     "@nestjs/typeorm": "10.0.0",
     "amqp-connection-manager": "4.1.14",
     "amqplib": "0.10.3",
