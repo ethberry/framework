@@ -21,6 +21,8 @@ import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/un
 import { LotteryRoundStartMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-start";
 import { LotteryRoundEndMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-end";
 import { LotteryScheduleMenuItem } from "../../../../components/menu/mechanics/lottery/contract/schedule";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
@@ -120,6 +122,14 @@ export const LotteryContracts: FC = () => {
                 <LotteryScheduleMenuItem
                   contract={contract}
                   refreshPage={handleRefreshPage}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
               </ListActions>

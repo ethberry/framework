@@ -15,15 +15,11 @@ export const MyWallet: FC = () => {
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "profile"]} />
-
       <PageHeader message="pages.wallet.title" />
-
       <Typography sx={{ mb: 2 }}>
         <FormattedMessage id="pages.wallet.connectedWallet" />: {profile.wallet || "N/A"}
       </Typography>
-
-      <AttachWalletButton />
-      <AllowanceButton />
+      <AttachWalletButton /> <AllowanceButton />
     </Grid>
   );
 };

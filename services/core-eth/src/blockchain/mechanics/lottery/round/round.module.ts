@@ -1,4 +1,4 @@
-import { Logger, Module, OnModuleInit } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
@@ -52,11 +52,4 @@ import { LotteryRoundAggregationService } from "./round.service.aggregation";
     LotteryRoundAggregationService,
   ],
 })
-export class LotteryRoundModule implements OnModuleInit {
-  constructor(private readonly lotteryRoundServiceCron: LotteryRoundServiceCron) {}
-
-  // start pre-defined lottery round end-start Cron Job
-  public onModuleInit(): void {
-    // return this.lotteryRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
-  }
-}
+export class LotteryRoundModule {}

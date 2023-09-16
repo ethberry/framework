@@ -13,7 +13,6 @@ import { ContractStatus } from "@framework/types";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { WaitListDeployButton } from "../../../../components/buttons";
 import { ListAction, ListActions } from "../../../../components/common/lists";
-import { WaitListEditDialog } from "./edit";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
@@ -21,6 +20,9 @@ import { PauseMenuItem } from "../../../../components/menu/mechanics/common/paus
 import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
 import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
 import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { WaitListEditDialog } from "./edit";
 
 export const WaitListContracts: FC = () => {
   const {
@@ -110,6 +112,14 @@ export const WaitListContracts: FC = () => {
                 <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <AllowanceMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
               </ListActions>
             </ListItem>
           ))}

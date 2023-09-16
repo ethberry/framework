@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { AddReaction } from "@mui/icons-material";
+import { HowToVote } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -63,7 +63,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
       <ListAction
         onClick={handleAllowance}
         disabled={disabled}
-        icon={AddReaction}
+        icon={HowToVote}
         message="form.buttons.allowance"
         variant={variant}
       />

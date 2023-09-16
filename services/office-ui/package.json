@@ -138,7 +138,7 @@
     "node": ">=18"
   },
   "license": "UNLICENSED",
-  "main": "./dist/main.js",
+  "main": "./dist/index.js",
   "name": "@framework/office-ui",
   "private": true,
   "repository": {

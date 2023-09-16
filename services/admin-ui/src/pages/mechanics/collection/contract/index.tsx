@@ -17,7 +17,6 @@ import {
 
 import { CollectionContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { Erc721CollectionEditDialog } from "./edit";
 import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
@@ -28,6 +27,9 @@ import { BlacklistMenuItem } from "../../../../components/menu/extensions/blackl
 import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
 import { TransferMenuItem } from "../../../../components/menu/common/transfer";
 import { CollectionUploadMenuItem } from "../../../../components/menu/mechanics/collection/upload";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { Erc721CollectionEditDialog } from "./edit";
 
 export const CollectionContract: FC = () => {
   const {
@@ -145,6 +147,14 @@ export const CollectionContract: FC = () => {
                   }
                 />
                 <CollectionUploadMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

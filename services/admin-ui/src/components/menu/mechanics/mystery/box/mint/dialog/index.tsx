@@ -31,6 +31,7 @@ export const MintMysteryboxDialog: FC<IMintMysteryboxDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.mintToken"
       testId="MintForm"
+      disabled={false}
       {...rest}
     >
       <MysteryboxInput />

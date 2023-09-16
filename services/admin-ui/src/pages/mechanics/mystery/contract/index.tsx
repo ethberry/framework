@@ -31,6 +31,8 @@ import { MintMenuItem } from "../../../../components/menu/mechanics/mystery/cont
 import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
 import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
 import { TransferMenuItem } from "../../../../components/menu/common/transfer";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
@@ -149,6 +151,14 @@ export const MysteryContract: FC = () => {
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
               </ListActions>
             </ListItem>

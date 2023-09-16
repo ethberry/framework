@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
-import { ConfigService } from "@nestjs/config";
 import { Contract, JsonRpcProvider, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
@@ -19,7 +18,6 @@ export class RaffleRoundServiceCron {
     private readonly signer: Wallet,
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly configService: ConfigService,
     private readonly schedulerRegistry: SchedulerRegistry,
   ) {}
 

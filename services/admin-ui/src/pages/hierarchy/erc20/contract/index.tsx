@@ -26,6 +26,8 @@ import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contrac
 import { TransferMenuItem } from "../../../../components/menu/common/transfer";
 import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
 import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { Erc20ContractEditDialog } from "./edit";
 
 export const Erc20Contract: FC = () => {
@@ -154,6 +156,8 @@ export const Erc20Contract: FC = () => {
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
+                  <EthListenerAddMenuItem contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveMenuItem contract={contract} disabled={itemDisabled} />
                 </ListActions>
               </ListItem>
             );

@@ -25,6 +25,8 @@ import { TransferMenuItem } from "../../../../components/menu/common/transfer";
 import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
 import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
 import { NativeTokenEditDialog } from "./edit";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 
 export const NativeContract: FC = () => {
   const {
@@ -111,6 +113,8 @@ export const NativeContract: FC = () => {
                 <TransferMenuItem contract={contract} disabled={true} />
                 <SnapshotMenuItem contract={contract} disabled={true} />
                 <RoyaltyMenuItem contract={contract} disabled={true} />
+                <EthListenerAddMenuItem contract={contract} disabled={true} />
+                <EthListenerRemoveMenuItem contract={contract} disabled={true} />
               </ListActions>
             </ListItem>
           ))}

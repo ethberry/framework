@@ -54,7 +54,7 @@ import { testChainId } from "@framework/constants";
         return {
           contract: {
             contractType: ChainLinkType.VRF,
-            contractAddress: vrfCoordinator.address,
+            contractAddress: allRandomAddresses.length > 0 ? vrfCoordinator.address : [],
             contractInterface: ABI,
             topics,
           },

@@ -20,6 +20,8 @@ import { PauseMenuItem } from "../../../../components/menu/mechanics/common/paus
 import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
 import { AllowanceMenu } from "../../../../components/menu/mechanics/staking/allowance";
 import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
@@ -110,6 +112,14 @@ export const StakingContracts: FC = () => {
                 <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <AllowanceMenu contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
               </ListActions>
             </ListItem>
           ))}

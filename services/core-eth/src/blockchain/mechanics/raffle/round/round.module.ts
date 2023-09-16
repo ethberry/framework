@@ -1,7 +1,6 @@
-import { Logger, Module, OnModuleInit } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-// import { CronExpression } from "@nestjs/schedule";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
@@ -45,11 +44,4 @@ import { UserModule } from "../../../../infrastructure/user/user.module";
   ],
   exports: [RaffleRoundService, RaffleRoundServiceEth, RaffleRoundServiceCron, RoundServiceRmq],
 })
-export class RaffleRoundModule implements OnModuleInit {
-  constructor(private readonly raffleRoundServiceCron: RaffleRoundServiceCron) {}
-
-  // start pre-defined raffle round end-start Cron Job
-  public onModuleInit(): void {
-    // return this.raffleRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
-  }
-}
+export class RaffleRoundModule {}

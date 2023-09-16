@@ -35,7 +35,7 @@ export class SyncService {
   public async getBalance(sub: string): Promise<Array<IBalance> | undefined> {
     const gameMicroserviceAddress = this.configService.get<string>(
       "GAME_MICROSERVICE_ADDRESS",
-      "http://localhost:3011",
+      "http://localhost:3012",
     );
 
     const merchantApiKey = this.configService.get<string>("MERCHANT_API_KEY", "11111111-2222-3333-4444-555555555555");

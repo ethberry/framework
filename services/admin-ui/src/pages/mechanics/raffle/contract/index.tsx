@@ -21,6 +21,8 @@ import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/un
 import { RaffleRoundStartMenuItem } from "../../../../components/menu/mechanics/raffle/contract/round-start";
 import { RaffleRoundEndMenuItem } from "../../../../components/menu/mechanics/raffle/contract/round-end";
 import { RaffleScheduleMenuItem } from "../../../../components/menu/mechanics/raffle/contract/schedule";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { RaffleEditDialog } from "./edit";
 
 export const RaffleContracts: FC = () => {
@@ -121,6 +123,14 @@ export const RaffleContracts: FC = () => {
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                   refreshPage={handleRefreshPage}
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
               </ListActions>
             </ListItem>

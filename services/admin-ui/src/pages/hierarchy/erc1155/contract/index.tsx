@@ -25,6 +25,8 @@ import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whit
 import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
 import { TransferMenuItem } from "../../../../components/menu/common/transfer";
 import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
@@ -147,6 +149,8 @@ export const Erc1155Contract: FC = () => {
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
+                  <EthListenerAddMenuItem contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveMenuItem contract={contract} disabled={itemDisabled} />
                 </ListActions>
               </ListItem>
             );

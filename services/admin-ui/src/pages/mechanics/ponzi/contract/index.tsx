@@ -18,6 +18,8 @@ import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/ren
 import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
 import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
 import { PonziBalanceMenuItem } from "../../../../components/menu/mechanics/ponzi/ponzi-balances";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { PonziContractEditDialog } from "./edit";
 
 export const PonziContract: FC = () => {
@@ -107,6 +109,14 @@ export const PonziContract: FC = () => {
                 <AllowanceMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <PonziBalanceMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
