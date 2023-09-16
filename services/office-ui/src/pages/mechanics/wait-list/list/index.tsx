@@ -11,8 +11,8 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
