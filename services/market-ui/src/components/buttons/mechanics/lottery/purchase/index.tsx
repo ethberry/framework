@@ -20,10 +20,11 @@ export interface ILotteryPurchaseButtonProps {
   ticketNumbers: Array<boolean>;
   clearForm: () => void;
   disabled: boolean;
+  className?: string;
 }
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { clearForm, ticketNumbers, round, disabled } = props;
+  const { clearForm, ticketNumbers, round, disabled, className } = props;
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -87,7 +88,14 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="LotteryBuyTicket">
+    <Button
+      startIcon={<Casino />}
+      onClick={handlePurchase}
+      disabled={disabled}
+      className={className}
+      variant="contained"
+      data-testid="LotteryBuyTicket"
+    >
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

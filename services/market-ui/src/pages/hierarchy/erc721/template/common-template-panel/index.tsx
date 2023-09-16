@@ -6,6 +6,7 @@ import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
+import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 
 export interface ICommonTemplatePanelProps {
   template: ITemplate;
@@ -21,6 +22,7 @@ export const CommonTemplatePanel: FC<ICommonTemplatePanelProps> = props => {
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.erc721.template.price" />
           </Typography>
+          <AllowanceInfoPopover />
         </Toolbar>
         <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
           {formatPrice(template.price)

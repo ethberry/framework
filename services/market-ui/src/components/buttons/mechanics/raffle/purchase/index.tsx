@@ -17,9 +17,11 @@ import { getEthPrice } from "../../../../../utils/money";
 export interface IRafflePurchaseButtonProps {
   round: Partial<IRaffleRound>;
   disabled: boolean;
+  className?: string;
 }
+
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
-  const { round, disabled } = props;
+  const { round, disabled, className } = props;
 
   const settings = useSettings();
 
@@ -81,7 +83,14 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="RaffleBuyTicket">
+    <Button
+      startIcon={<Casino />}
+      onClick={handlePurchase}
+      disabled={disabled}
+      className={className}
+      variant="contained"
+      data-testid="RaffleBuyTicket"
+    >
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

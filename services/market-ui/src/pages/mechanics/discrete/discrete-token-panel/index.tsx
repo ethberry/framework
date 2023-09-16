@@ -8,6 +8,7 @@ import { ContractFeatures } from "@framework/types";
 
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { GradeButton } from "../../../../components/buttons";
+import { AllowanceInfoPopover } from "../../../../components/dialogs/allowance";
 import { TokenDiscreteView } from "./discrete";
 
 export interface IDiscreteTokenPanelProps {
@@ -46,6 +47,7 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.discrete" />
           </Typography>
+          <AllowanceInfoPopover />
         </Toolbar>
         <TokenDiscreteView metadata={token.metadata} />
       </CardContent>
