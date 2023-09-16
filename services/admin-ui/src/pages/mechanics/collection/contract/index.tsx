@@ -1,27 +1,33 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { CollectionContractFeatures, ContractStatus, IContract, IContractSearchDto } from "@framework/types";
+import {
+  CollectionContractFeatures,
+  ContractFeatures,
+  ContractStatus,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 
 import { CollectionContractDeployButton } from "../../../../components/buttons";
-import { CollectionActionsMenu } from "../../../../components/menu/mechanics/collection";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc721CollectionEditDialog } from "./edit";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
+import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
+import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
+import { TransferMenuItem } from "../../../../components/menu/common/transfer";
+import { CollectionUploadMenuItem } from "../../../../components/menu/mechanics/collection/upload";
 
 export const CollectionContract: FC = () => {
   const {
@@ -95,21 +101,54 @@ export const CollectionContract: FC = () => {
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText>{contract.parameters.batchSize}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="CollectionActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <CollectionActionsMenu
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <RenounceRoleMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <AllowanceMenuItem
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <RoyaltyMenuItem
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <BlacklistMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnBlacklistMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <TransferMenuItem
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <CollectionUploadMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

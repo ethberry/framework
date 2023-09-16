@@ -33,7 +33,7 @@ export const PauseMenuItem: FC<IPausableMenuItemProps> = props => {
     return metaPause();
   };
 
-  if (contractFeatures.includes(ContractFeatures.PAUSABLE) && isPaused) {
+  if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || isPaused) {
     return null;
   }
 

@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -27,6 +18,7 @@ import type {
 import { ModuleType, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {
@@ -113,12 +105,10 @@ export const StakingRules: FC = () => {
             <ListItem key={rule.id} disableGutters>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingToggleRuleButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,22 +1,23 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { PauseCircleOutline, PlayCircleOutline } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
 import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/rule-toggle/updateRule.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
+
 export interface IPonziToggleRuleButtonProps {
+  disabled?: boolean;
   rule: IPonziRule;
+  variant?: ListActionVariant;
 }
 
 export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { disabled, rule, variant } = props;
 
   const metaToggleRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.ponziRuleStatus !== PonziRuleStatus.ACTIVE;
@@ -31,17 +32,15 @@ export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
   };
 
   return (
-    <Tooltip
-      title={formatMessage({
-        id:
-          rule.ponziRuleStatus === PonziRuleStatus.ACTIVE
-            ? "pages.ponzi.rules.deactivate"
-            : "pages.ponzi.rules.activate",
-      })}
-    >
-      <IconButton onClick={handleToggleRule(rule)} data-testid="StakeToggleRuleButton">
-        {rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <PauseCircleOutline /> : <PlayCircleOutline />}
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleToggleRule(rule)}
+      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <PauseCircleOutline /> : <PlayCircleOutline />}
+      message={
+        rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? "pages.ponzi.rules.deactivate" : "pages.ponzi.rules.activate"
+      }
+      dataTestId="StakeToggleRuleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

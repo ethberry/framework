@@ -33,7 +33,7 @@ export const UnPauseMenuItem: FC<IUnPauseMenuItemProps> = props => {
     return metaUnPause();
   };
 
-  if (contractFeatures.includes(ContractFeatures.PAUSABLE) && !isPaused) {
+  if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || !isPaused) {
     return null;
   }
 

@@ -96,7 +96,7 @@ export const RaffleTickets: FC = () => {
             return (
               <ListItem key={contract.id}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                <ListActions>
+                <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
                   <ListAction
                     onClick={handleDelete(contract)}

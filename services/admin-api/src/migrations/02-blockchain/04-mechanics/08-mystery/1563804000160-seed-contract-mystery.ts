@@ -72,7 +72,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC721',
-        '{}',
+        '{PAUSABLE}',
         'MYSTERY',
         '${fromBlock}',
         1,

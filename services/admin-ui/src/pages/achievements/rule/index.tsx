@@ -1,16 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
@@ -21,10 +12,9 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
-import { AchievementRuleEditDialog } from "./edit";
-
 import { ListAction, ListActions } from "../../../components/common/lists";
 import { cleanUpAsset } from "../../../utils/money";
+import { AchievementRuleEditDialog } from "./edit";
 
 export const AchievementRules: FC = () => {
   const {

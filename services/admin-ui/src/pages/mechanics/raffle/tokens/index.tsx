@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -16,6 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import type { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { RaffleTokenViewDialog } from "./view";
 import { RaffleTokenSearchForm } from "./form";
 
@@ -78,11 +70,9 @@ export const RaffleTokens: FC = () => {
                 {token.round.number === token.tokenId ? "winner" : ""}
               </ListItemText>
 
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction icon={Visibility} message="form.tips.view" onClick={handleView(token)} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

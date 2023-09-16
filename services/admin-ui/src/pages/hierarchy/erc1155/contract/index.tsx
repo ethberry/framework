@@ -111,7 +111,7 @@ export const Erc1155Contract: FC = () => {
             return (
               <ListItem key={contract.id}>
                 <ListItemText>{contract.title}</ListItemText>
-                <ListActions>
+                <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
                   <ListAction
                     onClick={handleDelete(contract)}

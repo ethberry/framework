@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -7,8 +7,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IBreed } from "@framework/types";
 
-import { BreedItemViewDialog } from "./view";
 import { BreedLimitButton } from "../../../../components/buttons";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { BreedItemViewDialog } from "./view";
 
 export const BreedBreeds: FC = () => {
   const {
@@ -41,11 +42,9 @@ export const BreedBreeds: FC = () => {
             <ListItem key={breed.id}>
               {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
               <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(breed)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(breed)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

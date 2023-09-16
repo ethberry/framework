@@ -24,6 +24,7 @@ import { ContractFeatures, IRentSearchDto, RentRuleStatus, TokenType } from "@fr
 
 import { RentEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
+import { ListAction } from "../../../../components/common/lists";
 
 export const Rent: FC = () => {
   const {
@@ -101,9 +102,7 @@ export const Rent: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(rent)}>
-                  <Create />
-                </IconButton>
+                <ListAction onClick={handleEdit(rent)} icon={Create} message="form.buttons.edit" />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

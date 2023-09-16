@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -7,8 +7,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IRaffleRound } from "@framework/types";
 
-import { RaffleRoundViewDialog } from "./view";
 import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { RaffleRoundViewDialog } from "./view";
 
 export const RaffleRounds: FC = () => {
   const {
@@ -44,12 +45,10 @@ export const RaffleRounds: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>
                 {round.roundId} - {round.number || "awaiting results"}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(round)}>
-                  <Visibility />
-                </IconButton>
+              <ListActions>
+                <ListAction onClick={handleView(round)} icon={Visibility} message="form.tips.view" />
                 <RaffleReleaseButton round={round} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

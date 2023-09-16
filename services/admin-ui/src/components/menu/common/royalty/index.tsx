@@ -5,7 +5,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
@@ -20,7 +20,7 @@ export interface IRoyaltyMenuItemProps {
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const {
-    contract: { address, contractFeatures, royalty, contractType },
+    contract: { address, royalty, contractType },
     disabled,
     variant,
   } = props;

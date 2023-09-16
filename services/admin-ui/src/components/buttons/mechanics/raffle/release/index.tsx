@@ -1,24 +1,24 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IRaffleRound } from "@framework/types";
 
 import RaffleReleaseABI from "../../../../../abis/mechanics/raffle/release/releaseFunds.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
+
 export interface ILotteryReleaseButtonProps {
+  disabled?: boolean;
   round: IRaffleRound;
   refreshPage?: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { round, refreshPage = () => {} } = props;
-
-  const { formatMessage } = useIntl();
+  const { disabled, round, refreshPage = () => {}, variant } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(round.contract!.address, RaffleReleaseABI, web3Context.provider?.getSigner());
@@ -35,14 +35,13 @@ export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
   const release = timeAfterRound >= Number(round.contract!.parameters.timeLagBeforeRelease);
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton
-        onClick={handleRelease()}
-        disabled={!round.endTimestamp || !release}
-        data-testid="RaffleReleaseButton"
-      >
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      icon={Redeem}
+      message="form.tips.release"
+      onClick={handleRelease()}
+      disabled={disabled || !round.endTimestamp || !release}
+      dataTestId="RaffleReleaseButton"
+      variant={variant}
+    />
   );
 };

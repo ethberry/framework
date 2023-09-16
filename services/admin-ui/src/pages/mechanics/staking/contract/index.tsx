@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -21,7 +12,14 @@ import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import { StakingDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { StakingActionsMenu } from "../../../../components/menu/mechanics/staking";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
+import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
+import { AllowanceMenu } from "../../../../components/menu/mechanics/staking/allowance";
+import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
 import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
@@ -91,21 +89,28 @@ export const StakingContracts: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="StakingActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <StakingActionsMenu
+                />
+                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <RenounceRoleMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <AllowanceMenu contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

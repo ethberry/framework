@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -22,6 +13,7 @@ import { PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton, PonziToggleRuleButton } from "../../../../components/buttons";
 import { PonziEditDialog } from "./edit";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const PonziRules: FC = () => {
   const {
@@ -97,12 +89,10 @@ export const PonziRules: FC = () => {
           {rows.map(rule => (
             <ListItem key={rule.id} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <PonziToggleRuleButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>
