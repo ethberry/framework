@@ -1,17 +1,7 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-  Tooltip,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -23,7 +13,10 @@ import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
+import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
+import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
+import { TransferOwnershipMenuItem } from "../../../../components/menu/extensions/transfer-ownership";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -52,8 +45,6 @@ export const VestingContracts: FC = () => {
     empty: emptyVestingContract,
   });
 
-  const { formatMessage } = useIntl();
-
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
@@ -80,19 +71,12 @@ export const VestingContracts: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleView(vesting)}>
-                    <Visibility />
-                  </IconButton>
-                </Tooltip>
-                <VestingActionsMenu contract={vesting} />
-              </ListItemSecondaryAction>
+              <ListActions dataTestId="VestingActionsMenuButton">
+                <ListAction onClick={handleView(vesting)} icon={Visibility} message="form.tips.view" />
+                <AllowanceMenuItem contract={vesting} />
+                <TopUpMenuItem contract={vesting} />
+                <TransferOwnershipMenuItem contract={vesting} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

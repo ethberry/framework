@@ -1,16 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
-
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -25,6 +15,7 @@ import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } fro
 
 import { PonziUploadButton } from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { PonziEditDialog } from "./edit";
 
 export const PonziRules: FC = () => {
@@ -120,15 +111,11 @@ export const PonziRules: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
               <div></div>
               <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <PonziUploadButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.ponziRuleStatus !== PonziRuleStatus.NEW}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(rule)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

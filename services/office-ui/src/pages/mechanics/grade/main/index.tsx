@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -24,6 +15,7 @@ import type { IGrade, IGradeSearchDto, IUser } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GradeEditDialog } from "./edit";
 
 export const Grade: FC = () => {
@@ -114,14 +106,10 @@ export const Grade: FC = () => {
               <ListItemText>
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(grade)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(grade)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(grade)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(grade)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

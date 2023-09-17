@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText } from "@mui/material";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
@@ -9,6 +9,7 @@ import type { IBalance, IContract } from "@framework/types";
 
 import { VestingReleasableButton, VestingReleaseButton } from "../../../../../components/buttons";
 import { formatEther } from "../../../../../utils/money";
+import { ListActions } from "../../../../../components/common/lists";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;
@@ -59,10 +60,10 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
                   row.token?.template?.contract?.symbol,
                 )}
               </ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <VestingReleasableButton balance={row} />
                 <VestingReleaseButton balance={row} disabled={row.amount === "0"} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

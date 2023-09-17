@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -21,13 +12,14 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
-import { IUser, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
+import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
-import { MysteryboxEditDialog } from "./edit";
+import { MintMenuItem } from "../../../../components/menu/mechanics/mystery/box/mint";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { ContractInput } from "../../../../components/forms/template-search/contract-input";
+import { MysteryboxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
   const { profile } = useUser<IUser>();
@@ -137,21 +129,16 @@ export const MysteryBox: FC = () => {
           {rows.map(mystery => (
             <ListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(mystery)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(mystery)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(mystery)}
-                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <MysteryActionsMenu
-                  mystery={mystery}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <MintMenuItem mystery={mystery} disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

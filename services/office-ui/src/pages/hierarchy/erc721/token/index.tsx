@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -19,6 +10,7 @@ import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { Erc721TokenViewDialog } from "./view";
 
 export const Erc721Token: FC = () => {
@@ -51,7 +43,6 @@ export const Erc721Token: FC = () => {
       templateIds: [],
       tokenId: "",
       metadata: {},
-      merchantId: profile.merchantId,
     },
   });
 
@@ -84,11 +75,9 @@ export const Erc721Token: FC = () => {
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>
