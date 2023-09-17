@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
+import type { IPonziDeposit } from "@framework/types";
+import { PonziDepositStatus } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { PonziRulesEntity } from "../rules/rules.entity";

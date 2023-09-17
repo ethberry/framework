@@ -1,8 +1,9 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { IPonziCreateEvent, IPonziUpdateEvent, PonziRuleStatus } from "@framework/types";
+import type { IPonziCreateEvent, IPonziUpdateEvent } from "@framework/types";
+import { PonziRuleStatus } from "@framework/types";
 import { PonziRulesService } from "./rules.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
@@ -10,8 +11,6 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class PonziRulesServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly ponziRulesService: PonziRulesService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,

@@ -7,23 +7,17 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IAssetDto,
-  IErc1363TransferReceivedEvent,
   IStakingBalanceWithdrawEvent,
-  IStakingDepositFinishEvent,
-  IStakingDepositReturnEvent,
-  IStakingDepositStartEvent,
-  IStakingDepositWithdrawEvent,
   IStakingRuleCreateEvent,
   IStakingRuleUpdateEvent,
 } from "@framework/types";
 import { DurationUnit, StakingRuleStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { StakingDepositService } from "../deposit/deposit.service";
 import { StakingRulesService } from "./rules.service";
 
 @Injectable()
@@ -35,7 +29,6 @@ export class StakingRulesServiceEth {
     private readonly stakingRulesService: StakingRulesService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
-    private readonly stakingDepositService: StakingDepositService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
   ) {}
@@ -154,73 +147,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async depositStart(event: ILogEvent<IStakingDepositStartEvent>, context: Log): Promise<void> {
-    // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
-    await this.eventHistoryService.updateHistory(event, context);
-    const {
-      args: { stakingId, ruleId, owner, startTimestamp },
-    } = event;
-    const { address, transactionHash } = context;
-
-    const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
-
-    if (!stakingRuleEntity) {
-      this.loggerService.error("stakingRuleNotFound", ruleId, StakingRulesServiceEth.name);
-      throw new NotFoundException("stakingRuleNotFound");
-    }
-
-    const stakingDepositEntity = await this.stakingDepositService.create({
-      account: owner.toLowerCase(),
-      externalId: stakingId,
-      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
-      stakingRuleId: stakingRuleEntity.id,
-      stakingRule: stakingRuleEntity,
-    });
-
-    await this.notificatorService.stakingDepositStart({
-      stakingDeposit: stakingDepositEntity,
-      address,
-      transactionHash,
-    });
-  }
-
-  public async depositWithdraw(event: ILogEvent<IStakingDepositWithdrawEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-  }
-
-  public async depositReturn(event: ILogEvent<IStakingDepositReturnEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-  }
-
-  public async depositFinish(event: ILogEvent<IStakingDepositFinishEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const {
-      args: { stakingId },
-    } = event;
-    const { address, transactionHash } = context;
-
-    const stakingDepositEntity = await this.stakingDepositService.findOne({
-      externalId: stakingId,
-    });
-
-    if (!stakingDepositEntity) {
-      throw new NotFoundException("stakingDepositNotFound");
-    }
-
-    await this.notificatorService.stakingDepositFinish({
-      stakingDeposit: stakingDepositEntity,
-      address,
-      transactionHash,
-    });
-  }
-
   public async balanceWithdraw(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
-  }
-
-  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-    // Balance will update by Erc20 controller
   }
 }

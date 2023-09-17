@@ -14,6 +14,14 @@ export class PauseServiceEth {
   ) {}
 
   public async pause(event: ILogEvent<IPausedEvent>, context: Log): Promise<void> {
+    await this.toggle(event, context, true);
+  }
+
+  public async unpause(event: ILogEvent<IPausedEvent>, context: Log): Promise<void> {
+    await this.toggle(event, context, false);
+  }
+
+  public async toggle(event: ILogEvent<IPausedEvent>, context: Log, isPaused: boolean): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
 
     const { address } = context;
@@ -24,7 +32,7 @@ export class PauseServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    Object.assign(contractEntity, { isPaused: !contractEntity.isPaused });
+    Object.assign(contractEntity, { isPaused });
     await contractEntity.save();
   }
 }

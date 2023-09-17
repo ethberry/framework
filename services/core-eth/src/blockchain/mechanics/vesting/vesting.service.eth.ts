@@ -1,10 +1,9 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
-  IErc1363TransferReceivedEvent,
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
@@ -21,8 +20,6 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 @Injectable()
 export class VestingServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
@@ -88,10 +85,6 @@ export class VestingServiceEth {
     }
 
     await this.balanceService.increment(tokenEntity.id, context.address.toLowerCase(), amount);
-  }
-
-  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
