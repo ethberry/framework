@@ -38,19 +38,19 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102220001
+        102210001
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102220002
+        102210002
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102220003
+        102210003
       );
     `);
 

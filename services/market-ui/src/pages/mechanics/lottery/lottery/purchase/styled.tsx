@@ -54,6 +54,8 @@ export const StyledIconButton = styled(({ isSelected: _, ...props }: IconButtonP
   `}
 `;
 
-export const StyledTypography = styled(Typography)`
-  text-align: center;
-`;
+export const StyledTypography = styled(Typography)(({ theme }) => ({
+  textAlign: "center",
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
+}));
