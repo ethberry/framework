@@ -22,7 +22,7 @@ export interface ICollectionUploadDialogProps {
 }
 
 export const CollectionUploadDialog: FC<ICollectionUploadDialogProps> = props => {
-  const { initialValues, isLoading, onConfirm, ...rest } = props;
+  const { initialValues, isLoading, ...rest } = props;
 
   return (
     <FormDialog
@@ -30,7 +30,6 @@ export const CollectionUploadDialog: FC<ICollectionUploadDialogProps> = props =>
       validationSchema={validationSchema}
       message="dialogs.upload"
       testId="CollectionUploadDialog"
-      onConfirm={onConfirm}
       action={<CollectionInfoPopover />}
       {...rest}
     >

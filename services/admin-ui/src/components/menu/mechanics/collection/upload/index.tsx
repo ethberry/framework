@@ -18,6 +18,7 @@ export interface ICollectionUploadMenuItemProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = props => {
@@ -25,6 +26,7 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
     contract: { address },
     disabled,
     variant,
+    onRefreshPage,
   } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -45,8 +47,8 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
   };
 
   const handleUploadConfirm = async (values: ICollectionUploadDto, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsUploadDialogOpen(false);
     });
   };

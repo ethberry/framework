@@ -149,6 +149,7 @@ export const CollectionContract: FC = () => {
                 <CollectionUploadMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  onRefreshPage={handleRefreshPage}
                 />
                 <EthListenerAddMenuItem
                   contract={contract}

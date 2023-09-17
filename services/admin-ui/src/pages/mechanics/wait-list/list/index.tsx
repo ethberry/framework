@@ -15,9 +15,9 @@ import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { CreateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/create";
-import { UploadMenuItem } from "../../../../components/menu/mechanics/wait-list-list/upload";
-import { GenerateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/generate";
+import { WaitListListCreateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/create";
+import { WaitListListUploadMenuItem } from "../../../../components/menu/mechanics/wait-list-list/upload";
+import { WaitListListGenerateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/generate";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -38,6 +38,7 @@ export const WaitListList: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IWaitListList, ISearchDto>({
     baseUrl: "/wait-list/list",
     empty: {
@@ -85,15 +86,17 @@ export const WaitListList: FC = () => {
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} icon={Create} message="form.buttons.edit" />
                 <ListAction onClick={handleDelete(waitListList)} icon={Delete} message="form.buttons.delete" />
-                <CreateMenuItem
+                <WaitListListCreateMenuItem
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
                 />
-                <UploadMenuItem
+                <WaitListListUploadMenuItem
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
                 />
-                <GenerateMenuItem
+                <WaitListListGenerateMenuItem
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                 />

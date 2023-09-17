@@ -1,35 +1,38 @@
 import React, { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IVestingClaimUploadDto } from "@framework/types";
+import { TextInput } from "@gemunion/mui-inputs-core";
+import type { IInvitationCreateDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { FileInput } from "./file-input";
-import { VestingClaimInfoPopover } from "./popover";
 
-export interface IVestingClaimUploadDialogProps {
+export interface IInviteDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
-  initialValues: IVestingClaimUploadDto;
+  initialValues: IInvitationCreateDto;
 }
 
-export const VestingClaimUploadDialog: FC<IVestingClaimUploadDialogProps> = props => {
+export const InviteDialog: FC<IInviteDialogProps> = props => {
   const { isLoading, initialValues, ...rest } = props;
 
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.upload"
-      testId="VestingClaimUploadDialog"
-      action={<VestingClaimInfoPopover />}
+      message="dialogs.invite"
+      testId="InviteDialog"
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>
-        <FileInput initialValues={initialValues} />
+        <Alert severity="warning" sx={{ mt: 2 }}>
+          <FormattedMessage id="alert.onlyIfUserExists" />
+        </Alert>
+        <TextInput name="email" type="email" />
       </ProgressOverlay>
     </FormDialog>
   );

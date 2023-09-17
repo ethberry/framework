@@ -8,17 +8,19 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { WaitListUploadDialog } from "./dialog";
 import { IWaitListUploadDto } from "./dialog/file-input";
 
-export interface IMintMenuItemProps {
+export interface IWaitListListUploadMenuItemProps {
   waitListList: IWaitListList;
   disabled?: boolean;
   variant?: ListActionVariant;
+  onRefreshPage: () => Promise<void>;
 }
 
-export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
+export const WaitListListUploadMenuItem: FC<IWaitListListUploadMenuItemProps> = props => {
   const {
     waitListList: { id },
     disabled,
     variant,
+    onRefreshPage,
   } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -40,8 +42,8 @@ export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IWaitListUploadDto, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsUploadDialogOpen(false);
     });
   };

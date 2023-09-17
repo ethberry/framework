@@ -10,10 +10,11 @@ import { VestingClaimUploadDialog } from "./dialog";
 
 export interface IVestingClaimUploadButtonProps {
   className?: string;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = props => {
-  const { className } = props;
+  const { className, onRefreshPage } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -33,8 +34,8 @@ export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = prop
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsUploadDialogOpen(false);
     });
   };

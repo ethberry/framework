@@ -11,6 +11,7 @@ import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IUser } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";
+import { InviteButton } from "./invite";
 
 export const MerchantManagers: FC<ITabPanelProps> = props => {
   const { open } = props;
@@ -28,7 +29,9 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
 
   return (
     <Fragment>
-      <PageHeader message="pages.merchant.tabs.managers" />
+      <PageHeader message="pages.merchant.tabs.managers">
+        <InviteButton />
+      </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>

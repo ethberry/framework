@@ -65,7 +65,7 @@ export const Claim: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <ClaimUploadButton />
+        <ClaimUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

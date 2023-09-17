@@ -17,7 +17,7 @@ export interface IVestingClaimUploadDialogProps {
 }
 
 export const VestingClaimUploadDialog: FC<IVestingClaimUploadDialogProps> = props => {
-  const { isLoading, initialValues, onConfirm, ...rest } = props;
+  const { isLoading, initialValues, ...rest } = props;
 
   return (
     <FormDialog
@@ -25,7 +25,6 @@ export const VestingClaimUploadDialog: FC<IVestingClaimUploadDialogProps> = prop
       validationSchema={validationSchema}
       message="dialogs.upload"
       testId="VestingClaimUploadDialog"
-      onConfirm={onConfirm}
       action={<VestingClaimInfoPopover />}
       {...rest}
     >

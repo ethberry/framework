@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { User } from "@gemunion/nest-js-utils";
@@ -18,7 +18,7 @@ export class InvitationController {
     return this.invitationService.findAll(userEntity);
   }
 
-  @Put("/")
+  @Post("/")
   @HttpCode(HttpStatus.NO_CONTENT)
   public create(@Body() dto: InvitationCreateDto, @User() userEntity: UserEntity): Promise<void> {
     return this.invitationService.create(dto, userEntity);

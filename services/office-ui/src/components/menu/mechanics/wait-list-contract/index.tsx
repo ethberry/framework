@@ -12,12 +12,12 @@ import { UnPauseMenuItem } from "../common/unpause";
 import { TopUpMenuItem } from "../common/top-up";
 import { AllowanceMenuItem } from "../common/allowance";
 
-export interface IDefaultContractActionsMenu {
+export interface IWaitListContractActionsMenu {
   contract: IContract;
   disabled?: boolean;
 }
 
-export const WaitListContractActionsMenu: FC<IDefaultContractActionsMenu> = props => {
+export const WaitListContractActionsMenu: FC<IWaitListContractActionsMenu> = props => {
   const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -41,6 +41,7 @@ export const VestingClaim: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<any, IClaimSearchDto>({
     baseUrl: "/vesting/claims",
     empty: {
@@ -78,7 +79,7 @@ export const VestingClaim: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <VestingClaimUploadButton />
+        <VestingClaimUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

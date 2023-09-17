@@ -7,17 +7,19 @@ import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@fram
 
 import { WaitListItemEditDialog } from "../../../../../pages/mechanics/wait-list/item/edit";
 
-export interface IMintMenuItemProps {
+export interface IWaitListListCreateMenuItemProps {
   waitListList: IWaitListList;
   disabled?: boolean;
   variant?: ListActionVariant;
+  onRefreshPage: () => Promise<void>;
 }
 
-export const CreateMenuItem: FC<IMintMenuItemProps> = props => {
+export const WaitListListCreateMenuItem: FC<IWaitListListCreateMenuItemProps> = props => {
   const {
     waitListList: { id },
     disabled,
     variant,
+    onRefreshPage,
   } = props;
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -36,8 +38,8 @@ export const CreateMenuItem: FC<IMintMenuItemProps> = props => {
   };
 
   const handleCreateConfirm = async (values: Partial<IWaitListItem>, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsCreateDialogOpen(false);
     });
   };

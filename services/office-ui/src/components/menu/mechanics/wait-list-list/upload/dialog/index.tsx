@@ -17,7 +17,7 @@ export interface IWaitListUploadDialogProps {
 }
 
 export const WaitListUploadDialog: FC<IWaitListUploadDialogProps> = props => {
-  const { isLoading, initialValues, onConfirm, ...rest } = props;
+  const { isLoading, initialValues, ...rest } = props;
 
   return (
     <FormDialog
@@ -25,7 +25,6 @@ export const WaitListUploadDialog: FC<IWaitListUploadDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.upload"
       testId="WaitListUploadDialog"
-      onConfirm={onConfirm}
       action={<WaitListInfoPopover />}
       {...rest}
     >

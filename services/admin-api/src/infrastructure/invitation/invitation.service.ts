@@ -1,16 +1,19 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { FindOptionsWhere } from "typeorm";
+
+import type { IInvitationCreateDto } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
 import { OtpService } from "../otp/otp.service";
 import { OtpEntity } from "../otp/otp.entity";
 import { EmailService } from "../email/email.service";
-import { IInvitationCreateDto } from "./interfaces";
 
 @Injectable()
 export class InvitationService {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     private readonly otpService: OtpService,
     private readonly userService: UserService,
     private readonly emailService: EmailService,
@@ -21,13 +24,16 @@ export class InvitationService {
   }
 
   public async create(dto: IInvitationCreateDto, userEntity: UserEntity): Promise<void> {
-    const userEntity2 = await this.userService.findOne({ id: dto.userId });
+    const inviteeEntity = await this.userService.findOne(dto);
 
-    if (!userEntity2) {
-      throw new NotFoundException("invitationNotFound");
+    if (!inviteeEntity) {
+      this.loggerService.log(
+        `User ${userEntity.displayName} (#${userEntity.id}) invited ${dto.email} but there is no user with such email`,
+      );
+      return;
     }
 
-    await this.emailService.invite(userEntity2, { merchantId: userEntity.merchantId });
+    await this.emailService.invite(inviteeEntity, userEntity);
   }
 
   public async delete(where: FindOptionsWhere<OtpEntity>, userEntity: UserEntity): Promise<OtpEntity> {

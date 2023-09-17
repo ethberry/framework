@@ -10,13 +10,13 @@ import { IWaitListList, TokenType } from "@framework/types";
 
 import WaitListSetRewardABI from "../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
 
-export interface IGenerateMenuItemProps {
+export interface IWailtListListGenerateMenuItemProps {
   waitListList: IWaitListList;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
+export const WaitListListGenerateMenuItem: FC<IWailtListListGenerateMenuItemProps> = props => {
   const {
     waitListList: { id },
     disabled,

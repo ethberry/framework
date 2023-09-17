@@ -11,10 +11,11 @@ import { ClaimUploadDialog } from "./dialog";
 
 export interface IClaimUploadButtonProps {
   className?: string;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
-  const { className } = props;
+  const { className, onRefreshPage } = props;
 
   const { formatMessage } = useIntl();
 
@@ -50,8 +51,8 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsUploadDialogOpen(false);
     });
   };
