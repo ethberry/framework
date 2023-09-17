@@ -54,7 +54,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const handleClick = (i: number) => {
     return () => {
-      if (ticketNumbers.filter(e => e).length >= maxNumbers && !ticketNumbers[i]) {
+      if (ticketNumbers.filter(Boolean).length >= maxNumbers && !ticketNumbers[i]) {
         return;
       }
       const newNumbers = [...ticketNumbers];
@@ -96,8 +96,11 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
               round={round}
               clearForm={clearForm}
               ticketNumbers={ticketNumbers}
-              // @ts-ignore
-              disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
+              disabled={
+                ticketNumbers.filter(Boolean).length < maxNumbers ||
+                // @ts-ignore
+                (round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
+              }
             />
           ) : null}
         </PageHeader>
