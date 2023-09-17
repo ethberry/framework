@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,8 +11,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IClaimSearchDto } from "@framework/types";
-import { ClaimStatus, IUser, TokenType } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IClaimSearchDto, IUser } from "@framework/types";
+import { ClaimStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { VestingClaimUploadButton } from "../../../../components/buttons";
@@ -113,19 +105,20 @@ export const VestingClaim: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <IconButton onClick={handleEdit(vesting)} disabled={vesting.claimStatus !== ClaimStatus.NEW}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(vesting)} disabled={vesting.claimStatus !== ClaimStatus.NEW}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction
+                  onClick={handleEdit(vesting)}
+                  icon={Create}
+                  message="form.buttons.edit"
+                  disabled={vesting.claimStatus !== ClaimStatus.NEW}
+                />
+                <ListAction
+                  onClick={handleDelete(vesting)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={vesting.claimStatus !== ClaimStatus.NEW}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

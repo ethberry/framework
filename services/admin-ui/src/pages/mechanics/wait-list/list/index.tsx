@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -10,11 +10,14 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/wait-list-list";
 import { cleanUpAsset } from "../../../../utils/money";
+import { CreateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/create";
+import { UploadMenuItem } from "../../../../components/menu/mechanics/wait-list-list/upload";
+import { GenerateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/generate";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -79,18 +82,22 @@ export const WaitListList: FC = () => {
           {rows.map(waitListList => (
             <ListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(waitListList)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(waitListList)}>
-                  <Delete />
-                </IconButton>
-                <WaitListListActionsMenu
+              <ListActions dataTestId="WaitListActionsMenuButton">
+                <ListAction onClick={handleEdit(waitListList)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(waitListList)} icon={Delete} message="form.buttons.delete" />
+                <CreateMenuItem
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <UploadMenuItem
+                  waitListList={waitListList}
+                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                />
+                <GenerateMenuItem
+                  waitListList={waitListList}
+                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

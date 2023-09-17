@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -18,11 +9,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IDismantle, IDismantleSearchDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, TokenType } from "@framework/types";
 
-import { DismantleEditDialog } from "./edit";
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
+import { DismantleEditDialog } from "./edit";
 
 export const Dismantle: FC = () => {
   const {
@@ -104,14 +96,10 @@ export const Dismantle: FC = () => {
             <ListItem key={dismantle.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.item)}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(dismantle)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(dismantle)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(dismantle)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(dismantle)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,15 +1,5 @@
 import { FC, useState } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-  Tooltip,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
@@ -20,14 +10,15 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
 
-import { Erc998CompositionViewDialog } from "./view";
-import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
+import { Erc998CompositionViewDialog } from "./view";
 
 export const Erc998Composition: FC = () => {
   const {
@@ -163,18 +154,10 @@ export const Erc998Composition: FC = () => {
               <ListItemText sx={{ flex: "0 1 80%" }}>
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleView(composition)}>
-                    <Visibility />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                  <IconButton onClick={handleDelete(composition)}>
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(composition)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleDelete(composition)} icon={Delete} message="form.tips.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

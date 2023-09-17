@@ -1,16 +1,17 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ILotteryRound } from "@framework/types";
 import { CronExpression } from "@framework/types";
 
+import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/release";
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
-import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/release";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -54,12 +55,10 @@ export const LotteryRounds: FC = () => {
                     ]
                   : ""}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(round)}>
-                  <Visibility />
-                </IconButton>
+              <ListActions>
+                <ListAction onClick={handleView(round)} icon={Visibility} message="form.tips.view" />
                 <LotteryReleaseButton round={round} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

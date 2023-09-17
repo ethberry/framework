@@ -25,6 +25,7 @@ export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.edit"
       testId="RoyaltyEditForm"
+      disabled={false}
       {...rest}
     >
       <CurrencyInput name="royalty" symbol="%" />

@@ -2,21 +2,24 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziRule, PonziRuleStatus, TokenType } from "@framework/types";
 
 import PonziSetRuleABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
 import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/upload/updateRule.abi.json";
 
 export interface IPonziUploadButtonProps {
+  disabled?: boolean;
   rule: IPonziRule;
+  variant?: ListActionVariant;
 }
 
 export const PonziUploadButton: FC<IPonziUploadButtonProps> = props => {
-  const { rule } = props;
+  const { disabled, rule, variant } = props;
   const { formatMessage } = useIntl();
 
   const metaLoadRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
@@ -83,17 +86,17 @@ export const PonziUploadButton: FC<IPonziUploadButtonProps> = props => {
   }
 
   return (
-    <Tooltip
-      title={formatMessage({
-        id:
-          rule.ponziRuleStatus === PonziRuleStatus.ACTIVE
-            ? "pages.staking.rules.deactivate"
-            : "pages.staking.rules.activate",
-      })}
-    >
-      <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <Close /> : <Check />}
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleToggleRule(rule)}
+      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <Close /> : <Check />}
+      message={
+        rule.ponziRuleStatus === PonziRuleStatus.ACTIVE
+          ? "pages.staking.rules.deactivate"
+          : "pages.staking.rules.activate"
+      }
+      dataTestId="StakeRuleToggleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

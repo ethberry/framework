@@ -1,17 +1,9 @@
 import { FC, Fragment } from "react";
-import {
-  Button,
-  Chip,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Tooltip,
-} from "@mui/material";
+import { Button, Chip, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -102,18 +94,10 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                   }
                   sx={{ pr: 3 }}
                 />
-                <ListItemSecondaryAction>
-                  <Tooltip title={formatMessage({ id: "form.tips.edit" })}>
-                    <IconButton edge="end" aria-label="edit" onClick={handleEdit(address)} sx={{ mr: 0.5 }}>
-                      <Edit />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                    <IconButton edge="end" aria-label="delete" onClick={handleDelete(address)}>
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleEdit(address)} icon={Edit} message="form.buttons.edit" />
+                  <ListAction onClick={handleDelete(address)} icon={Delete} message="form.buttons.delete" />
+                </ListActions>
               </ListItem>
             ))
           ) : (

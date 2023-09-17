@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -14,11 +13,11 @@ import VestingReleaseABI from "../../../../../abis/mechanics/vesting/release/rel
 export interface IVestingReleaseButtonProps {
   balance: IBalance;
   disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
-  const { balance, disabled } = props;
-  const { formatMessage } = useIntl();
+  const { balance, disabled, variant } = props;
 
   const metaRelease = useMetamask(async (vesting: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.account, VestingReleaseABI, web3Context.provider?.getSigner());
@@ -40,10 +39,13 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton onClick={handleClick} disabled={disabled} data-testid="VestingReleaseButton">
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Redeem}
+      message="form.tips.release"
+      dataTestId="VestingReleaseButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

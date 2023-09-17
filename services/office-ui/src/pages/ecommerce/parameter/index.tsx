@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { stringify } from "qs";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { IParameter } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -60,14 +61,10 @@ export const Parameter: FC = () => {
               <ListItemText>
                 {parameter.parameterName} ({parameter.parameterType})
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(parameter)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(parameter)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(parameter)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(parameter)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

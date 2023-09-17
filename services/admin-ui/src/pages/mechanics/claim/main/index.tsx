@@ -1,15 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -18,6 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus } from "@framework/types";
 
@@ -102,19 +94,20 @@ export const Claim: FC = () => {
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
                 {claim.item.components.map(component => component.template?.title).join(", ")}
               </ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <IconButton onClick={handleEdit(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction
+                  onClick={handleEdit(claim)}
+                  icon={Create}
+                  message="form.buttons.edit"
+                  disabled={claim.claimStatus !== ClaimStatus.NEW}
+                />
+                <ListAction
+                  onClick={handleDelete(claim)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={claim.claimStatus !== ClaimStatus.NEW}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

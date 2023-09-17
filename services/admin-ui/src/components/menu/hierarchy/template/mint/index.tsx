@@ -1,6 +1,4 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -8,8 +6,9 @@ import { Web3ContextType } from "@web3-react/core";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
 import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
@@ -20,18 +19,22 @@ import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   template: ITemplate;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
     template: { contract, id: templateId, tokens },
+    disabled,
+    variant,
   } = props;
 
   const { profile } = useUser<IUser>();
   const { checkAccessMint } = useCheckAccessMint();
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { address, contractType, id: contractId, decimals, contractFeatures } = contract!;
+  const { address, contractType, id: contractId, decimals } = contract!;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -96,26 +99,15 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     }
   }, [profile?.wallet]);
 
-  if (contractType === TokenType.NATIVE || contractFeatures.includes(ContractFeatures.GENES)) {
-    return (
-      <MenuItem>
-        <Typography variant="inherit">
-          <FormattedMessage id="dialogs.unsupported" />
-        </Typography>
-      </MenuItem>
-    );
-  }
-
   return (
     <Fragment>
-      <MenuItem onClick={handleMintToken} disabled={!hasAccess}>
-        <ListItemIcon>
-          <AddCircleOutline />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.mintToken" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleMintToken}
+        disabled={disabled || !hasAccess}
+        icon={AddCircleOutline}
+        message="form.buttons.mintToken"
+        variant={variant}
+      />
       <MintTokenDialog
         onCancel={handleMintTokenCancel}
         onConfirm={handleMintTokenConfirmed}

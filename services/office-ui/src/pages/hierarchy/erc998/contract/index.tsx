@@ -1,27 +1,32 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListActions, ListAction } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
-import { ContractStatus, Erc998ContractFeatures } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc998ContractFeatures, TokenType } from "@framework/types";
 
 import { Erc998ContractDeployButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
+import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
+import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
+import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
+import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
+import { TransferMenuItem } from "../../../../components/menu/common/transfer";
+import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
+import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { Erc998ContractEditDialog } from "./edit";
 
 export const Erc998Contract: FC = () => {
@@ -85,26 +90,53 @@ export const Erc998Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => (
-            <ListItem key={contract.id}>
-              <ListItemText>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
-                  onClick={handleDelete(contract)}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <ContractActionsMenu
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
+          {rows.map(contract => {
+            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
+            return (
+              <ListItem key={contract.id}>
+                <ListItemText>{contract.title}</ListItemText>
+                <ListActions dataTestId="ContractActionsMenuButton">
+                  <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                    icon={Delete}
+                    message="form.buttons.delete"
+                  />
+                  <GrantRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <RevokeRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <RenounceRoleMenuItem contract={contract} disabled={itemDisabled} />
+                  <BlacklistMenuItem contract={contract} disabled={itemDisabled} />
+                  <UnBlacklistMenuItem contract={contract} disabled={itemDisabled} />
+                  <WhitelistMenuItem contract={contract} disabled={itemDisabled} />
+                  <UnWhitelistMenuItem contract={contract} disabled={itemDisabled} />
+                  <MintMenuItem
+                    contract={contract}
+                    disabled={
+                      itemDisabled ||
+                      contract.contractType === TokenType.NATIVE ||
+                      contract.contractFeatures.includes(ContractFeatures.GENES)
+                    }
+                  />
+                  <AllowanceMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
+                  <TransferMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
+                  <SnapshotMenuItem contract={contract} disabled={itemDisabled} />
+                  <RoyaltyMenuItem
+                    contract={contract}
+                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+                  />
+                  <EthListenerAddMenuItem contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveMenuItem contract={contract} disabled={itemDisabled} />
+                </ListActions>
+              </ListItem>
+            );
+          })}
         </List>
       </ProgressOverlay>
 

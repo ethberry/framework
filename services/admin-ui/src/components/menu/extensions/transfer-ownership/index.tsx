@@ -1,11 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { ChangeCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
@@ -15,11 +14,15 @@ import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = props => {
   const {
     contract: { address, contractSecurity },
+    disabled,
+    variant,
   } = props;
 
   const [isOwnershipDialogOpen, setIsOwnershipDialogOpen] = useState(false);
@@ -48,14 +51,13 @@ export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = pr
 
   return (
     <Fragment>
-      <MenuItem onClick={handleTransferOwnership}>
-        <ListItemIcon>
-          <ChangeCircle />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.transferOwnership" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleTransferOwnership}
+        icon={ChangeCircle}
+        message="form.buttons.transferOwnership"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccountDialog
         onCancel={handleTransferOwnershipCancel}
         onConfirm={handleTransferOwnershipConfirm}

@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -16,12 +7,21 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListContractActionsMenu } from "../../../../components/menu/mechanics/wait-list-contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { WaitListDeployButton } from "../../../../components/buttons";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
+import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
+import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
+import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { WaitListEditDialog } from "./edit";
 
 export const WaitListContracts: FC = () => {
@@ -91,21 +91,36 @@ export const WaitListContracts: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <WaitListContractActionsMenu
+                />
+                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <RenounceRoleMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <AllowanceMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

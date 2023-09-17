@@ -659,7 +659,7 @@ export class ContractManagerServiceEth {
       title: `${ModuleType.WAITLIST} (new)`,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: [],
+      contractFeatures: [ContractFeatures.PAUSABLE],
       contractModule: ModuleType.WAITLIST,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

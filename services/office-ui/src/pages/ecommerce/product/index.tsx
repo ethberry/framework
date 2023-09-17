@@ -1,22 +1,14 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IProduct } from "@framework/types";
+import { ProductStatus } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import type { IProduct } from "@framework/types";
-import { ProductStatus } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -100,14 +92,15 @@ export const Product: FC = () => {
           {rows.map(product => (
             <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(product)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(product)} disabled={product.productStatus === ProductStatus.INACTIVE}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(product)} icon={Create} message="form.buttons.edit" />
+                <ListAction
+                  onClick={handleDelete(product)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={product.productStatus === ProductStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

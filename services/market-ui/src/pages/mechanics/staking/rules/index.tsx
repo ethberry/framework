@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -19,6 +10,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -135,13 +127,11 @@ export const StakingRules: FC = () => {
           {rows.map(rule => (
             <ListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
-                <IconButton onClick={handleView(rule)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

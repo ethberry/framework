@@ -1,16 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
@@ -18,12 +9,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
-import { AchievementRuleEditDialog } from "./edit";
-
 import { cleanUpAsset } from "../../../utils/money";
+import { AchievementRuleEditDialog } from "./edit";
 
 export const AchievementRules: FC = () => {
   const {
@@ -85,11 +76,9 @@ export const AchievementRules: FC = () => {
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

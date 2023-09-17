@@ -1,25 +1,24 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
-import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
-import { useIntl } from "react-intl";
-import { useApiCall } from "@gemunion/react-hooks";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IWaitListItem } from "@framework/types";
 
 import ClaimABI from "../../../../../abis/mechanics/wait-list/claim/claim.abi.json";
-import { IWaitListItem } from "@framework/types";
 
 export interface IWaitListClaimButtonProps {
+  disabled?: boolean;
   listItem: Partial<IWaitListItem>;
+  variant?: ListActionVariant;
 }
 
 export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
-  const { listItem } = props;
+  const { disabled, listItem, variant } = props;
   const { listId, list } = listItem;
-
-  const { formatMessage } = useIntl();
 
   const { fn } = useApiCall(
     async (api, listId) => {
@@ -46,10 +45,13 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.claim" })}>
-      <IconButton onClick={handleClick} data-testid="ClaimWaitListButton">
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Redeem}
+      message="form.tips.claim"
+      dataTestId="ClaimWaitListButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

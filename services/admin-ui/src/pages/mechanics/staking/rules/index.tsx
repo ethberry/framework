@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -18,6 +9,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -113,12 +105,10 @@ export const StakingRules: FC = () => {
             <ListItem key={rule.id} disableGutters>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingToggleRuleButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

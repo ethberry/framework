@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -18,6 +9,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IGrade, IGradeSearchDto } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
@@ -104,14 +96,10 @@ export const Grade: FC = () => {
               <ListItemText>
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(grade)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(grade)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(grade)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(grade)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

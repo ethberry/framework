@@ -1,12 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
-import { BigNumber, constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { BigNumber, constants, Contract } from "ethers";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -16,11 +15,15 @@ import { ITopUpDto, TopUpDialog } from "./dialog";
 
 export interface ITopUpMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const TopUpMenuItem: FC<ITopUpMenuItemProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const [isTopUpDialogOpen, setIsTopUpDialogOpen] = useState(false);
@@ -70,14 +73,13 @@ export const TopUpMenuItem: FC<ITopUpMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleTopUp}>
-        <ListItemIcon>
-          <AddCircleOutline />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.topUp" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleTopUp}
+        icon={AddCircleOutline}
+        message="form.buttons.topUp"
+        disabled={disabled}
+        variant={variant}
+      />
       <TopUpDialog
         onConfirm={handleTopUpConfirm}
         onCancel={handleTopUpCancel}

@@ -1,12 +1,13 @@
 import { FC, Fragment } from "react";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Tooltip } from "@mui/material";
+import { List, ListItem, ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IUser } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";
@@ -20,7 +21,6 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
     });
 
   const { profile } = useUser<IUser>();
-  const { formatMessage } = useIntl();
 
   if (!open) {
     return null;
@@ -36,18 +36,14 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
             rows.map((user: IUser) => (
               <ListItem key={user.id} disableGutters={true}>
                 <ListItemText>{user.displayName}</ListItemText>
-                <ListItemSecondaryAction>
-                  <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                    <IconButton
-                      edge="end"
-                      aria-label="delete"
-                      onClick={handleDelete(user)}
-                      disabled={user.id === profile.id}
-                    >
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction
+                    icon={Delete}
+                    message="form.tips.delete"
+                    onClick={handleDelete(user)}
+                    disabled={user.id === profile.id}
+                  />
+                </ListActions>
               </ListItem>
             ))
           ) : (

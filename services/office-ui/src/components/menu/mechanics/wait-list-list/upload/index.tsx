@@ -1,8 +1,7 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { CloudUploadOutlined } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IWaitListList } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
@@ -11,11 +10,15 @@ import { IWaitListUploadDto } from "./dialog/file-input";
 
 export interface IMintMenuItemProps {
   waitListList: IWaitListList;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
   const {
     waitListList: { id },
+    disabled,
+    variant,
   } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -49,14 +52,13 @@ export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleUpload}>
-        <ListItemIcon>
-          <CloudUploadOutlined />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.upload" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleUpload}
+        icon={CloudUploadOutlined}
+        message="form.buttons.upload"
+        disabled={disabled}
+        variant={variant}
+      />
       <WaitListUploadDialog
         onCancel={handleUploadCancel}
         onConfirm={handleUploadConfirm}

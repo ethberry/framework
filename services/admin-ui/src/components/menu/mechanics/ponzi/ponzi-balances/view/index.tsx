@@ -2,13 +2,14 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IBalance } from "@framework/types";
 
 import PonziWithdrawTokenABI from "../../../../../../abis/mechanics/ponzi/ponzi-balances/withdrawToken.abi.json";
@@ -92,11 +93,13 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
                     balance.token!.template!.contract!.symbol,
                   )}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleSetAmount(balance)}>
-                    <CurrencyExchange />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction
+                    onClick={handleSetAmount(balance)}
+                    icon={CurrencyExchange}
+                    message="form.buttons.setAmount"
+                  />
+                </ListActions>
               </ListItem>
             ))}
           </List>

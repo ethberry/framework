@@ -1,26 +1,26 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
+
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IPonziRewardComplexButtonProps {
+  disabled?: boolean;
   stake: IPonziDeposit;
+  variant?: ListActionVariant;
 }
 
 export const PonziRewardComplexButton: FC<IPonziRewardComplexButtonProps> = props => {
-  const { stake } = props;
+  const { disabled, stake, variant } = props;
 
   const [isRewardDialogOpen, setIsRewardDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask(async (stake: IPonziDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -53,11 +53,14 @@ export const PonziRewardComplexButton: FC<IPonziRewardComplexButtonProps> = prop
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.reward" })}>
-        <IconButton onClick={handleReward} data-testid="StakeRewardButton">
-          <Redeem />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleReward}
+        icon={Redeem}
+        message="form.tips.reward"
+        dataTestId="StakeRewardButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <DepositRewardDialog
         onConfirm={handleRewardConfirm}
         onCancel={handleRewardCancel}

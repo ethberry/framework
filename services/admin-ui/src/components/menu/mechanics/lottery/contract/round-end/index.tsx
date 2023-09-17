@@ -1,22 +1,25 @@
 import { FC } from "react";
-import { Web3ContextType } from "@web3-react/core";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { StopCircleOutlined } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 
 export interface ILotteryRoundEndMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const LotteryRoundEndMenuItem: FC<ILotteryRoundEndMenuItemProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
@@ -29,13 +32,13 @@ export const LotteryRoundEndMenuItem: FC<ILotteryRoundEndMenuItemProps> = props 
   };
 
   return (
-    <MenuItem onClick={handleEndRound} data-testid="LotteryRoundEndButton">
-      <ListItemIcon>
-        <StopCircleOutlined fontSize="small" />
-      </ListItemIcon>
-      <Typography variant="inherit">
-        <FormattedMessage id="pages.lottery.rounds.end" />
-      </Typography>
-    </MenuItem>
+    <ListAction
+      onClick={handleEndRound}
+      dataTestId="LotteryRoundEndButton"
+      icon={StopCircleOutlined}
+      message="pages.lottery.rounds.end"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

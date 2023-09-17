@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListActions } from "@framework/mui-lists";
 import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
@@ -50,14 +51,9 @@ export const WaitListItem: FC = () => {
             <ListItem key={waitlist.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{waitlist.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlist.list?.title}</ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
+              <ListActions>
                 <WaitListClaimButton listItem={waitlist} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

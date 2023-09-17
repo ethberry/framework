@@ -1,19 +1,11 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
 import { LotteryTokenViewDialog } from "./view";
@@ -77,11 +69,9 @@ export const LotteryTokens: FC = () => {
                 {token.metadata.PRIZE ? "Prize " : ""}
                 {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

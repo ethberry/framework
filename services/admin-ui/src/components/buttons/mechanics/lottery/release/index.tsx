@@ -1,23 +1,22 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ILotteryRound } from "@framework/types";
 
 import LotteryReleaseABI from "../../../../../abis/mechanics/lottery/round/release/releaseFunds.abi.json";
 
 export interface ILotteryReleaseButtonProps {
+  disabled?: boolean;
   round: ILotteryRound;
+  variant?: ListActionVariant;
 }
 
 export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { round } = props;
-
-  const { formatMessage } = useIntl();
+  const { disabled, round, variant } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(round.contract!.address, LotteryReleaseABI, web3Context.provider?.getSigner());
@@ -36,14 +35,13 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
   const release = timeAfterRound >= Number(round.contract!.parameters.timeLagBeforeRelease);
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton
-        onClick={handleRelease()}
-        disabled={!round.numbers || !round.endTimestamp || !release}
-        data-testid="LotteryReleaseButton"
-      >
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleRelease()}
+      icon={Redeem}
+      message="form.tips.release"
+      disabled={disabled || !round.numbers || !round.endTimestamp || !release}
+      variant={variant}
+      dataTestId="LotteryReleaseButton"
+    />
   );
 };

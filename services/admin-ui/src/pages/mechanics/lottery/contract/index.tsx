@@ -1,27 +1,28 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { LotteryActionsMenu } from "../../../../components/menu/mechanics/lottery/contract";
+import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
+import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
+import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
+import { LotteryRoundStartMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-start";
+import { LotteryRoundEndMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-end";
+import { LotteryScheduleMenuItem } from "../../../../components/menu/mechanics/lottery/contract/schedule";
+import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
@@ -91,22 +92,47 @@ export const LotteryContracts: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="LotteryActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <LotteryActionsMenu
+                />
+                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleMenuItem
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  onRefreshPage={handleRefreshPage}
                 />
-              </ListItemSecondaryAction>
+                <RenounceRoleMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <LotteryRoundStartMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <LotteryRoundEndMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <LotteryScheduleMenuItem
+                  contract={contract}
+                  refreshPage={handleRefreshPage}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerAddMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveMenuItem
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

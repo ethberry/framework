@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PauseCircleOutline } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
@@ -13,11 +12,15 @@ import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
 
 export interface IPausableMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const PauseMenuItem: FC<IPausableMenuItemProps> = props => {
   const {
     contract: { address, isPaused, contractFeatures },
+    disabled,
+    variant,
   } = props;
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
@@ -29,18 +32,17 @@ export const PauseMenuItem: FC<IPausableMenuItemProps> = props => {
     return metaPause();
   };
 
-  if (contractFeatures.includes(ContractFeatures.PAUSABLE) && isPaused) {
+  if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || isPaused) {
     return null;
   }
 
   return (
-    <MenuItem onClick={handlePause}>
-      <ListItemIcon>
-        <PauseCircleOutline fontSize="small" />
-      </ListItemIcon>
-      <Typography variant="inherit">
-        <FormattedMessage id="form.buttons.pause" />
-      </Typography>
-    </MenuItem>
+    <ListAction
+      onClick={handlePause}
+      icon={PauseCircleOutline}
+      message="form.buttons.pause"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

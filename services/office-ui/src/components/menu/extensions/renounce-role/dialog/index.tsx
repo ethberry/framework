@@ -1,15 +1,16 @@
 import { FC, useEffect, useState } from "react";
-import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
@@ -79,11 +80,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                   <br />
                   {access.role}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleRenounce(access)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleRenounce(access)} icon={Delete} message="form.buttons.delete" />
+                </ListActions>
               </ListItem>
             ))}
           </List>

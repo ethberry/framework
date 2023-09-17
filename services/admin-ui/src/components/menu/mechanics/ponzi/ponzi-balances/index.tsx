@@ -1,19 +1,22 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { MonetizationOn } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 
 import { PonziBalanceDialog } from "./view";
 
 export interface IPonziBalanceMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const PonziBalanceMenuItem: FC<IPonziBalanceMenuItemProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const [isPonziBalanceDialogOpen, setIsPonziBalanceDialogOpen] = useState(false);
@@ -32,14 +35,13 @@ export const PonziBalanceMenuItem: FC<IPonziBalanceMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handlePonziBalance}>
-        <ListItemIcon>
-          <MonetizationOn fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.ponziBalance" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handlePonziBalance}
+        icon={MonetizationOn}
+        message="form.buttons.ponziBalance"
+        disabled={disabled}
+        variant={variant}
+      />
       <PonziBalanceDialog
         onCancel={handlePonziBalanceCancel}
         onConfirm={handlePonziBalanceConfirm}

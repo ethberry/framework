@@ -1,20 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@framework/types";
 
 import { WaitListItemEditDialog } from "../../../../../pages/mechanics/wait-list/item/edit";
 
 export interface IMintMenuItemProps {
   waitListList: IWaitListList;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CreateMenuItem: FC<IMintMenuItemProps> = props => {
   const {
     waitListList: { id },
+    disabled,
+    variant,
   } = props;
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -45,14 +48,7 @@ export const CreateMenuItem: FC<IMintMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleUpload}>
-        <ListItemIcon>
-          <Add />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.add" />
-        </Typography>
-      </MenuItem>
+      <ListAction onClick={handleUpload} icon={Add} message="form.buttons.add" disabled={disabled} variant={variant} />
       <WaitListItemEditDialog
         onCancel={handleCreateCancel}
         onConfirm={handleCreateConfirm}

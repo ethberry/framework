@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
@@ -19,10 +10,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IDrop } from "@framework/types";
 
-import { DropEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
+import { DropEditDialog } from "./edit";
 
 export const Drop: FC = () => {
   const now = new Date();
@@ -78,14 +70,10 @@ export const Drop: FC = () => {
           {rows.map(drop => (
             <ListItem key={drop.id}>
               <ListItemText>{drop.item?.components[0].template?.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(drop)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(drop)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(drop)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(drop)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

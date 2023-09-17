@@ -1,9 +1,8 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
@@ -17,11 +16,15 @@ export interface ICollectionRow {
 
 export interface ICollectionUploadMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -54,14 +57,13 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
 
   return (
     <Fragment>
-      <MenuItem onClick={handleUpload}>
-        <ListItemIcon>
-          <PaidOutlined fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.collectionUpload" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleUpload}
+        icon={PaidOutlined}
+        message="form.buttons.collectionUpload"
+        disabled={disabled}
+        variant={variant}
+      />
       <CollectionUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

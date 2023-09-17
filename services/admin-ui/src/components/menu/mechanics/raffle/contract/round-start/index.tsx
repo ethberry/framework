@@ -1,26 +1,30 @@
 import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PlayCircleOutline } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import RaffleStartRoundABI from "../../../../../../abis/mechanics/raffle/round/start/startRound.abi.json";
+
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
 
 export interface IRaffleRoundStartMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = props => {
   const {
     contract: { address, id },
+    disabled,
+    variant,
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
@@ -63,14 +67,14 @@ export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = prop
 
   return (
     <Fragment>
-      <MenuItem onClick={handleStartRound} data-testid="RaffleRoundStartButton">
-        <ListItemIcon>
-          <PlayCircleOutline fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="pages.raffle.rounds.start" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleStartRound}
+        dataTestId="RaffleRoundStartButton"
+        icon={PlayCircleOutline}
+        message="pages.raffle.rounds.start"
+        disabled={disabled}
+        variant={variant}
+      />
       <RaffleStartRoundDialog
         onConfirm={handleStartRoundConfirm}
         onCancel={handleStartRoundCancel}

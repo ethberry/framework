@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -21,6 +12,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -138,12 +130,10 @@ export const StakingRules: FC = () => {
           {rows.map(rule => (
             <ListItem key={rule.id} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingToggleRuleButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListActions } from "@framework/mui-lists";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
@@ -61,13 +62,13 @@ export const Claim: FC = () => {
             <ListItem key={claim.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{formatItem(claim.item)}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 {claim.claimType === ClaimType.TOKEN ? (
-                  <ClaimRedeemButton claim={claim} />
+                  <ClaimRedeemButton claim={claim} disabled={claim.claimStatus !== ClaimStatus.NEW} />
                 ) : (
                   <VestingDeployButton claim={claim} />
                 )}
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

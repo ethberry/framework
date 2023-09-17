@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -17,8 +8,9 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
 
 import { EditMerchantDialog } from "./edit";
 
@@ -76,14 +68,10 @@ export const Merchant: FC = () => {
           {rows.map(merchant => (
             <ListItem key={merchant.id}>
               <ListItemText>{merchant.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(merchant)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(merchant)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(merchant)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(merchant)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>
