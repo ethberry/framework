@@ -102,6 +102,9 @@ export const StakingRules: FC = () => {
         testId="StakingRuleSearchForm"
       >
         <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
           <Grid item xs={6}>
             <EntityInput
               name="contractIds"
