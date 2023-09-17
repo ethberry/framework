@@ -3,7 +3,8 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { ContractType, IPonziCreateEvent, IPonziUpdateEvent, PonziEventType } from "@framework/types";
+import type { IPonziCreateEvent, IPonziUpdateEvent } from "@framework/types";
+import { ContractType, PonziEventType } from "@framework/types";
 
 import { PonziRulesServiceEth } from "./rules.service.eth";
 

@@ -1,6 +1,6 @@
 import { DurationUnit, IAssetDto } from "@framework/types";
 
-export interface IPonziUpdateDto {
+export interface IStakingUpdateDto {
   title: string;
   description: string;
   deposit: IAssetDto;
@@ -8,5 +8,6 @@ export interface IPonziUpdateDto {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxStake: number;
   recurrent: boolean;
 }

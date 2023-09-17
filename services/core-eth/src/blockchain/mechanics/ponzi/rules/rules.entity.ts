@@ -1,12 +1,13 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
-import { ns } from "@framework/constants";
-import { DurationUnit, IPonziRule, PonziRuleStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { ns } from "@framework/constants";
+import type { IPonziRule } from "@framework/types";
+import { DurationUnit, PonziRuleStatus } from "@framework/types";
 
-import { PonziDepositEntity } from "../deposit/deposit.entity";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { PonziDepositEntity } from "../deposit/deposit.entity";
 
 @Entity({ schema: ns, name: "ponzi_rules" })
 export class PonziRulesEntity extends SearchableEntity implements IPonziRule {

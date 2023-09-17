@@ -2,14 +2,14 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
+import type {
   IFinalizedTokenEvent,
   IPonziDepositEvent,
   IPonziFinishEvent,
   IPonziWithdrawEvent,
   IWithdrawTokenEvent,
-  PonziDepositStatus,
 } from "@framework/types";
+import { PonziDepositStatus } from "@framework/types";
 import { PonziDepositService } from "./deposit.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { PonziRulesService } from "../rules/rules.service";
