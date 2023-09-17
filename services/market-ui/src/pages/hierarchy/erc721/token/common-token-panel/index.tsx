@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
 
 import type { IToken } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import { Erc721TransferButton, TokenLendButton, TokenSellButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
@@ -14,6 +15,13 @@ export interface ICommonTokenPanelProps {
 export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   const { token } = props;
 
+  const { price } =
+    token.template?.contract?.contractModule === ModuleType.LOTTERY ||
+    token.template?.contract?.contractModule === ModuleType.RAFFLE
+      ? // @ts-ignore
+        token.round
+      : token.template;
+
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
@@ -23,7 +31,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
           </Typography>
         </Toolbar>
         <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
-          {formatPrice(token.template?.price)
+          {formatPrice(price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>

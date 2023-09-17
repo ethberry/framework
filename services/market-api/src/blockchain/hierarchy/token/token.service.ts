@@ -7,6 +7,7 @@ import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, 
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
+import { LotteryRoundEntity } from "../../mechanics/lottery/round/round.entity";
 import { TokenEntity } from "./token.entity";
 
 @Injectable()
@@ -41,6 +42,8 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
+
+    // MODULE:RENT
     queryBuilder.leftJoinAndSelect("rent.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -231,19 +234,33 @@ export class TokenService {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // MODULE MYSTERY
+    // MODULE:LOTTERY
+    // MODULE:RAFFLE
+    queryBuilder.leftJoinAndMapOne(
+      "token.round",
+      LotteryRoundEntity,
+      "round",
+      `(token.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+    );
+    queryBuilder.leftJoinAndSelect("round.price", "round_price");
+    queryBuilder.leftJoinAndSelect("round_price.components", "round_price_components");
+    queryBuilder.leftJoinAndSelect("round_price_components.contract", "round_price_contract");
+    queryBuilder.leftJoinAndSelect("round_price_components.template", "round_price_template");
+
+    // MODULE:MYSTERY
     queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    // MODULE RENT
+    // MODULE:RENT
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");
