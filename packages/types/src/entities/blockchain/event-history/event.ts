@@ -77,7 +77,7 @@ export enum ContractEventType {
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper",
 
-  // MODULE MYSTERY
+  // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox",
 
   // MODULE:PAUSE
@@ -209,7 +209,7 @@ export enum ContractEventSignature {
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper(uint256)",
 
-  // MODULE MYSTERY
+  // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox(address,uint256)",
 
   // MODULE:PAUSE

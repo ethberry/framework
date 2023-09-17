@@ -55,7 +55,7 @@ enum ContractEventSignature {
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper(uint256)",
 
-  // MODULE MYSTERY
+  // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox(address,uint256)",
 
   // MODULE:PAUSE
