@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ICategory } from "@framework/types";
@@ -19,6 +10,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyCategory } from "../../../components/common/interfaces";
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditCategoryDialog } from "./edit";
 
 export const Category: FC = () => {
@@ -66,14 +58,10 @@ export const Category: FC = () => {
           {rows.map(category => (
             <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(category)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(category)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(category)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(category)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

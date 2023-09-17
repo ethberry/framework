@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -18,6 +9,7 @@ import type { IPage, IPageSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { PageEditDialog } from "./edit";
 
 export const Page: FC = () => {
@@ -65,14 +57,10 @@ export const Page: FC = () => {
           {rows.map(page => (
             <ListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(page)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(page)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(page)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(page)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 
@@ -20,6 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyOrder } from "../../../components/common/interfaces";
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditOrderDialog } from "./edit";
 import { OrderSearchForm } from "./form";
 import { parseDateRange, stringifyDateRange } from "./utils";
@@ -108,14 +100,10 @@ export const Order: FC = () => {
           {rows.map(order => (
             <ListItem key={order.id} disableGutters={true}>
               <ListItemText>Order #{order.id}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(order)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(order)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(order)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(order)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

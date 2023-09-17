@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { IPromo } from "@framework/types";
@@ -20,6 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { emptyPromo } from "../../../components/common/interfaces";
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditPromoDialog } from "./edit";
 
 export const Promo: FC = () => {
@@ -62,14 +54,10 @@ export const Promo: FC = () => {
           {rows.map(promo => (
             <ListItem key={promo.id}>
               <ListItemText>{promo.product!.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(promo)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(promo)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(promo)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(promo)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

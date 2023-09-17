@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { stringify } from "qs";
 
@@ -12,6 +12,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyParameter } from "../../../components/common/interfaces";
 import { uniqueBy } from "../../../utils/uniqueBy";
+import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditParameterDialog } from "./edit";
 
 export const Parameter: FC = () => {
@@ -60,14 +61,10 @@ export const Parameter: FC = () => {
               <ListItemText>
                 {parameter.parameterName} ({parameter.parameterType})
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(parameter)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(parameter)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(parameter)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(parameter)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>
