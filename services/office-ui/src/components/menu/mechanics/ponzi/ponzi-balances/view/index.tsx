@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -15,6 +15,7 @@ import PonziWithdrawTokenABI from "../../../../../../abis/mechanics/ponzi/ponzi-
 
 import { formatEther } from "../../../../../../utils/money";
 import { emptyBalance } from "../../../../../common/interfaces";
+import { ListAction, ListActions } from "../../../../../common/lists";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
 
 export interface IPonziBalanceDialogProps {
@@ -92,11 +93,13 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
                     balance.token!.template!.contract!.symbol,
                   )}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleSetAmount(balance)}>
-                    <CurrencyExchange />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction
+                    onClick={handleSetAmount(balance)}
+                    icon={CurrencyExchange}
+                    message="form.buttons.setAmount"
+                  />
+                </ListActions>
               </ListItem>
             ))}
           </List>

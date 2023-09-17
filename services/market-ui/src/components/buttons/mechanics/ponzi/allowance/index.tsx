@@ -1,26 +1,24 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-
-import { IconButton, Tooltip } from "@mui/material";
 import { HowToVote } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPonziRule, TokenType } from "@framework/types";
 
 import AllowanceABI from "../../../../../abis/mechanics/ponzi/allowance/allowance.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IPonziAllowanceButtonProps {
+  disabled?: boolean;
   rule: IPonziRule;
+  variant?: ListActionVariant;
 }
 
 export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -53,11 +51,14 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.allowance" })}>
-        <IconButton onClick={handleAllowance} data-testid="PonziAllowanceButton">
-          <HowToVote />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleAllowance}
+        icon={HowToVote}
+        message="form.tips.allowance"
+        dataTestId="PonziAllowanceButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}

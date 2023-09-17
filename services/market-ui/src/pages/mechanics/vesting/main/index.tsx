@@ -13,6 +13,7 @@ import { VestingTransferOwnershipButton } from "../../../../components/buttons/m
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const Vesting: FC = () => {
   const {
@@ -57,29 +58,22 @@ export const Vesting: FC = () => {
       <PageHeader message="pages.vesting.title" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List>
           {rows.map(vesting => (
             <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.5 }}>
+              <ListItemText sx={{ overflowX: "scroll", width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <IconButton onClick={handleWithdraw(vesting)}>
-                  <AccountBalanceWallet />
-                </IconButton>
-                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleView(vesting)}>
-                    <Visibility />
-                  </IconButton>
-                </Tooltip>
+              <ListActions>
+                <ListAction
+                  onClick={handleWithdraw(vesting)}
+                  icon={AccountBalanceWallet}
+                  message="form.buttons.withdraw"
+                />
+                <ListAction onClick={handleView(vesting)} icon={Visibility} message="form.tips.view" />
                 <VestingTransferOwnershipButton vesting={vesting} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

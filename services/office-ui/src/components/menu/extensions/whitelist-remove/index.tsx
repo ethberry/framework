@@ -1,20 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { Unpublished } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccessListUnWhitelistDialog } from "./dialog";
 
 export interface IUnWhitelistMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const UnWhitelistMenuItem: FC<IUnWhitelistMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures },
+    disabled,
+    variant,
   } = props;
 
   const [isUnWhitelistDialogOpen, setIsUnWhitelistDialogOpen] = useState(false);
@@ -37,14 +40,13 @@ export const UnWhitelistMenuItem: FC<IUnWhitelistMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleUnWhitelist}>
-        <ListItemIcon>
-          <Unpublished fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.unwhitelist" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleUnWhitelist}
+        icon={Unpublished}
+        message="form.buttons.unwhitelist"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccessListUnWhitelistDialog
         onCancel={handleUnWhitelistCancel}
         onConfirm={handleUnWhitelistConfirm}

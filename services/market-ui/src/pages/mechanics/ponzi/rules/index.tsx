@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -22,6 +13,7 @@ import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziAllowanceButton, PonziDepositButton } from "../../../../components/buttons";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 import { PonziViewDialog } from "./view";
 
 export const PonziRules: FC = () => {
@@ -110,13 +102,11 @@ export const PonziRules: FC = () => {
           {rows.map(rule => (
             <ListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <PonziAllowanceButton rule={rule} />
                 <PonziDepositButton rule={rule} />
-                <IconButton onClick={handleView(rule)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -12,6 +12,8 @@ import { useApiCall } from "@gemunion/react-hooks";
 import type { IAccessList } from "@framework/types";
 
 import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
+
+import { ListAction, ListActions } from "../../../../common/lists";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
@@ -59,11 +61,9 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
             {rows.map(access => (
               <ListItem key={access.id}>
                 <ListItemText>{access.account}</ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleUnWhitelist(access)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleUnWhitelist(access)} icon={Delete} message="dialogs.unWhitelist" />
+                </ListActions>
               </ListItem>
             ))}
           </List>

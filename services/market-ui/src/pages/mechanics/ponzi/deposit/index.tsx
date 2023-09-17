@@ -20,6 +20,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { PonziDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
 import { PonziRewardComplexButton } from "../../../../components/buttons";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const PonziDeposit: FC = () => {
   const {
@@ -68,12 +69,10 @@ export const PonziDeposit: FC = () => {
           {rows.map(stake => (
             <ListItem key={stake.id}>
               <ListItemText>{stake.ponziRule?.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <PonziRewardComplexButton stake={stake} />
-                <IconButton onClick={handleView(stake)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(stake)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

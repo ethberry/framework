@@ -31,6 +31,7 @@ import {
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
 import { StakingViewDialog } from "./view";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const StakingRules: FC = () => {
   const {
@@ -135,13 +136,11 @@ export const StakingRules: FC = () => {
           {rows.map(rule => (
             <ListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
-                <IconButton onClick={handleView(rule)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

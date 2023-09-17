@@ -1,9 +1,7 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
@@ -13,16 +11,17 @@ import { IPonziRule, PonziRuleStatus } from "@framework/types";
 import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IPonziDepositButtonProps {
+  disabled?: boolean;
   rule: IPonziRule;
+  variant?: ListActionVariant;
 }
 
 export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
-  const { rule } = props;
+  const { disabled, rule, variant } = props;
   const settings = useSettings();
-
-  const { formatMessage } = useIntl();
 
   const metaDeposit = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract.address, PonziDepositABI, web3Context.provider?.getSigner());
@@ -50,10 +49,13 @@ export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.deposit" })}>
-      <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositSimpleButton">
-        <Savings />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleDeposit(rule)}
+      icon={Savings}
+      message="form.tips.deposit"
+      dataTestId="StakeDepositSimpleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

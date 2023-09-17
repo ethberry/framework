@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -14,6 +14,8 @@ import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RenounceRoleABI from "../../../../../abis/extensions/renounce-role/renounceRole.abi.json";
+
+import { ListAction, ListActions } from "../../../../common/lists";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -79,11 +81,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                   <br />
                   {access.role}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleRenounce(access)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleRenounce(access)} icon={Delete} message="form.buttons.delete" />
+                </ListActions>
               </ListItem>
             ))}
           </List>

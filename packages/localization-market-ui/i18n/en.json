@@ -351,6 +351,7 @@
       "create": "Create",
       "delete": "Delete",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "forgot": "Forgot password?",

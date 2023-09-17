@@ -1,9 +1,7 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { HowToVote } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IStakingRule, TokenType } from "@framework/types";
@@ -12,16 +10,18 @@ import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.appr
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 // TODO allowance for deposit array
 // TODO allowance for exact 721 or 998 token
 export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -69,11 +69,14 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.allowance" })}>
-        <IconButton onClick={handleAllowance} data-testid="StakeDepositAllowanceButton">
-          <HowToVote />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleAllowance}
+        icon={HowToVote}
+        message="form.tips.allowance"
+        dataTestId="StakeDepositAllowanceButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingAllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}

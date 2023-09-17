@@ -1,21 +1,22 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOn } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import type { IContract } from "@framework/types";
 import { NodeEnv } from "@framework/types";
 
-import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 import { getListenerType } from "../../../../utils/listener-type";
+import { ListAction, ListActionVariant } from "../../../common/lists";
+import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 
 export interface IEthListenerAddMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props => {
-  const { contract } = props;
+  const { contract, disabled, variant } = props;
 
   const [isEthListenerDialogOpen, setIsEthListenerDialogOpen] = useState(false);
 
@@ -47,14 +48,13 @@ export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props =>
 
   return (
     <Fragment>
-      <MenuItem onClick={handleEthListenerAdd}>
-        <ListItemIcon>
-          <DoNotDisturbOn fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.addListener" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleEthListenerAdd}
+        icon={DoNotDisturbOn}
+        message="form.buttons.addListener"
+        disabled={disabled}
+        variant={variant}
+      />
       <EthListenerAddDialog
         onCancel={handleEthListenerAddCancel}
         onConfirm={handleEthListenerAddConfirm}

@@ -10,6 +10,7 @@ import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
 import { WaitListJoinDialog } from "../../../../components/buttons/mechanics/wait-list/join";
+import { ListActions } from "../../../../components/common/lists";
 
 export const WaitListItem: FC = () => {
   const { account } = useWeb3React();
@@ -50,14 +51,9 @@ export const WaitListItem: FC = () => {
             <ListItem key={waitlist.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{waitlist.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlist.list?.title}</ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
+              <ListActions>
                 <WaitListClaimButton listItem={waitlist} />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

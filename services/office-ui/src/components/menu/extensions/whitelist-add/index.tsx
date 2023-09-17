@@ -1,7 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
@@ -11,15 +9,20 @@ import { ContractFeatures } from "@framework/types";
 
 import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface IWhitelistMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const WhitelistMenuItem: FC<IWhitelistMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures },
+    disabled,
+    variant,
   } = props;
 
   const [isWhitelistDialogOpen, setIsWhitelistDialogOpen] = useState(false);
@@ -49,14 +52,13 @@ export const WhitelistMenuItem: FC<IWhitelistMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleWhitelist}>
-        <ListItemIcon>
-          <CheckCircle fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.whitelist" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleWhitelist}
+        icon={CheckCircle}
+        message="form.buttons.whitelist"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccountDialog
         onCancel={handleWhitelistCancel}
         onConfirm={handleWhitelistConfirmed}

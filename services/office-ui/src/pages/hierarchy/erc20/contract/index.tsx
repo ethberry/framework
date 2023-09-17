@@ -25,6 +25,7 @@ import { Erc20ContractDeployButton } from "../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc20ContractEditDialog } from "./edit";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const Erc20Contract: FC = () => {
   const { profile } = useUser<IUser>();
@@ -116,16 +117,14 @@ export const Erc20Contract: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
+                />
                 <ContractActionsMenu
                   contract={contract}
                   disabled={
@@ -133,7 +132,7 @@ export const Erc20Contract: FC = () => {
                     contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
                   }
                 />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>

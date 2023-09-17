@@ -10,15 +10,16 @@ import type { IRaffleToken } from "@framework/types";
 import { TokenStatus } from "@framework/types";
 
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IRaffleRewardButtonProps {
+  disabled?: boolean;
   token: IRaffleToken;
+  variant?: ListActionVariant;
 }
 
 export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
-  const { token } = props;
-
-  const { formatMessage } = useIntl();
+  const { disabled, token, variant } = props;
 
   const metaFn = useMetamask((ticket: IRaffleToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.round.contract!.address, RaffleGetPrizeABI, web3Context.provider?.getSigner());
@@ -38,16 +39,13 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
-      <IconButton
-        onClick={handleReward(token)}
-        disabled={
-          token.tokenStatus !== TokenStatus.MINTED || token.metadata.PRIZE || token.tokenId !== token.round.number
-        }
-        data-testid="RaffleRewardButton"
-      >
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleReward(token)}
+      icon={Redeem}
+      message="form.tips.redeem"
+      disabled={disabled}
+      data-testid="RaffleRewardButton"
+      variant={variant}
+    />
   );
 };

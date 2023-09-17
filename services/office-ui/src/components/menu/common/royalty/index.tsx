@@ -1,25 +1,28 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const {
-    contract: { address, contractFeatures, royalty, contractType },
+    contract: { address, royalty, contractType },
+    disabled,
+    variant,
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
@@ -49,14 +52,13 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleRoyalty} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
-        <ListItemIcon>
-          <PaidOutlined fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.royalty" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleRoyalty}
+        icon={PaidOutlined}
+        disabled={disabled}
+        message="form.buttons.royalty"
+        variant={variant}
+      />
       <RoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}

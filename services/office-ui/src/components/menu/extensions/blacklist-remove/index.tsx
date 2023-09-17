@@ -1,20 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccessListUnBlacklistDialog } from "./dialog";
 
 export interface IUnBlacklistMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
   const {
     contract: { address, contractFeatures },
+    disabled,
+    variant,
   } = props;
 
   const [isUnBlacklistDialogOpen, setIsUnBlacklistDialogOpen] = useState(false);
@@ -37,14 +40,13 @@ export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleUnBlacklist}>
-        <ListItemIcon>
-          <DoNotDisturbOff fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.unblacklist" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleUnBlacklist}
+        icon={DoNotDisturbOff}
+        message="form.buttons.unblacklist"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccessListUnBlacklistDialog
         onCancel={handleUnBlacklistCancel}
         onConfirm={handleUnBlacklistConfirm}

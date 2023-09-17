@@ -1,6 +1,4 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -11,15 +9,20 @@ import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "
 
 import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
 export interface IGrantRoleMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const GrantRoleMenuItem: FC<IGrantRoleMenuItemProps> = props => {
   const {
     contract: { address, contractSecurity },
+    disabled,
+    variant,
   } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
@@ -49,14 +52,13 @@ export const GrantRoleMenuItem: FC<IGrantRoleMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleGrantRole}>
-        <ListItemIcon>
-          <AccountCircle fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.grantRole" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleGrantRole}
+        icon={AccountCircle}
+        disabled={disabled}
+        message="form.buttons.grantRole"
+        variant={variant}
+      />
       <AccessControlGrantRoleDialog
         onCancel={handleGrantRoleCancel}
         onConfirm={handleGrantRoleConfirmed}

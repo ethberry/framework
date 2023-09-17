@@ -21,6 +21,7 @@ import { StakingRewardButton } from "../../../../components/buttons";
 
 import { StakingDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
+import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const StakingDeposit: FC = () => {
   const {
@@ -70,12 +71,10 @@ export const StakingDeposit: FC = () => {
           {rows.map(deposit => (
             <ListItem key={deposit.id}>
               <ListItemText>{deposit.stakingRule?.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingRewardButton stake={deposit} />
-                <IconButton onClick={handleView(deposit)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(deposit)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,9 +1,7 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AddReaction } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -13,15 +11,20 @@ import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.appr
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceMenuProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const [isStakingAllowanceDialogOpen, setIsStakingAllowanceDialogOpen] = useState(false);
@@ -67,15 +70,13 @@ export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleStakingAllowance}>
-        <ListItemIcon>
-          <AddReaction />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.allowance" />
-        </Typography>
-      </MenuItem>
-
+      <ListAction
+        onClick={handleStakingAllowance}
+        icon={AddReaction}
+        message="form.buttons.allowance"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingAllowanceDialog
         onCancel={handleStakingAllowanceCancel}
         onConfirm={handleStakingAllowanceConfirm}

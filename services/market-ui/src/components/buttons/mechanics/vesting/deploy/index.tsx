@@ -1,27 +1,26 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
-import { Web3ContextType } from "@web3-react/core";
 import { Inventory } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-
 import type { IClaim, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import VestingDeployABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
+
 import { sorter } from "../../../../../utils/sorter";
+import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IVestingReleaseButtonProps {
   claim: IClaim;
   disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
-  const { claim, disabled } = props;
-  const { formatMessage } = useIntl();
+  const { claim, disabled, variant } = props;
   const { profile } = useUser<IUser>();
 
   // ethersV6 : concat([zeroPadValue(toBeHex(profile.id), 3), zeroPadValue(toBeHex(claim.id), 4)]);
@@ -65,10 +64,13 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.deploy" })}>
-      <IconButton onClick={handleClick} disabled={disabled} data-testid="VestingDeployButton">
-        <Inventory />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Inventory}
+      message="form.tips.deploy"
+      disabled={disabled}
+      dataTestId="VestingDeployButton"
+      variant={variant}
+    />
   );
 };

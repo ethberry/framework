@@ -1,9 +1,7 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
+import { FC } from "react";
 import { Settings } from "@mui/icons-material";
-import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -11,13 +9,19 @@ import { IWaitListList, TokenType } from "@framework/types";
 
 import WaitListSetRewardABI from "../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
 
+import { ListAction, ListActionVariant } from "../../../../common/lists";
+
 export interface IGenerateMenuItemProps {
   waitListList: IWaitListList;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   const {
     waitListList: { id },
+    disabled,
+    variant,
   } = props;
 
   const { fn } = useApiCall(
@@ -65,15 +69,12 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   };
 
   return (
-    <Fragment>
-      <MenuItem onClick={handleUpload}>
-        <ListItemIcon>
-          <Settings />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.submit" />
-        </Typography>
-      </MenuItem>
-    </Fragment>
+    <ListAction
+      onClick={handleUpload}
+      icon={Settings}
+      message="form.buttons.submit"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

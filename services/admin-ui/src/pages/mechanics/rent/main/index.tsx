@@ -1,16 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, FilterList } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -22,9 +13,9 @@ import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import type { IRent } from "@framework/types";
 import { ContractFeatures, IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
 
-import { RentEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { ListAction } from "../../../../components/common/lists";
+import { ListAction, ListActions } from "../../../../components/common/lists";
+import { RentEditDialog } from "./edit";
 
 export const Rent: FC = () => {
   const {
@@ -101,9 +92,9 @@ export const Rent: FC = () => {
             <ListItem key={rent.id}>
               <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <ListAction onClick={handleEdit(rent)} icon={Create} message="form.buttons.edit" />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>
