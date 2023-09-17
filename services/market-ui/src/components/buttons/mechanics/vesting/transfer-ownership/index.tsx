@@ -4,12 +4,12 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 
 import VestingTransferOwnershipABI from "../../../../../abis/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 interface IVestingTransferOwnershipButtonProps {
   disabled?: boolean;

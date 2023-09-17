@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ILotteryToken } from "@framework/types";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
 
 import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/token-list/utils";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface ILotteryRewardButtonProps {
   disabled?: boolean;

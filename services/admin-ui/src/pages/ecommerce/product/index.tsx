@@ -3,18 +3,18 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IProduct } from "@framework/types";
+import { ProductStatus } from "@framework/types";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import type { IProduct } from "@framework/types";
-import { ProductStatus } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditProductDialog } from "./edit";
 
 export interface IProductSearchDto extends ISearchDto {

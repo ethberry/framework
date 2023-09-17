@@ -3,13 +3,13 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IPage, IPageSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import type { IPage, IPageSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { PageEditDialog } from "./edit";
 
 export const Page: FC = () => {

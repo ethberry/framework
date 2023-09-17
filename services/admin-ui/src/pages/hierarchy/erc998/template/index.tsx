@@ -8,11 +8,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { MintMenuItem } from "../../../../components/menu/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc998TemplateEditDialog } from "./edit";

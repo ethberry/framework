@@ -4,12 +4,12 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IClaim, TokenType } from "@framework/types";
 
 import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
 import { sorter } from "../../../../../utils/sorter";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;

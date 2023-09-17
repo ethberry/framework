@@ -3,12 +3,11 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IStakingRewardSimpleButtonProps {
   disabled?: boolean;

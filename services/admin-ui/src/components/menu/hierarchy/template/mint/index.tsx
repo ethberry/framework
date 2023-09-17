@@ -6,6 +6,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ITemplate, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -14,7 +15,6 @@ import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc72
 import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {

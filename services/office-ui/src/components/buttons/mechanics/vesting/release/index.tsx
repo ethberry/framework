@@ -1,15 +1,14 @@
 import { FC } from "react";
-import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import VestingReleaseABI from "../../../../../abis/mechanics/vesting/release/release.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;

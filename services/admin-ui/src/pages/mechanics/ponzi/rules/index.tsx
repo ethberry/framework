@@ -8,12 +8,12 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton, PonziToggleRuleButton } from "../../../../components/buttons";
 import { PonziEditDialog } from "./edit";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const PonziRules: FC = () => {
   const {

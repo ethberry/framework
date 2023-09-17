@@ -1,10 +1,10 @@
 import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOff } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccessListUnBlacklistDialog } from "./dialog";
 
 export interface IUnBlacklistMenuItemProps {

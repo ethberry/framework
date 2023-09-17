@@ -10,11 +10,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { CreateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/create";
 import { UploadMenuItem } from "../../../../components/menu/mechanics/wait-list-list/upload";
 import { GenerateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/generate";

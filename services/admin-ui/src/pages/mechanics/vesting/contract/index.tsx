@@ -6,6 +6,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
@@ -13,7 +14,6 @@ import { VestingDeployButton } from "../../../../components/buttons";
 import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
 import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
 import { TransferOwnershipMenuItem } from "../../../../components/menu/extensions/transfer-ownership";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {

@@ -4,11 +4,10 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
 import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/rule-toggle/updateRule.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IPonziToggleRuleButtonProps {
   disabled?: boolean;

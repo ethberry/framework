@@ -12,6 +12,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -28,7 +29,6 @@ import {
 } from "@framework/types";
 
 import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {

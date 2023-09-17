@@ -9,6 +9,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -18,7 +19,6 @@ import type {
 import { ModuleType, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {

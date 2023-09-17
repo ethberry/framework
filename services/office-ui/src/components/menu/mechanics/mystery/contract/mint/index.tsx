@@ -5,12 +5,12 @@ import { Contract } from "ethers";
 
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
 
 export interface IMintMenuItemProps {

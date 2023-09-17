@@ -1,16 +1,16 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListActions } from "@framework/mui-lists";
 import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
 import { WaitListJoinDialog } from "../../../../components/buttons/mechanics/wait-list/join";
-import { ListActions } from "../../../../components/common/lists";
 
 export const WaitListItem: FC = () => {
   const { account } = useWeb3React();

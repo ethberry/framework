@@ -7,9 +7,9 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IUser } from "@framework/types";
 
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { ITabPanelProps } from "../tabs";
 
 export const MerchantManagers: FC<ITabPanelProps> = props => {

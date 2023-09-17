@@ -5,13 +5,13 @@ import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IClaim, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import VestingDeployABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
 import { sorter } from "../../../../../utils/sorter";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IVestingReleaseButtonProps {
   claim: IClaim;

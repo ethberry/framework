@@ -3,12 +3,12 @@ import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/mat
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { ILotteryToken, ILotteryTokenSearchDto, TokenStatus } from "@framework/types";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryRewardButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryTokenSearchForm } from "./form";
 import { LotteryTokenViewDialog } from "./view";

@@ -5,9 +5,9 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { LotteryTokenViewDialog } from "./view";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "../utils";
 import { LotteryTokenSearchForm } from "./form";

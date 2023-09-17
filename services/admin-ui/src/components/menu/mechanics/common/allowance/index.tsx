@@ -3,13 +3,13 @@ import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceMenuItemProps {

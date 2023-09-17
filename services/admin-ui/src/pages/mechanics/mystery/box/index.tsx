@@ -11,12 +11,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { MintMenuItem } from "../../../../components/menu/mechanics/mystery/box/mint";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { MysteryboxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {

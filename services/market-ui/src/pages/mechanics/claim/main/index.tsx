@@ -6,13 +6,13 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListActions } from "@framework/mui-lists";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { formatItem } from "../../../../utils/money";
 import { VestingDeployButton } from "../../../../components/buttons/mechanics/vesting/deploy";
 import { ClaimRedeemButton } from "../../../../components/buttons";
-import { ListActions } from "../../../../components/common/lists";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {

@@ -8,10 +8,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IParameter } from "@framework/types";
 
 import { emptyParameter } from "../../../components/common/interfaces";
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditParameterDialog } from "./edit";
 
 export const Parameter: FC = () => {

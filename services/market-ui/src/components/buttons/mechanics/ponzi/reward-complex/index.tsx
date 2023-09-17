@@ -3,13 +3,13 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IPonziRewardComplexButtonProps {
   disabled?: boolean;

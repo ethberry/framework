@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -10,7 +11,6 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyCategory } from "../../../components/common/interfaces";
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditCategoryDialog } from "./edit";
 
 export const Category: FC = () => {

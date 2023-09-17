@@ -1,19 +1,18 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination, Tooltip } from "@mui/material";
+import { List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const Vesting: FC = () => {
   const {

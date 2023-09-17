@@ -11,12 +11,12 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { VestingClaimUploadButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { VestingClaimEditDialog } from "./edit";
 
 export const VestingClaim: FC = () => {

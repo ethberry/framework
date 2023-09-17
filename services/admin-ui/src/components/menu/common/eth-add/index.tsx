@@ -1,12 +1,12 @@
 import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOn } from "@mui/icons-material";
-import { useApiCall } from "@gemunion/react-hooks";
 
+import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { NodeEnv } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
-import { ListAction, ListActionVariant } from "../../../common/lists";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 
 export interface IEthListenerAddMenuItemProps {

@@ -9,11 +9,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { MintMenuItem } from "../../../../components/menu/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc1155TemplateEditDialog } from "./edit";

@@ -6,12 +6,12 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
 import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IPonziDepositButtonProps {
   disabled?: boolean;

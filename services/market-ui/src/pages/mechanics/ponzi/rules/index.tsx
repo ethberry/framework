@@ -9,11 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziAllowanceButton, PonziDepositButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { PonziViewDialog } from "./view";
 
 export const PonziRules: FC = () => {

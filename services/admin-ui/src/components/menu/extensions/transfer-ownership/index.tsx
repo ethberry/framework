@@ -4,12 +4,12 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
 import TransferOwnershipABI from "../../../../abis/extensions/transfer-ownership/transferOwnership.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipMenuItemProps {

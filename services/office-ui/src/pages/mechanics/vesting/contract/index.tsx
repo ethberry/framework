@@ -9,6 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
@@ -16,7 +17,6 @@ import { VestingDeployButton } from "../../../../components/buttons";
 import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
 import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
 import { TransferOwnershipMenuItem } from "../../../../components/menu/extensions/transfer-ownership";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {

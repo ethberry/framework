@@ -4,11 +4,10 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ILotteryRound } from "@framework/types";
 
 import LotteryReleaseABI from "../../../../../abis/mechanics/lottery/round/release/releaseFunds.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface ILotteryReleaseButtonProps {
   disabled?: boolean;

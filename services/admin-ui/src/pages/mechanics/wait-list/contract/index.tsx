@@ -7,12 +7,12 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { WaitListDeployButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";

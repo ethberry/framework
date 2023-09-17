@@ -1,10 +1,10 @@
 import { FC, Fragment, useState } from "react";
 import { CloudUploadOutlined } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IWaitListList } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { WaitListUploadDialog } from "./dialog";
 import { IWaitListUploadDto } from "./dialog/file-input";
 

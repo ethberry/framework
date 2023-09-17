@@ -10,13 +10,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Divider, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
@@ -9,12 +9,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto, ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc20ContractFeatures, TokenType } from "@framework/types";
 
 import { Erc20ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";

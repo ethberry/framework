@@ -9,12 +9,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus, IUser } from "@framework/types";
 
 import { WaitListItemEditDialog } from "./edit";
 import { WaitListInput } from "./list-input";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const WaitListItem: FC = () => {
   const { profile } = useUser<IUser>();

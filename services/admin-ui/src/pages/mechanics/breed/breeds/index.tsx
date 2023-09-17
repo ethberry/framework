@@ -5,10 +5,10 @@ import { Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IBreed } from "@framework/types";
 
 import { BreedLimitButton } from "../../../../components/buttons";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { BreedItemViewDialog } from "./view";
 
 export const BreedBreeds: FC = () => {

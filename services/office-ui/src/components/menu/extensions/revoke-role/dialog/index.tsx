@@ -1,21 +1,20 @@
 import { FC, useEffect, useState } from "react";
-import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAccessControl, IContract, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "../../../../../abis/extensions/revoke-role/revokeRole.abi.json";
-
-import { ListAction, ListActions } from "../../../../common/lists";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;

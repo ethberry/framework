@@ -11,11 +11,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IGrade, IGradeSearchDto, IUser } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GradeEditDialog } from "./edit";
 
 export const Grade: FC = () => {

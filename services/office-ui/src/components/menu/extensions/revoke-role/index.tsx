@@ -1,10 +1,10 @@
 import { FC, Fragment, useState } from "react";
 import { NoAccounts } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
-import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccessControlRevokeRoleDialog } from "./dialog";
 
 export interface IRevokeRoleMenuItemProps {

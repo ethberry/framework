@@ -2,15 +2,15 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziRule, PonziRuleStatus, TokenType } from "@framework/types";
 
 import PonziSetRuleABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
 import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/upload/updateRule.abi.json";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IPonziUploadButtonProps {
   disabled?: boolean;

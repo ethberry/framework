@@ -4,12 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IUnPauseMenuItemProps {
   contract: IContract;

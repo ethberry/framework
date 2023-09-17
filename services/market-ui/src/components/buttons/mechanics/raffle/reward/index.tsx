@@ -1,16 +1,13 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IRaffleToken } from "@framework/types";
-import { TokenStatus } from "@framework/types";
 
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IRaffleRewardButtonProps {
   disabled?: boolean;

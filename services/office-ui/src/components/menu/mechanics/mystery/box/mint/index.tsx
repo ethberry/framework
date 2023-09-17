@@ -3,6 +3,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IMysteryBox } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
@@ -10,7 +11,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
 
 export interface IMintMenuItemProps {

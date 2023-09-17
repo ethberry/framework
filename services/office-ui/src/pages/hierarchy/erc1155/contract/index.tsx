@@ -8,6 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc1155ContractFeatures, TokenType } from "@framework/types";
 
@@ -27,7 +28,6 @@ import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract
 import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
 import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {

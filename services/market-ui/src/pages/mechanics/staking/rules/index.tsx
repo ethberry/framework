@@ -19,6 +19,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -31,7 +32,6 @@ import {
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
 import { StakingViewDialog } from "./view";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 
 export const StakingRules: FC = () => {
   const {

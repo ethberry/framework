@@ -4,6 +4,7 @@ import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { stringify } from "qs";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { IParameter } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -12,7 +13,6 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyParameter } from "../../../components/common/interfaces";
 import { uniqueBy } from "../../../utils/uniqueBy";
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditParameterDialog } from "./edit";
 
 export const Parameter: FC = () => {

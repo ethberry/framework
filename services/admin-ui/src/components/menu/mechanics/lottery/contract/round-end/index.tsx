@@ -4,11 +4,10 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../../common/lists";
 
 export interface ILotteryRoundEndMenuItemProps {
   contract: IContract;

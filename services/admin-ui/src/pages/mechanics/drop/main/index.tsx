@@ -10,10 +10,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IDrop } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { DropEditDialog } from "./edit";
 
 export const Drop: FC = () => {

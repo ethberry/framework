@@ -2,9 +2,9 @@ import { FC, Fragment, useState } from "react";
 import { ManageHistory } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 
-import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 import { RaffleScheduleDialog } from "./dialog";
 

@@ -5,11 +5,11 @@ import { Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ILotteryRound } from "@framework/types";
 import { CronExpression } from "@framework/types";
 
 import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/release";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
 

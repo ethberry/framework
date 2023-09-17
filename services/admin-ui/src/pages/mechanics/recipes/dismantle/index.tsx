@@ -9,11 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IDismantle, IDismantleSearchDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, TokenType } from "@framework/types";
 
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { DismantleEditDialog } from "./edit";
 
 export const Dismantle: FC = () => {

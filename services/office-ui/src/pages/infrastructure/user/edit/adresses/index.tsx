@@ -3,6 +3,7 @@ import { Box, Button, Chip, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -12,7 +13,6 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyAddress } from "../../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../../utils/address";
-import { ListAction, ListActions } from "../../../../../components/common/lists";
 import { UserAddressForm } from "./edit";
 
 export interface IUserAddressSearchDro extends IPaginationDto {

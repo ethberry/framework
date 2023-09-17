@@ -8,12 +8,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import { StakingDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";

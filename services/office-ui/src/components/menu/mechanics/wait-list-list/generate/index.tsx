@@ -5,11 +5,10 @@ import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IWaitListList, TokenType } from "@framework/types";
 
 import WaitListSetRewardABI from "../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
-
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IGenerateMenuItemProps {
   waitListList: IWaitListList;

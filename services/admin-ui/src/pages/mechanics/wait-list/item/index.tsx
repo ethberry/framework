@@ -8,10 +8,10 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { WaitListItemEditDialog } from "./edit";
 
 export const WaitListItem: FC = () => {

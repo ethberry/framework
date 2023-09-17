@@ -8,11 +8,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
 import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
 import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";

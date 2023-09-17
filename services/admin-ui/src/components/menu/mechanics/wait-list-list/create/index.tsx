@@ -2,10 +2,10 @@ import { FC, Fragment, useState } from "react";
 import { Add } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@framework/types";
 
 import { WaitListItemEditDialog } from "../../../../../pages/mechanics/wait-list/item/edit";
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 
 export interface IMintMenuItemProps {
   waitListList: IWaitListList;

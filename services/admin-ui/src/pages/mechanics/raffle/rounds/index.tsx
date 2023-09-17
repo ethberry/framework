@@ -5,10 +5,10 @@ import { Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IRaffleRound } from "@framework/types";
 
 import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
-import { ListAction, ListActions } from "../../../../components/common/lists";
 import { RaffleRoundViewDialog } from "./view";
 
 export const RaffleRounds: FC = () => {

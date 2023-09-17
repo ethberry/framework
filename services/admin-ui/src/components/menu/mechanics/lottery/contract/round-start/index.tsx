@@ -5,12 +5,12 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../../../common/lists";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
 export interface ILotteryRoundStartMenuItemProps {

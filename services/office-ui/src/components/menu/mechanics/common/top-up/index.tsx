@@ -5,12 +5,12 @@ import { BigNumber, constants, Contract } from "ethers";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import TopUpABI from "../../../../../abis/exchange/top-up/topUp.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../../common/lists";
 import { ITopUpDto, TopUpDialog } from "./dialog";
 
 export interface ITopUpMenuItemProps {

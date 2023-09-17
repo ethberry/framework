@@ -4,12 +4,12 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import BlacklistABI from "../../../../abis/extensions/blacklist-add/blacklist.abi.json";
 
-import { ListAction, ListActionVariant } from "../../../common/lists";
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface IBlacklistMenuItemProps {

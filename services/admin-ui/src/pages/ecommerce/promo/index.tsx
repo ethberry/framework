@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { IPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -11,7 +12,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { emptyPromo } from "../../../components/common/interfaces";
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditPromoDialog } from "./edit";
 
 export const Promo: FC = () => {

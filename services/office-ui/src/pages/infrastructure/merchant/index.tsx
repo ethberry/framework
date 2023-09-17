@@ -8,10 +8,10 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
 
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { EditMerchantDialog } from "./edit";
 
 export const Merchant: FC = () => {

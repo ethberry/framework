@@ -11,10 +11,10 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
-import { ListAction, ListActions } from "../../../components/common/lists";
 import { FormRefresher } from "../../../components/forms/form-refresher";
 import { cleanUpAsset } from "../../../utils/money";
 import { AchievementLevelEditDialog } from "./edit";
