@@ -6,8 +6,6 @@ import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export class ContractAutocompleteDto implements IContractAutocompleteDto {
-  public contractStatus: Array<ContractStatus>;
-
   @ApiPropertyOptional({
     enum: TokenType,
     isArray: true,
@@ -40,23 +38,6 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
-  @ApiPropertyOptional({
-    enum: ContractFeatures,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractFeatures>)
-  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
-  public excludeFeatures: Array<ContractFeatures>;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public contractId: number;
-
   @ApiProperty({
     minimum: 1,
   })
@@ -65,6 +46,8 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Type(() => Number)
   public chainId: number;
 
+  public contractStatus: Array<ContractStatus>;
+  public excludeFeatures: Array<ContractFeatures>;
   public merchantId: number;
   public includeExternalContracts: boolean;
 }

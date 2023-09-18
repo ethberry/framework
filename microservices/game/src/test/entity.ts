@@ -3,11 +3,38 @@ import { ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import type { IContract, IUser } from "@framework/types";
-import { ContractStatus, TokenType, UserRole, UserStatus } from "@framework/types";
+import { wallet } from "@gemunion/constants";
+import type { IContract, IMerchant, IUser } from "@framework/types";
+import {
+  ContractStatus,
+  MerchantStatus,
+  ModuleType,
+  RatePlanType,
+  TokenType,
+  UserRole,
+  UserStatus,
+} from "@framework/types";
 import { baseTokenURI, EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 import { UserEntity } from "../infrastructure/user/user.entity";
+import { MerchantEntity } from "../infrastructure/merchant/merchant.entity";
+
+export const generateTestMerchant = (data: Partial<IMerchant> = {}): DeepPartial<MerchantEntity> => {
+  return Object.assign(
+    {
+      title: "GEMUNION",
+      description: simpleFormatting,
+      email: `trejgun+${v4()}@gmail.com`,
+      imageUrl,
+      wallet,
+      merchantStatus: MerchantStatus.ACTIVE,
+      // social: IMerchantSocial,
+      ratePlan: RatePlanType.GOLD,
+      users: [],
+    },
+    data,
+  );
+};
 
 export const generateTestUser = (data: Partial<IUser> = {}): DeepPartial<UserEntity> => {
   return Object.assign(
@@ -44,6 +71,7 @@ export const generateTestContract = (data: Partial<IContract> = {}): Record<stri
       baseTokenUri: baseTokenURI,
       contractStatus: ContractStatus.ACTIVE,
       contractType: TokenType.NATIVE,
+      contractModule: ModuleType.HIERARCHY,
       contractFeatures: [],
     },
     data,

@@ -123,7 +123,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "e2e": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config=test/jest.config.json",
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist",
     "prepublish": "npm run build",
