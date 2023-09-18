@@ -34,7 +34,7 @@ export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
   return (
     <ListAction
       onClick={handleToggleRule(rule)}
-      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <PauseCircleOutline /> : <PlayCircleOutline />}
+      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? PauseCircleOutline : PlayCircleOutline}
       message={
         rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? "pages.ponzi.rules.deactivate" : "pages.ponzi.rules.activate"
       }
