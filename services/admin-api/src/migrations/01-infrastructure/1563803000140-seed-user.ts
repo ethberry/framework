@@ -27,9 +27,11 @@ export class SeedUser1563803000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'trejgun@gmail.com',
-        'bPTD3jSwxTdqHWvlG0ek2WbHPJd2',
-        'Trej Gun',
+        '${process.env.NODE_ENV === NodeEnv.production ? "gemunion@gemunion.io" : "trejgun@gmail.com"}',
+        '${
+          process.env.NODE_ENV === NodeEnv.production ? "Rme7AdwNfdMoXaje551gkRtJF402" : "nmuQTQhyQ1X5nla2i061Wsc4cIj1"
+        }',
+        'GemUnion Admin',
         '${avatarWhiteUrl}',
         'EN',
         'US',
