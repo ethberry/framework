@@ -1,23 +1,13 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import {
-  ethLoggerInServiceProvider,
-  ethLoggerOutServiceProvider,
-  ethTxInServiceProvider,
-} from "../../common/providers";
+import { coreEthServiceProvider, ethTxInServiceProvider } from "../../common/providers";
 import { EthLoggerService } from "./eth-logger.service";
 import { EthLoggerController } from "./eth-logger.controller";
 
 @Module({
   imports: [ConfigModule],
-  providers: [
-    ethLoggerInServiceProvider,
-    ethLoggerOutServiceProvider,
-    ethTxInServiceProvider,
-    Logger,
-    EthLoggerService,
-  ],
+  providers: [coreEthServiceProvider, ethTxInServiceProvider, Logger, EthLoggerService],
   controllers: [EthLoggerController],
   exports: [EthLoggerService],
 })

@@ -25,7 +25,7 @@ export class ContractManagerServiceRmq {
     private readonly vestingLogService: VestingLogService,
   ) {}
 
-  public async loggerIn(dto: IEthLoggerInOutDto): Promise<void> {
+  public async addListener(dto: IEthLoggerInOutDto): Promise<void> {
     const { address, listenerType, fromBlock } = dto;
 
     if (listenerType === ListenerType.ERC20) {
@@ -102,7 +102,7 @@ export class ContractManagerServiceRmq {
     }
   }
 
-  public async loggerOut(dto: IEthLoggerInOutDto): Promise<void> {
+  public async removeListener(dto: IEthLoggerInOutDto): Promise<void> {
     const { address, listenerType, fromBlock } = dto;
 
     if (listenerType === ListenerType.ERC20) {

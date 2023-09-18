@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { MicroserviceOptions, Transport, MessageHandler } from "@nestjs/microservices";
+import { MessageHandler, MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
@@ -80,6 +80,7 @@ async function bootstrap(): Promise<void> {
       url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
     },
   };
+
   const getQueue = new Queue(redisQueueName, sharedConfigWorker);
   getQueue.process(async (job: IRedisJob, done: any): Promise<Observable<any>> => {
     console.info(`PROCESSING JOB ${job.id}, route: ${job.data.route}`);

@@ -1,20 +1,19 @@
-import { Inject, Injectable, LoggerService, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-
-import { RmqProviderType } from "@framework/types";
-import type { IEthLoggerInOutDto } from "./interfaces";
-import { RedisProviderType } from "../../common/providers";
 import Queue from "bee-queue";
+
+import { CoreEthType, RmqProviderType } from "@framework/types";
+
+import { RedisProviderType } from "../../common/providers";
+import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class EthLoggerService {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
-    @Inject(RmqProviderType.WATCHER_IN_SERVICE)
-    private readonly loggerInProxy: ClientProxy,
-    @Inject(RmqProviderType.WATCHER_OUT_SERVICE)
-    private readonly loggerOutProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE)
+    private readonly coreEthServiceProxy: ClientProxy,
     @Inject(RedisProviderType.QUEUE_IN_SERVICE)
     private readonly txInQueue: Queue,
   ) {}
@@ -29,10 +28,10 @@ export class EthLoggerService {
         this.loggerService.log("JOB CREATED", job.id);
         // job enqueued, job.id populated
       });
-    return this.loggerInProxy.emit(RmqProviderType.WATCHER_IN_SERVICE, dto).toPromise();
+    return this.coreEthServiceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
   }
 
   public async removeListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return this.loggerOutProxy.emit(RmqProviderType.WATCHER_OUT_SERVICE, dto).toPromise();
+    return this.coreEthServiceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
   }
 }

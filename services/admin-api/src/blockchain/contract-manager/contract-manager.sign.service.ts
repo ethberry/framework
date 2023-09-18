@@ -31,12 +31,9 @@ import {
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractService } from "../hierarchy/contract/contract.service";
-import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
+import { ContractManagerService } from "./contract-manager.service";
 import { getContractABI } from "./utils";
-
-import { ConfigService } from "@nestjs/config";
-// import Queue from "bee-queue";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -45,7 +42,6 @@ export class ContractManagerSignService {
     private readonly signer: Wallet,
     private readonly contractService: ContractService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {

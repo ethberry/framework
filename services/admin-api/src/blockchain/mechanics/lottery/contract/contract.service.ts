@@ -6,7 +6,7 @@ import { FindOptionsWhere, Repository } from "typeorm";
 import { ClientProxy } from "@nestjs/microservices";
 
 import type { IContractSearchDto, ILotteryScheduleUpdateDto } from "@framework/types";
-import { ModuleType, RmqProviderType } from "@framework/types";
+import { CronType, ModuleType, RmqProviderType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -17,8 +17,8 @@ export class LotteryContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE_LOTTERY)
-    private readonly scheduleProxy: ClientProxy,
+    @Inject(RmqProviderType.CRON_SERVICE)
+    protected readonly cronServiceProxy: ClientProxy,
     protected readonly configService: ConfigService,
   ) {
     super(contractEntityRepository, configService);
@@ -45,8 +45,8 @@ export class LotteryContractService extends ContractService {
 
     await this.updateParameter(where, "schedule", dto.schedule);
 
-    return this.scheduleProxy
-      .emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, {
+    return this.cronServiceProxy
+      .emit(CronType.SCHEDULE_LOTTERY_ROUND, {
         address: lotteryEntity.address,
         schedule: dto.schedule,
       })

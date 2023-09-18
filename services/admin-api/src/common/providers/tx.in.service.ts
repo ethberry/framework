@@ -18,7 +18,6 @@ export const ethTxInServiceProvider = {
         url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
       },
     };
-    // const rmqQueueLogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
     return new Queue("ETH_EVENTS", sharedConfigSend);
   },
 };

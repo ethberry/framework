@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 
 import { RmqProviderType } from "@framework/types";
 
-export const ethLoggerOutServiceProvider = {
-  provide: RmqProviderType.WATCHER_OUT_SERVICE,
+export const coreEthServiceProvider = {
+  provide: RmqProviderType.CORE_ETH_SERVICE,
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
