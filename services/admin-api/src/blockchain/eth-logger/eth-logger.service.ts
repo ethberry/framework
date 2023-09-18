@@ -1,5 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Inject, Injectable, LoggerService, Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { RmqProviderType } from "@framework/types";
@@ -10,7 +9,8 @@ import Queue from "bee-queue";
 @Injectable()
 export class EthLoggerService {
   constructor(
-    private readonly configService: ConfigService,
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     @Inject(RmqProviderType.WATCHER_IN_SERVICE)
     private readonly loggerInProxy: ClientProxy,
     @Inject(RmqProviderType.WATCHER_OUT_SERVICE)
@@ -26,7 +26,7 @@ export class EthLoggerService {
       .retries(2)
       .save()
       .then((job: any) => {
-        console.log("JOB CREATED", job.id);
+        this.loggerService.log("JOB CREATED", job.id);
         // job enqueued, job.id populated
       });
     return this.loggerInProxy.emit(RmqProviderType.WATCHER_IN_SERVICE, dto).toPromise();
