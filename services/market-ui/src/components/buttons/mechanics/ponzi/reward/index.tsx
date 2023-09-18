@@ -1,23 +1,23 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import PonziReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
 
 export interface IPonziRewardButtonProps {
+  className?: string;
+  disabled?: boolean;
   stake: IPonziDeposit;
+  variant?: ListActionVariant;
 }
 
 export const PonziRewardButton: FC<IPonziRewardButtonProps> = props => {
-  const { stake } = props;
-
-  const { formatMessage } = useIntl();
+  const { className, disabled, stake, variant } = props;
 
   const metaFn = useMetamask((stake: IPonziDeposit, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -39,10 +39,14 @@ export const PonziRewardButton: FC<IPonziRewardButtonProps> = props => {
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.reward" })}>
-      <IconButton onClick={handleReward(stake)} data-testid="StakeRewardButton">
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleReward(stake)}
+      icon={Redeem}
+      message="form.tips.reward"
+      className={className}
+      dataTestId="StakeRewardButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

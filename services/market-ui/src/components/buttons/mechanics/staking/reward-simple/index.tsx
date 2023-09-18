@@ -10,13 +10,14 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
 
 export interface IStakingRewardSimpleButtonProps {
+  className?: string;
   disabled?: boolean;
   stake: IStakingDeposit;
   variant?: ListActionVariant;
 }
 
 export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = props => {
-  const { disabled, stake, variant } = props;
+  const { className, disabled, stake, variant } = props;
 
   const metaFn = useMetamask((stake: IStakingDeposit, web3Context: Web3ContextType) => {
     // const contract = new Contract(process.env.STAKING_ADDR, StakingReceiveRewardABI, web3Context.provider?.getSigner());
@@ -43,6 +44,7 @@ export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = pr
       onClick={handleReward(stake)}
       icon={Redeem}
       message="form.tips.reward"
+      className={className}
       dataTestId="StakeRewardButton"
       disabled={disabled}
       variant={variant}

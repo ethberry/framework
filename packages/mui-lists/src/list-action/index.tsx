@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { ElementType, FC } from "react";
 import {
   Button,
   ButtonPropsVariantOverrides,
@@ -8,14 +8,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { Warning } from "@mui/icons-material";
 import { OverridableStringUnion } from "@mui/types";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListActionVariant } from "../interface";
 
 export interface IListActionProps {
-  icon: any;
+  icon?: ElementType;
   message: string;
+  messageValues?: Record<string, any>;
   onClick: () => void;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -24,7 +26,7 @@ export interface IListActionProps {
   className?: string; // for button toolbar
 }
 
-export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
+export const ListAction: FC<IListActionProps> = props => {
   const {
     icon: Icon,
     variant = ListActionVariant.iconButton,
@@ -32,6 +34,7 @@ export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
     className,
     dataTestId,
     message,
+    messageValues = {},
     disabled,
     onClick,
   } = props;
@@ -46,29 +49,32 @@ export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
           variant={buttonVariant}
           onClick={onClick}
           disabled={disabled}
-          startIcon={<Icon />}
+          startIcon={Icon ? <Icon /> : null}
           data-testid={dataTestId}
         >
-          <FormattedMessage id={message} />
+          <FormattedMessage id={message} values={messageValues} />
         </Button>
       );
     case ListActionVariant.menuItem:
       return (
         <MenuItem onClick={onClick} disabled={disabled} data-testid={dataTestId}>
-          <ListItemIcon>
-            <Icon />
-          </ListItemIcon>
+          {Icon ? (
+            <ListItemIcon>
+              <Icon />
+            </ListItemIcon>
+          ) : null}
+
           <Typography variant="inherit">
-            <FormattedMessage id={message} />
+            <FormattedMessage id={message} values={messageValues} />
           </Typography>
         </MenuItem>
       );
     case ListActionVariant.iconButton:
     default:
       return (
-        <Tooltip title={formatMessage({ id: message })}>
+        <Tooltip title={formatMessage({ id: message }, { ...messageValues })}>
           <IconButton onClick={onClick} disabled={disabled} data-testid={dataTestId}>
-            <Icon />
+            {Icon ? <Icon /> : <Warning />}
           </IconButton>
         </Tooltip>
       );

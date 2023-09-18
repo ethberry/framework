@@ -1,20 +1,22 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
-import { Button } from "@mui/material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import UnpackABI from "../../../../../abis/mechanics/wrapper/unpack/unpack.abi.json";
 
 export interface IWrapperUnpackButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.template!.contract!.address, UnpackABI, web3Context.provider?.getSigner());
@@ -30,8 +32,13 @@ export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleUnpack(token)} data-testid="WrapperUnpackButton">
-      <FormattedMessage id="form.buttons.unpack" />
-    </Button>
+    <ListAction
+      onClick={handleUnpack(token)}
+      message="form.buttons.unpack"
+      className={className}
+      dataTestId="WrapperUnpackButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

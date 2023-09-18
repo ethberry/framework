@@ -12,13 +12,14 @@ import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/get
 import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/token-list/utils";
 
 export interface ILotteryRewardButtonProps {
+  className?: string;
   disabled?: boolean;
   token: ILotteryToken;
   variant?: ListActionVariant;
 }
 
 export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
-  const { disabled, token, variant } = props;
+  const { className, disabled, token, variant } = props;
 
   const metaFn = useMetamask((ticket: ILotteryToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.round.contract!.address, LotteryGetPrizeABI, web3Context.provider?.getSigner());
@@ -43,6 +44,7 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
       onClick={handleReward(token)}
       icon={Redeem}
       message="form.tips.redeem"
+      className={className}
       dataTestId="LotteryRewardButton"
       disabled={disabled || count === ""}
       variant={variant}

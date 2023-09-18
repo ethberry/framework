@@ -11,13 +11,14 @@ import type { IWaitListItem } from "@framework/types";
 import ClaimABI from "../../../../../abis/mechanics/wait-list/claim/claim.abi.json";
 
 export interface IWaitListClaimButtonProps {
+  className?: string;
   disabled?: boolean;
   listItem: Partial<IWaitListItem>;
   variant?: ListActionVariant;
 }
 
 export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
-  const { disabled, listItem, variant } = props;
+  const { className, disabled, listItem, variant } = props;
   const { listId, list } = listItem;
 
   const { fn } = useApiCall(
@@ -49,6 +50,7 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
       onClick={handleClick}
       icon={Redeem}
       message="form.tips.claim"
+      className={className}
       dataTestId="ClaimWaitListButton"
       disabled={disabled}
       variant={variant}

@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { boolArrayToByte32 } from "@framework/traits-ui";
@@ -16,15 +15,16 @@ import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/p
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface ILotteryPurchaseButtonProps {
-  round: Partial<ILotteryRound>;
-  ticketNumbers: Array<boolean>;
+  className?: string;
   clearForm: () => void;
   disabled: boolean;
-  className?: string;
+  round: Partial<ILotteryRound>;
+  ticketNumbers: Array<boolean>;
+  variant?: ListActionVariant;
 }
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { clearForm, ticketNumbers, round, disabled, className } = props;
+  const { clearForm, ticketNumbers, round, disabled, className, variant = ListActionVariant.button } = props;
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -88,15 +88,15 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button
-      startIcon={<Casino />}
+    <ListAction
       onClick={handlePurchase}
-      disabled={disabled}
+      icon={Casino}
+      message="form.buttons.buy"
+      buttonVariant="contained"
       className={className}
-      variant="contained"
-      data-testid="LotteryBuyTicket"
-    >
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+      dataTestId="LotteryBuyTicket"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

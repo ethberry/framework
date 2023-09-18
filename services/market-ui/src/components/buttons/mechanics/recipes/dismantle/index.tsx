@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
+import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IDismantle, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -18,12 +17,15 @@ import { sorter } from "../../../../../utils/sorter";
 import { getDismantleMultiplier } from "./utils";
 
 interface IDismantleButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
   dismantle: IDismantle;
+  variant?: ListActionVariant;
 }
 
 export const DismantleButton: FC<IDismantleButtonProps> = props => {
-  const { token, dismantle } = props;
+  const { className, disabled, token, dismantle, variant = ListActionVariant.button } = props;
 
   const navigate = useNavigate();
   const settings = useSettings();
@@ -99,8 +101,13 @@ export const DismantleButton: FC<IDismantleButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleDismantle} data-testid="ExchangeDismantleButton">
-      <FormattedMessage id="form.buttons.dismantle" />
-    </Button>
+    <ListAction
+      onClick={handleDismantle}
+      message="form.buttons.dismantle"
+      className={className}
+      dataTestId="ExchangeDismantleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

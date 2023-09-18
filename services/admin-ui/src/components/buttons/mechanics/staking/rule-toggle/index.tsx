@@ -34,7 +34,7 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
   return (
     <ListAction
       onClick={handleToggleRule(rule)}
-      icon={rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? <PauseCircleOutline /> : <PlayCircleOutline />}
+      icon={rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? PauseCircleOutline : PlayCircleOutline}
       message={
         rule.stakingRuleStatus === StakingRuleStatus.ACTIVE
           ? "pages.staking.rules.deactivate"

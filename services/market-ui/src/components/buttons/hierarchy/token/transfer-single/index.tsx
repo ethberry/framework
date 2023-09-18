@@ -1,28 +1,28 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import ERC1155SafeTransferFromABI from "../../../../../abis/hierarchy/erc1155/transfer/transfer.abi.json";
 
-import type { IErc1155TransferDto } from "./account";
-import { Erc1155TransferDialog } from "./account";
+import type { IErc1155TransferDto } from "./dialog";
+import { Erc1155TransferDialog } from "./dialog";
 
 interface ITokenTransferButtonProps {
+  className?: string;
   token: IToken;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const Erc1155TransferButton: FC<ITokenTransferButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const [isTransferTokenDialogOpen, setIsTransferTokenDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IErc1155TransferDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -49,15 +49,14 @@ export const Erc1155TransferButton: FC<ITokenTransferButtonProps> = props => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
-        <Button
-          onClick={handleTransfer}
-          disabled={token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-          data-testid="TransferErc1155Button"
-        >
-          <FormattedMessage id="form.buttons.transfer" />
-        </Button>
-      </Tooltip>
+      <ListAction
+        onClick={handleTransfer}
+        message="form.buttons.transfer"
+        className={className}
+        dataTestId="TransferErc1155Button"
+        disabled={disabled || token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        variant={variant}
+      />
       <Erc1155TransferDialog
         onConfirm={handleTransferConfirm}
         onCancel={handleTransferCancel}

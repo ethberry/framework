@@ -1,12 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { ContractFeatures, IGrade, IToken, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
@@ -15,12 +14,14 @@ import { getEthPrice, getMultiplier } from "./utils";
 import { IUpgradeDto, UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
+  className?: string;
   disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const GradeButton: FC<IUpgradeButtonProps> = props => {
-  const { disabled = false, token } = props;
+  const { className, disabled = false, token, variant = ListActionVariant.button } = props;
 
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
@@ -116,9 +117,14 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button disabled={disabled} onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
-        <FormattedMessage id={`form.buttons.upgrade`} />
-      </Button>
+      <ListAction
+        onClick={handleUpgrade}
+        message="form.buttons.upgrade"
+        className={className}
+        dataTestId="ExchangeUpgradeButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <UpgradeDialog
         onCancel={handleUpgradeCancel}
         onConfirm={handleUpgradeConfirm}

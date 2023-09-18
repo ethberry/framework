@@ -13,12 +13,13 @@ import { sorter } from "../../../../../utils/sorter";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
-  const { claim, disabled, variant } = props;
+  const { claim, className, disabled, variant } = props;
 
   const metaRedeem = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
@@ -51,8 +52,9 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
       onClick={handleClick}
       icon={Redeem}
       message="form.tips.redeem"
+      className={className}
       disabled={disabled}
-      data-testid="ClaimRedeemButton"
+      dataTestId="ClaimRedeemButton"
       variant={variant}
     />
   );

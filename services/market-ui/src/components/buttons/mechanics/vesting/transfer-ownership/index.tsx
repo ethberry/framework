@@ -12,13 +12,14 @@ import VestingTransferOwnershipABI from "../../../../../abis/mechanics/vesting/t
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
 interface IVestingTransferOwnershipButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
   vesting: IContract;
 }
 
 export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonProps> = props => {
-  const { disabled, variant, vesting } = props;
+  const { className, disabled, variant, vesting } = props;
 
   const [isTransferOwnershipDialogOpen, setIsTransferOwnershipDialogOpen] = useState(false);
 
@@ -47,6 +48,7 @@ export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonP
         onClick={handleTransferOwnership}
         icon={Send}
         message="form.tips.transferOwnership"
+        className={className}
         dataTestId="VestingTransferOwnershipButton"
         disabled={disabled}
         variant={variant}

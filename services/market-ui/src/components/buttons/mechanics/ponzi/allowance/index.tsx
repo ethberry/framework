@@ -12,13 +12,14 @@ import AllowanceABI from "../../../../../abis/mechanics/ponzi/allowance/allowanc
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IPonziAllowanceButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IPonziRule;
   variant?: ListActionVariant;
 }
 
 export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -55,6 +56,7 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
         onClick={handleAllowance}
         icon={HowToVote}
         message="form.tips.allowance"
+        className={className}
         dataTestId="PonziAllowanceButton"
         disabled={disabled}
         variant={variant}

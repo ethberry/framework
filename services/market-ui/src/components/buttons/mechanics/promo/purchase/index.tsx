@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
-import { FormattedMessage } from "react-intl";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { IAssetPromo, IMysteryBox, ModuleType, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { IAssetPromo, IMysteryBox, ModuleType, TokenType } from "@framework/types";
 
 import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
 
@@ -19,11 +18,14 @@ interface IPromoWithMystery extends IAssetPromo {
 }
 
 interface IPromoPurchaseButtonProps {
+  className?: string;
+  disabled?: boolean;
   promo: IPromoWithMystery;
+  variant?: ListActionVariant;
 }
 
 export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
-  const { promo } = props;
+  const { className, disabled, promo, variant = ListActionVariant.button } = props;
 
   const mysteryComponents = promo.item?.components.filter(
     component => component.contract!.contractModule === ModuleType.MYSTERY,
@@ -128,8 +130,13 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleBuy} data-testid="PromoPurchaseButton">
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+    <ListAction
+      onClick={handleBuy}
+      message="form.buttons.buy"
+      className={className}
+      dataTestId="PromoPurchaseButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

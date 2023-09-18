@@ -88,7 +88,7 @@ export const PonziUploadButton: FC<IPonziUploadButtonProps> = props => {
   return (
     <ListAction
       onClick={handleToggleRule(rule)}
-      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? <Close /> : <Check />}
+      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? Close : Check}
       message={
         rule.ponziRuleStatus === PonziRuleStatus.ACTIVE
           ? "pages.staking.rules.deactivate"

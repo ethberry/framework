@@ -14,13 +14,14 @@ import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IPonziDepositButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IPonziRule;
   variant?: ListActionVariant;
 }
 
 export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
   const settings = useSettings();
 
   const metaDeposit = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
@@ -53,6 +54,7 @@ export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
       onClick={handleDeposit(rule)}
       icon={Savings}
       message="form.tips.deposit"
+      className={className}
       dataTestId="StakeDepositSimpleButton"
       disabled={disabled}
       variant={variant}
