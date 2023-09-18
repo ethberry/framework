@@ -56,7 +56,7 @@ export class SeedContractDispenserAt1692165706800 implements MigrationInterface 
         ), (
           ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 208},
           '${dispenserAddrBinance}',
-          '${chainId}',
+          56,
           'DISPENSER (BNB)',
           '${simpleFormatting}',
           '${imageUrl}',
