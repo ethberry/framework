@@ -43,6 +43,15 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
       testId="Erc998TemplateEditForm"
       {...rest}
     >
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractType: [TokenType.ERC998],
+          contractModule: [ModuleType.HIERARCHY],
+        }}
+        readOnly={!!id}
+      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TemplateAssetInput
@@ -61,15 +70,6 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
       />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
-      <EntityInput
-        name="contractId"
-        controller="contracts"
-        data={{
-          contractType: [TokenType.ERC998],
-          contractModule: [ModuleType.HIERARCHY],
-        }}
-        readOnly={!!id}
-      />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );
