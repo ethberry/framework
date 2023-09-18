@@ -1,7 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
-import { useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -31,7 +30,6 @@ export const Vesting: FC = () => {
     empty: emptyVestingContract,
   });
 
-  const { formatMessage } = useIntl();
   const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
   const [contract, setContract] = useState<IContract>({} as IContract);
 
