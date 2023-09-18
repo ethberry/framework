@@ -10,13 +10,14 @@ import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import StakingUpdateRuleABI from "../../../../../abis/mechanics/staking/rule-toggle/updateRule.abi.json";
 
 export interface IStakingToggleRuleButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IStakingRule;
   variant?: ListActionVariant;
 }
 
 export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
 
   const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
@@ -39,6 +40,7 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
           ? "pages.staking.rules.deactivate"
           : "pages.staking.rules.activate"
       }
+      className={className}
       dataTestId="StakeToggleRuleButton"
       disabled={disabled}
       variant={variant}

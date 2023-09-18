@@ -8,13 +8,14 @@ import type { IClaimUploadDto } from "@framework/types";
 import { VestingClaimUploadDialog } from "./dialog";
 
 export interface IVestingClaimUploadButtonProps {
+  className?: string;
   disabled?: boolean;
   onRefreshPage: () => Promise<void>;
   variant?: ListActionVariant;
 }
 
 export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = props => {
-  const { disabled, onRefreshPage, variant = ListActionVariant.button } = props;
+  const { className, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -50,6 +51,7 @@ export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = prop
         onClick={handleUpload}
         icon={Add}
         message="form.buttons.upload"
+        className={className}
         dataTestId="VestingClaimUploadButton"
         disabled={disabled}
         variant={variant}

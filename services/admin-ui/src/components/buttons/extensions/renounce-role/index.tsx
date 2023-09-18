@@ -8,6 +8,7 @@ import { ContractSecurity } from "@framework/types";
 import { AccessControlRenounceRoleDialog } from "./dialog";
 
 export interface IRenounceRoleButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -15,6 +16,7 @@ export interface IRenounceRoleButtonProps {
 
 export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
   const {
+    className,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -44,6 +46,8 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
         onClick={handleRenounceRole}
         icon={NoAccounts}
         message="form.buttons.renounceRole"
+        className={className}
+        dataTestId="RenounceRoleButton"
         disabled={disabled}
         variant={variant}
       />

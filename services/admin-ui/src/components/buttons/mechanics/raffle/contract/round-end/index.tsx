@@ -11,6 +11,7 @@ import { NodeEnv } from "@framework/types";
 import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 
 export interface IRaffleRoundEndButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -18,6 +19,7 @@ export interface IRaffleRoundEndButtonProps {
 
 export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -41,6 +43,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       onClick={handleEndRound}
       icon={StopCircleOutlined}
       message="pages.raffle.rounds.end"
+      className={className}
       dataTestId="RaffleRoundEndButton"
       disabled={disabled}
       variant={variant}

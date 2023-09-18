@@ -13,6 +13,7 @@ import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/set
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface IRoyaltyButtonProps {
 
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   const {
+    className,
     contract: { address, royalty, contractType },
     disabled,
     variant,
@@ -56,6 +58,8 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         onClick={handleRoyalty}
         icon={PaidOutlined}
         message="form.buttons.royalty"
+        className={className}
+        dataTestId="RoyaltyButton"
         disabled={disabled}
         variant={variant}
       />

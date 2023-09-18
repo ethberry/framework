@@ -18,6 +18,7 @@ import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -25,6 +26,7 @@ export interface IMintButtonProps {
 
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
+    className,
     contract: { address, id: contractId, contractType, decimals },
     disabled,
     variant,
@@ -104,6 +106,8 @@ export const MintButton: FC<IMintButtonProps> = props => {
         onClick={handleMintToken}
         icon={AddCircleOutline}
         message="form.buttons.mintToken"
+        className={className}
+        dataTestId="ContractMintButton"
         disabled={disabled || !hasAccess}
         variant={variant}
       />

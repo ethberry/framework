@@ -9,6 +9,7 @@ import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 import { LotteryScheduleDialog } from "./dialog";
 
 export interface ILotteryScheduleFullButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   refreshPage: () => Promise<void>;
@@ -17,6 +18,7 @@ export interface ILotteryScheduleFullButtonProps {
 
 export const LotteryScheduleButton: FC<ILotteryScheduleFullButtonProps> = props => {
   const {
+    className,
     contract: { id, parameters },
     disabled,
     refreshPage,
@@ -54,6 +56,7 @@ export const LotteryScheduleButton: FC<ILotteryScheduleFullButtonProps> = props 
         onClick={handleSchedule}
         icon={ManageHistory}
         message="form.buttons.schedule"
+        className={className}
         dataTestId="LotteryScheduleButton"
         disabled={disabled}
         variant={variant}

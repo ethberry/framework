@@ -13,13 +13,19 @@ import DeployERC721TokenABI from "../../../../../abis/hierarchy/erc721/contract-
 import { Erc721ContractDeployDialog } from "./dialog";
 
 export interface IErc721ContractDeployButtonProps {
+  className?: string;
   contractTemplate?: Erc721ContractTemplates;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = props => {
-  const { contractTemplate = Erc721ContractTemplates.SIMPLE, disabled, variant = ListActionVariant.button } = props;
+  const {
+    className,
+    contractTemplate = Erc721ContractTemplates.SIMPLE,
+    disabled,
+    variant = ListActionVariant.button,
+  } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -68,6 +74,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="Erc721ContractDeployButton"
         disabled={disabled}
         variant={variant}

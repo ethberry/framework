@@ -8,14 +8,16 @@ import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@fram
 import { WaitListItemEditDialog } from "../../../../../../pages/mechanics/wait-list/item/edit";
 
 export interface IWaitListListCreateButtonProps {
-  waitListList: IWaitListList;
+  className?: string;
   disabled?: boolean;
-  variant?: ListActionVariant;
   onRefreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
+  waitListList: IWaitListList;
 }
 
 export const WaitListListCreateButton: FC<IWaitListListCreateButtonProps> = props => {
   const {
+    className,
     waitListList: { id },
     disabled,
     variant,
@@ -50,7 +52,15 @@ export const WaitListListCreateButton: FC<IWaitListListCreateButtonProps> = prop
 
   return (
     <Fragment>
-      <ListAction onClick={handleUpload} icon={Add} message="form.buttons.add" disabled={disabled} variant={variant} />
+      <ListAction
+        onClick={handleUpload}
+        icon={Add}
+        message="form.buttons.add"
+        className={className}
+        dataTestId="WaitListListCreateButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <WaitListItemEditDialog
         onCancel={handleCreateCancel}
         onConfirm={handleCreateConfirm}

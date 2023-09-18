@@ -13,12 +13,13 @@ import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contrac
 import { Erc1155ContractDeployDialog } from "./dialog";
 
 export interface IErc1155TokenDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -65,6 +66,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         data-testid="Erc1155ContractDeployButton"
         disabled={disabled}
         variant={variant}

@@ -21,6 +21,7 @@ export interface IListActionProps {
   variant?: ListActionVariant;
   dataTestId?: string;
   buttonVariant?: OverridableStringUnion<"text" | "outlined" | "contained", ButtonPropsVariantOverrides>;
+  className?: string; // for button toolbar
 }
 
 export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
@@ -28,6 +29,7 @@ export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
     icon: Icon,
     variant = ListActionVariant.iconButton,
     buttonVariant = "outlined",
+    className,
     dataTestId,
     message,
     disabled,
@@ -40,6 +42,7 @@ export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
     case ListActionVariant.button:
       return (
         <Button
+          className={className}
           variant={buttonVariant}
           onClick={onClick}
           disabled={disabled}

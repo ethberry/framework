@@ -8,6 +8,7 @@ import { ContractFeatures } from "@framework/types";
 import { AccessListUnBlacklistDialog } from "./dialog";
 
 export interface IUnBlacklistButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -15,6 +16,7 @@ export interface IUnBlacklistButtonProps {
 
 export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
   const {
+    className,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -44,6 +46,8 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
         onClick={handleUnBlacklist}
         icon={DoNotDisturbOff}
         message="form.buttons.unblacklist"
+        className={className}
+        dataTestId="UnBlacklistButton"
         disabled={disabled}
         variant={variant}
       />

@@ -15,6 +15,7 @@ export interface ICollectionRow {
 }
 
 export interface ICollectionUploadButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -23,6 +24,7 @@ export interface ICollectionUploadButtonProps {
 
 export const CollectionUploadButton: FC<ICollectionUploadButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -63,6 +65,8 @@ export const CollectionUploadButton: FC<ICollectionUploadButtonProps> = props =>
         onClick={handleUpload}
         icon={PaidOutlined}
         message="form.buttons.collectionUpload"
+        className={className}
+        dataTestId="CollectionUploadButton"
         disabled={disabled}
         variant={variant}
       />

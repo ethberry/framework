@@ -13,12 +13,13 @@ import DeployCollectionABI from "../../../../../abis/mechanics/collection/contra
 import { CollectionContractDeployDialog } from "./dialog";
 
 export interface ICollectionContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -68,6 +69,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="CollectionContractDeployButton"
         disabled={disabled}
         variant={variant}

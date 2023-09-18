@@ -9,6 +9,7 @@ import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 import { RaffleScheduleDialog } from "./dialog";
 
 export interface IRaffleScheduleFullButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   refreshPage: () => Promise<void>;
@@ -17,6 +18,7 @@ export interface IRaffleScheduleFullButtonProps {
 
 export const RaffleScheduleButton: FC<IRaffleScheduleFullButtonProps> = props => {
   const {
+    className,
     contract: { id, parameters },
     disabled,
     refreshPage,
@@ -54,6 +56,7 @@ export const RaffleScheduleButton: FC<IRaffleScheduleFullButtonProps> = props =>
         onClick={handleSchedule}
         icon={ManageHistory}
         message="form.buttons.schedule"
+        className={className}
         dataTestId="RaffleScheduleButton"
         disabled={disabled}
         variant={variant}

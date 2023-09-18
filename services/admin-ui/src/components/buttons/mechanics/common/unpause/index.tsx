@@ -11,6 +11,7 @@ import { ContractFeatures } from "@framework/types";
 import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
 
 export interface IUnPauseButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -18,6 +19,7 @@ export interface IUnPauseButtonProps {
 
 export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
   const {
+    className,
     contract: { address, isPaused, contractFeatures },
     disabled,
     variant,
@@ -41,6 +43,8 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
       onClick={handleUnPause}
       icon={PlayCircleOutline}
       message="form.buttons.unpause"
+      className={className}
+      dataTestId="UnPauseButton"
       disabled={disabled}
       variant={variant}
     />

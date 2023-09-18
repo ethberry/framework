@@ -13,12 +13,13 @@ import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/set
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
 export interface IStakingRuleCreateButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -106,6 +107,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
         onClick={handleUpload}
         icon={Add}
         message="form.buttons.create"
+        className={className}
         dataTestId="StakingRuleUploadButton"
         disabled={disabled}
         variant={variant}

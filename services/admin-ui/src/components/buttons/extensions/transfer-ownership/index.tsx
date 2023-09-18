@@ -13,6 +13,7 @@ import TransferOwnershipABI from "../../../../abis/extensions/transfer-ownership
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface ITransferOwnershipButtonProps {
 
 export const TransferOwnershipButton: FC<ITransferOwnershipButtonProps> = props => {
   const {
+    className,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -55,6 +57,8 @@ export const TransferOwnershipButton: FC<ITransferOwnershipButtonProps> = props 
         onClick={handleTransferOwnership}
         icon={ChangeCircle}
         message="form.buttons.transferOwnership"
+        className={className}
+        dataTestId="TransferOwnershipButton"
         disabled={disabled}
         variant={variant}
       />

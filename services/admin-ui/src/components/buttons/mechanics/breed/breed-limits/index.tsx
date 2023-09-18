@@ -12,12 +12,13 @@ import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 
 export interface IBreedLimitButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
-  const { disabled, variant } = props;
+  const { className, disabled, variant } = props;
 
   const [isBreedLimitDialogOpen, setIsBreedLimitDialogOpen] = useState(false);
 
@@ -50,9 +51,10 @@ export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
         onClick={handleBreedLimit}
         icon={Bloodtype}
         message="pages.breed.limit"
+        className={className}
+        dataTestId="BreedLimitButton"
         disabled={disabled}
         variant={variant}
-        dataTestId="BreedLimitButton"
       />
       <BreedLimitDialog
         onCancel={handleBreedLimitCancel}

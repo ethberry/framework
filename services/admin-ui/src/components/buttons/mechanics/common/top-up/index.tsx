@@ -14,6 +14,7 @@ import TopUpABI from "../../../../../abis/exchange/top-up/topUp.abi.json";
 import { ITopUpDto, TopUpDialog } from "./dialog";
 
 export interface ITopUpButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -21,6 +22,7 @@ export interface ITopUpButtonProps {
 
 export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -77,6 +79,8 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
         onClick={handleTopUp}
         icon={AddCircleOutline}
         message="form.buttons.topUp"
+        className={className}
+        dataTestId="TopUpButton"
         disabled={disabled}
         variant={variant}
       />

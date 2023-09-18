@@ -9,14 +9,16 @@ import { WaitListUploadDialog } from "./dialog";
 import { IWaitListUploadDto } from "./dialog/file-input";
 
 export interface IWaitListListUploadButtonProps {
-  waitListList: IWaitListList;
+  className?: string;
   disabled?: boolean;
-  variant?: ListActionVariant;
   onRefreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
+  waitListList: IWaitListList;
 }
 
 export const WaitListListUploadButton: FC<IWaitListListUploadButtonProps> = props => {
   const {
+    className,
     waitListList: { id },
     disabled,
     variant,
@@ -58,6 +60,8 @@ export const WaitListListUploadButton: FC<IWaitListListUploadButtonProps> = prop
         onClick={handleUpload}
         icon={CloudUploadOutlined}
         message="form.buttons.upload"
+        className={className}
+        dataTestId="WaitListListUploadButton"
         disabled={disabled}
         variant={variant}
       />

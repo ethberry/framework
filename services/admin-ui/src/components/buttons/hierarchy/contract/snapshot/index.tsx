@@ -11,6 +11,7 @@ import { TokenType } from "@framework/types";
 import ERC20SnapshotABI from "../../../../../abis/hierarchy/erc20/snapshot/snapshot.abi.json";
 
 export interface IErc20TokenSnapshotButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -18,6 +19,7 @@ export interface IErc20TokenSnapshotButtonProps {
 
 export const SnapshotButton: FC<IErc20TokenSnapshotButtonProps> = props => {
   const {
+    className,
     contract: { address, contractType },
     disabled,
     variant,
@@ -41,6 +43,8 @@ export const SnapshotButton: FC<IErc20TokenSnapshotButtonProps> = props => {
       onClick={handleSnapshot}
       icon={PhotoCamera}
       message="form.buttons.snapshot"
+      className={className}
+      dataTestId="ContractSnapshotButton"
       disabled={disabled}
       variant={variant}
     />

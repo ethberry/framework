@@ -12,12 +12,13 @@ import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deplo
 import { VestingDeployDialog } from "./dialog";
 
 export interface IVestingDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
   // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
@@ -74,6 +75,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="VestingDeployButton"
         disabled={disabled}
         variant={variant}

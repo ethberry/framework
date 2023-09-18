@@ -10,6 +10,7 @@ import type { IContract } from "@framework/types";
 import LotteryEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 
 export interface ILotteryRoundEndButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -17,6 +18,7 @@ export interface ILotteryRoundEndButtonProps {
 
 export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -36,6 +38,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       onClick={handleEndRound}
       icon={StopCircleOutlined}
       message="pages.lottery.rounds.end"
+      className={className}
       dataTestId="LotteryRoundEndButton"
       disabled={disabled}
       variant={variant}

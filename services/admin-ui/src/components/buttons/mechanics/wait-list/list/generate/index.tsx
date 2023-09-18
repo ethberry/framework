@@ -11,13 +11,15 @@ import { IWaitListList, TokenType } from "@framework/types";
 import WaitListSetRewardABI from "../../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
 
 export interface IWailtListListGenerateButtonProps {
-  waitListList: IWaitListList;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
+  waitListList: IWaitListList;
 }
 
 export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> = props => {
   const {
+    className,
     waitListList: { id },
     disabled,
     variant,
@@ -72,6 +74,8 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       onClick={handleUpload}
       icon={Settings}
       message="form.buttons.submit"
+      className={className}
+      dataTestId="WaitListListGenerateButton"
       disabled={disabled}
       variant={variant}
     />

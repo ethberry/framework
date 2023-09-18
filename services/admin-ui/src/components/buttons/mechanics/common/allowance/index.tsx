@@ -13,6 +13,7 @@ import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.appr
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface IAllowanceButtonProps {
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -58,6 +60,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         onClick={handleAllowance}
         icon={HowToVote}
         message="form.buttons.allowance"
+        className={className}
+        dataTestId="AllowanceButton"
         disabled={disabled}
         variant={variant}
       />

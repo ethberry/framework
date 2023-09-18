@@ -15,6 +15,7 @@ import ERC1155SafeTransferFromABI from "../../../../abis/hierarchy/erc1155/trans
 import { ITransferDto, TransferDialog } from "./dialog";
 
 export interface ITransferButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -22,6 +23,7 @@ export interface ITransferButtonProps {
 
 export const TransferButton: FC<ITransferButtonProps> = props => {
   const {
+    className,
     contract: { address, contractType, id },
     disabled,
     variant,
@@ -79,6 +81,8 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         onClick={handleTransfer}
         icon={Send}
         message="form.buttons.transfer"
+        className={className}
+        dataTestId="TransferButton"
         disabled={disabled}
         variant={variant}
       />

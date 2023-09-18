@@ -13,6 +13,7 @@ import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.ab
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface IWhitelistButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface IWhitelistButtonProps {
 
 export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   const {
+    className,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -56,6 +58,8 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
         onClick={handleWhitelist}
         icon={CheckCircle}
         message="form.buttons.whitelist"
+        className={className}
+        dataTestId="WhitelistButton"
         disabled={disabled}
         variant={variant}
       />

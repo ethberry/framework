@@ -12,12 +12,13 @@ import DeployLotteryABI from "../../../../../../abis/mechanics/lottery/contract/
 import { LotteryContractDeployDialog } from "./dialog";
 
 export interface ILotteryContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -64,6 +65,7 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="LotteryDeployButton"
         disabled={disabled}
         variant={variant}

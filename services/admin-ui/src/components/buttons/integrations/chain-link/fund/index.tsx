@@ -11,12 +11,13 @@ import LinkTransferAndCallABI from "../../../../../abis/integrations/chain-link/
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 
 export interface IChainLinkFundButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { account } = useWeb3React();
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
@@ -48,6 +49,7 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
         onClick={handleFund}
         icon={Savings}
         message="form.buttons.fund"
+        className={className}
         dataTestId="ChainLinkFundButton"
         disabled={disabled || !account}
         variant={variant}

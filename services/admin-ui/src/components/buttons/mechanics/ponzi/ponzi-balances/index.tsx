@@ -7,6 +7,7 @@ import type { IContract } from "@framework/types";
 import { PonziBalanceDialog } from "./view";
 
 export interface IPonziBalanceButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -14,6 +15,7 @@ export interface IPonziBalanceButtonProps {
 
 export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -39,6 +41,8 @@ export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
         onClick={handlePonziBalance}
         icon={MonetizationOn}
         message="form.buttons.ponziBalance"
+        className={className}
+        dataTestId="PonziBalanceButton"
         disabled={disabled}
         variant={variant}
       />

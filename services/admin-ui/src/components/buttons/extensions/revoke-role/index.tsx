@@ -8,6 +8,7 @@ import { ContractSecurity } from "@framework/types";
 import { AccessControlRevokeRoleDialog } from "./dialog";
 
 export interface IRevokeRoleButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -15,6 +16,7 @@ export interface IRevokeRoleButtonProps {
 
 export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
   const {
+    className,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -44,6 +46,8 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         onClick={handleRevokeRole}
         icon={NoAccounts}
         message="form.buttons.revokeRole"
+        className={className}
+        dataTestId="RevokeRoleButton"
         disabled={disabled}
         variant={variant}
       />

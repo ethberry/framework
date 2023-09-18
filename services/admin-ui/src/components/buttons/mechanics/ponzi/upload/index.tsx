@@ -13,12 +13,13 @@ import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRule
 import { PonziRuleUploadDialog } from "./upload-dialog";
 
 export interface IPonziRuleCreateButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
-  const { disabled, variant } = props;
+  const { className, disabled, variant } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -104,6 +105,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
         onClick={handleUpload}
         icon={Add}
         message="form.buttons.create"
+        className={className}
         dataTestId="PonziRuleUploadButton"
         disabled={disabled}
         variant={variant}

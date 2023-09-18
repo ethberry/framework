@@ -13,12 +13,13 @@ import DeployMysteryBoxABI from "../../../../../../abis/mechanics/mystery-box/de
 import { MysteryContractDeployDialog } from "./dialog";
 
 export interface IMysteryContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -67,6 +68,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="MysteryContractDeployButton"
         disabled={disabled}
         variant={variant}

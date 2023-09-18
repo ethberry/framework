@@ -12,12 +12,13 @@ import VestingReleaseABI from "../../../../../abis/mechanics/vesting/release/rel
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
-  const { balance, disabled, variant } = props;
+  const { balance, className, disabled, variant } = props;
 
   const metaRelease = useMetamask(async (vesting: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.account, VestingReleaseABI, web3Context.provider?.getSigner());
@@ -43,6 +44,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
       onClick={handleClick}
       icon={Redeem}
       message="form.tips.release"
+      className={className}
       dataTestId="VestingReleaseButton"
       disabled={disabled}
       variant={variant}

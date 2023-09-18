@@ -10,13 +10,14 @@ import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 
 export interface IEthListenerAddButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
-  const { contract, disabled, variant } = props;
+  const { className, contract, disabled, variant } = props;
 
   const [isEthListenerDialogOpen, setIsEthListenerDialogOpen] = useState(false);
 
@@ -52,6 +53,8 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
         onClick={handleEthListenerAdd}
         icon={DoNotDisturbOn}
         message="form.buttons.addListener"
+        className={className}
+        dataTestId="EthListenerAddButton"
         disabled={disabled}
         variant={variant}
       />

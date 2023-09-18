@@ -14,6 +14,7 @@ import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint
 import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
 
 export interface IMintButtonProps {
+  className?: string;
   mystery: IMysteryBox;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -21,6 +22,7 @@ export interface IMintButtonProps {
 
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
+    className,
     mystery: { template },
     disabled,
     variant,
@@ -65,6 +67,8 @@ export const MintButton: FC<IMintButtonProps> = props => {
         onClick={handleMintToken}
         icon={AddCircleOutline}
         message="form.buttons.mintToken"
+        className={className}
+        dataTestId="MysteryBoxMintButton"
         disabled={disabled}
         variant={variant}
       />

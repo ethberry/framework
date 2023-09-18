@@ -13,12 +13,13 @@ import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
 import { getEthPrice } from "./utils";
 
 export interface IDispenserUploadButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +73,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
         onClick={handleUpload}
         icon={Add}
         message="form.buttons.upload"
+        className={className}
         dataTestId="DispenserUploadButton"
         disabled={disabled}
         variant={variant}

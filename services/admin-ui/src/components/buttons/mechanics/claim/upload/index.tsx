@@ -10,13 +10,14 @@ import type { IClaim, IClaimUploadDto } from "@framework/types";
 import { ClaimUploadDialog } from "./dialog";
 
 export interface IClaimUploadButtonProps {
+  className?: string;
   disabled?: boolean;
   onRefreshPage: () => Promise<void>;
   variant?: ListActionVariant;
 }
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
-  const { disabled, onRefreshPage, variant = ListActionVariant.button } = props;
+  const { className, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
 
   const { formatMessage } = useIntl();
 
@@ -68,6 +69,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         onClick={handleUpload}
         icon={Add}
         message="form.buttons.upload"
+        className={className}
         dataTestId="ClaimUploadButton"
         disabled={disabled}
         variant={variant}

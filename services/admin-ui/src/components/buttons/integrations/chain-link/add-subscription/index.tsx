@@ -11,12 +11,13 @@ import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscrip
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDDto } from "./dialog";
 
 export interface IChainLinkSubscriptionButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { account } = useWeb3React();
   const [isSubscriptionDialogOpen, setIsSubscriptionDialogOpen] = useState(false);
@@ -48,6 +49,7 @@ export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> 
         onClick={handleAddConsumer}
         icon={RecentActors}
         message="form.buttons.addConsumer"
+        className={className}
         dataTestId="ChainLinkAddConsumerButton"
         disabled={disabled || !account}
         variant={variant}

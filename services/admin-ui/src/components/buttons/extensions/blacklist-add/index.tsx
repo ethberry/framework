@@ -13,6 +13,7 @@ import BlacklistABI from "../../../../abis/extensions/blacklist-add/blacklist.ab
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface IBlacklistButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface IBlacklistButtonProps {
 
 export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
   const {
+    className,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -56,6 +58,8 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
         onClick={handleBlacklist}
         icon={DoNotDisturbOn}
         message="form.buttons.blacklist"
+        className={className}
+        dataTestId="BlacklistButton"
         disabled={disabled}
         variant={variant}
       />

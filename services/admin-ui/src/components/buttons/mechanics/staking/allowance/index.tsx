@@ -15,6 +15,7 @@ import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowanc
 import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -22,6 +23,7 @@ export interface IStakingAllowanceButtonProps {
 
 export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const {
+    className,
     contract: { address },
     disabled,
     variant,
@@ -74,6 +76,8 @@ export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
         onClick={handleStakingAllowance}
         icon={AddReaction}
         message="form.buttons.allowance"
+        className={className}
+        dataTestId="StakingAllowanceButton"
         disabled={disabled}
         variant={variant}
       />

@@ -12,12 +12,13 @@ import DeployRaffleABI from "../../../../../../abis/mechanics/raffle/contract/de
 import { RaffleContractDeployDialog } from "./dialog";
 
 export interface IRaffleContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -57,6 +58,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="RaffleDeployButton"
         disabled={disabled}
         variant={variant}

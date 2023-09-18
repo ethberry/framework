@@ -10,12 +10,13 @@ import type { IUser, IWaitListContractDeployDto } from "@framework/types";
 import DeployWaitListABI from "../../../../../../abis/mechanics/wait-list/deploy/deployWaitList.abi.json";
 
 export interface IWaitListDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -53,6 +54,7 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
       onClick={onDeployConfirm}
       icon={Add}
       message="form.buttons.deploy"
+      className={className}
       dataTestId="WaitlistDeployButton"
       disabled={disabled}
       variant={variant}

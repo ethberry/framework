@@ -13,12 +13,13 @@ import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPon
 import { PonziContractDeployDialog } from "./dialog";
 
 export interface IPonziContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -69,6 +70,7 @@ export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="PonziContractDeployButton"
         disabled={disabled}
         variant={variant}

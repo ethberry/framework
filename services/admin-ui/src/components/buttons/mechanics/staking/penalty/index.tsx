@@ -12,12 +12,13 @@ import { formatEther } from "../../../../../utils/money";
 
 export interface IStakingPenaltyBalanceButtonProps {
   balance: IBalance;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const StakingPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProps> = props => {
-  const { balance, disabled, variant } = props;
+  const { balance, className, disabled, variant } = props;
 
   const metaGetPenalty = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
@@ -43,6 +44,7 @@ export const StakingPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProps> 
       onClick={handleClick}
       icon={Policy}
       message="form.tips.penalty"
+      className={className}
       dataTestId="StakingPenaltyBalanceButton"
       disabled={disabled}
       variant={variant}

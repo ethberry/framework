@@ -13,12 +13,13 @@ import DeployERC20TokenABI from "../../../../../abis/hierarchy/erc20/contract-de
 import { Erc20ContractDeployDialog } from "./dialog";
 
 export interface IErc20ContractDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -64,8 +65,9 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
     <Fragment>
       <ListAction
         onClick={handleDeploy}
-        message="form.buttons.deploy"
         icon={Add}
+        message="form.buttons.deploy"
+        className={className}
         dataTestId="Erc20ContractDeployButton"
         disabled={disabled}
         variant={variant}

@@ -9,13 +9,14 @@ import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
 
 export interface IEthListenerRemoveButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props => {
-  const { contract, disabled, variant } = props;
+  const { className, contract, disabled, variant } = props;
 
   const [isEthListenerDialogOpen, setIsEthListenerDialogOpen] = useState(false);
 
@@ -51,6 +52,8 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
         onClick={handleEthListenerRemove}
         icon={DoNotDisturbOff}
         message="form.buttons.removeListener"
+        className={className}
+        dataTestId="EthListenerRemoveButton"
         disabled={disabled}
         variant={variant}
       />

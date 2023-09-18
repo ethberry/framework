@@ -12,12 +12,13 @@ import StakingWithdrawABI from "../../../../../abis/mechanics/staking/stakingWit
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
-  const { balance, disabled, variant } = props;
+  const { balance, className, disabled, variant } = props;
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
@@ -39,6 +40,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       onClick={handleClick}
       icon={RequestQuote}
       message="form.tips.withdrawPenalty"
+      className={className}
       dataTestId="StakingBalanceWithdrawButton"
       disabled={disabled}
       variant={variant}

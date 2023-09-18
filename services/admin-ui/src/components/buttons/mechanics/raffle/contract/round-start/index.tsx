@@ -15,6 +15,7 @@ import RaffleStartRoundABI from "../../../../../../abis/mechanics/raffle/round/s
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
 
 export interface IRaffleRoundStartButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -22,6 +23,7 @@ export interface IRaffleRoundStartButtonProps {
 
 export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props => {
   const {
+    className,
     contract: { address, id },
     disabled,
     variant,
@@ -71,6 +73,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         onClick={handleStartRound}
         icon={PlayCircleOutline}
         message="pages.raffle.rounds.start"
+        className={className}
         dataTestId="RaffleRoundStartButton"
         disabled={disabled}
         variant={variant}

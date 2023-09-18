@@ -14,6 +14,7 @@ import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
 export interface ILotteryRoundStartButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -21,6 +22,7 @@ export interface ILotteryRoundStartButtonProps {
 
 export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props => {
   const {
+    className,
     contract: { address, id },
     disabled,
     variant,
@@ -70,6 +72,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         onClick={handleStartRound}
         icon={PlayCircleOutline}
         message="pages.lottery.rounds.start"
+        className={className}
         dataTestId="LotteryRoundStartButton"
         disabled={disabled}
         variant={variant}

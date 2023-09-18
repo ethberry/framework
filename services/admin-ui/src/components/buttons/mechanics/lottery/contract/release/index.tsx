@@ -10,13 +10,14 @@ import type { ILotteryRound } from "@framework/types";
 import LotteryReleaseABI from "../../../../../../abis/mechanics/lottery/round/release/releaseFunds.abi.json";
 
 export interface ILotteryReleaseButtonProps {
+  className?: string;
   disabled?: boolean;
   round: ILotteryRound;
   variant?: ListActionVariant;
 }
 
 export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { disabled, round, variant } = props;
+  const { className, disabled, round, variant } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(round.contract!.address, LotteryReleaseABI, web3Context.provider?.getSigner());
@@ -39,6 +40,7 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
       onClick={handleRelease()}
       icon={Redeem}
       message="form.tips.release"
+      className={className}
       dataTestId="LotteryReleaseButton"
       disabled={disabled || !round.numbers || !round.endTimestamp || !release}
       variant={variant}

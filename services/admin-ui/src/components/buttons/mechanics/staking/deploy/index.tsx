@@ -13,12 +13,13 @@ import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deplo
 import { StakingDeployDialog } from "./dialog";
 
 export interface IStakingDeployButtonProps {
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
-  const { disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -63,6 +64,7 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         onClick={handleDeploy}
         icon={Add}
         message="form.buttons.deploy"
+        className={className}
         dataTestId="StakingDeployButton"
         disabled={disabled}
         variant={variant}

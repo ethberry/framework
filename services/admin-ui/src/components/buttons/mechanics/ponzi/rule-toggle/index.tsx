@@ -10,13 +10,14 @@ import { IPonziRule, PonziRuleStatus } from "@framework/types";
 import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/rule-toggle/updateRule.abi.json";
 
 export interface IPonziToggleRuleButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IPonziRule;
   variant?: ListActionVariant;
 }
 
 export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
 
   const metaToggleRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.ponziRuleStatus !== PonziRuleStatus.ACTIVE;
@@ -37,7 +38,8 @@ export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
       message={
         rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? "pages.ponzi.rules.deactivate" : "pages.ponzi.rules.activate"
       }
-      dataTestId="StakeToggleRuleButton"
+      className={className}
+      dataTestId="PonziToggleRuleButton"
       disabled={disabled}
       variant={variant}
     />

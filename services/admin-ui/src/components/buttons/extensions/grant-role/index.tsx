@@ -13,6 +13,7 @@ import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.j
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
 export interface IGrantRoleButtonProps {
+  className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
@@ -20,6 +21,7 @@ export interface IGrantRoleButtonProps {
 
 export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   const {
+    className,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -56,6 +58,8 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         onClick={handleGrantRole}
         icon={AccountCircle}
         message="form.buttons.grantRole"
+        className={className}
+        dataTestId="GrantRoleButton"
         disabled={disabled}
         variant={variant}
       />
