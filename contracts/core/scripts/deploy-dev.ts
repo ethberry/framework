@@ -12,9 +12,12 @@ import { expiresAt, externalId } from "../test/constants";
 import { deployDiamond } from "../test/Exchange/shared/fixture";
 
 const delay = 1; // block delay
-const delayMs = 300; // block delay ms
+const delayMs = 900; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
+
+const vrfSubId = 5; // VRF subscription Id
+
 interface IObj {
   address?: string;
   hash?: string;
@@ -250,7 +253,7 @@ async function main() {
 
   // await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Random.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
   await blockAwait(delay, delayMs);
@@ -269,7 +272,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Genes.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc721Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -308,7 +311,7 @@ async function main() {
 
   // await debug(await linkInstance.transfer(contracts.erc998Random.getAddress(), linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc998Random.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc998Random.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -323,7 +326,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc998Genes.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc998Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -550,7 +553,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.lottery.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.lottery.getAddress()),
     "vrfInstance.addConsumer",
   );
   await debug(
@@ -573,7 +576,7 @@ async function main() {
   contracts.raffle = await raffleFactory.deploy();
   await debug(contracts);
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.raffle.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.raffle.getAddress()),
     "vrfInstance.addConsumer",
   );
   await debug(

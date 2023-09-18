@@ -53,6 +53,7 @@ async function main() {
   //     ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
   //     : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
   // const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
+  // const [owner] = await ethers.getSigners();
 
   // DIAMOND CM
   const cmInstance = await deployDiamond(

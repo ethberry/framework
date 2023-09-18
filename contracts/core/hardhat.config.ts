@@ -38,7 +38,6 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-
     gemunionprod: {
       url: process.env.JSON_RPC_ADDR_GEMUNION,
       timeout: 30000,
@@ -61,9 +60,9 @@ export default {
       url: process.env.JSON_RPC_ADDR_BINANCE_TEST,
       chainId: 97,
       gasPrice: "auto",
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-      },
+      accounts: [
+        process.env.GEMUNION_PRIVATE_KEY_STAGE, // 0xf6bD844ED9Ebd5FA533D0Ae26fD864aF6FD61Df2
+      ],
     },
     goerli: {
       url: process.env.JSON_RPC_ADDR_GOERLY,
