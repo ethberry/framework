@@ -5,7 +5,7 @@ steps:
     args: ["cp", "-r", "gs://framework-env/app/.env", ".env"]
   # Download firebase file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://framework-env/app/gemunion-firebase-key.json", "gemunion-firebase-key.json"]
+    args: ["cp", "-r", "gs://framework-env/app/gemunion-framework-production-firebase-admin.json", "gemunion-framework-production-firebase-admin.json"]
   # Download gcloud file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/halogen-framing-key.json", "halogen-framing-key.json"]
