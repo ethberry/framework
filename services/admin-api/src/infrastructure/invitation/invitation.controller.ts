@@ -1,7 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { UserEntity } from "../user/user.entity";
 import { OtpEntity } from "../otp/otp.entity";
@@ -14,7 +25,8 @@ export class InvitationController {
   constructor(private readonly invitationService: InvitationService) {}
 
   @Get("/")
-  public search(@User() userEntity: UserEntity): Promise<Array<OtpEntity>> {
+  @UseInterceptors(PaginationInterceptor)
+  public search(@User() userEntity: UserEntity): Promise<[Array<OtpEntity>, number]> {
     return this.invitationService.findAll(userEntity);
   }
 

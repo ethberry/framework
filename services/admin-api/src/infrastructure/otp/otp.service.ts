@@ -39,7 +39,7 @@ export class OtpService {
     }
   }
 
-  public async findAllInvitations(userEntity: UserEntity): Promise<Array<OtpEntity>> {
+  public async findAllInvitations(userEntity: UserEntity): Promise<[Array<OtpEntity>, number]> {
     const queryBuilder = this.otpEntityRepository.createQueryBuilder("otp");
 
     queryBuilder.select();
@@ -48,6 +48,6 @@ export class OtpService {
     queryBuilder.andWhere("otp.otpType = :otpType", { otpType: OtpType.INVITE });
     queryBuilder.andWhere("otp.data->>'merchantId' = :merchantId", { merchantId: userEntity.merchantId });
 
-    return queryBuilder.getMany();
+    return queryBuilder.getManyAndCount();
   }
 }

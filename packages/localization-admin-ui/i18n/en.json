@@ -1190,9 +1190,13 @@
       "managers": {
         "empty": "You don't have any managers yet"
       },
+      "invitations": {
+        "empty": "You don't have any invites yet"
+      },
       "tabs": {
         "general": "General",
-        "managers": "Managers"
+        "managers": "Managers",
+        "invitations": "Invitations"
       },
       "title": "Merchant"
     },

@@ -19,7 +19,7 @@ export class InvitationService {
     private readonly emailService: EmailService,
   ) {}
 
-  public findAll(userEntity: UserEntity): Promise<Array<OtpEntity>> {
+  public findAll(userEntity: UserEntity): Promise<[Array<OtpEntity>, number]> {
     return this.otpService.findAllInvitations(userEntity);
   }
 
