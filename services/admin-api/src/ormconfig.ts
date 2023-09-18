@@ -46,7 +46,7 @@ import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.e
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 /* lottery */
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
@@ -71,7 +71,7 @@ import { PhotoEntity } from "./ecommerce/photo/photo.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
 import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
 import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
-import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 /* achievements */
 import { AchievementItemEntity } from "./achievements/item/item.entity";
@@ -103,7 +103,7 @@ import {
   CreateCraft1653616448000,
   CreateCustomParameter1683724062400,
   CreateDismantle1693120862000,
-  CreateDropAt1658980521000,
+  CreateAssetPromoAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
   CreateGameBalance1686896594700,
@@ -124,7 +124,7 @@ import {
   CreateProductItem1683724061500,
   CreateProductItemParameter1683724062600,
   CreateProductToCategory1683724061700,
-  CreatePromo1683724062300,
+  CreateProductPromo1683724062300,
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
   CreateReferralRewardAt1660103709900,
@@ -222,10 +222,10 @@ import {
   SeedCustomParameter1683724062410,
   SeedDismantleErc1155Erc155RecipesAt1693120862550,
   SeedDismantleErc721Erc155RecipesAt1693120862350,
-  SeedDropErc1155At1658980521050,
-  SeedDropErc721At1658980521030,
-  SeedDropErc998At1658980521040,
-  SeedDropErcMysteryboxAt1658980521050,
+  SeedAssetPromoErc1155At1658980521050,
+  SeedAssetPromoErc721At1658980521030,
+  SeedAssetPromoErc998At1658980521040,
+  SeedAssetPromoMysteryBoxAt1658980521050,
   SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
   SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
   SeedEventHistoryErc1155PurchaseAt1563804040230,
@@ -290,7 +290,7 @@ import {
   SeedProductItem1683724061510,
   SeedProductItemParameter1683724062610,
   SeedProductToCategory1683724061710,
-  SeedPromo1683724062310,
+  SeedProductPromo1683724062310,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
   SeedReferralRewardAt1660103709910,
@@ -374,7 +374,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     CraftEntity,
     DismantleEntity,
-    DropEntity,
+    AssetPromoEntity,
     GradeEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
@@ -399,7 +399,7 @@ const config: PostgresConnectionOptions = {
     ProductEntity,
     ProductItemEntity,
     ProductItemParameterEntity,
-    PromoEntity,
+    ProductPromoEntity,
     StockEntity,
     /* achievements */
     AchievementItemEntity,
@@ -604,11 +604,11 @@ const config: PostgresConnectionOptions = {
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
 
-    CreateDropAt1658980521000,
-    SeedDropErc721At1658980521030,
-    SeedDropErc998At1658980521040,
-    SeedDropErc1155At1658980521050,
-    SeedDropErcMysteryboxAt1658980521050,
+    CreateAssetPromoAt1658980521000,
+    SeedAssetPromoErc721At1658980521030,
+    SeedAssetPromoErc998At1658980521040,
+    SeedAssetPromoErc1155At1658980521050,
+    SeedAssetPromoMysteryBoxAt1658980521050,
 
     CreateReferralRewardAt1660103709900,
     SeedReferralRewardAt1660103709910,
@@ -701,8 +701,8 @@ const config: PostgresConnectionOptions = {
     // SeedOrderItems1683724062110,
     CreateCart1683724062200,
     CreateCartItem1683724062210,
-    CreatePromo1683724062300,
-    SeedPromo1683724062310,
+    CreateProductPromo1683724062300,
+    SeedProductPromo1683724062310,
     CreateCustomParameter1683724062400,
     SeedCustomParameter1683724062410,
     CreateStock1683724062500,

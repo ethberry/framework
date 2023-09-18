@@ -2,7 +2,7 @@ export * from "./01-breeding";
 export * from "./02-claim";
 export * from "./03-collection";
 export * from "./04-craft";
-export * from "./05-drop";
+export * from "./05-promo";
 export * from "./06-grade";
 export * from "./07-lottery";
 export * from "./08-mystery";

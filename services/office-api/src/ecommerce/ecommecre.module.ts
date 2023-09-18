@@ -9,7 +9,7 @@ import { PhotoModule } from "./photo/photo.module";
 import { ProductModule } from "./product/product.module";
 import { ProductItemModule } from "./product-item/product-item.module";
 import { ProductItemParameterModule } from "./product-item-parameter/product-item-parameter.module";
-import { PromoModule } from "./promo/promo.module";
+import { ProductPromoModule } from "./promo/promo.module";
 import { StockModule } from "./stock/stock.module";
 
 @Module({
@@ -23,7 +23,7 @@ import { StockModule } from "./stock/stock.module";
     ProductModule,
     ProductItemModule,
     ProductItemParameterModule,
-    PromoModule,
+    ProductPromoModule,
     StockModule,
   ],
 })

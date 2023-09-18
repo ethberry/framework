@@ -26,7 +26,7 @@ import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.e
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
-import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
@@ -44,7 +44,7 @@ import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-lin
 /* ecommerce */
 import { OrderEntity } from "./ecommerce/order/order.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
-import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { PhotoEntity } from "./ecommerce/photo/photo.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
@@ -95,7 +95,7 @@ const config: PostgresConnectionOptions = {
     StakingRulesEntity,
     ClaimEntity,
     DismantleEntity,
-    DropEntity,
+    AssetPromoEntity,
     GradeEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
@@ -122,7 +122,7 @@ const config: PostgresConnectionOptions = {
     ProductItemEntity,
     ParameterEntity,
     CustomParameterEntity,
-    PromoEntity,
+    ProductPromoEntity,
     CartEntity,
     CartItemEntity,
     /* achievement */

@@ -34,7 +34,7 @@ export * from "./mechanics/dismantle/sign";
 
 export * from "./mechanics/rent/search";
 
-export * from "./mechanics/drop/search";
+export * from "./mechanics/promo/search";
 
 export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/lottery/search";

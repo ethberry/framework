@@ -4,7 +4,7 @@ import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/mat
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions } from "@framework/mui-lists";
-import { IPromo } from "@framework/types";
+import { IProductPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -14,7 +14,7 @@ import { ISearchDto } from "@gemunion/types-collection";
 import { emptyPromo } from "../../../components/common/interfaces";
 import { EditPromoDialog } from "./edit";
 
-export const Promo: FC = () => {
+export const ProductPromo: FC = () => {
   const {
     rows,
     count,
@@ -32,7 +32,7 @@ export const Promo: FC = () => {
     handleEditConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IPromo, ISearchDto>({
+  } = useCollection<IProductPromo, ISearchDto>({
     baseUrl: "/ecommerce/promos",
     empty: emptyPromo,
   });
@@ -42,7 +42,7 @@ export const Promo: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "promos"]} />
 
       <PageHeader message="pages.promos.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommercePromoCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ProductPromoCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

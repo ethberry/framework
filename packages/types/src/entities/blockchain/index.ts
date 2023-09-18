@@ -14,7 +14,7 @@ export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
 export * from "./mechanics/dismantle/dismantle";
-export * from "./mechanics/drop/drop";
+export * from "./mechanics/promo/promo";
 export * from "./mechanics/grade/grade";
 
 export * from "./mechanics/lottery/aggregation";

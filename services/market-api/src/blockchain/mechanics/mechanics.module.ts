@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { BreedModule } from "./breed/breed.module";
 import { ClaimModule } from "./claim/claim.module";
-import { DropModule } from "./drop/drop.module";
+import { AssetPromoModule } from "./promo/promo.module";
 import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
@@ -20,7 +20,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
   imports: [
     BreedModule,
     ClaimModule,
-    DropModule,
+    AssetPromoModule,
     GradeModule,
     LotteryModule,
     MysteryModule,

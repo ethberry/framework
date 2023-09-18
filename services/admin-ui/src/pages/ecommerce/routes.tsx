@@ -4,7 +4,7 @@ import { Protected } from "@gemunion/common-pages";
 
 import { Product } from "./product";
 import { Category } from "./category";
-import { Promo } from "./promo";
+import { ProductPromo } from "./promo";
 import { Order } from "./order";
 import { Photo } from "./photo";
 import { Kanban } from "./kanban";
@@ -51,8 +51,8 @@ export const ecommerceRoutes: Array<RouteObject> = [
     path: "/ecommerce/promos",
     element: <Protected />,
     children: [
-      { index: true, element: <Promo /> },
-      { path: "/ecommerce/promos/:id", element: <Promo /> },
+      { index: true, element: <ProductPromo /> },
+      { path: "/ecommerce/promos/:id", element: <ProductPromo /> },
     ],
   },
   {

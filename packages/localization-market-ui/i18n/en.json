@@ -697,7 +697,7 @@
         "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
-        "drop": "Drop",
+        "promo": "Promo",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
@@ -796,8 +796,8 @@
         "title": "Uniswap"
       }
     },
-    "drop-list": {
-      "title": "Drops"
+    "promo-list": {
+      "title": "Promos"
     },
     "ecommerce": {
       "title": "Ecommerce"

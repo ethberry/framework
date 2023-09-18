@@ -1,7 +1,7 @@
-import { IPromo } from "@framework/types";
+import { IProductPromo } from "@framework/types";
 
 export const emptyPromo = {
   title: "",
   productId: "",
   photos: [],
-} as unknown as IPromo;
+} as unknown as IProductPromo;

@@ -1056,7 +1056,7 @@
         "claim": "Claim",
         "collection": "Collections",
         "dispenser": "Dispenser",
-        "drop": "Drop",
+        "promo": "Promo",
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
@@ -1084,8 +1084,8 @@
       "description": "Here be dragons",
       "title": "Not implemented :)"
     },
-    "drop": {
-      "title": "Drops"
+    "promo": {
+      "title": "Promo"
     },
     "ecommerce": {
       "title": "Ecommerce"

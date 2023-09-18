@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { breedRoutes } from "./breed/routes";
 import { claimRoutes } from "./claim/routes";
-import { dropRoutes } from "./drop/routes";
+import { promoRoutes } from "./promo/routes";
 import { lotteryRoutes } from "./lottery/routes";
 import { mysteryboxRoutes } from "./mystery/routes";
 import { ponziRoutes } from "./ponzi/routes";
@@ -18,7 +18,7 @@ import { wrapperRoutes } from "./wrapper/routes";
 export const mechanicsRoutes: Array<RouteObject> = [
   ...breedRoutes,
   ...claimRoutes,
-  ...dropRoutes,
+  ...promoRoutes,
   ...lotteryRoutes,
   ...mysteryboxRoutes,
   ...ponziRoutes,

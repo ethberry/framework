@@ -602,7 +602,7 @@
       "mechanics": {
         "claim": "Claim",
         "dispenser": "Dispenser",
-        "drop": "Drop",
+        "promo": "Promo",
         "grade": "Grade",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
@@ -621,8 +621,8 @@
       "description": "Here be dragons",
       "title": "Not implemented :)"
     },
-    "drop": {
-      "title": "Drops"
+    "promo": {
+      "title": "Promos"
     },
     "emails": {
       "title": "Emails"

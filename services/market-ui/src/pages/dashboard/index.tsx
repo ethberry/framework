@@ -18,7 +18,7 @@ import { LotterySection } from "./mechanics/lottery";
 import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
 import { CraftSection } from "./mechanics/craft";
-import { DropSection } from "./mechanics/drop";
+import { AssetPromoSection } from "./mechanics/promo";
 import { ReferralSection } from "./exchange/referral";
 import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
@@ -53,7 +53,7 @@ export const Dashboard: FC = () => {
           <ClaimSection />
           <VestingSection />
           <CraftSection />
-          <DropSection />
+          <AssetPromoSection />
           <RentSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
