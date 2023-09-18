@@ -59,7 +59,7 @@ export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> 
         onConfirm={handleAddConsumerConfirm}
         open={isSubscriptionDialogOpen}
         initialValues={{
-          subscriptionId: "1",
+          subscriptionId: "",
           address: "0x",
         }}
       />
