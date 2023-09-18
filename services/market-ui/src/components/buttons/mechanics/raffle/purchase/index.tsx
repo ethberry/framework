@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IRaffleRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -15,13 +14,14 @@ import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/pur
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IRafflePurchaseButtonProps {
-  round: Partial<IRaffleRound>;
-  disabled: boolean;
   className?: string;
+  disabled: boolean;
+  round: Partial<IRaffleRound>;
+  variant?: ListActionVariant;
 }
 
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
-  const { round, disabled, className } = props;
+  const { className, disabled, round, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
@@ -83,15 +83,15 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   };
 
   return (
-    <Button
-      startIcon={<Casino />}
+    <ListAction
       onClick={handlePurchase}
-      disabled={disabled}
+      icon={Casino}
+      message="form.buttons.buy"
+      buttonVariant="contained"
       className={className}
-      variant="contained"
-      data-testid="RaffleBuyTicket"
-    >
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+      dataTestId="RaffleBuyTicket"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };
