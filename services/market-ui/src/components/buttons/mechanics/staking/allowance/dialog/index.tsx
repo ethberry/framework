@@ -44,7 +44,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
       validationSchema={validationSchema}
       message="dialogs.allowance"
       testId="StakingAllowanceForm"
-      showDebug={true}
+      disabled={false}
       {...rest}
     >
       <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />

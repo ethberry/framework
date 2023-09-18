@@ -49,7 +49,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.allowance"
       testId="MechanicsAllowanceForm"
-      showDebug={true}
       {...rest}
     >
       <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />
