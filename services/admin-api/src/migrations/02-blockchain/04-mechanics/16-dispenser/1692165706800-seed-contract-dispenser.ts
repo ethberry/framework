@@ -10,7 +10,9 @@ export class SeedContractDispenserAt1692165706800 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const dispenserAddr = process.env.DISPENSER_ADDR || wallet;
+    const dispenserAddrBinance = process.env.DISPENSER_BINANCE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
+    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
     await queryRunner.query(`
         INSERT INTO ${ns}.contract (
@@ -48,6 +50,25 @@ export class SeedContractDispenserAt1692165706800 implements MigrationInterface 
           '{}',
           'DISPENSER',
           '${fromBlock}',
+          1,
+          '${currentDateTime}',
+          '${currentDateTime}'
+        ), (
+          ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 208},
+          '${dispenserAddrBinance}',
+          '${chainId}',
+          'DISPENSER (BNB)',
+          '${simpleFormatting}',
+          '${imageUrl}',
+          'Dispenser',
+          '',
+          '',
+          '${JSON.stringify({})}',
+          'ACTIVE',
+          null,
+          '{}',
+          'DISPENSER',
+          '${fromBlockBinance}',
           1,
           '${currentDateTime}',
           '${currentDateTime}'

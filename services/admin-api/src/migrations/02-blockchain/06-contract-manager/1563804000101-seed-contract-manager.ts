@@ -11,6 +11,8 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
+    const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_BINANCE_ADDR || wallet;
+    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -44,6 +46,23 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '{ALLOWANCE}',
         'CONTRACT_MANAGER',
         '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 201},
+        '${contractManagerAddressBinance}',
+        56,
+        'CONTRACT MANAGER (BNB)',
+        '${simpleFormatting}',
+        '',
+        'CONTRACT_MANAGER',
+        '',
+        '',
+        'ACTIVE',
+        '{ALLOWANCE}',
+        'CONTRACT_MANAGER',
+        '${fromBlockBinance}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
