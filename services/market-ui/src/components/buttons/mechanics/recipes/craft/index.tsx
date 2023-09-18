@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ICraft } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -16,11 +15,14 @@ import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface ICraftButtonProps {
+  className?: string;
   craft: ICraft;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CraftButton: FC<ICraftButtonProps> = props => {
-  const { craft } = props;
+  const { className, craft, disabled, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
@@ -85,8 +87,13 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleCraft} data-testid="CraftButton">
-      <FormattedMessage id="form.buttons.craft" />
-    </Button>
+    <ListAction
+      onClick={handleCraft}
+      message="form.buttons.craft"
+      className={className}
+      dataTestId="CraftButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

@@ -13,13 +13,14 @@ import { getEthPrice } from "../../../../../utils/money";
 import { IStakingDepositDto, StakingDepositDialog } from "./dialog";
 
 export interface IStakingDepositComplexButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IStakingRule;
   variant?: ListActionVariant;
 }
 
 export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
 
@@ -60,6 +61,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         onClick={handleDeposit}
         icon={Savings}
         message="form.tips.deposit"
+        className={className}
         dataTestId="StakeDepositComplexButton"
         disabled={disabled}
         variant={variant}

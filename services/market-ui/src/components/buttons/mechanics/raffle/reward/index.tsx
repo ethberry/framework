@@ -10,13 +10,14 @@ import type { IRaffleToken } from "@framework/types";
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
 
 export interface IRaffleRewardButtonProps {
+  className?: string;
   disabled?: boolean;
   token: IRaffleToken;
   variant?: ListActionVariant;
 }
 
 export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
-  const { disabled, token, variant } = props;
+  const { className, disabled, token, variant } = props;
 
   const metaFn = useMetamask((ticket: IRaffleToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.round.contract!.address, RaffleGetPrizeABI, web3Context.provider?.getSigner());
@@ -40,6 +41,7 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
       onClick={handleReward(token)}
       icon={Redeem}
       message="form.tips.redeem"
+      className={className}
       disabled={disabled}
       data-testid="RaffleRewardButton"
       variant={variant}

@@ -14,12 +14,13 @@ import { formatEther } from "../../../../../utils/money";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props => {
-  const { balance, disabled, variant } = props;
+  const { balance, className, disabled, variant } = props;
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
@@ -51,6 +52,7 @@ export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props 
       onClick={handleClick}
       icon={Visibility}
       message="form.tips.releasable"
+      className={className}
       dataTestId="VestingReleasableButton"
       disabled={disabled}
       variant={variant}

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ElementType, FC } from "react";
 import {
   Button,
   ButtonPropsVariantOverrides,
@@ -8,12 +8,14 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { Warning } from "@mui/icons-material";
 import { OverridableStringUnion } from "@mui/types";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListActionVariant } from "../interface";
 
 export interface IListActionProps {
+  icon?: ElementType;
   message: string;
   messageValues?: Record<string, any>;
   onClick: () => void;
@@ -24,17 +26,7 @@ export interface IListActionProps {
   className?: string; // for button toolbar
 }
 
-export interface IListActionsWithIconProps extends IListActionProps {
-  icon: any;
-  variant?: ListActionVariant.iconButton;
-}
-
-export interface IListActionsWithoutIconProps extends IListActionProps {
-  icon?: any;
-  variant: ListActionVariant.menuItem | ListActionVariant.button;
-}
-
-export const ListAction: FC<IListActionsWithIconProps | IListActionsWithoutIconProps> = props => {
+export const ListAction: FC<IListActionProps> = props => {
   const {
     icon: Icon,
     variant = ListActionVariant.iconButton,
@@ -57,7 +49,7 @@ export const ListAction: FC<IListActionsWithIconProps | IListActionsWithoutIconP
           variant={buttonVariant}
           onClick={onClick}
           disabled={disabled}
-          startIcon={<Icon /> ?? null}
+          startIcon={Icon ? <Icon /> : null}
           data-testid={dataTestId}
         >
           <FormattedMessage id={message} values={messageValues} />
@@ -82,7 +74,7 @@ export const ListAction: FC<IListActionsWithIconProps | IListActionsWithoutIconP
       return (
         <Tooltip title={formatMessage({ id: message }, { ...messageValues })}>
           <IconButton onClick={onClick} disabled={disabled} data-testid={dataTestId}>
-            <Icon />
+            {Icon ? <Icon /> : <Warning />}
           </IconButton>
         </Tooltip>
       );

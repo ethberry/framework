@@ -15,12 +15,13 @@ import { sorter } from "../../../../../utils/sorter";
 
 export interface IVestingReleaseButtonProps {
   claim: IClaim;
+  className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
-  const { claim, disabled, variant } = props;
+  const { claim, className, disabled, variant } = props;
   const { profile } = useUser<IUser>();
 
   // ethersV6 : concat([zeroPadValue(toBeHex(profile.id), 3), zeroPadValue(toBeHex(claim.id), 4)]);
@@ -68,8 +69,9 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
       onClick={handleClick}
       icon={Inventory}
       message="form.tips.deploy"
-      disabled={disabled}
+      className={className}
       dataTestId="VestingDeployButton"
+      disabled={disabled}
       variant={variant}
     />
   );

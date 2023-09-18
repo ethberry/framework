@@ -12,13 +12,14 @@ import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/dep
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IStakingDepositSimpleButtonProps {
+  className?: string;
   disabled?: boolean;
   rule: IStakingRule;
   variant?: ListActionVariant;
 }
 
 export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = props => {
-  const { disabled, rule, variant } = props;
+  const { className, disabled, rule, variant } = props;
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
@@ -54,6 +55,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       onClick={handleDeposit(rule)}
       icon={Savings}
       message="form.tips.deposit"
+      className={className}
       dataTestId="StakeDepositSimpleButton"
       disabled={disabled}
       variant={variant}

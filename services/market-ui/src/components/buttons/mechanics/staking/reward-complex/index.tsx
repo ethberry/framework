@@ -12,13 +12,14 @@ import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IStakingRewardComplexButtonProps {
+  className?: string;
   disabled?: boolean;
   stake: IStakingDeposit;
   variant?: ListActionVariant;
 }
 
 export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = props => {
-  const { disabled, stake, variant } = props;
+  const { className, disabled, stake, variant } = props;
 
   const [isRewardDialogOpen, setIsRewardDialogOpen] = useState(false);
 
@@ -63,6 +64,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
         onClick={handleReward}
         icon={Redeem}
         message="form.tips.reward"
+        className={className}
         dataTestId="StakeRewardButton"
         disabled={disabled}
         variant={variant}
