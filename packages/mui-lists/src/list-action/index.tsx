@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 import {
   Button,
   ButtonPropsVariantOverrides,
@@ -26,22 +26,15 @@ export interface IListActionProps {
 
 export interface IListActionsWithIconProps extends IListActionProps {
   icon: any;
-  variant: ListActionVariant.iconButton;
+  variant?: ListActionVariant.iconButton;
 }
 
 export interface IListActionsWithoutIconProps extends IListActionProps {
   icon?: any;
-  variant: ListActionVariant.menuItem;
+  variant: ListActionVariant.menuItem | ListActionVariant.button;
 }
 
-export interface IListActionsIconProps extends IListActionProps {
-  icon?: any;
-  variant: ListActionVariant.button;
-}
-
-export const ListAction: FC<
-  PropsWithChildren<IListActionsWithIconProps | IListActionsWithoutIconProps | IListActionsIconProps>
-> = props => {
+export const ListAction: FC<IListActionsWithIconProps | IListActionsWithoutIconProps> = props => {
   const {
     icon: Icon,
     variant = ListActionVariant.iconButton,
