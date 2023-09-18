@@ -18,17 +18,17 @@ import {
 
 import { CollectionContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
-import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
-import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
-import { TransferMenuItem } from "../../../../components/menu/common/transfer";
-import { CollectionUploadMenuItem } from "../../../../components/menu/mechanics/collection/upload";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
+import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
+import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
+import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
+import { TransferButton } from "../../../../components/buttons/common/transfer";
+import { CollectionUploadButton } from "../../../../components/buttons/mechanics/collection/upload";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc721CollectionEditDialog } from "./edit";
 
 export const CollectionContract: FC = () => {
@@ -111,51 +111,45 @@ export const CollectionContract: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleMenuItem
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <RenounceRoleMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <AllowanceMenuItem
+                <AllowanceButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <RoyaltyMenuItem
+                <RoyaltyButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <BlacklistMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnBlacklistMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <TransferMenuItem
+                <BlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnBlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TransferButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <CollectionUploadMenuItem
+                <CollectionUploadButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                   onRefreshPage={handleRefreshPage}
                 />
-                <EthListenerAddMenuItem
+                <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <EthListenerRemoveMenuItem
+                <EthListenerRemoveButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

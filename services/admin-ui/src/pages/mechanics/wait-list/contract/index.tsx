@@ -13,15 +13,15 @@ import { ContractStatus } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { WaitListDeployButton } from "../../../../components/buttons";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
-import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
-import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
-import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { PauseButton } from "../../../../components/buttons/mechanics/common/pause";
+import { UnPauseButton } from "../../../../components/buttons/mechanics/common/unpause";
+import { AllowanceButton } from "../../../../components/buttons/mechanics/common/allowance";
+import { TopUpButton } from "../../../../components/buttons/mechanics/common/top-up";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { WaitListEditDialog } from "./edit";
 
 export const WaitListContracts: FC = () => {
@@ -99,24 +99,21 @@ export const WaitListContracts: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleMenuItem
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <RenounceRoleMenuItem
+                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <AllowanceButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TopUpButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <AllowanceMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <EthListenerAddMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <EthListenerRemoveMenuItem
+                <EthListenerRemoveButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

@@ -1,26 +1,24 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
 export interface IStakingRuleCreateButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -104,15 +102,14 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="StakingRuleUploadButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.create" />
-      </Button>
+        icon={Add}
+        message="form.buttons.create"
+        dataTestId="StakingRuleUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingRuleUploadDialog
         onConfirm={handleLoadRule}
         onCancel={handleUploadCancel}

@@ -1,17 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { BigNumber, Contract, utils } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button, Typography } from "@mui/material";
 import { RecentActors } from "@mui/icons-material";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { BigNumber, Contract, utils } from "ethers";
 
-import { FormattedMessage } from "react-intl";
-
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+
 import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDDto } from "./dialog";
 
-export const ChainLinkSubscriptionButton: FC = () => {
+export interface IChainLinkSubscriptionButtonProps {
+  disabled?: boolean;
+  variant?: ListActionVariant;
+}
+
+export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> = props => {
+  const { disabled, variant = ListActionVariant.button } = props;
+
   const { account } = useWeb3React();
   const [isSubscriptionDialogOpen, setIsSubscriptionDialogOpen] = useState(false);
 
@@ -38,18 +44,14 @@ export const ChainLinkSubscriptionButton: FC = () => {
 
   return (
     <Fragment>
-      <Typography variant="body1">
-        <FormattedMessage id="dialogs.addConsumer" />
-      </Typography>
-      <Button
-        variant="outlined"
-        startIcon={<RecentActors />}
+      <ListAction
         onClick={handleAddConsumer}
-        data-testid="ChainLinkAddConsumerButton"
-        disabled={!account}
-      >
-        <FormattedMessage id="form.buttons.addConsumer" />
-      </Button>
+        icon={RecentActors}
+        message="form.buttons.addConsumer"
+        dataTestId="ChainLinkAddConsumerButton"
+        disabled={disabled || !account}
+        variant={variant}
+      />
       <ChainLinkSubscriptionDialog
         onCancel={handleAddConsumerCancel}
         onConfirm={handleAddConsumerConfirm}

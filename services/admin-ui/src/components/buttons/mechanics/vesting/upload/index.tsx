@@ -1,20 +1,20 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IClaimUploadDto } from "@framework/types";
 
 import { VestingClaimUploadDialog } from "./dialog";
 
 export interface IVestingClaimUploadButtonProps {
-  className?: string;
+  disabled?: boolean;
   onRefreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = props => {
-  const { className, onRefreshPage } = props;
+  const { disabled, onRefreshPage, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -46,15 +46,14 @@ export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = prop
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="VestingClaimUploadButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.upload" />
-      </Button>
+        icon={Add}
+        message="form.buttons.upload"
+        dataTestId="VestingClaimUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <VestingClaimUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

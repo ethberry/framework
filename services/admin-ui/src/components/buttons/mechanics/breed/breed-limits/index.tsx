@@ -1,6 +1,4 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { Button } from "@mui/material";
 import { Bloodtype } from "@mui/icons-material";
 
 import { Contract } from "ethers";
@@ -10,9 +8,17 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import BreedSetPregnancyLimitsABI from "../../../../../abis/mechanics/breed/breed-limits/setPregnancyLimits.abi.json";
 
-import { BreedLimitDialog, IBreedLimitDto } from "./edit";
+import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 
-export const BreedLimitButton: FC = () => {
+export interface IBreedLimitButtonProps {
+  disabled?: boolean;
+  variant?: ListActionVariant;
+}
+
+export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
+  const { disabled, variant } = props;
+
   const [isBreedLimitDialogOpen, setIsBreedLimitDialogOpen] = useState(false);
 
   const handleBreedLimit = (): void => {
@@ -40,9 +46,14 @@ export const BreedLimitButton: FC = () => {
 
   return (
     <Fragment>
-      <Button startIcon={<Bloodtype />} onClick={handleBreedLimit} data-testid="BreedLimitButton">
-        <FormattedMessage id="pages.breed.limit" />
-      </Button>
+      <ListAction
+        onClick={handleBreedLimit}
+        icon={Bloodtype}
+        message="pages.breed.limit"
+        disabled={disabled}
+        variant={variant}
+        dataTestId="BreedLimitButton"
+      />
       <BreedLimitDialog
         onCancel={handleBreedLimitCancel}
         onConfirm={handleBreedLimitConfirmed}

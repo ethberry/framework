@@ -59,7 +59,6 @@
     }
   },
   "dialogs": {
-    "addConsumer": "Add VRF Consumer",
     "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
@@ -538,7 +537,7 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
-      "addConsumer": "Add Consumer",
+      "addConsumer": "Add VRF Consumer",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
       "approve": "Approve",

@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IPonziContractDeployDto, IUser } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 
@@ -14,11 +13,12 @@ import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPon
 import { PonziContractDeployDialog } from "./dialog";
 
 export interface IPonziContractDeployButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -65,15 +65,14 @@ export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="PonziContractDeployButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        icon={Add}
+        message="form.buttons.deploy"
+        dataTestId="PonziContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <PonziContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );

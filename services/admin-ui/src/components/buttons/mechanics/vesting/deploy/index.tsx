@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IUser, IVestingContractDeployDto } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
@@ -13,11 +12,12 @@ import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deplo
 import { VestingDeployDialog } from "./dialog";
 
 export interface IVestingDeployButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
   // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
@@ -70,15 +70,14 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="VestingDeployButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        icon={Add}
+        message="form.buttons.deploy"
+        dataTestId="VestingDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <VestingDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

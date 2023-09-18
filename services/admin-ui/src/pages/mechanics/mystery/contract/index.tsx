@@ -18,21 +18,21 @@ import {
 
 import { MysteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
-import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
-import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
-import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
-import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
-import { MintMenuItem } from "../../../../components/menu/mechanics/mystery/contract/mint";
-import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
-import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
-import { TransferMenuItem } from "../../../../components/menu/common/transfer";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
+import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
+import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
+import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
+import { PauseButton } from "../../../../components/buttons/mechanics/common/pause";
+import { UnPauseButton } from "../../../../components/buttons/mechanics/common/unpause";
+import { MintButton } from "../../../../components/buttons/mechanics/mystery/contract/mint";
+import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
+import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
+import { TransferButton } from "../../../../components/buttons/common/transfer";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
@@ -109,54 +109,45 @@ export const MysteryContract: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleMenuItem
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <RenounceRoleMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <BlacklistMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnBlacklistMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <WhitelistMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnWhitelistMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <MintMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <AllowanceMenuItem
+                <BlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnBlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <WhitelistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnWhitelistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <MintButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <AllowanceButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <RoyaltyMenuItem
+                <RoyaltyButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <TransferMenuItem
+                <TransferButton
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
                   }
                 />
-                <EthListenerAddMenuItem
+                <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <EthListenerRemoveMenuItem
+                <EthListenerRemoveButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

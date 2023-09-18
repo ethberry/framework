@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IStakingContractDeployDto, IUser } from "@framework/types";
 import { StakingContractTemplates } from "@framework/types";
 
@@ -14,11 +13,12 @@ import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deplo
 import { StakingDeployDialog } from "./dialog";
 
 export interface IStakingDeployButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -59,15 +59,14 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="StakingDeployButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        icon={Add}
+        message="form.buttons.deploy"
+        dataTestId="StakingDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );

@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
@@ -14,11 +13,12 @@ import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contrac
 import { Erc1155ContractDeployDialog } from "./dialog";
 
 export interface IErc1155TokenDeployButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -61,15 +61,14 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
+        icon={Add}
+        message="form.buttons.deploy"
         data-testid="Erc1155ContractDeployButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        disabled={disabled}
+        variant={variant}
+      />
       <Erc1155ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

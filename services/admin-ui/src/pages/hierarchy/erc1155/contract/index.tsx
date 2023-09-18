@@ -13,20 +13,20 @@ import { ContractFeatures, ContractStatus, Erc1155ContractFeatures, TokenType } 
 
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
-import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
-import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
-import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
-import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
-import { TransferMenuItem } from "../../../../components/menu/common/transfer";
-import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
+import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
+import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
+import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
+import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
+import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
+import { TransferButton } from "../../../../components/buttons/common/transfer";
+import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
@@ -121,14 +121,14 @@ export const Erc1155Contract: FC = () => {
                     icon={Delete}
                     message="form.buttons.delete"
                   />
-                  <GrantRoleMenuItem contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleMenuItem contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleMenuItem contract={contract} disabled={itemDisabled} />
-                  <BlacklistMenuItem contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistMenuItem contract={contract} disabled={itemDisabled} />
-                  <WhitelistMenuItem contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistMenuItem contract={contract} disabled={itemDisabled} />
-                  <MintMenuItem
+                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
+                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
+                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
+                  <BlacklistButton contract={contract} disabled={itemDisabled} />
+                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
+                  <WhitelistButton contract={contract} disabled={itemDisabled} />
+                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
+                  <MintButton
                     contract={contract}
                     disabled={
                       itemDisabled ||
@@ -136,21 +136,21 @@ export const Erc1155Contract: FC = () => {
                       contract.contractFeatures.includes(ContractFeatures.GENES)
                     }
                   />
-                  <AllowanceMenuItem
+                  <AllowanceButton
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
-                  <TransferMenuItem
+                  <TransferButton
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
-                  <SnapshotMenuItem contract={contract} disabled={itemDisabled} />
-                  <RoyaltyMenuItem
+                  <SnapshotButton contract={contract} disabled={itemDisabled} />
+                  <RoyaltyButton
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
-                  <EthListenerAddMenuItem contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveMenuItem contract={contract} disabled={itemDisabled} />
+                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
                 </ListActions>
               </ListItem>
             );

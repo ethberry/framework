@@ -8,7 +8,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IRaffleRound } from "@framework/types";
 
-import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
+import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/contract/release";
 import { RaffleRoundViewDialog } from "./view";
 
 export const RaffleRounds: FC = () => {

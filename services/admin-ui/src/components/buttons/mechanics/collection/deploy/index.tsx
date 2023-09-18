@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ICollectionContractDeployDto, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
@@ -14,11 +13,12 @@ import DeployCollectionABI from "../../../../../abis/mechanics/collection/contra
 import { CollectionContractDeployDialog } from "./dialog";
 
 export interface ICollectionContractDeployButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
@@ -64,15 +64,14 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="CollectionContractDeployButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        icon={Add}
+        message="form.buttons.deploy"
+        dataTestId="CollectionContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <CollectionContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

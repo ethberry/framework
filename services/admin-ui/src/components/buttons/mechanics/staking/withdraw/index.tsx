@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
 import { RequestQuote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -13,12 +12,12 @@ import StakingWithdrawABI from "../../../../../abis/mechanics/staking/stakingWit
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
-  const { balance } = props;
-
-  const { formatMessage } = useIntl();
+  const { balance, disabled, variant } = props;
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
@@ -36,10 +35,13 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.withdrawPenalty" })}>
-      <IconButton onClick={handleClick} data-testid="StakingBalanceWithdrawButton">
-        <RequestQuote />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={RequestQuote}
+      message="form.tips.withdrawPenalty"
+      dataTestId="StakingBalanceWithdrawButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

@@ -40,7 +40,7 @@ export const ListAction: FC<PropsWithChildren<IListActionProps>> = props => {
     case ListActionVariant.button:
       return (
         <Button
-          variant={buttonVariant ?? ""}
+          variant={buttonVariant}
           onClick={onClick}
           disabled={disabled}
           startIcon={<Icon />}

@@ -1,11 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
-import { Contract, BigNumber } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract, BigNumber } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { TokenType } from "@framework/types";
 
 import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
@@ -14,11 +13,12 @@ import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
 import { getEthPrice } from "./utils";
 
 export interface IDispenserUploadButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,16 +68,14 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="DispenserUploadButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.upload" />
-      </Button>
-
+        icon={Add}
+        message="form.buttons.upload"
+        dataTestId="DispenserUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <DispenserUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

@@ -1,26 +1,24 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
 import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
 import { PonziRuleUploadDialog } from "./upload-dialog";
 
 export interface IPonziRuleCreateButtonProps {
-  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
-  const { className } = props;
+  const { disabled, variant } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -102,15 +100,14 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="PonziRuleUploadButton"
-        className={className}
-      >
-        <FormattedMessage id="form.buttons.create" />
-      </Button>
+        icon={Add}
+        message="form.buttons.create"
+        dataTestId="PonziRuleUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <PonziRuleUploadDialog
         onConfirm={handleLoadRule}
         onCancel={handleUploadCancel}

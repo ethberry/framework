@@ -13,16 +13,16 @@ import { ContractStatus } from "@framework/types";
 
 import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { PauseMenuItem } from "../../../../components/menu/mechanics/common/pause";
-import { UnPauseMenuItem } from "../../../../components/menu/mechanics/common/unpause";
-import { LotteryRoundStartMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-start";
-import { LotteryRoundEndMenuItem } from "../../../../components/menu/mechanics/lottery/contract/round-end";
-import { LotteryScheduleMenuItem } from "../../../../components/menu/mechanics/lottery/contract/schedule";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { PauseButton } from "../../../../components/buttons/mechanics/common/pause";
+import { UnPauseButton } from "../../../../components/buttons/mechanics/common/unpause";
+import { LotteryRoundStartButton } from "../../../../components/buttons/mechanics/lottery/contract/round-start";
+import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/lottery/contract/round-end";
+import { LotteryScheduleButton } from "../../../../components/buttons/mechanics/lottery/contract/schedule";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
@@ -100,35 +100,32 @@ export const LotteryContracts: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleMenuItem
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <RenounceRoleMenuItem
+                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <LotteryRoundStartButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <PauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnPauseMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <LotteryRoundStartMenuItem
+                <LotteryRoundEndButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <LotteryRoundEndMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <LotteryScheduleMenuItem
+                <LotteryScheduleButton
                   contract={contract}
                   refreshPage={handleRefreshPage}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <EthListenerAddMenuItem
+                <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <EthListenerRemoveMenuItem
+                <EthListenerRemoveButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

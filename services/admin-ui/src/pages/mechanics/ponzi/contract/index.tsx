@@ -12,14 +12,14 @@ import { ContractStatus, IContract, IContractSearchDto, PonziContractFeatures } 
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { PonziDeployButton } from "../../../../components/buttons";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
-import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
-import { PonziBalanceMenuItem } from "../../../../components/menu/mechanics/ponzi/ponzi-balances";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { AllowanceButton } from "../../../../components/buttons/mechanics/common/allowance";
+import { TopUpButton } from "../../../../components/buttons/mechanics/common/top-up";
+import { PonziBalanceButton } from "../../../../components/buttons/mechanics/ponzi/ponzi-balances";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { PonziContractEditDialog } from "./edit";
 
 export const PonziContract: FC = () => {
@@ -97,26 +97,23 @@ export const PonziContract: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <GrantRoleMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleMenuItem
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <RenounceRoleMenuItem
+                <AllowanceButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TopUpButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <PonziBalanceButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <AllowanceMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <TopUpMenuItem contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <PonziBalanceMenuItem
+                <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <EthListenerAddMenuItem
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <EthListenerRemoveMenuItem
+                <EthListenerRemoveButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
