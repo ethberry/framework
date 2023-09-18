@@ -1,14 +1,13 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
-import { FormattedMessage } from "react-intl";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ITemplate } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 
@@ -17,11 +16,14 @@ import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
+  className?: string;
+  disabled?: boolean;
   template: ITemplate;
+  variant?: ListActionVariant;
 }
 
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
-  const { template } = props;
+  const { className, disabled, template, variant = ListActionVariant.button } = props;
   const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
 
   const settings = useSettings();
@@ -109,13 +111,14 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   return (
     <Fragment>
-      <Button
-        disabled={template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap)}
+      <ListAction
         onClick={handleBuy}
-        data-testid="TemplatePurchaseButton"
-      >
-        <FormattedMessage id="form.buttons.buy" />
-      </Button>
+        message="form.buttons.buy"
+        className={className}
+        dataTestId="TemplatePurchaseButton"
+        disabled={disabled || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))}
+        variant={variant}
+      />
       <AmountDialog
         onCancel={handleAmountCancel}
         onConfirm={handleAmountConfirm}

@@ -1,22 +1,24 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
-import { Button } from "@mui/material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
 import { ModuleType, TokenStatus } from "@framework/types";
 
 import UnpackABI from "../../../../../abis/mechanics/mysterybox/unpack/unpack.abi.json";
 
 export interface IMysteryUnpackButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
   onRefreshPage?: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
-  const { onRefreshPage = () => {}, token } = props;
+  const { className, disabled, onRefreshPage = () => {}, token, variant = ListActionVariant.button } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(token.template!.contract!.address, UnpackABI, web3Context.provider?.getSigner());
@@ -40,8 +42,13 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
   }
 
   return (
-    <Button onClick={handleUnpack(token)} data-testid="WrapperUnpackButton">
-      <FormattedMessage id="form.buttons.unpack" />
-    </Button>
+    <ListAction
+      onClick={handleUnpack(token)}
+      message="form.buttons.unpack"
+      className={className}
+      dataTestId="WrapperUnpackButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

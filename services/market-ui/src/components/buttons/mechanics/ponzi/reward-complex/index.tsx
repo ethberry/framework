@@ -12,13 +12,14 @@ import ReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiv
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IPonziRewardComplexButtonProps {
+  className?: string;
   disabled?: boolean;
   stake: IPonziDeposit;
   variant?: ListActionVariant;
 }
 
 export const PonziRewardComplexButton: FC<IPonziRewardComplexButtonProps> = props => {
-  const { disabled, stake, variant } = props;
+  const { className, disabled, stake, variant } = props;
 
   const [isRewardDialogOpen, setIsRewardDialogOpen] = useState(false);
 
@@ -57,6 +58,7 @@ export const PonziRewardComplexButton: FC<IPonziRewardComplexButtonProps> = prop
         onClick={handleReward}
         icon={Redeem}
         message="form.tips.reward"
+        className={className}
         dataTestId="StakeRewardButton"
         disabled={disabled}
         variant={variant}
