@@ -24,15 +24,13 @@ async function bootstrap(): Promise<void> {
     },
   });
 
-  await app
-    .startAllMicroservices()
-    .then(() => console.info(`Email service is subscribed to ${rmqUrl}/${rmqQueueCron}`));
+  await app.startAllMicroservices().then(() => console.info(`Cron service is subscribed to ${rmqUrl}/${rmqQueueCron}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<number>("PORT", 3010);
 
   await app.listen(port, host, () => {
-    console.info(`Email service health check is running on http://${host}:${port}/health`);
+    console.info(`Cron service health check is running on http://${host}:${port}/health`);
   });
 }
 

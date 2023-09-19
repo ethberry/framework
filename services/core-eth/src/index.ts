@@ -47,13 +47,13 @@ async function bootstrap(): Promise<void> {
   const configService = app.get(ConfigService);
   const nodeEnv = configService.get<string>("NODE_ENV", "development");
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
+  const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
       urls: [rmqUrl],
-      queue: rmqQueueEthlogger,
+      queue: rmqQueueEth,
     },
   });
 
@@ -116,7 +116,7 @@ async function bootstrap(): Promise<void> {
 
   await app
     .startAllMicroservices()
-    .then(() => console.info(`Core-Eth service is subscribed to ${rmqUrl}/${rmqQueueEthlogger}`));
+    .then(() => console.info(`Core-Eth service is subscribed to ${rmqUrl}/${rmqQueueEth}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<number>("PORT", 3021);

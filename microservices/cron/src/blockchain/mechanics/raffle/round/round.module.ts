@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { coreEthServiceProvider } from "../../../../common/providers";
@@ -12,4 +12,11 @@ import { RaffleRoundServiceRmq } from "./round.service.rmq";
   providers: [Logger, coreEthServiceProvider, RaffleRoundServiceRmq],
   exports: [RaffleRoundServiceRmq],
 })
-export class RaffleRoundModule {}
+export class RaffleRoundModule implements OnModuleInit {
+  constructor(private readonly raffleRoundServiceRmq: RaffleRoundServiceRmq) {}
+
+  // save last block on SIGTERM
+  public async onModuleInit(): Promise<void> {
+    return this.raffleRoundServiceRmq.initSchedule();
+  }
+}

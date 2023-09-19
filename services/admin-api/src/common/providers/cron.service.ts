@@ -8,12 +8,12 @@ export const cronServiceProvider = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueueLogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
+    const rmqQueueCron = configService.get<string>("RMQ_QUEUE_CRON", "cron");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: [rmqUrl],
-        queue: rmqQueueLogger,
+        queue: rmqQueueCron,
       },
     });
   },
