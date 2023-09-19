@@ -10,7 +10,9 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const vrfAddress = process.env.VRF_ADDR || wallet;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
+    const vrfAddressBinance = process.env.VRF_BINANCE_ADDR || wallet;
+    const fromBlock = process.env.STARTING_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -46,6 +48,24 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         '{}',
         'CHAIN_LINK',
         '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 207},
+        '${vrfAddressBinance.toLowerCase()}',
+        56,
+        'VRF COORDINATOR (BNB)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlockBinance}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

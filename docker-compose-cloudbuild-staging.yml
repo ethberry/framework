@@ -96,8 +96,10 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       STARTING_BLOCK: "${STARTING_BLOCK}"
+      STARTING_BINANCE_BLOCK: "${STARTING_BINANCE_BLOCK}"
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      CONTRACT_MANAGER_BINANCE_ADDR: "${CONTRACT_MANAGER_BINANCE_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
       ERC20_SIMPLE_ADDR: "${ERC20_SIMPLE_ADDR}"
@@ -146,9 +148,12 @@ services:
       ERC721_WRAPPER_ADDR: "${ERC721_WRAPPER_ADDR}"
       PONZI_ADDR: "${PONZI_ADDR}"
       DISPENSER_ADDR: "${DISPENSER_ADDR}"
+      DISPENSER_BINANCE_ADDR: "${DISPENSER_BINANCE_ADDR}"
       # CHAINLINK
       LINK_ADDR: "${LINK_ADDR}"
+      LINK_BINANCE_ADDR: "${LINK_BINANCE_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
+      VRF_BINANCE_ADDR: "${VRF_BINANCE_ADDR}"
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2B}:${PORT_ADMIN_API_B2B}"
@@ -385,44 +390,44 @@ services:
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
-#  core-eth-binance:
-#    container_name: core-eth-binance
-#    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-#    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
-#    environment:
-#      # common
-#      BASE_MODE: "${BASE_MODE}"
-#      NODE_ENV: "${NODE_ENV}"
-#      HOST: "${HOST}"
-#      PORT: "${PORT_RPC_API_BINANCE}"
-#      # admin api
-#      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
-#      # GEMUNION
-#      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
-#      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
-#      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
-#      # RMQ
-#      RMQ_URL: "${RMQ_URL}"
-#      # REDIS
-#      REDIS_WS_URL: "${REDIS_WS_URL}"
-#      # FE
-#      # FE_URL: "${ADMIN_FE_URL}"
-#      # LOGDNA
-#      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-#      # BLOCKCHAIN
-#      CHAIN_ID: "${CHAIN_ID_BINANCE}"
-#      ACCOUNT: "${ACCOUNT}"
-#      PRIVATE_KEY: "${PRIVATE_KEY}"
-#      JSON_RPC_ADDR: "${JSON_RPC_ADDR_BINANCE_TEST}"
-#      LATENCY: "${LATENCY}"
-#      CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
-#      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE}"
-#      STARTING_BLOCK: "${STARTING_BLOCK_BINANCE_TEST}"
-#      # Chain-Link
-#      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_BINANCE_TEST}"
-#      # Contracts
-#    ports:
-#      - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
+  core-eth-binance:
+    container_name: core-eth-binance
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API_BINANCE}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL}"
+      # FE
+      # FE_URL: "${ADMIN_FE_URL}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID_BINANCE}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      LATENCY: "${LATENCY}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE}"
+      STARTING_BLOCK: "${STARTING_BLOCK_BINANCE_TEST}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_BINANCE_TEST}"
+      # Contracts
+    ports:
+      - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
 
   json-api:
     container_name: json-api
@@ -552,4 +557,4 @@ services:
       - json-api
       - game-api
       - core-eth
-#      - core-eth-binance
+      - core-eth-binance

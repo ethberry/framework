@@ -59,7 +59,9 @@ export default {
     binance_test: {
       url: process.env.JSON_RPC_ADDR_BINANCE_TEST,
       chainId: 97,
-      gasPrice: "auto",
+      // gasPrice: "auto",
+      gas: 2100000,
+      gasPrice: 5000000000,
       accounts: [
         process.env.GEMUNION_PRIVATE_KEY_STAGE, // 0xf6bD844ED9Ebd5FA533D0Ae26fD864aF6FD61Df2
       ],
