@@ -1,10 +1,11 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { UserModule } from "../../infrastructure/user/user.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";
@@ -17,9 +18,8 @@ import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
-import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
-import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
+import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
@@ -33,7 +33,8 @@ import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module";
 import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
 import { ClaimModule } from "../mechanics/claim/claim.module";
-import { ChainLinkLogModule } from "../integrations/chain-link/log/log.module";
+import { ChainLinkLogModule } from "../integrations/chain-link/contract/log/log.module";
+import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
 
 @Module({
   imports: [
@@ -47,10 +48,11 @@ import { ChainLinkLogModule } from "../integrations/chain-link/log/log.module";
     MysteryLogModule,
     VestingLogModule,
     StakingLogModule,
-    PyramidLogModule,
+    PonziLogModule,
     LotteryLogModule,
     LotteryTicketLogModule,
     RaffleLogModule,
+    WaitListLogModule,
     RaffleTicketLogModule,
     ContractManagerLogModule,
     EventHistoryModule,
@@ -58,12 +60,12 @@ import { ChainLinkLogModule } from "../integrations/chain-link/log/log.module";
     ContractModule,
     TemplateModule,
     TokenModule,
-    GradeModule,
     RentModule,
     BalanceModule,
     UserModule,
     ClaimModule,
     ChainLinkLogModule,
+    SecretManagerModule.deferred(),
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],

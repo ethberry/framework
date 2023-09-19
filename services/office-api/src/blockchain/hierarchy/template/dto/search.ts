@@ -5,7 +5,7 @@ import { Transform, Type } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 import type { ITemplateSearchDto } from "@framework/types";
-import { TemplateStatus } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @ApiPropertyOptional({
@@ -27,14 +27,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsOptional()
   @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public merchantId: number;
 
   @ApiPropertyOptional({
     type: Number,
@@ -61,4 +53,16 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @Transform(({ value }) => value as Array<TemplateStatus>)
   @IsEnum(TemplateStatus, { each: true, message: "badInput" })
   public templateStatus: Array<TemplateStatus>;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public merchantId: number;
+
+  public chainId: number;
+  public contractType: Array<TokenType>;
+  public contractModule: Array<ModuleType>;
 }

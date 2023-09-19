@@ -14,7 +14,7 @@ export class PageService {
     private readonly pageEntityRepository: Repository<PageEntity>,
   ) {}
 
-  public async search(dto: IPageSearchDto): Promise<[Array<PageEntity>, number]> {
+  public async search(dto: Partial<IPageSearchDto>): Promise<[Array<PageEntity>, number]> {
     const { query, pageStatus, skip, take } = dto;
 
     const queryBuilder = this.pageEntityRepository.createQueryBuilder("page");
@@ -66,9 +66,9 @@ export class PageService {
   public async create(dto: IPageCreateDto): Promise<PageEntity> {
     const { slug } = dto;
 
-    const productEntity = await this.pageEntityRepository.findOne({ where: { slug } });
+    const pageEntity = await this.pageEntityRepository.findOne({ where: { slug } });
 
-    if (productEntity) {
+    if (pageEntity) {
       throw new ConflictException("duplicateSlug");
     }
 

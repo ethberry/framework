@@ -4,10 +4,11 @@ import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
+import type { IGradeSignDto } from "@framework/types";
 
-import { ISignGradeDto } from "../interfaces";
+import { ChainIdDto } from "../../../../common/dto";
 
-export class SignGradeDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignGradeDto {
+export class GradeSignDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements IGradeSignDto {
   @ApiProperty({
     minimum: 1,
   })

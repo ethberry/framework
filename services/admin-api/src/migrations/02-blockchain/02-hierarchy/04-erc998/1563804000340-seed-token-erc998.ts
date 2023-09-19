@@ -2,11 +2,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { TokenMetadata } from "@framework/types";
+import { NodeEnv, TokenMetadata } from "@framework/types";
 
 export class SeedTokenErc998At1563804000340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -200,12 +200,11 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        104070101,
+        104070101, -- Infinity
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1040701",
           [TokenMetadata.LEVEL]: "10",
-          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
-          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+          [TokenMetadata.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         100,
         '104070101',

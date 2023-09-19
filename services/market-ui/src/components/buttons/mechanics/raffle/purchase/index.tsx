@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IRaffleRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -15,10 +14,14 @@ import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/pur
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IRafflePurchaseButtonProps {
+  className?: string;
+  disabled: boolean;
   round: Partial<IRaffleRound>;
+  variant?: ListActionVariant;
 }
+
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
-  const { round } = props;
+  const { className, disabled, round, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
@@ -28,32 +31,25 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
 
       return contract.purchaseRaffle(
         {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
+          externalId: round.id,
           expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
+          nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
+          receiver: round.contract?.address,
+          referrer: settings.getReferrer(),
         },
-        [
-          {
-            tokenType: 0,
-            token: round.contract?.address,
-            tokenId: "0",
-            amount: "0",
-          },
-          {
-            tokenType: 2,
-            token: round.ticketContract?.address,
-            tokenId: "0",
-            amount: "1",
-          },
-        ],
+        {
+          tokenType: 2,
+          token: round.ticketContract?.address,
+          tokenId: "0",
+          amount: "1",
+        },
         round.price?.components.map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,
-          tokenId: component.templateId || 0,
+          tokenId: component.template?.tokens![0].tokenId,
           amount: component.amount,
-        })),
+        }))[0],
         sign.signature,
         {
           value: getEthPrice(round.price),
@@ -64,16 +60,17 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
 
     return metaFnWithSign(
       {
         url: "/raffle/ticket/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
-          roundId: round.id,
+          contractId: round.contractId,
         },
       },
       null,
@@ -86,8 +83,15 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="RaffleBuyTicket">
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+    <ListAction
+      onClick={handlePurchase}
+      icon={Casino}
+      message="form.buttons.buy"
+      buttonVariant="contained"
+      className={className}
+      dataTestId="RaffleBuyTicket"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

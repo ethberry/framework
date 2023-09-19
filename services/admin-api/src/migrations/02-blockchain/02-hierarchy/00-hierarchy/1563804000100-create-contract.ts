@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateContract1563804000100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -14,7 +15,10 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
-        'SYSTEM',
+        'EXCHANGE',
+        'CONTRACT_MANAGER',
+        'CHAIN_LINK',
+        'DISPENSER',
         'HIERARCHY',
         'TEST',
         'MYSTERY',
@@ -22,7 +26,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'LOTTERY',
         'RAFFLE',
         'STAKING',
-        'PYRAMID',
+        'PONZI',
         'WAITLIST',
         'VESTING',
         'POLYGON',
@@ -40,10 +44,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'EXTERNAL',
         'BLACKLIST',
         'WHITELIST',
+        'STABLE_COIN',
         
         -- ERC721
         'RANDOM',
-        'UPGRADEABLE',
+        'DISCRETE',
         'GENES',
         'RENTABLE',
         'SOULBOUND',
@@ -58,32 +63,40 @@ export class CreateContract1563804000100 implements MigrationInterface {
         -- MODULE:MYSTERY
         'PAUSABLE',
         
-        -- MODULE:VESTING
-        'LINEAR',
-        'GRADED',
-        'CLIFF',
-        
-        -- MODULE:PYRAMID
+        -- MODULE:PONZI
         'SPLITTER',
         'REFERRAL'
+      );
+    `);
+
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.contract_security_enum AS ENUM (
+        'OWNABLE',
+        'OWNABLE_2_STEP',
+        'ACCESS_CONTROL',
+        'ACCESS_CONTROL_ENUMERABLE',
+        'ACCESS_CONTROL_DEFAULT_ADMIN_RULES',
+        'ACCESS_CONTROL_CROSS_CHAIN'
       );
     `);
 
     // 01   - CM
     // 02   - exchange
     // 07   - VRF
-    // 010x - native
-    // 020x - erc20
-    // 030x - erc721
-    // 040x - erc998
-    // 050x - erc1155
-    // 011x - mystery
-    // 012x - mystery
-    // 013x - wrapper
-    // 021x - raffle
-    // 022x - raffle
-    // 023x - lottery
-    // 024x - lottery
+    // 08   - dispenser
+    // 01x - native
+    // 02x - erc20
+    // 03x - erc721
+    // 04x - erc998
+    // 05x - erc1155
+    // 11x - mystery
+    // 13x - wrapper
+    // 21x - raffle
+    // 22x - raffle
+    // 23x - lottery
+    // 24x - lottery
+    // 25x - staking
+    // 26x - ponzi
 
     const table = new Table({
       name: `${ns}.contract`,
@@ -164,6 +177,12 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: "'HIERARCHY'",
         },
         {
+          name: "contract_security",
+          type: `${ns}.contract_security_enum`,
+          default: "'ACCESS_CONTROL'",
+          isNullable: true,
+        },
+        {
           name: "is_paused",
           type: "boolean",
           default: false,
@@ -198,11 +217,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 50000, true);`);
+    await queryRunner.query(
+      `SELECT setval('${ns}.contract_id_seq', ${process.env.NODE_ENV === NodeEnv.production ? 50 : 50000}, true);`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

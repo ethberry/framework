@@ -4,7 +4,7 @@ import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposi
 
 import { PhotoStatus } from "@framework/types";
 
-import { IPhotoCreateDto, IPhotoUpdateDto } from "./interfaces";
+import type { IPhotoCreateDto, IPhotoUpdateDto } from "./interfaces";
 import { PhotoEntity } from "./photo.entity";
 import { ProductEntity } from "../product/product.entity";
 import { ProductItemEntity } from "../product-item/product-item.entity";

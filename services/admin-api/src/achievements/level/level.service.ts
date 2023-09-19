@@ -8,7 +8,7 @@ import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleService } from "../rule/rule.service";
 import { AchievementLevelEntity } from "./level.entity";
-import { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
+import type { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AchievementLevelService {
@@ -19,7 +19,7 @@ export class AchievementLevelService {
     protected readonly achievementRuleService: AchievementRuleService,
   ) {}
 
-  public search(dto: IAchievementLevelSearchDto): Promise<[Array<AchievementLevelEntity>, number]> {
+  public search(dto: Partial<IAchievementLevelSearchDto>): Promise<[Array<AchievementLevelEntity>, number]> {
     const { query, achievementRuleIds, skip, take } = dto;
 
     const queryBuilder = this.achievementLevelEntityRepository.createQueryBuilder("level");

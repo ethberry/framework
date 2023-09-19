@@ -20,8 +20,8 @@ export const getListenerType = (contract: IContract) => {
       return ListenerType.ERC1155;
     default:
       switch (contractModule) {
-        case ModuleType.PYRAMID:
-          return ListenerType.PYRAMID;
+        case ModuleType.PONZI:
+          return ListenerType.PONZI;
         default:
           return ListenerType.ERC20;
       }

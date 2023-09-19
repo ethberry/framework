@@ -13,9 +13,7 @@ import "../RaffleRandom.sol";
 contract RaffleRandomBinance is RaffleRandom, ChainLinkBinance {
   using Counters for Counters.Counter;
 
-  constructor(
-    RaffleConfig memory config
-  ) RaffleRandom(config) ChainLinkBinance(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  constructor() RaffleRandom() ChainLinkBinance(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();

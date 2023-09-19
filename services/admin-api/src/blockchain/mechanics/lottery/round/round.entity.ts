@@ -1,11 +1,12 @@
-import { Column, Entity, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { ILotteryRound } from "@framework/types";
+import type { ILotteryRound } from "@framework/types";
 
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
 
 @Entity({ schema: ns, name: "lottery_round" })
 export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRound {
@@ -44,4 +45,13 @@ export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRoun
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
+
+  @OneToMany(_type => LotteryRoundAggregationEntity, aggregation => aggregation.round)
+  public aggregation?: Array<LotteryRoundAggregationEntity>;
+
+  // @OneToMany(_type => TokenEntity, token => token.template)
+  // public tokens: Array<TokenEntity>;
+
+  // this is not a column
+  public ticketCount: number;
 }

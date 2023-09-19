@@ -10,6 +10,24 @@ export enum StakingRuleStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum StakingDepositTokenType {
+  NATIVE = "NATIVE",
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC998 = "ERC998",
+  ERC1155 = "ERC1155",
+}
+
+export enum StakingRewardTokenType {
+  NONE = "NONE",
+  NATIVE = "NATIVE",
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC998 = "ERC998",
+  ERC1155 = "ERC1155",
+  MYSTERY = "MYSTERY",
+}
+
 export interface IStakingRule extends ISearchable {
   depositId: number;
   deposit?: IAsset;

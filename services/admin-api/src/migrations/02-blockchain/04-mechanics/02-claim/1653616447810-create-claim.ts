@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateClaim1653616447810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -8,7 +9,6 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       CREATE TYPE ${ns}.claim_status_enum AS ENUM (
         'NEW',
         'REDEEMED',
-        'UNPACKED',
         'EXPIRED'
       );
     `);
@@ -111,7 +111,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       EXECUTE PROCEDURE update_expired_claims();
     `);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

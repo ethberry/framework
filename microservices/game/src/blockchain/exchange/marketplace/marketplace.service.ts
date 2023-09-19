@@ -1,47 +1,31 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { SettingsKeys, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { ITemplateSignDto } from "@framework/types";
+import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
-import type { ISignTemplateDto } from "./interfaces";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Injectable()
 export class MarketplaceService {
   constructor(
+    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, templateId } = dto;
-    const templateEntity = await this.templateService.findOne(
-      { id: templateId },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            contract: "template.contract",
-            // tokens: "template.tokens",
-            price: "template.price",
-            price_components: "price.components",
-            price_template: "price_components.template",
-            price_contract: "price_components.contract",
-            price_tokens: "price_template.tokens",
-          },
-        },
-      },
-    );
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
+  public async sign(dto: ITemplateSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
+    const { account, referrer = ZeroAddress, templateId, chainId } = dto;
+    const templateEntity = await this.templateService.findOneAndCheckMerchant({ id: templateId }, merchantEntity);
 
     const cap = BigInt(templateEntity.cap);
     if (cap > 0 && cap <= BigInt(templateEntity.amount)) {
@@ -53,13 +37,15 @@ export class MarketplaceService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        nonce,
         externalId: templateEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       templateEntity,
     );
@@ -67,8 +53,14 @@ export class MarketplaceService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, templateEntity: TemplateEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    templateEntity: TemplateEntity,
+  ): Promise<string> {
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

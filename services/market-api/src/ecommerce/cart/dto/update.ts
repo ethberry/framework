@@ -9,7 +9,7 @@ import { CartItemCreateDto } from "../../cart-item/dto";
 
 export class CartUpdateDto implements ICartUpdateDto {
   @ApiProperty({ type: () => [CartItemCreateDto] })
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
   @ValidateNested()
   @Type(() => CartItemCreateDto)

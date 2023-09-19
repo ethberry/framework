@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Card, CardActionArea, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 interface IErc998ContractListItemProps {

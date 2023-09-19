@@ -1,26 +1,21 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { IProduct, ProductStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IProduct } from "@framework/types";
+import { ProductStatus } from "@framework/types";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";
-import { ProductSearchForm } from "./form";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
@@ -71,26 +66,36 @@ export const Product: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ProductCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <ProductSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ProductSearchForm">
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <SelectInput multiple name="productStatus" options={ProductStatus} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <EntityInput multiple name="categoryIds" controller="ecommerce/categories" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((product, i) => (
-            <ListItem key={i}>
+          {rows.map(product => (
+            <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(product)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(product)} disabled={product.productStatus === ProductStatus.INACTIVE}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(product)}
+                  message="form.buttons.delete"
+                  icon={Delete}
+                  disabled={product.productStatus === ProductStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { Not } from "typeorm";
 
 import { IMetamaskDto, MetamaskService } from "@gemunion/nest-js-module-metamask";
@@ -6,11 +6,14 @@ import { UserStatus } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
-import { IProfileUpdateDto } from "./interfaces";
+import type { IProfileUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly metamaskService: MetamaskService, private readonly userService: UserService) {}
+  constructor(
+    private readonly metamaskService: MetamaskService,
+    private readonly userService: UserService,
+  ) {}
 
   public update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
     Object.assign(userEntity, dto);
@@ -35,7 +38,7 @@ export class ProfileService {
     });
 
     if (count) {
-      throw new BadRequestException("walletAlreadyInUse");
+      throw new ConflictException("duplicateAccount");
     }
 
     Object.assign(userEntity, { wallet });

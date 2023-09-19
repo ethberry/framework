@@ -1,12 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { ContractFeatures, IGrade, IToken, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
@@ -15,16 +14,19 @@ import { getEthPrice, getMultiplier } from "./utils";
 import { IUpgradeDto, UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const GradeButton: FC<IUpgradeButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled = false, token, variant = ListActionVariant.button } = props;
 
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
@@ -53,11 +55,12 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
           return contract.upgrade(
             {
-              nonce: utils.arrayify(sign.nonce),
               externalId: grade.id,
               expiresAt: sign.expiresAt,
-              referrer: constants.AddressZero,
+              nonce: utils.arrayify(sign.nonce),
               extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
+              receiver: grade.contract!.merchant!.wallet,
+              referrer: constants.AddressZero,
             },
             // ITEM
             {
@@ -86,6 +89,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           tokenId: token.id,
           attribute: values.attribute,
           account,
+          chainId,
         },
       },
       values,
@@ -107,15 +111,20 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     setIsUpgradeDialogOpen(false);
   };
 
-  if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+  if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
     return null;
   }
 
   return (
     <Fragment>
-      <Button onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
-        <FormattedMessage id={`form.buttons.upgrade`} />
-      </Button>
+      <ListAction
+        onClick={handleUpgrade}
+        message="form.buttons.upgrade"
+        className={className}
+        dataTestId="ExchangeUpgradeButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <UpgradeDialog
         onCancel={handleUpgradeCancel}
         onConfirm={handleUpgradeConfirm}

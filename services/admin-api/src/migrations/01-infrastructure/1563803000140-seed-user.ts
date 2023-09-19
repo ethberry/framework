@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { avatarWhiteUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedUser1563803000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = BigInt(process.env.CHAIN_ID || testChainId);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.user (
@@ -26,10 +27,12 @@ export class SeedUser1563803000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'trejgun@gmail.com',
-        'bPTD3jSwxTdqHWvlG0ek2WbHPJd2',
-        'Trej Gun',
-        '${imageUrl}',
+        '${process.env.NODE_ENV === NodeEnv.production ? "gemunion@gemunion.io" : "trejgun@gmail.com"}',
+        '${
+          process.env.NODE_ENV === NodeEnv.production ? "Rme7AdwNfdMoXaje551gkRtJF402" : "nmuQTQhyQ1X5nla2i061Wsc4cIj1"
+        }',
+        'GemUnion Admin',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
@@ -37,14 +40,14 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'ACTIVE',
         '{SUPER,ADMIN,OWNER}',
         1,
-        '${chainId.toString() === testChainId.toString() ? wallets[0] : process.env.ACCOUNT}',
+        '${chainId === testChainId ? wallets[0] : process.env.ACCOUNT}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -67,16 +70,16 @@ export class SeedUser1563803000140 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun@gemunion.io',
-        'ia31Zjm8NUTstqI3Ug9mbHtiVbH2',
+        'SbE0QAb34lhB1bBwoa62MpZW1qn1',
         'CTAPbIu_MABP',
-        '${imageUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
         '',
         'ACTIVE',
         '{ADMIN,OWNER}',
-        1,
+        2,
         '${wallets[1]}',
         '${chainId}',
         '${currentDateTime}',
@@ -85,14 +88,14 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'meowdao@gmail.com',
         's1dBg1j0WtOyRutwwJfCSBLurqi2',
         'Meow Dao',
-        '${imageUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
         '',
         'ACTIVE',
         '{ADMIN,OWNER}',
-        1,
+        3,
         '${wallets[2]}',
         '${chainId}',
         '${currentDateTime}',
@@ -101,14 +104,14 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test1@gemunion.io',
         'qwerty',
         'Yuri',
-        '${imageUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
         '',
         'ACTIVE',
         '{MANAGER}',
-        1,
+        2,
         '0x01',
         '${chainId}',
         '${currentDateTime}',
@@ -117,14 +120,14 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test2@gemunion.io',
         'qwerty',
         'Arthur',
-        '${imageUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
         '',
         'ACTIVE',
         '{CUSTOMER}',
-        1,
+        2,
         '0x02',
         '${chainId}',
         '${currentDateTime}',
@@ -133,14 +136,14 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test3@gemunion.io',
         'qwerty',
         'Jenya',
-        '${imageUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
         '',
         'ACTIVE',
         '{CUSTOMER}',
-        1,
+        2,
         '0x03',
         '${chainId}',
         '${currentDateTime}',

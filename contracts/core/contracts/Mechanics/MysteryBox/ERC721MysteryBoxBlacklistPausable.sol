@@ -8,7 +8,8 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
+
 import "./ERC721MysteryBoxBlacklist.sol";
 
 contract ERC721MysteryBoxBlacklistPausable is ERC721MysteryBoxBlacklist, Pausable {
@@ -21,10 +22,24 @@ contract ERC721MysteryBoxBlacklistPausable is ERC721MysteryBoxBlacklist, Pausabl
     _grantRole(PAUSER_ROLE, _msgSender());
   }
 
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }

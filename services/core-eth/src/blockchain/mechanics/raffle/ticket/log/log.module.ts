@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 
@@ -31,11 +31,10 @@ import { RaffleTicketLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.RAFFLE,
-            contractAddress: raffleTicketAddr.address || [],
+            contractAddress: raffleTicketAddr.address,
             contractInterface: new Interface(RaffleTicketSol.abi),
             // prettier-ignore
             eventNames: [
-              // TODO add other events
               ContractEventType.Transfer,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
@@ -62,7 +61,7 @@ export class RaffleTicketLogModule implements OnModuleDestroy {
   constructor(private readonly raffleTicketLogService: RaffleTicketLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.raffleTicketLogService.updateBlock();
   }
 }

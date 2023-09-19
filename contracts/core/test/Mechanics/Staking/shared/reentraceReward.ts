@@ -20,6 +20,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
     nonce,
     externalId: 1,
     expiresAt,
+    receiver: ZeroAddress,
     referrer: ZeroAddress,
     extra,
   };

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangePurchaseMysteryBoxEvent } from "@framework/types";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IExchangePurchaseMysteryBoxEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";

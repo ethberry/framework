@@ -3,10 +3,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -34,7 +35,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        3,
+        12501,
         '${stakingAddr}',
         '${chainId}',
         'STAKING',
@@ -48,6 +49,74 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         'STAKING',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12502,
+        '${stakingAddr}',
+        '${chainId}',
+        'STAKING (new)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Staking',
+        '',
+        '',
+        'NEW',
+        '{WITHDRAW,ALLOWANCE,REFERRAL}',
+        'STAKING',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12503,
+        '${stakingAddr}',
+        '${chainId}',
+        'STAKING (inactive)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Staking',
+        '',
+        '',
+        'INACTIVE',
+        '{WITHDRAW,ALLOWANCE,REFERRAL}',
+        'STAKING',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12504,
+        '${stakingAddr}',
+        56,
+        'STAKING (BEP)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Staking',
+        '',
+        '',
+        'ACTIVE',
+        '{WITHDRAW,ALLOWANCE,REFERRAL}',
+        'STAKING',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12505,
+        '${stakingAddr}',
+        '${chainId}',
+        'STAKING (2)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Staking',
+        '',
+        '',
+        'ACTIVE',
+        '{WITHDRAW,ALLOWANCE,REFERRAL}',
+        'STAKING',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

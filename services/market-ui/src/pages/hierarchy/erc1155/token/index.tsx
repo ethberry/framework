@@ -1,20 +1,17 @@
 import { FC, Fragment } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import type { IBalance, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import type { IBalance, ITemplate, IToken } from "@framework/types";
 
-import { StyledPaper } from "./styled";
-import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
-import { formatPrice } from "../../../../utils/money";
-import { TokenHistory } from "../../../../components/common/token-history";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { CommonTokenPanel } from "./common-token-panel";
 
 export const Erc1155Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc1155/tokens",
     empty: {
       balance: [
@@ -52,29 +49,13 @@ export const Erc1155Token: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <StyledPaper>
-            <FormattedMessage id="pages.token.priceTitle" />
-            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
-              {formatPrice(selected.template?.price)
-                .split(", ")
-                .map((item: string, index: number) => (
-                  <li key={index}>{item}</li>
-                ))}
-            </Box>
-            <FormattedMessage id="pages.token.balanceTitle" />
-            <Box component="p" sx={{ pl: 0, listStylePosition: "inside" }}>
-              {selected.balance?.at(0)?.amount}
-            </Box>
-            <TokenSellButton token={selected} />
-            <Erc1155TransferButton token={selected} />
-          </StyledPaper>
+          {selected.templateId ? (
+            <>
+              <CommonTokenPanel token={selected} />
+              <DismantleTokenPanel token={selected} />
+            </>
+          ) : null}
         </Grid>
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
     </Fragment>
   );

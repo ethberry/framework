@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
@@ -63,6 +63,7 @@ jobs:
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          GEMUNION_PRIVATE_KEY_PROD: ${{ secrets.GEMUNION_PRIVATE_KEY_PROD }}
           RINKEBY_RPC_URL: ${{ secrets.RINKEBY_RPC_URL }}
           JSON_RPC_ADDR_GOERLY: ${{ secrets.JSON_RPC_ADDR_GOERLY }}
 

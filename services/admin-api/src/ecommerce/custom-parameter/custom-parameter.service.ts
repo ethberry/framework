@@ -5,7 +5,7 @@ import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CustomParameterEntity } from "./custom-parameter.entity";
-import { ICustomParameterCreateDto, ICustomParameterUpdateDto } from "./interfaces";
+import type { ICustomParameterCreateDto, ICustomParameterUpdateDto } from "./interfaces";
 
 @Injectable()
 export class CustomParameterService {
@@ -14,7 +14,7 @@ export class CustomParameterService {
     private readonly customParameterEntityRepository: Repository<CustomParameterEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CustomParameterEntity>, number]> {
+  public search(dto: Partial<ISearchDto>): Promise<[Array<CustomParameterEntity>, number]> {
     const { query } = dto;
 
     const queryBuilder = this.customParameterEntityRepository.createQueryBuilder("parameter");

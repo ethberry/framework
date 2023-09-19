@@ -1,22 +1,22 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
+import { TransferOwnershipMenuItem } from "../../extensions/transfer-ownership";
 import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { AllowanceMenuItem } from "../common/allowance";
 import { TopUpMenuItem } from "../common/top-up";
-import { TransferOwnershipMenuItem } from "./transfer-ownership";
 
 export interface IVestingActionsMenu {
-  vesting: IContract;
+  contract: IContract;
   disabled?: boolean;
 }
 
 export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
-  const { vesting, disabled } = props;
+  const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -43,12 +43,20 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <AllowanceMenuItem contract={vesting} />
-        <TopUpMenuItem contract={vesting} />
-        <TransferOwnershipMenuItem vesting={vesting} />
-        <EthListenerAddMenuItem contract={vesting} />
-        <EthListenerRemoveMenuItem contract={vesting} />
+      <Menu
+        id="vesting-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
+        <AllowanceMenuItem contract={contract} />
+        <TopUpMenuItem contract={contract} />
+        <TransferOwnershipMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <EthListenerAddMenuItem contract={contract} />
+        <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

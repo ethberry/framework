@@ -26,7 +26,7 @@ export class ReferralReportService {
     return this.referralRewardService.search(dto, userEntity);
   }
 
-  public async chart(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<any> {
+  public async chart(dto: Partial<IReferralReportSearchDto>, userEntity: UserEntity): Promise<any> {
     const { startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -50,7 +50,7 @@ export class ReferralReportService {
     return Promise.all([this.entityManager.query(queryString, [startTimestamp, endTimestamp, userEntity.wallet]), 0]);
   }
 
-  public async export(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<string> {
+  public async export(dto: Partial<IReferralReportSearchDto>, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
     const [list] = await this.search(rest, userEntity);

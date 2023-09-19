@@ -4,12 +4,12 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@ge
 
 import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { shouldBehaveLikeDiscrete } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC721Blacklist } from "../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
-describe("ERC998BlacklistUpgradeable", function () {
+describe("ERC998BlacklistDiscrete", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
@@ -17,7 +17,7 @@ describe("ERC998BlacklistUpgradeable", function () {
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
-  shouldBehaveLikeUpgradeable(factory);
+  shouldBehaveLikeDiscrete(factory);
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

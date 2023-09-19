@@ -1,13 +1,15 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Casino, ConfirmationNumber, EmojiEvents } from "@mui/icons-material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { Casino, ConfirmationNumber } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const LotterySection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+import { NodeEnv } from "@framework/types";
 
-  if (disabled) {
+export const LotterySection: FC = () => {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+
+  if (!isDevelopment) {
     return null;
   }
 
@@ -21,38 +23,22 @@ export const LotterySection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/contracts">
+        <ListItemButton component={RouterLink} to="/lottery/contracts">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.title" />
           </ListItemText>
-        </ListItem>
-        {/* <ListItem button component={RouterLink} to="/lottery/purchase"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Casino /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.lottery.purchase.title" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItem> */}
-        <ListItem button component={RouterLink} to="/lottery/ticket">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/lottery/tokens">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.tokens.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/leaderboard">
-          <ListItemIcon>
-            <EmojiEvents />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.lottery.leaderboard.title" />
-          </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

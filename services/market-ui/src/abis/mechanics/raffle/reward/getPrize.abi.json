@@ -5,6 +5,11 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "roundId",
+        "type": "uint256"
       }
     ],
     "name": "getPrize",

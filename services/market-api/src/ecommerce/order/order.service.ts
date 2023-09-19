@@ -6,13 +6,10 @@ import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateRe
 import { OrderStatus } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderSearchDto } from "./interfaces";
+import type { IOrderCreateDto, IOrderSearchDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AddressService } from "../address/address.service";
 import { CartService } from "../cart/cart.service";
-import { UserService } from "../../infrastructure/user/user.service";
-import { AuthService } from "../../infrastructure/auth/auth.service";
-import { ProductService } from "../product/product.service";
 
 @Injectable()
 export class OrderService {
@@ -21,9 +18,6 @@ export class OrderService {
     private readonly orderEntityRepository: Repository<OrderEntity>,
     private readonly addressService: AddressService,
     private readonly cartService: CartService,
-    private readonly userService: UserService,
-    private readonly authService: AuthService,
-    private readonly productService: ProductService,
   ) {}
 
   public findAndCount(
@@ -33,7 +27,8 @@ export class OrderService {
     return this.orderEntityRepository.findAndCount({ where, order: { createdAt: "DESC" }, ...options });
   }
 
-  public search({ orderStatus, dateRange }: IOrderSearchDto): Promise<[Array<OrderEntity>, number]> {
+  public search(dto: Partial<IOrderSearchDto>): Promise<[Array<OrderEntity>, number]> {
+    const { orderStatus, dateRange } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
     if (orderStatus && orderStatus.length) {

@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IErc20TokenDeployDto, IUser } from "@framework/types";
 import { Erc20ContractTemplates } from "@framework/types";
 
@@ -15,12 +14,14 @@ import { Erc20ContractDeployDialog } from "./dialog";
 
 export interface IErc20ContractDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc20TokenDeployDto, web3Context, sign) => {
@@ -35,7 +36,7 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {
@@ -62,15 +63,15 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="Erc20ContractDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="Erc20ContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <Erc20ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

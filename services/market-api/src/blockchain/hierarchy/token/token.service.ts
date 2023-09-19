@@ -2,19 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import {
-  ContractFeatures,
-  ITokenAutocompleteDto,
-  ITokenSearchDto,
-  ModuleType,
-  TokenMetadata,
-  TokenRarity,
-  TokenStatus,
-  TokenType,
-} from "@framework/types";
+import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 
-import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
+import { LotteryRoundEntity } from "../../mechanics/lottery/round/round.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {
@@ -24,10 +18,10 @@ export class TokenService {
   ) {}
 
   public async search(
-    dto: ITokenSearchDto,
+    dto: Partial<ITokenSearchDto>,
     userEntity: UserEntity,
-    contractType: Array<TokenType>,
     contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<[Array<TokenEntity>, number]> {
     const {
@@ -48,6 +42,8 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
+
+    // MODULE:RENT
     queryBuilder.leftJoinAndSelect("rent.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -60,18 +56,18 @@ export class TokenService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    if (contractType.length) {
-      queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
+    if (contractType.length === 1) {
+      queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
     } else {
-      queryBuilder.andWhere("contract.contractType = :contractType", {
+      queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
         contractType,
       });
     }
 
-    if (contractModule.length) {
-      queryBuilder.andWhere(`contract.contractModule IN(:...contractModule)`, { contractModule });
+    if (contractModule.length === 1) {
+      queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
     } else {
-      queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      queryBuilder.andWhere(`contract.contractModule IN(:...contractModule)`, {
         contractModule,
       });
     }
@@ -162,14 +158,14 @@ export class TokenService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
-      "token.id": "ASC",
+      "token.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    const { contractIds, templateIds } = dto;
+    const { contractIds, templateIds, tokenStatus } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -209,6 +205,14 @@ export class TokenService {
       }
     }
 
+    if (tokenStatus) {
+      if (tokenStatus.length === 1) {
+        queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
+      } else {
+        queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
+      }
+    }
+
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
     });
@@ -228,19 +232,35 @@ export class TokenService {
     userEntity?: UserEntity,
   ): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-    queryBuilder.leftJoinAndSelect("token.history", "history");
-    queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
-    queryBuilder.leftJoinAndSelect("exchange.history", "asset_component_history");
-    queryBuilder.leftJoinAndSelect("asset_component_history.assets", "asset_component_history_assets");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.token", "assets_token");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.contract", "assets_contract");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
+    // MODULE:LOTTERY
+    // MODULE:RAFFLE
+    queryBuilder.leftJoinAndMapOne(
+      "token.round",
+      LotteryRoundEntity,
+      "round",
+      `(token.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+    );
+    queryBuilder.leftJoinAndSelect("round.price", "round_price");
+    queryBuilder.leftJoinAndSelect("round_price.components", "round_price_components");
+    queryBuilder.leftJoinAndSelect("round_price_components.contract", "round_price_contract");
+    queryBuilder.leftJoinAndSelect("round_price_components.template", "round_price_template");
+
+    // MODULE:MYSTERY
+    queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    // MODULE:RENT
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");

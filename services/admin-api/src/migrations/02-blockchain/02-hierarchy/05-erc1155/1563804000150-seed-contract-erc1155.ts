@@ -3,10 +3,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -43,7 +44,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${chainId}',
         'Resources (simple)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fresources.png?alt=media&token=8e3c28ae-b0fc-4eef-ac23-1ebc9fe92bc3',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fresources.png?alt=media&token=abe28478-b19a-47a2-979f-62950aae2927',
         '',
         '',
         100,
@@ -97,7 +98,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${chainId}',
         'Potions (blacklist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fpotions.png?alt=media&token=e736b4fd-0eb1-4bff-b867-4f26601a5ea8',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fpotions.png?alt=media&token=db790592-76fe-4cba-a79a-eb140ca63efd',
         '',
         '',
         100,
@@ -115,7 +116,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         56,
         'BEP',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         '',
         '',
         100,

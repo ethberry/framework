@@ -77,7 +77,7 @@ export const CartProvider: FC<PropsWithChildren<ICartProviderProps>> = props => 
 
   const alter = (amount: number, product: IProduct): (() => Promise<void>) => {
     return () => {
-      return alterApi(undefined, { amount, product });
+      return alterApi(void 0, { amount, product });
     };
   };
 

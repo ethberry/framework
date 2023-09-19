@@ -1,40 +1,38 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsInt, IsJSON, IsOptional, IsString } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsEmail, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-// import { rePhoneNumber } from "@framework/constants";
-import { IMerchantCreateDto } from "../interfaces";
+import { SearchableDto, WalletDto } from "@gemunion/collection";
+import { emailMaxLength } from "@gemunion/constants";
 
-export class MerchantCreateDto implements IMerchantCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
+import type { IMerchantCreateDto } from "../interfaces";
+import { MerchantSocialDto } from "./social";
 
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
-  @ApiProperty()
-  @IsEmail()
+export class MerchantCreateDto extends Mixin(SearchableDto, WalletDto) implements IMerchantCreateDto {
+  @ApiProperty({
+    maxLength: emailMaxLength,
+  })
+  @IsEmail({}, { message: "patternMismatch" })
+  @MaxLength(emailMaxLength, { message: "rangeOverflow" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  // @Matches(rePhoneNumber, { message: "patternMismatch" })
   public phoneNumber: string;
-
-  @ApiPropertyOptional({
-    type: Number,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsInt({ each: true, message: "typeMismatch" })
-  public userIds: Array<number>;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   public imageUrl = "";
+
+  @ApiPropertyOptional({
+    type: MerchantSocialDto,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => MerchantSocialDto)
+  public social: MerchantSocialDto;
 }

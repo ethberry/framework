@@ -2,11 +2,12 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ZeroAddress } from "ethers";
 
-import { batchSize } from "@gemunion/contracts-constants";
-
 import { tokenId } from "../../../../../constants";
+import { IERC721Options } from "@gemunion/contracts-erc721";
 
-export function shouldMintConsecutive(factory: () => Promise<any>) {
+export function shouldMintConsecutive(factory: () => Promise<any>, options: IERC721Options = {}) {
+  const { batchSize = 0n } = options;
+
   describe("mintConsecutive", function () {
     it("should fail: token already minted", async function () {
       const [_owner, receiver] = await ethers.getSigners();

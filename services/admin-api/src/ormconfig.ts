@@ -11,11 +11,11 @@ import {
   createTokenTypesEnum,
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-postgres";
+import { NodeEnv } from "@framework/types";
 
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
-import { PageEntity } from "./infrastructure/page/page.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
@@ -33,6 +33,8 @@ import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { PayeesEntity } from "./blockchain/exchange/payees/payees.entity";
+// integrations
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 // extensions
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
@@ -41,19 +43,21 @@ import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
+import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 /* lottery */
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 /* raffle */
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
-/* pyramid */
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
-import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
+/* ponzi */
+import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */
@@ -67,7 +71,7 @@ import { PhotoEntity } from "./ecommerce/photo/photo.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
 import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
 import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
-import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 /* achievements */
 import { AchievementItemEntity } from "./achievements/item/item.entity";
@@ -92,16 +96,19 @@ import {
   CreateCart1683724062200,
   CreateCartItem1683724062210,
   CreateCategory1683724061300,
+  CreateChainLinkSubscriptions1563803000121,
   CreateClaim1653616447810,
   CreateCompositionAt1658980520000,
   CreateContract1563804000100,
-  CreateCraft1653616448010,
+  CreateCraft1653616448000,
   CreateCustomParameter1683724062400,
-  CreateDropAt1658980521000,
+  CreateDismantle1693120862000,
+  CreateAssetPromoAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
   CreateGameBalance1686896594700,
   CreateGrade1657846587000,
+  CreateLotteryRoundAggregationAt1660436476130,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
   CreateMysterybox1653616447910,
@@ -111,13 +118,13 @@ import {
   CreatePage1563803000210,
   CreateParameter1683724061600,
   CreatePhoto1683724061800,
+  CreatePonziDeposit1660436477300,
+  CreatePonziRules1660436477200,
   CreateProduct1683724061400,
   CreateProductItem1683724061500,
   CreateProductItemParameter1683724062600,
   CreateProductToCategory1683724061700,
-  CreatePromo1683724062300,
-  CreatePyramidDeposit1660436477300,
-  CreatePyramidRules1660436477200,
+  CreateProductPromo1683724062300,
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
   CreateReferralRewardAt1660103709900,
@@ -133,10 +140,10 @@ import {
   CreateWaitListList1663047650200,
   CreateWalletPayees1663047650500,
   SeedAccessControlCollectionAt1679894502230,
-  SeedAccessControlErc1155At20At1653616447250,
+  SeedAccessControlErc1155At1653616447250,
   SeedAccessControlErc20At1653616447220,
-  SeedAccessControlErc721At20At1653616447230,
-  SeedAccessControlErc998At20At1653616447240,
+  SeedAccessControlErc721At1653616447230,
+  SeedAccessControlErc998At1653616447240,
   SeedAccessListErc1155At1653616447350,
   SeedAccessListErc20At1653616447320,
   SeedAccessListErc721At1653616447330,
@@ -169,14 +176,14 @@ import {
   SeedBalanceErc721MysteryAt1563804020460,
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
-  SeedBalanceExchangeAt1563804020402,
   SeedBalanceLotteryTicketAt1563804020480,
-  SeedBalancePyramidAt1663047650530,
+  SeedBalancePonziAt1663047650530,
   SeedBalanceRaffleTicketAt1685961134480,
   SeedBalanceStakingAt1654751224530,
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
   SeedCategory1683724061310,
+  SeedChainLinkSubscriptions1563803000122,
   SeedClaimErc1155At1653616447850,
   SeedClaimErc20At1653616447820,
   SeedClaimErc721At1653616447830,
@@ -187,6 +194,7 @@ import {
   SeedCompositionAt1658980520010,
   SeedContractChainLinkAt1563804000105,
   SeedContractCollectionAt1679894500000,
+  SeedContractDispenserAt1692165706800,
   SeedContractErc1155At1563804000150,
   SeedContractErc1155DumbWayToDieAt1563804000151,
   SeedContractErc20At1563804000120,
@@ -202,7 +210,7 @@ import {
   SeedContractManagerAt1563804000101,
   SeedContractMysteryAt1563804000160,
   SeedContractNativeAt1563804000110,
-  SeedContractPyramidAt1660436477100,
+  SeedContractPonziAt1660436477100,
   SeedContractRaffleAt1685961136100,
   SeedContractRaffleTicketAt1685961134180,
   SeedContractStakingAt1654751224100,
@@ -212,10 +220,12 @@ import {
   SeedCraftErc1155Erc1155RecipesAt1653616448020,
   SeedCraftErc721Erc1155RecipesAt1653616448350,
   SeedCustomParameter1683724062410,
-  SeedDropErc1155At1658980521050,
-  SeedDropErc721At1658980521030,
-  SeedDropErc998At1658980521040,
-  SeedDropErcMysteryboxAt1658980521050,
+  SeedDismantleErc1155Erc155RecipesAt1693120862550,
+  SeedDismantleErc721Erc155RecipesAt1693120862350,
+  SeedAssetPromoErc1155At1658980521050,
+  SeedAssetPromoErc721At1658980521030,
+  SeedAssetPromoErc998At1658980521040,
+  SeedAssetPromoMysteryBoxAt1658980521050,
   SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
   SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
   SeedEventHistoryErc1155PurchaseAt1563804040230,
@@ -258,9 +268,9 @@ import {
   SeedEventHistoryVestingTransferOwnershipAt1687338973200,
   SeedEventHistoryWaitListAt1663047650350,
   SeedEventHistoryWaitListComponentsAt1663047650360,
-  SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
+  SeedLotteryRoundAggregationAt1660436476140,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
   SeedMysteryBoxErc1155At1653616447950,
@@ -271,16 +281,16 @@ import {
   SeedPage1563803000220,
   SeedParameter1683724061610,
   SeedPhoto1683724061810,
+  SeedPonziDepositErc20Erc20At1660436477320,
+  SeedPonziDepositNativeNativeAt1660436477310,
+  SeedPonziPayees1663047650520,
+  SeedPonziRulesErc20At1660436477220,
+  SeedPonziRulesNativeAt1660436477210,
   SeedProduct1683724061410,
   SeedProductItem1683724061510,
   SeedProductItemParameter1683724062610,
   SeedProductToCategory1683724061710,
-  SeedPromo1683724062310,
-  SeedPyramidDepositErc20Erc20At1660436477320,
-  SeedPyramidDepositNativeNativeAt1660436477310,
-  SeedPyramidPayees1663047650520,
-  SeedPyramidRulesErc20At1660436477220,
-  SeedPyramidRulesNativeAt1660436477210,
+  SeedProductPromo1683724062310,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
   SeedReferralRewardAt1660103709910,
@@ -337,10 +347,10 @@ const config: PostgresConnectionOptions = {
   entities: [
     /* infrastructure */
     MerchantEntity,
+    ChainLinkSubscriptionEntity,
     UserEntity,
     OtpEntity,
     SettingsEntity,
-    PageEntity,
     RatePlanEntity,
     /* blockchain */
     ContractManagerEntity,
@@ -363,13 +373,15 @@ const config: PostgresConnectionOptions = {
     BreedEntity,
     ClaimEntity,
     CraftEntity,
-    DropEntity,
+    DismantleEntity,
+    AssetPromoEntity,
     GradeEntity,
     LotteryRoundEntity,
+    LotteryRoundAggregationEntity,
     RaffleRoundEntity,
     MysteryBoxEntity,
-    PyramidRulesEntity,
-    PyramidDepositEntity,
+    PonziRulesEntity,
+    PonziDepositEntity,
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
@@ -387,7 +399,7 @@ const config: PostgresConnectionOptions = {
     ProductEntity,
     ProductItemEntity,
     ProductItemParameterEntity,
-    PromoEntity,
+    ProductPromoEntity,
     StockEntity,
     /* achievements */
     AchievementItemEntity,
@@ -404,7 +416,7 @@ const config: PostgresConnectionOptions = {
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === NodeEnv.development,
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.
@@ -420,7 +432,9 @@ const config: PostgresConnectionOptions = {
     CreateSettings1563803000010,
     SeedSettings1563803000020,
     CreateMerchant1563803000110,
+    CreateChainLinkSubscriptions1563803000121,
     SeedMerchant1563803000120,
+    SeedChainLinkSubscriptions1563803000122,
     CreateUser1563803000130,
     SeedUser1563803000140,
     CreateAuth1563803000150,
@@ -471,7 +485,6 @@ const config: PostgresConnectionOptions = {
     SeedWrapperAt1563804000370,
 
     CreateBalance1563804000400,
-    SeedBalanceExchangeAt1563804020402,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc20UsdtAt1563804020421,
     SeedBalanceErc20WethAt1563804020422,
@@ -489,9 +502,9 @@ const config: PostgresConnectionOptions = {
 
     CreateAccessControl1653616447200,
     SeedAccessControlErc20At1653616447220,
-    SeedAccessControlErc721At20At1653616447230,
-    SeedAccessControlErc998At20At1653616447240,
-    SeedAccessControlErc1155At20At1653616447250,
+    SeedAccessControlErc721At1653616447230,
+    SeedAccessControlErc998At1653616447240,
+    SeedAccessControlErc1155At1653616447250,
 
     CreateAccessList1653616447300,
     SeedAccessListErc20At1653616447320,
@@ -537,13 +550,17 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryMysteryMixedUnpackAt1687580606630,
     SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640,
 
-    CreateCraft1653616448010,
+    CreateCraft1653616448000,
     SeedCraftErc1155Erc1155RecipesAt1653616448020,
     SeedCraftErc721Erc1155RecipesAt1653616448350,
     SeedEventHistoryErc721Erc1155CraftAt1687760533510,
     SeedEventHistoryErc721Erc1155CraftComponentsAt1687760533520,
     SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
     SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
+
+    CreateDismantle1693120862000,
+    SeedDismantleErc721Erc155RecipesAt1693120862350,
+    SeedDismantleErc1155Erc155RecipesAt1693120862550,
 
     SeedContractStakingAt1654751224100,
     CreateStakingRules1654751224200,
@@ -587,11 +604,11 @@ const config: PostgresConnectionOptions = {
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
 
-    CreateDropAt1658980521000,
-    SeedDropErc721At1658980521030,
-    SeedDropErc998At1658980521040,
-    SeedDropErc1155At1658980521050,
-    SeedDropErcMysteryboxAt1658980521050,
+    CreateAssetPromoAt1658980521000,
+    SeedAssetPromoErc721At1658980521030,
+    SeedAssetPromoErc998At1658980521040,
+    SeedAssetPromoErc1155At1658980521050,
+    SeedAssetPromoMysteryBoxAt1658980521050,
 
     CreateReferralRewardAt1660103709900,
     SeedReferralRewardAt1660103709910,
@@ -604,6 +621,8 @@ const config: PostgresConnectionOptions = {
     SeedContractLotteryAt1660436476100,
     CreateLotteryRoundAt1660436476100,
     SeedLotteryRoundAt1660436476120,
+    CreateLotteryRoundAggregationAt1660436476130,
+    SeedLotteryRoundAggregationAt1660436476140,
     SeedEventHistoryLotteryTicketPurchaseAt1660436476310,
     SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
 
@@ -618,16 +637,16 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
     SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
 
-    // PYRAMID
-    SeedContractPyramidAt1660436477100,
-    CreatePyramidRules1660436477200,
-    SeedPyramidRulesNativeAt1660436477210,
-    SeedPyramidRulesErc20At1660436477220,
-    CreatePyramidDeposit1660436477300,
-    SeedPyramidDepositNativeNativeAt1660436477310,
-    SeedPyramidDepositErc20Erc20At1660436477320,
-    SeedPyramidPayees1663047650520,
-    SeedBalancePyramidAt1663047650530,
+    // PONZI
+    SeedContractPonziAt1660436477100,
+    CreatePonziRules1660436477200,
+    SeedPonziRulesNativeAt1660436477210,
+    SeedPonziRulesErc20At1660436477220,
+    CreatePonziDeposit1660436477300,
+    SeedPonziDepositNativeNativeAt1660436477310,
+    SeedPonziDepositErc20Erc20At1660436477320,
+    SeedPonziPayees1663047650520,
+    SeedBalancePonziAt1663047650530,
 
     SeedContractWaitlistAt1663047650100,
     CreateWaitListList1663047650200,
@@ -649,7 +668,6 @@ const config: PostgresConnectionOptions = {
     SeedAccessControlCollectionAt1679894502230,
 
     CreateWalletPayees1663047650500,
-    SeedExchangePayees1663047650510,
     SeedContractChainLinkAt1563804000105,
 
     CreateRent1678931845500,
@@ -657,6 +675,8 @@ const config: PostgresConnectionOptions = {
     SeedRent1678931845510,
     SeedEventHistoryErc721LendAt1678931845530,
     SeedEventHistoryErc721LendComponentsAt1678931845540,
+
+    SeedContractDispenserAt1692165706800,
 
     /* ecommerce */
     CreateCategory1683724061300,
@@ -681,8 +701,8 @@ const config: PostgresConnectionOptions = {
     // SeedOrderItems1683724062110,
     CreateCart1683724062200,
     CreateCartItem1683724062210,
-    CreatePromo1683724062300,
-    SeedPromo1683724062310,
+    CreateProductPromo1683724062300,
+    SeedProductPromo1683724062310,
     CreateCustomParameter1683724062400,
     SeedCustomParameter1683724062410,
     CreateStock1683724062500,

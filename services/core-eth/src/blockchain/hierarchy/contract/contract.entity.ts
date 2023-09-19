@@ -1,19 +1,24 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractSecurity, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { TemplateEntity } from "../template/template.entity";
 import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
   @Column({ type: "int" })
   public merchantId: number;
+
+  @JoinColumn()
+  @OneToOne(_type => MerchantEntity)
+  public merchant: MerchantEntity;
 
   @Column({ type: "varchar" })
   public imageUrl: string;
@@ -45,6 +50,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   @Column({
     type: "enum",
     enum: ContractStatus,
+    default: ContractStatus.NEW,
   })
   public contractStatus: ContractStatus;
 
@@ -67,6 +73,12 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
     enum: ModuleType,
   })
   public contractModule: ModuleType;
+
+  @Column({
+    type: "enum",
+    enum: ContractSecurity,
+  })
+  public contractSecurity: ContractSecurity;
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;

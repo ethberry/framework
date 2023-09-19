@@ -8,10 +8,10 @@ import { CoreService } from "./core.service";
 
 @Controller()
 export class CoreControllerRmq {
-  constructor(private readonly claimService: CoreService) {}
+  constructor(private readonly coreService: CoreService) {}
 
   @MessagePattern(MobileEventType.PURCHASE)
   public purchase(@Payload() dto: IRmqPurchase): Promise<void> {
-    return this.claimService.purchase(dto);
+    return this.coreService.purchase(dto);
   }
 }

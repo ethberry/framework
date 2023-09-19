@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -30,6 +31,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         contract_status,
         contract_features,
         contract_module,
+        contract_security,
         from_block,
         merchant_id,
         created_at,
@@ -38,10 +40,10 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         1901,
         '${vestingAddress}',
         '${chainId}',
-        'LINEAR VESTING',
+        'VESTING #1',
         '${simpleFormatting}',
         '',
-        'Linear vesting',
+        'Vesting',
         '',
         '',
         '${JSON.stringify({
@@ -51,8 +53,9 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
           monthlyRelease: 417,
         })}',
         'ACTIVE',
-        '{LINEAR}',
+        '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -61,10 +64,10 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         1902,
         '${vestingAddress}',
         '${chainId}',
-        'GRADED VESTING',
+        'VESTING #2',
         '${simpleFormatting}',
         '',
-        'Graded vesting',
+        'Vesting',
         '',
         '',
         '${JSON.stringify({
@@ -74,8 +77,9 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
           monthlyRelease: 417,
         })}',
         'ACTIVE',
-        '{GRADED}',
+        '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -84,10 +88,10 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         1903,
         '${vestingAddress}',
         '${chainId}',
-        'CLIFF VESTING',
+        'VESTING #3',
         '${simpleFormatting}',
         '',
-        'Cliff vesting',
+        'Vesting',
         '',
         '',
         '${JSON.stringify({
@@ -97,8 +101,9 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
           monthlyRelease: 417,
         })}',
         'ACTIVE',
-        '{CLIFF}',
+        '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',

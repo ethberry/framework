@@ -2,17 +2,14 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  AccessControlEventType,
-  ContractType,
-  Erc4907EventType,
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
-  IErc4907UpdateUserEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
+import { AccessControlEventType, ContractType } from "@framework/types";
 
 import { AccessControlServiceEth } from "./access-control.service.eth";
 
@@ -34,7 +31,7 @@ export class AccessControlControllerEth {
       eventName: AccessControlEventType.RoleGranted,
     },
     { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleGranted },
+    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleGranted },
@@ -63,7 +60,7 @@ export class AccessControlControllerEth {
       eventName: AccessControlEventType.RoleRevoked,
     },
     { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleRevoked },
+    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleRevoked },
@@ -92,7 +89,7 @@ export class AccessControlControllerEth {
       eventName: AccessControlEventType.RoleAdminChanged,
     },
     { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleAdminChanged },
+    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleAdminChanged },
@@ -116,29 +113,10 @@ export class AccessControlControllerEth {
       eventName: AccessControlEventType.OwnershipTransferred,
     },
   ])
-  public ownership(@Payload() event: ILogEvent<IOwnershipTransferredEvent>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.ownershipChanged(event, context);
-  }
-
-  @EventPattern([
-    {
-      contractType: ContractType.ERC721_TOKEN,
-      eventName: Erc4907EventType.UpdateUser,
-    },
-    {
-      contractType: ContractType.ERC721_TOKEN_RANDOM,
-      eventName: Erc4907EventType.UpdateUser,
-    },
-    {
-      contractType: ContractType.ERC998_TOKEN,
-      eventName: Erc4907EventType.UpdateUser,
-    },
-    {
-      contractType: ContractType.ERC998_TOKEN_RANDOM,
-      eventName: Erc4907EventType.UpdateUser,
-    },
-  ])
-  public updateUser(@Payload() event: ILogEvent<IErc4907UpdateUserEvent>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.updateUser(event, context);
+  public ownershipTransferred(
+    @Payload() event: ILogEvent<IOwnershipTransferredEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.accessControlServiceEth.ownershipTransferred(event, context);
   }
 }

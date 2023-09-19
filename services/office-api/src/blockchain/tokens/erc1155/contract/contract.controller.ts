@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Post,
   Put,
   Query,
   UseInterceptors,
@@ -15,10 +16,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { Erc1155ContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { Erc1155ContractService } from "./contract.service";
+import { Erc1155ContractCreateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc1155/contracts")
@@ -34,9 +36,18 @@ export class Erc1155ContractController {
     return this.erc1155CollectionService.search(dto, userEntity);
   }
 
+  @Post("/")
+  public create(@Body() dto: Erc1155ContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc1155CollectionService.create(dto, userEntity);
+  }
+
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity | null> {
-    return this.erc1155CollectionService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity | null> {
+    return this.erc1155CollectionService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -47,7 +58,7 @@ export class Erc1155ContractController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.erc1155CollectionService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.erc1155CollectionService.delete({ id }, userEntity);
   }
 }

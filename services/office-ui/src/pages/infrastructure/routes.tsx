@@ -8,6 +8,7 @@ import { Page } from "./page";
 import { Settings } from "./settings";
 import { Email } from "./email";
 import { Merchant } from "./merchant";
+import { RatePlan } from "./rate-plan";
 
 export const infrastructureRoutes: Array<RouteObject> = [
   {
@@ -32,6 +33,14 @@ export const infrastructureRoutes: Array<RouteObject> = [
     children: [
       { index: true, element: <Merchant /> },
       { path: "/merchants/:id", element: <Merchant /> },
+    ],
+  },
+  {
+    path: "/rate-plans",
+    element: <Protected />,
+    children: [
+      { index: true, element: <RatePlan /> },
+      { path: "/rate-plans/:tab", element: <RatePlan /> },
     ],
   },
   {

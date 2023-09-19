@@ -55,8 +55,7 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD, Rarity 
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
-    _upsertRecordField(tokenId, TRAITS, encodeData(request, randomWords[0]));
+    _upsertRecordField(tokenId, GENES, encodeData(request, randomWords[0]));
 
     delete _queue[requestId];
 
@@ -77,6 +76,9 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD, Rarity 
 
   function getRandomNumber() internal virtual returns (uint256 requestId);
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }

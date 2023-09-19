@@ -42,7 +42,7 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     setSettings(data ? JSON.parse(data) : {});
   }, []);
 
-  const save = (key: string, data: any | null): void => {
+  const save = (key: string, data: any): void => {
     const json = JSON.stringify(data);
     localStorage.setItem(key, json);
   };

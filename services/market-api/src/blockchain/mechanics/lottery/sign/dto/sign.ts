@@ -1,18 +1,25 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString } from "class-validator";
+import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
 import { ISignLotteryDto } from "../interfaces";
 
-export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignLotteryDto {
+import { LotteryTicketRule } from "./rule";
+import { ChainIdDto } from "../../../../../common/dto";
+
+export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignLotteryDto {
   @ApiProperty()
-  // TODO validation
-  @IsString({ message: "badInput" })
+  @IsString({ message: "typeMismatch" })
+  @MinLength(66, { message: "rangeUnderflow" })
+  @MaxLength(66, { message: "rangeOverflow" })
+  @Validate(LotteryTicketRule, [6 /* 6 from 36 */], {
+    message: "typeMismatch",
+  })
   public ticketNumbers: string;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  public roundId: number;
+  public contractId: number;
 }

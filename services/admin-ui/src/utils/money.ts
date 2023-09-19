@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory } from "@framework/types";
+import { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory, TokenType } from "@framework/types";
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {
   return `${currency} ${utils.formatUnits(amount, decimals)}`;
@@ -15,6 +15,29 @@ export const formatPrice = (asset?: IAsset | IAssetHistory): string => {
       .map((component: IAssetComponent | IAssetComponentHistory) =>
         formatEther(component.amount, component.contract!.decimals, component.contract!.symbol),
       )
+      .join(", ") || ""
+  );
+};
+
+export const formatItem = (asset?: IAsset): string => {
+  return (
+    asset?.components
+      .map(component => {
+        switch (component.contract?.contractType) {
+          case TokenType.NATIVE:
+          case TokenType.ERC20:
+            return formatEther(component.amount, component.contract.decimals, component.contract.symbol);
+          case TokenType.ERC721:
+          case TokenType.ERC998:
+            return component.template?.title;
+          case TokenType.ERC1155:
+            return BigInt(component.amount) > 1n
+              ? `${component.amount} ${component.template?.title}`
+              : component.template?.title;
+          default:
+            return "unsupported token type";
+        }
+      })
       .join(", ") || ""
   );
 };

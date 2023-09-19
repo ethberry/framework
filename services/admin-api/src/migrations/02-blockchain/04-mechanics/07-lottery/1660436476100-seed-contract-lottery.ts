@@ -3,11 +3,12 @@ import { CronExpression } from "@nestjs/schedule";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
-import { ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -42,16 +43,18 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           '${chainId}',
           'LOTTERY',
           '${simpleFormatting}',
-          '',
+          '${imageUrl}',
           'Lottery',
           '',
           '',
           '${JSON.stringify({
+            timeLagBeforeRelease: "100",
+            commission: "30",
             schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
           })}',
           'ACTIVE',
           null,
-          '{RANDOM, ALLOWANCE}',
+          '{RANDOM,ALLOWANCE,PAUSABLE}',
           'LOTTERY',
           '${fromBlock}',
           1,

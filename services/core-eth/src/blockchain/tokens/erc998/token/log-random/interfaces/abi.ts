@@ -1,5 +1,5 @@
 import { Interface } from "ethers";
 
-import ERC998BlacklistUpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistUpgradeableRandom.sol/ERC998BlacklistUpgradeableRandom.json";
+import ERC998BlacklistDiscreteRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistDiscreteRandom.sol/ERC998BlacklistDiscreteRandom.json";
 
-export const ABIRandom = new Interface(ERC998BlacklistUpgradeableRandomSol.abi);
+export const ABIRandom = new Interface(ERC998BlacklistDiscreteRandomSol.abi);

@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
-import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
+import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -30,7 +31,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2301,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -40,7 +41,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2302,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -50,7 +51,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2303,
         '${subDays(now, 2).toISOString()}',
         '${subDays(now, 2 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
@@ -60,7 +61,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2304,
         '${subDays(now, 2).toISOString()}',
         '${subDays(now, 2 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
@@ -70,7 +71,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2305,
         '${subDays(now, 1).toISOString()}',
         '${subDays(now, 1 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
@@ -80,7 +81,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2306,
         '${subDays(now, 1).toISOString()}',
         '${subDays(now, 1 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
@@ -90,7 +91,7 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         2307,
         '${subDays(now, 1).toISOString()}',
         '${subDays(now, 1 - 7).toISOString()}',
-        23, -- ERC20 > ERC721
+        123, -- ERC20 > ERC721
         1,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'

@@ -1,20 +1,12 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IRaffleTokenSearchDto, IRaffleToken, IRaffleRound } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 
 import { RaffleTokenViewDialog } from "./view";
 import { RaffleTokenSearchForm } from "./form";
@@ -63,23 +55,24 @@ export const RaffleTokens: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
-            <ListItem key={i}>
-              <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
+          {rows.map(token => (
+            <ListItem key={token.id}>
+              <ListItemText sx={{ width: 0.2 }}>#{token.tokenId}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
+                {" ("}
+                {token.round.id}
+                {")"}
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {token.metadata.PRIZE ? "Prize " : ""}
                 {token.round.number === token.tokenId ? "winner" : ""}
               </ListItemText>
 
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction icon={Visibility} message="form.tips.view" onClick={handleView(token)} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

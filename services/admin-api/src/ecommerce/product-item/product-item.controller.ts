@@ -27,8 +27,8 @@ export class ProductItemController {
   constructor(private readonly productItemService: ProductItemService) {}
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<ProductItemEntity>> {
-    return this.productItemService.autocomplete();
+  public autocomplete(@User() userEntity: UserEntity): Promise<Array<ProductItemEntity>> {
+    return this.productItemService.autocomplete(userEntity);
   }
 
   @Get("/")

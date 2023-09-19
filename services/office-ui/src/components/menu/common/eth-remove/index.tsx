@@ -1,20 +1,21 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IContract } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { IContract, NodeEnv } from "@framework/types";
 
-import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
 import { getListenerType } from "../../../../utils/listener-type";
+import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
 
 export interface IEthListenerRemoveMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const EthListenerRemoveMenuItem: FC<IEthListenerRemoveMenuItemProps> = props => {
-  const { contract } = props;
+  const { contract, disabled, variant } = props;
 
   const [isEthListenerDialogOpen, setIsEthListenerDialogOpen] = useState(false);
 
@@ -40,20 +41,19 @@ export const EthListenerRemoveMenuItem: FC<IEthListenerRemoveMenuItemProps> = pr
     });
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 
   return (
     <Fragment>
-      <MenuItem onClick={handleEthListenerRemove}>
-        <ListItemIcon>
-          <DoNotDisturbOff fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.removeListener" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleEthListenerRemove}
+        icon={DoNotDisturbOff}
+        message="form.buttons.removeListener"
+        disabled={disabled}
+        variant={variant}
+      />
       <EthListenerRemoveDialog
         onCancel={handleEthListenerRemoveCancel}
         onConfirm={handleEthListenerRemoveConfirm}

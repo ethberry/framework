@@ -29,11 +29,12 @@ export const expiresAt = 0;
 export const extra = ZeroHash;
 
 export const params = {
-  nonce,
   externalId,
   expiresAt,
-  referrer: ZeroAddress,
+  nonce,
   extra,
+  referrer: ZeroAddress,
+  receiver: ZeroAddress,
 };
 
 export const contractTemplate = "SIMPLE";
@@ -53,7 +54,7 @@ export const tokenAttributes = {
 export const subscriptionId = 1;
 
 export enum FrameworkInterfaceId {
-  ERC721Simple = "0xfdbf6221",
+  ERC721Simple = "0xbf290e49",
   ERC721Upgradable = "0x45977d03",
   ERC721Random = "0x32034d27",
   ERC721Mystery = "0xf0f47261",

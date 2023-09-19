@@ -11,12 +11,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "../../ERC721/extensions/MetaData.sol";
+import "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
 import "../../utils/errors.sol";
 import "../../utils/constants.sol";
 import "./interfaces/IERC721LotteryTicket.sol";
 
-contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, MetaData {
+contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Ticket) private _data;
@@ -75,6 +75,13 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     _upsertRecordField(tokenId, PRIZE, 1);
   }
 
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721LotteryTicket) {
     super.burn(tokenId);
   }
@@ -84,7 +91,9 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     return _baseURI(_baseTokenURI);
   }
 
-  // COMMON
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {

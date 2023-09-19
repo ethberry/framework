@@ -2,8 +2,8 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { Log, Wallet } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
@@ -19,20 +19,24 @@ import { testChainId } from "@framework/constants";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { UserService } from "../../../../infrastructure/user/user.service";
 
 @Injectable()
 export class RaffleRoundServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_SIGNER)
+    private readonly ethersSignerProvider: Wallet,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
-    @Inject(ETHERS_SIGNER)
-    private readonly ethersSignerProvider: Wallet,
+    private readonly userService: UserService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async start(event: ILogEvent<IRaffleRoundStartedEvent>, context: Log): Promise<void> {
@@ -40,7 +44,7 @@ export class RaffleRoundServiceEth {
     const {
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -86,7 +90,7 @@ export class RaffleRoundServiceEth {
 
     await this.raffleRoundService.updatePrice(asset, priceAsset);
 
-    await this.raffleRoundService.create({
+    const roundEntity = await this.raffleRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContract.id,
@@ -94,12 +98,18 @@ export class RaffleRoundServiceEth {
       priceId: asset.id,
       maxTickets: Number(maxTicket),
     });
+
+    await this.notificatorService.roundStartRaffle({
+      round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
+      address,
+      transactionHash,
+    });
   }
 
   public async finalize(event: ILogEvent<IRaffleRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
-      args: { round, prizeNumber },
+      args: { round, prizeNumber, prizeIndex },
     } = event;
     const { address } = context;
 
@@ -109,19 +119,27 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    // TODO BigInt ?
     Object.assign(roundEntity, { number: Number(prizeNumber).toString() });
     await roundEntity.save();
+
+    // NOTIFY
+    await this.notificatorService.finalizeRaffle({
+      round: roundEntity,
+      prizeIndex,
+      prizeNumber,
+    });
   }
 
   public async end(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {
+    const { address, transactionHash } = context;
+
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
       args: { round, endTimestamp },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+    const roundEntity = await this.raffleRoundService.getRound(round, address.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -132,14 +150,23 @@ export class RaffleRoundServiceEth {
     });
 
     await roundEntity.save();
+
+    await this.notificatorService.roundEndRaffle({
+      round: roundEntity,
+      address,
+      transactionHash,
+    });
   }
 
   public async prize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
     const {
-      args: { roundId, ticketId },
+      args: { account, roundId, ticketId, amount },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+    const roundEntity = await this.raffleRoundService.findOne(
+      { roundId },
+      { relations: { contract: true, ticketContract: true } },
+    );
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -151,15 +178,29 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("ticketNotFound");
     }
 
+    const userEntity = await this.userService.findOne({ wallet: account.toLowerCase() });
+
+    if (!userEntity) {
+      this.loggerService.error("CRITICAL ERROR", RaffleRoundServiceEth.name);
+      throw new NotFoundException("userNotFound");
+    }
+
     // UPDATE PRIZE METADATA
-    Object.assign(ticketEntity.metadata, { PRIZE: "1" });
+    Object.assign(ticketEntity.metadata, { PRIZE: amount });
     await ticketEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
+
+    // NOTIFY
+    await this.notificatorService.prizeRaffle({
+      account: userEntity,
+      round: roundEntity,
+      ticket: ticketEntity,
+      multiplier: amount,
+    });
   }
 
   public async release(event: ILogEvent<IRaffleReleaseEvent>, context: Log): Promise<void> {
-    // TODO use it somehow?
     await this.eventHistoryService.updateHistory(event, context);
   }
 }

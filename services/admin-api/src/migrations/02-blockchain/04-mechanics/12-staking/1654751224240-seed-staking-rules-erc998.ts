@@ -3,10 +3,11 @@ import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -16,27 +17,27 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80411
+        81411
       ), (
-        80412
+        81412
       ), (
-        80421
+        81421
       ), (
-        80422
+        81422
       ), (
-        80431
+        81431
       ), (
-        80432
+        81432
       ), (
-        80441
+        81441
       ), (
-        80442
+        81442
       ), (
-        80451
+        81451
       ), (
-        80452
+        81452
       ), (
-        80499
+        81499
       );
     `);
 
@@ -52,67 +53,67 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         10406,
         1040601, -- warrior
         1,
-        80411
+        81411
       ), (
         'NATIVE',
         10101,
         1010101, -- ETH
         '${WeiPerEther.toString()}',
-        80412
+        81412
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80421
+        81421
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        80422
+        81422
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80431
+        81431
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         1,
-        80432
+        81432
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80441
+        81441
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80442
+        81442
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80451
+        81451
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         1000,
-        80452
+        81452
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         1,
-        80499
+        81499
       );
     `);
 
@@ -131,81 +132,81 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        41,
+        141,
         'ERC998 > NATIVE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80411,
-        80412,
+        81411,
+        81412,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        42,
+        142,
         'ERC998 > ERC20',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80421,
-        80422,
+        81421,
+        81422,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        43,
+        143,
         'ERC998 > ERC721',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80431,
-        80432,
+        81431,
+        81432,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        44,
+        144,
         'ERC998 > ERC998',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80441,
-        80442,
+        81441,
+        81442,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        45,
+        145,
         'ERC998 > ERC1155',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80451,
-        80452,
+        81451,
+        81452,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        49,
+        149,
         'ERC998 > NONE',
         '${simpleFormatting}',
         604800,
         1,
         false,
-        80499,
+        81499,
         null,
         'ACTIVE',
-        3,       
+        12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       );

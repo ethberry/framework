@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { ContractType, IReferralRewardEvent, IReferralWithdrawEvent, ReferralProgramEventType } from "@framework/types";
 
 import { ReferralServiceEth } from "./referral.service.eth";

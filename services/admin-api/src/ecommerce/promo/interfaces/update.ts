@@ -1,3 +1,3 @@
-import { IPromoCreateDto } from "./create";
+import { IProductPromoCreateDto } from "./create";
 
-export interface IPromoUpdateDto extends IPromoCreateDto {}
+export interface IProductPromoUpdateDto extends IProductPromoCreateDto {}

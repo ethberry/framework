@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
+//
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
@@ -11,13 +12,13 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "hardhat/console.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../utils/constants.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../utils/TopUp.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 
-contract WaitList is AccessControl, Pausable {
+contract WaitList is AccessControl, Pausable, TopUp {
   using Counters for Counters.Counter;
 
   mapping(uint256 => bytes32) internal _roots;
@@ -81,11 +82,34 @@ contract WaitList is AccessControl, Pausable {
     emit WaitListRewardClaimed(_msgSender(), externalId, _items[externalId]);
   }
 
-  function pause() public virtual onlyRole(PAUSER_ROLE) {
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, TopUp) returns (bool) {
+    return super.supportsInterface(interfaceId);
+  }
+
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
+  function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
-  function unpause() public virtual onlyRole(PAUSER_ROLE) {
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
+  function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
 }

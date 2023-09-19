@@ -11,12 +11,14 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 
@@ -28,12 +30,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;
 
-  uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
-  uint256 internal immutable comm; // commission 30%
-
   event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
-  event RoundFinalized(uint256 round, uint256 prizeNumber);
+  event RoundFinalized(uint256 round, uint256 prizeIndex, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 roundId, uint256 ticketId, uint256 amount);
   event PaymentEthReceived(address from, uint256 amount);
@@ -45,7 +44,8 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
-    Counters.Counter ticketCounter; // all round tickets counter
+    //    Counters.Counter ticketCounter; // all round tickets counter
+    uint256[] tickets; // all round tickets ids
     uint256 prizeNumber; // prize number
     uint256 requestId;
     uint256 maxTicket;
@@ -56,15 +56,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   Round[] internal _rounds;
 
-  constructor(RaffleConfig memory config) {
+  constructor() {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
-
-    // SET Raffle Config
-    _timeLag = config.timeLagBeforeRelease;
-    comm = config.commission;
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -76,7 +72,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   function printTicket(
     uint256 externalId,
     address account
-  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId, uint256 index) {
     // get current round
     roundId = _rounds.length - 1;
     Round storage currentRound = _rounds[roundId];
@@ -86,17 +82,20 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     }
 
     // allow all
-    if (currentRound.maxTicket > 0 && currentRound.ticketCounter.current() >= currentRound.maxTicket) {
+    if (currentRound.maxTicket > 0 && currentRound.tickets.length >= currentRound.maxTicket) {
       revert LimitExceed();
     }
-
-    // workaround for struct
-    Counters.increment(currentRound.ticketCounter);
 
     currentRound.balance += currentRound.acceptedAsset.amount;
     currentRound.total += currentRound.acceptedAsset.amount;
 
     tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId);
+
+    // TODO overflow check?
+    currentRound.tickets.push(tokenId);
+
+    // serial number of ticket inside round
+    index = currentRound.tickets.length;
   }
 
   function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -142,6 +141,10 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       );
   }
 
+//  function getLotteryInfo() public view returns (RaffleConfig memory) {
+//    return RaffleConfig(_timeLag, comm);
+//  }
+
   // RANDOM
   function getRandomNumber() internal virtual returns (uint256 requestId);
 
@@ -161,15 +164,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     currentRound.endTimestamp = block.timestamp;
     currentRound.requestId = getRandomNumber();
 
-    uint256 commission = (currentRound.total * comm) / 100;
-    currentRound.total -= commission;
-
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
   function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
     Round storage currentRound = _rounds[roundNumber];
-    if (block.timestamp <= currentRound.endTimestamp + _timeLag) revert NotComplete();
     if (currentRound.balance == 0) revert ZeroBalance();
 
     uint256 roundBalance = currentRound.balance;
@@ -190,14 +189,16 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     Round storage currentRound = _rounds[_rounds.length - 1];
 
     // calculate wining numbers
-    uint256 len = currentRound.ticketCounter.current();
+    uint256 len = currentRound.tickets.length;
 
-    uint256 prizeNumber = len > 0 ? uint256(uint8(randomWords[0] % len) + 1) : 0; // if no tickets sold
+    // prizeNumber - tickets[index] or Zero if no tickets sold
+    uint256 prizeIndex = len > 0 ? uint256(uint8(randomWords[0] % len)) : 0;
 
-    // in case number is Zero - winner tokenId is 1
-    currentRound.prizeNumber = prizeNumber == 0 && len > 0 ? prizeNumber + 1 : prizeNumber;
+    // prizeNumber - winner's tokenId
+    // Zero if no tickets sold
+    currentRound.prizeNumber = len > 0 ? currentRound.tickets[prizeIndex] : 0;
 
-    emit RoundFinalized(currentRound.roundId, prizeNumber);
+    emit RoundFinalized(currentRound.roundId, prizeIndex, currentRound.prizeNumber /* ticket Id = ticket No*/);
   }
 
   function getPrize(uint256 tokenId, uint256 roundId) external {
@@ -211,41 +212,55 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       revert NotComplete();
     }
 
-    if (block.timestamp > ticketRound.endTimestamp + _timeLag) {
-      revert Expired();
+    // TODO OR approved?
+    if (IERC721(ticketRound.ticketAsset.token).ownerOf(tokenId) != _msgSender()) {
+      revert NotAnOwner();
     }
-
-    uint256 prizeNumber = ticketRound.prizeNumber;
 
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(ticketRound.ticketAsset.token);
 
     TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
 
-    // revert if prize already set
-    if (data.prize) {
-      revert WrongToken();
-    }
-
-    // revert if token's roundId differs
+    // check token's roundId
     if (data.round != roundId) {
       revert WrongRound();
     }
 
-    // ticketFactory.burn(tokenId);
-    // set prize status
-    ticketFactory.setTicketData(tokenId);
+    // check token's prize status
+    if (data.prize) {
+      revert WrongToken();
+    }
 
-    if (tokenId == prizeNumber) {
-      emit Prize(_msgSender(), roundId, tokenId, 0);
+    // check if tokenId is round winner
+    if (tokenId == ticketRound.prizeNumber) {
+      // ticketFactory.burn(tokenId);
+      // set prize status and multiplier
+      ticketFactory.setPrize(tokenId, ticketRound.tickets.length);
+      emit Prize(_msgSender(), roundId, tokenId, ticketRound.tickets.length);
+    } else {
+      revert NotInList();
     }
   }
 
   // PAUSABLE
-
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
@@ -255,6 +270,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }

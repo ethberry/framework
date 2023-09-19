@@ -6,7 +6,6 @@ import { IMerchant } from "../../../infrastructure";
 export enum ClaimStatus {
   NEW = "NEW",
   REDEEMED = "REDEEMED",
-  UNPACKED = "UNPACKED",
   EXPIRED = "EXPIRED",
 }
 

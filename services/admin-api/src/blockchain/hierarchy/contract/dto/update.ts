@@ -1,14 +1,14 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, Validate } from "class-validator";
+import { IsEnum, IsOptional, IsString, IsUrl, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { SearchableDto } from "@gemunion/collection";
+import { SearchableOptionalDto } from "@gemunion/collection";
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { ContractStatus } from "@framework/types";
 
 import { IContractUpdateDto } from "../interfaces";
 
-export class ContractUpdateDto extends SearchableDto implements IContractUpdateDto {
+export class ContractUpdateDto extends SearchableOptionalDto implements IContractUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsUrl({}, { message: "patternMismatch" })
@@ -20,12 +20,7 @@ export class ContractUpdateDto extends SearchableDto implements IContractUpdateD
   })
   @IsOptional()
   @Transform(({ value }) => value as ContractStatus)
-  @IsEnum(ContractStatus, { message: "badInput" })
   @Validate(ForbidEnumValues, [ContractStatus.NEW])
+  @IsEnum(ContractStatus, { message: "badInput" })
   public contractStatus: ContractStatus;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
 }

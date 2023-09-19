@@ -3,10 +3,10 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldNotMintCommon } from "../ERC721/shared/shouldNotMintCommon";
-import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { shouldNotMint } from "../ERC721/shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "../ERC721/shared/simple/base/shouldNotSafeMint";
 import { FrameworkInterfaceId } from "../constants";
+import { shouldMintRandomGenes } from "./shared/random/mintRandom";
 
 describe("ERC998Genes", function () {
   const factory = () => deployERC721(this.title);
@@ -16,7 +16,7 @@ describe("ERC998Genes", function () {
   shouldNotMint(factory);
   shouldNotMintCommon(factory);
   shouldNotSafeMint(factory);
-  shouldMintRandom(factory);
+  shouldMintRandomGenes(factory);
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

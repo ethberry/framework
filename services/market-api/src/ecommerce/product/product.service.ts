@@ -16,10 +16,10 @@ export class ProductService {
     private readonly productEntityRepository: Repository<ProductEntity>,
   ) {}
 
-  public async search(search: IProductSearchDto): Promise<[Array<ProductEntity>, number]> {
+  public async search(search: Partial<IProductSearchDto>): Promise<[Array<ProductEntity>, number]> {
     const {
       query,
-      sortBy = "id",
+      field = "id",
       sort = SortDirection.asc,
       merchantId,
       categoryIds,
@@ -86,7 +86,9 @@ export class ProductService {
 
     // https://github.com/typeorm/typeorm/issues/2919
     // @ts-ignore
-    queryBuilder.orderBy({ [`product.${sortBy}`]: sort.toUpperCase() });
+    queryBuilder.orderBy({
+      [`product.${field}`]: sort.toUpperCase(),
+    });
 
     return queryBuilder.getManyAndCount();
   }
@@ -204,7 +206,7 @@ export class ProductService {
 
   public findAll(
     where: FindOptionsWhere<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
+    options?: FindManyOptions<ProductEntity>,
   ): Promise<Array<ProductEntity>> {
     return this.productEntityRepository.find({ where, ...options });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { EthersContractService } from "@gemunion/nestjs-ethers";
+import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ICreateListenerPayload } from "../../../../common/interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -17,8 +17,10 @@ export class VestingLogService {
     this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByType(ModuleType.VESTING, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByType(
+      ModuleType.VESTING,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
@@ -14,24 +14,24 @@ import type {
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
-  IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerPyramidDeployedEvent,
   IContractManagerLotteryDeployedEvent,
+  IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
+  IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
-
 import {
   CollectionContractTemplates,
   ContractFeatures,
+  ContractSecurity,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
-  // PyramidContractTemplates,
   StakingContractTemplates,
   TemplateStatus,
   TokenType,
@@ -46,9 +46,8 @@ import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service"
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
-import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
-import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
+import { PonziLogService } from "../mechanics/ponzi/log/log.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
@@ -58,12 +57,13 @@ import { LotteryLogService } from "../mechanics/lottery/log/log.service";
 import { RaffleLogService } from "../mechanics/raffle/log/log.service";
 import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
 import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
-import { addConsumer } from "../integrations/chain-link/utils";
 import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.service";
 import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
-import { decodeExternalId } from "../../common/utils";
 import { ClaimService } from "../mechanics/claim/claim.service";
-import { ChainLinkLogService } from "../integrations/chain-link/log/log.service";
+import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log.service";
+import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
+import { addConsumer } from "../integrations/chain-link/contract/utils";
+import { decodeExternalId } from "../../common/utils";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -86,14 +86,14 @@ export class ContractManagerServiceEth {
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
-    private readonly pyramidLogService: PyramidLogService,
+    private readonly ponziLogService: PonziLogService,
     private readonly lotteryLogService: LotteryLogService,
     private readonly lotteryTicketLogService: LotteryTicketLogService,
     private readonly raffleLogService: RaffleLogService,
+    private readonly waitListLogService: WaitListLogService,
     private readonly raffleTicketLogService: RaffleTicketLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
-    private readonly gradeService: GradeService,
     private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
@@ -160,10 +160,12 @@ export class ContractManagerServiceEth {
         return { contractFeatures: [], contractModule: ModuleType.RAFFLE };
       case Erc721ContractTemplates.LOTTERY:
         return { contractFeatures: [], contractModule: ModuleType.LOTTERY };
+      case Erc721ContractTemplates.SIMPLE:
+        return { contractFeatures: [], contractModule: ModuleType.HIERARCHY };
       default:
         return {
           contractFeatures:
-            contractTemplate === "0"
+            contractTemplate === "0" || ""
               ? []
               : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split(
                   "_",
@@ -204,10 +206,13 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const vrfCoordinator = await this.contractService.findSystemByName({
+        contractModule: ModuleType.CHAIN_LINK,
+        chainId,
+      });
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
-        vrfAddr,
+        vrfCoordinator.address[0],
         ~~subscriptionId,
         account.toLowerCase(),
         this.ethersSignerProvider,
@@ -302,8 +307,7 @@ export class ContractManagerServiceEth {
       templateStatus: TemplateStatus.INACTIVE,
     });
 
-    // TODO add options to set naming scheme ?
-    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
+    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "$url/collection");
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
@@ -311,7 +315,8 @@ export class ContractManagerServiceEth {
       tokenId: i.toString(),
       royalty: Number(royalty),
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      imageUrl: `${imgUrl}/collection/${account.toLowerCase()}/${i}.jpg`,
+      // $url/collection/$account/$index.jpg
+      imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
       updatedAt: currentDateTime,
@@ -358,10 +363,13 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const vrfCoordinator = await this.contractService.findSystemByName({
+        contractModule: ModuleType.CHAIN_LINK,
+        chainId,
+      });
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
-        vrfAddr,
+        vrfCoordinator.address[0],
         ~~subscriptionId,
         account.toLowerCase(),
         this.ethersSignerProvider,
@@ -489,13 +497,14 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       parameters: {
-        beneficiary: beneficiary.toLowerCase(),
+        account: beneficiary.toLowerCase(),
         startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
         cliffInMonth,
         monthlyRelease,
       },
       contractFeatures: [],
       contractModule: ModuleType.VESTING,
+      contractSecurity: ContractSecurity.OWNABLE,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(userId),
@@ -511,7 +520,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
+  public async ponzi(event: ILogEvent<IContractManagerPonziDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
@@ -524,7 +533,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: account.toLowerCase(),
-      title: `${ModuleType.PYRAMID} (new)`,
+      title: `${ModuleType.PONZI} (new)`,
       description: emptyStateString,
       parameters: {
         payees: payees.toString(),
@@ -535,13 +544,13 @@ export class ContractManagerServiceEth {
         contractTemplate === "0"
           ? (["ALLOWANCE", "PAUSABLE"] as Array<ContractFeatures>)
           : (["WITHDRAW", "ALLOWANCE", "SPLITTER", "REFERRAL", "PAUSABLE"] as Array<ContractFeatures>),
-      contractModule: ModuleType.PYRAMID,
+      contractModule: ModuleType.PONZI,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.pyramidLogService.addListener({
+    this.ponziLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -575,9 +584,17 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
+    const txr: string = await addConsumer(
+      vrfCoordinator.address[0],
+      ~~subscriptionId,
+      account.toLowerCase(),
+      this.ethersSignerProvider,
+    );
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
     await this.chainLinkLogService.updateListener();
@@ -589,11 +606,8 @@ export class ContractManagerServiceEth {
 
   public async raffle(event: ILogEvent<IContractManagerRaffleDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { account, args, externalId },
+      args: { account, externalId },
     } = event;
-
-    const { config } = args;
-    const { timeLagBeforeRelease, commission } = config;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -603,25 +617,56 @@ export class ContractManagerServiceEth {
       address: account.toLowerCase(),
       title: `${ModuleType.RAFFLE} (new)`,
       description: emptyStateString,
-      parameters: {
-        timeLagBeforeRelease,
-        commission,
-      },
       imageUrl,
-      contractFeatures: [ContractFeatures.RANDOM],
-      contractModule: ModuleType.LOTTERY,
+      contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.PAUSABLE],
+      contractModule: ModuleType.RAFFLE,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const vrfCoordinator = await this.contractService.findSystemByName({
+      contractModule: ModuleType.CHAIN_LINK,
+      chainId,
+    });
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
+    const txr: string = await addConsumer(
+      vrfCoordinator.address[0],
+      ~~subscriptionId,
+      account.toLowerCase(),
+      this.ethersSignerProvider,
+    );
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
     await this.chainLinkLogService.updateListener();
     this.raffleLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { account, externalId },
+    } = event;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: `${ModuleType.WAITLIST} (new)`,
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: [ContractFeatures.PAUSABLE],
+      contractModule: ModuleType.WAITLIST,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.waitListLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -664,7 +709,7 @@ export class ContractManagerServiceEth {
 
     const userEntity = await this.userService.findOne({ id: externalId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", GradeService.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
 
@@ -682,7 +727,7 @@ export class ContractManagerServiceEth {
   public async getMerchantId(userId: number): Promise<number> {
     const userEntity = await this.userService.findOne({ id: userId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", GradeService.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
     return userEntity.merchantId;

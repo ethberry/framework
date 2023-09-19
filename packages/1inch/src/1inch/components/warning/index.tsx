@@ -3,9 +3,9 @@ import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 
-import type { IUser } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { chainIdToNetwork } from "@gemunion/provider-wallet";
+import type { IUser } from "@framework/types";
 
 export const Warning: FC = () => {
   const { chainId } = useWeb3React();

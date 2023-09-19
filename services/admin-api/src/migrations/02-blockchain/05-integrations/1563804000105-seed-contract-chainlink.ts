@@ -1,15 +1,18 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractChainLinkAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const vrfAddress = process.env.VRF_ADDR || wallet;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
+    const vrfAddressBinance = process.env.VRF_BINANCE_ADDR || wallet;
+    const fromBlock = process.env.STARTING_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,7 +34,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 107},
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 107},
         '${vrfAddress.toLowerCase()}',
         '${chainId}',
         'VRF COORDINATOR',
@@ -43,8 +46,26 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         'ACTIVE',
         null,
         '{}',
-        'SYSTEM',
+        'CHAIN_LINK',
         '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 207},
+        '${vrfAddressBinance.toLowerCase()}',
+        56,
+        'VRF COORDINATOR (BNB)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlockBinance}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

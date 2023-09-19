@@ -1,20 +1,20 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
-import { TokenType } from "@framework/types";
+import { Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TokenTypeInput } from "@gemunion/mui-inputs-asset";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
-import { ContractInput } from "./contract-input";
 import { validationSchema } from "./validation";
 
 export interface IStakingAllowanceDto {
+  tokenType: TokenType;
+  contractId: number;
   amount: string;
   contract: {
-    contractId?: number;
     address: string;
     contractType: TokenType;
-    tokenType: TokenType;
     decimals: number;
   };
 }
@@ -29,17 +29,36 @@ export interface IStakingAllowanceDialogProps {
 export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contract.address", option?.address ?? "0x");
+      form.setValue("contract.contractType", option?.contractType ?? "0x");
+      form.setValue("contract.decimals", option?.decimals ?? 0);
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
       testId="StakingAllowanceForm"
-      showDebug={true}
+      disabled={false}
       {...rest}
     >
-      <TokenTypeInput prefix="contract" disabledOptions={[TokenType.NATIVE]} />
-      <ContractInput />
+      <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />
+      <CommonContractInput
+        name="contractId"
+        onChange={handleContractChange}
+        autoselect
+        disableClear
+        withTokenType
+        data={{
+          contractModule: [ModuleType.HIERARCHY],
+          excludeFeatures: [Erc721ContractFeatures.SOULBOUND],
+        }}
+      />
       <AmountInput />
     </FormDialog>
   );

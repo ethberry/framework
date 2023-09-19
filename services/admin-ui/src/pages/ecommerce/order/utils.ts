@@ -1,5 +1,5 @@
 import { DateRange } from "@mui/x-date-pickers-pro";
-import { endOfDay, startOfDay, startOfMonth, endOfMonth } from "date-fns";
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
 
 import { IOrder, OrderStatus } from "@framework/types";
 

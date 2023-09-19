@@ -1,16 +1,8 @@
 import { FC } from "react";
-import {
-  Avatar,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-} from "@mui/material";
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { IPhoto, PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
@@ -45,7 +37,7 @@ export const Photo: FC = () => {
   );
 
   const handleChangeStatus = (photo: IPhoto, newStatus: PhotoStatus) => () =>
-    handleChangeStatusApi(undefined, { photo, newStatus });
+    handleChangeStatusApi(void 0, { photo, newStatus });
 
   return (
     <Grid>
@@ -61,14 +53,18 @@ export const Photo: FC = () => {
                 <Avatar alt={photo.title} src={photo.imageUrl} />
               </ListItemAvatar>
               <ListItemText primary={photo.title} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="approve" onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}>
-                  <Done />
-                </IconButton>
-                <IconButton edge="end" aria-label="delete" onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}>
-                  <Clear />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction
+                  onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}
+                  icon={Done}
+                  message="form.buttons.approve"
+                />
+                <ListAction
+                  onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}
+                  icon={Clear}
+                  message="form.buttons.delete"
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

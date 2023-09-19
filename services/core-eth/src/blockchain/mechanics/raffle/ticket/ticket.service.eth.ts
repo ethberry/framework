@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, TokenStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
@@ -20,8 +20,6 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class RaffleTicketServiceEth {
-  public raffleAddr: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -36,9 +34,7 @@ export class RaffleTicketServiceEth {
     private readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     private readonly configService: ConfigService,
-  ) {
-    this.raffleAddr = configService.get<string>("ERC721_RAFFLE_ADDR", "0x");
-  }
+  ) {}
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
@@ -89,7 +85,7 @@ export class RaffleTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider);
+    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

@@ -5,7 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { SettingsKeys } from "@framework/types";
 
 import { SettingsEntity } from "./settings.entity";
-import { ISettingsUpdateDto } from "./interfaces";
+import type { ISettingsUpdateDto } from "./interfaces";
 
 @Injectable()
 export class SettingsService {

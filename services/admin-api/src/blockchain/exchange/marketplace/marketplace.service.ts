@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, Repository } from "typeorm";
 import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
-import { ContractEventType, ExchangeType, TokenType } from "@framework/types";
+import { ContractEventType, ExchangeType, TokenType, UserRole } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
@@ -27,6 +27,10 @@ export class MarketplaceService {
     userEntity: UserEntity,
   ): Promise<[Array<EventHistoryEntity>, number]> {
     const { query, contractIds, templateIds, startTimestamp, endTimestamp, skip, take } = dto;
+
+    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
@@ -130,7 +134,7 @@ export class MarketplaceService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async export(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<string> {
+  public async export(dto: Partial<IMarketplaceReportSearchDto>, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
     const [list] = await this.search(rest, userEntity);
@@ -150,8 +154,12 @@ export class MarketplaceService {
     );
   }
 
-  public async supply(dto: IMarketplaceSupplySearchDto, userEntity: UserEntity): Promise<any> {
+  public async supply(dto: Partial<IMarketplaceSupplySearchDto>, userEntity: UserEntity): Promise<any> {
     const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [] } = dto;
+
+    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     // prettier-ignore
     const queryString = `
@@ -196,8 +204,12 @@ export class MarketplaceService {
     ]);
   }
 
-  public async chart(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<any> {
+  public async chart(dto: Partial<IMarketplaceReportSearchDto>, userEntity: UserEntity): Promise<any> {
     const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
+
+    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     // prettier-ignore
     const queryString = `

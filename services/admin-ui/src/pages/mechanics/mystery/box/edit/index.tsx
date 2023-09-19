@@ -6,15 +6,15 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, IMysterybox, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
 export interface IMysteryboxEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IMysterybox>, form: any) => Promise<void>;
-  initialValues: IMysterybox;
+  onConfirm: (values: Partial<IMysteryBox>, form: any) => Promise<void>;
+  initialValues: IMysteryBox;
 }
 
 export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
@@ -60,6 +60,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         contract={{
           data: {
             contractModule: [ModuleType.HIERARCHY],
+            contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },
         }}
       />
@@ -68,6 +69,12 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         multiple
         prefix="template.price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        contract={{
+          data: {
+            contractModule: [ModuleType.HIERARCHY],
+            contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+          },
+        }}
       />
       {id ? <SelectInput name="mysteryBoxStatus" options={MysteryBoxStatus} /> : null}
       <AvatarInput name="imageUrl" />

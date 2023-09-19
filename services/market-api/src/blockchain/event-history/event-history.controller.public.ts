@@ -1,8 +1,8 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
-import { EventHistorySearchDto } from "./dto";
+import { EventHistoryCraftSearchDto, EventHistoryTokenSearchDto } from "./dto";
 import { EventHistoryService } from "./event-history.service";
 import { EventHistoryEntity } from "./event-history.entity";
 
@@ -11,8 +11,15 @@ import { EventHistoryEntity } from "./event-history.entity";
 export class EventHistoryControllerPublic {
   constructor(private readonly eventHistoryService: EventHistoryService) {}
 
-  @Get("/token/search")
-  public search(@Query() dto: EventHistorySearchDto): Promise<[Array<EventHistoryEntity>, number]> {
-    return this.eventHistoryService.search(dto);
+  @Get("/token")
+  @UseInterceptors(PaginationInterceptor)
+  public token(@Query() dto: EventHistoryTokenSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
+    return this.eventHistoryService.token(dto);
+  }
+
+  @Get("/craft")
+  @UseInterceptors(PaginationInterceptor)
+  public craft(@Query() dto: EventHistoryCraftSearchDto): Promise<[Array<EventHistoryEntity>, number]> {
+    return this.eventHistoryService.craft(dto);
   }
 }

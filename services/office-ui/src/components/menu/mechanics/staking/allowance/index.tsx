@@ -1,10 +1,9 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
-import { Contract } from "ethers";
+import { AddReaction } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -17,11 +16,15 @@ import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceMenuProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
   const {
     contract: { address },
+    disabled,
+    variant,
   } = props;
 
   const [isStakingAllowanceDialogOpen, setIsStakingAllowanceDialogOpen] = useState(false);
@@ -67,28 +70,26 @@ export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleStakingAllowance}>
-        <ListItemIcon>
-          <AddReactionIcon />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.allowance" />
-        </Typography>
-      </MenuItem>
-
+      <ListAction
+        onClick={handleStakingAllowance}
+        icon={AddReaction}
+        message="form.buttons.allowance"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingAllowanceDialog
         onCancel={handleStakingAllowanceCancel}
         onConfirm={handleStakingAllowanceConfirm}
         open={isStakingAllowanceDialogOpen}
         initialValues={{
+          tokenType: TokenType.ERC20,
+          contractId: 0,
           amount: "0",
           contract: {
             address: "",
             contractType: TokenType.ERC20,
-            tokenType: TokenType.ERC20,
             decimals: 18,
           },
-          contractId: 0,
         }}
       />
     </Fragment>

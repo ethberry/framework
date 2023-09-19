@@ -1,23 +1,21 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { Divider, IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import { RoyaltyMenuItem } from "../../common/royalty";
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { TransferMenuItem } from "../../common/transfer";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { BlacklistMenuItem } from "../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
 import { WhitelistMenuItem } from "../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
 import { AllowanceMenuItem } from "./allowance";
 import { MintMenuItem } from "./mint";
-import { Erc20TokenSnapshotMenuItem } from "./snapshot";
+import { SnapshotMenuItem } from "./snapshot";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -52,26 +50,28 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
-
-        <MintMenuItem contract={contract} />
-        <Erc20TokenSnapshotMenuItem contract={contract} />
-        <RoyaltyMenuItem contract={contract} />
-
+      <Menu
+        id="contract-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
         <BlacklistMenuItem contract={contract} />
         <UnBlacklistMenuItem contract={contract} />
-
         <WhitelistMenuItem contract={contract} />
         <UnWhitelistMenuItem contract={contract} />
-
+        <Divider sx={{ m: 2 }} />
+        <MintMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
-
-        <EthListenerAddMenuItem contract={contract} />
-        <EthListenerRemoveMenuItem contract={contract} />
+        <SnapshotMenuItem contract={contract} />
+        <RoyaltyMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./interfaces/IERC721MysteryBox.sol";
-import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
 import "../../utils/TopUp.sol";
@@ -51,7 +51,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
     }
   }
 
-  function unpack(uint256 tokenId) public {
+  function unpack(uint256 tokenId) public virtual {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
 
     emit UnpackMysteryBox(_msgSender(), tokenId);
@@ -61,6 +61,9 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
     ExchangeUtils.acquire(_itemData[tokenId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Simple, TopUp) returns (bool) {
     return interfaceId == IERC721_MYSTERY_ID || super.supportsInterface(interfaceId);
   }

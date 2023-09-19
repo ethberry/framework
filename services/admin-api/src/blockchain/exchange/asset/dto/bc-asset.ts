@@ -1,13 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsEthereumAddress, IsInt, Min, ValidateIf } from "class-validator";
+import { IsEnum, IsInt, Min, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
 import { IsBigInt } from "@gemunion/nest-js-validators";
-import type { IBCAssetDto } from "@framework/types";
+import { AddressDto } from "@gemunion/collection";
+import type { IBCAssetTemplateDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-export class BCAssetDto implements IBCAssetDto {
+export class BCAssetTemplateDto extends AddressDto implements IBCAssetTemplateDto {
   @decorate(
     ApiProperty({
       enum: TokenType,
@@ -16,15 +17,6 @@ export class BCAssetDto implements IBCAssetDto {
   @decorate(Transform(({ value }) => value as TokenType))
   @decorate(IsEnum(TokenType, { message: "badInput" }))
   public tokenType: TokenType;
-
-  @decorate(
-    ApiProperty({
-      type: String,
-    }),
-  )
-  @decorate(IsEthereumAddress({ message: "patternMismatch" }))
-  @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
-  public address: string;
 
   @decorate(
     ApiProperty({

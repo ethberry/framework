@@ -21,7 +21,7 @@ export const GuestForm: FC = () => {
   );
 
   const handleSubmit = (values: any) => {
-    return handleSubmitApi(undefined, values);
+    return handleSubmitApi(void 0, values);
   };
 
   const fixedValues = {

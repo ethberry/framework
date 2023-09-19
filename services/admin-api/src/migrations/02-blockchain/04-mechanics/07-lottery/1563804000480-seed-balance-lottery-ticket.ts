@@ -1,11 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
+import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedBalanceLotteryTicketAt1563804020480 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

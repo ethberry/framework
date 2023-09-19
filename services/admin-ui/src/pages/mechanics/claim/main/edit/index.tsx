@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IClaim, ModuleType } from "@framework/types";
+import type { IClaim } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
+import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
@@ -64,7 +64,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -79,7 +79,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
         // MODULE:MYSTERYBOX
         if (mysteryBox) {
           content.push(
-            (mysteryBox as IMysterybox).item!.components.map(component => ({
+            (mysteryBox as IMysteryBox).item!.components.map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
               tokenId: component.templateId || 0,

@@ -1,31 +1,22 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useIntl, FormattedMessage } from "react-intl";
-
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { VestingClaimUploadButton } from "../../../../components/buttons/mechanics/vesting/upload";
-import { ClaimSearchForm } from "../../claim/main/form";
+import { VestingClaimUploadButton } from "../../../../components/buttons";
 import { VestingClaimEditDialog } from "./edit";
-// import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
 
 export const VestingClaim: FC = () => {
   const {
@@ -47,10 +38,12 @@ export const VestingClaim: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<any, IClaimSearchDto>({
     baseUrl: "/vesting/claims",
     empty: {
       parameters: {
+        externalId: "",
         beneficiary: "",
         startTimestamp: new Date().toISOString(),
         cliffInMonth: 12,
@@ -60,10 +53,11 @@ export const VestingClaim: FC = () => {
     },
     search: {
       account: "",
-      claimStatus: [],
+      claimStatus: [ClaimStatus.NEW],
     },
     filter: ({ item, parameters }) => ({
       parameters: {
+        externalId: "",
         beneficiary: parameters.beneficiary,
         monthlyRelease: parameters.monthlyRelease,
         cliffInMonth: parameters.cliffInMonth,
@@ -83,37 +77,47 @@ export const VestingClaim: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <VestingClaimUploadButton />
+        <VestingClaimUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <ClaimSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="VestingClaimSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput multiple name="claimStatus" options={ClaimStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
-          {rows.map((vesting, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.5 }}>
+        <List sx={{}}>
+          {rows.map(vesting => (
+            <ListItem key={vesting.id} sx={{ flexWrap: "wrap", pr: 0 }}>
+              <ListItemText sx={{ mr: 0.5, overflowX: "scroll", width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
-              <ListItemText sx={{ width: 0.1 }}>{vesting.parameters.cliffInMonth}</ListItemText>
-              <ListItemText sx={{ width: 0.05 }}>{vesting.parameters.monthlyRelease}</ListItemText>
-              <ListItemText sx={{ width: 0.1 }}>{vesting.claimStatus}</ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <IconButton onClick={handleEdit(vesting)} disabled={vesting.claimStatus !== ClaimStatus.NEW}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(vesting)} disabled={vesting.claimStatus !== ClaimStatus.NEW}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction
+                  onClick={handleEdit(vesting)}
+                  icon={Create}
+                  message="form.buttons.edit"
+                  disabled={vesting.claimStatus !== ClaimStatus.NEW}
+                />
+                <ListAction
+                  onClick={handleDelete(vesting)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={vesting.claimStatus !== ClaimStatus.NEW}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

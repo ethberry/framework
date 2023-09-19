@@ -6,12 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../../Exchange/interfaces/IAsset.sol";
-
-struct RaffleConfig {
-  uint256 timeLagBeforeRelease;
-  uint256 commission;
-}
+import "../../../Exchange/lib/interfaces/IAsset.sol";
 
 // TODO add more data?
 struct RaffleRoundInfo {

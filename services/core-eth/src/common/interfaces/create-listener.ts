@@ -5,6 +5,11 @@ export interface ICreateListenerPayload {
 }
 
 export interface IContractListenerResult {
-  address: Array<string> | null;
+  address: Array<string>;
+  fromBlock?: number;
+}
+
+export interface ISystemContractListenerResult {
+  address: Array<string>;
   fromBlock?: number;
 }

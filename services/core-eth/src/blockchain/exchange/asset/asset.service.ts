@@ -8,9 +8,10 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { DataSource, DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { ExchangeType, IAssetDto, IAssetItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
+import type { IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
+import { ExchangeType, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -33,7 +34,7 @@ export class AssetService {
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
-    protected readonly eventHistoryService: EventHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
@@ -49,7 +50,7 @@ export class AssetService {
 
   public findAll(
     where: FindOptionsWhere<AssetComponentHistoryEntity>,
-    options?: FindOneOptions<AssetComponentHistoryEntity>,
+    options?: FindManyOptions<AssetComponentHistoryEntity>,
   ): Promise<Array<AssetComponentHistoryEntity>> {
     return this.assetComponentHistoryEntityRepository.find({ where, ...options });
   }

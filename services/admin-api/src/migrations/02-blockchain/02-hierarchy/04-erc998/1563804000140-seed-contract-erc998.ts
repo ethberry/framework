@@ -3,10 +3,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -15,7 +16,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
     const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR || wallet;
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
     const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
@@ -50,7 +51,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Runes (simple)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frunes.png?alt=media&token=93968402-77ec-436f-8c3d-099939b37997',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Frunes.png?alt=media&token=aaabff2e-b8d1-493f-a81e-38456959e6b4',
         'RUNE',
         'RUNE998',
         100,
@@ -104,7 +105,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Scrolls (blacklist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls.png?alt=media&token=f1c654bd-cb7c-408a-be19-b0621e843c4a',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fscrolls.png?alt=media&token=4771aaf1-0de2-441d-9d4e-06ab8dcafb6f',
         'ERC998 BLACKLIST',
         'BL998',
         100,
@@ -118,18 +119,18 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10405,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${chainId}',
-        'Spell books (upgradeable)',
+        'Spell books (discrete)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspell_books.png?alt=media&token=e5196b6a-f3df-4242-b52f-00599843a601',
-        'ERC998 UPGRADEABLE',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspell_books.png?alt=media&token=72784284-77e2-45d5-9b73-d44e202ee4a6',
+        'ERC998 DISCRETE',
         'LVL998',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{ALLOWANCE,UPGRADEABLE}',
+        '{ALLOWANCE,DISCRETE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -138,16 +139,16 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         10406,
         '${erc998ContractRandomAddress}',
         '${chainId}',
-        'Heros (random)',
+        'Heroes (random)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=46414a13-c538-49af-a001-b93bd92a922c',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=899da038-3709-4665-9e2b-9b7154e9adfa',
         'ERC998 RANDOM',
         'RNG998',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{ALLOWANCE,UPGRADEABLE,RANDOM}',
+        '{ALLOWANCE,DISCRETE,RANDOM}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -156,7 +157,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         10407,
         '${erc998ContractGenesAddress}',
         '${chainId}',
-        'AXIE (traits)',
+        'AXIE (genes)',
         '${simpleFormatting}',
         '${imageUrl}',
         'GENES',
@@ -176,7 +177,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Buildings (rentable)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbuildings.png?alt=media&token=6ef9e87f-7724-4d4b-a860-cca32d225ed8',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbuildings.png?alt=media&token=762c8248-b947-4ddf-9df3-e4278c95ba77',
         'RENTABLE',
         'REN998',
         100,
@@ -244,18 +245,18 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10480,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${chainId}',
         'Anti-Heros (lvl)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=46414a13-c538-49af-a001-b93bd92a922c',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=899da038-3709-4665-9e2b-9b7154e9adfa',
         'AH',
         'AH998',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{UPGRADEABLE}',
+        '{DISCRETE}',
         '${fromBlock}',
         2,
         '${currentDateTime}',
@@ -266,7 +267,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         56,
         'BEP',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         'BEP',
         'BEP998',
         100,

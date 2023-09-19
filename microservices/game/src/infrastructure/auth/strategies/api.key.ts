@@ -1,5 +1,4 @@
 import { HeaderAPIKeyStrategy as Strategy } from "passport-headerapikey";
-import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
@@ -8,7 +7,7 @@ import { MerchantEntity } from "../../merchant/merchant.entity";
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(Strategy, "api-key") {
-  constructor(private readonly merchantService: MerchantService, private readonly configService: ConfigService) {
+  constructor(private readonly merchantService: MerchantService) {
     super(
       {
         header: "Authorization",

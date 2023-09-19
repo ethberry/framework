@@ -17,7 +17,7 @@ export class OrderService {
     private readonly orderItemService: OrderItemService,
   ) {}
 
-  public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
+  public async search(dto: Partial<IOrderSearchDto>, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
     const { orderStatus, dateRange, isArchived } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
@@ -31,7 +31,9 @@ export class OrderService {
 
     queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId: userEntity.merchantId });
 
-    queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
+    if (isArchived !== void 0) {
+      queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
+    }
 
     if (orderStatus && orderStatus.length) {
       if (orderStatus.length === 1) {
@@ -83,17 +85,17 @@ export class OrderService {
       .save();
   }
 
-  public async update(where: FindOptionsWhere<OrderEntity>, data: IOrderUpdateDto): Promise<OrderEntity> {
+  public async update(where: FindOptionsWhere<OrderEntity>, dto: IOrderUpdateDto): Promise<OrderEntity> {
     const orderEntity = await this.orderEntityRepository.findOne({ where });
 
     if (!orderEntity) {
       throw new NotFoundException("orderNotFound");
     }
 
-    // const price = await this.productService.writeOffAndGetPrice(data.items);
+    // const price = await this.productService.writeOffAndGetPrice(dto.items);
 
     const items = await Promise.all(
-      data.items.map(item =>
+      dto.items.map(item =>
         this.orderItemService.create({
           ...item,
           orderId: orderEntity.id,
@@ -101,7 +103,7 @@ export class OrderService {
       ),
     );
 
-    Object.assign(orderEntity, { ...data, items, price: 100 });
+    Object.assign(orderEntity, { ...dto, items, price: 100 });
     return orderEntity.save();
   }
 

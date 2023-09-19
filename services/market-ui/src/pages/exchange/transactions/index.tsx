@@ -34,6 +34,7 @@ export const MyTransactions: FC = () => {
     handleSearch,
     handleToggleFilters,
     handleChangePaginationModel,
+    handleChangeSortModel,
   } = useCollection<IEventHistory, IEventSearchDto>({
     search: {
       eventTypes: [],
@@ -56,12 +57,12 @@ export const MyTransactions: FC = () => {
     {
       field: "eventType",
       headerName: formatMessage({ id: "form.labels.eventType" }),
-      sortable: false,
+      sortable: true,
       flex: 2,
       renderCell: (params: GridCellParams<IEventHistory>) => {
         const { eventData, eventType } = params.row;
         const isBorrow =
-          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
+          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).account;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
       minWidth: 160,
@@ -77,7 +78,7 @@ export const MyTransactions: FC = () => {
     {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
-      sortable: false,
+      sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1.2,
       minWidth: 160,
@@ -122,6 +123,8 @@ export const MyTransactions: FC = () => {
       <DataGridPremium
         pagination
         paginationMode="server"
+        sortingMode="server"
+        onSortModelChange={handleChangeSortModel as any}
         rowCount={count}
         paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
         onPaginationModelChange={handleChangePaginationModel}
@@ -137,8 +140,13 @@ export const MyTransactions: FC = () => {
           [`& .${gridClasses.cell}`]: {
             p: 1.5,
           },
+          [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
+            borderBottom: "none",
+          },
         }}
         autoHeight
+        disableAggregation
+        disableRowGrouping
       />
     </Grid>
   );

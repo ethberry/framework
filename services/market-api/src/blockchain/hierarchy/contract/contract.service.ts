@@ -1,12 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
+import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import { ContractFeatures, ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
-
-import { ContractEntity } from "./contract.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractEntity } from "./contract.entity";
 
 @Injectable()
 export class ContractService {
@@ -16,20 +15,27 @@ export class ContractService {
   ) {}
 
   public async search(
-    dto: ISearchDto,
+    dto: Partial<IContractSearchDto>,
     userEntity: UserEntity,
-    contractType?: TokenType,
-    contractModule?: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
   ): Promise<[Array<ContractEntity>, number]> {
-    const { query, skip, take } = dto;
+    const { query, skip, take, merchantId } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
-    if (
-      contractModule === ModuleType.HIERARCHY ||
-      contractModule === ModuleType.COLLECTION ||
-      contractModule === ModuleType.MYSTERY
-    ) {
+    // get merchant wallet
+    queryBuilder.leftJoin("contract.merchant", "merchant");
+    queryBuilder.addSelect(["merchant.id", "merchant.wallet"]);
+
+    if (merchantId) {
+      queryBuilder.andWhere("contract.merchantId = :merchantId", {
+        merchantId,
+      });
+    }
+
+    const modules = [ModuleType.HIERARCHY, ModuleType.COLLECTION, ModuleType.MYSTERY];
+    if (contractModule && contractModule.filter(value => modules.includes(value)).length > 0) {
       // filter out contract without templates
       queryBuilder.andWhereExists(
         // https://github.com/typeorm/typeorm/issues/2815
@@ -43,16 +49,21 @@ export class ContractService {
     queryBuilder.select();
 
     if (contractType) {
-      queryBuilder.andWhere("contract.contractType = :contractType", {
-        contractType,
-      });
-    } else {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
       queryBuilder.andWhere("contract.contractType IS NULL");
     }
+
     if (contractModule) {
-      queryBuilder.andWhere("contract.contractModule = :contractModule", {
-        contractModule,
-      });
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
     }
 
     // do not display external contracts as there is no way to mint tokens from it
@@ -63,9 +74,11 @@ export class ContractService {
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
+
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,
     });
@@ -92,22 +105,23 @@ export class ContractService {
 
     queryBuilder.orderBy({
       "contract.createdAt": "DESC",
+      "contract.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IContractAutocompleteDto, chainId: number): Promise<Array<ContractEntity>> {
-    const { contractFeatures = [], contractType = [], contractModule = [], contractId } = dto;
+  public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
+    const { merchantId, contractFeatures = [], contractType = [], contractModule = [], excludeFeatures = [] } = dto;
 
     const where = {
-      chainId,
+      chainId: userEntity.chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
 
-    if (contractId) {
+    if (merchantId) {
       Object.assign(where, {
-        id: contractId,
+        merchantId,
       });
     }
 
@@ -130,6 +144,14 @@ export class ContractService {
       });
     }
 
+    // so far this is used only to filter out SOULBOUND tokens
+    if (excludeFeatures.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: Not(ArrayOverlap(excludeFeatures)),
+      });
+    }
+
     return this.contractEntityRepository.find({
       where,
       select: {
@@ -148,5 +170,16 @@ export class ContractService {
     options?: FindOneOptions<ContractEntity>,
   ): Promise<ContractEntity | null> {
     return this.contractEntityRepository.findOne({ where, ...options });
+  }
+
+  public async findOneOrFail(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
+    const contractEntity = await this.findOne(where);
+
+    // system must exist
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return contractEntity;
   }
 }

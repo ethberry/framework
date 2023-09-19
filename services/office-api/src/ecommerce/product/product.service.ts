@@ -18,7 +18,10 @@ export class ProductService {
     private readonly photoService: PhotoService,
   ) {}
 
-  public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
+  public async search(
+    dto: Partial<IProductSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<ProductEntity>, number]> {
     const { query, productStatus, categoryIds, skip, take } = dto;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
@@ -113,7 +116,7 @@ export class ProductService {
 
   public findAll(
     where: FindOptionsWhere<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
+    options?: FindManyOptions<ProductEntity>,
   ): Promise<Array<ProductEntity>> {
     return this.productEntityRepository.find({ where, ...options });
   }

@@ -1,6 +1,5 @@
 import {
   ForbiddenException,
-  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -12,9 +11,8 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
-import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -29,10 +27,8 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @Inject(forwardRef(() => TemplateService))
-    private readonly templateService: TemplateService,
     @InjectDataSource()
-    private dataSource: DataSource,
+    private readonly dataSource: DataSource,
   ) {}
 
   // This method accepts no arguments because all logic is in `update`
@@ -65,7 +61,15 @@ export class AssetService {
         }
 
         if (templateEntity.contract.merchantId !== userEntity.merchantId) {
-          throw new ForbiddenException("insufficientPermissions");
+          // BUSINESS_TYPE=B2B
+          if (
+            !(
+              templateEntity.contract.merchantId === 1 &&
+              templateEntity.contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+            )
+          ) {
+            throw new ForbiddenException("insufficientPermissions");
+          }
         }
 
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {

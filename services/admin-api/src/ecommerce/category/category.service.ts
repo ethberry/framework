@@ -5,7 +5,7 @@ import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CategoryEntity } from "./category.entity";
-import { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
+import type { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class CategoryService {
     private readonly categoryEntityRepository: Repository<CategoryEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CategoryEntity>, number]> {
+  public search(dto: Partial<ISearchDto>): Promise<[Array<CategoryEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.categoryEntityRepository.createQueryBuilder("category");

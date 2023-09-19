@@ -1,16 +1,12 @@
 import { Box, Button, ButtonProps, Paper, PaperProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const StyledPaperContainer = styled(({ children, component, ...rest }: PaperProps<any>) => (
-  <Paper component={component} {...rest}>
-    {children}
-  </Paper>
-))`
-  padding: ${({ theme }) => theme.spacing(3)};
-  border-radius: ${({ theme }) => theme.spacing(3)};
-  margin: ${({ theme }) => theme.spacing(10, "auto")};
-  width: 400px;
-`;
+export const StyledPaperContainer = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  margin: theme.spacing(10, "auto"),
+  borderRadius: theme.spacing(3),
+  width: 400,
+})) as typeof Paper;
 
 export const StyledPaper = styled(({ children, ...rest }: PaperProps) => <Paper {...rest}>{children}</Paper>)`
   padding: ${({ theme }) => theme.spacing(2)};

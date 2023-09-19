@@ -1,25 +1,18 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
 
 import { EditMerchantDialog } from "./edit";
-import { MerchantSearchForm } from "./form";
 
 export const Merchant: FC = () => {
   const {
@@ -31,7 +24,6 @@ export const Merchant: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -46,7 +38,6 @@ export const Merchant: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      users: [],
     },
     search: {
       query: "",
@@ -62,26 +53,25 @@ export const Merchant: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
-          <FormattedMessage id="form.buttons.add" />
-        </Button>
       </PageHeader>
 
-      <MerchantSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MerchantSearchForm">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <SelectInput multiple name="merchantStatus" options={MerchantStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((merchant, i) => (
-            <ListItem key={i}>
+          {rows.map(merchant => (
+            <ListItem key={merchant.id}>
               <ListItemText>{merchant.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(merchant)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(merchant)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(merchant)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(merchant)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

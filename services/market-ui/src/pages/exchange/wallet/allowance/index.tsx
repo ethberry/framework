@@ -1,5 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
+import { HowToVote } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -9,10 +10,10 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.setApproval.abi.json";
+import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.approve.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
-import { AllowanceDialog, IAllowanceDto } from "./edit";
+import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export const AllowanceButton: FC = () => {
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
@@ -30,7 +31,7 @@ export const AllowanceButton: FC = () => {
     if (asset.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(asset.contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, asset.amount) as Promise<any>;
-    } else if (asset.tokenType === TokenType.ERC721) {
+    } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         asset.contract.address,
         ERC721SetApprovalABI,
@@ -57,7 +58,7 @@ export const AllowanceButton: FC = () => {
 
   return (
     <Fragment>
-      <Button onClick={handleAllowance}>
+      <Button variant="outlined" startIcon={<HowToVote />} onClick={handleAllowance} data-testid="AllowanceButton">
         <FormattedMessage id="form.buttons.allowance" />
       </Button>
       <AllowanceDialog

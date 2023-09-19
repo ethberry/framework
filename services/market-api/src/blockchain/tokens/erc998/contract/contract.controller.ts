@@ -2,11 +2,11 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
 
-import { Erc998ContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ContractSearchDto } from "../../../hierarchy/contract/dto";
+import { Erc998ContractService } from "./contract.service";
 
 @ApiBearerAuth()
 @Controller("/erc998/contracts")
@@ -15,7 +15,10 @@ export class Erc998ContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
     return this.erc998CollectionService.search(dto, userEntity);
   }
 

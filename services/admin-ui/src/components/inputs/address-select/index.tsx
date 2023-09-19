@@ -21,7 +21,11 @@ export const AddressSelectInput: FC<IAddressSelectInputProps> = props => {
     form.setValue(name, 0);
   }, [userId]);
 
-  return userId ? (
+  if (!userId) {
+    return null;
+  }
+
+  return (
     <EntityInput name={name} controller="ecommerce/address" data={{ userId }} getTitle={formatAddress} autoselect />
-  ) : null;
+  );
 };

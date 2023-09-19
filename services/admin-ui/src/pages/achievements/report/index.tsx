@@ -6,12 +6,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import type { IAchievementItem, IAchievementsReportSearchDto } from "@framework/types";
-
-import { StakingReportSearchForm } from "./form";
 
 export const AchievementReport: FC = () => {
   const {
@@ -98,7 +98,22 @@ export const AchievementReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        name="account"
+        testId="StakingReportSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <DateTimeInput name="startTimestamp" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="endTimestamp" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <DataGrid
         pagination

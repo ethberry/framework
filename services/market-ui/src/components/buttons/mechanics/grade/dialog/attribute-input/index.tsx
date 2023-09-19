@@ -12,11 +12,11 @@ export interface IAttributeInputProps {
 }
 
 export const AttributeInput: FC<IAttributeInputProps> = props => {
-  const { name, data = {} } = props;
+  const { name = "gradeId", data = {} } = props;
 
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue(name, option?.id ?? 0);
     form.setValue("attribute", option?.attribute);
     form.setValue("price", option?.price);

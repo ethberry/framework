@@ -1,4 +1,17 @@
 {
+  "alert": {
+    "allowanceWarning": "You are going to allow all tokens of the contract",
+    "craftItem": "Items to be crafted",
+    "craftPrice": "Craft ingredients",
+    "dismantleItem": "Items to get after dismantle",
+    "dismantlePrice": "Token to be dismantled and burned",
+    "editNotAllowed": "Editing of this rule is not allowed",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
+    "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
+    "risk": "You are doing this at your own risk!",
+    "uncaughtError": "Uncaught error happened"
+  },
   "components": {
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
@@ -14,6 +27,7 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
+        "merchant": "Merchant",
         "profile": "Profile"
       },
       "theme": {
@@ -25,10 +39,26 @@
         "notValid": "Invalid network. Please switch to correct network according to your profile",
         "test": "Test"
       }
+    },
+    "productTypes": {
+      "enterprise": {
+        "linkTitle": "Contact Us",
+        "text": "For projects with grand ambitions, our Enterprise solution is the key to unlocking your full potential. This comprehensive package includes a dedicated development team and exclusive B2B features, designed to propel your game ecosystem to new heights of success",
+        "title": "Enterprise"
+      },
+      "saas": {
+        "linkTitle": "See pricing",
+        "text": "Perfect for startups on a budget, this plan is your gateway to the market. With our blockchain ecosystem at your fingertips, you can affordably bring your innovative ideas to life and make your mark in the gaming industry",
+        "title": "SaaS"
+      },
+      "selfHosted": {
+        "linkTitle": "See pricing",
+        "text": "Transform your proven ideas into a unique gaming brand with our Whitelabel game solution. Offering customized design and adjusted mechanics, this plan empowers you to stand out in the gaming industry with a truly bespoke experience",
+        "title": "Self-hosted"
+      }
     }
   },
   "dialogs": {
-    "addConsumer": "Add VRF Consumer",
     "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
@@ -42,17 +72,19 @@
     "endRound": "End Lottery Round",
     "fund": "Fund",
     "grantRole": "Grant role",
+    "invite": "Invite",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
     "mintBox": "Mint Mysterybox",
     "mintToken": "Mint tokens",
-    "pyramidBalance": "Pyramid Balances Withdraw",
+    "ponziBalance": "Ponzi Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
     "stakingInfo": "Staking Info",
     "startRound": "Start Lottery Round",
+    "subBalance": "Subscription balance: {value}",
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
@@ -136,12 +168,12 @@
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
-      "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked"
+      "REDEEMED": "Redeemed"
     },
     "contractFeatures": {
       "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
+      "DISCRETE": "Discrete",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
@@ -155,7 +187,6 @@
       "SOULBOUND": "Soulbound",
       "SPLITTER": "Payment Splitter",
       "STATEHASH": "State Hash",
-      "UPGRADEABLE": "Upgradeable",
       "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
@@ -166,13 +197,15 @@
     },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
+      "BLACKLIST_DISCRETE": "Blacklist + Discrete",
+      "BLACKLIST_DISCRETE_RANDOM": "Blacklist + Discrete + Random",
+      "BLACKLIST_DISCRETE_RENTABLE": "Blacklist + Discrete + Rentable",
+      "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
-      "BLACKLIST_UPGRADEABLE": "Blacklist + Upgradeable",
-      "BLACKLIST_UPGRADEABLE_RANDOM": "Blacklist + Upgradeable + Random",
-      "BLACKLIST_UPGRADEABLE_RENTABLE": "Blacklist + Upgradeable + Rentable",
-      "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM": "Blacklist + Upgradeable + Rentable + Random",
       "CLIFF": "Cliff",
+      "DISCRETE": "Discrete",
+      "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",
       "ERC20OWNER": "ERC20 Owner",
@@ -191,14 +224,20 @@
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
-      "UPGRADEABLE": "Upgradeable",
-      "UPGRADEABLE_RANDOM": "Upgradeable + Random",
       "WHITELIST": "Whitelist"
     },
     "craftStatus": {
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
+      "INACTIVE": "Inactive"
+    },
+    "dismantleStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "dismantleStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
     },
     "durationUnit": {
       "DAY": "Day",
@@ -209,8 +248,10 @@
       "YEAR": "Year"
     },
     "emailType": {
+      "CONTACT": "Contact form",
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
+      "INVITE": "Invite",
       "LINK_TOKEN": "LINK notification"
     },
     "eventDataLabel": {
@@ -382,7 +423,7 @@
       "ERC998": "ERC998",
       "MYSTERYBOX": "MYSTERYBOX",
       "NATIVE": "Native",
-      "PYRAMID": "PYRAMID",
+      "PONZI": "PONZI",
       "STAKING": "STAKING",
       "VESTING": "VESTING"
     },
@@ -413,18 +454,18 @@
       "NUMBER": "Number",
       "STRING": "String"
     },
-    "productStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "pyramidRuleStatus": {
+    "ponziRuleStatus": {
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
+    },
+    "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "rentStatus": {
       "ACTIVE": "Active",
@@ -468,7 +509,9 @@
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "NATIVE": "Native"
+      "MYSTERY": "Mystery",
+      "NATIVE": "Native",
+      "NONE": "None"
     },
     "traitName": {
       "CLOTHES": "Clothes",
@@ -486,10 +529,6 @@
       "INACTIVE": "Inactive"
     }
   },
-  "errors": {
-    "page-not-found": "Page Not Found",
-    "uncaughtError": "Uncaught error happened"
-  },
   "form": {
     "adornment": {
       "days": "days",
@@ -498,9 +537,10 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
-      "addConsumer": "Add Consumer",
+      "addConsumer": "Add VRF Consumer",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
+      "approve": "Approve",
       "archive": "Archive",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
@@ -510,6 +550,7 @@
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "finishRound": "Finish round",
@@ -518,6 +559,7 @@
       "fundEth": "Fund ETH",
       "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
+      "invite": "Invite",
       "load": "Load",
       "loaded": "Done",
       "login": "Login",
@@ -529,7 +571,7 @@
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
-      "pyramidBalance": "Pyramid balance",
+      "ponziBalance": "Ponzi balance",
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
@@ -539,6 +581,7 @@
       "save": "Save",
       "schedule": "Schedule",
       "search": "Search",
+      "setAmount": "Set amount",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
@@ -556,13 +599,10 @@
       "withdraw": "Withdraw"
     },
     "hints": {
-      "allowanceWarning": "You are going to allow all tokens of the contract",
-      "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "maxValue": "Max {label}: {value}",
-      "prompt": "You have unsaved information, are you sure you want to leave this page?",
-      "risk": "You are doing this at your own risk!"
+      "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
       "DUMMY": "Dummy",
@@ -622,6 +662,8 @@
       "decimals": "Decimals",
       "deposit": "Deposit",
       "description": "Description",
+      "dismantleStatus": "Status",
+      "dismantleStrategy": "Strategy",
       "displayName": "Display name",
       "duration": "Duration",
       "durationAmount": "Duration",
@@ -630,6 +672,7 @@
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
       "eventType": "Event type",
+      "facebookUrl": "Facebook",
       "files": "Files",
       "from": "From",
       "fromBlock": "Listen log from block №",
@@ -639,15 +682,16 @@
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "instagramUrl": "Instagram",
       "isDefault": "Is default",
       "isPrivate": "Private",
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "lottery": "Lottery",
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
+      "lottery": "Lottery",
       "matron": "Matron",
       "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
@@ -684,14 +728,15 @@
       "payees": "Payees",
       "penalty": "Penalty",
       "photos": "Photos",
+      "ponziDepositStatus": "Status",
+      "ponziRule": "Ponzi rule",
+      "ponziRuleStatus": "Status",
       "price": "Price",
       "productId": "Product",
       "productItemId": "Item",
       "productStatus": "Status",
-      "pyramidDepositStatus": "Status",
-      "pyramidRule": "Pyramid rule",
-      "pyramidRuleStatus": "Status",
       "random": "Random",
+      "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -729,6 +774,7 @@
       "tokenStatus": "Status",
       "tokenType": "Type",
       "traits": "Traits",
+      "twitterUrl": "Twitter",
       "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
@@ -743,6 +789,7 @@
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
       "year": "Year",
+      "youtubeUrl": "Youtube",
       "zip": "ZIP code"
     },
     "placeholders": {
@@ -757,7 +804,7 @@
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
-      "attribute": "...",
+      "attribute": "LEVEL",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
       "beneficiary": "0x...",
@@ -784,8 +831,10 @@
       "durationAmount": "30",
       "durationUnit": "Day",
       "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
       "fromBlock": "1",
       "growthRate": "2",
+      "instagramUrl": "https://instagram.com/",
       "item": "Bottle of water",
       "listId": "Default list",
       "listIds": "Default list",
@@ -819,6 +868,7 @@
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
+      "rarityMultiplier": "0",
       "recipient": "Recipient",
       "roundIds": "Round",
       "royalty": "1",
@@ -841,10 +891,12 @@
       "tokenId": "Token",
       "tokenIds": "Token",
       "tokenStatus": "Status",
+      "twitterUrl": "https://twitter.com/",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
       "userIds": "Gordon Freeman",
       "wallet": "Wallet",
+      "youtubeUrl": "https://youtube.com/",
       "zip": "80576"
     },
     "tips": {
@@ -870,7 +922,6 @@
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
       "typeMismatch": "{label} is invalid",
-      "unsupportedCombination": "{label} contains unsupported combination",
       "valid": "??",
       "valueMissing": "{label} is required",
       "weak": "{label} is too weak",
@@ -878,6 +929,7 @@
     }
   },
   "messages": {
+    "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
     "empty-list": "Nothing to display",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"
@@ -979,11 +1031,6 @@
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
-        },
-        "wallet": {
-          "balances": "Balances",
-          "payees": "Payees",
-          "title": "System Wallet"
         }
       },
       "hierarchy": {
@@ -995,13 +1042,8 @@
       },
       "infrastructure": {
         "admin": {
-          "balances": "System Balances",
-          "emails": "Emails",
-          "pages": "Pages",
-          "payees": "System Payees",
-          "settings": "Settings",
-          "title": "Admin",
-          "users": "Users"
+          "merchant": "Merchant",
+          "title": "Admin"
         }
       },
       "integrations": {
@@ -1013,27 +1055,37 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "craft": "Craft",
         "dispenser": "Dispenser",
-        "drop": "Drop",
+        "promo": "Promo",
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
-        "pyramid": "Pyramid",
+        "ponzi": "Ponzi",
         "raffle": "Raffle",
+        "recipes": "Recipes",
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "waitlist": "Waitlist"
+        "wait-list": "Waitlist"
       },
       "title": "Dashboard"
     },
+    "dismantle": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Dismantle recipes"
+    },
     "dispenser": {
+      "description": "This mechanic allows to mass-transact tokens to the list of addresses",
       "title": "Dispenser"
     },
-    "drop": {
-      "title": "Drops"
+    "dragons": {
+      "description": "Here be dragons",
+      "title": "Not implemented :)"
+    },
+    "promo": {
+      "title": "Promo"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1134,6 +1186,25 @@
       },
       "title": "Marketplace"
     },
+    "merchant": {
+      "managers": {
+        "empty": "You don't have any managers yet"
+      },
+      "invitations": {
+        "empty": "You don't have any invites yet"
+      },
+      "tabs": {
+        "general": "General",
+        "managers": "Managers",
+        "invitations": "Invitations"
+      },
+      "title": "Merchant"
+    },
+    "merge": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Merge recipes"
+    },
     "mystery": {
       "boxContent": {
         "title": "Mysterybox content"
@@ -1176,6 +1247,34 @@
     "photos": {
       "title": "Photos"
     },
+    "ponzi": {
+      "chart": {
+        "title": "Chart"
+      },
+      "contracts": {
+        "title": "Ponzi Contracts"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "finalizeByRule": "Finalize rule",
+        "finalizeByToken": "Finalize deposit token",
+        "title": "Ponzi rules",
+        "upload": "Upload rule"
+      },
+      "title": "Ponzi"
+    },
+    "productType": {
+      "description": "Rate plans",
+      "dialog": {
+        "text": "Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to self-hosted version.",
+        "title": "Time to upgrade!"
+      },
+      "title": "Product types"
+    },
     "products": {
       "title": "Products"
     },
@@ -1195,26 +1294,6 @@
     "promos": {
       "title": "Promos"
     },
-    "pyramid": {
-      "chart": {
-        "title": "Chart"
-      },
-      "contracts": {
-        "title": "Pyramid Contracts"
-      },
-      "report": {
-        "title": "Report"
-      },
-      "rules": {
-        "activate": "Activate rule",
-        "deactivate": "Deactivate rule",
-        "finalizeByRule": "Finalize rule",
-        "finalizeByToken": "Finalize deposit token",
-        "title": "Pyramid rules",
-        "upload": "Upload rule"
-      },
-      "title": "Pyramid"
-    },
     "raffle": {
       "contracts": {
         "title": "Contracts"
@@ -1232,6 +1311,59 @@
       "tokens": {
         "title": "Tokens"
       }
+    },
+    "ratePlan": {
+      "alwaysIncluded": {
+        "history": "Transaction history",
+        "insights": "Marketing insights",
+        "openSea": "OpenSea integration",
+        "title": "Always included"
+      },
+      "bronze": {
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "5 ERC1155 \n contracts",
+        "erc20": "1 ERC20 contract",
+        "erc721": "5 ERC721 contracts",
+        "grade": "Grade",
+        "mystery": "Mystery box",
+        "title": "Bronze",
+        "vesting": "1000 vesting contracts"
+      },
+      "contactViaTelegram": "Contact via Telegram",
+      "gold": {
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "25 ERC1155 \n contracts",
+        "erc20": "5 ERC20 contract",
+        "erc721": "25 ERC721 contracts",
+        "grade": "Grade",
+        "mystery": "Mystery box",
+        "title": "Gold",
+        "vesting": "5000 vesting contracts"
+      },
+      "month": "month",
+      "onDemand": {
+        "raffle": "Raffle",
+        "staking": "Staking",
+        "title": "On demand",
+        "waitList": "Wait list"
+      },
+      "silver": {
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "10 ERC1155 \n contracts",
+        "erc20": "1 ERC20 contract",
+        "erc721": "10 ERC721 contracts",
+        "grade": "Grade",
+        "mystery": "Mystery box",
+        "title": "Silver",
+        "vesting": "3000 vesting contracts"
+      },
+      "title": "Rate plans"
     },
     "rent": {
       "title": "Rent"
@@ -1275,7 +1407,7 @@
       },
       "title": "Vesting"
     },
-    "waitlist": {
+    "wait-list": {
       "contracts": {
         "title": "Contracts"
       },
@@ -1287,23 +1419,6 @@
         "title": "Lists"
       },
       "title": "Waitlist"
-    },
-    "wallet": {
-      "balances": {
-        "title": "Balances"
-      },
-      "payees": {
-        "title": "System Payees",
-        "withdraw": "Withdraw"
-      },
-      "title": "System Wallet",
-      "withdraw": {
-        "dialog": "From address",
-        "payee": "Payee will receive: ",
-        "title": "Withdraw",
-        "token": "Token",
-        "total": "Total balance"
-      }
     }
   },
   "snackbar": {
@@ -1317,6 +1432,8 @@
     "cartNotFound": "Cart not found",
     "categoryNotFound": "Category not found",
     "claimNotFound": "Claim not found",
+    "claimsNotUploaded": "No claims were uploaded",
+    "claimsUploaded": "Successfully uploaded {amount} from {total}",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",
@@ -1332,10 +1449,13 @@
     "invite": "Successfully invited",
     "listNotFound": "Waitlist not found",
     "loaded": "Successfully loaded",
+    "merchantAlreadyExist": "Merchant already exist",
+    "merchantIsNotActive": "Merchant is not active",
     "merchantNotFound": "Merchant not found",
     "orderNotFound": "Order not found",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
+    "paymentRequired": "Payment required",
     "productNotFound": "Product not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
@@ -1346,7 +1466,6 @@
     "tooManyRequests": "Too Many Requests.",
     "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
-    "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",

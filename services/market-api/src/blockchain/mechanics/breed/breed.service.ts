@@ -1,19 +1,21 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, SettingsKeys, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { BreedEntity } from "./breed.entity";
-import { ISignBreedDto } from "./interfaces";
+import type { ISignBreedDto } from "./interfaces";
 
 @Injectable()
 export class BreedService {
@@ -24,11 +26,12 @@ export class BreedService {
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
+    private readonly contractService: ContractService,
   ) {}
 
   public findAll(
     where: FindOptionsWhere<BreedEntity>,
-    options?: FindOneOptions<BreedEntity>,
+    options?: FindManyOptions<BreedEntity>,
   ): Promise<Array<BreedEntity>> {
     return this.breedEntityRepository.find({ where, ...options });
   }
@@ -48,6 +51,7 @@ export class BreedService {
           token: "breed.token",
           template: "token.template",
           contract: "template.contract",
+          merchant: "contract.merchant",
         },
       },
     });
@@ -70,7 +74,7 @@ export class BreedService {
   }
 
   public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, momId, dadId } = dto;
+    const { account, referrer = ZeroAddress, momId, dadId, chainId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
@@ -99,13 +103,15 @@ export class BreedService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        nonce,
         externalId: encodedExternalId.toString(),
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: momTokenEntity.token.template.contract.merchant.wallet,
+        referrer,
       },
       momTokenEntity.token,
       dadTokenEntity.token,
@@ -115,12 +121,14 @@ export class BreedService {
   }
 
   public async getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     momTokenEntity: TokenEntity,
     dadTokenEntity: TokenEntity,
   ): Promise<string> {
     return this.signerService.getOneToOneSignature(
+      verifyingContract,
       account,
       params,
       {

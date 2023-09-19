@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { imageUrl, ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedPhoto1683724061810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

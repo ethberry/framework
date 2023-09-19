@@ -1,29 +1,24 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { testChainId } from "@framework/constants";
-
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
 
-import { LotteryContractService } from "./lottery.service";
-
-import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractAutocompleteDto, ContractSearchDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { LotteryContractService } from "./lottery.service";
 
 @ApiBearerAuth()
 @Controller("/lottery/contracts")
 export class LotteryContractController {
-  constructor(
-    private readonly lotteryContractService: LotteryContractService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly lotteryContractService: LotteryContractService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
     return this.lotteryContractService.search(dto, userEntity);
   }
 
@@ -38,7 +33,6 @@ export class LotteryContractController {
     @Query() dto: ContractAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    return this.lotteryContractService.autocomplete(dto, userEntity?.chainId || chainId);
+    return this.lotteryContractService.autocomplete(dto, userEntity);
   }
 }

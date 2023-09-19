@@ -5,7 +5,7 @@ import { METADATA_ROLE } from "@gemunion/contracts-constants";
 
 import { FrameworkInterfaceId, templateId, tokenAttributes, tokenId } from "../../constants";
 
-export function shouldBehaveLikeUpgradeable(factory: () => Promise<any>) {
+export function shouldBehaveLikeDiscrete(factory: () => Promise<any>) {
   describe("upgrade", function () {
     it("should: upgrade level", async function () {
       const [owner, receiver] = await ethers.getSigners();

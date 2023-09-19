@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { ListenerType, ModuleType, TokenType } from "@framework/types";
 
@@ -10,20 +9,19 @@ import { Erc998LogService } from "../tokens/erc998/token/log/log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
-import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
-import { IEthLoggerInOutDto } from "./interfaces";
+import { PonziLogService } from "../mechanics/ponzi/log/log.service";
+import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class ContractManagerServiceRmq {
   constructor(
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721LogService,
     private readonly erc998LogService: Erc998LogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly mysteryLogService: MysteryLogService,
-    private readonly pyramidLogService: PyramidLogService,
+    private readonly ponziLogService: PonziLogService,
     private readonly vestingLogService: VestingLogService,
   ) {}
 
@@ -75,11 +73,11 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.PYRAMID) {
-      const contracts = await this.contractService.findAllByType([ModuleType.PYRAMID]);
+    if (listenerType === ListenerType.PONZI) {
+      const contracts = await this.contractService.findAllByType([ModuleType.PONZI]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
-      this.pyramidLogService.addListener({
+      this.ponziLogService.addListener({
         address: unique,
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
@@ -152,11 +150,11 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.PYRAMID) {
-      const contracts = await this.contractService.findAllByType([ModuleType.PYRAMID]);
+    if (listenerType === ListenerType.PONZI) {
+      const contracts = await this.contractService.findAllByType([ModuleType.PONZI]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
-      this.pyramidLogService.addListener({
+      this.ponziLogService.addListener({
         address: unique,
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });

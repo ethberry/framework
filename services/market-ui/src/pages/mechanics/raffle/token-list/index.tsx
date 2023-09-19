@@ -1,24 +1,16 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto, TokenStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IRaffleTokenSearchDto, IRaffleToken, IRaffleRound } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { RaffleRewardButton } from "../../../../components/buttons";
 import { RaffleTokenSearchForm } from "./form";
 import { RaffleTokenViewDialog } from "./view";
-import { RaffleRewardButton } from "../../../../components/buttons";
 
 export const RaffleTokenList: FC = () => {
   const {
@@ -36,11 +28,14 @@ export const RaffleTokenList: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IRaffleToken, IRaffleTokenSearchDto>({
-    baseUrl: "/raffle/token",
+    baseUrl: "/raffle/tokens",
     empty: {
       round: {
         number: "0",
       } as unknown as IRaffleRound,
+      metadata: {
+        PRIZE: 0,
+      },
     },
     search: {
       roundIds: [],
@@ -61,23 +56,23 @@ export const RaffleTokenList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((token, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(token => (
+            <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{token.metadata.NUMBER}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.metadata.NUMBER}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
-                {token.round.number === token.tokenId ? "winner" : ""}
-              </ListItemText>
-              <ListItemSecondaryAction>
-                <RaffleRewardButton token={token} />
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
+              <ListActions>
+                <RaffleRewardButton
+                  token={token}
+                  disabled={token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
+                />
+                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

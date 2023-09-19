@@ -2,13 +2,18 @@ import { Network, Signer } from "ethers";
 
 import { tokenName } from "@gemunion/contracts-constants";
 
-export const wrapOneToOneSignature = (network: Network, contractInstance: any, account: Signer) => {
+export const wrapOneToOneSignature = (
+  network: Network,
+  contractInstance: any,
+  contractName = tokenName,
+  account: Signer,
+) => {
   return async (values: Record<string, any>) => {
     const verifyingContract = await contractInstance.getAddress();
     return account.signTypedData(
       // Domain
       {
-        name: tokenName,
+        name: contractName,
         version: "1.0.0",
         chainId: network.chainId,
         verifyingContract,
@@ -22,11 +27,12 @@ export const wrapOneToOneSignature = (network: Network, contractInstance: any, a
           { name: "price", type: "Asset" },
         ],
         Params: [
-          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
-          { name: "referrer", type: "address" },
+          { name: "nonce", type: "bytes32" },
           { name: "extra", type: "bytes32" },
+          { name: "receiver", type: "address" },
+          { name: "referrer", type: "address" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -41,13 +47,18 @@ export const wrapOneToOneSignature = (network: Network, contractInstance: any, a
   };
 };
 
-export const wrapOneToManySignature = (network: Network, contractInstance: any, account: Signer) => {
+export const wrapOneToManySignature = (
+  network: Network,
+  contractInstance: any,
+  contractName = tokenName,
+  account: Signer,
+) => {
   return async (values: Record<string, any>) => {
     const verifyingContract = await contractInstance.getAddress();
     return account.signTypedData(
       // Domain
       {
-        name: tokenName,
+        name: contractName,
         version: "1.0.0",
         chainId: network.chainId,
         verifyingContract,
@@ -61,11 +72,12 @@ export const wrapOneToManySignature = (network: Network, contractInstance: any, 
           { name: "price", type: "Asset[]" },
         ],
         Params: [
-          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
-          { name: "referrer", type: "address" },
+          { name: "nonce", type: "bytes32" },
           { name: "extra", type: "bytes32" },
+          { name: "receiver", type: "address" },
+          { name: "referrer", type: "address" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -80,13 +92,18 @@ export const wrapOneToManySignature = (network: Network, contractInstance: any, 
   };
 };
 
-export const wrapManyToManySignature = (network: Network, contractInstance: any, account: Signer) => {
+export const wrapManyToManySignature = (
+  network: Network,
+  contractInstance: any,
+  contractName = tokenName,
+  account: Signer,
+) => {
   return async (values: Record<string, any>) => {
     const verifyingContract = await contractInstance.getAddress();
     return account.signTypedData(
       // Domain
       {
-        name: tokenName,
+        name: contractName,
         version: "1.0.0",
         chainId: network.chainId,
         verifyingContract,
@@ -100,11 +117,12 @@ export const wrapManyToManySignature = (network: Network, contractInstance: any,
           { name: "price", type: "Asset[]" },
         ],
         Params: [
-          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
-          { name: "referrer", type: "address" },
+          { name: "nonce", type: "bytes32" },
           { name: "extra", type: "bytes32" },
+          { name: "receiver", type: "address" },
+          { name: "referrer", type: "address" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },

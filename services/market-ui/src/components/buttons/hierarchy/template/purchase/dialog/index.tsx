@@ -6,7 +6,7 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { validationSchema } from "./validation";
 
 export interface IAmountDto {
-  amount: string;
+  amount: number;
 }
 
 export interface IAmountDialogProps {
@@ -21,6 +21,7 @@ export const AmountDialog: FC<IAmountDialogProps> = props => {
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.amount"

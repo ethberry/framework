@@ -1,16 +1,17 @@
 import { FC, useEffect, useState } from "react";
-import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import type { IAccessControl, IUser } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IAccessControl, IContract, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "../../../../../abis/extensions/revoke-role/revokeRole.abi.json";
@@ -22,12 +23,17 @@ export interface IAccessControlRevokeRoleDialogProps {
   data: { address: string };
 }
 
+export interface IAccessControlWithRelations extends IAccessControl {
+  address_contract: IContract;
+  account_contract: IContract;
+}
+
 export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, ...rest } = props;
 
-  const [rows, setRows] = useState<Array<IAccessControl>>([]);
+  const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -38,7 +44,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     { success: false },
   );
 
-  const metaRevokeRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
+  const metaRevokeRole = useMetamask((values: IAccessControlWithRelations, web3Context: Web3ContextType) => {
     const contract = new Contract(data.address, RevokeRoleABI, web3Context.provider?.getSigner());
     return contract.revokeRole(
       Object.values(AccessControlRoleHash)[
@@ -48,35 +54,37 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     ) as Promise<void>;
   });
 
-  const handleRevoke = (values: IAccessControl): (() => Promise<void>) => {
+  const handleRevoke = (values: IAccessControlWithRelations): (() => Promise<void>) => {
     return async () => {
       return metaRevokeRole(values);
     };
   };
 
   useEffect(() => {
-    void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.account !== user.profile.wallet));
-    });
-  }, []);
+    if (open) {
+      void fn().then((rows: Array<IAccessControlWithRelations>) => {
+        setRows(rows.filter(row => row.account !== profile.wallet));
+      });
+    }
+  }, [open]);
 
   return (
-    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" {...rest}>
+    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" open={open} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
-            {rows.map((access, i) => (
-              <ListItem key={i}>
+            {rows.map(access => (
+              <ListItem key={access.id}>
                 <ListItemText>
-                  {access.account}
+                  {access.account_contract?.title || access.account}
+                  {/* <br /> */}
+                  {/* {access.account} */}
                   <br />
                   {access.role}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleRevoke(access)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleRevoke(access)} icon={Delete} message="dialogs.revokeRole" />
+                </ListActions>
               </ListItem>
             ))}
           </List>

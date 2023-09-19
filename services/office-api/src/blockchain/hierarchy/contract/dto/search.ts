@@ -55,4 +55,6 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public merchantId: number;
+
+  public chainId: number;
 }

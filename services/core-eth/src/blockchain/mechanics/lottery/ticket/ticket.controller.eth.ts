@@ -2,14 +2,13 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ContractType,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  // LotteryEventType,
 } from "@framework/types";
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";

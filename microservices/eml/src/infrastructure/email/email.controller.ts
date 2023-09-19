@@ -4,14 +4,14 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import { IPayload } from "./interfaces";
+import type { IDummyPayload, IPayload, IVrfPayload } from "./interfaces";
 
 @Controller()
 export class EmailController {
   constructor(private readonly mailjetService: MailjetService) {}
 
   @EventPattern(EmailType.DUMMY)
-  async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
+  async welcome(@Payload() payload: IDummyPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
       template: 4921134,
       to: [payload.user.email],
@@ -25,7 +25,7 @@ export class EmailController {
   async feedback(@Payload() payload: IPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
       template: 4921119,
-      to: ["info@gemunion.io"],
+      to: ["trejgun@gemunion.io"],
       data: {
         displayName: payload.user.displayName,
         text: payload.feedback.text,
@@ -33,15 +33,28 @@ export class EmailController {
     });
   }
 
+  @EventPattern(EmailType.INVITE)
+  async invite(@Payload() payload: IPayload): Promise<any> {
+    return this.mailjetService.sendTemplate({
+      template: 5074828,
+      to: [payload.invitee.email],
+      data: {
+        displayName: payload.user.displayName,
+        companyName: payload.user.merchant.title,
+        code: payload.otp.uuid,
+        link: `${payload.baseUrl}/invitations/accept/${payload.otp.uuid}`,
+      },
+    });
+  }
+
   // INTEGRATION:CHAIN-LINK
   @EventPattern(EmailType.LINK_TOKEN)
-  async linkToken(@Payload() payload: IPayload): Promise<IEmailResult> {
+  async linkToken(@Payload() payload: IVrfPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
       template: 4921143,
-      to: [payload.user.email],
+      to: [payload.merchant.email],
       data: {
-        title: payload.contract.title,
-        address: payload.contract.address,
+        vrfSubId: payload.merchant.chainLinkSubscriptions![0].vrfSubId.toString(),
       },
     });
   }

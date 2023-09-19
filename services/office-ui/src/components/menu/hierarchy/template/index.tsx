@@ -1,9 +1,8 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ITemplate } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 
 import { MintMenuItem } from "./mint";
 
@@ -40,7 +39,14 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="template-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="template-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <MintMenuItem template={template} />
       </Menu>
     </Fragment>

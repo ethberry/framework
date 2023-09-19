@@ -2,10 +2,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -138,8 +139,8 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
         101041301
       ), (
         'ERC20',
-        10108,
-        1010801, -- Warp Credits
+        10280,
+        1028001, -- Warp Credits
         '${WeiPerEther.toString()}',
         101048001
       ), (

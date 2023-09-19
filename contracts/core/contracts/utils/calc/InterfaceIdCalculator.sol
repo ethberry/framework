@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "hardhat/console.sol";
 
 import "../../ERC721/interfaces/IERC721Simple.sol";
-import "../../ERC721/interfaces/IERC721Upgradeable.sol";
+import "../../ERC721/interfaces/IERC721Discrete.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
 import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
@@ -20,7 +20,7 @@ import "../../Mechanics/Raffle/interfaces/IERC721RaffleTicket.sol";
 contract InterfaceIdCalculator {
   function test() public view {
     console.logBytes4(type(IERC721Simple).interfaceId);
-    console.logBytes4(type(IERC721Upgradeable).interfaceId);
+    console.logBytes4(type(IERC721Discrete).interfaceId);
     console.logBytes4(type(IERC721Random).interfaceId);
 
     console.logBytes4(type(IERC721MysteryBox).interfaceId);

@@ -22,7 +22,7 @@ export class ContractSeedService {
     const contract1 = await this.contractEntityRepository
       .create(
         generateTestContract({
-          contractFeatures: [ContractFeatures.BLACKLIST, ContractFeatures.UPGRADEABLE, ContractFeatures.RANDOM],
+          contractFeatures: [ContractFeatures.BLACKLIST, ContractFeatures.DISCRETE, ContractFeatures.RANDOM],
           contractType: TokenType.ERC721,
           contractStatus: ContractStatus.ACTIVE,
           contractModule: ModuleType.HIERARCHY,
@@ -42,7 +42,7 @@ export class ContractSeedService {
     const contract3 = await this.contractEntityRepository
       .create(
         generateTestContract({
-          contractFeatures: [ContractFeatures.GENES, ContractFeatures.UPGRADEABLE, ContractFeatures.RANDOM],
+          contractFeatures: [ContractFeatures.GENES, ContractFeatures.DISCRETE, ContractFeatures.RANDOM],
           contractType: TokenType.ERC20,
           contractStatus: ContractStatus.NEW,
           contractModule: ModuleType.LOTTERY,

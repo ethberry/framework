@@ -24,13 +24,17 @@ export class NativeTokenController {
   }
 
   @Post("/")
-  public create(@Body() dto: NativeContractCreateDto): Promise<ContractEntity> {
-    return this.nativeContractService.create(dto);
+  public create(@Body() dto: NativeContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.nativeContractService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: NativeContractUpdateDto): Promise<ContractEntity> {
-    return this.nativeContractService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: NativeContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.nativeContractService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -40,7 +44,7 @@ export class NativeTokenController {
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity> {
-    return this.nativeContractService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.nativeContractService.delete({ id }, userEntity);
   }
 }

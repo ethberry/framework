@@ -1,14 +1,13 @@
-import { FC } from "react";
-import { format, parseISO } from "date-fns";
-import { Divider } from "@mui/material";
-import { useSnackbar } from "notistack";
+import { ChangeEvent, FC, useEffect, useState } from "react";
+import { Tab, Tabs } from "@mui/material";
+import { useIntl } from "react-intl";
 
-import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
+import { IUser } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EnabledLanguages } from "@framework/constants";
-import { IUser, UserRole, UserStatus } from "@framework/types";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
+import { UserAddresses } from "./adresses";
+import { UserFormTabs } from "./tabs";
+import { UserGeneralForm } from "./general";
 import { validationSchema } from "./validation";
 
 export interface IUserEditDialogProps {
@@ -21,20 +20,23 @@ export interface IUserEditDialogProps {
 export const UserEditDialog: FC<IUserEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
-  const onClick = (): void => {
-    enqueueSnackbar("Warning! This user won't be able to use this site until he confirms his new email address.", {
-      variant: "info",
-    });
+  const [value, setValue] = useState(UserFormTabs.general);
+
+  const handleChange = (_event: ChangeEvent<any>, newValue: UserFormTabs): void => {
+    setValue(newValue);
   };
 
-  const { id, email, displayName, language, imageUrl, userRoles, userStatus, comment, createdAt } = initialValues;
+  const { id, email, displayName, language, gender, country, imageUrl, userRoles, userStatus, comment, createdAt } =
+    initialValues;
 
   const fixedValues = {
     id,
     email,
     displayName,
+    gender: gender ?? "",
+    country: country ?? "",
     language,
     imageUrl,
     userRoles,
@@ -42,23 +44,28 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     comment,
   };
 
+  useEffect(() => {
+    return () => {
+      setValue(UserFormTabs.general);
+    };
+  }, []);
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      testId="UserEditForm"
+      testId="UserEditDialog"
       {...rest}
     >
-      <TextInput name="email" autoComplete="username" onClick={onClick} />
-      <TextInput name="displayName" />
-      <SelectInput name="language" options={EnabledLanguages} />
-      <AvatarInput name="imageUrl" />
-      <Divider sx={{ my: 2 }} />
-      <SelectInput multiple name="userRoles" options={UserRole} />
-      <SelectInput name="userStatus" options={UserStatus} />
-      <TextInput name="comment" multiline />
-      <StaticInput name="createdAt" value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")} />
+      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} sx={{ mb: 2 }}>
+        {Object.values(UserFormTabs).map(tab => (
+          <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
+        ))}
+      </Tabs>
+
+      <UserGeneralForm createdAt={createdAt} open={value === UserFormTabs.general} />
+      <UserAddresses userId={id} open={value === UserFormTabs.addresses} />
     </FormDialog>
   );
 };

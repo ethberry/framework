@@ -12,7 +12,10 @@ import { Public } from "@gemunion/nest-js-utils";
 @Public()
 @Controller("/health")
 export class HealthController {
-  constructor(private readonly health: HealthCheckService, private readonly db: TypeOrmHealthIndicator) {}
+  constructor(
+    private readonly health: HealthCheckService,
+    private readonly db: TypeOrmHealthIndicator,
+  ) {}
 
   @Get()
   @HealthCheck()

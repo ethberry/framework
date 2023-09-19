@@ -1,0 +1,50 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/nestjs-packages/issues"
+  },
+  "dependencies": {
+    "@framework/types": "0.0.1",
+    "@gemunion/contracts-constants": "4.0.16",
+    "@gemunion/nest-js-module-ethers-gcp": "1.1.0",
+    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.13"
+  },
+  "devDependencies": {
+    "@nestjs/common": "10.2.5",
+    "@nestjs/config": "3.1.1",
+    "ethers": "6.7.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/nest-js-module-exchange-signer",
+  "peerDependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
+    "ethers": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/nestjs-packages"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

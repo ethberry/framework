@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const DataViewWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2.5),
+  borderBottom: "1px solid rgba(224, 224, 224, 1)",
 }));
 
 export const DataViewItemWrapper = styled(Box)(({ theme }) => ({

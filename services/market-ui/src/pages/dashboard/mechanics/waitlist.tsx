@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { TimerOutlined } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -11,18 +11,18 @@ export const WaitListSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.waitlist" />
+            <FormattedMessage id="pages.dashboard.mechanics.wait-list" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/waitlist/item">
+        <ListItemButton component={RouterLink} to="/wait-list/item">
           <ListItemIcon>
             <TimerOutlined />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.waitlist.item.title" />
+            <FormattedMessage id="pages.wait-list.item.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

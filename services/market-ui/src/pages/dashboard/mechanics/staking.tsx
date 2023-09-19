@@ -1,13 +1,16 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Casino, EmojiEvents, Savings } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const StakingSection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+import { NodeEnv } from "@framework/types";
 
-  if (disabled) {
+export const StakingSection: FC = () => {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isStaging = process.env.NODE_ENV === NodeEnv.staging;
+
+  if (!(isDevelopment || isStaging)) {
     return null;
   }
 
@@ -21,30 +24,30 @@ export const StakingSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/staking/rules">
+        <ListItemButton component={RouterLink} to="/staking/rules">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.staking.rules.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking/deposits">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/staking/deposits">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.staking.deposit.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking/leaderboard">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/staking/leaderboard">
           <ListItemIcon>
             <EmojiEvents />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.staking.leaderboard.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

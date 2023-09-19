@@ -1,8 +1,7 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, Wallet } from "ethers";
 
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
   ICollectionContractDeployDto,
@@ -12,8 +11,7 @@ import type {
   IErc998ContractDeployDto,
   ILotteryContractDeployDto,
   IMysteryContractDeployDto,
-  IPyramidContractDeployDto,
-  IRaffleContractDeployDto,
+  IPonziContractDeployDto,
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
@@ -26,100 +24,47 @@ import {
   Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
-  PyramidContractTemplates,
+  PonziContractTemplates,
   StakingContractTemplates,
   TokenType,
 } from "@framework/types";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
-import ERC20WhitelistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Whitelist.sol/ERC20Whitelist.json";
-
-import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
-
-import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
-import ERC721RentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Rentable.sol/ERC721Rentable.json";
-import ERC721BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistRandomGemunion.sol/ERC721BlacklistRandomGemunion.json";
-
-import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/traits/ERC721GenesGemunion.sol/ERC721GenesGemunion.json";
-import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
-import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
-import ERC721SoulboundVotesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundVotes.sol/ERC721SoulboundVotes.json";
-import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
-import ERC721BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeable.sol/ERC721BlacklistUpgradeable.json";
-import ERC721BlacklistUpgradeableRandom from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRandomGemunion.sol/ERC721BlacklistUpgradeableRandomGemunion.json";
-import ERC721BlacklistUpgradeableRentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRentable.sol/ERC721BlacklistUpgradeableRentable.json";
-import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
-import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
-import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
-import ERC998ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155Simple.sol/ERC998ERC1155Simple.json";
-import ERC998ERC1155ERC20Sol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20.sol/ERC998ERC1155ERC20.json";
-import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/traits/ERC998GenesBesu.sol/ERC998GenesBesu.json";
-import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998RandomGemunion.sol/ERC998RandomGemunion.json";
-import ERC998RentableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Rentable.sol/ERC998Rentable.json";
-import ERC998BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998BlacklistRandomGemunion.sol/ERC998BlacklistRandomGemunion.json";
-import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
-import ERC998StateHashSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998StateHash.sol/ERC998StateHash.json";
-import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
-import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998UpgradeableRandomGemunion.sol/ERC998UpgradeableRandomGemunion.json";
-import ERC998BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistUpgradeable.sol/ERC998BlacklistUpgradeable.json";
-import ERC998BlacklistUpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998BlacklistUpgradeableRandomGemunion.sol/ERC998BlacklistUpgradeableRandomGemunion.json";
-
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
-import ERC1155SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json";
-
-import MysteryBoxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol/ERC721MysteryBoxSimple.json";
-import MysteryBoxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklist.sol/ERC721MysteryBoxBlacklist.json";
-import MysteryBoxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol/ERC721MysteryBoxPausable.json";
-import MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
-
-import ERC721CSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json";
-import ERC721CBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json";
-
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
-
-import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
-import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
-
-import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
-
-import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
-import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
-
-// TODO get contract by chainId
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBesu.sol/LotteryRandomBesu.json";
-import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
-
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
+import { getContractABI } from "./utils";
+
+import { ConfigService } from "@nestjs/config";
+// import Queue from "bee-queue";
 
 @Injectable()
 export class ContractManagerSignService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    private readonly configService: ConfigService,
+    private readonly contractService: ContractService,
     private readonly contractManagerService: ContractManagerService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc20ContractTemplates(dto);
+    const { bytecode } = await this.getBytecodeByErc20ContractTemplates(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC20);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -160,7 +105,7 @@ export class ContractManagerSignService {
 
   public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
+    const { bytecode } = await this.getBytecodeByErc721ContractTemplates(dto, userEntity.chainId);
 
     const moduleType =
       dto.contractTemplate === Erc721ContractTemplates.LOTTERY
@@ -173,10 +118,14 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -218,17 +167,21 @@ export class ContractManagerSignService {
 
   public async erc998Token(dto: IErc998ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc998ContractTemplates(dto);
+    const { bytecode } = await this.getBytecodeByErc998ContractTemplates(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC998);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -271,17 +224,21 @@ export class ContractManagerSignService {
 
   public async erc1155Token(dto: IErc1155ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc1155ContractTemplates(dto);
+    const { bytecode } = await this.getBytecodeByErc1155ContractTemplates(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC1155);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -315,23 +272,53 @@ export class ContractManagerSignService {
       },
     );
 
+    // producer queues running on the web server
+    // const sharedConfigSend = {
+    //   getEvents: false,
+    //   isWorker: false,
+    //   redis: {
+    //     url: this.configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+    //   },
+    // };
+
+    // const sendQueue = new Queue("ETH_EVENTS", sharedConfigSend);
+    // const job = sendQueue.createJob({ x: 2, y: 3 });
+    //
+    // await job
+    //   .timeout(3000)
+    //   .retries(2)
+    //   .save()
+    //   .then((job: any) => {
+    //     console.log("JOB CREATED", job.id);
+    //     // job enqueued, job.id populated
+    //   });
+
+    // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
+    //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
+    //   console.error("errors", errors);
+    // });
+
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:MYSTERY
   public async mystery(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByMysteryContractTemplates(dto);
+    const { bytecode } = await this.getBytecodeByMysteryContractTemplates(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.MYSTERY, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -380,17 +367,21 @@ export class ContractManagerSignService {
   ): Promise<IServerSignature> {
     const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByVestingContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByVestingContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -445,33 +436,37 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:PYRAMID
-  public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  // MODULE:PONZI
+  public async ponzi(dto: IPonziContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByPyramidContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByPonziContractTemplate(dto, userEntity.chainId);
 
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PYRAMID, null);
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PONZI, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
         EIP712: [
           { name: "params", type: "Params" },
-          { name: "args", type: "PyramidArgs" },
+          { name: "args", type: "PonziArgs" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
           { name: "externalId", type: "uint256" },
         ],
-        PyramidArgs: [
+        PonziArgs: [
           { name: "payees", type: "address[]" },
           { name: "shares", type: "uint256[]" },
           { name: "contractTemplate", type: "string" },
@@ -487,7 +482,7 @@ export class ContractManagerSignService {
         args: {
           payees: dto.payees,
           shares: dto.shares,
-          contractTemplate: Object.values(PyramidContractTemplates).indexOf(dto.contractTemplate).toString(),
+          contractTemplate: Object.values(PonziContractTemplates).indexOf(dto.contractTemplate).toString(),
         },
       },
     );
@@ -497,17 +492,21 @@ export class ContractManagerSignService {
   // MODULE:STAKING
   public async staking(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByStakingContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByStakingContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.STAKING, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -539,19 +538,23 @@ export class ContractManagerSignService {
   }
 
   // MODULE:WAITLIST
-  public async waitList(dto: IWaitListContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async waitList(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByWaitListContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByWaitListContractTemplate({}, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -576,35 +579,31 @@ export class ContractManagerSignService {
   }
 
   // MODULE:RAFFLE
-  public async raffle(dto: IRaffleContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async raffle(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByRaffleContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByRaffleContractTemplate(userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.RAFFLE, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "RaffleArgs" },
-        ],
+        EIP712: [{ name: "params", type: "Params" }],
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
           { name: "externalId", type: "uint256" },
-        ],
-        RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
-        RaffleConfig: [
-          { name: "timeLagBeforeRelease", type: "uint256" },
-          { name: "commission", type: "uint256" },
         ],
       },
       // Values
@@ -613,9 +612,6 @@ export class ContractManagerSignService {
           nonce,
           bytecode,
           externalId: userEntity.id,
-        },
-        args: {
-          config: dto.config,
         },
       },
     );
@@ -626,17 +622,21 @@ export class ContractManagerSignService {
   // MODULE:LOTTERY
   public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByLotteryContractTemplate(dto);
+    const { bytecode } = await this.getBytecodeByLotteryContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -674,17 +674,21 @@ export class ContractManagerSignService {
   // MODULE:COLLECTION
   public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByCollectionTemplates(dto);
+    const { bytecode } = await this.getBytecodeByCollectionTemplates(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.COLLECTION, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
       },
       // Types
       {
@@ -726,189 +730,340 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  public getBytecodeByErc20ContractTemplates(dto: IErc20TokenDeployDto) {
+  public getBytecodeByErc20ContractTemplates(dto: IErc20TokenDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case Erc20ContractTemplates.BLACKLIST:
-        return ERC20BlacklistSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json",
+          chainId,
+        );
       case Erc20ContractTemplates.WHITELIST:
-        return ERC20WhitelistSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Whitelist.sol/ERC20Whitelist.json",
+          chainId,
+        );
       case Erc20ContractTemplates.SIMPLE:
-        return ERC20SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
-  public getBytecodeByErc721ContractTemplates(dto: IErc721ContractDeployDto) {
+  public getBytecodeByErc721ContractTemplates(dto: IErc721ContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
     switch (contractTemplate) {
       case Erc721ContractTemplates.BLACKLIST:
-        return ERC721BlackListSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json",
+          chainId,
+        );
       case Erc721ContractTemplates.GENES:
-        return ERC721GenesSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721Genes.sol/ERC721Genes.json",
+          chainId,
+        );
       case Erc721ContractTemplates.RANDOM:
-        return ERC721RandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721Random.sol/ERC721Random.json",
+          chainId,
+        );
       case Erc721ContractTemplates.RENTABLE:
-        return ERC721RentableSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Rentable.sol/ERC721Rentable.json",
+          chainId,
+        );
       case Erc721ContractTemplates.BLACKLIST_RANDOM:
-        return ERC721BlacklistRandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistRandom.sol/ERC721BlacklistRandom.json",
+          chainId,
+        );
       case Erc721ContractTemplates.SIMPLE:
-        return ERC721SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json",
+          chainId,
+        );
       case Erc721ContractTemplates.SOULBOUND:
-        return ERC721SoulboundSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json",
+          chainId,
+        );
       case Erc721ContractTemplates.SOULBOUND_VOTES:
-        return ERC721SoulboundVotesSol.bytecode;
-      case Erc721ContractTemplates.UPGRADEABLE:
-        return ERC721UpgradeableSol.bytecode;
-      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE:
-        return ERC721BlacklistUpgradeableSol.bytecode;
-      case Erc721ContractTemplates.UPGRADEABLE_RANDOM:
-        return ERC721UpgradeableRandomSol.bytecode;
-      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RANDOM:
-        return ERC721BlacklistUpgradeableRandom.bytecode;
-      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RENTABLE:
-        return ERC721BlacklistUpgradeableRentableSol.bytecode;
-      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM:
-        return ERC721BlacklistUpgradeableRentableRandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundVotes.sol/ERC721SoulboundVotes.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.DISCRETE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Discrete.sol/ERC721Discrete.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.BLACKLIST_DISCRETE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistDiscrete.sol/ERC721BlacklistDiscrete.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.DISCRETE_RANDOM:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721DiscreteRandom.sol/ERC721DiscreteRandom.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.BLACKLIST_DISCRETE_RANDOM:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistDiscreteRentable.sol/ERC721BlacklistDiscreteRentable.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE_RANDOM:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRentableRandom.sol/ERC721BlacklistDiscreteRentableRandom.json",
+          chainId,
+        );
       case Erc721ContractTemplates.RAFFLE:
-        return RaffleTicketSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json",
+          chainId,
+        );
       case Erc721ContractTemplates.LOTTERY:
-        return LotteryTicketSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
-  public getBytecodeByErc998ContractTemplates(dto: IErc998ContractDeployDto) {
+  public getBytecodeByErc998ContractTemplates(dto: IErc998ContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case Erc998ContractTemplates.BLACKLIST:
-        return ERC998BlacklistSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json",
+          chainId,
+        );
       case Erc998ContractTemplates.ERC20OWNER:
-        return ERC998ERC20SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json",
+          chainId,
+        );
       case Erc998ContractTemplates.ERC1155OWNER:
-        return ERC998ERC1155SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155Simple.sol/ERC998ERC1155Simple.json",
+          chainId,
+        );
       case Erc998ContractTemplates.ERC1155OWNER_ERC20OWNER:
-        return ERC998ERC1155ERC20Sol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json",
+          chainId,
+        );
       case Erc998ContractTemplates.GENES:
-        return ERC998GenesSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/genes/ERC998Genes.sol/ERC998Genes.json",
+          chainId,
+        );
       case Erc998ContractTemplates.RANDOM:
-        return ERC998RandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998Random.sol/ERC998Random.json",
+          chainId,
+        );
       case Erc998ContractTemplates.RENTABLE:
-        return ERC998RentableSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Rentable.sol/ERC998Rentable.json",
+          chainId,
+        );
       case Erc998ContractTemplates.BLACKLIST_RANDOM:
-        return ERC998BlacklistRandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998BlacklistRandom.sol/ERC998BlacklistRandom.json",
+          chainId,
+        );
       case Erc998ContractTemplates.SIMPLE:
-        return ERC998SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json",
+          chainId,
+        );
       case Erc998ContractTemplates.STATEHASH:
-        return ERC998StateHashSol.bytecode;
-      case Erc998ContractTemplates.UPGRADEABLE:
-        return ERC998UpgradeableSol.bytecode;
-      case Erc998ContractTemplates.BLACKLIST_UPGRADEABLE:
-        return ERC998BlacklistUpgradeableSol.bytecode;
-      case Erc998ContractTemplates.UPGRADEABLE_RANDOM:
-        return ERC998UpgradeableRandomSol.bytecode;
-      case Erc998ContractTemplates.BLACKLIST_UPGRADEABLE_RANDOM:
-        return ERC998BlacklistUpgradeableRandomSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998StateHash.sol/ERC998StateHash.json",
+          chainId,
+        );
+      case Erc998ContractTemplates.DISCRETE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Discrete.sol/ERC998Discrete.json",
+          chainId,
+        );
+      case Erc998ContractTemplates.BLACKLIST_DISCRETE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistDiscrete.sol/ERC998BlacklistDiscrete.json",
+          chainId,
+        );
+      case Erc998ContractTemplates.DISCRETE_RANDOM:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998DiscreteRandom.sol/ERC998DiscreteRandom.json",
+          chainId,
+        );
+      case Erc998ContractTemplates.BLACKLIST_DISCRETE_RANDOM:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998BlacklistDiscreteRandom.sol/ERC998BlacklistDiscreteRandom.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
-  public getBytecodeByErc1155ContractTemplates(dto: IErc1155ContractDeployDto) {
+  public getBytecodeByErc1155ContractTemplates(dto: IErc1155ContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case Erc1155ContractTemplates.SIMPLE:
-        return ERC1155SimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json",
+          chainId,
+        );
       case Erc1155ContractTemplates.BLACKLIST:
-        return ERC1155BlackListSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json",
+          chainId,
+        );
       case Erc1155ContractTemplates.SOULBOUND:
-        return ERC1155SoulboundSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto) {
-    return VestingSol.bytecode;
+  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json",
+      chainId,
+    );
   }
 
   // MODULE:MYSTERY
-  public getBytecodeByMysteryContractTemplates(dto: IMysteryContractDeployDto) {
+  public getBytecodeByMysteryContractTemplates(dto: IMysteryContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case MysteryContractTemplates.SIMPLE:
-        return MysteryBoxSimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol/ERC721MysteryBoxSimple.json",
+          chainId,
+        );
       case MysteryContractTemplates.PAUSABLE:
-        return MysteryBoxPausableSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol/ERC721MysteryBoxPausable.json",
+          chainId,
+        );
       case MysteryContractTemplates.BLACKLIST:
-        return MysteryBoxBlacklistSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklist.sol/ERC721MysteryBoxBlacklist.json",
+          chainId,
+        );
       case MysteryContractTemplates.BLACKLIST_PAUSABLE:
-        return MysteryBoxBlacklistPausableSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
   // MODULE:COLLECTION
-  public getBytecodeByCollectionTemplates(dto: ICollectionContractDeployDto) {
+  public getBytecodeByCollectionTemplates(dto: ICollectionContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case CollectionContractTemplates.SIMPLE:
-        return ERC721CSimpleSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json",
+          chainId,
+        );
       case CollectionContractTemplates.BLACKLIST:
-        return ERC721CBlacklistSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
   // MODULE:STAKING
-  public getBytecodeByStakingContractTemplate(dto: IStakingContractDeployDto) {
+  public getBytecodeByStakingContractTemplate(dto: IStakingContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
       case StakingContractTemplates.SIMPLE:
-        return StakingSol.bytecode;
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
-  // MODULE:PYRAMID
-  public getBytecodeByPyramidContractTemplate(dto: IPyramidContractDeployDto) {
+  // MODULE:PONZI
+  public getBytecodeByPonziContractTemplate(dto: IPonziContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
+
     switch (contractTemplate) {
-      case PyramidContractTemplates.SIMPLE:
-        return PyramidBasicSol.bytecode;
-      case PyramidContractTemplates.SPLITTER:
-        return PyramidReferralSol.bytecode;
-      case PyramidContractTemplates.REFERRAL:
-        return PyramidReferralSol.bytecode;
+      case PonziContractTemplates.SIMPLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/PonziBasic.sol/PonziBasic.json",
+          chainId,
+        );
+      case PonziContractTemplates.SPLITTER:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
+          chainId,
+        );
+      case PonziContractTemplates.REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
   // MODULE:WAITLIST
-  public getBytecodeByWaitListContractTemplate(_dto: IWaitListContractDeployDto) {
-    return WaitListSol.bytecode;
+  public getBytecodeByWaitListContractTemplate(_dto: IWaitListContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json",
+      chainId,
+    );
   }
 
   // MODULE:RAFFLE
-  public getBytecodeByRaffleContractTemplate(_dto: IRaffleContractDeployDto) {
-    return RaffleSol.bytecode;
+  public getBytecodeByRaffleContractTemplate(chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandom.sol/RaffleRandom.json",
+      chainId,
+    );
   }
 
   // MODULE:LOTTERY
-  public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto) {
-    return LotterySol.bytecode;
+  public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandom.sol/LotteryRandom.json",
+      chainId,
+    );
   }
 }

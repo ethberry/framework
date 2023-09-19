@@ -6,7 +6,6 @@ import { LotteryRoundEntity } from "./round.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { IAssetDto } from "@framework/types";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class LotteryRoundService {
@@ -29,6 +28,7 @@ export class LotteryRoundService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("round.contract", "contract");
+    queryBuilder.leftJoinAndSelect("round.ticketContract", "ticket_contract");
 
     queryBuilder.andWhere("round.roundId = :roundId", {
       roundId: Number(roundId).toString(),

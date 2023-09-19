@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { IProductItem } from "@framework/types";
 import { ns } from "@framework/constants";

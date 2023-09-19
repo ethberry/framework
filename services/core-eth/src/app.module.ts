@@ -6,15 +6,17 @@ import { WinstonModule } from "nest-winston";
 
 import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston";
+import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 import { GameModule } from "./game/game.module";
+import { DiscoveryModule } from "@golevelup/nestjs-discovery";
 
 @Module({
   providers: [
@@ -25,6 +27,7 @@ import { GameModule } from "./game/game.module";
     },
   ],
   imports: [
+    DiscoveryModule,
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV as string}`,
     }),
@@ -38,6 +41,15 @@ import { GameModule } from "./game/game.module";
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
         return configService.get<string>("GEMUNION_API_KEY", "");
+      },
+    }),
+    SecretManagerModule.forRootAsync(SecretManagerModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          keyFile: configService.get<string>("GCLOUD_KEYFILE_BASE64_PATH", ""),
+        };
       },
     }),
     ScheduleModule.forRoot(),

@@ -1,4 +1,6 @@
 import { ForbiddenException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -9,7 +11,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { CollectionTokenService } from "../token/token.service";
-import { ICollectionUploadDto } from "./interfaces";
+import type { ICollectionUploadDto } from "./interfaces";
 
 @Injectable()
 export class CollectionContractService extends ContractService {
@@ -19,15 +21,13 @@ export class CollectionContractService extends ContractService {
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     protected readonly collectionTokenService: CollectionTokenService,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
-  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, { contractType: [TokenType.ERC721], contractModule: [ModuleType.COLLECTION] }),
-      userEntity,
-    );
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 
   public async upload(address: string, dto: ICollectionUploadDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {

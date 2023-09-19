@@ -18,18 +18,12 @@ export class MysteryTokenService extends TokenService {
     super(tokenEntityRepository);
   }
 
-  public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, [TokenType.ERC721], [ModuleType.MYSTERY]);
+  public async search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.MYSTERY], [TokenType.ERC721]);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-    queryBuilder.leftJoinAndSelect("token.history", "history");
-    queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
-    queryBuilder.leftJoinAndSelect("exchange.history", "asset_component_history");
-    queryBuilder.leftJoinAndSelect("asset_component_history.assets", "asset_component_history_assets");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.token", "assets_token");
-    queryBuilder.leftJoinAndSelect("asset_component_history_assets.contract", "assets_contract");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.price", "price");

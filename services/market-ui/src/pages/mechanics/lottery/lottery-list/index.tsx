@@ -3,27 +3,14 @@ import { Grid, Pagination } from "@mui/material";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IContract } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
+import type { IContract } from "@framework/types";
+
 import { LotteryListItem } from "./item";
 
 export const LotteryList: FC = () => {
-  const {
-    rows,
-    count,
-    search,
-    selected,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    isViewDialogOpen,
-    handleView,
-    handleViewConfirm,
-    handleViewCancel,
-    handleSearch,
-    handleChangePage,
-  } = useCollection<IContract, ISearchDto>({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IContract, ISearchDto>({
     baseUrl: "/lottery/contracts",
     search: {
       query: "",
@@ -31,11 +18,11 @@ export const LotteryList: FC = () => {
   });
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery-list"]} />
+      <Breadcrumbs path={["dashboard", "lottery"]} />
 
       <PageHeader message="pages.lottery-list.title" />
 
-      {/*<CommonSearchForm initialValues={search} onSubmit={handleSearch} />*/}
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

@@ -1,28 +1,23 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryBoxStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
+import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
+import { MintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { MysteryboxEditDialog } from "./edit";
-import { MysteryboxSearchForm } from "./form";
 
 export const MysteryBox: FC = () => {
   const {
@@ -44,7 +39,7 @@ export const MysteryBox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
+  } = useCollection<IMysteryBox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery/boxes",
     empty: {
       title: "",
@@ -95,28 +90,45 @@ export const MysteryBox: FC = () => {
         </Button>
       </PageHeader>
 
-      <MysteryboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="MysteryboxSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC721],
+                contractModule: [ModuleType.MYSTERY],
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((mystery, i) => (
-            <ListItem key={i}>
+          {rows.map(mystery => (
+            <ListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(mystery)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(mystery)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(mystery)}
-                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <MysteryActionsMenu
-                  mystery={mystery}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <MintButton mystery={mystery} disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

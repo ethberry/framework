@@ -11,7 +11,6 @@ export enum AchievementType {
 }
 
 export enum AchievementRuleStatus {
-  NEW = "NEW",
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }

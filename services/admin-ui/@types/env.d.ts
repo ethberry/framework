@@ -1,25 +1,24 @@
+import { BusinessType, NodeEnv } from "@framework/types";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: "development" | "production" | "test" | "staging";
+      NODE_ENV: NodeEnv;
       PORT: number;
       HOST: string;
       BE_URL: string;
       JSON_URL: string;
       GEMUNION_API_KEY: string;
+      GEMUNION_URL: string;
+      BUSINESS_TYPE: BusinessType;
       ACCOUNT: string;
+      // these addresses should be related to chainId
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
-      STAKING_ADDR: string;
-      PYRAMID_ADDR: string;
-      CHAIN_ID: string;
+      DISPENSER_ADDR: string;
       LINK_ADDR: string;
       VRF_ADDR: string;
-      WAITLIST_ADDR: string;
-      LOTTERY_ADDR: string;
-      RAFFLE_ADDR: string;
-      DISPENSER_ADDR: string;
-      GEMUNION_BUSINESS_MODEL: string;
+      CHAINLINK_SUBSCRIPTION_ID: string;
     }
   }
 }

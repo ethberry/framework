@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { OrderItemEntity } from "./order-item.entity";
-import { IOrderItemCreateDto } from "./interfaces";
+import type { IOrderItemCreateDto } from "./interfaces";
 
 @Injectable()
 export class OrderItemService {
@@ -20,8 +20,11 @@ export class OrderItemService {
     return this.orderItemEntityRepository.delete(where);
   }
 
-  public findAll(where: FindOptionsWhere<OrderItemEntity>): Promise<Array<OrderItemEntity>> {
-    return this.orderItemEntityRepository.find({ where });
+  public findAll(
+    where: FindOptionsWhere<OrderItemEntity>,
+    options?: FindManyOptions<OrderItemEntity>,
+  ): Promise<Array<OrderItemEntity>> {
+    return this.orderItemEntityRepository.find({ where, ...options });
   }
 
   public count(where: FindOptionsWhere<OrderItemEntity>): Promise<number> {

@@ -62,6 +62,7 @@ const config: Configuration = {
   },
   plugins: [
     new ProvidePlugin({
+      process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
     new DotEnvPlugin({

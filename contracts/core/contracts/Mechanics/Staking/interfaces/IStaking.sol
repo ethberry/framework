@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../../Exchange/interfaces/IAsset.sol";
+import "../../../Exchange/lib/interfaces/IAsset.sol";
 
 interface IStaking {
   struct Rule {
@@ -28,4 +28,10 @@ interface IStaking {
     uint256 cycles;
     bool activeDeposit;
   }
+
+  function deposit(Params memory params, uint256[] calldata tokenIds) external payable;
+
+  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
+
+  function withdrawBalance(Asset memory item) external;
 }

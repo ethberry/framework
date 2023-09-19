@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IContractSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -18,7 +18,7 @@ export class Erc721ContractService extends ContractService {
     super(contractEntityRepository);
   }
 
-  public search(dto: ISearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.HIERARCHY);
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC721]);
   }
 }

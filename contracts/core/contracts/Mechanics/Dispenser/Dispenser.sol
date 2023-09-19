@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "./interfaces/IDispenser.sol";
 
 /**
@@ -41,6 +41,9 @@ contract Dispenser is IDispenser, ERC165, Context {
     revert();
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IDispenser).interfaceId || super.supportsInterface(interfaceId);
   }

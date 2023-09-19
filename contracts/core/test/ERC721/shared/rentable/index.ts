@@ -1,5 +1,7 @@
+import { shouldUserExprires, shouldUserOf } from "@gemunion/contracts-erc721e";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+
 import { shouldSetUser } from "./setUser";
-import { IERC721EnumOptions, shouldUserExprires, shouldUserOf } from "@gemunion/contracts-erc721e";
 import { customMintCommonERC721 } from "../customMintFn";
 
 export function shouldBehaveLikeERC721Rentable(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {

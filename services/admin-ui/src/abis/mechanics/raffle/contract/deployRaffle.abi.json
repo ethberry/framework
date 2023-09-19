@@ -19,32 +19,8 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct AbstractFactory.Params",
+        "internalType": "struct SignatureValidatorCM.Params",
         "name": "params",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "timeLagBeforeRelease",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "commission",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct RaffleConfig",
-            "name": "config",
-            "type": "tuple"
-          }
-        ],
-        "internalType": "struct RaffleFactory.RaffleArgs",
-        "name": "args",
         "type": "tuple"
       },
       {

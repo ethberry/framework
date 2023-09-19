@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractSearchDto, IErc1155ContractCreateDto } from "@framework/types";
+import { BusinessType, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -14,22 +16,23 @@ export class Erc1155ContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
-  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC1155],
-        contractModule: [ModuleType.HIERARCHY],
-      }),
-      userEntity,
-    );
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 
   public async create(dto: IErc1155ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { address, title, description, imageUrl } = dto;
+
+    const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
+    // there is no exception for merchantId=1, to create token use office
+    if (businessType === BusinessType.B2B) {
+      throw new PaymentRequiredException("paymentRequired");
+    }
 
     return this.contractEntityRepository
       .create({

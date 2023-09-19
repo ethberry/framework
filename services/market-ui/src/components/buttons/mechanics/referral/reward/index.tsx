@@ -9,6 +9,8 @@ import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 import ReferralWithdrawRewardABI from "../../../../../abis/exchange/referral/reward/withdrawReward.abi.json";
 import ReferralGetBalanceABI from "../../../../../abis/exchange/referral/reward/getBalance.abi.json";
 
+// @TODO split the info and button
+
 export const ReferralRewardButton: FC = () => {
   const [balance, setBalance] = useState("");
   const { isActive, account } = useWeb3React();

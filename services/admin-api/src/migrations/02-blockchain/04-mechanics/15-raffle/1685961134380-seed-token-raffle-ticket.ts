@@ -2,10 +2,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -25,7 +26,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ) VALUES (
         121010101,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '1',
@@ -36,7 +37,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010102,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '2',
@@ -47,7 +48,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010103,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '3',
@@ -58,7 +59,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010104,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '4',
@@ -69,7 +70,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010105,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '5',

@@ -20,8 +20,8 @@ export async function deployERC998(contracts: Record<string, any>) {
   contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
   await blockAwait();
 
-  const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
-  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
+  const ERC998DiscreteFactory = await ethers.getContractFactory("ERC998Discrete");
+  contracts.erc998Discrete = await ERC998DiscreteFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await blockAwait();
 
   const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");

@@ -10,9 +10,6 @@ import { AchievementsSection } from "./achievements";
 import { EcommerceSection } from "./ecommerce";
 
 import { MarketplaceSection } from "./exchange/marketplace";
-import { WalletSection } from "./exchange/wallet";
-
-import { AdminSection } from "./infrastructure";
 
 import { ChainLinkSection } from "./integrations/chain-link";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
@@ -26,19 +23,19 @@ import { Erc1155Section } from "./hierarchy/erc1155";
 
 import { BreedSection } from "./mechanics/breed";
 import { ClaimSection } from "./mechanics/claim";
-import { Collections } from "./mechanics/collection";
-import { CraftSection } from "./mechanics/craft";
+import { CollectionSection } from "./mechanics/collection";
+import { RecipesSection } from "./mechanics/recipes";
 import { DispenserSection } from "./mechanics/dispenser";
-import { DropSection } from "./mechanics/drop";
+import { AssetPromoSection } from "./mechanics/promo";
 import { GradeSection } from "./mechanics/grade";
 import { LotterySection } from "./mechanics/lottery";
 import { RaffleSection } from "./mechanics/raffle";
 import { MysterySection } from "./mechanics/mystery";
-import { PyramidSection } from "./mechanics/pyramid";
+import { PonziSection } from "./mechanics/ponzi";
 import { RentSection } from "./mechanics/rent";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
-import { WaitListSection } from "./mechanics/waitlist";
+import { WaitListSection } from "./mechanics/wait-list";
 
 export const Dashboard: FC = () => {
   return (
@@ -54,7 +51,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
           <MysterySection />
-          <Collections />
+          <CollectionSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />
@@ -62,25 +59,23 @@ export const Dashboard: FC = () => {
           <ClaimSection />
           <VestingSection />
           <GradeSection />
-          <CraftSection />
-          <DropSection />
+          <RecipesSection />
+          <AssetPromoSection />
           <RentSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
           <RaffleSection />
           <LotterySection />
           <StakingSection />
-          <PyramidSection />
+          <PonziSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <ChainLinkSection />
           <CoinGeckoSection />
           <CoinMarketCapSection />
           <MarketplaceSection />
-          <WalletSection />
           <EcommerceSection />
           <AchievementsSection />
-          <AdminSection />
         </Grid>
       </Grid>
     </Root>

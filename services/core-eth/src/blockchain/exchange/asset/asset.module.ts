@@ -1,12 +1,12 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
+import { TokenModule } from "../../hierarchy/token/token.module";
+import { TemplateModule } from "../../hierarchy/template/template.module";
+import { EventHistoryModule } from "../../event-history/event-history.module";
+import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { AssetService } from "./asset.service";
 import { AssetEntity } from "./asset.entity";
-import { TemplateModule } from "../../hierarchy/template/template.module";
-import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
-import { EventHistoryModule } from "../../event-history/event-history.module";
-import { TokenModule } from "../../hierarchy/token/token.module";
 
 @Module({
   imports: [

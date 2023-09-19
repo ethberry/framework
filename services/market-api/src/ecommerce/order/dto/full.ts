@@ -19,7 +19,7 @@ export class OrderFullDto implements IOrderFullDto {
   @ApiProperty({
     type: () => [AddressCreateDto],
   })
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => AddressCreateDto)
   public addresses: Array<IAddressCreateDto>;

@@ -1,19 +1,23 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 
 import type { IMerchantSearchDto } from "@framework/types";
 import { MerchantStatus, UserRole } from "@framework/types";
 
-import { MerchantEntity } from "./merchant.entity";
-import type { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
+import { AuthService } from "../auth/auth.service";
 import { UserEntity } from "../user/user.entity";
+import { UserService } from "../user/user.service";
+import { MerchantEntity } from "./merchant.entity";
+import type { IMerchantUpdateDto } from "./interfaces";
 
 @Injectable()
 export class MerchantService {
   constructor(
     @InjectRepository(MerchantEntity)
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   public search(dto: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
@@ -80,55 +84,73 @@ export class MerchantService {
   public async update(
     where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
-    userEntity: UserEntity,
   ): Promise<MerchantEntity | null> {
-    const { userIds, ...rest } = dto;
+    const { wallet, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
     if (!merchantEntity) {
       throw new NotFoundException("merchantNotFound");
+    }
+
+    if (wallet) {
+      const count = await this.count({
+        wallet,
+      });
+
+      if (count) {
+        throw new ConflictException("duplicateAccount");
+      }
+    }
+
+    if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {
+      merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
+
+      await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.ADMIN);
     }
 
     Object.assign(merchantEntity, rest);
-
-    if (userEntity.userRoles.includes(UserRole.ADMIN)) {
-      Object.assign(merchantEntity, {
-        users: userIds.map(id => ({ id })),
-      });
-    }
-
     return merchantEntity.save();
   }
 
-  public async create(dto: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
-    const { userIds, ...rest } = dto;
-
-    return this.merchantEntityRepository
-      .create({
-        ...rest,
-        merchantStatus: userEntity.userRoles.includes(UserRole.ADMIN) ? MerchantStatus.ACTIVE : MerchantStatus.PENDING,
-        users: userEntity.userRoles.includes(UserRole.ADMIN) ? userIds.map(id => ({ id })) : [userEntity],
-      })
-      .save();
-  }
-
-  public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity | null> {
-    const merchantEntity = await this.merchantEntityRepository.findOne({ where });
+  public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity> {
+    const merchantEntity = await this.findOne(where);
 
     if (!merchantEntity) {
       throw new NotFoundException("merchantNotFound");
-    }
-
-    const isAdmin = userEntity.userRoles.includes(UserRole.ADMIN);
-    const isSelf = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
-
-    if (!(isAdmin || isSelf)) {
-      throw new ForbiddenException("insufficientPermissions");
     }
 
     Object.assign(merchantEntity, { merchantStatus: MerchantStatus.INACTIVE });
 
-    return merchantEntity.save();
+    await merchantEntity.save();
+
+    if (merchantEntity.id === userEntity.merchantId) {
+      await this.authService.revokeRefreshTokens(userEntity);
+    }
+
+    return merchantEntity;
+  }
+
+  public count(where: FindOptionsWhere<MerchantEntity>): Promise<number> {
+    return this.merchantEntityRepository.count({ where });
+  }
+
+  public searchUsers(userEntity: UserEntity): Promise<Array<UserEntity>> {
+    return this.userService.findAll({ merchantId: userEntity.merchantId });
+  }
+
+  public async removeUser(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<UpdateResult> {
+    const userEntity2 = await this.userService.findOne(where);
+
+    if (!userEntity2) {
+      throw new NotFoundException("userNotFound");
+    }
+
+    if (userEntity2.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    // TODO multiple admins
+    return this.userService.removeRole(where, UserRole.MANAGER);
   }
 }

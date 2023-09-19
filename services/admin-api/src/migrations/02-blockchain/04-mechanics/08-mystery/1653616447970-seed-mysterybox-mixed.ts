@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -65,7 +66,7 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Mixed Mysterybox',
+        'Mixed Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102120401,

@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractManagerEventType,
   ContractType,
@@ -13,10 +13,11 @@ import {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerPyramidDeployedEvent,
+  IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
+  IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
@@ -109,10 +110,10 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.PyramidDeployed,
+    eventName: ContractManagerEventType.PonziDeployed,
   })
-  public pyramid(@Payload() event: ILogEvent<IContractManagerPyramidDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.pyramid(event, ctx);
+  public ponzi(@Payload() event: ILogEvent<IContractManagerPonziDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.ponzi(event, ctx);
   }
 
   @EventPattern({
@@ -129,5 +130,13 @@ export class ContractManagerControllerEth {
   })
   public raffle(@Payload() event: ILogEvent<IContractManagerRaffleDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.raffle(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.WaitListDeployed,
+  })
+  public waitList(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.waitList(event, ctx);
   }
 }

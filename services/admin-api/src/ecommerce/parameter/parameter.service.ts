@@ -5,7 +5,7 @@ import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "type
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { ParameterEntity } from "./parameter.entity";
-import { IParameterCreateDto, IParameterUpdateDto } from "./interfaces";
+import type { IParameterCreateDto, IParameterUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ParameterService {
@@ -14,7 +14,7 @@ export class ParameterService {
     private readonly parameterEntityRepository: Repository<ParameterEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<ParameterEntity>, number]> {
+  public search(dto: Partial<ISearchDto>): Promise<[Array<ParameterEntity>, number]> {
     const { query } = dto;
 
     const queryBuilder = this.parameterEntityRepository.createQueryBuilder("parameter");

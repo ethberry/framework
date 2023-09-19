@@ -3,11 +3,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { Erc20ContractService } from "./contract.service";
 import { Erc20ContractCreateDto } from "./dto";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc20/contracts")
@@ -24,13 +24,17 @@ export class Erc20TokenController {
   }
 
   @Post("/")
-  public create(@Body() dto: Erc20ContractCreateDto): Promise<ContractEntity> {
-    return this.erc20ContractService.create(dto);
+  public create(@Body() dto: Erc20ContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc20ContractService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
-    return this.erc20ContractService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.erc20ContractService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -40,7 +44,7 @@ export class Erc20TokenController {
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity> {
-    return this.erc20ContractService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc20ContractService.delete({ id }, userEntity);
   }
 }

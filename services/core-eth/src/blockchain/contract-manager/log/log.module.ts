@@ -1,16 +1,16 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
-import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractManagerEventType, ContractType } from "@framework/types";
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
+import { AccessControlEventType, ContractManagerEventType, ContractType, ModuleType } from "@framework/types";
 
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerLogService } from "./log.service";
+import { ABI } from "./interfaces";
+import { testChainId } from "@framework/constants";
 
 @Module({
   imports: [
@@ -20,19 +20,23 @@ import { ContractManagerLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
+        const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
+        const contractManagerEntity = await contractService.findSystemByName({
+          contractModule: ModuleType.CONTRACT_MANAGER,
+          chainId,
+        });
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
+        const fromBlock = contractManagerEntity.fromBlock || startingBlock;
 
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
-            contractAddress: [contractManagerAddr],
-            contractInterface: new Interface(ContractManagerSol.abi),
+            contractAddress: contractManagerEntity.address,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               ContractManagerEventType.VestingDeployed,
@@ -43,9 +47,10 @@ import { ContractManagerLogService } from "./log.service";
               ContractManagerEventType.MysteryboxDeployed,
               ContractManagerEventType.CollectionDeployed,
               ContractManagerEventType.StakingDeployed,
-              ContractManagerEventType.PyramidDeployed,
+              ContractManagerEventType.PonziDeployed,
               ContractManagerEventType.LotteryDeployed,
               ContractManagerEventType.RaffleDeployed,
+              ContractManagerEventType.WaitListDeployed,
               // MODULE:ACCESS_CONTROL
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
@@ -68,7 +73,7 @@ export class ContractManagerLogModule implements OnModuleDestroy {
   constructor(private readonly contractManagerLogService: ContractManagerLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.contractManagerLogService.updateBlock();
   }
 }

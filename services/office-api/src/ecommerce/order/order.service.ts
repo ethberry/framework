@@ -5,7 +5,7 @@ import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposi
 import { IOrderSearchDto, UserRole } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
+import type { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
 import { OrderItemService } from "../order-item/order-item.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -17,7 +17,7 @@ export class OrderService {
     private readonly orderItemService: OrderItemService,
   ) {}
 
-  public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
+  public async search(dto: Partial<IOrderSearchDto>, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
     const { orderStatus, dateRange, merchantId, isArchived } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
@@ -42,7 +42,7 @@ export class OrderService {
       queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", { begin, end });
     }
 
-    if (isArchived === true || isArchived === false) {
+    if (isArchived !== void 0) {
       queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
     }
 
@@ -86,17 +86,17 @@ export class OrderService {
       .save();
   }
 
-  public async update(where: FindOptionsWhere<OrderEntity>, data: IOrderUpdateDto): Promise<OrderEntity> {
+  public async update(where: FindOptionsWhere<OrderEntity>, dto: IOrderUpdateDto): Promise<OrderEntity> {
     const orderEntity = await this.orderEntityRepository.findOne({ where });
 
     if (!orderEntity) {
       throw new NotFoundException("orderNotFound");
     }
 
-    // const price = await this.productService.writeOffAndGetPrice(data.items);
+    // const price = await this.productService.writeOffAndGetPrice(dto.items);
 
     const items = await Promise.all(
-      data.items.map(item =>
+      dto.items.map(item =>
         this.orderItemService.create({
           ...item,
           orderId: orderEntity.id,
@@ -104,7 +104,7 @@ export class OrderService {
       ),
     );
 
-    Object.assign(orderEntity, { ...data, items, price: 100 });
+    Object.assign(orderEntity, { ...dto, items, price: 100 });
     return orderEntity.save();
   }
 

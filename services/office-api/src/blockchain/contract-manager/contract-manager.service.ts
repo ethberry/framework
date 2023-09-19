@@ -1,22 +1,24 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { IContractManagerSearchDto } from "@framework/types";
+import { PaymentRequiredException } from "@gemunion/nest-js-utils";
+import type { IContractManagerSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { IContractManagerCreateDto } from "./interfaces";
+import { UserEntity } from "../../infrastructure/user/user.entity";
+import { RatePlanService } from "../../infrastructure/rate-plan/rate-plan.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
-import { AST } from "eslint";
 
 @Injectable()
 export class ContractManagerService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
-    private readonly configService: ConfigService,
     @InjectRepository(ContractManagerEntity)
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
+    private readonly planService: RatePlanService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<IContractManagerSearchDto>): Promise<[Array<ContractManagerEntity>, number]> {
@@ -82,20 +84,19 @@ export class ContractManagerService {
     return contractManagerEntity.save();
   }
 
-  // public async validateDeployment(
-  //   userEntity: UserEntity,
-  //   contractModule: ModuleType,
-  //   contractType: TokenType | null,
-  // ): Promise<void> {
-  //   const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
-  //
-  //   const count = await this.contractService.count({
-  //     contractModule,
-  //     contractType: contractType || IsNull(),
-  //   });
-  //
-  //   if (count >= limit) {
-  //     throw new ForbiddenException("rateLimitExceeded");
-  //   }
-  // }
+  public async validateDeployment(
+    userEntity: UserEntity,
+    contractModule: ModuleType,
+    contractType: TokenType | null,
+  ): Promise<void> {
+    const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+    const count = await this.contractService.count({
+      contractModule,
+      contractType: contractType || IsNull(),
+    });
+
+    if (count >= limit) {
+      throw new PaymentRequiredException("paymentRequired");
+    }
+  }
 }

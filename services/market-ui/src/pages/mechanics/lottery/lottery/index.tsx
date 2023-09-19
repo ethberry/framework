@@ -9,7 +9,8 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { IContract, IContractSearchDto } from "@framework/types";
 
-import { LotteryPurchase } from "../purchase";
+import { LotteryPurchase } from "./purchase";
+import { LotteryStatistic } from "./statistics";
 
 export const LotteryContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -17,6 +18,9 @@ export const LotteryContract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      parameters: {
+        commission: 0,
+      },
     },
     redirect: () => "",
   });
@@ -29,7 +33,7 @@ export const LotteryContract: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.lottery.title" data={selected} />
+      <PageHeader message="pages.lottery.contract.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>
@@ -55,6 +59,7 @@ export const LotteryContract: FC = () => {
       </Box>
 
       <LotteryPurchase contract={selected} />
+      <LotteryStatistic contract={selected} />
     </Fragment>
   );
 };

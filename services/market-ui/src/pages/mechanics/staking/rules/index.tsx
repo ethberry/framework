@@ -1,28 +1,28 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
-import { DurationUnit, TokenType } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import {
+  DurationUnit,
+  IStakingRuleRewardSearchDto,
+  ModuleType,
+  StakingDepositTokenType,
+  StakingRewardTokenType,
+} from "@framework/types";
 
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
-import { StakingRuleSearchForm } from "./form";
-import { StakingViewDialog } from "./view";
 import { emptyContract } from "../../../../components/common/interfaces";
+import { StakingViewDialog } from "./view";
 
 export const StakingRules: FC = () => {
   const {
@@ -56,11 +56,11 @@ export const StakingRules: FC = () => {
       query: "",
       contractIds: [],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingDepositTokenType>,
+      } as IStakingRuleDepositSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingRewardTokenType>,
+      } as IStakingRuleRewardSearchDto,
     },
     filter: ({ id, title, contract, description, ...rest }) =>
       id
@@ -72,6 +72,8 @@ export const StakingRules: FC = () => {
             ...rest,
           },
   });
+
+  const { formatMessage } = useIntl();
 
   return (
     <Grid>
@@ -86,20 +88,50 @@ export const StakingRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="StakingRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.STAKING] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="deposit.tokenType"
+              options={StakingDepositTokenType}
+              label={formatMessage({ id: "form.labels.deposit" })}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="reward.tokenType"
+              options={StakingRewardTokenType}
+              label={formatMessage({ id: "form.labels.reward" })}
+            />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rule, i) => (
-            <ListItem key={i}>
+          {rows.map(rule => (
+            <ListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
-                <IconButton onClick={handleView(rule)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

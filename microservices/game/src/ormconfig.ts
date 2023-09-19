@@ -11,6 +11,7 @@ import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -27,6 +28,7 @@ const config: PostgresConnectionOptions = {
     TemplateEntity,
     TokenEntity,
     UserEntity,
+    ChainLinkSubscriptionEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

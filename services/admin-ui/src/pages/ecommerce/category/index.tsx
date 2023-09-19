@@ -1,17 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -49,7 +41,12 @@ export const Category: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "category"]} />
 
       <PageHeader message="pages.category.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceCategoryCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
@@ -58,17 +55,13 @@ export const Category: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((category, i) => (
-            <ListItem key={i}>
+          {rows.map(category => (
+            <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(category)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(category)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

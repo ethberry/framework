@@ -1,21 +1,13 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
-import { useCollection } from "@gemunion/react-hooks";
 
 import { StakingRewardButton } from "../../../../components/buttons";
 
@@ -40,7 +32,6 @@ export const StakingDeposit: FC = () => {
   } = useCollection<IStakingDeposit, IStakingDepositSearchDto>({
     baseUrl: "/staking/deposits",
     search: {
-      query: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       contractIds: [],
       deposit: {
@@ -68,15 +59,13 @@ export const StakingDeposit: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((stake, i) => (
-            <ListItem key={i}>
-              <ListItemText>{stake.stakingRule?.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <StakingRewardButton stake={stake} />
-                <IconButton onClick={handleView(stake)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+          {rows.map(deposit => (
+            <ListItem key={deposit.id}>
+              <ListItemText>{deposit.stakingRule?.title}</ListItemText>
+              <ListActions>
+                <StakingRewardButton stake={deposit} />
+                <ListAction onClick={handleView(deposit)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,17 +1,18 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
+import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
     const currentDateTime = new Date().toISOString();
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -36,35 +37,35 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         1,
         104040101, -- Fireball
         104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         1,
         104040201, -- Frostbite
         104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         1,
         104040301, -- Lightning bolt
         104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         1,
         104040401, -- Slow
         104050102, -- Grimoire #2
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         1,
         104040501, -- Fly
         104050102, -- Grimoire #2

@@ -4,12 +4,12 @@ import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository
 
 import { ProductStatus } from "@framework/types";
 
-import { ProductItemEntity } from "./product-item.entity";
-import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDto } from "./interfaces";
-import { PhotoService } from "../photo/photo.service";
-import { PhotoEntity } from "../photo/photo.entity";
 import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { PhotoService } from "../photo/photo.service";
+import { PhotoEntity } from "../photo/photo.entity";
+import { ProductItemEntity } from "./product-item.entity";
+import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProductItemService {
@@ -20,7 +20,7 @@ export class ProductItemService {
     private readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IProductItemSearchDto): Promise<[Array<ProductItemEntity>, number]> {
+  public async search(dto: Partial<IProductItemSearchDto>): Promise<[Array<ProductItemEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product_item");
@@ -97,7 +97,7 @@ export class ProductItemService {
 
   public findAll(
     where: FindOptionsWhere<ProductItemEntity>,
-    options?: FindOneOptions<ProductItemEntity>,
+    options?: FindManyOptions<ProductItemEntity>,
   ): Promise<Array<ProductItemEntity>> {
     return this.productItemEntityRepository.find({ where, ...options });
   }
@@ -171,12 +171,16 @@ export class ProductItemService {
     return productItemEntity.save();
   }
 
-  public async autocomplete(): Promise<Array<ProductItemEntity>> {
+  public async autocomplete(userEntity: UserEntity): Promise<Array<ProductItemEntity>> {
     const queryBuilder = this.productItemEntityRepository.createQueryBuilder("productItem");
 
     queryBuilder.leftJoinAndSelect("productItem.product", "product");
     queryBuilder.leftJoinAndSelect("productItem.parameters", "parameters");
     queryBuilder.select(["productItem.id", "product.title", "parameters"]);
+
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     return queryBuilder.getMany();
   }

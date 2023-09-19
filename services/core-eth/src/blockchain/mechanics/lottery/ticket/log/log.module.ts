@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
@@ -31,11 +31,10 @@ import { LotteryTicketLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: lotteryTicketAddr.address || [],
+            contractAddress: lotteryTicketAddr ? lotteryTicketAddr.address : [],
             contractInterface: new Interface(LotteryTicketSol.abi),
             // prettier-ignore
             eventNames: [
-              // TODO add other events
               ContractEventType.Transfer,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
@@ -62,7 +61,7 @@ export class LotteryTicketLogModule implements OnModuleDestroy {
   constructor(private readonly lotteryTicketLogService: LotteryTicketLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.lotteryTicketLogService.updateBlock();
   }
 }

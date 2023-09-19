@@ -5,34 +5,35 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "lerna": "6.6.2",
-    "nx": "15.8.9"
+    "@lerna/legacy-package-management": "7.3.0",
+    "lerna": "7.3.0",
+    "nx": "16.8.1"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "3.0.2",
-    "@types/node": "18.16.19",
-    "@types/react": "18.2.14",
-    "@typescript-eslint/eslint-plugin": "5.60.1",
-    "@typescript-eslint/parser": "5.60.1",
-    "eslint": "8.44.0",
-    "eslint-config-prettier": "8.8.0",
+    "@gemunion/eslint-config": "4.0.5",
+    "@types/node": "18.17.17",
+    "@types/react": "18.2.21",
+    "@typescript-eslint/eslint-plugin": "6.7.0",
+    "@typescript-eslint/parser": "6.7.0",
+    "eslint": "8.49.0",
+    "eslint-config-prettier": "9.0.0",
     "eslint-config-standard": "17.1.0",
-    "eslint-import-resolver-typescript": "3.5.5",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jest": "27.2.2",
-    "eslint-plugin-n": "16.0.1",
-    "eslint-plugin-prettier": "4.2.1",
+    "eslint-import-resolver-typescript": "3.6.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-jest": "27.4.0",
+    "eslint-plugin-n": "16.1.0",
+    "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-testing-library": "5.11.0",
+    "eslint-plugin-testing-library": "6.0.1",
     "husky": "4.3.8",
-    "lint-staged": "13.2.3",
-    "prettier": "2.8.8",
-    "typescript": "5.1.6"
+    "lint-staged": "14.0.1",
+    "prettier": "3.0.3",
+    "typescript": "5.2.2"
   },
   "engines": {
-    "node": ">=12.13"
+    "node": ">=18"
   },
   "license": "UNLICENSED",
   "name": "@framework/root",
@@ -43,7 +44,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
-    "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore \"@framework/office-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth",
+    "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore \"@framework/office-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth --ignore @framework/eml --ignore @framework/game --ignore @framework/json --ignore @framework/core-contracts",
     "clean": "sh scripts/clean.sh",
     "docker:bootstrap": "lerna bootstrap --hoist --ignore-scripts",
     "docker:build": "lerna run build --concurrency 1",
@@ -53,7 +54,6 @@
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream",
-    "migration": "lerna exec --scope @framework/admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
     "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",

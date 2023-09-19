@@ -45,7 +45,7 @@ export class BalanceService {
     });
   }
 
-  public search(dto: IBalanceSearchDto, userEntity: UserEntity): Promise<[Array<BalanceEntity>, number]> {
+  public search(dto: Partial<IBalanceSearchDto>, userEntity: UserEntity): Promise<[Array<BalanceEntity>, number]> {
     const { contractIds, templateIds, targetIds, accounts, skip, take } = dto;
 
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");

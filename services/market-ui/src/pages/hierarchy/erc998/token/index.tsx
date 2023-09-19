@@ -1,25 +1,24 @@
 import { FC, Fragment } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
-import { FormattedMessage } from "react-intl";
-
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ITemplate } from "@framework/types";
-import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
+import type { ITemplate, IToken } from "@framework/types";
 
-import { Erc721TransferButton, GradeButton, TokenSellButton } from "../../../../components/buttons";
-import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
-import { formatPrice } from "../../../../utils/money";
-import { TokenTraitsView } from "../../traits";
-import { TokenGenesisView } from "../../genesis";
+import { TokenHistory } from "../../../../components/common/token-history";
+import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
+import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
+import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
+import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
+import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
 import { Erc998Composition } from "./composition";
-import { StyledPaper } from "./styled";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
+  const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
     baseUrl: "/erc998/tokens",
     empty: {
       template: {
@@ -55,65 +54,21 @@ export const Erc998Token: FC = () => {
           <Erc998Composition token={selected} />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <StyledPaper>
-            <FormattedMessage id="pages.token.priceTitle" />
-            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
-              {formatPrice(selected.template?.price)
-                .split(", ")
-                .map((item: string, index: number) => (
-                  <li key={index}>{item}</li>
-                ))}
-            </Box>
-            <TokenSellButton token={selected} />
-            <Erc721TransferButton token={selected} />
-          </StyledPaper>
-
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage
-                  id="pages.erc998.token.rarity"
-                  values={{ rarity: Object.values(TokenRarity)[selected.metadata[TokenMetadata.RARITY]] }}
-                />
-              </Typography>
-            </StyledPaper>
-          ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage
-                  id="pages.erc998.token.level"
-                  values={{ level: selected.metadata[TokenMetadata.LEVEL] }}
-                />
-              </Typography>
-              <GradeButton token={selected} />
-            </StyledPaper>
-          ) : null}
-
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage id="pages.erc998.token.genesis" />
-              </Typography>
-              <TokenGenesisView metadata={selected.metadata} />
-            </StyledPaper>
-          ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage id="pages.erc998.token.traits" />
-              </Typography>
-              <TokenTraitsView metadata={selected.metadata} />
-            </StyledPaper>
+          {selected.templateId ? (
+            <>
+              <CommonTokenPanel token={selected} />
+              <RarityTokenPanel token={selected} />
+              <DiscreteTokenPanel token={selected} />
+              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <GenesTokenPanel token={selected} />
+              <TraitTokenPanel token={selected} />
+              <DismantleTokenPanel token={selected} />
+            </>
           ) : null}
         </Grid>
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
+
+      {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>
   );
 };

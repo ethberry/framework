@@ -7,6 +7,7 @@ import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
 import { ModuleType } from "../../common";
 import { IRent } from "../mechanics/rent/rent";
+import { IMerchant } from "../../infrastructure";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -24,6 +25,7 @@ export enum Erc20ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
   "EXTERNAL" = "EXTERNAL",
+  "STABLE_COIN" = "STABLE_COIN",
 }
 
 export enum Erc20ContractTemplates {
@@ -35,7 +37,7 @@ export enum Erc20ContractTemplates {
 
 export enum Erc721ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
-  "UPGRADEABLE" = "UPGRADEABLE",
+  "DISCRETE" = "DISCRETE",
   "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
@@ -48,24 +50,24 @@ export enum Erc721ContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
-  "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
-  "BLACKLIST_UPGRADEABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RANDOM",
-  "BLACKLIST_UPGRADEABLE_RENTABLE" = "BLACKLIST_UPGRADEABLE_RENTABLE",
-  "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM",
+  "BLACKLIST_DISCRETE" = "BLACKLIST_DISCRETE",
+  "BLACKLIST_DISCRETE_RANDOM" = "BLACKLIST_DISCRETE_RANDOM",
+  "BLACKLIST_DISCRETE_RENTABLE" = "BLACKLIST_DISCRETE_RENTABLE",
+  "BLACKLIST_DISCRETE_RENTABLE_RANDOM" = "BLACKLIST_DISCRETE_RENTABLE_RANDOM",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
   "RENTABLE" = "RENTABLE",
   "SOULBOUND" = "SOULBOUND",
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
-  "UPGRADEABLE" = "UPGRADEABLE",
-  "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
+  "DISCRETE" = "DISCRETE",
+  "DISCRETE_RANDOM" = "DISCRETE_RANDOM",
   "LOTTERY" = "LOTTERY",
   "RAFFLE" = "RAFFLE",
 }
 
 export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
-  "UPGRADEABLE" = "UPGRADEABLE",
+  "DISCRETE" = "DISCRETE",
   "RANDOM" = "RANDOM",
   "RENTABLE" = "RENTABLE",
   "GENES" = "GENES",
@@ -78,8 +80,8 @@ export enum Erc998ContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
-  "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
-  "BLACKLIST_UPGRADEABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RANDOM",
+  "BLACKLIST_DISCRETE" = "BLACKLIST_DISCRETE",
+  "BLACKLIST_DISCRETE_RANDOM" = "BLACKLIST_DISCRETE_RANDOM",
   "ERC20OWNER" = "ERC20OWNER",
   "ERC1155OWNER" = "ERC1155OWNER",
   "ERC1155OWNER_ERC20OWNER" = "ERC1155OWNER_ERC20OWNER",
@@ -87,8 +89,8 @@ export enum Erc998ContractTemplates {
   "RANDOM" = "RANDOM",
   "RENTABLE" = "RENTABLE",
   "STATEHASH" = "STATEHASH",
-  "UPGRADEABLE" = "UPGRADEABLE",
-  "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
+  "DISCRETE" = "DISCRETE",
+  "DISCRETE_RANDOM" = "DISCRETE_RANDOM",
 }
 
 export enum Erc1155ContractFeatures {
@@ -124,12 +126,12 @@ export enum CollectionContractTemplates {
   "BLACKLIST" = "BLACKLIST",
 }
 
-export enum PyramidContractFeatures {
+export enum PonziContractFeatures {
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
 }
 
-export enum PyramidContractTemplates {
+export enum PonziContractTemplates {
   "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
@@ -150,9 +152,10 @@ export enum ContractFeatures {
   // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
+  "STABLE_COIN" = "STABLE_COIN",
 
   // EC721
-  "UPGRADEABLE" = "UPGRADEABLE",
+  "DISCRETE" = "DISCRETE",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
   "RENTABLE" = "RENTABLE",
@@ -168,13 +171,21 @@ export enum ContractFeatures {
   // MODULE:MYSTERY
   "PAUSABLE" = "PAUSABLE",
 
-  // MODULE:PYRAMID
+  // MODULE:PONZI
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
 }
 
+export enum ContractSecurity {
+  "OWNABLE" = "OWNABLE",
+  "OWNABLE_2_STEP" = "OWNABLE_2_STEP",
+  "ACCESS_CONTROL" = "ACCESS_CONTROL",
+  "ACCESS_CONTROL_ENUMERABLE" = "ACCESS_CONTROL_ENUMERABLE",
+  "ACCESS_CONTROL_DEFAULT_ADMIN_RULES" = "ACCESS_CONTROL_DEFAULT_ADMIN_RULES",
+  "ACCESS_CONTROL_CROSS_CHAIN" = "ACCESS_CONTROL_CROSS_CHAIN",
+}
+
 export interface IContract extends IDeployable, ISearchable {
-  merchantId: number;
   imageUrl: string;
   name: string;
   symbol: string;
@@ -188,9 +199,12 @@ export interface IContract extends IDeployable, ISearchable {
   contractType: TokenType | null;
   contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
+  contractSecurity: ContractSecurity;
   templates: Array<ITemplate>;
   history?: Array<IEventHistory>;
   parent?: Array<IComposition>;
   children?: Array<IComposition>;
   rent?: Array<IRent>;
+  merchantId: number;
+  merchant?: IMerchant;
 }

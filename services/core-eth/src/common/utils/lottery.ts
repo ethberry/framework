@@ -1,16 +1,8 @@
-import { ethers } from "ethers";
-import { IAssetItem } from "@framework/types";
-import { recursivelyDecodeResult } from "./decodeResult";
+import { Contract, JsonRpcProvider } from "ethers";
 
-// TODO move to @types
-export interface ILotteryCurrentRound {
-  roundId: string;
-  startTimestamp: string;
-  endTimestamp: string;
-  acceptedAsset: IAssetItem;
-  ticketAsset: IAssetItem;
-  maxTicket: string;
-}
+import type { ILotteryCurrentRound } from "@framework/types";
+
+import { recursivelyDecodeResult } from "./decodeResult";
 
 export const getLotteryNumbers = (selected: Array<number>) => {
   const numbers: Array<boolean> = new Array(36).fill(false);
@@ -20,13 +12,12 @@ export const getLotteryNumbers = (selected: Array<number>) => {
   return `{${numbers.join(",")}}`;
 };
 
-export const getCurrentRound = async function (
+export const getCurrentLotteryRound = async function (
   address: string,
   abi: any,
-  provider: ethers.JsonRpcProvider,
+  provider: JsonRpcProvider,
 ): Promise<ILotteryCurrentRound> {
-  const contract = new ethers.Contract(address, abi, provider);
-  // const roundInfo = recursivelyDecodeResult((await contract.getCurrentRoundInfo()) as Result);
+  const contract = new Contract(address, abi, provider);
   const roundInfo = await contract.getCurrentRoundInfo();
   return recursivelyDecodeResult(roundInfo) as ILotteryCurrentRound;
 };

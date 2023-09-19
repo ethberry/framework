@@ -11,8 +11,8 @@ export function shouldBehaveLikeERC721Collection(factory: () => Promise<any>, op
   options = Object.assign(
     {},
     {
-      mint: customMintConsecutive,
-      safeMint: customMintConsecutive,
+      mint: customMintConsecutive(options.batchSize),
+      safeMint: customMintConsecutive(options.batchSize),
       tokenId,
       batchSize,
     },

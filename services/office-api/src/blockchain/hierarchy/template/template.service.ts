@@ -5,11 +5,12 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { TokenService } from "../token/token.service";
+import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -19,13 +20,14 @@ export class TemplateService {
     @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(
-    dto: ITemplateSearchDto,
+    dto: Partial<ITemplateSearchDto>,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, merchantId, skip, take } = dto;
 
@@ -51,12 +53,25 @@ export class TemplateService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
     });
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
@@ -101,7 +116,7 @@ export class TemplateService {
 
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
-      "template.id": "ASC",
+      "template.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -146,11 +161,11 @@ export class TemplateService {
 
     if (contractType) {
       if (contractType.length === 1) {
-        queryBuilder.andWhere("manager.contractType = :contractType", {
+        queryBuilder.andWhere("contract.contractType = :contractType", {
           contractType: contractType[0],
         });
       } else {
-        queryBuilder.andWhere("manager.contractType IN(:...contractType)", { contractType });
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
     }
 
@@ -191,6 +206,7 @@ export class TemplateService {
       join: {
         alias: "template",
         leftJoinAndSelect: {
+          contract: "template.contract",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
@@ -199,17 +215,24 @@ export class TemplateService {
     });
   }
 
-  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+  public async createTemplate(dto: ITemplateCreateDto, userEntity: UserEntity): Promise<TemplateEntity> {
+    const { price, contractId } = dto;
+
+    const contractEntity = await this.contractService.findOne({
+      id: contractId,
+    });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
     const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, price, userEntity);
 
-    const templateEntity = await this.templateEntityRepository
-      .create({
-        ...dto,
-        price: assetEntity,
-      })
-      .save();
-
-    return this.update({ id: templateEntity.id }, dto);
+    return this.create({
+      ...dto,
+      price: assetEntity,
+    });
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {
@@ -219,14 +242,14 @@ export class TemplateService {
   public async update(
     where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<ITemplateUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<TemplateEntity> {
     const { price, ...rest } = dto;
     const templateEntity = await this.findOne(where, {
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          price: "template.price",
-          components: "price.components",
+      relations: {
+        contract: true,
+        price: {
+          components: true,
         },
       },
     });
@@ -235,21 +258,31 @@ export class TemplateService {
       throw new NotFoundException("templateNotFound");
     }
 
-    Object.assign(templateEntity, rest);
-
     if (price) {
-      await this.assetService.update(templateEntity.price, price);
+      await this.assetService.update(templateEntity.price, price, userEntity);
     }
 
+    Object.assign(templateEntity, rest);
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<TemplateEntity>, _userEntity: UserEntity): Promise<TemplateEntity> {
+    const templateEntity = await this.findOne(where, {
+      relations: {
+        contract: true,
+      },
+    });
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
     const count = await this.tokenService.count({ templateId: where.id });
-    if (!count) {
-      await this.templateEntityRepository.delete(where);
+    if (count) {
+      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.save();
     } else {
-      await this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.remove();
     }
   }
 }

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -15,14 +15,14 @@ export const ChainLinkSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/chain-link">
+        <ListItemButton component={RouterLink} to="/chain-link">
           <ListItemIcon>
             <Paid />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.chain-link.fund" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

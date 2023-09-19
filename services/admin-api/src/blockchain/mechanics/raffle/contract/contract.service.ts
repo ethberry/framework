@@ -1,29 +1,55 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
+import { ClientProxy } from "@nestjs/microservices";
 
-import { IContractSearchDto, ModuleType } from "@framework/types";
+import type { IContractSearchDto, IRaffleScheduleUpdateDto } from "@framework/types";
+import { ModuleType, RmqProviderType } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class RaffleContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
+    @Inject(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
+    private readonly scheduleProxy: ClientProxy,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
-  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractModule: [ModuleType.RAFFLE],
-        contractType: null,
-      }),
-      userEntity,
-    );
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.RAFFLE], null);
+  }
+
+  public async updateSchedule(
+    where: FindOptionsWhere<ContractEntity>,
+    dto: IRaffleScheduleUpdateDto,
+    userEntity: UserEntity,
+  ): Promise<any> {
+    const raffleEntity = await this.findOne(where);
+
+    if (!raffleEntity) {
+      throw new NotFoundException("lotteryNotFound");
+    }
+
+    if (raffleEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    await this.updateParameter(where, "schedule", dto.schedule);
+
+    return this.scheduleProxy
+      .emit(RmqProviderType.SCHEDULE_SERVICE_RAFFLE, {
+        address: raffleEntity.address,
+        schedule: dto.schedule,
+      })
+      .toPromise();
   }
 }

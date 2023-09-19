@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
 import "./interfaces/IERC721Wrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
-import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 
 contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   using Counters for Counters.Counter;
@@ -65,6 +65,9 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Hol
     ExchangeUtils.spend(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC721Simple, ERC1155Receiver) returns (bool) {

@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
@@ -59,6 +59,7 @@ jobs:
           POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
           CHAIN_ID: 13378
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
+          GEMUNION_PRIVATE_KEY_PROD: ${{ secrets.GEMUNION_PRIVATE_KEY_PROD }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
   cloudbuild-deploy:

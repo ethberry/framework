@@ -19,7 +19,7 @@ import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { AddressService } from "./address.service";
 import { AddressEntity } from "./address.entity";
 import { AddressCreateDto, AddressUpdateDto } from "./dto";
-import { IAddressAutocompleteDto } from "./interfaces";
+import type { IAddressAutocompleteDto } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/address")

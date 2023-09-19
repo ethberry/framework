@@ -1,6 +1,7 @@
-import { EnabledLanguages } from "@framework/constants";
 import type { IIdDateBase } from "@gemunion/types-collection";
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { EnabledLanguages } from "@framework/constants";
+
 import { IAddress } from "../ecommerce";
 import { IMerchant } from "./merchant";
 

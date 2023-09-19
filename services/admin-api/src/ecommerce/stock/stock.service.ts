@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { StockEntity } from "./stock.entity";
-import { IStockCreateDto, IStockUpdateDto } from "./interfaces";
+import type { IStockCreateDto, IStockUpdateDto } from "./interfaces";
 
 @Injectable()
 export class StockService {

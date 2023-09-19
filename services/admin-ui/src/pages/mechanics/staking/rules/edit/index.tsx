@@ -3,7 +3,7 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
@@ -36,6 +36,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     durationUnit,
     stakingRuleStatus,
     contractId,
+    maxStake,
   } = initialValues;
   const fixedValues = {
     id,
@@ -49,6 +50,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     durationUnit,
     stakingRuleStatus,
     contractId,
+    maxStake,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -69,7 +71,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
           <Grid item xs={12}>
             <Box mt={2}>
               <Alert severity="warning">
-                <FormattedMessage id="form.hints.editNotAllowed" />
+                <FormattedMessage id="alert.editNotAllowed" />
               </Alert>
             </Box>
           </Grid>

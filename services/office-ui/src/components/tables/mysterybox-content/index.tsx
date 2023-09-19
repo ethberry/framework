@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { IMysterybox } from "@framework/types";
+import { IMysteryBox } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 
 export interface IMysteryboxContentProps {
-  mysterybox: IMysterybox;
+  mysterybox: IMysteryBox;
 }
 
 export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {

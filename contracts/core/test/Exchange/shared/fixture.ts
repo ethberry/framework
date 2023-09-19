@@ -1,5 +1,6 @@
 import { ethers, network } from "hardhat";
-
+import { FacetCutAction, getSelectors } from "../../shared/diamond";
+import { BaseContract } from "ethers";
 import {
   amount,
   baseTokenURI,
@@ -9,28 +10,70 @@ import {
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";
-
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
 import { getContractName } from "../../utils";
 
-export async function deployExchangeFixture() {
+export async function deployDiamond(
+  DiamondName = "Diamond",
+  FacetNames: Array<string>,
+  InitContractName: string,
+  options?: Record<string, any>,
+): Promise<BaseContract> {
+  const { log, logSelectors } = options || {};
   const [owner] = await ethers.getSigners();
 
-  const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+  // deploy DiamondCutFacet
+  const diamondCutFacetFactory = await ethers.getContractFactory("DiamondCutFacet");
+  const diamondCutFacet = await diamondCutFacetFactory.deploy();
+  await diamondCutFacet.waitForDeployment();
+  if (log) console.info("DiamondCutFacet deployed:", await diamondCutFacet.getAddress());
 
-  const network = await ethers.provider.getNetwork();
+  // deploy Diamond
+  const diamondFactory = await ethers.getContractFactory(DiamondName);
+  const diamond = await diamondFactory.deploy(owner.address, await diamondCutFacet.getAddress());
+  await diamond.waitForDeployment();
+  if (log) console.info("Diamond deployed:", await diamond.getAddress());
 
-  const generateOneToOneSignature = wrapOneToOneSignature(network, exchangeInstance, owner);
-  const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, owner);
-  const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, owner);
+  // deploy DiamondInit
+  // DiamondInit provides a function that is called when the diamond is upgraded to initialize state variables
+  // Read about how the diamondCut function works here: https://eips.ethereum.org/EIPS/eip-2535#addingreplacingremoving-functions
+  // * diamondInit
+  const diamondInitFactory = await ethers.getContractFactory(InitContractName);
+  const diamondInit = await diamondInitFactory.deploy();
+  await diamondInit.waitForDeployment();
+  // if (log) console.info("DiamondInit deployed:", diamondInit.address);
 
-  return {
-    contractInstance: exchangeInstance,
-    generateOneToOneSignature,
-    generateOneToManySignature,
-    generateManyToManySignature,
-  };
+  // * deploy facets
+  if (log) console.info("");
+  if (log) console.info("Deploying facets");
+  // const FacetNames = ["ExchangePurchaseFacet"];
+  const cut = [];
+  for (const FacetName of FacetNames) {
+    const facetFactory = await ethers.getContractFactory(FacetName);
+    const facet = await facetFactory.deploy();
+    await facet.waitForDeployment();
+    if (log) console.info(`${FacetName} deployed: ${await facet.getAddress()}`);
+    cut.push({
+      facetAddress: await facet.getAddress(),
+      action: FacetCutAction.Add,
+      functionSelectors: getSelectors(facet, { logSelectors }),
+    });
+  }
+
+  // cut Facets & Init
+  if (log) console.info("");
+  if (log) console.info("Diamond Cut:", cut);
+  const diamondCut = await ethers.getContractAt("IDiamondCut", await diamond.getAddress());
+  // upgrade diamond with facets & call to init function
+  const functionCall = diamondInit.interface.encodeFunctionData("init");
+  const tx = await diamondCut.diamondCut(cut, await diamondInit.getAddress(), functionCall);
+  // const tx = await diamondCut.diamondCut(cut, constants.AddressZero, "0x");
+  if (log) console.info("Diamond cut tx: ", tx.hash);
+  const receipt = await tx.wait();
+  if (!receipt?.status) {
+    throw Error(`Diamond upgrade failed: ${tx.hash}`);
+  }
+  if (log) console.info("Completed diamond cut");
+  return diamond;
 }
 
 export async function deployErc20Base(name: string, exchangeInstance: any): Promise<any> {
@@ -59,14 +102,4 @@ export async function deployErc1155Base(name: string, exchangeInstance: any): Pr
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return erc1155Instance;
-}
-
-export async function deployContractManager(exchangeInstance: any): Promise<any> {
-  const managerFactory = await ethers.getContractFactory("ContractManager");
-  const managerInstance = await managerFactory.deploy();
-
-  await managerInstance.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE);
-  await managerInstance.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE);
-
-  return managerInstance;
 }

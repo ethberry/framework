@@ -8,16 +8,19 @@ import { IToken } from "@framework/types";
 import { TokenSellButton } from "../../../../components/buttons";
 import { RarityBadge } from "../../../../components/common/badge";
 
-interface IErc721TokenListItemProps {
+interface IMyTokenListItemProps {
   token: IToken;
 }
 
-export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
+export const MyTokenListItem: FC<IMyTokenListItemProps> = props => {
   const { token } = props;
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}`}>
+      <CardActionArea
+        component={RouterLink}
+        to={`/${token.template?.contract?.contractType?.toLowerCase()}/tokens/${token.id}`}
+      >
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
         <CardMedia sx={{ height: 200 }} image={token.template!.imageUrl} />

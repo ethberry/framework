@@ -59,7 +59,7 @@ export const Kanban: FC = () => {
   );
 
   const updateOrderStatus = (id: string, orderStatus: OrderStatus) => {
-    return updateOrderStatusApi(undefined, { id, orderStatus });
+    return updateOrderStatusApi(void 0, { id, orderStatus });
   };
 
   const handleEdit = (order: IOrder) => {
@@ -118,7 +118,7 @@ export const Kanban: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "kanban"]} />
 
       <PageHeader message="pages.kanban.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommerceOrderCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

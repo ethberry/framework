@@ -1,19 +1,18 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ModuleType, TokenType } from "@framework/types";
-
-import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { TokenType } from "@framework/types";
 import { RaffleRoundEntity } from "./round.entity";
+import { RaffleTokenService } from "../token/token.service";
+import type { IRaffleCurrentDto } from "./interfaces";
 
 @Injectable()
 export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
-    private readonly contractService: ContractService,
+    private readonly raffleTokenService: RaffleTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<RaffleRoundEntity>> {
@@ -28,22 +27,47 @@ export class RaffleRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<ContractEntity> {
-    const raffleEntity = await this.contractService.findOne({
-      contractModule: ModuleType.RAFFLE,
-      contractType: undefined,
-    });
-
-    if (!raffleEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    const raffleRound = await this.findCurrentRoundWithRelations();
-
-    return Object.assign(raffleEntity, { round: raffleRound });
+  public findOne(
+    where: FindOptionsWhere<RaffleRoundEntity>,
+    options?: FindOneOptions<RaffleRoundEntity>,
+  ): Promise<RaffleRoundEntity | null> {
+    return this.roundEntityRepository.findOne({ where, ...options });
   }
 
-  public findCurrentRoundWithRelations(where?: FindOptionsWhere<RaffleRoundEntity>): Promise<RaffleRoundEntity | null> {
+  public async current(dto: IRaffleCurrentDto): Promise<RaffleRoundEntity> {
+    const { contractId } = dto;
+
+    const raffleRoundEntity = await this.findCurrentRoundWithRelations(contractId);
+
+    if (!raffleRoundEntity) {
+      throw new NotFoundException("roundNotFound");
+    }
+
+    const ticketCount = await this.raffleTokenService.getTicketCount(raffleRoundEntity.id);
+
+    return Object.assign(raffleRoundEntity, { ticketCount });
+  }
+
+  public async latest(dto: IRaffleCurrentDto): Promise<RaffleRoundEntity | null> {
+    const { contractId } = dto;
+
+    const raffleRoundEntity = await this.findOne(
+      { contractId },
+      {
+        order: {
+          createdAt: "DESC",
+        },
+      },
+    );
+
+    if (!raffleRoundEntity) {
+      throw new NotFoundException("roundNotFound");
+    }
+
+    return this.statistic(raffleRoundEntity.id);
+  }
+
+  public findCurrentRoundWithRelations(contractId: number): Promise<RaffleRoundEntity | null> {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
     queryBuilder.leftJoinAndSelect("round.contract", "contract");
     queryBuilder.leftJoinAndSelect("round.ticketContract", "ticketContract");
@@ -59,15 +83,16 @@ export class RaffleRoundService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    if (where) {
-      queryBuilder.andWhere("round.id = :id", {
-        id: where.id,
-      });
-    } else {
-      // TODO better find current
-      queryBuilder.andWhere("round.endTimestamp IS NULL");
-    }
+    queryBuilder.andWhere("round.contractId = :contractId", {
+      contractId,
+    });
+
+    queryBuilder.andWhere("round.endTimestamp IS NULL");
 
     return queryBuilder.getOne();
+  }
+
+  public async statistic(roundId: number): Promise<RaffleRoundEntity | null> {
+    return this.findOne({ id: roundId });
   }
 }

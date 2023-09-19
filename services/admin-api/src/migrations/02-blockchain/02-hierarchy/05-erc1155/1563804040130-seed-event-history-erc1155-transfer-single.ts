@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, ZeroAddress } from "ethers";
+import { ZeroAddress, ZeroHash } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedEventHistoryErc1155TransferSingleAt1563804040130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -15,38 +15,38 @@ export const RaffleSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/raffle/contracts">
+        <ListItemButton component={RouterLink} to="/raffle/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.contracts.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/tickets">
-          <ListItemIcon>
-            <ConfirmationNumber />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.raffle.tickets.title" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/rounds">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/raffle/rounds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.rounds.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/tokens">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/raffle/tickets">
+          <ListItemIcon>
+            <ConfirmationNumber />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.raffle.tickets.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/raffle/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.tokens.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

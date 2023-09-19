@@ -3,11 +3,12 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IContract, IContractSearchDto } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
+import type { IContract, IContractSearchDto } from "@framework/types";
 
+import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
 import { Erc998TemplateList } from "../template-list";
 
 export const Erc998Contract: FC = () => {
@@ -28,7 +29,9 @@ export const Erc998Contract: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "erc998", "erc998.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.erc998.contract.title" data={selected} />
+      <PageHeader message="pages.erc998.contract.title" data={selected}>
+        <CraftContactPanel contract={selected} />
+      </PageHeader>
 
       <Box display="flex">
         <Box margin={1}>

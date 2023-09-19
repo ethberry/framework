@@ -1,24 +1,25 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
-import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ClaimStatus, IClaim, TokenType } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { IClaim, TokenType } from "@framework/types";
 
 import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
+
 import { sorter } from "../../../../../utils/sorter";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
-  const { claim } = props;
-
-  const { formatMessage } = useIntl();
+  const { claim, className, disabled, variant } = props;
 
   const metaRedeem = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
@@ -29,6 +30,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
         nonce: utils.arrayify(claim.nonce),
         extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(claim.endTimestamp).getTime() / 1000)), 32),
+        receiver: claim.merchant!.wallet,
         referrer: constants.AddressZero,
       },
       claim.item?.components.sort(sorter("id")).map(component => ({
@@ -46,14 +48,14 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
-      <IconButton
-        onClick={handleClick}
-        disabled={claim.claimStatus !== ClaimStatus.NEW}
-        data-testid="ClaimRedeemButton"
-      >
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Redeem}
+      message="form.tips.redeem"
+      className={className}
+      disabled={disabled}
+      dataTestId="ClaimRedeemButton"
+      variant={variant}
+    />
   );
 };

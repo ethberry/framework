@@ -13,7 +13,6 @@ export enum TokenStatus {
 export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
   LEVEL = "LEVEL",
-  GRADE = "GRADE",
   RARITY = "RARITY",
   TRAITS = "TRAITS",
   GENES = "GENES",
@@ -37,6 +36,13 @@ export enum TokenTraits {
   MOUTH = "MOUTH",
 }
 
+export enum ProtectedAttribute {
+  TEMPLATE_ID = "TEMPLATE_ID",
+  RARITY = "RARITY",
+  TRAITS = "TRAITS",
+  GENES = "GENES",
+}
+
 export interface IToken extends IIdDateBase {
   imageUrl: string | null;
   metadata: any;
@@ -44,7 +50,7 @@ export interface IToken extends IIdDateBase {
   royalty: number;
   cid: string | null;
   tokenStatus: TokenStatus;
-  templateId: number | null;
+  templateId: number;
   template?: ITemplate;
   balance?: Array<IBalance>;
   exchange?: Array<IAssetComponentHistory>;

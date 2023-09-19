@@ -16,7 +16,7 @@ export interface IRaffleTokenViewDialogProps {
 
 export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { tokenId, round, balance, tokenStatus } = initialValues;
+  const { tokenId, round, balance, tokenStatus, metadata } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -35,6 +35,12 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.raffle" />
+              </TableCell>
+              <TableCell align="right">{round.contract?.title}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.roundId" />
               </TableCell>
               <TableCell align="right">{round.roundId}</TableCell>
@@ -49,7 +55,7 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenStatus" />
               </TableCell>
-              <TableCell align="right">{tokenStatus}</TableCell>
+              <TableCell align="right">{metadata.PRIZE ? `PRIZE 1 of ${metadata.PRIZE}` : tokenStatus}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

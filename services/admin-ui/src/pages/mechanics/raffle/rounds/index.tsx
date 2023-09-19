@@ -1,14 +1,15 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IRaffleRound } from "@framework/types";
 
+import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/contract/release";
 import { RaffleRoundViewDialog } from "./view";
-import { CronExpression } from "@framework/types";
 
 export const RaffleRounds: FC = () => {
   const {
@@ -22,6 +23,7 @@ export const RaffleRounds: FC = () => {
     handleViewConfirm,
     handleViewCancel,
     handleChangePage,
+    // handleRefreshPage,
   } = useCollection<IRaffleRound, ISearchDto>({
     baseUrl: "/raffle/rounds",
     empty: {
@@ -37,26 +39,16 @@ export const RaffleRounds: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((round, i) => (
-            <ListItem key={i}>
+          {rows.map(round => (
+            <ListItem key={round.id}>
               <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.6 }}>
                 {round.roundId} - {round.number || "awaiting results"}
               </ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
-                {round.contract?.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(
-                        round.contract?.parameters.schedule as unknown as CronExpression,
-                      )
-                    ]
-                  : ""}
-              </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(round)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(round)} icon={Visibility} message="form.tips.view" />
+                <RaffleReleaseButton round={round} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

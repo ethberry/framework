@@ -1,13 +1,15 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { CarRental } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const RentSection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+import { NodeEnv } from "@framework/types";
 
-  if (disabled) {
+export const RentSection: FC = () => {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+
+  if (!isDevelopment) {
     return null;
   }
 
@@ -21,14 +23,14 @@ export const RentSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/rent">
+        <ListItemButton component={RouterLink} to="/rent">
           <ListItemIcon>
             <CarRental />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.rent.title" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

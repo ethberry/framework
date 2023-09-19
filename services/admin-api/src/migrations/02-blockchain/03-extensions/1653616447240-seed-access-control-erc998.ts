@@ -2,10 +2,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
-export class SeedAccessControlErc998At20At1653616447240 implements MigrationInterface {
+export class SeedAccessControlErc998At1653616447240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -14,7 +15,7 @@ export class SeedAccessControlErc998At20At1653616447240 implements MigrationInte
     const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
     const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR || wallet;
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
     const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
@@ -101,19 +102,19 @@ export class SeedAccessControlErc998At20At1653616447240 implements MigrationInte
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${wallet}',
         'DEFAULT_ADMIN_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${wallet}',
         'MINTER_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${wallet}',
         'METADATA_ROLE',
         '${currentDateTime}',

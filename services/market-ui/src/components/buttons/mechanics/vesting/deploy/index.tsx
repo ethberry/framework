@@ -1,33 +1,34 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
-import { Web3ContextType } from "@web3-react/core";
 import { Inventory } from "@mui/icons-material";
-import { Contract, utils, BigNumber } from "ethers";
-import { useIntl } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IClaim, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import VestingDeployABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
+
 import { sorter } from "../../../../../utils/sorter";
 
 export interface IVestingReleaseButtonProps {
   claim: IClaim;
+  className?: string;
   disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
-  const { claim, disabled } = props;
-  const { formatMessage } = useIntl();
-  const user = useUser<IUser>();
-  const { id } = user.profile;
+  const { claim, className, disabled, variant } = props;
+  const { profile } = useUser<IUser>();
 
-  // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
+  // ethersV6 : concat([zeroPadValue(toBeHex(profile.id), 3), zeroPadValue(toBeHex(claim.id), 4)]);
   const encodedExternalId = BigNumber.from(
-    utils.hexlify(utils.concat([utils.zeroPad(utils.hexlify(id), 3), utils.zeroPad(utils.hexlify(claim.id), 4)])),
+    utils.hexlify(
+      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(claim.id), 4)]),
+    ),
   );
 
   const metaRelease = useMetamask(async (claim: IClaim, web3Context: Web3ContextType) => {
@@ -64,10 +65,14 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton onClick={handleClick} disabled={disabled} data-testid="VestingReleaseButton">
-        <Inventory />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Inventory}
+      message="form.tips.deploy"
+      className={className}
+      dataTestId="VestingDeployButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

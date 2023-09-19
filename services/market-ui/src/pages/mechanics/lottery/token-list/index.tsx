@@ -1,25 +1,17 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { ILotteryToken, ILotteryTokenSearchDto, TokenStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILotteryTokenSearchDto, ILotteryToken } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { LotteryRewardButton } from "../../../../components/buttons";
+import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryTokenSearchForm } from "./form";
 import { LotteryTokenViewDialog } from "./view";
-import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
-import { LotteryRewardButton } from "../../../../components/buttons";
 
 export const LotteryTokenList: FC = () => {
   const {
@@ -42,6 +34,10 @@ export const LotteryTokenList: FC = () => {
       round: {
         numbers: [],
       },
+      metadata: {
+        PRIZE: 0,
+        NUMBERS: 0,
+      },
     },
     search: {
       roundIds: [],
@@ -62,10 +58,11 @@ export const LotteryTokenList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((token, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(token => (
+            <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
@@ -73,12 +70,10 @@ export const LotteryTokenList: FC = () => {
               <ListItemText sx={{ width: 0.2 }}>
                 {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <LotteryRewardButton token={token} />
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <LotteryRewardButton token={token} disabled={token.tokenStatus !== TokenStatus.MINTED} />
+                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

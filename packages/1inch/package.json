@@ -12,33 +12,33 @@
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/provider-license": "3.0.22",
-    "@gemunion/provider-user": "6.0.30",
-    "@gemunion/provider-wallet": "3.3.27",
-    "@gemunion/react-hooks-eth": "1.0.111",
-    "@mui/material": "5.13.6",
-    "@mui/icons-material": "5.11.16",
-    "@web3-react/core": "8.2.0",
-    "cross-fetch": "3.1.6",
+    "@gemunion/provider-license": "3.0.29",
+    "@gemunion/provider-user": "6.0.49",
+    "@gemunion/provider-wallet": "3.3.49",
+    "@gemunion/react-hooks-eth": "1.1.11",
+    "@mui/material": "5.14.9",
+    "@mui/icons-material": "5.14.9",
+    "@web3-react/core": "8.2.2",
+    "cross-fetch": "4.0.0",
     "ethers": "5.7.2",
-    "mathjs": "11.8.2",
+    "mathjs": "11.11.0",
     "notistack": "3.0.1",
-    "react-intl": "6.4.4",
+    "react-intl": "6.4.6",
     "react-window": "1.8.9",
-    "type-fest": "3.12.0"
+    "type-fest": "4.3.1"
   },
   "devDependencies": {
-    "@types/react": "18.2.14",
+    "@types/react": "18.2.21",
     "@types/react-window": "1.8.5",
     "react": "18.2.0"
   },
   "engines": {
-    "node": ">=12.13"
+    "node": ">=18"
   },
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/1inch",
+  "name": "@framework/1inch",
   "peerDependencies": {
     "notistack": "^3.0.0",
     "react": "^18.0.0",

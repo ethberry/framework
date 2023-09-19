@@ -1,9 +1,9 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
 import { IToken } from "../../hierarchy/token";
+import { IAssetItem } from "../../event-history";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner
@@ -12,15 +12,20 @@ export interface IRaffleRound extends IIdDateBase {
   contractId: number; // lottery contract
   ticketContractId: number; // ticket contract
   priceId: number;
+  price?: IAsset;
   maxTickets: number;
   startTimestamp: string;
   endTimestamp: string;
   contract?: IContract;
   ticketContract?: IContract;
-  price?: IAsset;
 }
 
-export interface IRaffleScheduleUpdateDto {
-  address: string;
-  schedule: CronExpression;
+export interface IRaffleCurrentRound {
+  roundId: string;
+  startTimestamp: string;
+  endTimestamp: string;
+  maxTicket: string;
+  prizeNumber: string; // prize number
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
 }

@@ -74,6 +74,7 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @Type(() => Number)
   public merchantId: number;
 
+  public chainId: number;
   public tokenStatus: Array<TokenStatus>;
   public tokenId: string;
 }

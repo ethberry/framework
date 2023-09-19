@@ -1,9 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
-import { ns } from "@framework/constants";
-import type { IRaffleLeaderboard, IRaffleLeaderboardSearchDto, IRaffleTokenSearchDto } from "@framework/types";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import type { IRaffleTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -12,12 +10,10 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { RaffleRoundEntity } from "../round/round.entity";
 
 @Injectable()
-export class RaffleTicketService extends TokenService {
+export class RaffleTokenService extends TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
-    @InjectEntityManager()
-    private readonly entityManager: EntityManager,
   ) {
     super(tokenEntityRepository);
   }
@@ -45,8 +41,10 @@ export class RaffleTicketService extends TokenService {
       "ticket.round",
       RaffleRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
+
+    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
 
     queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
@@ -79,16 +77,17 @@ export class RaffleTicketService extends TokenService {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 
     queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
       RaffleRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
     );
 
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
+    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
 
     queryBuilder.andWhere("ticket.id = :id", {
       id: where.id,
@@ -97,22 +96,25 @@ export class RaffleTicketService extends TokenService {
     return queryBuilder.getOne();
   }
 
-  public async leaderboard(dto: Partial<IRaffleLeaderboardSearchDto>): Promise<[Array<IRaffleLeaderboard>, number]> {
-    const { skip, take } = dto;
+  public getTicketCount(roundId: number): Promise<number> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 
-    const queryString = `
-        SELECT row_number() OVER (ORDER BY account)::INTEGER id,
-               SUM(amount)   AS                              amount,
-               COUNT(amount) AS                              count,
-               account
-        FROM ${ns}.raffle_ticket
-        GROUP BY account
-    `;
+    queryBuilder.leftJoin("ticket.template", "template");
+    queryBuilder.leftJoin("template.contract", "contract");
 
-    return Promise.all([
-      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $1 LIMIT $2`, [skip, take]),
-      this.entityManager.query(`SELECT COUNT(DISTINCT (id))::INTEGER as count
-                                FROM (${queryString}) as l`),
-    ]).then(([list, [{ count }]]) => [list, count]);
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      RaffleRoundEntity,
+      "round",
+      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+    );
+
+    queryBuilder.leftJoin("round.contract", "raffle_contract");
+
+    queryBuilder.andWhere("round.id = :id", {
+      id: roundId,
+    });
+
+    return queryBuilder.getCount();
   }
 }

@@ -1,10 +1,10 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ExchangeEventType,
@@ -14,7 +14,7 @@ import {
 import { testChainId } from "@framework/constants";
 
 import { AchievementsRuleService } from "../../achievements/rule/rule.service";
-import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
+import { ChainLinkEventType } from "../integrations/chain-link/contract/log/interfaces";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { EventHistoryEntity } from "./event-history.entity";
 
@@ -79,7 +79,7 @@ export class EventHistoryService {
 
   public findAll(
     where: FindOptionsWhere<EventHistoryEntity>,
-    options?: FindOneOptions<EventHistoryEntity>,
+    options?: FindManyOptions<EventHistoryEntity>,
   ): Promise<Array<EventHistoryEntity>> {
     return this.contractEventEntityRepository.find({ where, ...options });
   }
@@ -234,7 +234,7 @@ export class EventHistoryService {
       transactionHash,
       parentId: undefined,
     });
-    // TODO nested ?== parent
+
     if (nestedEvents) {
       nestedEvents.map(async nested => {
         if (nested.id !== parentId) {

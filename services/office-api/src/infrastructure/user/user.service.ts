@@ -1,12 +1,13 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ArrayOverlap, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import type { IUserSearchDto } from "@framework/types";
+import { UserRole } from "@framework/types";
 
+import { AuthService } from "../auth/auth.service";
 import { UserEntity } from "./user.entity";
 import type { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
-import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
     private readonly authService: AuthService,
   ) {}
 
-  public async search(dto: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
+  public async search(dto: Partial<IUserSearchDto>): Promise<[Array<UserEntity>, number]> {
     const { query, userRoles, userStatus, skip, take } = dto;
     const queryBuilder = this.userEntityRepository.createQueryBuilder("user");
 
@@ -90,8 +91,35 @@ export class UserService {
     return userEntity.save();
   }
 
+  public async addRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_append("user_roles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
+  }
+
+  public findAll(
+    where: FindOptionsWhere<UserEntity>,
+    options?: FindManyOptions<UserEntity>,
+  ): Promise<Array<UserEntity>> {
+    return this.userEntityRepository.find({ where, ...options });
+  }
+
   public async import(dto: IUserImportDto): Promise<UserEntity> {
     return this.userEntityRepository.create(dto).save();
+  }
+
+  public async removeRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_remove("user_roles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
   }
 
   public async delete(where: FindOptionsWhere<UserEntity>): Promise<UserEntity> {

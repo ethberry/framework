@@ -1,26 +1,9 @@
-import { Logger, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
+import { Module } from "@nestjs/common";
 
-import { emlServiceProvider } from "../../../common/providers";
-import { EventHistoryModule } from "../../event-history/event-history.module";
-import { ContractModule } from "../../hierarchy/contract/contract.module";
-import { ChainLinkControllerEth } from "./chain-link.controller.eth";
-import { ChainLinkServiceEth } from "./chain-link.service.eth";
-import { ChainLinkLogModule } from "./log/log.module";
-import { ChainLinkServiceCron } from "./chain-link.service.cron";
+import { ChainLinkContractModule } from "./contract/contract.module";
+import { ChainLinkSubscriptionModule } from "./subscription/subscription.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, ChainLinkLogModule, EventHistoryModule],
-  providers: [
-    Logger,
-    ethersRpcProvider,
-    ethersSignerProvider,
-    emlServiceProvider,
-    ChainLinkServiceEth,
-    ChainLinkServiceCron,
-  ],
-  controllers: [ChainLinkControllerEth],
-  exports: [ChainLinkServiceEth],
+  imports: [ChainLinkContractModule, ChainLinkSubscriptionModule],
 })
 export class ChainLinkModule {}

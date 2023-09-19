@@ -4,7 +4,9 @@ import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repositor
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { defaultChainId } from "@framework/constants";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "./template.entity";
 
 @Injectable()
@@ -16,9 +18,9 @@ export class TemplateService {
 
   public async search(
     dto: Partial<ITemplateSearchDto>,
-    chainId: number,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
@@ -27,6 +29,7 @@ export class TemplateService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     // get single token for ERC1155, to use in purchase
     queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {
@@ -50,19 +53,32 @@ export class TemplateService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
+      chainId: userEntity?.chainId || Number(defaultChainId),
     });
+
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,
     });
@@ -122,12 +138,13 @@ export class TemplateService {
 
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
+      "template.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+  public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
     const {
       contractFeatures = [],
       templateStatus = [],
@@ -137,7 +154,9 @@ export class TemplateService {
     } = dto;
 
     const where = {
-      contract: {},
+      contract: {
+        chainId: userEntity.chainId,
+      },
     };
 
     if (contractType.length) {
@@ -196,6 +215,7 @@ export class TemplateService {
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     // get single token for ERC1155, to use in purchase
     queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {
@@ -213,6 +233,7 @@ export class TemplateService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
     queryBuilder.andWhere("template.id = :id", {
       id: where.id,
     });

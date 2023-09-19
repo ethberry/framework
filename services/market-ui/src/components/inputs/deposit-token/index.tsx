@@ -11,16 +11,16 @@ export const TokenDepositInput: () => any = () => {
   const deposit: IAssetComponent[] = useWatch({ name: "deposit" });
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue("tokenIds", [option?.id] ?? [0]);
     form.setValue("tokenId", option?.id ?? 0);
     form.setValue("token.tokenId", option?.tokenId ?? 0);
   };
 
-  return deposit.map((dep, i) =>
+  return deposit.map(dep =>
     dep.tokenType === TokenType.ERC721 ? (
       <EntityInput
-        key={i}
+        key={dep.id}
         name="tokenId"
         controller="tokens"
         data={{

@@ -41,7 +41,7 @@
     "listenerAdd": "أضف مستمع ETH",
     "listenerRemove": "إزالة ETH المستمع",
     "mintToken": "الرموز المميزة للنعناع",
-    "pyramidBalance": "سحب أرصدة الهرم",
+    "ponziBalance": "سحب أرصدة الهرم",
     "renounceRole": "نبذ الدور",
     "revokeRole": "إبطال الدور",
     "schedule": "حدد جدول جولة اليانصيب",
@@ -85,11 +85,6 @@
       "80001": "مومباي",
       "97": "بينانس (testnet)"
     },
-    "claimStatus": {
-      "NEW": "جديد",
-      "REDEEMED": "مخلص",
-      "UNPACKED": "غير معبأ"
-    },
     "contractFeatures": {
       "BLACKLIST": "القائمة السوداء",
       "ERC1155OWNER": "ERC1155OWNER",
@@ -102,7 +97,7 @@
       "RANDOM": "عشوائي",
       "REFERRAL": "إحالة خطية",
       "SOULBOUND": "Soulbound",
-      "UPGRADEABLE": "قابل للترقية"
+      "DISCRETE": "قابل للترقية"
     },
     "contractStatus": {
       "ACTIVE": "نشيط",
@@ -145,7 +140,7 @@
       "ERC998": "ERC998",
       "MYSTERYBOX": "الصندوق الغامض",
       "NATIVE": "محلي",
-      "PYRAMID": "هرم",
+      "PONZI": "هرم",
       "VESTING": "تكريم"
     },
     "mysteryboxStatus": {
@@ -156,12 +151,12 @@
       "ACTIVE": "نشيط",
       "INACTIVE": "غير نشط"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "نشيط",
       "CANCELED": "ألغيت",
       "COMPLETE": "اكتمال"
     },
-    "pyramidRuleStatus": {
+    "ponziRuleStatus": {
       "ACTIVE": "نشيط",
       "NEW": "الجديد"
     },
@@ -212,9 +207,6 @@
       "INACTIVE": "غير نشط"
     }
   },
-  "errors": {
-    "page-not-found": "الصفحة غير موجودة"
-  },
   "form": {
     "adornment": {
       "days": "أيام",
@@ -247,7 +239,7 @@
       "mintToken": "رموز النعناع",
       "ok": "موافق",
       "pause": "وقفة",
-      "pyramidBalance": "التوازن الهرمي",
+      "ponziBalance": "التوازن الهرمي",
       "reject": "يرفض",
       "removeListener": "إزالة ETH المستمع",
       "renounceRole": "نبذ الدور",
@@ -267,7 +259,6 @@
       "withdraw": "انسحب"
     },
     "hints": {
-      "editNotAllowed": "تحرير هذه القاعدة غير مسموح به",
       "markdown": "هذا المجال يدعم<a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\"> GH نكهة Markdown</a>",
       "maxValue": "الحد الأقصى {label}: {value}",
       "prompt": "لديك معلومات غير محفوظة ، هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟",
@@ -344,8 +335,8 @@
       "payee": "المستفيد",
       "penalty": "جزاء",
       "price": "السعر",
-      "pyramidDepositStatus": "حالة",
-      "pyramidRuleStatus": "حالة",
+      "ponziDepositStatus": "حالة",
+      "ponziRuleStatus": "حالة",
       "random": "عشوائي",
       "recipient": "متلقي",
       "recurrent": "متكرر؟",
@@ -464,7 +455,6 @@
       "tooLong": "{label} طويل جدًا",
       "tooShort": "{label} أقصر مما يجب",
       "typeMismatch": "{label} غير صالحة",
-      "unsupportedCombination": "يحتوي {label} على مجموعة غير مدعومة",
       "valid": "??",
       "valueMissing": "{label} مطلوب",
       "weak": "{label} ضعيف جدا",
@@ -547,25 +537,16 @@
         "breed": "تربية",
         "claim": "مطالبة",
         "craft": "حرفة",
-        "drop": "قطرة",
         "grade": "رتبة",
         "lottery": "اليانصيب",
         "mystery": "الغموض",
-        "pyramid": "هرم",
+        "ponzi": "هرم",
         "staking": "Staking",
         "title": "علم الميكانيكا",
         "vesting": "استحقاق",
         "waitlist": "قائمة الانتظار"
       },
-      "title": "لوحة القيادة",
-      "wallet": {
-        "balances": "أرصدة",
-        "payees": "المدفوع لهم",
-        "title": "محفظة النظام"
-      }
-    },
-    "drop": {
-      "title": "قطرات"
+      "title": "لوحة القيادة"
     },
     "emails": {
       "title": "رسائل البريد الإلكتروني"
@@ -681,7 +662,7 @@
     "profile": {
       "title": "حساب تعريفي"
     },
-    "pyramid": {
+    "ponzi": {
       "chart": {
         "title": "جدول"
       },
@@ -737,23 +718,6 @@
         "title": "القوائم"
       },
       "title": "قائمة الانتظار"
-    },
-    "wallet": {
-      "balances": {
-        "title": "أرصدة"
-      },
-      "payees": {
-        "title": "نظام المدفوعات",
-        "withdraw": "انسحب"
-      },
-      "title": "محفظة النظام",
-      "withdraw": {
-        "dialog": "من العنوان",
-        "payee": "سوف يتلقى المدفوع لأمره",
-        "title": "انسحب",
-        "token": "رمز",
-        "total": "إجمالي الرصيد"
-      }
     }
   },
   "snackbar": {
@@ -786,7 +750,6 @@
     "tokenNotFound": "الصنف غير موجود",
     "tooManyRequests": "طلبات كثيرة جدا.",
     "unauthorized": "تسجيل الدخول أو كلمة سر خاطئة",
-    "unsupportedCombination": "تركيبة ميزة غير مدعومة",
     "updated": "تم التحديث بنجاح",
     "userHasWrongRole": "أذونات غير كافية",
     "userIsNotActive": "المستخدم غير نشط",

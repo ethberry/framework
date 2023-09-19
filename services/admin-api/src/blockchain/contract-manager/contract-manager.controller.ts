@@ -15,11 +15,9 @@ import {
   Erc998ContractDeployDto,
   LotteryContractDeployDto,
   MysteryContractDeployDto,
-  PyramidContractDeployDto,
-  RaffleContractDeployDto,
+  PonziContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
-  WaitListContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -84,22 +82,22 @@ export class ContractManagerController {
     return this.contractManagerSignService.staking(dto, userEntity);
   }
 
-  // MODULE:PYRAMID
-  @Post("/pyramid")
-  public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.pyramid(dto, userEntity);
+  // MODULE:PONZI
+  @Post("/ponzi")
+  public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.ponzi(dto, userEntity);
   }
 
   // MODULE:WAITLIST
-  @Post("/waitlist")
-  public waitList(@Body() dto: WaitListContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.waitList(dto, userEntity);
+  @Post("/wait-list")
+  public waitList(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.waitList(userEntity);
   }
 
   // MODULE:RAFFLE
   @Post("/raffle")
-  public raffle(@Body() dto: RaffleContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.raffle(dto, userEntity);
+  public raffle(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.raffle(userEntity);
   }
 
   // MODULE:LOTTERY

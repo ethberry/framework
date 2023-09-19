@@ -7,7 +7,7 @@ import type { IAchievementItemReport } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementItemEntity } from "./item.entity";
-import { IAchievementsItemCountDto } from "./interfaces";
+import type { IAchievementsItemCountDto } from "./interfaces";
 
 @Injectable()
 export class AchievementItemService {

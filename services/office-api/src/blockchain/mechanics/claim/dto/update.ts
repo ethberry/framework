@@ -2,12 +2,12 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { AccountDto } from "@gemunion/collection";
+import { AccountOptionalDto } from "@gemunion/collection";
 import type { IClaimUpdateDto } from "@framework/types";
 
 import { ItemDto } from "../../../exchange/asset/dto";
 
-export class ClaimUpdateDto extends AccountDto implements IClaimUpdateDto {
+export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
     type: ItemDto,
   })
@@ -21,4 +21,6 @@ export class ClaimUpdateDto extends AccountDto implements IClaimUpdateDto {
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
+
+  public chainId: number;
 }

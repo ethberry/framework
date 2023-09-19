@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
+import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { BusinessType, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -20,22 +22,23 @@ export class Erc20ContractService extends ContractService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
-  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC20],
-        contractModule: [ModuleType.HIERARCHY],
-      }),
-      userEntity,
-    );
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC20]);
   }
 
   public async create(dto: IErc20ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { address, symbol, decimals, title, description } = dto;
+
+    const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
+    // there is no exception for merchantId=1, to create token use office
+    if (businessType === BusinessType.B2B) {
+      throw new PaymentRequiredException("paymentRequired");
+    }
 
     const contractEntity = await this.contractEntityRepository
       .create({

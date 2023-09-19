@@ -1,27 +1,21 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, FilterList } from "@mui/icons-material";
 
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IRent } from "@framework/types";
-import { IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
+import { ContractFeatures, IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
 
-import { RentEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { RentSearchForm } from "./form";
+import { RentEditDialog } from "./edit";
 
 export const Rent: FC = () => {
   const {
@@ -76,19 +70,31 @@ export const Rent: FC = () => {
         </Button>
       </PageHeader>
 
-      <RentSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="RentSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractFeatures: [ContractFeatures.RENTABLE] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="rentStatus" options={RentRuleStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rent, i) => (
-            <ListItem key={i}>
+          {rows.map(rent => (
+            <ListItem key={rent.id}>
               <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(rent)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(rent)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

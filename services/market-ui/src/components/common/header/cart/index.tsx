@@ -14,7 +14,7 @@ export const Cart: FC = () => {
   return (
     <Tooltip title={formatMessage({ id: "components.header.checkout" })} enterDelay={300}>
       <IconButton color="inherit" component={RouterNavLink} to="/ecommerce/checkout">
-        <Badge badgeContent={cart.items.length} color="primary">
+        <Badge badgeContent={cart && cart.items ? cart.items.length : 1} color="primary">
           <ShoppingCart />
         </Badge>
       </IconButton>

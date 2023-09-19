@@ -4,13 +4,17 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
+import { ChainIdDto } from "../../../../../common/dto";
 import { ISignMysteryboxDto } from "../interfaces";
 
-export class SignMysteryboxDto extends Mixin(ReferrerOptionalDto, AccountDto) implements ISignMysteryboxDto {
+export class SignMysteryboxDto
+  extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto)
+  implements ISignMysteryboxDto
+{
   @ApiProperty({
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  public mysteryboxId: number;
+  public mysteryBoxId: number;
 }

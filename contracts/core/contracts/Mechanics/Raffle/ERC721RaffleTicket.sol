@@ -11,12 +11,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "../../ERC721/extensions/MetaData.sol";
+import "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
 import "../../utils/errors.sol";
 import "../../utils/constants.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
 
-contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, MetaData {
+contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
   using Counters for Counters.Counter;
 
   mapping(uint256 => TicketRaffle) private _data;
@@ -47,6 +47,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     _safeMint(account, tokenId);
   }
 
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721RaffleTicket) {
     super.burn(tokenId);
   }
@@ -58,13 +65,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     return _data[tokenId];
   }
 
-  function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
+  function setPrize(uint256 tokenId, uint256 multiplier) external onlyRole(MINTER_ROLE) {
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
     // TODO use only metadata as storage?
     _data[tokenId].prize = true;
-    _upsertRecordField(tokenId, PRIZE, 1);
+    _upsertRecordField(tokenId, PRIZE, multiplier);
   }
 
   // BASE URL
@@ -73,8 +80,9 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     return _baseURI(_baseTokenURI);
   }
 
-  // COMMON
-
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {

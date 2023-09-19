@@ -2,8 +2,9 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, ExchangeEventType, IExchangeGradeEvent } from "@framework/types";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IExchangeGradeEvent } from "@framework/types";
+import { ContractType, ExchangeEventType } from "@framework/types";
 
 import { ExchangeGradeServiceEth } from "./grade.service.eth";
 

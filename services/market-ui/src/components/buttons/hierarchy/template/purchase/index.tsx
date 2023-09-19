@@ -1,26 +1,29 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
-import { FormattedMessage } from "react-intl";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { ITemplate } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { ITemplate } from "@framework/types";
+import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
+  className?: string;
+  disabled?: boolean;
   template: ITemplate;
+  variant?: ListActionVariant;
 }
 
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
-  const { template } = props;
+  const { className, disabled, template, variant = ListActionVariant.button } = props;
   const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
 
   const settings = useSettings();
@@ -31,11 +34,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
       return contract.purchase(
         {
-          nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
+          nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
+          receiver: template.contract!.merchant!.wallet,
+          referrer: settings.getReferrer(),
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
@@ -51,20 +55,21 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         })),
         sign.signature,
         {
-          value: getEthPrice(template.price),
+          value: getEthPrice(template.price).mul(values.amount),
         },
       ) as Promise<void>;
     },
   );
 
   const metaFn = useMetamask((dto: IAmountDto, web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
 
     return metaFnWithSign(
       {
         url: "/marketplace/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
           templateId: template.id,
@@ -81,7 +86,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       setIsAmountDialogOpen(true);
     } else {
       await metaFn({
-        amount: "1",
+        amount: 1,
       });
     }
   };
@@ -100,17 +105,26 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
+  if (template.templateStatus !== TemplateStatus.ACTIVE) {
+    return null;
+  }
+
   return (
     <Fragment>
-      <Button onClick={handleBuy} data-testid="TemplatePurchaseButton">
-        <FormattedMessage id="form.buttons.buy" />
-      </Button>
+      <ListAction
+        onClick={handleBuy}
+        message="form.buttons.buy"
+        className={className}
+        dataTestId="TemplatePurchaseButton"
+        disabled={disabled || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))}
+        variant={variant}
+      />
       <AmountDialog
         onCancel={handleAmountCancel}
         onConfirm={handleAmountConfirm}
         open={isAmountDialogOpen}
         initialValues={{
-          amount: "1",
+          amount: 1,
         }}
       />
     </Fragment>

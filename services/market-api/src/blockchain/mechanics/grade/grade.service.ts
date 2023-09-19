@@ -4,15 +4,18 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeStatus, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { IGradeSignDto } from "@framework/types";
+import { ContractFeatures, GradeStatus, GradeStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { SettingsService } from "../../../infrastructure/settings/settings.service";
-import type { IAutocompleteGradeDto, ISearchGradeDto, ISignGradeDto } from "./interfaces";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import type { IGradeAutocompleteDto, IGradeSearchDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 
 @Injectable()
@@ -22,6 +25,7 @@ export class GradeService {
     private readonly gradeEntityRepository: Repository<GradeEntity>,
     private readonly tokenService: TokenService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -32,7 +36,7 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: ISearchGradeDto): Promise<GradeEntity | null> {
+  public async findOneByToken(dto: IGradeSearchDto): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
@@ -51,6 +55,8 @@ export class GradeService {
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
     queryBuilder.leftJoinAndSelect("grade.price", "price");
+    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
@@ -72,8 +78,8 @@ export class GradeService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, tokenId, attribute } = dto;
+  public async sign(dto: IGradeSignDto): Promise<IServerSignature> {
+    const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -81,7 +87,7 @@ export class GradeService {
     }
 
     const { contractFeatures } = tokenEntity.template.contract;
-    if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+    if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
       throw new BadRequestException("featureIsNotSupported");
     }
 
@@ -102,13 +108,15 @@ export class GradeService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        nonce,
         externalId: gradeEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: zeroPadValue(toUtf8Bytes(attribute), 32),
+        receiver: gradeEntity.contract.merchant.wallet,
+        referrer,
       },
       attribute,
       tokenEntity,
@@ -119,6 +127,7 @@ export class GradeService {
   }
 
   public async getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     attribute: string,
@@ -128,6 +137,7 @@ export class GradeService {
     const level = tokenEntity.metadata[attribute] || 0;
 
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {
@@ -160,7 +170,7 @@ export class GradeService {
     }
   }
 
-  public autocomplete(dto: IAutocompleteGradeDto): Promise<Array<GradeEntity>> {
+  public autocomplete(dto: IGradeAutocompleteDto): Promise<Array<GradeEntity>> {
     const { contractId } = dto;
     return this.gradeEntityRepository.find({
       where: {

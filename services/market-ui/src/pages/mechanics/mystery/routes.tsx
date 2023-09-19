@@ -4,8 +4,8 @@ import { MysteryContractList } from "./contract-list";
 import { MysteryContract } from "./contract";
 import { MysteryBoxList } from "./box-list";
 import { MysteryBox } from "./box";
-import { MysteryboxTokenList } from "./token-list";
-import { MysteryboxToken } from "./token";
+import { MysteryTokenList } from "./token-list";
+import { MysteryBoxToken } from "./token";
 import { IndexWrapper } from "../../index-wrapper";
 import { MysterySection } from "../../dashboard/mechanics/mystery";
 
@@ -38,8 +38,8 @@ export const mysteryboxRoutes: Array<RouteObject> = [
       {
         path: "/mystery/tokens",
         children: [
-          { index: true, element: <MysteryboxTokenList /> },
-          { path: "/mystery/tokens/:id", element: <MysteryboxToken /> },
+          { index: true, element: <MysteryTokenList /> },
+          { path: "/mystery/tokens/:id", element: <MysteryBoxToken /> },
         ],
       },
     ],

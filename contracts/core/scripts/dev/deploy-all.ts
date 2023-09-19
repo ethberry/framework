@@ -203,8 +203,8 @@ async function main() {
   contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("ERC721 BLACKLIST", "BL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const ERC721UpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
-  contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
+  const ERC721DiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
+  contracts.erc721Discrete = await ERC721DiscreteFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
   // const randomContractName =
@@ -213,7 +213,7 @@ async function main() {
   //     : network.name === "gemunion"
   //     ? "ERC721RandomGemunionV2"
   //     : "ERC721Random";
-  const randomContractName = getContractName("ERC721UpgradeableRandom", network.name);
+  const randomContractName = getContractName("ERC721DiscreteRandom", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
@@ -266,8 +266,8 @@ async function main() {
   contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
-  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
+  const ERC998DiscreteFactory = await ethers.getContractFactory("ERC998Discrete");
+  contracts.erc998Discrete = await ERC998DiscreteFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
   const randomContract998Name = getContractName("ERC998Random", network.name);
@@ -311,7 +311,7 @@ async function main() {
   contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20");
+  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
   contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
     "OWNER FULL",
     "OWNFULL",
@@ -599,8 +599,8 @@ async function main() {
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
-  const pyramidFactory = await ethers.getContractFactory("Pyramid");
-  contracts.pyramid = await pyramidFactory.deploy(
+  const ponziFactory = await ethers.getContractFactory("Ponzi");
+  contracts.ponzi = await ponziFactory.deploy(
     [
       "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
       "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
@@ -624,7 +624,7 @@ async function main() {
       await contracts.erc721Random.getAddress(),
       await contracts.erc721Simple.getAddress(),
       await contracts.erc721Blacklist.getAddress(),
-      await contracts.erc721Upgradeable.getAddress(),
+      await contracts.erc721Discrete.getAddress(),
       await contracts.erc721Rentable.getAddress(),
       await contracts.erc721Soulbound.getAddress(),
       await contracts.erc721Genes.getAddress(),
@@ -633,7 +633,7 @@ async function main() {
       await contracts.erc998New.getAddress(),
       await contracts.erc998Random.getAddress(),
       await contracts.erc998Simple.getAddress(),
-      await contracts.erc998Upgradeable.getAddress(),
+      await contracts.erc998Discrete.getAddress(),
       await contracts.erc998Genes.getAddress(),
       await contracts.erc998Rentable.getAddress(),
       await contracts.erc998OwnerErc1155Erc20.getAddress(),
@@ -657,7 +657,7 @@ async function main() {
       await contracts.erc721MysteryboxSimple.getAddress(),
       await contracts.lottery.getAddress(),
       await contracts.raffle.getAddress(),
-      await contracts.pyramid.getAddress(),
+      await contracts.ponzi.getAddress(),
     ],
     [MINTER_ROLE],
   );
@@ -666,8 +666,8 @@ async function main() {
   await grantRoles(
     [
       await contracts.erc721Random.getAddress(),
-      await contracts.erc721Upgradeable.getAddress(),
-      await contracts.erc998Upgradeable.getAddress(),
+      await contracts.erc721Discrete.getAddress(),
+      await contracts.erc998Discrete.getAddress(),
     ],
     [await contracts.exchange.getAddress()],
     [METADATA_ROLE],

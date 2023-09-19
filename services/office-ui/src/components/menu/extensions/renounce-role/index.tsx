@@ -1,19 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
+import { ContractSecurity } from "@framework/types";
 
 import { AccessControlRenounceRoleDialog } from "./dialog";
 
-export interface IContractRenounceRoleMenuItemProps {
+export interface IRenounceRoleMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
-export const ContractRenounceRoleMenuItem: FC<IContractRenounceRoleMenuItemProps> = props => {
+export const RenounceRoleMenuItem: FC<IRenounceRoleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractSecurity },
+    disabled,
+    variant,
   } = props;
 
   const [isRenounceRoleDialogOpen, setIsRenounceRoleDialogOpen] = useState(false);
@@ -30,16 +34,19 @@ export const ContractRenounceRoleMenuItem: FC<IContractRenounceRoleMenuItemProps
     setIsRenounceRoleDialogOpen(false);
   };
 
+  if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
+    return null;
+  }
+
   return (
     <Fragment>
-      <MenuItem onClick={handleRenounceRole}>
-        <ListItemIcon>
-          <NoAccounts fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.renounceRole" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleRenounceRole}
+        icon={NoAccounts}
+        message="form.buttons.renounceRole"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccessControlRenounceRoleDialog
         onCancel={handleRenounceRoleCancel}
         onConfirm={handleRenounceRoleConfirm}

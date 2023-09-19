@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
-import { customMintCommonERC721 } from "../../customMintFn";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+
 import { FrameworkInterfaceId } from "../../../../constants";
+import { customMintCommonERC721 } from "../../customMintFn";
 
 export function shouldGetRecordFieldKeyCount(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   const { mint = customMintCommonERC721, tokenId: defaultTokenId = 0n } = options;

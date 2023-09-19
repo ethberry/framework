@@ -2,25 +2,26 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
+import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto, IAssetDto } from "@framework/types";
+
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleEntity } from "./rule.entity";
-import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto, IAssetDto } from "@framework/types";
-import { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
+import type { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AchievementRuleService {
   constructor(
     @InjectRepository(AchievementRuleEntity)
-    private readonly achievementRuleEntityRepository: Repository<AchievementRuleEntity>,
+    protected readonly achievementRuleEntityRepository: Repository<AchievementRuleEntity>,
     protected readonly assetService: AssetService,
     protected readonly contractService: ContractService,
   ) {}
 
   public search(
-    dto: IAchievementRuleSearchDto,
-    _userEntity: UserEntity,
+    dto: Partial<IAchievementRuleSearchDto>,
+    userEntity: UserEntity,
   ): Promise<[Array<AchievementRuleEntity>, number]> {
     const { query, achievementType, achievementStatus, contractIds, eventType, skip, take } = dto;
     const queryBuilder = this.achievementRuleEntityRepository.createQueryBuilder("achievement");
@@ -33,10 +34,9 @@ export class AchievementRuleService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    // TODO use merchants if contract?
-    // queryBuilder.andWhere("contract.merchantId = :merchantId", {
-    //   merchantId: userEntity.merchantId,
-    // });
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (achievementType) {
       if (achievementType.length === 1) {
@@ -58,8 +58,8 @@ export class AchievementRuleService {
       }
     }
 
-    if (achievementStatus) {
-      if (achievementStatus.length === 1) {
+    if (eventType) {
+      if (eventType.length === 1) {
         queryBuilder.andWhere("achievement.eventType = :eventType", {
           eventType: eventType[0],
         });
@@ -180,7 +180,13 @@ export class AchievementRuleService {
     const itemEntity = await this.assetService.create();
     await this.assetService.update(itemEntity, item, userEntity);
 
-    return this.achievementRuleEntityRepository.create({ ...rest, contractId, item: itemEntity }).save();
+    return this.achievementRuleEntityRepository
+      .create({
+        ...rest,
+        contractId,
+        item: itemEntity,
+      })
+      .save();
   }
 
   public async update(

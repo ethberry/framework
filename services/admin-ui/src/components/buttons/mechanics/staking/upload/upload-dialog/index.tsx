@@ -70,7 +70,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
           <Grid item xs={12}>
             <Box mt={2}>
               <Alert severity="warning">
-                <FormattedMessage id="form.hints.editNotAllowed" />
+                <FormattedMessage id="alert.editNotAllowed" />
               </Alert>
             </Box>
           </Grid>

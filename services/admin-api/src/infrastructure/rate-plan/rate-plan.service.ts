@@ -32,6 +32,7 @@ export class RatePlanService {
       ratePlan: userEntity.merchant.ratePlan,
     }).then(rateLimitEntity => {
       if (userEntity.merchantId === 1) {
+        // TODO get it from settings
         return 1e6;
       }
       if (!rateLimitEntity) {

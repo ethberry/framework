@@ -1,7 +1,7 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { Erc721TokenControllerEth } from "./token.controller.eth";
 import { Erc721TokenServiceEth } from "./token.service.eth";

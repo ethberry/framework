@@ -1,10 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsInt, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IRentCreateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
-import { RentRuleStatus } from "@framework/types";
+import { IRentCreateDto } from "../interfaces";
 
 export class RentCreateDto implements IRentCreateDto {
   @ApiProperty()
@@ -24,9 +23,4 @@ export class RentCreateDto implements IRentCreateDto {
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsEnum(RentRuleStatus, { message: "badInput" })
-  public rentStatus: RentRuleStatus;
 }

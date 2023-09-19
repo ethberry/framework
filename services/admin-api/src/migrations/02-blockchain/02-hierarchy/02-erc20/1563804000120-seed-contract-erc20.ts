@@ -3,10 +3,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -45,7 +46,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'Space Credits',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'Space Credits',
         'GEM20',
         18,
@@ -64,7 +65,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (inactive)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 INACTIVE',
         'OFF20',
         18,
@@ -83,7 +84,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (new)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 NEW',
         'NEW20',
         18,
@@ -102,7 +103,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (blacklist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 BLACKLIST',
         'BL20',
         18,
@@ -121,7 +122,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (whitelist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 WHITELIST',
         'WL20',
         18,
@@ -140,9 +141,9 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'Warp Credits',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'Warp Credits',
-        'GEM20',
+        'WARP20',
         18,
         0,
         '',

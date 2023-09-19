@@ -6,13 +6,13 @@ import { ns } from "@framework/constants";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc1155TokenService } from "../token/token.service";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {
@@ -26,8 +26,11 @@ export class Erc1155TemplateService extends TemplateService {
     super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
-  public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.HIERARCHY);
+  public async search(
+    dto: Partial<ITemplateSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<TemplateEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 
   public async getMaxTokenIdForContract(contractId: number): Promise<number> {

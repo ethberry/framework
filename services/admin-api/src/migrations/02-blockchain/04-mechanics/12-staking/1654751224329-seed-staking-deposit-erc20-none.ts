@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
-import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
+import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -30,7 +31,7 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         2901,
         '${subDays(now, 5).toISOString()}',
         '${subDays(now, 5 - 7).toISOString()}',
-        29, -- ERC20 > NONE
+        129, -- ERC20 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
@@ -40,7 +41,7 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         2902,
         '${subDays(now, 4).toISOString()}',
         '${subDays(now, 4 - 7).toISOString()}',
-        29, -- ERC20 > NONE
+        129, -- ERC20 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
@@ -50,7 +51,7 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         2903,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 3 - 7).toISOString()}',
-        29, -- ERC20 > NONE
+        129, -- ERC20 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -60,7 +61,7 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         2904,
         '${subDays(now, 2).toISOString()}',
         '${subDays(now, 2 - 7).toISOString()}',
-        29, -- ERC20 > NONE
+        129, -- ERC20 > NONE
         1,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
@@ -70,7 +71,7 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         2905,
         '${subDays(now, 0).toISOString()}',
         '${subDays(now, 0 - 7).toISOString()}',
-        29, -- ERC20 > NONE
+        129, -- ERC20 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'

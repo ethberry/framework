@@ -2,9 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryBoxEntity } from "./box.entity";
+import { testChainId } from "@framework/constants";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
+import { MysteryBoxEntity } from "./box.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysteryBoxService {
@@ -13,7 +16,10 @@ export class MysteryBoxService {
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
   ) {}
 
-  public async search(dto: Partial<IMysteryBoxSearchDto>, chainId: number): Promise<[Array<MysteryBoxEntity>, number]> {
+  public async search(
+    dto: Partial<IMysteryBoxSearchDto>,
+    userEntity?: UserEntity,
+  ): Promise<[Array<MysteryBoxEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
@@ -22,11 +28,19 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -51,7 +65,7 @@ export class MysteryBoxService {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
+      chainId: userEntity?.chainId || testChainId,
     });
 
     queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {
@@ -125,11 +139,18 @@ export class MysteryBoxService {
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");

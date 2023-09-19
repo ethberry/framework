@@ -1,10 +1,9 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
@@ -14,24 +13,26 @@ import { getEthPrice } from "../../../../../utils/money";
 import { IStakingDepositDto, StakingDepositDialog } from "./dialog";
 
 export interface IStakingDepositComplexButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 
 export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> = props => {
-  const { rule } = props;
+  const { className, disabled, rule, variant } = props;
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
-      nonce: utils.formatBytes32String("nonce"),
       externalId: rule.externalId,
       expiresAt: 0,
-      referrer: constants.AddressZero,
+      nonce: utils.formatBytes32String("nonce"),
       extra: utils.formatBytes32String("0x"),
+      receiver: constants.AddressZero,
+      referrer: constants.AddressZero,
     };
     return contract.deposit(params, values.tokenIds, {
       value: getEthPrice(rule.deposit),
@@ -56,23 +57,21 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.deposit" })}>
-        <IconButton onClick={handleDeposit} data-testid="StakeDepositComplexButton">
-          <Savings />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleDeposit}
+        icon={Savings}
+        message="form.tips.deposit"
+        className={className}
+        dataTestId="StakeDepositComplexButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingDepositDialog
         onConfirm={handleDepositConfirm}
         onCancel={handleDepositCancel}
         open={isDepositDialogOpen}
         initialValues={{
-          // tokenId: 0,
           tokenIds: [0],
-          // token: {
-          //   tokenId: "0",
-          // },
-          // templateId: rule.deposit!.components[0].templateId,
-          // contractId: rule.deposit!.components[0].contractId,
           deposit: rule.deposit!.components,
         }}
       />

@@ -14,7 +14,7 @@ import {
   Erc1155ContractDeployDto,
   Erc20ContractDeployDto,
   Erc721ContractDeployDto,
-  PyramidContractDeployDto,
+  PonziContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
 } from "./dto";
@@ -83,9 +83,9 @@ export class ContractManagerController {
     return this.contractManagerSignService.staking(dto, userEntity);
   }
 
-  // MODULE:PYRAMID
-  @Post("/pyramid")
-  public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.pyramid(dto, userEntity);
+  // MODULE:PONZI
+  @Post("/ponzi")
+  public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.ponzi(dto, userEntity);
   }
 }

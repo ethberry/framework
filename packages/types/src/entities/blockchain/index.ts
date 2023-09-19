@@ -13,20 +13,20 @@ export * from "./exchange/payee";
 export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
-export * from "./mechanics/drop/drop";
+export * from "./mechanics/dismantle/dismantle";
+export * from "./mechanics/promo/promo";
 export * from "./mechanics/grade/grade";
 
-export * from "./mechanics/lottery/leaderboard";
+export * from "./mechanics/lottery/aggregation";
 export * from "./mechanics/lottery/round";
 export * from "./mechanics/lottery/ticket";
 export * from "./mechanics/lottery/token";
 
 export * from "./mechanics/mysterybox/mysterybox";
-export * from "./mechanics/pyramid/leaderboard";
-export * from "./mechanics/pyramid/rule";
-export * from "./mechanics/pyramid/deposit";
+export * from "./mechanics/ponzi/leaderboard";
+export * from "./mechanics/ponzi/rule";
+export * from "./mechanics/ponzi/deposit";
 
-export * from "./mechanics/raffle/leaderboard";
 export * from "./mechanics/raffle/round";
 export * from "./mechanics/raffle/token";
 export * from "./mechanics/raffle/ticket";
@@ -36,8 +36,8 @@ export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/vesting";
-export * from "./mechanics/waitlist/list";
-export * from "./mechanics/waitlist/item";
+export * from "./mechanics/wait-list/list";
+export * from "./mechanics/wait-list/item";
 
 export * from "./mechanics/referral/leaderboard";
 export * from "./mechanics/referral/reward";

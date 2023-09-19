@@ -17,8 +17,7 @@ import { ClaimStatus, ClaimType } from "@framework/types";
 import { ContractManagerSignService } from "../../../contract-manager/contract-manager.sign.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
-import type { IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
-import { IVestingClaimRow } from "./interfaces";
+import type { IVestingClaimRow, IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 

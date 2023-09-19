@@ -17,7 +17,7 @@ export interface IClaimUploadDialogProps {
 }
 
 export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
-  const { isLoading, initialValues, onConfirm, ...rest } = props;
+  const { isLoading, initialValues, ...rest } = props;
 
   return (
     <FormDialog
@@ -25,7 +25,6 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.upload"
       testId="ClaimUploadDialog"
-      onConfirm={onConfirm}
       action={<ClaimInfoPopover />}
       {...rest}
     >

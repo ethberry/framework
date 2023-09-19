@@ -1,27 +1,25 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
-
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IStakingRule, IStakingRuleSearchDto, IStakingRuleItemSearchDto } from "@framework/types";
-import { StakingRuleStatus, TokenType } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type {
+  IStakingRule,
+  IStakingRuleDepositSearchDto,
+  IStakingRuleRewardSearchDto,
+  IStakingRuleSearchDto,
+} from "@framework/types";
+import { ModuleType, StakingDepositTokenType, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
-import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
   const {
@@ -52,11 +50,11 @@ export const StakingRules: FC = () => {
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingDepositTokenType>,
+      } as IStakingRuleDepositSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
+        tokenType: [] as Array<StakingRewardTokenType>,
+      } as IStakingRuleRewardSearchDto,
     },
   });
 
@@ -74,19 +72,43 @@ export const StakingRules: FC = () => {
         <StakingRuleCreateButton />
       </PageHeader>
 
-      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="StakingRuleSearchForm"
+      >
+        <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.STAKING] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="stakingRuleStatus" options={StakingRuleStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="deposit.tokenType" options={StakingDepositTokenType} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput displayEmpty multiple name="reward.tokenType" options={StakingRewardTokenType} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((rule, i) => (
-            <ListItem key={i} disableGutters>
-              <ListItemText>{rule.title}</ListItemText>
-              <ListItemSecondaryAction>
+          {rows.map(rule => (
+            <ListItem key={rule.id} disableGutters>
+              <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
+              <ListActions>
                 <StakingToggleRuleButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

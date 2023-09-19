@@ -1,7 +1,9 @@
+import { NodeEnv } from "@framework/types";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: "development" | "production" | "test" | "staging";
+      NODE_ENV: NodeEnv;
       PORT: number;
       HOST: string;
       BE_URL: string;
@@ -13,6 +15,7 @@ declare global {
       CHAIN_ID: string;
       LINK_ADDR: string;
       STAKING_ADDR: string;
+      DISPENSER_ADDR: string;
     }
   }
 }

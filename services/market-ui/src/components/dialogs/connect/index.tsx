@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
 import { MetaMaskButton, WalletConnectButton } from "@gemunion/provider-wallet";
 
-import { CloseButton } from "../../buttons/close-button";
+import { CloseButton } from "../../buttons";
 
 interface IConnectWalletProps {
   open: boolean;

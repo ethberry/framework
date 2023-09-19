@@ -14,18 +14,12 @@ import { UserEntity } from "../../../infrastructure/user/user.entity";
 export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    return this.tokenService.autocomplete(dto, userEntity);
-  }
-
   @Get("/search")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return this.tokenService.search(
       dto,
       userEntity,
-      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
       [
         ModuleType.HIERARCHY,
         ModuleType.COLLECTION,
@@ -34,6 +28,12 @@ export class TokenController {
         ModuleType.LOTTERY,
         ModuleType.RAFFLE,
       ],
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     );
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    return this.tokenService.autocomplete(dto, userEntity);
   }
 }

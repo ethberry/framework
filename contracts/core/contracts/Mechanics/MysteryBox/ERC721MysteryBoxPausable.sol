@@ -21,27 +21,29 @@ contract ERC721MysteryBoxPausable is ERC721MysteryBoxSimple, Pausable {
     _grantRole(PAUSER_ROLE, _msgSender());
   }
 
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
 
-  /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   *
-   * Requirements:
-   *
-   * - the contract must not be paused.
-   */
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal virtual override whenNotPaused {
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+  function unpack(uint256 tokenId) public override whenNotPaused {
+    super.unpack(tokenId);
   }
 }

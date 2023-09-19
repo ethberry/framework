@@ -27,6 +27,9 @@ contract ERC998ERC1155ERC20Enum is ERC998SimpleEnum, ERC998ERC1155Enumerable, ER
     return super.ownerOf(tokenId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC998SimpleEnum, ERC998ERC1155Enumerable, ERC998ERC20Enumerable) returns (bool) {

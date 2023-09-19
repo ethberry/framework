@@ -2,13 +2,10 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -25,51 +22,51 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        1021601,
+        ${process.env.NODE_ENV === NodeEnv.production ? 21 : 1021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
         'ACTIVE',
-        10216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 21 : 10216},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2021601,
+        ${process.env.NODE_ENV === NodeEnv.production ? 22 : 2021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
         'ACTIVE',
-        20216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 22 : 20216},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3021601,
+        ${process.env.NODE_ENV === NodeEnv.production ? 23 : 3021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
         'ACTIVE',
-        30216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 23 : 30216},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4021601,
+        ${process.env.NODE_ENV === NodeEnv.production ? 24 : 4021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
         'ACTIVE',
-        40216,
+        ${process.env.NODE_ENV === NodeEnv.production ? 24 : 40216},
         '${currentDateTime}',
         '${currentDateTime}'
       );

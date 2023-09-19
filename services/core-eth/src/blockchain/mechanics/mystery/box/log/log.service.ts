@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { EthersContractService } from "@gemunion/nestjs-ethers";
+import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 import { ModuleType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../../../common/interfaces";
@@ -26,8 +26,10 @@ export class MysteryLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByType(ModuleType.MYSTERY, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByType(
+      ModuleType.MYSTERY,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

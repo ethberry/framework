@@ -6,10 +6,15 @@ import { MobileEventType } from "@framework/types";
 
 import { MerchantService } from "../../infrastructure/merchant/merchant.service";
 import type {
+  IBatchTransferData,
   IClaimData,
   IGradeData,
   IPurchaseData,
   IPurchaseRandomData,
+  IRentUserUpdateData,
+  IRoundEndLotteryData,
+  IRoundEndRaffleData,
+  IRoundStartRaffleData,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
@@ -17,14 +22,18 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
-import { IUnpackMysteryData } from "./interfaces/mystery-box";
-
-export interface IRentUserUpdateData {
-  merchantId: number;
-  tokenId: string;
-  user: string;
-  expires: string;
-}
+import {
+  ICraftData,
+  IFinalizeLotteryData,
+  IFinalizeRaffleData,
+  IPrizeRaffleData,
+  IPurchaseRaffleData,
+  IRoundStartLotteryData,
+  ITokenTransferData,
+  IVestingReleaseData,
+  IUnpackMysteryData,
+  IDismantleData,
+} from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -62,6 +71,20 @@ export class NotificatorService {
       });
   }
 
+  // TRANSFER
+  public tokenTransfer(data: ITokenTransferData): Promise<any> {
+    return this.sendMessage(data.token.template!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.TOKEN_TRANSFER, data).toPromise();
+    });
+  }
+
+  public batchTransfer(data: IBatchTransferData): Promise<any> {
+    return this.sendMessage(data.tokens[0].template!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.BATCH_TRANSFER, data).toPromise();
+    });
+  }
+
+  // MODULE:RENT
   public updateUser(data: IRentUserUpdateData): Promise<any> {
     return this.sendMessage(data.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RENT_USER, data).toPromise();
@@ -78,20 +101,6 @@ export class NotificatorService {
   public purchaseRandom(data: IPurchaseRandomData): Promise<any> {
     return this.sendMessage(data.item.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_RANDOM, data).toPromise();
-    });
-  }
-
-  // MODULE:RAFFLE
-  public purchaseRaffle(data: IPurchaseData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
-    });
-  }
-
-  // MODULE:LOTTERY
-  public purchaseLottery(data: IPurchaseData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
     });
   }
 
@@ -112,6 +121,20 @@ export class NotificatorService {
   public async claim(data: IClaimData): Promise<any> {
     return this.sendMessage(data.claim.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+    });
+  }
+
+  // MODULE:CRAFT
+  public async craft(data: ICraftData): Promise<any> {
+    return this.sendMessage(data.craft.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+    });
+  }
+
+  // MODULE:DISMANTLE
+  public async dismantle(data: IDismantleData): Promise<any> {
+    return this.sendMessage(data.dismantle.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.DISMANTLE, data).toPromise();
     });
   }
 
@@ -157,6 +180,69 @@ export class NotificatorService {
   public stakingRuleUpdated(data: IStakingRuleUpdatedData): Promise<any> {
     return this.sendMessage(data.stakingRule.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.STAKING_RULE_UPDATED, data).toPromise();
+    });
+  }
+
+  // MODULE:RAFFLE
+  public purchaseRaffle(data: IPurchaseRaffleData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
+    });
+  }
+
+  public finalizeRaffle(data: IFinalizeRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.FINALIZE_RAFFLE, data).toPromise();
+    });
+  }
+
+  public prizeRaffle(data: IPrizeRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PRIZE_RAFFLE, data).toPromise();
+    });
+  }
+
+  public roundStartRaffle(data: IRoundStartRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_ROUND_START, data).toPromise();
+    });
+  }
+
+  public roundEndRaffle(data: IRoundEndRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_ROUND_END, data).toPromise();
+    });
+  }
+
+  // MODULE:LOTTERY
+  public purchaseLottery(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
+    });
+  }
+
+  public finalizeLottery(data: IFinalizeLotteryData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.FINALIZE_LOTTERY, data).toPromise();
+    });
+  }
+
+  public roundStartLottery(data: IRoundStartLotteryData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_ROUND_START, data).toPromise();
+    });
+  }
+
+  public roundEndLottery(data: IRoundEndLotteryData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_ROUND_END, data).toPromise();
+    });
+  }
+
+  // MODULE:VESTING
+  public vestingRelease(data: IVestingReleaseData): Promise<any> {
+    return this.sendMessage(data.vesting.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.VESTING_RELEASED, data).toPromise();
     });
   }
 }

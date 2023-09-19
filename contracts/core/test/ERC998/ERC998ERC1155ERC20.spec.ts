@@ -8,7 +8,7 @@ import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { customMintCommonERC721 } from "../ERC721/shared/customMintFn";
 
-describe("ERC998ERC1155ERC20", function () {
+describe("ERC998ERC1155ERC20Simple", function () {
   const factory = () => deployERC721(this.title);
   const options = { mint: customMintCommonERC721, tokenId };
 

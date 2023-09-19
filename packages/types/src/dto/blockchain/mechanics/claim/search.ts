@@ -1,10 +1,12 @@
 import type { IPaginationDto } from "@gemunion/types-collection";
 
-import { ClaimStatus } from "../../../../entities";
+import { ClaimStatus, ClaimType } from "../../../../entities";
 
 export interface IClaimSearchDto extends IPaginationDto {
   account: string;
   claimStatus: Array<ClaimStatus>;
-  templateIds: Array<number>;
+  claimType: Array<ClaimType>;
+
+  chainId: number;
   merchantId: number;
 }

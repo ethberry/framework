@@ -1,20 +1,12 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IPage, IPageSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IPage, IPageSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
@@ -55,24 +47,20 @@ export const Page: FC = () => {
       <Breadcrumbs path={["dashboard", "pages"]} />
 
       <PageHeader message="pages.pages.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommercePageCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((page, i) => (
-            <ListItem key={i}>
+          {rows.map(page => (
+            <ListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(page)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(page)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(page)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleDelete(page)} icon={Delete} message="form.buttons.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

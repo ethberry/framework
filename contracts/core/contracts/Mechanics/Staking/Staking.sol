@@ -14,13 +14,15 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
 
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
-import "../../ERC721/interfaces/IERC721Metadata.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/referral/LinearReferral.sol";
+import "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
+import "../../Referral/LinearReferral.sol";
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../utils/errors.sol";
@@ -140,7 +142,10 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
 
           if (ruleDepositTokenTemplateId != 0) {
-            uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
+            uint256 templateId = IERC721GeneralizedCollection(depositItem.token).getRecordFieldValue(
+              tokenIds[i],
+              TEMPLATE_ID
+            );
             if (templateId != ruleDepositTokenTemplateId) {
               revert WrongToken();
             }
@@ -370,11 +375,11 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
       // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
       for (uint256 k = 0; k < multiplier; ) {
-        if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
-          // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
+        if (IERC721GeneralizedCollection(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+          // If the token supports the Mysterybox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
           IERC721MysteryBox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
         } else {
-          // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
+          // If the token does not support the Mysterybox interface, call the acquire function to mint NFTs to the receiver.
           ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
         }
         unchecked {
@@ -641,14 +646,22 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
-   * @dev Pauses the contract.
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
    */
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
   }
 
   /**
-   * @dev Unpauses the contract.
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
    */
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();

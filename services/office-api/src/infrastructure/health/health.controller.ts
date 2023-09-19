@@ -16,7 +16,7 @@ import { Public } from "@gemunion/nest-js-utils";
 import { SkipThrottle, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
 
 @Public()
-@SkipThrottle(true)
+@SkipThrottle({ default: true })
 @Controller("/health")
 export class HealthController {
   constructor(

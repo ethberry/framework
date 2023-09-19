@@ -2,8 +2,8 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { AccessControlEventType, ContractEventType, ContractType, Erc4907EventType, TokenType } from "@framework/types";
 
@@ -31,7 +31,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN,
-            contractAddress: erc721Contracts.address || [],
+            contractAddress: erc721Contracts.address,
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [
@@ -70,7 +70,7 @@ export class Erc721TokenLogModule implements OnModuleDestroy {
   constructor(private readonly erc721TokenLogService: Erc721LogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.erc721TokenLogService.updateBlock();
   }
 }

@@ -1,25 +1,19 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IUser, IUserSearchDto, UserStatus } from "@framework/types";
-import { EnabledLanguages } from "@framework/constants";
 import { useCollection } from "@gemunion/react-hooks";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { EnabledLanguages } from "@framework/constants";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IUser, IUserSearchDto } from "@framework/types";
+import { UserRole, UserStatus } from "@framework/types";
 
 import { UserEditDialog } from "./edit";
-import { UserSearchForm } from "./form";
 
 export const User: FC = () => {
   const {
@@ -72,21 +66,26 @@ export const User: FC = () => {
         </Button>
       </PageHeader>
 
-      <UserSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="UserSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SelectInput multiple name="userStatus" options={UserStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="userRoles" options={UserRole} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((user, i) => (
-            <ListItem key={i}>
+          {rows.map(user => (
+            <ListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(user)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(user)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(user)} icon={Create} message="form.actions.edit" />
+                <ListAction onClick={handleDelete(user)} icon={Delete} message="form.actions.delete" />
+              </ListActions>
             </ListItem>
           ))}
         </List>

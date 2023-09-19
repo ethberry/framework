@@ -1,18 +1,39 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsEmail, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { MerchantStatus } from "@framework/types";
+import { emailMaxLength } from "@gemunion/constants";
+import { SearchableOptionalDto, WalletOptionalDto } from "@gemunion/collection";
 
 import { IMerchantUpdateDto } from "../interfaces";
-import { MerchantCreateDto } from "./create";
+import { MerchantSocialDto } from "./social";
 
-export class MerchantUpdateDto extends MerchantCreateDto implements IMerchantUpdateDto {
+export class MerchantUpdateDto extends Mixin(WalletOptionalDto, SearchableOptionalDto) implements IMerchantUpdateDto {
   @ApiPropertyOptional({
-    enum: MerchantStatus,
+    maxLength: emailMaxLength,
   })
   @IsOptional()
-  @Transform(({ value }) => value as MerchantStatus)
-  @IsEnum(MerchantStatus, { message: "badInput" })
-  public merchantStatus: MerchantStatus;
+  @IsEmail({}, { message: "patternMismatch" })
+  @MaxLength(emailMaxLength, { message: "rangeOverflow" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public email: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  public phoneNumber: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  public imageUrl = "";
+
+  @ApiPropertyOptional({
+    type: MerchantSocialDto,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => MerchantSocialDto)
+  public social: MerchantSocialDto;
 }

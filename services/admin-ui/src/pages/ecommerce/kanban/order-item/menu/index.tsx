@@ -39,7 +39,14 @@ export const OrderActionMenu: FC<IOrderActionMenu> = props => {
       >
         <MoreVert />
       </IconButton>
-      <Menu id="order-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        id="order-actions-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        keepMounted
+      >
         <OrderArchiveMenuItem order={order} />
       </Menu>
     </Fragment>

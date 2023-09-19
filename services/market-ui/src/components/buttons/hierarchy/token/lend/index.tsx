@@ -1,28 +1,29 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
-import { ILendDto, LendDialog } from "./dialog";
+
 import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
+import { ILendDto, LendDialog } from "./dialog";
 
 interface ITokenLendButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
   const [isLendTokenDialogOpen, setIsLendTokenDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFnWithSign = useServerSignature(
     (values: ILendDto, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -32,11 +33,12 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplateLendABI, web3Context.provider?.getSigner());
 
       const params = {
-        nonce: utils.arrayify(sign.nonce),
         externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
-        referrer: values.account,
+        nonce: utils.arrayify(sign.nonce),
         extra: expires,
+        receiver: token.template?.contract?.merchant!.wallet,
+        referrer: values.account,
       };
       const item = {
         tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),
@@ -69,7 +71,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
   );
 
   const metaFn = useMetamask((dto: ILendDto, web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
     const expires = Math.ceil(new Date(dto.expires).getTime() / 1000); // in seconds,
 
     return metaFnWithSign(
@@ -77,6 +79,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         url: "/rent/tokens/sign",
         method: "POST",
         data: {
+          chainId,
           account, // user token owner
           referrer: dto.account, // borrower
           tokenId: token.id, // token.id to lend
@@ -109,11 +112,14 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.lend" })}>
-        <Button onClick={handleLend} data-testid="TokenLendButton">
-          <FormattedMessage id="form.buttons.lend" />
-        </Button>
-      </Tooltip>
+      <ListAction
+        onClick={handleLend}
+        message="form.buttons.lend"
+        className={className}
+        dataTestId="TokenLendButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <LendDialog
         onConfirm={handleLendConfirm}
         onCancel={handleLendCancel}

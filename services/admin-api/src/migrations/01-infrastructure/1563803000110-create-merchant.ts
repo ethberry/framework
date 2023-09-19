@@ -41,6 +41,7 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
         {
           name: "phone_number",
           type: "varchar",
+          isNullable: true,
         },
         {
           name: "image_url",
@@ -49,6 +50,18 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
         {
           name: "merchant_status",
           type: `${ns}.merchant_status_enum`,
+          default: "'PENDING'",
+        },
+        {
+          name: "wallet",
+          type: "varchar",
+          isNullable: false, // always needed
+          isUnique: true,
+        },
+        {
+          name: "social",
+          type: "json",
+          default: "'{}'",
         },
         {
           name: "created_at",

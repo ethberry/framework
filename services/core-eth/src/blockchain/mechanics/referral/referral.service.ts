@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ReferralEntity } from "./referral.entity";
 
@@ -20,7 +20,7 @@ export class ReferralService {
 
   public findAll(
     where: FindOptionsWhere<ReferralEntity>,
-    options?: FindOneOptions<ReferralEntity>,
+    options?: FindManyOptions<ReferralEntity>,
   ): Promise<Array<ReferralEntity>> {
     return this.referralEntityRepository.find({ where, ...options });
   }

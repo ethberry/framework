@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested, Allow } from "class-validator";
+import { Allow, IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IPhoto } from "@framework/types";
@@ -26,7 +26,7 @@ export class ProductCreateDto implements IProductCreateDto {
 
   @ApiPropertyOptional({ type: () => [PhotoCreateDto] })
   @IsOptional()
-  @IsArray()
+  @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => PhotoCreateDto)
   public photos: Array<IPhoto> = [];

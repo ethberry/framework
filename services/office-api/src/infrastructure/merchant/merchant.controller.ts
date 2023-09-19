@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   Query,
   UseInterceptors,
@@ -15,12 +14,10 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { UserRole } from "@framework/types";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
-import { MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto } from "./dto";
-import { Roles } from "../../common/decorators";
+import { MerchantSearchDto, MerchantUpdateDto } from "./dto";
 import { UserEntity } from "../user/user.entity";
 
 @ApiBearerAuth()
@@ -39,35 +36,18 @@ export class MerchantController {
     return this.merchantService.autocomplete();
   }
 
-  @Post("/")
-  public create(@Body() dto: MerchantCreateDto, @User() userEntity: UserEntity): Promise<MerchantEntity> {
-    return this.merchantService.create(dto, userEntity);
-  }
-
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: MerchantUpdateDto,
-    @User() userEntity: UserEntity,
-  ): Promise<MerchantEntity | null> {
-    return this.merchantService.update({ id }, dto, userEntity);
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MerchantUpdateDto): Promise<MerchantEntity | null> {
+    return this.merchantService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<MerchantEntity | null> {
-    return this.merchantService.findOne(
-      { id },
-      {
-        relations: {
-          users: true,
-        },
-      },
-    );
+    return this.merchantService.findOne({ id });
   }
 
   @Delete("/:id")
-  @Roles(UserRole.ADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.merchantService.delete({ id }, userEntity);

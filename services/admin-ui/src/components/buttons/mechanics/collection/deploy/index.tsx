@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { ICollectionContractDeployDto, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
@@ -15,12 +14,14 @@ import { CollectionContractDeployDialog } from "./dialog";
 
 export interface ICollectionContractDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ICollectionContractDeployDto, web3Context, sign) => {
@@ -35,7 +36,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {
@@ -64,15 +65,15 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="CollectionContractDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="CollectionContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <CollectionContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

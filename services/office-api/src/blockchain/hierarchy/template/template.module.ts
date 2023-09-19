@@ -6,9 +6,10 @@ import { TemplateService } from "./template.service";
 import { TemplateController } from "./template.controller";
 import { TokenModule } from "../token/token.module";
 import { AssetModule } from "../../exchange/asset/asset.module";
+import { ContractModule } from "../contract/contract.module";
 
 @Module({
-  imports: [TokenModule, forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],
+  imports: [TokenModule, forwardRef(() => AssetModule), ContractModule, TypeOrmModule.forFeature([TemplateEntity])],
   providers: [TemplateService],
   controllers: [TemplateController],
   exports: [TemplateService],

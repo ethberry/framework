@@ -9,17 +9,17 @@
   },
   "description": "react uniswap-widget",
   "dependencies": {
-    "@gemunion/provider-wallet": "3.3.27",
-    "@mui/material": "5.13.6",
-    "@uniswap/widgets": "2.51.2",
-    "@web3-react/core": "8.2.0"
+    "@gemunion/provider-wallet": "3.3.49",
+    "@mui/material": "5.14.9",
+    "@uniswap/widgets": "2.53.2",
+    "@web3-react/core": "8.2.2"
   },
   "devDependencies": {
-    "@types/react": "18.2.14",
+    "@types/react": "18.2.21",
     "react": "18.2.0"
   },
   "engines": {
-    "node": ">=12.13"
+    "node": ">=18"
   },
   "keywords": [],
   "license": "UNLICENSED",

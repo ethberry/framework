@@ -1,5 +1,4 @@
 import { Logger, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import admin from "firebase-admin";
 
 import { PassportInitialize } from "@gemunion/nest-js-module-passport";
@@ -10,7 +9,7 @@ import { AuthService } from "./auth.service";
 import { APP_PROVIDER } from "./auth.constants";
 
 @Module({
-  imports: [UserModule, ConfigModule, PassportInitialize.forRoot()],
+  imports: [UserModule, PassportInitialize.forRoot()],
   providers: [
     Logger,
     AuthService,

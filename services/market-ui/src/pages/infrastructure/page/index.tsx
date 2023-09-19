@@ -41,7 +41,7 @@ export const Page: FC = () => {
   );
 
   useEffect(() => {
-    void fetchPage(undefined, slug);
+    void fetchPage(void 0, slug);
   }, [slug]);
 
   if (notFound) {

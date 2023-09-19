@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
+import { IStakingRuleSearchDto, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 
@@ -75,15 +75,23 @@ export class StakingRulesService {
     }
 
     if (reward && reward.tokenType) {
-      if (reward.tokenType.length === 1) {
-        queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
-          rewardTokenType: reward.tokenType[0],
-        });
-      } else {
-        queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
-          rewardTokenType: reward.tokenType,
-        });
-      }
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          for (let i = 0, l = reward.tokenType.length; i < l; i++) {
+            if (reward.tokenType[i] === StakingRewardTokenType.NONE) {
+              qb.orWhere("rule.reward IS NULL");
+            } else if (reward.tokenType[i] === StakingRewardTokenType.MYSTERY) {
+              qb.orWhere("reward_contract.contractModule = :rewardModuleType", {
+                rewardModuleType: StakingRewardTokenType.MYSTERY, // all mystery boxes are erc721
+              });
+            } else {
+              qb.orWhere("reward_contract.contractType = :rewardTokenType", {
+                rewardTokenType: reward.tokenType[i],
+              });
+            }
+          }
+        }),
+      );
     }
 
     queryBuilder.skip(skip);
@@ -91,7 +99,7 @@ export class StakingRulesService {
 
     queryBuilder.orderBy({
       "rule.createdAt": "DESC",
-      "rule.id": "ASC",
+      "rule.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

@@ -1,25 +1,28 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
-export interface IContractGrantRoleMenuItemProps {
+export interface IGrantRoleMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
-export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = props => {
+export const GrantRoleMenuItem: FC<IGrantRoleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractSecurity },
+    disabled,
+    variant,
   } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
@@ -43,16 +46,19 @@ export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = pr
     });
   };
 
+  if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
+    return null;
+  }
+
   return (
     <Fragment>
-      <MenuItem onClick={handleGrantRole}>
-        <ListItemIcon>
-          <AccountCircle fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.grantRole" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleGrantRole}
+        icon={AccountCircle}
+        disabled={disabled}
+        message="form.buttons.grantRole"
+        variant={variant}
+      />
       <AccessControlGrantRoleDialog
         onCancel={handleGrantRoleCancel}
         onConfirm={handleGrantRoleConfirmed}

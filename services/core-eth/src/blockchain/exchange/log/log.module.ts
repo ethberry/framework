@@ -1,10 +1,9 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
-import { Interface } from "ethers";
 
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
 import {
   AccessControlEventType,
@@ -12,13 +11,15 @@ import {
   ContractType,
   Erc1363EventType,
   ExchangeEventType,
+  ModuleType,
   ReferralProgramEventType,
 } from "@framework/types";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { ExchangeLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ABI } from "./interfaces";
+import { testChainId } from "@framework/constants";
 
 @Module({
   imports: [
@@ -28,18 +29,22 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const exchangeAddr = configService.get<string>("EXCHANGE_ADDR", "");
+        const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
+        const exchangeEntity = await contractService.findSystemByName({
+          contractModule: ModuleType.EXCHANGE,
+          chainId,
+        });
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(exchangeAddr)) || startingBlock;
+        const fromBlock = exchangeEntity.fromBlock || startingBlock;
         return {
           contract: {
             contractType: ContractType.EXCHANGE,
-            contractAddress: [exchangeAddr],
-            contractInterface: new Interface(ExchangeSol.abi),
+            contractAddress: exchangeEntity.address,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               // MODULE:PAUSE
@@ -98,7 +103,7 @@ export class ExchangeLogModule implements OnModuleDestroy {
   constructor(private readonly exchangeLogService: ExchangeLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.exchangeLogService.updateBlock();
   }
 }

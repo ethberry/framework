@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Casino, ConfirmationNumber, EmojiEvents } from "@mui/icons-material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { Casino, ConfirmationNumber } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,30 +15,22 @@ export const RaffleSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/raffle/purchase">
+        <ListItemButton component={RouterLink} to="/raffle/contracts">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.raffle.purchase.title" />
+            <FormattedMessage id="pages.raffle.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/ticket">
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/raffle/tokens">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.tokens.title" />
           </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/leaderboard">
-          <ListItemIcon>
-            <EmojiEvents />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.raffle.leaderboard.title" />
-          </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

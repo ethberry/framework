@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
 import { customMintCommonERC721 } from "../../customMintFn";
 

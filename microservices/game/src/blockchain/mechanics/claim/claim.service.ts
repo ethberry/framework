@@ -1,35 +1,85 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Inject,
-  Injectable,
-  Logger,
-  LoggerService,
-  NotFoundException,
-} from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { ClaimEntity } from "./claim.entity";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ClaimService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
     private readonly signerService: SignerService,
   ) {}
+
+  public async search(
+    dto: Partial<IClaimSearchDto>,
+    merchantEntity: MerchantEntity,
+  ): Promise<[Array<ClaimEntity>, number]> {
+    const { account, claimStatus, claimType, chainId, skip, take } = dto;
+
+    const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
+
+    queryBuilder.leftJoinAndSelect("claim.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId,
+    });
+
+    queryBuilder.andWhere("claim.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
+    queryBuilder.andWhere("claim.claimType = :claimType", {
+      claimType: ClaimType.TOKEN,
+    });
+
+    if (account) {
+      queryBuilder.andWhere("claim.account ILIKE '%' || :account || '%'", { account });
+    }
+
+    if (claimStatus) {
+      if (claimStatus.length === 1) {
+        queryBuilder.andWhere("claim.claimStatus = :claimStatus", { claimStatus: claimStatus[0] });
+      } else {
+        queryBuilder.andWhere("claim.claimStatus IN(:...claimStatus)", { claimStatus });
+      }
+    }
+
+    if (claimType) {
+      if (claimType.length === 1) {
+        queryBuilder.andWhere("claim.claimType = :claimType", { claimType: claimType[0] });
+      } else {
+        queryBuilder.andWhere("claim.claimType IN(:...claimType)", { claimType });
+      }
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "claim.createdAt": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public findOne(
     where: FindOptionsWhere<ClaimEntity>,
@@ -75,7 +125,7 @@ export class ClaimService {
     dto: IClaimUpdateDto,
     merchantEntity: MerchantEntity,
   ): Promise<ClaimEntity> {
-    const { account, item, endTimestamp } = dto;
+    const { account, item, endTimestamp, chainId } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);
 
@@ -103,14 +153,16 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         // @TODO fix to use expiresAt as extra, temporary set to empty
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       },
 
       claimEntity,
@@ -120,8 +172,14 @@ export class ClaimService {
     return claimEntity.save();
   }
 
-  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    claimEntity: ClaimEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       claimEntity.item.components.map(component => ({

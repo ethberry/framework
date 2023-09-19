@@ -5,8 +5,8 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
-import { IAchievementRuleUpdateDto } from "../interfaces";
 import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import { IAchievementRuleUpdateDto } from "../interfaces";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
   @ApiPropertyOptional()
@@ -25,11 +25,11 @@ export class AchievementRuleUpdateDto extends SearchableDto implements IAchievem
   public eventType: ContractEventType;
 
   @ApiPropertyOptional({
-    minimum: 0,
+    minimum: 1,
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
+  @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 
   @ApiPropertyOptional({

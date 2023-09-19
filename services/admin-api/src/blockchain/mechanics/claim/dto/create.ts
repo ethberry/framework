@@ -19,4 +19,6 @@ export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
+
+  public chainId: number;
 }

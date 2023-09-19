@@ -1,14 +1,22 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import {
+  ArrayOverlap,
+  Brackets,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  In,
+  Not,
+  Repository,
+} from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import { ContractEntity } from "./contract.entity";
-import { TemplateEntity } from "../template/template.entity";
-import { IContractUpdateDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractEntity } from "./contract.entity";
+import type { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -17,8 +25,13 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractFeatures, contractType, contractModule, merchantId, skip, take } = dto;
+  public async search(
+    dto: Partial<IContractSearchDto>,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
+  ): Promise<[Array<ContractEntity>, number]> {
+    const { query, contractStatus, contractFeatures, merchantId, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -44,6 +57,8 @@ export class ContractService {
       } else {
         queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
     }
 
     if (contractModule) {
@@ -94,6 +109,7 @@ export class ContractService {
 
     queryBuilder.orderBy({
       "contract.createdAt": "DESC",
+      "contract.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -103,9 +119,18 @@ export class ContractService {
     dto: Partial<IContractAutocompleteDto>,
     userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [], merchantId } = dto;
+    const {
+      contractStatus = [],
+      contractFeatures = [],
+      contractType = [],
+      contractModule = [],
+      excludeFeatures = [],
+      includeExternalContracts,
+      merchantId,
+    } = dto;
     const where = {
       chainId: userEntity.chainId,
+      merchantId,
     };
 
     if (contractType.length) {
@@ -127,29 +152,51 @@ export class ContractService {
       });
     }
 
+    // so far this is used only to filter out SOULBOUND tokens
+    if (excludeFeatures.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: Not(ArrayOverlap(excludeFeatures)),
+      });
+    }
+
     if (contractModule.length) {
       Object.assign(where, {
         contractModule: In(contractModule),
       });
     }
 
-    if (merchantId) {
-      Object.assign(where, {
-        merchantId,
-      });
-    }
-
-    return this.contractEntityRepository.find({
+    const contractEntities = await this.contractEntityRepository.find({
       where,
       select: {
         id: true,
         title: true,
         address: true,
         contractType: true,
+        contractFeatures: true,
         decimals: true,
         symbol: true,
       },
     });
+
+    if (includeExternalContracts) {
+      const externalContractEntities = await this.autocomplete(
+        {
+          contractStatus,
+          contractFeatures: [ContractFeatures.EXTERNAL],
+          contractType,
+          contractModule,
+          excludeFeatures,
+        },
+        {
+          chainId: userEntity.chainId,
+          merchantId: 1,
+        } as UserEntity,
+      );
+      return contractEntities.concat(externalContractEntities);
+    }
+
+    return contractEntities;
   }
 
   public findOne(
@@ -159,9 +206,17 @@ export class ContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindManyOptions<ContractEntity>,
+  ): Promise<Array<ContractEntity>> {
+    return this.contractEntityRepository.find({ where, ...options });
+  }
+
   public async update(
     where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IContractUpdateDto>,
+    _userEntity: UserEntity,
   ): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
@@ -174,14 +229,22 @@ export class ContractService {
     return contractEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
-    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
+  public delete(where: FindOptionsWhere<ContractEntity>, userEntity: UserEntity): Promise<ContractEntity> {
+    return this.update(where, { contractStatus: ContractStatus.INACTIVE }, userEntity);
   }
 
-  public findAll(
-    where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
-  ): Promise<Array<ContractEntity>> {
-    return this.contractEntityRepository.find({ where, ...options });
+  public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
+    return this.contractEntityRepository.count({ where });
+  }
+
+  public async findOneOrFail(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
+    const contractEntity = await this.findOne(where);
+
+    // system must exist
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return contractEntity;
   }
 }

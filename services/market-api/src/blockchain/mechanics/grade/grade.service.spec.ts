@@ -6,7 +6,7 @@ import { WeiPerEther } from "ethers";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 import { GradeStrategy } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";

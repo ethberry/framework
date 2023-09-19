@@ -1,24 +1,16 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import { IOrder, OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyOrder } from "../../../components/common/interfaces";
 import { EditOrderDialog } from "./edit";
@@ -92,7 +84,7 @@ export const Order: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommerceOrderCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
@@ -105,17 +97,13 @@ export const Order: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
-          {rows.map((order, i) => (
-            <ListItem key={i} disableGutters={true}>
+          {rows.map(order => (
+            <ListItem key={order.id} disableGutters={true}>
               <ListItemText>Order #{order.id}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(order)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(order)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(order)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

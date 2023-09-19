@@ -3,14 +3,16 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import { ClaimStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class ClaimService {
@@ -18,22 +20,29 @@ export class ClaimService {
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
     private readonly signerService: SignerService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, account, claimStatus, templateIds } = dto;
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+    const { skip, take, account, claimStatus, claimType } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
-    queryBuilder.select();
-
     queryBuilder.andWhere("claim.account = :account", { account });
+
+    queryBuilder.leftJoinAndSelect("claim.merchant", "merchant");
 
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -50,13 +59,11 @@ export class ClaimService {
       }
     }
 
-    if (templateIds) {
-      if (templateIds.length === 1) {
-        queryBuilder.andWhere("claim.templateId = :templateId", {
-          templateId: templateIds[0],
-        });
+    if (claimType) {
+      if (claimType.length === 1) {
+        queryBuilder.andWhere("claim.claimType = :claimType", { claimType: claimType[0] });
       } else {
-        queryBuilder.andWhere("claim.templateId IN(:...templateIds)", { templateIds });
+        queryBuilder.andWhere("claim.claimType IN(:...claimType)", { claimType });
       }
     }
 
@@ -82,6 +89,7 @@ export class ClaimService {
       join: {
         alias: "claim",
         leftJoinAndSelect: {
+          merchant: "claim.merchant",
           item: "claim.item",
           item_components: "item.components",
           item_contract: "item_components.contract",
@@ -115,7 +123,7 @@ export class ClaimService {
     dto: IClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
-    const { account, item, endTimestamp } = dto;
+    const { account, item, endTimestamp, chainId } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);
 
@@ -143,14 +151,16 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
       {
-        nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         // @TODO fix to use expiresAt as extra, temporary set to empty
         extra: encodeBytes32String("0x"),
+        receiver: claimEntity.merchant.wallet,
+        referrer: ZeroAddress,
       },
 
       claimEntity,
@@ -160,8 +170,14 @@ export class ClaimService {
     return claimEntity.save();
   }
 
-  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    claimEntity: ClaimEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       claimEntity.item.components.map(component => ({

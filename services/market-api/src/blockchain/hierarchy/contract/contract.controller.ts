@@ -1,25 +1,52 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { Public, User } from "@gemunion/nest-js-utils";
-import { testChainId } from "@framework/constants";
+import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { ModuleType, TokenType } from "@framework/types";
 
-import { ContractAutocompleteDto } from "./dto";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractAutocompleteDto, ContractSearchDto, SystemContractSearchDto } from "./dto";
 import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Public()
 @Controller("/contracts")
 export class ContractController {
-  constructor(private readonly contractService: ContractService, private readonly configService: ConfigService) {}
+  constructor(private readonly contractService: ContractService) {}
+
+  @Get("/")
+  @UseInterceptors(PaginationInterceptor)
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
+    return this.contractService.search(
+      dto,
+      userEntity,
+      [ModuleType.HIERARCHY],
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+    );
+  }
 
   @Get("/autocomplete")
   public autocomplete(
     @Query() dto: ContractAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    return this.contractService.autocomplete(dto, userEntity?.chainId || chainId);
+    return this.contractService.autocomplete(dto, userEntity);
+  }
+
+  @Post("/system")
+  @UseInterceptors(NotFoundInterceptor)
+  public system(@Body() dto: SystemContractSearchDto, @User() userEntity: UserEntity): Promise<ContractEntity | null> {
+    return this.contractService.findOne({
+      contractModule: dto.contractModule as unknown as ModuleType,
+      chainId: userEntity.chainId,
+    });
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity | null> {
+    return this.contractService.findOne({ id });
   }
 }

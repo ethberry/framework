@@ -1,16 +1,13 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
+import { AddressOptionalDto } from "@gemunion/collection";
 import { ListenerType } from "@framework/types";
+
 import { IEthLoggerInOutDto } from "../interfaces";
 
-export class EthLoggerInOutDto implements IEthLoggerInOutDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  public address: string;
-
+export class EthLoggerInOutDto extends AddressOptionalDto implements IEthLoggerInOutDto {
   @ApiPropertyOptional({
     enum: ListenerType,
   })

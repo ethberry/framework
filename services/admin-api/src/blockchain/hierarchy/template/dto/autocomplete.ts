@@ -60,4 +60,7 @@ export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
+
+  public chainId: number;
+  public merchantId: number;
 }

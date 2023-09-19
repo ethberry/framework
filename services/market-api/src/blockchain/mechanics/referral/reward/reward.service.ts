@@ -76,7 +76,7 @@ export class ReferralRewardService {
     return this.referralRewardEntityRepository.findOne({ where, ...options });
   }
 
-  public async export(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<string> {
+  public async export(dto: Partial<IReferralReportSearchDto>, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
     const [list] = await this.search(rest, userEntity);

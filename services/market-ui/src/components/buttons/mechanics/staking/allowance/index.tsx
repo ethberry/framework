@@ -1,13 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-
-import { IconButton, Tooltip } from "@mui/material";
 import { HowToVote } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IStakingRule, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
@@ -17,13 +14,15 @@ import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowanc
 import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 // TODO allowance for deposit array
 // TODO allowance for exact 721 or 998 token
 export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { className, disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -37,20 +36,19 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
-    const tokenType = rule.deposit?.components[0].tokenType;
     const address = rule.contract!.address;
 
-    if (tokenType === TokenType.ERC20) {
+    if (contract.contractType === TokenType.ERC20) {
       const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
-    } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
+    } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         contract.address,
         ERC721SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.setApprovalForAll(address, true) as Promise<any>;
-    } else if (tokenType === TokenType.ERC1155) {
+    } else if (contract.contractType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         contract.address,
         ERC1155SetApprovalForAllABI,
@@ -72,23 +70,27 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.allowance" })}>
-        <IconButton onClick={handleAllowance} data-testid="StakeDepositAllowanceButton">
-          <HowToVote />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleAllowance}
+        icon={HowToVote}
+        message="form.tips.allowance"
+        className={className}
+        dataTestId="StakeDepositAllowanceButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingAllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
+          tokenType: rule.deposit!.components[0].contract!.contractType || TokenType.ERC20,
+          contractId: rule.deposit!.components[0].contract!.id,
           amount: rule.deposit?.components[0].amount || "0",
           contract: {
-            contractId: rule.deposit?.components[0].contract!.id,
-            address: rule.deposit?.components[0].contract!.address || "",
-            contractType: rule.deposit?.components[0].contract!.contractType || TokenType.ERC20,
-            tokenType: rule.deposit?.components[0].contract!.contractType || TokenType.ERC20,
-            decimals: rule.deposit?.components[0].contract!.decimals ?? 18,
+            address: rule.deposit!.components[0].contract!.address || "",
+            contractType: rule.deposit!.components[0].contract!.contractType || TokenType.ERC20,
+            decimals: rule.deposit!.components[0].contract!.decimals || 18,
           },
         }}
       />

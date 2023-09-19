@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IStakingDepositSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingDepositEntity } from "./deposit.entity";
 
 @Injectable()
@@ -22,17 +23,32 @@ export class StakingDepositService {
 
   public findAll(
     where: FindOptionsWhere<StakingDepositEntity>,
-    options?: FindOneOptions<StakingDepositEntity>,
+    options?: FindManyOptions<StakingDepositEntity>,
   ): Promise<Array<StakingDepositEntity>> {
     return this.stakingDepositEntityRepository.find({ where, ...options });
   }
 
-  public async search(dto: Partial<IStakingDepositSearchDto>): Promise<[Array<StakingDepositEntity>, number]> {
-    const { query, account, stakingDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
+  public async search(
+    dto: Partial<IStakingDepositSearchDto>,
+    _userEntity: UserEntity,
+  ): Promise<[Array<StakingDepositEntity>, number]> {
+    const {
+      contractIds,
+      account,
+      emptyReward,
+      stakingDepositStatus,
+      deposit,
+      reward,
+      startTimestamp,
+      endTimestamp,
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.stakingDepositEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -45,25 +61,18 @@ export class StakingDepositService {
 
     queryBuilder.select();
 
-    if (account) {
-      queryBuilder.andWhere("stake.account = :account", { account });
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
-    if (query) {
-      queryBuilder.leftJoin(
-        qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
-          return qb;
-        },
-        `blocks`,
-        `TRUE`,
-      );
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
-        }),
-      );
+    if (account) {
+      queryBuilder.andWhere("stake.account = :account", { account });
     }
 
     if (stakingDepositStatus) {
@@ -76,6 +85,7 @@ export class StakingDepositService {
       }
     }
 
+    // deposit always exists
     if (deposit) {
       if (deposit.tokenType) {
         if (deposit.tokenType.length === 1) {
@@ -101,7 +111,8 @@ export class StakingDepositService {
       }
     }
 
-    if (reward) {
+    // reward is optional
+    if (!emptyReward && reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
@@ -124,6 +135,8 @@ export class StakingDepositService {
           });
         }
       }
+    } else {
+      queryBuilder.andWhere("rule.reward IS NULL");
     }
 
     if (startTimestamp && endTimestamp) {

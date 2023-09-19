@@ -5,6 +5,8 @@ import { Protected } from "@gemunion/common-pages";
 import { Profile } from "./profile";
 import { Page } from "./page";
 import { Feedback } from "./feedback";
+import { Merchant } from "./merchant";
+import { AcceptInvitation } from "./invitation";
 
 export const infrastructureRoutes: Array<RouteObject> = [
   {
@@ -27,5 +29,15 @@ export const infrastructureRoutes: Array<RouteObject> = [
     path: "/feedback",
     element: <Protected />,
     children: [{ index: true, element: <Feedback /> }],
+  },
+  {
+    path: "/merchant",
+    element: <Protected />,
+    children: [{ index: true, element: <Merchant /> }],
+  },
+  {
+    path: "/invitations/accept/:uuid",
+    element: <Protected />,
+    children: [{ index: true, element: <AcceptInvitation /> }],
   },
 ];

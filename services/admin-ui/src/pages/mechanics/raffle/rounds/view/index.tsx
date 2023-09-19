@@ -14,7 +14,7 @@ export interface IRaffleRoundViewDialogProps {
 
 export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { roundId, number } = initialValues;
+  const { roundId, contract, number } = initialValues;
 
   const { formatMessage } = useIntl();
 
@@ -27,6 +27,12 @@ export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
       <TableContainer component={Paper}>
         <Table aria-label="raffle ticket table">
           <TableBody>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{contract?.title}</TableCell>
+            </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.roundId" />

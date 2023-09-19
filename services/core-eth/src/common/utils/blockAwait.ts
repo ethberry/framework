@@ -1,6 +1,6 @@
-import { ethers } from "ethers";
+import { JsonRpcProvider } from "ethers";
 
-export const blockAwait = async function (blockDelay = 1, provider: ethers.JsonRpcProvider): Promise<number> {
+export const blockAwait = async function (blockDelay = 1, provider: JsonRpcProvider): Promise<number> {
   return new Promise(resolve => {
     let initialBlockNumber = 0;
     void provider.on("block", (blockNumber: number) => {

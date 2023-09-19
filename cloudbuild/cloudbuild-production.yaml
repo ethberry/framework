@@ -6,6 +6,9 @@ steps:
   # Download firebase file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/gemunion-firebase-key.json", "gemunion-firebase-key.json"]
+  # Download gcloud file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/app/halogen-framing-key.json", "halogen-framing-key.json"]
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/services/*", "services/"]

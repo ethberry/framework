@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -17,11 +8,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
+import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { CollectionTemplateEditDialog } from "./edit";
 
@@ -45,6 +37,7 @@ export const CollectionTemplate: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/collection/templates",
     empty: {
@@ -107,30 +100,32 @@ export const CollectionTemplate: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.COLLECTION]}
+        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((template, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+          {rows.map(template => (
+            <ListItem key={template.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(template)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="TemplateActionsMenuButton">
+                <ListAction onClick={handleEdit(template)} icon={Create} message="form.buttons.edit" />
+                <ListAction
                   onClick={handleDelete(template)}
-                  // disabled={template.templateStatus === TemplateStatus.INACTIVE}
-                  disabled
-                >
-                  <Delete />
-                </IconButton>
-                <TemplateActionsMenu
-                  template={template}
                   disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  icon={Delete}
+                  message="form.buttons.delete"
                 />
-              </ListItemSecondaryAction>
+                <MintButton
+                  template={template}
+                  disabled={
+                    template.templateStatus === TemplateStatus.INACTIVE ||
+                    template.contract?.contractType === TokenType.NATIVE ||
+                    template.contract?.contractFeatures.includes(ContractFeatures.GENES)
+                  }
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

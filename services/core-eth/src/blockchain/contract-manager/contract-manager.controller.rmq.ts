@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
-import { IEthLoggerInOutDto } from "./interfaces";
+import type { IEthLoggerInOutDto } from "./interfaces";
 import { RmqProviderType } from "@framework/types";
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 

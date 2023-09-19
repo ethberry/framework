@@ -19,5 +19,5 @@ interface IERC721RaffleTicket {
 
   function getTicketData(uint256 tokenId) external view returns (TicketRaffle memory);
 
-  function setTicketData(uint256 tokenId) external;
+  function setPrize(uint256 tokenId, uint256 multiplier) external;
 }

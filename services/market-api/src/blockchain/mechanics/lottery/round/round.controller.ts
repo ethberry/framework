@@ -1,14 +1,12 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { Public } from "@gemunion/nest-js-utils";
-import { ILotteryContractRound } from "@framework/types";
+import { NotFoundInterceptor } from "@gemunion/nest-js-utils";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
-import { LotteryOptionsDto } from "./dto";
+import { LotteryCurrentDto } from "./dto";
 
-@Public()
 @ApiBearerAuth()
 @Controller("/lottery/rounds")
 export class LotteryRoundController {
@@ -19,8 +17,20 @@ export class LotteryRoundController {
     return this.lotteryRoundService.autocomplete();
   }
 
-  @Get("/options")
-  public options(@Query() dto: LotteryOptionsDto): Promise<ILotteryContractRound> {
-    return this.lotteryRoundService.options(dto);
+  @Get("/current")
+  public current(@Query() dto: LotteryCurrentDto): Promise<LotteryRoundEntity> {
+    return this.lotteryRoundService.current(dto);
+  }
+
+  @Get("/latest")
+  @UseInterceptors(NotFoundInterceptor)
+  public last(@Query() dto: LotteryCurrentDto): Promise<LotteryRoundEntity | null> {
+    return this.lotteryRoundService.latest(dto);
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public statistic(@Param("id", ParseIntPipe) id: number): Promise<LotteryRoundEntity | null> {
+    return this.lotteryRoundService.statistic(id);
   }
 }

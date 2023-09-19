@@ -12,16 +12,14 @@ import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import "../../utils/TopUp.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 
 /**
  * @title Vesting
  * @dev Basic preset of Vesting contract that includes the following extensions:
  *      - Ownable (OpenZeppelin)
  *      - VestingWallet (OpenZeppelin)
- *      - Multicall (OpenZeppelin)
- *      - ERC1363 (OpenZeppelin)
+ *      - TopUp (Gemunion)
  *      This contract abstracts all common functions and is used as an foundation for other vesting contracts
  */
 contract Vesting is VestingWallet, Ownable, TopUp {
@@ -32,14 +30,14 @@ contract Vesting is VestingWallet, Ownable, TopUp {
   uint16 private immutable _monthlyRelease; // The amount of tokens that can be released daily
 
   constructor(
-    address beneficiary,
+    address beneficiaryAddress,
     uint64 startTimestamp,
     uint16 cliffInMonth,
     uint16 monthlyRelease
   ) VestingWallet(address(1), startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
     _cliffInMonth = cliffInMonth;
     _monthlyRelease = monthlyRelease;
-    _transferOwnership(beneficiary);
+    _transferOwnership(beneficiaryAddress);
   }
 
   /**

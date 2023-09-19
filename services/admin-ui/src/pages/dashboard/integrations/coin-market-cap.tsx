@@ -1,13 +1,15 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const CoinMarketCapSection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+import { NodeEnv } from "@framework/types";
 
-  if (disabled) {
+export const CoinMarketCapSection: FC = () => {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+
+  if (!isDevelopment) {
     return null;
   }
 
@@ -21,14 +23,14 @@ export const CoinMarketCapSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/coin-market-cap/rates">
+        <ListItemButton component={RouterLink} to="/coin-market-cap/rates">
           <ListItemIcon>
             <Paid />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.coin-market-cap.rates" />
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
       </List>
     </Paper>
   );

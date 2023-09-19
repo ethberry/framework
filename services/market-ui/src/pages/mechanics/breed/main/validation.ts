@@ -1,6 +1,7 @@
-import { mixed, number, object, string } from "yup";
+import { mixed, object, string } from "yup";
 
 import { reEthAddress } from "@gemunion/constants";
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { TokenType } from "@framework/types";
 
 export const validationSchema = object().shape({
@@ -9,18 +10,12 @@ export const validationSchema = object().shape({
     address: string()
       .matches(reEthAddress, "form.validations.patternMismatch")
       .required("form.validations.valueMissing"),
-    tokenId: number()
-      .required("form.validations.valueMissing")
-      .integer("form.validations.badInput")
-      .min(1, "form.validations.rangeUnderflow"),
+    tokenId: dbIdValidationSchema,
   }),
   dad: object().shape({
     address: string()
       .matches(reEthAddress, "form.validations.patternMismatch")
       .required("form.validations.valueMissing"),
-    tokenId: number()
-      .required("form.validations.valueMissing")
-      .integer("form.validations.badInput")
-      .min(1, "form.validations.rangeUnderflow"),
+    tokenId: dbIdValidationSchema,
   }),
 });

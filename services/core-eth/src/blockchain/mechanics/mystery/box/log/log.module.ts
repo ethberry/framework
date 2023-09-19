@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
 import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
@@ -31,7 +31,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
         return {
           contract: {
             contractType: ContractType.MYSTERY,
-            contractAddress: mysteryContracts.address || [],
+            contractAddress: mysteryContracts ? mysteryContracts.address : [],
             contractInterface: new Interface(ERC721MysteryBoxBlacklistPausableSol.abi),
             // prettier-ignore
             eventNames: [
@@ -64,7 +64,7 @@ export class MysteryLogModule implements OnModuleDestroy {
   constructor(private readonly mysteryLogService: MysteryLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.mysteryLogService.updateBlock();
   }
 }

@@ -1,4 +1,11 @@
 {
+  "alert": {
+    "allowanceWarning": "You are going to allow all tokens of the contract",
+    "approve": "Please approve ingredients to Exchange before using this mechanic",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "redirect": "You will be redirected in a moment",
+    "uncaughtError": "Uncaught error happened"
+  },
   "components": {
     "header": {
       "checkout": "Checkout",
@@ -44,12 +51,13 @@
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
     "transfer": "Transfer",
-    "view": "View",
+    "transferOwnership": "Transfer ownership",
     "upgrade": "Upgrade",
+    "view": "View",
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "GRADE": {
+    "LEVEL": {
       "1": "1",
       "10": "10",
       "2": "2",
@@ -103,8 +111,11 @@
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
-      "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked"
+      "REDEEMED": "Redeemed"
+    },
+    "claimType": {
+      "TOKEN": "Token",
+      "VESTING": "Vesting"
     },
     "durationUnit": {
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
@@ -220,8 +231,8 @@
       "PaymentReleased": "PaymentReleased",
       "Purchase": "Purchase",
       "PurchaseLottery": "PurchaseLottery",
-      "PurchaseRaffle": "PurchaseRaffle",
       "PurchaseMysteryBox": "PurchaseMysteryBox",
+      "PurchaseRaffle": "PurchaseRaffle",
       "RandomWordsRequested": "RandomWordsRequested",
       "RandomnessRequest": "RandomnessRequest",
       "RandomnessRequestId": "RandomnessRequestId",
@@ -285,7 +296,7 @@
       "NOW_IN_DELIVERY": "Now in delivery",
       "SCHEDULED": "Scheduled"
     },
-    "pyramidDepositStatus": {
+    "ponziDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
@@ -309,7 +320,9 @@
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "NATIVE": "Native"
+      "MYSTERY": "Mystery",
+      "NATIVE": "Native",
+      "NONE": "None"
     },
     "userRoles": {
       "ADMIN": "Admin",
@@ -321,14 +334,6 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     }
-  },
-  "errors": {
-    "access-denied": "Access Denied",
-    "internal-server-error": "Server Error",
-    "page-not-found": "Page Not Found",
-    "service-unavailable": "Service Unavailable",
-    "uncaughtError": "Uncaught error happened",
-    "unknown": "Unknown Error"
   },
   "form": {
     "buttons": {
@@ -346,11 +351,13 @@
       "create": "Create",
       "delete": "Delete",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
+      "join": "Join",
       "lend": "Lend token",
       "login": "Login",
       "logout": "Logout",
@@ -374,14 +381,17 @@
       "withdraw": "Withdraw"
     },
     "hints": {
-      "allowanceWarning": "You are going to allow all tokens of the contract",
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
       "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
+      "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
       "achievementLevel": "Level to reach",
       "address": "Address",
@@ -395,6 +405,7 @@
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Status",
+      "claimType": "Type",
       "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
       "confirm": "Confirm",
@@ -425,18 +436,21 @@
       "eventTypes": "Event type",
       "expires": "Lend expires",
       "externalId": "External ID",
+      "facebookUrl": "Facebook",
       "from": "From",
       "gender": "Gender",
       "gradeId": "Grade",
       "id": "ID",
       "imageUrl": "Avatar",
+      "instagramUrl": "Instagram",
+      "inverse": "Inverse",
       "isDefault": "Make default",
       "item": "Item",
-      "lottery": "Lottery",
       "language": "Language",
       "lendType": "Lend Type",
       "level": "Level",
       "listId": "List ID",
+      "lottery": "Lottery",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
       "merchantId": "Merchant",
@@ -448,10 +462,11 @@
       "orderStatus": "Status",
       "password": "Password",
       "penalty": "Penalty",
+      "ponziDepositStatus": "Status",
+      "ponziRuleStatus": "Status",
       "price": "Price",
-      "pyramidDepositStatus": "Status",
-      "pyramidRuleStatus": "Status",
       "quantity": "Quantity",
+      "raffle": "Raffle",
       "rank": "Rank",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
@@ -480,11 +495,14 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Token status",
       "tokenType": "Type",
+      "twitterUrl": "Twitter",
       "tx": "Tx hash",
       "type": "Type",
       "updatedAt": "Updated",
+      "wallet": "Wallet",
       "winNumbers": "Win numbers",
       "withdrawDeposit": "Withdraw deposit",
+      "youtubeUrl": "Youtube",
       "zip": "ZIP code"
     },
     "placeholders": {
@@ -503,9 +521,12 @@
       "country": "Germany",
       "createdAt": "Registered",
       "customContractId": "Allowance Contract",
+      "description": "Description",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
       "gradeId": "LEVEL",
+      "instagramUrl": "https://instagram.com/",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -521,18 +542,24 @@
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Type something",
+      "title": "Title",
       "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens",
+      "twitterUrl": "https://twitter.com/",
+      "wallet": "Wallet",
+      "youtubeUrl": "https://youtube.com/",
       "zip": "80576"
     },
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
       "cancel": "Cancel",
+      "claim": "Claim",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
+      "deploy": "Deploy",
       "deposit": "Deposit",
       "edit": "Edit",
       "lend": "Lend",
@@ -542,8 +569,7 @@
       "reward": "Reward",
       "transfer": "Transfer",
       "transferOwnership": "Transfer ownership",
-      "view": "View",
-      "waitlist": "Waitlist"
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -563,8 +589,11 @@
     }
   },
   "messages": {
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "merchant-created": "Congratulations on creating your merchant account! It's currently undergoing the validation process. We appreciate your patience during this time.",
     "noAddress": "No address",
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "uncaughtError": "Uncaught error happened"
   },
   "pages": {
     "achievements": {
@@ -609,6 +638,7 @@
       "title": "CoinGecko"
     },
     "craft": {
+      "approve": "Please approve ingredients to Exchange before",
       "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",
@@ -667,15 +697,15 @@
         "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
-        "drop": "Drop",
+        "promo": "Promo",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
-        "pyramid": "Pyramid",
+        "ponzi": "Ponzi",
         "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
-        "waitlist": "Waitlist",
+        "wait-list": "Waitlist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -766,8 +796,8 @@
         "title": "Uniswap"
       }
     },
-    "drop-list": {
-      "title": "Drops"
+    "promo-list": {
+      "title": "Promos"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -803,7 +833,7 @@
         "title": "ERC721 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC721 Template: {title}"
       },
       "templates": {
@@ -811,13 +841,7 @@
       },
       "title": "ERC721",
       "token": {
-        "genesis": "Genesis",
-        "grade": "Grade",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
-        "title": "ERC721 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC721 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -835,7 +859,7 @@
         "title": "ERC998 Contracts"
       },
       "template": {
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "ERC998 Template: {title}"
       },
       "templates": {
@@ -843,12 +867,7 @@
       },
       "title": "ERC998",
       "token": {
-        "genesis": "Genesis",
-        "level": "Level: {level}",
-        "price": "Base price: {amount}",
-        "rarity": "Rarity: {rarity}",
-        "title": "ERC998 Token: {title}",
-        "traits": "Traits"
+        "title": "ERC998 Token: {title}"
       },
       "tokens": {
         "sort": {
@@ -894,27 +913,47 @@
       "popular": "Popular items"
     },
     "lottery": {
-      "leaderboard": {
-        "title": "Leaderboard"
+      "contract": {
+        "title": "Contract: {title}"
       },
       "purchase": {
+        "count": "{current} of {max} sold",
         "price": "Ticket Price",
-        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
         "title": "Buy a ticket"
       },
+      "title": "Lottery",
       "tokens": {
         "title": "My tickets"
-      },
-      "contract": {
-        "title": "Contracts"
-      },
-      "title": "Lottery"
+      }
     },
     "lottery-list": {
       "title": "Lottery contracts"
     },
     "marketplace": {
+      "contract": {
+        "title": "Contract: {title}"
+      },
+      "contracts": {
+        "title": "Contract"
+      },
+      "merchant": {
+        "title": "Merchant: {title}"
+      },
+      "merchants": {
+        "title": "Merchants"
+      },
+      "template": {
+        "price": "Base price: {amount}",
+        "title": "Templates: {title}"
+      },
+      "templates": {
+        "title": "Templates"
+      },
+      "title": "Marketplace"
+    },
+    "marketplace-old": {
       "erc1155": {
         "title": "ERC1155"
       },
@@ -936,7 +975,7 @@
       "title": "Primary market"
     },
     "merchant": {
-      "title": "Merchant: {title}"
+      "title": "Create merchant"
     },
     "merchants": {
       "title": "Merchants"
@@ -944,7 +983,7 @@
     "mystery": {
       "box": {
         "content": "Mystery Box Content",
-        "price": "Price: {amount}",
+        "price": "Price",
         "title": "Mystery Box: {title}"
       },
       "boxes": {
@@ -982,6 +1021,20 @@
     "page": {
       "title": "{title}"
     },
+    "ponzi": {
+      "deposit": {
+        "title": "My Deposits"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "reward": "Reward",
+      "rules": {
+        "deposit": "Deposit",
+        "title": "Deposit rules"
+      },
+      "title": "Ponzi"
+    },
     "product": {
       "price": "Price: {amount}",
       "title": "{title}"
@@ -1005,32 +1058,24 @@
       },
       "title": "Profile"
     },
-    "pyramid": {
-      "deposit": {
-        "title": "My Deposits"
-      },
-      "leaderboard": {
-        "title": "Leaderboard"
-      },
-      "reward": "Reward",
-      "rules": {
-        "deposit": "Deposit",
-        "title": "Deposit rules"
-      },
-      "title": "Pyramid"
-    },
     "raffle": {
-      "leaderboard": {
-        "title": "Leaderboard"
+      "contract": {
+        "title": "Contract: {title}"
       },
       "purchase": {
+        "commission": "{commission}% commission",
+        "count": "{current} of {max} sold",
         "rules": "Just buy a ticket. Random will choose a winner",
+        "sold": "{count} sold",
         "title": "Buy a ticket"
       },
+      "title": "Raffle",
       "tokens": {
         "title": "My tickets"
-      },
-      "title": "Raffle"
+      }
+    },
+    "raffle-list": {
+      "title": "Raffle contracts"
     },
     "referral": {
       "cabinet": {
@@ -1066,7 +1111,16 @@
     },
     "token": {
       "balanceTitle": "Balance:",
-      "priceTitle": "Base price:"
+      "craft": "Craft",
+      "discrete": "Levels",
+      "dismantle": "Dismantle",
+      "genesis": "Genesis",
+      "mystery": "Mystery box",
+      "price": "Base price",
+      "priceTitle": "Base price:",
+      "rarity": "Rarity",
+      "rarityMultiplier": "x {multiplier}",
+      "traits": "Traits"
     },
     "tokens": {
       "title": "My tokens"
@@ -1079,7 +1133,7 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
-    "waitlist": {
+    "wait-list": {
       "item": {
         "title": "Waitlist"
       },
@@ -1116,10 +1170,13 @@
     "gradeNotActive": "Attribute is not active",
     "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
+    "merchantAlreadyExist": "Merchant already exist",
     "pageNotFound": "Page not found",
+    "paymentRequired": "Payment required",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "removedFromCart": "Removed from cart",
+    "signatureDoesNotMatch": "Signature does not match",
     "success": "Success",
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",

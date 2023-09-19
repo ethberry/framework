@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { testChainId } from "@framework/constants";
 import { IERC721TokenTransferEvent, TokenStatus } from "@framework/types";
@@ -86,7 +86,7 @@ export class LotteryTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider);
+    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

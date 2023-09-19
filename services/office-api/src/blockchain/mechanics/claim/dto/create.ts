@@ -26,4 +26,6 @@ export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
+
+  public chainId: number;
 }

@@ -7,7 +7,10 @@ import { BalanceEntity } from "../../blockchain/hierarchy/balance/balance.entity
 
 @Injectable()
 export class SyncService {
-  constructor(private readonly userService: UserService, private readonly balanceService: BalanceService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly balanceService: BalanceService,
+  ) {}
 
   public async getProfileBySub(sub: string): Promise<UserEntity> {
     const userEntity = await this.userService.findOne({ sub });

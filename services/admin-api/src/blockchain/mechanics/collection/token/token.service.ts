@@ -8,6 +8,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ITokenUploadDto } from "../contract/interfaces";
+import { compare } from "../../../../common/utils/sorter";
 
 @Injectable()
 export class CollectionTokenService extends TokenService {
@@ -27,8 +28,8 @@ export class CollectionTokenService extends TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.COLLECTION);
+  public search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 
   public getAllTokens(templateId: number): Promise<Array<TokenEntity>> {
@@ -56,10 +57,12 @@ export class CollectionTokenService extends TokenService {
       throw new NotFoundException("tokensNotFound");
     }
 
-    // arrays must be equal
-    // todo more check?
     if (files.length !== tokens.length) {
       throw new NotFoundException("tokensArrayLengthMismatch");
+    }
+    // arrays must be equal
+    if (compare(new Set(files.map(file => file.tokenId)), new Set(tokens.map(token => token.tokenId)))) {
+      throw new NotFoundException("tokensArrayMismatch");
     }
 
     files.map((file, i) => {

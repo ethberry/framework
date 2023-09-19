@@ -3,7 +3,8 @@ import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Error, Message, Protected } from "@gemunion/common-pages";
-import { routes as loginRoutes } from "@gemunion/firebase-login";
+import { FirebaseLogin } from "@gemunion/firebase-login";
+import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
@@ -32,7 +33,10 @@ const router = createBrowserRouter([
         element: <Protected />,
         children: [{ index: true, element: <Dashboard /> }],
       },
-      ...loginRoutes,
+      {
+        path: "/login",
+        element: <FirebaseLogin wallets={[MetamaskLoginButton]} />,
+      },
       ...infrastructureRoutes,
       ...hierarchyRoutes,
       ...mechanicsRoutes,

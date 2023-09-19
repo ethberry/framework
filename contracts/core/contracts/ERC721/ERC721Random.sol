@@ -7,7 +7,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
 
 import "./interfaces/IERC721Random.sol";
 import "./ERC721Simple.sol";
@@ -58,6 +58,9 @@ abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
     _mintCommon(request.account, request.templateId);
   }
 
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }

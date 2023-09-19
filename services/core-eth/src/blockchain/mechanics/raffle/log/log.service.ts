@@ -1,17 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
-import { EthersContractService } from "@gemunion/nestjs-ethers";
+import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ICreateListenerPayload } from "../../../../common/interfaces";
+import { ContractFeatures, ModuleType } from "@framework/types";
 
 @Injectable()
 export class RaffleLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
@@ -27,9 +26,14 @@ export class RaffleLogService {
     this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    const raffleAddr = this.configService.get<string>("RAFFLE_ADDR", "");
-    return this.contractService.updateLastBlockByAddr(raffleAddr, lastBlock);
+  public async updateBlock(): Promise<void> {
+    const raffleContracts = await this.contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
+
+    if (raffleContracts.fromBlock) {
+      await this.contractService.updateLastBlockByAddr(
+        raffleContracts.address[0],
+        this.ethersContractService.getLastBlockOption(),
+      );
+    }
   }
 }

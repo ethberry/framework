@@ -1,13 +1,14 @@
 import { Column, Entity, OneToMany } from "typeorm";
 
-import type { IMerchant } from "@framework/types";
-import { MerchantStatus, RatePlan } from "@framework/types";
+import type { IMerchant, IMerchantSocial } from "@framework/types";
+import { MerchantStatus, RatePlanType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { UserEntity } from "../user/user.entity";
+import { ChainLinkSubscriptionEntity } from "../../blockchain/integrations/chain-link/subscription/subscription.entity";
 import { OrderEntity } from "../../ecommerce/order/order.entity";
 import { ProductEntity } from "../../ecommerce/product/product.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends SearchableEntity implements IMerchant {
@@ -21,6 +22,12 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   public imageUrl: string;
 
   @Column({ type: "varchar" })
+  public wallet: string;
+
+  @Column({
+    type: "varchar",
+    select: false,
+  })
   public apiKey: string;
 
   @Column({
@@ -29,11 +36,14 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   })
   public merchantStatus: MerchantStatus;
 
+  @Column({ type: "json" })
+  public social: IMerchantSocial;
+
   @Column({
     type: "enum",
-    enum: RatePlan,
+    enum: RatePlanType,
   })
-  public ratePlan: RatePlan;
+  public ratePlan: RatePlanType;
 
   @OneToMany(_type => UserEntity, user => user.merchant)
   public users: Array<UserEntity>;
@@ -47,4 +57,7 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
     cascade: ["remove"],
   })
   public orders: Array<OrderEntity>;
+
+  @OneToMany(_type => ChainLinkSubscriptionEntity, sub => sub.merchant)
+  public chainLinkSubscriptions: Array<ChainLinkSubscriptionEntity>;
 }

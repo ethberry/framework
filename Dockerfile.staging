@@ -1,0 +1,41 @@
+FROM node:20 AS base
+ENV NODE_OPTIONS=--max-old-space-size=7168
+
+LABEL stage=base
+RUN apt-get update
+RUN apt-get install -y \
+  python3 \
+  build-essential \
+  git \
+  bash \
+  curl \
+  gettext \
+  nano \
+  jq \
+  && npm i -g node-gyp
+
+FROM base AS deps
+LABEL stage=deps
+
+USER node
+ENV NODE_OPTIONS=--max_old_space_size=7168
+RUN mkdir -p /home/node/framework
+WORKDIR /home/node/framework
+
+# doubling admins
+COPY --chown=node:node . .
+# RUN mkdir -p /home/node/framework/services/adminb2b-ui
+# RUN mkdir -p /home/node/framework/services/adminb2c-ui
+COPY --chown=node:node ./services/admin-ui/ ./services/adminb2b-ui/
+RUN contents="$(jq '.name = "@framework/admin-ui-b2b"' ./services/adminb2b-ui/package.json)" && echo "${contents}" > ./services/adminb2b-ui/package.json
+COPY --chown=node:node ./services/admin-ui/ ./services/adminb2c-ui/
+RUN contents="$(jq '.name = "@framework/admin-ui-b2c"' ./services/adminb2c-ui/package.json)" && echo "${contents}" > ./services/adminb2c-ui/package.json
+
+RUN rm -rf /home/node/framework/services/admin-ui
+
+RUN npm i --omit=dev
+
+RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent"}' >> /home/node/framework/lerna.json
+
+RUN npm run docker:bootstrap
+RUN npm run docker:build

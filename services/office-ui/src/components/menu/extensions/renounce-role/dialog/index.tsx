@@ -1,15 +1,16 @@
 import { FC, useEffect, useState } from "react";
-import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
@@ -23,11 +24,11 @@ export interface IAccessControlRenounceRoleDialogProps {
 }
 
 export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -55,28 +56,33 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   };
 
   useEffect(() => {
-    void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.account === user.profile.wallet));
-    });
-  }, []);
+    if (open) {
+      void fn().then((rows: Array<IAccessControl>) => {
+        setRows(rows.filter(row => row.account === profile.wallet));
+      });
+    }
+  }, [open]);
 
   return (
-    <ConfirmationDialog message="dialogs.renounceRole" data-testid="AccessControlRenounceRoleDialog" {...rest}>
+    <ConfirmationDialog
+      message="dialogs.renounceRole"
+      data-testid="AccessControlRenounceRoleDialog"
+      open={open}
+      {...rest}
+    >
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
-            {rows.map((access, i) => (
-              <ListItem key={i}>
+            {rows.map(access => (
+              <ListItem key={access.id}>
                 <ListItemText>
                   {access.account}
                   <br />
                   {access.role}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton onClick={handleRenounce(access)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleRenounce(access)} icon={Delete} message="form.buttons.delete" />
+                </ListActions>
               </ListItem>
             ))}
           </List>

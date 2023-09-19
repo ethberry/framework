@@ -1,13 +1,12 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
-import { Contract } from "ethers";
+import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
@@ -17,11 +16,15 @@ import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
   const {
-    contract: { address, contractFeatures, contractType, decimals },
+    contract: { address, contractType, decimals },
+    disabled,
+    variant,
   } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
@@ -57,14 +60,13 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleAllowance} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
-        <ListItemIcon>
-          <AddReactionIcon />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.allowance" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleAllowance}
+        disabled={disabled}
+        icon={HowToVote}
+        message="form.buttons.allowance"
+        variant={variant}
+      />
       <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}

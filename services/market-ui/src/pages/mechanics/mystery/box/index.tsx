@@ -1,19 +1,17 @@
 import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IMysterybox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import type { IMysteryBox } from "@framework/types";
 
-import { MysteryboxPurchaseButton } from "../../../../components/buttons";
-import { formatPrice } from "../../../../utils/money";
-import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
+import { MysteryBoxContent } from "../token/mysterybox-content";
+import { MysteryBoxPanel } from "./mystery-box-panel";
 
 export const MysteryBox: FC = () => {
-  const { selected, isLoading } = useCollection<IMysterybox>({
+  const { selected, isLoading } = useCollection<IMysteryBox>({
     baseUrl: "/mystery/boxes",
     empty: {
       title: "",
@@ -36,26 +34,24 @@ export const MysteryBox: FC = () => {
       <PageHeader message="pages.mystery.box.title" data={selected} />
 
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           <Box component="img" sx={{ maxWidth: "100%" }} src={selected.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.description} />
           </Typography>
         </Grid>
-        <Grid item xs={3}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage
-                id="pages.mystery.box.price"
-                values={{ amount: formatPrice(selected.template?.price) }}
-              />
-            </Typography>
-            <MysteryboxPurchaseButton mysterybox={selected} />
-          </Paper>
+        <Grid item xs={12} sm={3}>
+          {selected.templateId ? (
+            <>
+              <MysteryBoxPanel box={selected} />
+            </>
+          ) : null}
         </Grid>
+
+        <Grid item xs={3}></Grid>
       </Grid>
 
-      <MysteryboxContent mysterybox={selected} />
+      <MysteryBoxContent mysteryBox={selected} />
     </Fragment>
   );
 };

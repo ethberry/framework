@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IExchangePurchaseLotteryEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
@@ -18,16 +18,16 @@ export class ExchangeLotteryServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
+  // event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);
   public async purchaseLottery(event: ILogEvent<IExchangePurchaseLotteryEvent>, context: Log): Promise<void> {
     const {
-      args: { items, price },
+      args: { item, price },
     } = event;
     const { address, transactionHash } = context;
 
-    // TODO find ticket-token?
     const ticketTemplate = await this.templateService.findOne(
       {
-        contract: { address: items[1].token.toLowerCase() }, // lottery ticket contract
+        contract: { address: item.token.toLowerCase() }, // lottery ticket contract
       },
       { relations: { contract: true } },
     );
@@ -37,11 +37,11 @@ export class ExchangeLotteryServiceEth {
     }
 
     // change contract's tokenID to DB's templateID
-    Object.assign(items[1], { tokenId: ticketTemplate.id });
+    Object.assign(item, { tokenId: ticketTemplate.id });
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const assets = await this.assetService.saveAssetHistory(history, [items[1]] /* [lottery, ticket] */, [price]);
+    const assets = await this.assetService.saveAssetHistory(history, [item] /* [ticket] */, [price]);
 
     await this.notificatorService.purchaseLottery({
       ...assets,

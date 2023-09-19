@@ -1,13 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
@@ -22,21 +19,21 @@ export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        102170101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 31 : 102170101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        1021701,
+        ${process.env.NODE_ENV === NodeEnv.production ? 31 : 1021701},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202170101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 32 : 202170101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        2021701,
+        ${process.env.NODE_ENV === NodeEnv.production ? 32 : 2021701},
         '${currentDateTime}',
         '${currentDateTime}'
       );

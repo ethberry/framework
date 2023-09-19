@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IExchangeErc20PaymentReleasedEvent,
   IExchangePayeeAddedEvent,

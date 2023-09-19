@@ -25,7 +25,7 @@ export const Cart: FC = () => {
         <FormattedMessage id="pages.checkout.products" />
       </Typography>
       <List disablePadding={true}>
-        {cart.items.length ? (
+        {cart && cart.items && cart.items.length ? (
           cart.items.map(item => (
             <ListItem key={item.product.id} disableGutters={true}>
               <ListItemText

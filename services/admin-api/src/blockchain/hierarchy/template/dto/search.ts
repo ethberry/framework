@@ -4,8 +4,8 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBigInt } from "@gemunion/nest-js-validators";
-import { TemplateStatus } from "@framework/types";
 import type { ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @ApiPropertyOptional({
@@ -54,5 +54,8 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsEnum(TemplateStatus, { each: true, message: "badInput" })
   public templateStatus: Array<TemplateStatus>;
 
+  public chainId: number;
   public merchantId: number;
+  public contractType: Array<TokenType>;
+  public contractModule: Array<ModuleType>;
 }

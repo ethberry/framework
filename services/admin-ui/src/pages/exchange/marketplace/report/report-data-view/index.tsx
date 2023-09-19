@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 
 import { ContractEventType, IEventHistoryReport, IExchangePurchaseEvent } from "@framework/types";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
 
 import { formatPriceHistory } from "../../../../../utils/money";
 
@@ -11,10 +11,9 @@ export interface IEventDataViewProps {
   row: IEventHistoryReport;
 }
 
-// TODO add transactionHash ScannerLink
 export const ReportDataView: FC<IEventDataViewProps> = props => {
   const {
-    row: { eventData, eventType, items, price },
+    row: { eventData, eventType, items, price, transactionHash },
   } = props;
 
   const purchaseEventData = eventData as IExchangePurchaseEvent;
@@ -32,6 +31,11 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
             <Box sx={{ ml: 1 }}>
               <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
                 <AddressLink address={purchaseEventData.account} />
+              </Box>
+            </Box>
+            <Box sx={{ ml: 1 }}>
+              <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                <TxHashLink hash={transactionHash} />
               </Box>
             </Box>
           </Box>

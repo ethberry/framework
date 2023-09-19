@@ -5,7 +5,7 @@ import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhe
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CategoryEntity } from "./category.entity";
-import { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
+import type { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
 
 @Injectable()
 export class CategoryService {

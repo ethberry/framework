@@ -1,5 +1,7 @@
-import { number, object } from "yup";
+import { object } from "yup";
+
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
-  addressId: number().required("form.validations.valueMissing"),
+  addressId: dbIdValidationSchema,
 });

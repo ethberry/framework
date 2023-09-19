@@ -1,19 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
+import { ContractSecurity } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
 
-export interface IContractRevokeRoleMenuItemProps {
+export interface IRevokeRoleMenuItemProps {
   contract: IContract;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
-export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
+export const RevokeRoleMenuItem: FC<IRevokeRoleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractSecurity },
+    disabled,
+    variant,
   } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
@@ -30,16 +34,19 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
     setIsRevokeRoleDialogOpen(false);
   };
 
+  if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
+    return null;
+  }
+
   return (
     <Fragment>
-      <MenuItem onClick={handleRevokeRole}>
-        <ListItemIcon>
-          <NoAccounts fontSize="small" />
-        </ListItemIcon>
-        <Typography variant="inherit">
-          <FormattedMessage id="form.buttons.revokeRole" />
-        </Typography>
-      </MenuItem>
+      <ListAction
+        onClick={handleRevokeRole}
+        icon={NoAccounts}
+        message="form.buttons.revokeRole"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccessControlRevokeRoleDialog
         onCancel={handleRevokeRoleCancel}
         onConfirm={handleRevokeRoleConfirm}

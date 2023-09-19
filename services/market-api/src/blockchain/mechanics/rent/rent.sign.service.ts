@@ -2,15 +2,17 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { SettingsKeys, TokenType } from "@framework/types";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
+import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { ISignRentTokenDto } from "./interfaces";
-import { sorter } from "../../../common/utils/sorter";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import type { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 
@@ -18,13 +20,14 @@ import { RentEntity } from "./rent.entity";
 export class RentSignService {
   constructor(
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly rentService: RentService,
     private readonly settingsService: SettingsService,
   ) {}
 
   public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
-    const { tokenId, account, referrer, expires, externalId } = dto;
+    const { tokenId, account, referrer, expires, externalId, chainId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -43,13 +46,15 @@ export class RentSignService {
     const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account, // from
       {
-        nonce,
         externalId, // rent.id
         expiresAt, // sign expires
-        referrer, // to
+        nonce,
         extra: lendExpires,
+        receiver: rentEntity.contract.merchant.wallet,
+        referrer, // to
       },
       tokenEntity,
       rentEntity,
@@ -59,12 +64,14 @@ export class RentSignService {
   }
 
   public getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

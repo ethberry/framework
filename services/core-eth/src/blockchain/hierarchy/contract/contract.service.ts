@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
+import { ArrayOverlap, DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ArrayOverlap, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
-
-import { ContractEntity } from "./contract.entity";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
-import { IContractListenerResult } from "../../../common/interfaces";
+
+import type { IContractListenerResult, ISystemContractListenerResult } from "../../../common/interfaces";
+import { ContractEntity } from "./contract.entity";
 
 @Injectable()
 export class ContractService {
@@ -27,7 +27,7 @@ export class ContractService {
 
   public findAll(
     where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
+    options?: FindManyOptions<ContractEntity>,
   ): Promise<Array<ContractEntity>> {
     return this.contractEntityRepository.find({ where, ...options });
   }
@@ -122,6 +122,20 @@ export class ContractService {
     return lastBlock;
   }
 
+  public async findSystemByName(where: FindOptionsWhere<ContractEntity>): Promise<ISystemContractListenerResult> {
+    const contractEntity = await this.findOne(where);
+
+    // system must exist
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return {
+      address: contractEntity.address !== wallet ? [contractEntity.address] : [],
+      fromBlock: contractEntity.fromBlock,
+    };
+  }
+
   public async findAllByType(
     contractModule: Array<ModuleType>,
     contractFeatures?: Array<ContractFeatures>,
@@ -149,7 +163,9 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return {
+      address: [],
+    };
   }
 
   public async findAllTokensByType(
@@ -169,7 +185,6 @@ export class ContractService {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
     }
 
-    // TODO fix search in array
     if (contractFeatures) {
       if (contractFeatures.length === 1) {
         queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
@@ -190,7 +205,7 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 
   public async findAllRandomTokensByType(
@@ -210,9 +225,7 @@ export class ContractService {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
     }
 
-    // TODO fix search in array
     if (contractFeatures) {
-      // queryBuilder.andWhere("contract.contractFeatures = ANY(:...contractFeatures)", {
       queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", {
         contractFeatures,
       });
@@ -228,7 +241,7 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 
   public async findAllCommonTokensByType(
@@ -270,6 +283,6 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 }

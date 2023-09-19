@@ -138,7 +138,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
     setIsComposeTokenDialogOpen(false);
   };
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     postponeAction(option, metaComposeFn);
   };
 

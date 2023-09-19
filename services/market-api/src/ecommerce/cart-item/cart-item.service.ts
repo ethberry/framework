@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CartItemEntity } from "./cart-item.entity";
-import { ICartItemCreateDto } from "./interfaces";
+import type { ICartItemCreateDto } from "./interfaces";
 import { CartEntity } from "../cart/cart.entity";
 
 @Injectable()

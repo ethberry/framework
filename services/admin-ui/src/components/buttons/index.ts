@@ -7,15 +7,15 @@ export * from "./mechanics/claim/upload";
 export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/collection/deploy";
 
-export * from "./mechanics/lottery/deploy";
+export * from "./mechanics/lottery/contract/deploy";
 
-export * from "./mechanics/raffle/deploy";
+export * from "./mechanics/raffle/contract/deploy";
 
-export * from "./mechanics/mysterybox/deploy";
+export * from "./mechanics/mystery/contract/deploy";
 
-export * from "./mechanics/pyramid/deploy";
-export * from "./mechanics/pyramid/upload";
-export * from "./mechanics/pyramid/rule-toggle";
+export * from "./mechanics/ponzi/deploy";
+export * from "./mechanics/ponzi/upload";
+export * from "./mechanics/ponzi/rule-toggle";
 
 export * from "./mechanics/staking/deploy";
 export * from "./mechanics/staking/upload";
@@ -23,11 +23,9 @@ export * from "./mechanics/staking/penalty";
 export * from "./mechanics/staking/withdraw";
 export * from "./mechanics/staking/rule-toggle";
 
-export * from "./mechanics/waitlist/deploy";
+export * from "./mechanics/wait-list/contract/deploy";
 
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
-
-export * from "./balance/releasable";
-export * from "./balance/release";
+export * from "./mechanics/vesting/upload";

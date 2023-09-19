@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateTemplate1563804000200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -88,11 +89,9 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 500000, true);`);
+    await queryRunner.query(
+      `SELECT setval('${ns}.template_id_seq', ${process.env.NODE_ENV === NodeEnv.production ? 50 : 500000}, true);`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

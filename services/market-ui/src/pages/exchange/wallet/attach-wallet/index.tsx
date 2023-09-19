@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "@mui/material";
+import { AccountBalanceWallet } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { useSnackbar } from "notistack";
 import { v4 } from "uuid";
@@ -10,8 +11,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { phrase } from "@gemunion/constants";
 import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
-import type { IUser } from "@framework/types";
 import { ApiError } from "@gemunion/provider-api-firebase";
+import type { IUser } from "@framework/types";
 
 export const AttachWalletButton: FC = () => {
   const [data, setData] = useState<IMetamaskDto>({ nonce: "", signature: "", wallet: "" });
@@ -75,11 +76,21 @@ export const AttachWalletButton: FC = () => {
   }, [account]);
 
   return user.profile.wallet ? (
-    <Button onClick={handleDetach}>
+    <Button
+      variant="outlined"
+      startIcon={<AccountBalanceWallet />}
+      onClick={handleDetach}
+      data-testid="DetachWalletButton"
+    >
       <FormattedMessage id="pages.wallet.detach" />
     </Button>
   ) : (
-    <Button onClick={handleAttach}>
+    <Button
+      variant="outlined"
+      startIcon={<AccountBalanceWallet />}
+      onClick={handleAttach}
+      data-testid="AttachWalletButton"
+    >
       <FormattedMessage id="pages.wallet.attach" />
     </Button>
   );

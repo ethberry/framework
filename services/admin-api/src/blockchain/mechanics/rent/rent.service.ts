@@ -2,12 +2,14 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { RentEntity } from "./rent.entity";
-import { IRentCreateDto, IRentUpdateDto } from "./interfaces";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { IRentSearchDto, RentRuleStatus } from "@framework/types";
+import type { IRentSearchDto } from "@framework/types";
+import { RentRuleStatus } from "@framework/types";
+
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import type { IRentCreateDto, IRentUpdateDto } from "./interfaces";
+import { RentEntity } from "./rent.entity";
 
 @Injectable()
 export class RentService {
@@ -18,7 +20,7 @@ export class RentService {
     protected readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: IRentSearchDto): Promise<[Array<RentEntity>, number]> {
+  public async search(dto: Partial<IRentSearchDto>): Promise<[Array<RentEntity>, number]> {
     const { query, rentStatus, contractIds, skip, take } = dto;
     const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");
 
@@ -66,7 +68,7 @@ export class RentService {
   }
 
   public async create(dto: IRentCreateDto, userEntity: UserEntity): Promise<RentEntity> {
-    const { price, title, contractId, rentStatus = RentRuleStatus.NEW } = dto;
+    const { price, title, contractId } = dto;
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
@@ -86,7 +88,7 @@ export class RentService {
         price: priceEntity,
         title,
         contractId,
-        rentStatus,
+        rentStatus: RentRuleStatus.NEW,
       })
       .save();
   }

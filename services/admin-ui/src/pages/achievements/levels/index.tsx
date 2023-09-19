@@ -1,29 +1,23 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
-import { AchievementLevelEditDialog } from "./edit";
-import { AchievementLevelSearchForm } from "./search";
+import { FormRefresher } from "../../../components/forms/form-refresher";
 import { cleanUpAsset } from "../../../utils/money";
+import { AchievementLevelEditDialog } from "./edit";
 
 export const emptyAchievementRule = {
   achievementType: AchievementType.MARKETPLACE,
@@ -49,6 +43,7 @@ export const AchievementLevels: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IAchievementLevel, IAchievementLevelSearchDto>({
     baseUrl: "/achievements/levels",
     empty: {
@@ -125,23 +120,31 @@ export const AchievementLevels: FC = () => {
         </Button>
       </PageHeader>
 
-      <AchievementLevelSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="AchievementLevelSearchForm"
+      >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <EntityInput name="achievementRuleIds" controller="achievements/rules" multiple />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((level, i) => (
-            <ListItem key={i}>
+          {rows.map(level => (
+            <ListItem key={level.id}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(level)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(level)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>

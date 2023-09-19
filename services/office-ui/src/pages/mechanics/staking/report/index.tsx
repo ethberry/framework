@@ -5,6 +5,9 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
+import { SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
@@ -12,8 +15,9 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
-import { StakingReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
+import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
+import { SearchContractInput } from "../../../../components/inputs/search-contract";
 
 export const StakingReport: FC = () => {
   const {
@@ -31,21 +35,21 @@ export const StakingReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      query: "",
       account: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 1201,
+        contractId: 0,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 1301,
+        contractId: 0,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
+    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();
@@ -121,7 +125,44 @@ export const StakingReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="StakingReportSearchForm"
+        awaitingFieldsNames={["deposit.contractId", "reward.contractId"]}
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SelectInput name="stakingDepositStatus" options={StakingDepositStatus} multiple />
+          </Grid>
+          <Grid item xs={6}>
+            <TextInput name="account" />
+          </Grid>
+          <Grid item xs={6} />
+          <Grid item xs={6}>
+            <SwitchInput name="emptyReward" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="reward" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchContractInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchContractInput prefix="reward" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="startTimestamp" />
+          </Grid>
+          <Grid item xs={6}>
+            <DateTimeInput name="endTimestamp" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <DataGrid
         pagination

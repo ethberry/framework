@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
@@ -49,7 +49,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 
@@ -65,7 +65,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        metadata: JSON.stringify(metadata),
+        metadata,
         royalty: contractEntity.royalty,
         template: templateEntity,
       });

@@ -1,13 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedTokenErc20USDTAt1563804000321 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
@@ -22,39 +19,39 @@ export class SeedTokenErc20USDTAt1563804000321 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        102150101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 11 : 102150101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        1021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 11 : 1021501},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202150101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 12 : 202150101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        2021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 12 : 2021501},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        302150101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 13 : 302150101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        3021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 13 : 3021501},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        402150101,
+        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 402150101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        4021501,
+        ${process.env.NODE_ENV === NodeEnv.production ? 14 : 4021501},
         '${currentDateTime}',
         '${currentDateTime}'
       );

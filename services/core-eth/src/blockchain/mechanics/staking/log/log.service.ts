@@ -1,16 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
-import { EthersContractService } from "@gemunion/nestjs-ethers";
+import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ICreateListenerPayload } from "../../../../common/interfaces";
+import { ModuleType } from "@framework/types";
 
 @Injectable()
 export class StakingLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
@@ -22,10 +21,15 @@ export class StakingLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    const stakingAddr = this.configService.get<string>("STAKING_ADDR", "");
-    return this.contractService.updateLastBlockByAddr(stakingAddr, lastBlock);
+  public async updateBlock(): Promise<void> {
+    const stakingContracts = await this.contractService.findAllByType([ModuleType.STAKING]);
+
+    if (stakingContracts.fromBlock) {
+      await this.contractService.updateLastBlockByAddr(
+        stakingContracts.address[0],
+        this.ethersContractService.getLastBlockOption(),
+      );
+    }
   }
 
   public addListener(dto: ICreateListenerPayload): void {

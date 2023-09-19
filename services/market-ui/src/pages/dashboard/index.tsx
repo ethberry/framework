@@ -18,13 +18,13 @@ import { LotterySection } from "./mechanics/lottery";
 import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
 import { CraftSection } from "./mechanics/craft";
-import { DropSection } from "./mechanics/drop";
+import { AssetPromoSection } from "./mechanics/promo";
 import { ReferralSection } from "./exchange/referral";
 import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
 import { WrapperSection } from "./mechanics/wrapper";
 import { BreedSection } from "./mechanics/breed";
-import { PyramidSection } from "./mechanics/pyramid";
+import { PonziSection } from "./mechanics/ponzi";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
@@ -39,6 +39,9 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
+          <PersonalSection />
+          <MarketplaceSection />
+          <ReferralSection />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
@@ -50,19 +53,16 @@ export const Dashboard: FC = () => {
           <ClaimSection />
           <VestingSection />
           <CraftSection />
-          <DropSection />
+          <AssetPromoSection />
           <RentSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
           <LotterySection />
           <RaffleSection />
           <StakingSection />
-          <PyramidSection />
+          <PonziSection />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <PersonalSection />
-          <MarketplaceSection />
-          <ReferralSection />
           <EcommerceSection />
           <DexSection />
           <CoinGeckoSection />

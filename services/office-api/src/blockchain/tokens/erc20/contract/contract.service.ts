@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -23,24 +21,16 @@ export class Erc20ContractService extends ContractService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
-    protected readonly configService: ConfigService,
   ) {
     super(contractEntityRepository);
   }
 
-  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC20],
-        contractModule: [ModuleType.HIERARCHY],
-      }),
-      userEntity,
-    );
+  public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC20]);
   }
 
-  public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {
+  public async create(dto: IErc20ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { address, symbol, decimals, title, description, merchantId } = dto;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractEntityRepository
       .create({
@@ -54,8 +44,8 @@ export class Erc20ContractService extends ContractService {
         name: title,
         title,
         description,
-        chainId,
         imageUrl: "",
+        chainId: userEntity.chainId,
         merchantId,
       })
       .save();
