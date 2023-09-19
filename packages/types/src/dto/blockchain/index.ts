@@ -2,6 +2,7 @@ export * from "./contract-manager/search";
 
 export * from "./hierarchy/contract/autocomplete";
 export * from "./hierarchy/contract/search";
+export * from "./hierarchy/contract/system";
 export * from "./hierarchy/template/autocomplete";
 export * from "./hierarchy/template/search";
 export * from "./hierarchy/token/autocomplete";

@@ -24,6 +24,7 @@ export enum TokenMintType {
 export enum ModuleType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   EXCHANGE = "EXCHANGE",
+  DISPENSER = "DISPENSER",
   CHAIN_LINK = "CHAIN_LINK",
   HIERARCHY = "HIERARCHY",
   COLLECTION = "COLLECTION",
@@ -36,6 +37,11 @@ export enum ModuleType {
   POLYGON = "POLYGON",
   STAKING = "STAKING",
   WAITLIST = "WAITLIST",
+}
+
+export enum SystemModuleType {
+  CONTRACT_MANAGER = "CONTRACT_MANAGER",
+  EXCHANGE = "EXCHANGE",
   DISPENSER = "DISPENSER",
 }
 
