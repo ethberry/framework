@@ -4,11 +4,11 @@ import { Casino } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { IRaffleRound } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IContract, IRaffleRound } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
@@ -26,8 +26,8 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, RafflePurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, RafflePurchaseABI, web3Context.provider?.getSigner());
 
       return contract.purchaseRaffle(
         {
@@ -59,23 +59,30 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const { chainId, account } = web3Context;
 
-    return metaFnWithSign(
-      {
-        url: "/raffle/ticket/sign",
-        method: "POST",
-        data: {
-          chainId,
-          account,
-          referrer: settings.getReferrer(),
-          contractId: round.contractId,
+      return metaFnWithSign(
+        {
+          url: "/raffle/ticket/sign",
+          method: "POST",
+          data: {
+            chainId,
+            account,
+            referrer: settings.getReferrer(),
+            contractId: round.contractId,
+          },
         },
-      },
-      null,
-      web3Context,
-    );
+        null,
+        web3Context,
+        systemContract,
+      ) as Promise<void>;
+    },
+  );
+
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
   });
 
   const handlePurchase = () => {
@@ -89,7 +96,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       message="form.buttons.buy"
       buttonVariant="contained"
       className={className}
-      dataTestId="RaffleBuyTicket"
+      dataTestId="RafflePurchaseButton"
       disabled={disabled}
       variant={variant}
     />

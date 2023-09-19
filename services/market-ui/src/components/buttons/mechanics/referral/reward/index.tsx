@@ -3,7 +3,9 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { constants, Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { useMetamask, useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import ReferralWithdrawRewardABI from "../../../../../abis/exchange/referral/reward/withdrawReward.abi.json";
 import ReferralGetBalanceABI from "../../../../../abis/exchange/referral/reward/getBalance.abi.json";
@@ -20,13 +22,19 @@ export const ReferralRewardButton: FC<IReferralRewardButtonProps> = props => {
   const [balance, setBalance] = useState("");
   const { isActive, account } = useWeb3React();
 
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(
+        systemContract.address,
+        ReferralWithdrawRewardABI,
+        web3Context.provider?.getSigner(),
+      );
+      return contract.withdrawReward() as Promise<void>;
+    },
+  );
+
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      process.env.EXCHANGE_ADDR,
-      ReferralWithdrawRewardABI,
-      web3Context.provider?.getSigner(),
-    );
-    return contract.withdrawReward() as Promise<void>;
+    return metaFnWithContract(SystemModuleType.DISPENSER, null, web3Context);
   });
 
   const handleWithdraw = () => {

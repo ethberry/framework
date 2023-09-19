@@ -4,7 +4,7 @@ import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/m
 
 import type { IMysteryBox } from "@framework/types";
 
-import { MysteryboxPurchaseButton } from "../../../../../components/buttons";
+import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 
@@ -27,7 +27,7 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
         <Box>{formatPrice(box.template?.price)}</Box>
       </CardContent>
       <CardActions>
-        <MysteryboxPurchaseButton mysteryBox={box} />
+        <MysteryBoxPurchaseButton mysteryBox={box} />
       </CardActions>
     </Card>
   );

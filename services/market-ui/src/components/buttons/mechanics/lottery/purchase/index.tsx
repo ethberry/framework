@@ -4,11 +4,11 @@ import { Casino } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ILotteryRound } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IContract, ILotteryRound } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 import { boolArrayToByte32 } from "@framework/traits-ui";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
@@ -28,8 +28,8 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, LotteryPurchaseABI, web3Context.provider?.getSigner());
 
       return contract
         .purchaseLottery(
@@ -63,24 +63,31 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const { chainId, account } = web3Context;
 
-    return metaFnWithSign(
-      {
-        url: "/lottery/ticket/sign",
-        method: "POST",
-        data: {
-          chainId,
-          account,
-          referrer: settings.getReferrer(),
-          ticketNumbers: boolArrayToByte32(ticketNumbers),
-          contractId: round.contractId,
+      return metaFnWithSign(
+        {
+          url: "/lottery/ticket/sign",
+          method: "POST",
+          data: {
+            chainId,
+            account,
+            referrer: settings.getReferrer(),
+            ticketNumbers: boolArrayToByte32(ticketNumbers),
+            contractId: round.contractId,
+          },
         },
-      },
-      null,
-      web3Context,
-    );
+        null,
+        web3Context,
+        systemContract,
+      ) as Promise<void>;
+    },
+  );
+
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
   });
 
   const handlePurchase = () => {
@@ -94,7 +101,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       message="form.buttons.buy"
       buttonVariant="contained"
       className={className}
-      dataTestId="LotteryBuyTicket"
+      dataTestId="LotteryPurchaseButton"
       disabled={disabled}
       variant={variant}
     />

@@ -1,11 +1,12 @@
 import { FC, Fragment, useState } from "react";
 import { Add } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, BigNumber } from "ethers";
+import { BigNumber, Contract } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IContract, ModuleType, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
 import { DispenserUploadDialog } from "./dialog";
@@ -24,8 +25,8 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const metaFnWithContract = useSystemContract<IContract, ModuleType>(
-    (values: IDispenserUploadDto, web3Context: Web3ContextType, systemContract) => {
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (values: IDispenserUploadDto, web3Context: Web3ContextType, systemContract: IContract) => {
       const { rows } = values;
 
       const [items, receivers] = rows.reduce<[Array<Omit<IDispenserRow, "account">>, Array<string>]>(
@@ -54,7 +55,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IDispenserUploadDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(ModuleType.DISPENSER, values, web3Context);
+    return metaFnWithContract(SystemModuleType.DISPENSER, values, web3Context);
   });
 
   const handleUpload = () => {

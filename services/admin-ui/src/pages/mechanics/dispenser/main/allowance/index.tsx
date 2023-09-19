@@ -6,14 +6,13 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-import { IContract, ModuleType, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
-
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
-import { IDispenserUploadDto } from "../../../../../components/buttons/mechanics/dispenser/upload/dialog/file-input";
 
 export interface IAllowanceButtonProps {
   className?: string;
@@ -32,8 +31,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFnWithContract = useSystemContract<IContract, ModuleType>(
-    (values: IAllowanceDto, web3Context: Web3ContextType, systemContract) => {
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (values: IAllowanceDto, web3Context: Web3ContextType, systemContract: IContract) => {
       const { amount, contract } = values;
       if (contract.contractType === TokenType.ERC20) {
         const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
@@ -58,8 +57,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     },
   );
 
-  const metaFn = useMetamask((values: IDispenserUploadDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(ModuleType.DISPENSER, values, web3Context);
+  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
+    return metaFnWithContract(SystemModuleType.DISPENSER, values, web3Context);
   });
 
   const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
