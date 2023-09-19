@@ -311,10 +311,10 @@ services:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
 
-  core-api:
-    container_name: core-api
+  cron-api:
+    container_name: cron-api
     image: gcr.io/halogen-framing-335807/framework-img:latest
-    command: "npm run --prefix ./microservices/core start:${BASE_MODE}"
+    command: "npm run --prefix ./microservices/cron start:${BASE_MODE}"
     environment:
       # common
       BASE_MODE: "${BASE_MODE}"
@@ -329,6 +329,7 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
       RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH_BINANCE: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
       # THROTTLE
       THROTTLE_TTL: "${THROTTLE_TTL}"
       THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
@@ -396,4 +397,5 @@ services:
       - office-api
       - json-api
       - game-api
+      - cron-api
       - core-eth

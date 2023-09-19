@@ -5,7 +5,7 @@ import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { deployDiamond } from "../test/Exchange/shared/fixture";
 
-const delay = 1; // block delay
+const delay = 2; // block delay
 const delayMs = 1100; // block delay ms
 
 interface IObj {
@@ -56,71 +56,72 @@ async function main() {
   // const [owner] = await ethers.getSigners();
 
   // DIAMOND CM
-  const cmInstance = await deployDiamond(
-    "DiamondCM",
-    [
-      "CollectionFactoryFacet",
-      "ERC20FactoryFacet",
-      "ERC721FactoryFacet",
-      "ERC998FactoryFacet",
-      "ERC1155FactoryFacet",
-      "LotteryFactoryFacet",
-      "MysteryBoxFactoryFacet",
-      "PonziFactoryFacet",
-      "RaffleFactoryFacet",
-      "StakingFactoryFacet",
-      "VestingFactoryFacet",
-      "WaitListFactoryFacet",
-      "UseFactoryFacet",
-      "AccessControlFacet",
-      "PausableFacet",
-    ],
-    "DiamondCMInit",
-    {
-      log: false,
-      logSelectors: false,
-    },
-  );
-  contracts.contractManager = cmInstance;
-  await debug(contracts);
-  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
+  // const cmInstance = await deployDiamond(
+  //   "DiamondCM",
+  //   [
+  //     "CollectionFactoryFacet",
+  //     "ERC20FactoryFacet",
+  //     "ERC721FactoryFacet",
+  //     "ERC998FactoryFacet",
+  //     "ERC1155FactoryFacet",
+  //     "LotteryFactoryFacet",
+  //     "MysteryBoxFactoryFacet",
+  //     "PonziFactoryFacet",
+  //     "RaffleFactoryFacet",
+  //     "StakingFactoryFacet",
+  //     "VestingFactoryFacet",
+  //     "WaitListFactoryFacet",
+  //     "UseFactoryFacet",
+  //     "AccessControlFacet",
+  //     "PausableFacet",
+  //   ],
+  //   "DiamondCMInit",
+  //   {
+  //     log: true,
+  //     logSelectors: false,
+  //   },
+  // );
+  // contracts.contractManager = cmInstance;
+  // await debug(contracts);
+  // const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
+  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", "0x7794f02dd366e28c0e1d8e6231fa5caf15e9b3b6");
 
   // console.info("contracts.contractManager.address", contracts.contractManager.address);
 
   // DIAMOND EXCHANGE
-  const exchangeInstance = await deployDiamond(
-    "DiamondExchange",
-    [
-      "ExchangePurchaseFacet",
-      "ExchangeClaimFacet",
-      "ExchangeBreedFacet",
-      "ExchangeCraftFacet",
-      "ExchangeDismantleFacet",
-      "ExchangeGradeFacet",
-      "ExchangeLotteryFacet",
-      "ExchangeRaffleFacet",
-      "ExchangeMysteryBoxFacet",
-      "ExchangeRentableFacet",
-      "PausableFacet",
-      "AccessControlFacet",
-      "WalletFacet",
-    ],
-    "DiamondExchangeInit",
-    {
-      log: false,
-      logSelectors: false,
-    },
-  );
-  contracts.exchange = exchangeInstance;
-  await debug(contracts);
+  // const exchangeInstance = await deployDiamond(
+  //   "DiamondExchange",
+  //   [
+  //     "ExchangePurchaseFacet",
+  //     "ExchangeClaimFacet",
+  //     "ExchangeBreedFacet",
+  //     "ExchangeCraftFacet",
+  //     "ExchangeDismantleFacet",
+  //     "ExchangeGradeFacet",
+  //     "ExchangeLotteryFacet",
+  //     "ExchangeRaffleFacet",
+  //     "ExchangeMysteryBoxFacet",
+  //     "ExchangeRentableFacet",
+  //     "PausableFacet",
+  //     "AccessControlFacet",
+  //     "WalletFacet",
+  //   ],
+  //   "DiamondExchangeInit",
+  //   {
+  //     log: false,
+  //     logSelectors: false,
+  //   },
+  // );
+  // contracts.exchange = exchangeInstance;
+  // await debug(contracts);
 
   await debug(
-    await factoryInstance.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory("0xf509a556b9c8be682b0ee597a1051230f18a35bb", MINTER_ROLE),
     "contractManager.addFactory",
   );
 
   await debug(
-    await factoryInstance.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE),
+    await factoryInstance.addFactory("0xf509a556b9c8be682b0ee597a1051230f18a35bb", METADATA_ROLE),
     "contractManager.addFactory",
   );
 
