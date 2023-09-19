@@ -1,8 +1,8 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, NotAcceptableException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { ClientProxy } from "@nestjs/microservices";
 import { CronJob } from "cron";
-import { IsNull, Not, JsonContains } from "typeorm";
+import { IsNull, JsonContains, Not } from "typeorm";
 
 import type { ILotteryScheduleUpdateRmq } from "@framework/types";
 import { ContractStatus, CoreEthType, CronExpression, ModuleType, RmqProviderType } from "@framework/types";
@@ -18,6 +18,8 @@ export class LotteryRoundServiceRmq {
     private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.CORE_ETH_SERVICE)
     private readonly coreEthServiceProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
+    private readonly coreEthServiceBinanceProxy: ClientProxy,
   ) {}
 
   public async initSchedule(): Promise<void> {
@@ -31,14 +33,15 @@ export class LotteryRoundServiceRmq {
 
     lotteryEntities.map(lottery => {
       return Object.values(CronExpression).includes(lottery.parameters.schedule as unknown as CronExpression)
-        ? this.updateOrCreateRoundCronJob({
-            address: lottery.address,
-            schedule: lottery.parameters.schedule as CronExpression,
-          })
+        ? this.updateOrCreateRoundCronJob(
+            {
+              address: lottery.address,
+              schedule: lottery.parameters.schedule as CronExpression,
+            },
+            lottery.chainId,
+          )
         : void 0;
     });
-
-    // this.updateOrCreateRoundCronJob(dto);
   }
 
   public async updateSchedule(dto: ILotteryScheduleUpdateRmq): Promise<void> {
@@ -62,17 +65,19 @@ export class LotteryRoundServiceRmq {
 
     await lotteryEntity.save();
 
-    this.updateOrCreateRoundCronJob(dto);
+    this.updateOrCreateRoundCronJob(dto, lotteryEntity.chainId);
   }
 
-  public updateOrCreateRoundCronJob(dto: ILotteryScheduleUpdateRmq): void {
+  public updateOrCreateRoundCronJob(dto: ILotteryScheduleUpdateRmq, chainId: number): void {
     try {
       this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.address}`);
     } catch (e) {
       this.loggerService.error(e, LotteryRoundServiceRmq.name);
     } finally {
       const job = new CronJob(dto.schedule, () => {
-        this.coreEthServiceProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto);
+        chainId === 56 || chainId === 97
+          ? this.coreEthServiceBinanceProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto)
+          : this.coreEthServiceProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto);
       });
       this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
       job.start();

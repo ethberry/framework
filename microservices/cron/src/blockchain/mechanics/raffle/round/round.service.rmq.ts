@@ -18,27 +18,30 @@ export class RaffleRoundServiceRmq {
     private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.CORE_ETH_SERVICE)
     private readonly coreEthServiceProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
+    private readonly coreEthServiceBinanceProxy: ClientProxy,
   ) {}
 
   public async initSchedule(): Promise<void> {
-    const lotteryEntities = await this.contractService.findAll({
-      contractModule: ModuleType.LOTTERY,
+    const raffleEntities = await this.contractService.findAll({
+      contractModule: ModuleType.RAFFLE,
       contractStatus: ContractStatus.ACTIVE,
       isPaused: false,
       contractType: IsNull(), // ?
       parameters: Not(JsonContains({ schedule: IsNull() })),
     });
 
-    lotteryEntities.map(lottery => {
-      return Object.values(CronExpression).includes(lottery.parameters.schedule as unknown as CronExpression)
-        ? this.updateOrCreateRoundCronJob({
-            address: lottery.address,
-            schedule: lottery.parameters.schedule as CronExpression,
-          })
+    raffleEntities.map(raffle => {
+      return Object.values(CronExpression).includes(raffle.parameters.schedule as unknown as CronExpression)
+        ? this.updateOrCreateRoundCronJob(
+            {
+              address: raffle.address,
+              schedule: raffle.parameters.schedule as CronExpression,
+            },
+            raffle.chainId,
+          )
         : void 0;
     });
-
-    // this.updateOrCreateRoundCronJob(dto);
   }
 
   public async updateSchedule(dto: IRaffleScheduleUpdateRmq): Promise<void> {
@@ -62,17 +65,19 @@ export class RaffleRoundServiceRmq {
 
     await raffleEntity.save();
 
-    this.updateOrCreateRoundCronJob(dto);
+    this.updateOrCreateRoundCronJob(dto, raffleEntity.chainId);
   }
 
-  public updateOrCreateRoundCronJob(dto: IRaffleScheduleUpdateRmq): void {
+  public updateOrCreateRoundCronJob(dto: IRaffleScheduleUpdateRmq, chainId: number): void {
     try {
       this.schedulerRegistry.deleteCronJob(`raffleRound@${dto.address}`);
     } catch (e) {
       this.loggerService.error(e, RaffleRoundServiceRmq.name);
     } finally {
       const job = new CronJob(dto.schedule, () => {
-        this.coreEthServiceProxy.emit(CoreEthType.START_RAFFLE_ROUND, dto);
+        chainId === 56 || chainId === 97
+          ? this.coreEthServiceBinanceProxy.emit(CoreEthType.START_RAFFLE_ROUND, dto)
+          : this.coreEthServiceProxy.emit(CoreEthType.START_RAFFLE_ROUND, dto);
       });
       this.schedulerRegistry.addCronJob(`raffleRound@${dto.address}`, job);
       job.start();

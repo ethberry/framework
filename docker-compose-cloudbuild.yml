@@ -61,6 +61,8 @@ services:
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
       ADMIN_FE_URL: "${ADMIN_FE_URL}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
@@ -168,6 +170,8 @@ services:
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
       OFFICE_FE_URL: "${OFFICE_FE_URL}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
@@ -219,6 +223,8 @@ services:
       PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
       FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
@@ -304,6 +310,34 @@ services:
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
+
+  core-api:
+    container_name: core-api
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./microservices/core start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_CRON_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    ports:
+      # cron-api
+      - "${PORT_CRON_API}:${PORT_CRON_API}"
 
   emailer:
     container_name: emailer
