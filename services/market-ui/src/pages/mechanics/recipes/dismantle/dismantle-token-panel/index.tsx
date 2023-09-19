@@ -5,23 +5,23 @@ import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
 import {
   Card,
-  Toolbar,
   CardContent,
-  ListItemIcon,
   Grid,
   List,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { formatItem } from "../../../../../utils/money";
@@ -48,20 +48,20 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   });
 
   const metaFnWithSign = useServerSignature(
-    (dismantle: IDismantle, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, DismantleABI, web3Context.provider?.getSigner());
+    (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, DismantleABI, web3Context.provider?.getSigner());
 
       return contract.dismantle(
         {
-          externalId: dismantle.id,
+          externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: dismantle.merchant!.wallet,
+          receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
         // ITEM to get after dismantle
-        dismantle.item?.components.sort(sorter("id")).map(component => ({
+        values.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -71,12 +71,12 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           amount: getDismantleMultiplier(
             component.amount,
             token.metadata,
-            dismantle.dismantleStrategy,
-            dismantle.rarityMultiplier,
+            values.dismantleStrategy,
+            values.rarityMultiplier,
           ).amount.toString(),
         })),
         // PRICE token to dismantle
-        dismantle.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: token.tokenId,
@@ -91,26 +91,33 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((dismantle: IDismantle, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (values: IDismantle, web3Context: Web3ContextType, systemContract: IContract) => {
+      const { chainId, account } = web3Context;
 
-    return metaFnWithSign(
-      {
-        url: "/dismantle/sign",
-        method: "POST",
-        data: {
-          chainId,
-          account,
-          referrer: settings.getReferrer(),
-          dismantleId: dismantle.id,
-          tokenId: token.id,
+      return metaFnWithSign(
+        {
+          url: "/dismantle/sign",
+          method: "POST",
+          data: {
+            chainId,
+            account,
+            referrer: settings.getReferrer(),
+            dismantleId: values.id,
+            tokenId: token.id,
+          },
         },
-      },
-      dismantle,
-      web3Context,
-    ).then(() => {
-      navigate("/tokens");
-    });
+        values,
+        web3Context,
+        systemContract,
+      ).then(() => {
+        navigate("/tokens");
+      });
+    },
+  );
+
+  const metaFn = useMetamask((values: IDismantle, web3Context: Web3ContextType) => {
+    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
   });
 
   const handleDismantle = (dismantle: IDismantle) => {

@@ -1,21 +1,23 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { enqueueSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IClaim, IClaimUploadDto } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";
 
 export interface IClaimUploadButtonProps {
   className?: string;
+  disabled?: boolean;
   onRefreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
-  const { className, onRefreshPage } = props;
+  const { className, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
 
   const { formatMessage } = useIntl();
 
@@ -63,15 +65,15 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="ClaimUploadButton"
+        icon={Add}
+        message="form.buttons.upload"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.upload" />
-      </Button>
+        dataTestId="ClaimUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <ClaimUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

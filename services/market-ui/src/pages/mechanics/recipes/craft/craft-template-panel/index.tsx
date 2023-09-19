@@ -15,11 +15,11 @@ import {
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 
@@ -45,19 +45,19 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   });
 
   const metaFnWithSign = useServerSignature(
-    (craft: ICraft, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
+    (values: ICraft, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
 
       return contract.craft(
         {
-          externalId: craft.id,
+          externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: craft.merchant!.wallet,
+          receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        craft.item?.components.sort(sorter("id")).map(component => ({
+        values.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -66,7 +66,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
-        craft.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -74,30 +74,37 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
         })),
         sign.signature,
         {
-          value: getEthPrice(craft.price),
+          value: getEthPrice(values.price),
         },
       ) as Promise<void>;
     },
     // { error: false },
   );
 
-  const metaFn = useMetamask((craft: ICraft, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (values: ICraft, web3Context: Web3ContextType, systemContract: IContract) => {
+      const { chainId, account } = web3Context;
 
-    return metaFnWithSign(
-      {
-        url: "/craft/sign",
-        method: "POST",
-        data: {
-          chainId,
-          account,
-          referrer: settings.getReferrer(),
-          craftId: craft.id,
+      return metaFnWithSign(
+        {
+          url: "/craft/sign",
+          method: "POST",
+          data: {
+            chainId,
+            account,
+            referrer: settings.getReferrer(),
+            craftId: values.id,
+          },
         },
-      },
-      craft,
-      web3Context,
-    );
+        values,
+        web3Context,
+        systemContract,
+      ) as Promise<void>;
+    },
+  );
+
+  const metaFn = useMetamask((values: ICraft, web3Context: Web3ContextType) => {
+    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
   });
 
   const handleCraft = (craft: ICraft) => {

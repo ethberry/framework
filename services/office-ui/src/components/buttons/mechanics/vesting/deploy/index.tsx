@@ -1,11 +1,10 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
-import { Contract, utils } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IUser, IVestingContractDeployDto } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
@@ -14,18 +13,27 @@ import { VestingDeployDialog } from "./dialog";
 
 export interface IVestingDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
+  // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
+  const encodedExternalId = BigNumber.from(
+    utils.hexlify(
+      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(0 /* claim.id */), 4)]),
+    ),
+  );
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingContractDeployDto, web3Context, sign) => {
       const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = values;
 
       const nonce = utils.arrayify(sign.nonce);
+
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
         DeployVestingABI,
@@ -36,7 +44,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: profile.id,
+          externalId: encodedExternalId,
         },
         {
           beneficiary,
@@ -55,7 +63,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       {
         url: "/contract-manager/vesting",
         method: "POST",
-        data: values,
+        data: Object.assign(values, { externalId: encodedExternalId.toString() }),
       },
       form,
     );
@@ -63,15 +71,15 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="VestingDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="VestingDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <VestingDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

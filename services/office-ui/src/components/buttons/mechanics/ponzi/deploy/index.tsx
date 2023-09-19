@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import type { IPonziContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IPonziContractDeployDto, IUser } from "@framework/types";
+import { PonziContractTemplates } from "@framework/types";
 
 import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPonzi.abi.json";
 
@@ -13,10 +14,14 @@ import { PonziContractDeployDialog } from "./dialog";
 
 export interface IPonziContractDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
+
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPonziContractDeployDto, web3Context, sign) => {
@@ -31,8 +36,14 @@ export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: profile.id,
         },
-        values,
+        // values,
+        {
+          payees: values.payees,
+          shares: values.shares,
+          contractTemplate: Object.values(PonziContractTemplates).indexOf(values.contractTemplate).toString(),
+        },
         sign.signature,
       ) as Promise<void>;
     },
@@ -45,8 +56,8 @@ export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
         method: "POST",
         data: {
           contractTemplate: values.contractTemplate,
-          payees: [values.payees],
-          shares: [values.shares],
+          payees: values.shares.map(({ payee }: { payee: string }) => payee),
+          shares: values.shares.map(({ share }: { share: number }) => share),
         },
       },
       form,
@@ -55,15 +66,15 @@ export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="PonziContractDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="PonziContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <PonziContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );

@@ -28,7 +28,7 @@ import {
   StakingRuleStatus,
 } from "@framework/types";
 
-import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
+import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {
@@ -92,7 +92,7 @@ export const StakingRules: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <StakingRuleUploadCreateButton />
+        <StakingRuleCreateButton />
       </PageHeader>
 
       <CommonSearchForm

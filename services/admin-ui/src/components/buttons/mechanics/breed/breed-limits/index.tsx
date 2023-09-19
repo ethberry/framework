@@ -1,15 +1,17 @@
 import { FC, Fragment, useState } from "react";
 import { Bloodtype } from "@mui/icons-material";
-
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import BreedSetPregnancyLimitsABI from "../../../../../abis/mechanics/breed/breed-limits/setPregnancyLimits.abi.json";
 
-import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IBreedLimitDto } from "./dialog";
+import { BreedLimitDialog } from "./dialog";
 
 export interface IBreedLimitButtonProps {
   className?: string;
@@ -30,13 +32,19 @@ export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
     setIsBreedLimitDialogOpen(false);
   };
 
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (values: IBreedLimitDto, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(
+        systemContract.address,
+        BreedSetPregnancyLimitsABI,
+        web3Context.provider?.getSigner(),
+      );
+      return contract.setPregnancyLimits(values.count, values.time, values.maxTime) as Promise<void>;
+    },
+  );
+
   const metaFn = useMetamask((values: IBreedLimitDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      process.env.EXCHANGE_ADDR,
-      BreedSetPregnancyLimitsABI,
-      web3Context.provider?.getSigner(),
-    );
-    return contract.setPregnancyLimits(values.count, values.time, values.maxTime) as Promise<void>;
+    return metaFnWithContract(SystemModuleType.DISPENSER, values, web3Context);
   });
 
   const handleBreedLimitConfirmed = async (values: IBreedLimitDto): Promise<void> => {
