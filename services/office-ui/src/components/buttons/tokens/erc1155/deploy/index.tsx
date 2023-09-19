@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc1155ContractTemplates, IErc1155ContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IErc1155ContractDeployDto, IUser } from "@framework/types";
+import { Erc1155ContractTemplates } from "@framework/types";
 
 import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
 
@@ -13,10 +14,14 @@ import { Erc1155ContractDeployDialog } from "./dialog";
 
 export interface IErc1155TokenDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
+
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc1155ContractDeployDto, web3Context, sign) => {
@@ -31,8 +36,14 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: profile.id,
         },
-        values,
+        // values,
+        {
+          contractTemplate: Object.values(Erc1155ContractTemplates).indexOf(values.contractTemplate).toString(),
+          baseTokenURI: values.baseTokenURI,
+          royalty: values.royalty,
+        },
         sign.signature,
       ) as Promise<void>;
     },
@@ -51,15 +62,15 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="Erc1155ContractDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        data-testid="Erc1155ContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <Erc1155ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

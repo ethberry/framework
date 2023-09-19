@@ -13,20 +13,20 @@ import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleMenuItem } from "../../../../components/menu/extensions/grant-role";
-import { RevokeRoleMenuItem } from "../../../../components/menu/extensions/revoke-role";
-import { RenounceRoleMenuItem } from "../../../../components/menu/extensions/renounce-role";
-import { BlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../../../components/menu/extensions/blacklist-remove";
-import { WhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-add";
-import { UnWhitelistMenuItem } from "../../../../components/menu/extensions/whitelist-remove";
-import { MintMenuItem } from "../../../../components/menu/hierarchy/contract/mint";
-import { AllowanceMenuItem } from "../../../../components/menu/hierarchy/contract/allowance";
-import { TransferMenuItem } from "../../../../components/menu/common/transfer";
-import { SnapshotMenuItem } from "../../../../components/menu/hierarchy/contract/snapshot";
-import { RoyaltyMenuItem } from "../../../../components/menu/common/royalty";
-import { EthListenerAddMenuItem } from "../../../../components/menu/common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/common/eth-remove";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
+import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
+import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
+import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
+import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
+import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
+import { TransferButton } from "../../../../components/buttons/common/transfer";
+import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
+import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
@@ -110,20 +110,20 @@ export const NativeContract: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <GrantRoleMenuItem contract={contract} disabled={true} />
-                <RevokeRoleMenuItem contract={contract} disabled={true} />
-                <RenounceRoleMenuItem contract={contract} disabled={true} />
-                <BlacklistMenuItem contract={contract} disabled={true} />
-                <UnBlacklistMenuItem contract={contract} disabled={true} />
-                <WhitelistMenuItem contract={contract} disabled={true} />
-                <UnWhitelistMenuItem contract={contract} disabled={true} />
-                <MintMenuItem contract={contract} disabled={true} />
-                <AllowanceMenuItem contract={contract} disabled={true} />
-                <TransferMenuItem contract={contract} disabled={true} />
-                <SnapshotMenuItem contract={contract} disabled={true} />
-                <RoyaltyMenuItem contract={contract} disabled={true} />
-                <EthListenerAddMenuItem contract={contract} disabled={true} />
-                <EthListenerRemoveMenuItem contract={contract} disabled={true} />
+                <GrantRoleButton contract={contract} disabled={true} />
+                <RevokeRoleButton contract={contract} disabled={true} />
+                <RenounceRoleButton contract={contract} disabled={true} />
+                <BlacklistButton contract={contract} disabled={true} />
+                <UnBlacklistButton contract={contract} disabled={true} />
+                <WhitelistButton contract={contract} disabled={true} />
+                <UnWhitelistButton contract={contract} disabled={true} />
+                <MintButton contract={contract} disabled={true} />
+                <AllowanceButton contract={contract} disabled={true} />
+                <TransferButton contract={contract} disabled={true} />
+                <SnapshotButton contract={contract} disabled={true} />
+                <RoyaltyButton contract={contract} disabled={true} />
+                <EthListenerAddButton contract={contract} disabled={true} />
+                <EthListenerRemoveButton contract={contract} disabled={true} />
               </ListActions>
             </ListItem>
           ))}

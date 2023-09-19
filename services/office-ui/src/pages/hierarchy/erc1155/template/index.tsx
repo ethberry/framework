@@ -14,7 +14,7 @@ import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { MintMenuItem } from "../../../../components/menu/hierarchy/template/mint";
+import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -101,7 +101,7 @@ export const Erc1155Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintMenuItem
+                <MintButton
                   template={template}
                   disabled={
                     template.templateStatus === TemplateStatus.INACTIVE ||

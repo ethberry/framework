@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -14,7 +14,7 @@ import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IPonziRule, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } from "@framework/types";
 
-import { PonziUploadButton } from "../../../../components/buttons";
+import { PonziRuleCreateButton } from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { PonziEditDialog } from "./edit";
 
@@ -28,7 +28,6 @@ export const PonziRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -80,9 +79,7 @@ export const PonziRules: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="PonziCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        <PonziRuleCreateButton />
       </PageHeader>
 
       <CommonSearchForm
@@ -112,7 +109,6 @@ export const PonziRules: FC = () => {
               <div></div>
               <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
               <ListActions>
-                <PonziUploadButton rule={rule} />
                 <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
                 <ListAction onClick={handleDelete(rule)} icon={Delete} message="form.buttons.delete" />
               </ListActions>

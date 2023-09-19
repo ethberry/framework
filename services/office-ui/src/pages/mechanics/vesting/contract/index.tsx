@@ -14,9 +14,9 @@ import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { AllowanceMenuItem } from "../../../../components/menu/mechanics/common/allowance";
-import { TopUpMenuItem } from "../../../../components/menu/mechanics/common/top-up";
-import { TransferOwnershipMenuItem } from "../../../../components/menu/extensions/transfer-ownership";
+import { AllowanceButton } from "../../../../components/buttons/mechanics/common/allowance";
+import { TopUpButton } from "../../../../components/buttons/mechanics/common/top-up";
+import { TransferOwnershipButton } from "../../../../components/buttons/extensions/transfer-ownership";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -73,9 +73,9 @@ export const VestingContracts: FC = () => {
               </ListItemText>
               <ListActions dataTestId="VestingActionsMenuButton">
                 <ListAction onClick={handleView(vesting)} icon={Visibility} message="form.tips.view" />
-                <AllowanceMenuItem contract={vesting} />
-                <TopUpMenuItem contract={vesting} />
-                <TransferOwnershipMenuItem contract={vesting} />
+                <AllowanceButton contract={vesting} />
+                <TopUpButton contract={vesting} />
+                <TransferOwnershipButton contract={vesting} />
               </ListActions>
             </ListItem>
           ))}

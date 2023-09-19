@@ -378,7 +378,8 @@
       "unpack": "Unwrap",
       "upgrade": "Upgrade",
       "upload": "Upload",
-      "withdraw": "Withdraw"
+      "withdraw": "Withdraw",
+      "withdrawReferral": "Withdraw {symbol} {amount}"
     },
     "hints": {
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",

@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IStakingContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IStakingContractDeployDto, IUser } from "@framework/types";
+import { StakingContractTemplates } from "@framework/types";
 
 import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
 
@@ -13,10 +14,14 @@ import { StakingDeployDialog } from "./dialog";
 
 export interface IStakingDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
+
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IStakingContractDeployDto, web3Context, sign) => {
@@ -31,8 +36,12 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: profile.id,
         },
-        values,
+        // values,
+        {
+          contractTemplate: Object.values(StakingContractTemplates).indexOf(values.contractTemplate).toString(),
+        },
         sign.signature,
       ) as Promise<void>;
     },
@@ -51,15 +60,15 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="StakingDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="StakingDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );
