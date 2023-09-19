@@ -1,41 +1,60 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract, BigNumber } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { IContract, ModuleType, TokenType } from "@framework/types";
 
 import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
 import { DispenserUploadDialog } from "./dialog";
 import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
+import { getEthPrice } from "./utils";
 
 export interface IDispenserUploadButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const metaFnWithContract = useSystemContract<IContract, ModuleType>(
+    (values: IDispenserUploadDto, web3Context: Web3ContextType, systemContract) => {
+      const { rows } = values;
+
+      const [items, receivers] = rows.reduce<[Array<Omit<IDispenserRow, "account">>, Array<string>]>(
+        ([items, receivers], { account, ...rest }) => {
+          receivers.push(account);
+          items.push(rest);
+          return [items, receivers];
+        },
+        [[], []],
+      );
+
+      const assets = items.map(item => {
+        return {
+          tokenType: Object.values(TokenType).indexOf(item.tokenType).toString(),
+          token: item.address,
+          tokenId: item.tokenId,
+          amount: BigNumber.from(item.amount),
+        };
+      });
+
+      const contract = new Contract(systemContract.address, DispenserABI, web3Context.provider?.getSigner());
+      return contract.disperse(assets, receivers, {
+        value: getEthPrice(assets),
+      }) as Promise<void>;
+    },
+  );
+
   const metaFn = useMetamask((values: IDispenserUploadDto, web3Context: Web3ContextType) => {
-    const { rows } = values;
-
-    const [items, receivers] = rows.reduce<[Array<Omit<IDispenserRow, "account">>, Array<string>]>(
-      ([items, receivers], { account, ...rest }) => {
-        receivers.push(account);
-        items.push(rest);
-        return [items, receivers];
-      },
-      [[], []],
-    );
-
-    // TODO get from backend
-    const contract = new Contract(process.env.DISPENSER_ADDR, DispenserABI, web3Context.provider?.getSigner());
-    return contract.disperse(items, receivers) as Promise<any>;
+    return metaFnWithContract(ModuleType.DISPENSER, values, web3Context);
   });
 
   const handleUpload = () => {
@@ -56,16 +75,15 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="DispenserUploadButton"
+        icon={Add}
+        message="form.buttons.upload"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.upload" />
-      </Button>
-
+        dataTestId="DispenserUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <DispenserUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

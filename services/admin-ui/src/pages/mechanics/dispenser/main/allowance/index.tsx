@@ -5,14 +5,15 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { TokenType } from "@framework/types";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { IContract, ModuleType, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
+import { IDispenserUploadDto } from "../../../../../components/buttons/mechanics/dispenser/upload/dialog/file-input";
 
 export interface IAllowanceButtonProps {
   className?: string;
@@ -31,28 +32,34 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
-    const { amount, contract } = values;
-    if (contract.contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
-      return contractErc20.approve(process.env.DISPENSER_ADDR, amount) as Promise<any>;
-    } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
-      const contractErc721 = new Contract(
-        contract.address,
-        ERC721SetApprovalForAllABI,
-        web3Context.provider?.getSigner(),
-      );
-      return contractErc721.setApprovalForAll(process.env.DISPENSER_ADDR, true) as Promise<any>;
-    } else if (contract.contractType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(
-        contract.address,
-        ERC1155SetApprovalForAllABI,
-        web3Context.provider?.getSigner(),
-      );
-      return contractErc1155.setApprovalForAll(process.env.DISPENSER_ADDR, true) as Promise<any>;
-    } else {
-      throw new Error("unsupported token type");
-    }
+  const metaFnWithContract = useSystemContract<IContract, ModuleType>(
+    (values: IAllowanceDto, web3Context: Web3ContextType, systemContract) => {
+      const { amount, contract } = values;
+      if (contract.contractType === TokenType.ERC20) {
+        const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
+        return contractErc20.approve(systemContract.address, amount) as Promise<void>;
+      } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
+        const contractErc721 = new Contract(
+          contract.address,
+          ERC721SetApprovalForAllABI,
+          web3Context.provider?.getSigner(),
+        );
+        return contractErc721.setApprovalForAll(systemContract.address, true) as Promise<void>;
+      } else if (contract.contractType === TokenType.ERC1155) {
+        const contractErc1155 = new Contract(
+          contract.address,
+          ERC1155SetApprovalForAllABI,
+          web3Context.provider?.getSigner(),
+        );
+        return contractErc1155.setApprovalForAll(systemContract.address, true) as Promise<void>;
+      } else {
+        throw new Error("unsupported token type");
+      }
+    },
+  );
+
+  const metaFn = useMetamask((values: IDispenserUploadDto, web3Context: Web3ContextType) => {
+    return metaFnWithContract(ModuleType.DISPENSER, values, web3Context);
   });
 
   const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {

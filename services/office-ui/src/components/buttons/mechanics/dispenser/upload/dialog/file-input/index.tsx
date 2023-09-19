@@ -5,13 +5,14 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
-import { IBCAssetTemplateDto } from "@framework/types";
+import type { IBCAssetTokenDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { dispenserValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
-export interface IDispenserRow extends IBCAssetTemplateDto {
+export interface IDispenserRow extends IBCAssetTokenDto {
+  id?: string;
   account: string;
 }
 
