@@ -17,7 +17,6 @@ declare global {
       PONZI_ADDR: string;
       RAFFLE_ADDR: string;
       WAITLIST_ADDR: string;
-      CONTRACT_MANAGER_ADDR: string;
     }
   }
 }

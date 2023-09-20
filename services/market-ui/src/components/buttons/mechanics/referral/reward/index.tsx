@@ -42,17 +42,17 @@ export const ReferralRewardButton: FC<IReferralRewardButtonProps> = props => {
   };
 
   // TODO add token selector for balance and get balances on demand only
-  const getBalance = useMetamaskValue(
-    (web3Context: Web3ContextType) => {
-      const contract = new Contract(
-        process.env.EXCHANGE_ADDR,
-        ReferralGetBalanceABI,
-        web3Context.provider?.getSigner(),
-      );
+  const getBalanceWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, ReferralGetBalanceABI, web3Context.provider?.getSigner());
       return contract.getBalance(account, constants.AddressZero) as Promise<string>;
     },
     { success: false },
   );
+
+  const getBalance = useMetamaskValue((web3Context: Web3ContextType) => {
+    return getBalanceWithContract(SystemModuleType.EXCHANGE, null, web3Context);
+  });
 
   useEffect(() => {
     if (isActive) {
