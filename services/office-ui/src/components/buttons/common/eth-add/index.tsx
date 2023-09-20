@@ -4,7 +4,7 @@ import { DoNotDisturbOn } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
@@ -47,6 +47,10 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
     return null;
   }
 
+  if (contract.contractType === TokenType.NATIVE) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ListAction
@@ -66,6 +70,7 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
           address: contract.address,
           listenerType: getListenerType(contract),
           fromBlock: contract.fromBlock,
+          chainId: contract.chainId,
         }}
       />
     </Fragment>

@@ -3,7 +3,8 @@ import { DoNotDisturbOff } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IContract, NodeEnv } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
@@ -46,6 +47,10 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
     return null;
   }
 
+  if (contract.contractType === TokenType.NATIVE) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ListAction
@@ -64,6 +69,7 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
         initialValues={{
           address: contract.address,
           listenerType: getListenerType(contract),
+          chainId: contract.chainId,
         }}
       />
     </Fragment>
