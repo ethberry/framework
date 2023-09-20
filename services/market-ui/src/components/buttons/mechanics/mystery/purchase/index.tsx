@@ -4,10 +4,10 @@ import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, IMysteryBox } from "@framework/types";
-import { SystemModuleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purchase/mysterybox.abi.json";
 
@@ -72,29 +72,22 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-      return metaFnWithSign(
-        {
-          url: "/mystery/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            mysteryBoxId: mysteryBox.id,
-          },
+  const metaFn = useMetamask((_values: null, web3Context: Web3ContextType) => {
+    const { chainId, account } = web3Context;
+    return metaFnWithSign(
+      {
+        url: "/mystery/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          mysteryBoxId: mysteryBox.id,
         },
-        null,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
+      },
+      null,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {
