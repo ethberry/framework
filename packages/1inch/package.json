@@ -23,12 +23,12 @@
     "ethers": "5.7.2",
     "mathjs": "11.11.0",
     "notistack": "3.0.1",
-    "react-intl": "6.4.6",
+    "react-intl": "6.4.7",
     "react-window": "1.8.9",
     "type-fest": "4.3.1"
   },
   "devDependencies": {
-    "@types/react": "18.2.21",
+    "@types/react": "18.2.22",
     "@types/react-window": "1.8.5",
     "react": "18.2.0"
   },
