@@ -13,6 +13,7 @@ export interface IEthListenerAddDto {
   address: string;
   listenerType: ListenerType;
   fromBlock: number;
+  chainId: number;
 }
 
 export interface IEthListenerAddDialogProps {
@@ -39,6 +40,7 @@ export const EthListenerAddDialog: FC<IEthListenerAddDialogProps> = props => {
       <TextInput name="address" />
       <SelectInput name="listenerType" options={ListenerType} />
       <NumberInput name="fromBlock" />
+      <NumberInput name="chainId" />
     </FormDialog>
   );
 };

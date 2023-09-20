@@ -66,6 +66,7 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
           address: contract.address,
           listenerType: getListenerType(contract),
           fromBlock: contract.fromBlock,
+          chainId: contract.chainId,
         }}
       />
     </Fragment>

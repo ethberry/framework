@@ -64,6 +64,7 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
         initialValues={{
           address: contract.address,
           listenerType: getListenerType(contract),
+          chainId: contract.chainId,
         }}
       />
     </Fragment>

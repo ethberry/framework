@@ -11,14 +11,20 @@ export class EthLoggerService {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(RmqProviderType.CORE_ETH_SERVICE)
-    private readonly coreEthServiceProxy: ClientProxy,
+    private readonly coreEthServiceBesuProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
+    private readonly coreEthServiceBinanceProxy: ClientProxy,
   ) {}
 
   public async addListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return this.coreEthServiceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
+    return dto.chainId === 56 || dto.chainId === 97
+      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
+      : this.coreEthServiceBesuProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
   }
 
   public async removeListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return this.coreEthServiceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
+    return dto.chainId === 56 || dto.chainId === 97
+      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
+      : this.coreEthServiceBesuProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
   }
 }
