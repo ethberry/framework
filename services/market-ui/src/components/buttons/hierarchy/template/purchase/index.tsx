@@ -3,11 +3,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
 import { useSettings } from "@gemunion/provider-settings";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, ITemplate } from "@framework/types";
-import { ContractFeatures, SystemModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 
@@ -61,31 +61,24 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: IAmountDto, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-
-      return metaFnWithSign(
-        {
-          url: "/marketplace/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            templateId: template.id,
-            amount: values.amount,
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((values: IAmountDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    const { chainId, account } = web3Context;
+
+    return metaFnWithSign(
+      {
+        url: "/marketplace/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          templateId: template.id,
+          amount: values.amount,
+        },
+      },
+      values,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {
