@@ -40,6 +40,7 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
       validationSchema={validationSchema}
       message={"dialogs.create"}
       testId="Erc998CompositionCreateForm"
+      disabled={false}
       {...rest}
     >
       <ContractInput
