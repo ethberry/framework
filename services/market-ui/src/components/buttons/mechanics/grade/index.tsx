@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -29,7 +29,6 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
-  const { account, chainId } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
@@ -84,6 +83,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
+    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/grade/sign",

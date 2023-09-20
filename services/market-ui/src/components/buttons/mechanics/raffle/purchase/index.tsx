@@ -59,7 +59,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((_values: null, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(

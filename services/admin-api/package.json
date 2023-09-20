@@ -18,7 +18,7 @@
     "@gemunion/nest-js-guards": "3.1.3",
     "@gemunion/nest-js-module-coin-gecko": "4.0.18",
     "@gemunion/nest-js-module-coin-market-cap": "3.0.18",
-    "@gemunion/nest-js-module-ethers-gcp": "1.1.0",
+    "@gemunion/nest-js-module-ethers-gcp": "1.1.0-redis-beta.4",
     "@gemunion/nest-js-module-helmet": "4.0.16",
     "@gemunion/nest-js-module-license": "4.0.13",
     "@gemunion/nest-js-module-passport": "3.0.16",
