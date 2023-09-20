@@ -14,7 +14,13 @@ export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = 
   const fixedValues: Record<string, any> = {};
 
   return (
-    <FormDialog initialValues={fixedValues} message="dialogs.deploy" testId="RaffleContractDeployForm" {...props}>
+    <FormDialog
+      initialValues={fixedValues}
+      message="dialogs.deploy"
+      testId="RaffleContractDeployForm"
+      disabled={false}
+      {...props}
+    >
       <Alert severity="warning" sx={{ mt: 2 }}>
         <FormattedMessage id="alert.minterRole" />
       </Alert>

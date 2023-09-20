@@ -21,6 +21,7 @@ export const LotteryContractDeployDialog: FC<ILotteryContractDeployDialogProps> 
       message="dialogs.deploy"
       testId="LotteryContractDeployForm"
       validationSchema={validationSchema}
+      disabled={false}
       {...props}
     >
       <Alert severity="warning" sx={{ mt: 2 }}>
