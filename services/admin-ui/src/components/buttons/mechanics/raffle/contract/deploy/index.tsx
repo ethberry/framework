@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { IRaffleContractDeployDto, IUser } from "@framework/types";
+import type { IContract, IRaffleContractDeployDto, IUser } from "@framework/types";
 
 import DeployRaffleABI from "../../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
@@ -23,13 +23,9 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (_values: IRaffleContractDeployDto, web3Context, sign) => {
+    (_values: IRaffleContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployRaffleABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployRaffleABI, web3Context.provider?.getSigner());
 
       return contract.deployRaffle(
         {

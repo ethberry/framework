@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ILotteryContractDeployDto, IUser } from "@framework/types";
+import type { IContract, ILotteryContractDeployDto, IUser } from "@framework/types";
 
 import DeployLotteryABI from "../../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
 
@@ -23,13 +23,9 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: ILotteryContractDeployDto, web3Context, sign) => {
+    (values: ILotteryContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployLotteryABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployLotteryABI, web3Context.provider?.getSigner());
 
       return contract.deployLottery(
         {

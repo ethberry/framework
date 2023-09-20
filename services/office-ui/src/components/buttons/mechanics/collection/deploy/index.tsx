@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ICollectionContractDeployDto, IUser } from "@framework/types";
+import type { ICollectionContractDeployDto, IContract, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
 import DeployCollectionABI from "../../../../../abis/mechanics/collection/contract-deploy/deployCollection.abi.json";
@@ -24,13 +24,9 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: ICollectionContractDeployDto, web3Context, sign) => {
+    (values: ICollectionContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployCollectionABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployCollectionABI, web3Context.provider?.getSigner());
 
       return contract.deployCollection(
         {

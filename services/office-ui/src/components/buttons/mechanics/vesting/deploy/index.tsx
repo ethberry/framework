@@ -5,7 +5,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { IUser, IVestingContractDeployDto } from "@framework/types";
+import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
@@ -29,16 +29,12 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   );
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IVestingContractDeployDto, web3Context, sign) => {
+    (values: IVestingContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = values;
 
       const nonce = utils.arrayify(sign.nonce);
 
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployVestingABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployVestingABI, web3Context.provider?.getSigner());
 
       return contract.deployVesting(
         {

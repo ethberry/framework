@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { IStakingContractDeployDto, IUser } from "@framework/types";
+import type { IContract, IStakingContractDeployDto, IUser } from "@framework/types";
 import { StakingContractTemplates } from "@framework/types";
 
 import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
@@ -24,13 +24,9 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IStakingContractDeployDto, web3Context, sign) => {
+    (values: IStakingContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployStakingABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployStakingABI, web3Context.provider?.getSigner());
 
       return contract.deployStaking(
         {
