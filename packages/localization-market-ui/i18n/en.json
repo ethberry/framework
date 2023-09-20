@@ -698,10 +698,10 @@
         "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
-        "promo": "Promo",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
@@ -796,9 +796,6 @@
       "uniswap": {
         "title": "Uniswap"
       }
-    },
-    "promo-list": {
-      "title": "Promos"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1059,6 +1056,9 @@
       },
       "title": "Profile"
     },
+    "promo-list": {
+      "title": "Promos"
+    },
     "raffle": {
       "contract": {
         "title": "Contract: {title}"
@@ -1121,6 +1121,7 @@
       "priceTitle": "Base price:",
       "rarity": "Rarity",
       "rarityMultiplier": "x {multiplier}",
+      "tokenUser": "User",
       "traits": "Traits"
     },
     "tokens": {

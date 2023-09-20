@@ -14,6 +14,7 @@ import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
 import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
 import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
 import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { LendTokenPanel } from "../../../mechanics/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 
 export const Erc721Token: FC = () => {
@@ -62,6 +63,7 @@ export const Erc721Token: FC = () => {
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
+              <LendTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>
