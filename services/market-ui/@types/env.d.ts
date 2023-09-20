@@ -10,13 +10,6 @@ declare global {
       MARKET_FE_URL: string;
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
-      // these addresses should be related to chainId
-      EXCHANGE_ADDR: string;
-      STAKING_ADDR: string;
-      LOTTERY_ADDR: string;
-      PONZI_ADDR: string;
-      RAFFLE_ADDR: string;
-      WAITLIST_ADDR: string;
     }
   }
 }

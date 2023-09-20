@@ -10,9 +10,8 @@ declare global {
       JSON_URL: string;
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
-      CHAIN_ID: string;
+      // these addresses should be related to chainId
       LINK_ADDR: string;
-      STAKING_ADDR: string;
     }
   }
 }
