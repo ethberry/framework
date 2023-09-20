@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 
@@ -30,6 +33,9 @@ export const EthListenerAddDialog: FC<IEthListenerAddDialogProps> = props => {
       testId="EthListenerAddForm"
       {...rest}
     >
+      <Alert severity="warning">
+        <FormattedMessage id="alert.risk" />
+      </Alert>
       <TextInput name="address" />
       <SelectInput name="listenerType" options={ListenerType} />
       <NumberInput name="fromBlock" />
