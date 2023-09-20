@@ -100,7 +100,7 @@ export const NativeContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(contract => (
-            <ListItem key={contract.id}>
+            <ListItem key={contract.id} disableGutters>
               <ListItemText>{contract.title}</ListItemText>
               <ListActions dataTestId="ContractActionsMenuButton">
                 <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />

@@ -27,7 +27,7 @@ export const Cart: FC = () => {
       <List disablePadding={true}>
         {cart && cart.items && cart.items.length ? (
           cart.items.map(item => (
-            <ListItem key={item.product.id} disableGutters={true}>
+            <ListItem key={item.product.id} disableGutters>
               <ListItemText
                 primary={item.product.title}
                 secondary={<Fragment>{formatPrice(item.product.productItems[0].price)}</Fragment>}
@@ -46,7 +46,7 @@ export const Cart: FC = () => {
             </ListItem>
           ))
         ) : (
-          <ListItem disableGutters={true}>
+          <ListItem disableGutters>
             <FormattedMessage id="pages.checkout.empty" />
           </ListItem>
         )}

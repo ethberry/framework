@@ -113,7 +113,7 @@ export const Erc721Contract: FC = () => {
               contract.contractStatus === ContractStatus.INACTIVE ||
               contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
             return (
-              <ListItem key={contract.id}>
+              <ListItem key={contract.id} disableGutters>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />

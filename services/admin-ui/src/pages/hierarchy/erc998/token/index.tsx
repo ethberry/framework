@@ -88,7 +88,7 @@ export const Erc998Token: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(token => (
-            <ListItem key={token.id}>
+            <ListItem key={token.id} disableGutters>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>

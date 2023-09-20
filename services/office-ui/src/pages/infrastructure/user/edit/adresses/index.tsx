@@ -81,7 +81,7 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((address: IAddress, i: number) => (
-              <ListItem key={address.id || i} disableGutters={true}>
+              <ListItem key={address.id || i} disableGutters>
                 <ListItemText
                   primary={
                     <Fragment>
@@ -112,7 +112,7 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
               </ListItem>
             ))
           ) : (
-            <ListItem disableGutters={true}>
+            <ListItem disableGutters>
               <FormattedMessage id="pages.profile.addresses.empty" />
             </ListItem>
           )}

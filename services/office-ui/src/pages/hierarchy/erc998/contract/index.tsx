@@ -93,7 +93,7 @@ export const Erc998Contract: FC = () => {
           {rows.map(contract => {
             const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
-              <ListItem key={contract.id}>
+              <ListItem key={contract.id} disableGutters>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />

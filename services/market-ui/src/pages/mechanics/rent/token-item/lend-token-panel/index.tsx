@@ -22,7 +22,7 @@ export const LendTokenPanel: FC<ILendTokenPanelProps> = props => {
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.tokenUser" />
           </Typography>

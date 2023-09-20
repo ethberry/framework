@@ -128,7 +128,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   return (
     <Card>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.dismantle" />
           </Typography>

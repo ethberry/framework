@@ -98,7 +98,7 @@ export const Order: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {rows.map(order => (
-            <ListItem key={order.id} disableGutters={true}>
+            <ListItem key={order.id} disableGutters>
               <ListItemText>Order #{order.id}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(order)} icon={Create} message="form.buttons.edit" />
