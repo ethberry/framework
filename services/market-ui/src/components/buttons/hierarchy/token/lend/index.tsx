@@ -2,17 +2,18 @@ import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, IToken } from "@framework/types";
-import { ContractFeatures, SystemModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
-import { ILendDto, LendDialog } from "./dialog";
+import type { ILendDto } from "./dialog";
+import { LendDialog } from "./dialog";
 
 interface ITokenLendButtonProps {
   className?: string;
@@ -70,33 +71,26 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: ILendDto, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-      const expires = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
-
-      return metaFnWithSign(
-        {
-          url: "/rent/tokens/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account, // user token owner
-            referrer: values.account, // borrower
-            tokenId: token.id, // token.id to lend
-            externalId: values.rentRule, // DB rent rule id
-            expires, // lend time
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((values: ILendDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    const { chainId, account } = web3Context;
+    const expires = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
+
+    return metaFnWithSign(
+      {
+        url: "/rent/tokens/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account, // user token owner
+          referrer: values.account, // borrower
+          tokenId: token.id, // token.id to lend
+          externalId: values.rentRule, // DB rent rule id
+          expires, // lend time
+        },
+      },
+      values,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleLend = (): void => {

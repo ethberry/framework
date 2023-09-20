@@ -17,11 +17,11 @@ import {
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
-import { SystemModuleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { formatItem } from "../../../../../utils/money";
@@ -91,33 +91,26 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: IDismantle, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-
-      return metaFnWithSign(
-        {
-          url: "/dismantle/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            dismantleId: values.id,
-            tokenId: token.id,
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ).then(() => {
-        navigate("/tokens");
-      });
-    },
-  );
-
   const metaFn = useMetamask((values: IDismantle, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    const { chainId, account } = web3Context;
+
+    return metaFnWithSign(
+      {
+        url: "/dismantle/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          dismantleId: values.id,
+          tokenId: token.id,
+        },
+      },
+      values,
+      web3Context,
+    ).then(() => {
+      navigate("/tokens");
+    });
   });
 
   const handleDismantle = (dismantle: IDismantle) => {

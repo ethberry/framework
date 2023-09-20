@@ -4,11 +4,11 @@ import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, IGrade, IToken } from "@framework/types";
-import { ContractFeatures, SystemModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
@@ -83,28 +83,21 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: IUpgradeDto, web3Context: Web3ContextType, systemContract: IContract) => {
-      return metaFnWithSign(
-        {
-          url: "/grade/sign",
-          method: "POST",
-          data: {
-            tokenId: token.id,
-            attribute: values.attribute,
-            account,
-            chainId,
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    return metaFnWithSign(
+      {
+        url: "/grade/sign",
+        method: "POST",
+        data: {
+          tokenId: token.id,
+          attribute: values.attribute,
+          account,
+          chainId,
+        },
+      },
+      values,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleUpgrade = (): void => {

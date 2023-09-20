@@ -5,7 +5,8 @@ import { constants, Contract, utils } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IClaim, IContract, SystemModuleType, TokenType } from "@framework/types";
+import type { IClaim, IContract } from "@framework/types";
+import { SystemModuleType, TokenType } from "@framework/types";
 
 import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
 

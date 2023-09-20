@@ -5,13 +5,13 @@ import { Grid, Typography } from "@mui/material";
 import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, SystemModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import BreedABI from "../../../../abis/mechanics/breed/main/breed.abi.json";
 
@@ -75,31 +75,24 @@ export const Breed: FC = () => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: IBreedDto, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-
-      return metaFnWithSign(
-        {
-          url: "/breed/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            momId: values.mom.tokenId,
-            dadId: values.dad.tokenId,
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((values: IBreedDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    const { chainId, account } = web3Context;
+
+    return metaFnWithSign(
+      {
+        url: "/breed/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          momId: values.mom.tokenId,
+          dadId: values.dad.tokenId,
+        },
+      },
+      values,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleSubmit = async (values: IBreedDto) => {

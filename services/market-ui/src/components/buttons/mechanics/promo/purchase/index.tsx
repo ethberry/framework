@@ -3,11 +3,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
 import { useSettings } from "@gemunion/provider-settings";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
-import { ModuleType, SystemModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
 
@@ -107,30 +107,23 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
+  const metaFn = useMetamask((_values: null, web3Context: Web3ContextType) => {
+    const { chainId, account } = web3Context;
 
-      return metaFnWithSign(
-        {
-          url: "/promos/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            promoId: promo.id,
-          },
+    return metaFnWithSign(
+      {
+        url: "/promos/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          promoId: promo.id,
         },
-        null,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
+      },
+      null,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {

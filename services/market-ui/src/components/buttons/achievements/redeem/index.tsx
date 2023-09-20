@@ -5,10 +5,10 @@ import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
-import { SystemModuleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ClaimABI from "../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
@@ -68,29 +68,22 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
     },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { account } = web3Context;
-
-      return metaFnWithSign(
-        {
-          url: "/achievements/sign",
-          method: "POST",
-          data: {
-            account,
-            referrer: settings.getReferrer(),
-            achievementLevelId: achievementLevel.id,
-          },
-        },
-        null,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
+    const { account } = web3Context;
+
+    return metaFnWithSign(
+      {
+        url: "/achievements/sign",
+        method: "POST",
+        data: {
+          account,
+          referrer: settings.getReferrer(),
+          achievementLevelId: achievementLevel.id,
+        },
+      },
+      null,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleRedeem = async () => {

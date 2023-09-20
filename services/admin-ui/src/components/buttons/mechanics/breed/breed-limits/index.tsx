@@ -44,7 +44,7 @@ export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IBreedLimitDto, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.DISPENSER, values, web3Context);
+    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
   });
 
   const handleBreedLimitConfirmed = async (values: IBreedLimitDto): Promise<void> => {

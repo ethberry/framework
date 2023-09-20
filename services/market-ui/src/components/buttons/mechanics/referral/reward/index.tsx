@@ -34,7 +34,7 @@ export const ReferralRewardButton: FC<IReferralRewardButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.DISPENSER, null, web3Context);
+    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
   });
 
   const handleWithdraw = () => {

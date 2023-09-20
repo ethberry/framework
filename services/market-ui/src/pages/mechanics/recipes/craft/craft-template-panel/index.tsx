@@ -15,11 +15,11 @@ import {
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
-import { SystemModuleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 
@@ -81,30 +81,23 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
     // { error: false },
   );
 
-  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
-    (values: ICraft, web3Context: Web3ContextType, systemContract: IContract) => {
-      const { chainId, account } = web3Context;
-
-      return metaFnWithSign(
-        {
-          url: "/craft/sign",
-          method: "POST",
-          data: {
-            chainId,
-            account,
-            referrer: settings.getReferrer(),
-            craftId: values.id,
-          },
-        },
-        values,
-        web3Context,
-        systemContract,
-      ) as Promise<void>;
-    },
-  );
-
   const metaFn = useMetamask((values: ICraft, web3Context: Web3ContextType) => {
-    return metaFnWithContract(SystemModuleType.EXCHANGE, values, web3Context);
+    const { chainId, account } = web3Context;
+
+    return metaFnWithSign(
+      {
+        url: "/craft/sign",
+        method: "POST",
+        data: {
+          chainId,
+          account,
+          referrer: settings.getReferrer(),
+          craftId: values.id,
+        },
+      },
+      values,
+      web3Context,
+    ) as Promise<void>;
   });
 
   const handleCraft = (craft: ICraft) => {
