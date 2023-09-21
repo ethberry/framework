@@ -22,7 +22,7 @@ contract ERC721BlacklistDiscreteRentableRandomBesu is ERC721BlacklistDiscreteRen
 
   function getRandomNumber()
     internal
-    override(ChainLinkBase, ERC721BlacklistDiscreteRentableRandom)
+    override(ChainLinkBaseV2, ERC721BlacklistDiscreteRentableRandom)
     returns (uint256 requestId)
   {
     return super.getRandomNumber();

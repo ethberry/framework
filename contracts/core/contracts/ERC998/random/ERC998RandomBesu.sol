@@ -17,7 +17,7 @@ contract ERC998RandomBesu is ERC998Random, ChainLinkBesu {
     string memory baseTokenURI
   ) ERC998Random(name, symbol, royalty, baseTokenURI) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC998Random) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998Random) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

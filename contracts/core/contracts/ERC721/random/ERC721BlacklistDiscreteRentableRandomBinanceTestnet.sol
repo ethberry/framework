@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinanceTestnet.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinanceTestnetV2.sol";
 
 import "../ERC721BlacklistDiscreteRentableRandom.sol";
 
@@ -15,7 +15,7 @@ import "../ERC721BlacklistDiscreteRentableRandom.sol";
  */
 contract ERC721BlacklistDiscreteRentableRandomBinanceTestnet is
   ERC721BlacklistDiscreteRentableRandom,
-  ChainLinkBinanceTestnet
+  ChainLinkBinanceTestnetV2
 {
   constructor(
     string memory name,
@@ -24,7 +24,7 @@ contract ERC721BlacklistDiscreteRentableRandomBinanceTestnet is
     string memory baseTokenURI
   )
     ERC721BlacklistDiscreteRentableRandom(name, symbol, royalty, baseTokenURI)
-    ChainLinkBinanceTestnet(uint64(2778), uint16(3), uint32(700000), uint32(1))
+    ChainLinkBinanceTestnetV2(uint64(2778), uint16(3), uint32(700000), uint32(1))
   {}
 
   /**
@@ -32,7 +32,7 @@ contract ERC721BlacklistDiscreteRentableRandomBinanceTestnet is
    */
   function getRandomNumber()
     internal
-    override(ChainLinkBase, ERC721BlacklistDiscreteRentableRandom)
+    override(ChainLinkBaseV2, ERC721BlacklistDiscreteRentableRandom)
     returns (uint256 requestId)
   {
     return super.getRandomNumber();

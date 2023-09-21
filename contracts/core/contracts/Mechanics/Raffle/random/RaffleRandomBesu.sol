@@ -14,7 +14,7 @@ contract RaffleRandomBesu is RaffleRandom, ChainLinkBesu {
 
   constructor() RaffleRandom() ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
+  function getRandomNumber() internal override(RaffleRandom, ChainLinkBaseV2) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

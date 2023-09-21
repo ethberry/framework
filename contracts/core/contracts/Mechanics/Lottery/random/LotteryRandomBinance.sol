@@ -6,16 +6,16 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinance.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinanceV2.sol";
 
 import "../LotteryRandom.sol";
 
-contract LotteryRandomBinance is LotteryRandom, ChainLinkBinance {
+contract LotteryRandomBinance is LotteryRandom, ChainLinkBinanceV2 {
   constructor(
     LotteryConfig memory config
-  ) LotteryRandom(config) ChainLinkBinance(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  ) LotteryRandom(config) ChainLinkBinanceV2(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
+  function getRandomNumber() internal override(LotteryRandom, ChainLinkBaseV2) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
