@@ -4,7 +4,7 @@ import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/m
 
 import type { IMysteryBox } from "@framework/types";
 
-import { MysteryboxPurchaseButton } from "../../../../../components/buttons";
+import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 
@@ -18,7 +18,7 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.mystery.box.price" />
           </Typography>
@@ -27,7 +27,7 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
         <Box>{formatPrice(box.template?.price)}</Box>
       </CardContent>
       <CardActions>
-        <MysteryboxPurchaseButton mysteryBox={box} />
+        <MysteryBoxPurchaseButton mysteryBox={box} />
       </CardActions>
     </Card>
   );

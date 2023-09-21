@@ -1,0 +1,77 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "dependencies": {
+    "@framework/constants": "0.0.1",
+    "@framework/types": "0.0.1",
+    "@gemunion/nest-js-module-license": "4.0.13",
+    "@gemunion/nest-js-module-request-logger": "3.0.12",
+    "@gemunion/nest-js-module-typeorm-postgres": "1.0.18",
+    "@gemunion/nest-js-module-typeorm-debug": "3.0.15",
+    "@gemunion/nest-js-module-winston-logdna": "3.0.12",
+    "@nestjs/common": "10.2.5",
+    "@nestjs/config": "3.1.1",
+    "@nestjs/core": "10.2.5",
+    "@nestjs/microservices": "10.2.5",
+    "@nestjs/platform-express": "10.2.5",
+    "@nestjs/schedule": "3.0.3",
+    "@nestjs/terminus": "10.1.1",
+    "@nestjs/typeorm": "10.0.0",
+    "amqp-connection-manager": "4.1.14",
+    "amqplib": "0.10.3",
+    "cron": "2.4.3",
+    "express": "4.18.2",
+    "nest-winston": "1.9.4",
+    "reflect-metadata": "0.1.13",
+    "ts-mixer": "6.0.3",
+    "typeorm": "0.3.17",
+    "typeorm-naming-strategies": "4.1.0",
+    "typescript": "5.2.2"
+  },
+  "description": "EML engine",
+  "devDependencies": {
+    "@gemunion/cross-env": "0.0.4",
+    "@gemunion/eslint-config": "4.0.5",
+    "@nestjs/testing": "10.2.5",
+    "@types/cron": "2.0.1",
+    "@types/node": "18.17.18",
+    "@typescript-eslint/eslint-plugin": "6.7.2",
+    "@typescript-eslint/parser": "6.7.2",
+    "eslint": "8.49.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-import-resolver-typescript": "3.6.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-n": "16.1.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-promise": "6.1.1",
+    "rimraf": "5.0.1",
+    "tsc-watch": "6.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/cron",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix --ext .ts,.tsx",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build",
+    "start": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
+    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+    "test": "exit 0"
+  },
+  "title": "CRON",
+  "version": "0.0.1"
+}

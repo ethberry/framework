@@ -24,7 +24,7 @@ export class ExchangeMysteryServiceEth {
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const assets = await this.assetService.saveAssetHistory(history, [items[0]], price);
+    const assets = await this.assetService.saveAssetHistory(history, [items[items.length - 1]], price);
 
     await this.notificatorService.purchaseMystery({
       ...assets,

@@ -19,7 +19,7 @@ export const CraftContactPanel: FC<ICraftContactPanelProps> = props => {
     async api => {
       return contract.id
         ? api.fetchJson({
-            url: "/craft/count",
+            url: "/recipes/craft/count",
             method: "POST",
             data: {
               contractId: contract.id,

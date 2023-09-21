@@ -18,21 +18,22 @@ import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
-import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
-import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
-import { BalanceModule } from "../hierarchy/balance/balance.module";
-import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
 import { RentModule } from "../mechanics/rent/rent.module";
+import { BalanceModule } from "../hierarchy/balance/balance.module";
+import { ClaimModule } from "../mechanics/claim/claim.module";
+import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
+import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
+
+import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
+import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
+import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { RaffleLogModule } from "../mechanics/raffle/log/log.module";
 import { LotteryLogModule } from "../mechanics/lottery/log/log.module";
 import { Erc721TokenRandomLogModule } from "../tokens/erc721/token/log-random/log.module";
 import { Erc998TokenRandomLogModule } from "../tokens/erc998/token/log-random/log.module";
-import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
-import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module";
 import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
-import { ClaimModule } from "../mechanics/claim/claim.module";
 import { ChainLinkLogModule } from "../integrations/chain-link/contract/log/log.module";
 import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
 
@@ -55,6 +56,7 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     WaitListLogModule,
     RaffleTicketLogModule,
     ContractManagerLogModule,
+    ChainLinkLogModule,
     EventHistoryModule,
     VestingModule,
     ContractModule,
@@ -64,7 +66,6 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     BalanceModule,
     UserModule,
     ClaimModule,
-    ChainLinkLogModule,
     SecretManagerModule.deferred(),
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],

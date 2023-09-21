@@ -8,7 +8,7 @@ import { DismantleEntity } from "./dismantle.entity";
 import { DismantleSearchDto, DismantleSignDto } from "./dto";
 
 @Public()
-@Controller("/dismantle")
+@Controller("/recipes/dismantle")
 export class DismantleController {
   constructor(private readonly dismantleService: DismantleService) {}
 

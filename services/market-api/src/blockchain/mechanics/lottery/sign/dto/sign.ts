@@ -2,12 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
+import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 
 import { ISignLotteryDto } from "../interfaces";
 
 import { LotteryTicketRule } from "./rule";
-import { ChainIdDto } from "../../../../../common/dto";
 
 export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignLotteryDto {
   @ApiProperty()

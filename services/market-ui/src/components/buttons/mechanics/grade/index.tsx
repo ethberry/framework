@@ -1,17 +1,20 @@
 import { FC, Fragment, useState } from "react";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { ContractFeatures, IGrade, IToken, TokenType } from "@framework/types";
+import type { IContract, IGrade, IToken } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
-import { IUpgradeDto, UpgradeDialog } from "./dialog";
+import type { IUpgradeDto } from "./dialog";
+import { UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
   className?: string;
@@ -26,12 +29,11 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
-  const { account, chainId } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
   const metaFnWithSign = useServerSignature(
-    (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature) => {
+    (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       return api
         .fetchJson({
           url: `/grade`,
@@ -52,7 +54,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
               amount: getMultiplier(level, component.amount, grade),
             })) || [];
 
-          const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
+          const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
           return contract.upgrade(
             {
               externalId: grade.id,
@@ -81,6 +83,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
+    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/grade/sign",
@@ -94,7 +97,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
       },
       values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleUpgrade = (): void => {

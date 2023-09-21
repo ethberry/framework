@@ -37,7 +37,7 @@ export const Craft: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ICraft, ICraftSearchDto>({
-    baseUrl: "/craft",
+    baseUrl: "/recipes/craft",
     empty: {
       item: getEmptyTemplate(TokenType.ERC721),
       price: getEmptyTemplate(TokenType.ERC1155),
@@ -55,9 +55,9 @@ export const Craft: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "craft"]} />
+      <Breadcrumbs path={["dashboard", "recipes", "recipes.craft"]} />
 
-      <PageHeader message="pages.craft.title">
+      <PageHeader message="pages.recipes.craft.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

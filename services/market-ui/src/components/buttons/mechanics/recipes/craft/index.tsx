@@ -6,7 +6,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ICraft } from "@framework/types";
+import type { IContract, ICraft } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
@@ -27,8 +27,8 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
 
       return contract.craft(
         {
@@ -79,7 +79,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleCraft = async () => {

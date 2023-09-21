@@ -1,27 +1,25 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage } from "react-intl";
-
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
-export interface IStakingRuleUploadCreateButtonProps {
+export interface IStakingRuleCreateButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
-export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonProps> = props => {
-  const { className } = props;
+export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props => {
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -34,13 +32,16 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
   };
 
   // MODULE:MYSTERYBOX
-  const { fn } = useApiCall((api, data: { templateIds: Array<number> }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return api.fetchJson({
-      url: "/mystery-boxes",
-      data,
-    });
-  });
+  const { fn } = useApiCall(
+    (api, data: { templateIds: Array<number> }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return api.fetchJson({
+        url: "/mystery/boxes",
+        data,
+      });
+    },
+    { success: false },
+  );
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
@@ -62,6 +63,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
+      maxStake: rule.maxStake,
       active: true, // todo add var in interface
     };
     const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
@@ -72,10 +74,10 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     // MODULE:MYSTERYBOX
     const content = [] as Array<any>;
     if (rule.reward) {
-      for (const rew of rule.reward.components) {
+      for (const row of rule.reward.components) {
         const {
           rows: [mysteryBox],
-        } = await fn(void 0, { templateIds: [rew.templateId] });
+        } = await fn(void 0, { templateIds: [row.templateId] });
         // MODULE:MYSTERYBOX
         if (mysteryBox) {
           content.push(
@@ -94,32 +96,33 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     } else {
       content.push([]);
     }
-    return metaLoadRule(rule, content);
+    return metaLoadRule(rule, content).then(() => {
+      setIsUploadDialogOpen(false);
+    });
   };
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="StakingRuleUploadButton"
+        icon={Add}
+        message="form.buttons.create"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.create" />
-      </Button>
+        dataTestId="StakingRuleUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <StakingRuleUploadDialog
         onConfirm={handleLoadRule}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
         initialValues={{
-          title: "new STAKING rule",
-          description: emptyStateString,
           deposit: emptyPrice,
           reward: emptyPrice,
           durationAmount: 2592000,
           durationUnit: DurationUnit.DAY,
           penalty: 100,
+          maxStake: 0,
           recurrent: false,
         }}
       />

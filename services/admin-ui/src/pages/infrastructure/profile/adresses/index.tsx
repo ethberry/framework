@@ -70,7 +70,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((address: IAddress) => (
-              <ListItem key={address.id} disableGutters={true}>
+              <ListItem key={address.id} disableGutters>
                 <ListItemText
                   primary={
                     <Fragment>
@@ -101,7 +101,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
               </ListItem>
             ))
           ) : (
-            <ListItem disableGutters={true}>
+            <ListItem disableGutters>
               <FormattedMessage id="pages.profile.addresses.empty" />
             </ListItem>
           )}

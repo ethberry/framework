@@ -16,9 +16,9 @@ import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/ty
 import { ContractStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { WaitListListCreateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/create";
-import { WaitListListUploadMenuItem } from "../../../../components/menu/mechanics/wait-list-list/upload";
-import { WaitListListGenerateMenuItem } from "../../../../components/menu/mechanics/wait-list-list/generate";
+import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
+import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
+import { WaitListListGenerateButton } from "../../../../components/buttons/mechanics/wait-list/list/generate";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -109,17 +109,17 @@ export const WaitListList: FC = () => {
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} icon={Create} message="form.buttons.edit" />
                 <ListAction onClick={handleDelete(waitListList)} icon={Delete} message="form.buttons.delete" />
-                <WaitListListCreateMenuItem
+                <WaitListListCreateButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                   onRefreshPage={handleRefreshPage}
                 />
-                <WaitListListUploadMenuItem
+                <WaitListListUploadButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                   onRefreshPage={handleRefreshPage}
                 />
-                <WaitListListGenerateMenuItem
+                <WaitListListGenerateButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                 />

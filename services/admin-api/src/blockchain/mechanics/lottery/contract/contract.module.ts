@@ -6,11 +6,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { LotteryContractService } from "./contract.service";
 import { LotteryContractController } from "./contract.controller";
-import { scheduleLotteryServiceProvider } from "../../../../common/providers";
+import { cronServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity])],
-  providers: [scheduleLotteryServiceProvider, LotteryContractService],
+  providers: [cronServiceProvider, LotteryContractService],
   controllers: [LotteryContractController],
   exports: [LotteryContractService],
 })

@@ -17,7 +17,7 @@ import { RaffleSection } from "./mechanics/raffle";
 import { LotterySection } from "./mechanics/lottery";
 import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
-import { CraftSection } from "./mechanics/craft";
+import { RecipesSection } from "./mechanics/recipes";
 import { AssetPromoSection } from "./mechanics/promo";
 import { ReferralSection } from "./exchange/referral";
 import { EcommerceSection } from "./ecommerce";
@@ -52,7 +52,7 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <VestingSection />
-          <CraftSection />
+          <RecipesSection />
           <AssetPromoSection />
           <RentSection />
           <BreedSection />

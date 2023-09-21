@@ -37,7 +37,7 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((user: IUser) => (
-              <ListItem key={user.id} disableGutters={true}>
+              <ListItem key={user.id} disableGutters>
                 <ListItemText>{user.displayName}</ListItemText>
                 <ListActions>
                   <ListAction
@@ -50,7 +50,7 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
               </ListItem>
             ))
           ) : (
-            <ListItem disableGutters={true}>
+            <ListItem disableGutters>
               <FormattedMessage id="pages.merchant.managers.empty" />
             </ListItem>
           )}

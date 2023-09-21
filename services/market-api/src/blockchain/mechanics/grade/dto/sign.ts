@@ -3,10 +3,8 @@ import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
+import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 import type { IGradeSignDto } from "@framework/types";
-
-import { ChainIdDto } from "../../../../common/dto";
 
 export class GradeSignDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements IGradeSignDto {
   @ApiProperty({

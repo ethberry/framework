@@ -10,6 +10,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
 import BreedABI from "../../../../abis/mechanics/breed/main/breed.abi.json";
@@ -45,8 +46,8 @@ export const Breed: FC = () => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, BreedABI, web3Context.provider?.getSigner());
+    (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, BreedABI, web3Context.provider?.getSigner());
 
       return contract.breed(
         {
@@ -74,7 +75,7 @@ export const Breed: FC = () => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((data: IBreedDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IBreedDto, web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(
@@ -85,13 +86,13 @@ export const Breed: FC = () => {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          momId: data.mom.tokenId,
-          dadId: data.dad.tokenId,
+          momId: values.mom.tokenId,
+          dadId: values.dad.tokenId,
         },
       },
-      data,
+      values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleSubmit = async (values: IBreedDto) => {

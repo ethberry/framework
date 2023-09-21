@@ -14,6 +14,7 @@ import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-p
 import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
 import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
 import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { LendTokenPanel } from "../../../mechanics/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
 import { Erc998Composition } from "./composition";
 
@@ -63,6 +64,7 @@ export const Erc998Token: FC = () => {
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
+              <LendTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

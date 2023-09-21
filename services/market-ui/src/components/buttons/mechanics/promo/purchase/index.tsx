@@ -6,7 +6,8 @@ import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IAssetPromo, IMysteryBox, ModuleType, TokenType } from "@framework/types";
+import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
 
@@ -34,8 +35,8 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, PromoPurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, PromoPurchaseABI, web3Context.provider?.getSigner());
 
       return mysteryComponents && mysteryComponents.length > 0
         ? (contract.purchaseMystery(
@@ -122,7 +123,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {

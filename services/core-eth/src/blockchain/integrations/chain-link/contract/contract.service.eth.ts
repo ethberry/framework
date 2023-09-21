@@ -19,7 +19,7 @@ export class ChainLinkContractServiceEth {
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(ETHERS_SIGNER)
-    protected readonly ethersSignerProviderAws: Wallet,
+    protected readonly ethersSignerProvider: Wallet,
     protected readonly configService: ConfigService,
     protected readonly contractService: ContractService,
     protected readonly eventHistoryService: EventHistoryService,
@@ -61,7 +61,7 @@ export class ChainLinkContractServiceEth {
         numWords,
         keyHash,
       },
-      this.ethersSignerProviderAws,
+      this.ethersSignerProvider,
     );
     this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkContractServiceEth.name);
   }

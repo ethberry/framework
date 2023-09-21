@@ -6,7 +6,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ITemplate } from "@framework/types";
+import type { IContract, ITemplate } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
@@ -29,8 +29,8 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
+    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
 
       return contract.purchase(
         {
@@ -61,7 +61,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     },
   );
 
-  const metaFn = useMetamask((dto: IAmountDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAmountDto, web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(
@@ -73,12 +73,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           account,
           referrer: settings.getReferrer(),
           templateId: template.id,
-          amount: dto.amount,
+          amount: values.amount,
         },
       },
-      dto,
+      values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {

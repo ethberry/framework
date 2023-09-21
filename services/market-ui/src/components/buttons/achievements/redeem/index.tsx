@@ -7,8 +7,8 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
-import type { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
 import ClaimABI from "../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
@@ -40,31 +40,33 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
     ? previousLevels.some(({ redemptions }) => !redemptions?.length)
     : true;
 
-  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, ClaimABI, web3Context.provider?.getSigner());
 
-    return contract.claim(
-      {
-        externalId: sign.bytecode, // claimEntity ID
-        expiresAt: sign.expiresAt,
-        nonce: utils.arrayify(sign.nonce),
-        extra: utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32),
-        receiver: achievementRule.contract!.merchant!.wallet,
-        referrer: settings.getReferrer(),
-      },
-      achievementLevel.item?.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        // pass templateId instead of tokenId = 0
-        tokenId:
-          component.contract!.contractType === TokenType.ERC1155
-            ? component.template!.tokens![0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      })),
-      sign.signature,
-    ) as Promise<void>;
-  });
+      return contract.claim(
+        {
+          externalId: sign.bytecode, // claimEntity ID
+          expiresAt: sign.expiresAt,
+          nonce: utils.arrayify(sign.nonce),
+          extra: utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32),
+          receiver: achievementRule.contract!.merchant!.wallet,
+          referrer: settings.getReferrer(),
+        },
+        achievementLevel.item?.components.map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          // pass templateId instead of tokenId = 0
+          tokenId:
+            component.contract!.contractType === TokenType.ERC1155
+              ? component.template!.tokens![0].tokenId
+              : (component.templateId || 0).toString(), // suppression types check with 0
+          amount: component.amount,
+        })),
+        sign.signature,
+      ) as Promise<void>;
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
@@ -81,7 +83,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleRedeem = async () => {

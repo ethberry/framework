@@ -5,7 +5,7 @@ import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/m
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { Erc721TransferButton, TokenLendButton, TokenSellButton } from "../../../../../components/buttons";
+import { Erc721TransferButton, TokenSellButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 
 export interface ICommonTokenPanelProps {
@@ -25,7 +25,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.priceTitle" />
           </Typography>
@@ -41,7 +41,6 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
       <CardActions>
         <TokenSellButton token={token} />
         <Erc721TransferButton token={token} />
-        <TokenLendButton token={token} />
       </CardActions>
     </Card>
   );

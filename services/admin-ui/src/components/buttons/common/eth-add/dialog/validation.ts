@@ -10,4 +10,8 @@ export const validationSchema = object().shape({
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),
+  chainId: number()
+    .required("form.validations.valueMissing")
+    .integer("form.validations.badInput")
+    .min(1, "form.validations.rangeUnderflow"),
 });

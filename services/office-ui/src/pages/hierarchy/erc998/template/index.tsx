@@ -14,7 +14,7 @@ import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { MintMenuItem } from "../../../../components/menu/hierarchy/template/mint";
+import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc998TemplateEditDialog } from "./edit";
 
@@ -104,7 +104,7 @@ export const Erc998Template: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(template => (
-            <ListItem key={template.id} sx={{ flexWrap: "wrap" }}>
+            <ListItem key={template.id} disableGutters sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListActions dataTestId="TemplateActionsMenuButton">
@@ -115,7 +115,7 @@ export const Erc998Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintMenuItem
+                <MintButton
                   template={template}
                   disabled={
                     template.templateStatus === TemplateStatus.INACTIVE ||

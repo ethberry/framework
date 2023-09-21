@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { MysteryboxPurchaseButton } from "../../../../../components/buttons";
+import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 
 interface IMysteryBoxListItemProps {
@@ -30,7 +30,7 @@ export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <MysteryboxPurchaseButton mysteryBox={mysteryBox} />
+          <MysteryBoxPurchaseButton mysteryBox={mysteryBox} />
         </Grid>
       </CardActions>
     </Card>

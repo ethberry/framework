@@ -7,7 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import type { ILotteryRound } from "@framework/types";
+import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { boolArrayToByte32 } from "@framework/traits-ui";
 
@@ -28,8 +28,8 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, LotteryPurchaseABI, web3Context.provider?.getSigner());
 
       return contract
         .purchaseLottery(
@@ -80,7 +80,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handlePurchase = () => {
@@ -94,7 +94,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       message="form.buttons.buy"
       buttonVariant="contained"
       className={className}
-      dataTestId="LotteryBuyTicket"
+      dataTestId="LotteryPurchaseButton"
       disabled={disabled}
       variant={variant}
     />

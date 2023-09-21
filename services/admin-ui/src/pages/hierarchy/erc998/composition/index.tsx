@@ -150,8 +150,8 @@ export const Erc998Composition: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(composition => (
-            <ListItem key={composition.id}>
-              <ListItemText sx={{ flex: "0 1 80%" }}>
+            <ListItem key={composition.id} disableGutters>
+              <ListItemText>
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
               <ListActions>

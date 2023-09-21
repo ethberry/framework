@@ -1,38 +1,30 @@
-import { Inject, Injectable, LoggerService, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { RmqProviderType } from "@framework/types";
+import { CoreEthType, RmqProviderType } from "@framework/types";
+
 import type { IEthLoggerInOutDto } from "./interfaces";
-import { RedisProviderType } from "../../common/providers";
-import Queue from "bee-queue";
 
 @Injectable()
 export class EthLoggerService {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
-    @Inject(RmqProviderType.WATCHER_IN_SERVICE)
-    private readonly loggerInProxy: ClientProxy,
-    @Inject(RmqProviderType.WATCHER_OUT_SERVICE)
-    private readonly loggerOutProxy: ClientProxy,
-    @Inject(RedisProviderType.QUEUE_IN_SERVICE)
-    private readonly txInQueue: Queue,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE)
+    private readonly coreEthServiceBesuProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
+    private readonly coreEthServiceBinanceProxy: ClientProxy,
   ) {}
 
   public async addListener(dto: IEthLoggerInOutDto): Promise<any> {
-    const job = this.txInQueue.createJob({ x: 2, y: 3, dto });
-    await job
-      .timeout(3000)
-      .retries(2)
-      .save()
-      .then((job: any) => {
-        this.loggerService.log("JOB CREATED", job.id);
-        // job enqueued, job.id populated
-      });
-    return this.loggerInProxy.emit(RmqProviderType.WATCHER_IN_SERVICE, dto).toPromise();
+    return dto.chainId === 56 || dto.chainId === 97
+      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
+      : this.coreEthServiceBesuProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
   }
 
   public async removeListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return this.loggerOutProxy.emit(RmqProviderType.WATCHER_OUT_SERVICE, dto).toPromise();
+    return dto.chainId === 56 || dto.chainId === 97
+      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
+      : this.coreEthServiceBesuProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
   }
 }

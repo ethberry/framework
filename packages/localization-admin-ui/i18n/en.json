@@ -999,10 +999,23 @@
       },
       "tokens": "Collection Tokens"
     },
-    "craft": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Craft recipes"
+    "recipes": {
+      "title": "Recipes",
+      "craft": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Craft recipes"
+      },
+      "dismantle": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Dismantle recipes"
+      },
+      "merge": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Merge recipes"
+      }
     },
     "dashboard": {
       "achievements": {
@@ -1070,11 +1083,6 @@
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
-    },
-    "dismantle": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Dismantle recipes"
     },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
@@ -1200,11 +1208,7 @@
       },
       "title": "Merchant"
     },
-    "merge": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Merge recipes"
-    },
+
     "mystery": {
       "boxContent": {
         "title": "Mysterybox content"

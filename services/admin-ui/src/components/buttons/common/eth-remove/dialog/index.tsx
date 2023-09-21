@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
 import { ListenerType } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -11,6 +11,7 @@ import { validationSchema } from "./validation";
 export interface IEthListenerRemoveDto {
   address: string;
   listenerType: ListenerType;
+  chainId: number;
 }
 
 export interface IEthListenerRemoveDialogProps {
@@ -35,6 +36,7 @@ export const EthListenerRemoveDialog: FC<IEthListenerRemoveDialogProps> = props 
       </Alert>
       <TextInput name="address" />
       <SelectInput name="listenerType" options={ListenerType} />
+      <NumberInput name="chainId" />
     </FormDialog>
   );
 };

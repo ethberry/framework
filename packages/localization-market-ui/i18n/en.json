@@ -378,7 +378,8 @@
       "unpack": "Unwrap",
       "upgrade": "Upgrade",
       "upload": "Upload",
-      "withdraw": "Withdraw"
+      "withdraw": "Withdraw",
+      "withdrawReferral": "Withdraw {symbol} {amount}"
     },
     "hints": {
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
@@ -637,18 +638,22 @@
       "rates": "Rates",
       "title": "CoinGecko"
     },
-    "craft": {
-      "approve": "Please approve ingredients to Exchange before",
-      "price": "Price",
-      "tabs": {
-        "erc1155": "ERC1155",
-        "erc721": "ERC721",
-        "erc998": "ERC998"
+    "recipes": {
+      "title": "Recipes",
+      "ingredients": "Ingredients",
+      "craft": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "tabs": {
+          "erc1155": "ERC1155",
+          "erc721": "ERC721",
+          "erc998": "ERC998"
+        },
+        "title": "Craft recipe: {title}"
       },
-      "title": "Craft recipe: {title}"
-    },
-    "craft-list": {
-      "title": "Craft recipes"
+      "craft-list": {
+        "title": "Craft recipes"
+      }
     },
     "dashboard": {
       "achievements": {
@@ -696,11 +701,11 @@
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
-        "craft": "Craft",
-        "promo": "Promo",
+        "recipes": "Recipes",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
@@ -795,9 +800,6 @@
       "uniswap": {
         "title": "Uniswap"
       }
-    },
-    "promo-list": {
-      "title": "Promos"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1058,6 +1060,9 @@
       },
       "title": "Profile"
     },
+    "promo-list": {
+      "title": "Promos"
+    },
     "raffle": {
       "contract": {
         "title": "Contract: {title}"
@@ -1120,6 +1125,7 @@
       "priceTitle": "Base price:",
       "rarity": "Rarity",
       "rarityMultiplier": "x {multiplier}",
+      "tokenUser": "User",
       "traits": "Traits"
     },
     "tokens": {

@@ -19,7 +19,7 @@ export const CraftItem: FC<ICraftItemProps> = props => {
   // https://mui.com/material-ui/react-masonry/
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/craft/${craft.id}`}>
+      <CardActionArea component={RouterLink} to={`/recipes/craft/${craft.id}`}>
         <CardHeader
           action={<CraftIngredients craft={craft} />}
           title={craft.item?.components[0].template!.title}

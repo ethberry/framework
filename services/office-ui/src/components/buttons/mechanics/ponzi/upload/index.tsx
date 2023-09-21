@@ -1,102 +1,127 @@
-import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
-import { Check, Close, CloudUpload } from "@mui/icons-material";
+import { FC, Fragment, useState } from "react";
+import { Add } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IPonziRule, PonziRuleStatus, TokenType } from "@framework/types";
+import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
-import PonziSetRuleABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
-import PonziUpdateRuleABI from "../../../../../abis/mechanics/ponzi/upload/updateRule.abi.json";
+import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
+import { PonziRuleUploadDialog } from "./upload-dialog";
 
-export interface IPonziUploadButtonProps {
+export interface IPonziRuleCreateButtonProps {
+  className?: string;
   disabled?: boolean;
-  rule: IPonziRule;
   variant?: ListActionVariant;
 }
 
-export const PonziUploadButton: FC<IPonziUploadButtonProps> = props => {
-  const { disabled, rule, variant } = props;
-  const { formatMessage } = useIntl();
+export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
+  const { className, disabled, variant } = props;
 
-  const metaLoadRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
-    if (rule.ponziRuleStatus !== PonziRuleStatus.NEW) {
-      return Promise.reject(new Error(""));
-    }
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-    const stakingRule = {
-      externalId: rule.id,
+  const handleUpload = () => {
+    setIsUploadDialogOpen(true);
+  };
+
+  const handleUploadCancel = () => {
+    setIsUploadDialogOpen(false);
+  };
+
+  // MODULE:MYSTERYBOX
+  const { fn } = useApiCall(
+    (api, data: { templateIds: Array<number> }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return api.fetchJson({
+        url: "/mystery/boxes",
+        data,
+      });
+    },
+    { success: false },
+  );
+
+  const metaLoadRule = useMetamask((rule: IPonziRule, content: Array<any>, web3Context: Web3ContextType) => {
+    const ponziRule = {
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
-      }))[0],
-      reward: rule.reward?.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.templateId,
-        amount: component.amount,
-      }))[0],
+      })),
+      reward: rule.reward
+        ? rule.reward.components.map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.templateId,
+            amount: component.amount,
+          }))
+        : [],
+      content,
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
-      active: true, // TODO new rules always ACTIVE ?
+      active: true, // todo add var in interface
     };
-
-    const contract = new Contract(rule.contract.address, PonziSetRuleABI, web3Context.provider?.getSigner());
-    return contract.setRules([stakingRule]) as Promise<void>;
+    const contract = new Contract(rule.contract.address, PonziSetRulesABI, web3Context.provider?.getSigner());
+    return contract.setRules([ponziRule]) as Promise<void>;
   });
 
-  const handleLoadRule = (rule: IPonziRule): (() => Promise<void>) => {
-    return async (): Promise<void> => {
-      return metaLoadRule(rule);
-    };
-  };
-
-  const metaToggleRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
-    let ruleStatus: boolean;
-    if (rule.ponziRuleStatus === PonziRuleStatus.NEW) {
-      // this should never happen
-      return Promise.reject(new Error(":)"));
+  const handleLoadRule = async (rule: Partial<IPonziRule>): Promise<void> => {
+    // MODULE:MYSTERYBOX
+    const content = [] as Array<any>;
+    if (rule.reward) {
+      for (const row of rule.reward.components) {
+        const {
+          rows: [mysteryBox],
+        } = await fn(void 0, { templateIds: [row.templateId] });
+        // MODULE:MYSTERYBOX
+        if (mysteryBox) {
+          content.push(
+            (mysteryBox as IMysteryBox).item!.components.map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.templateId || 0,
+              amount: component.amount,
+            })),
+          );
+        } else {
+          content.push([]);
+        }
+      }
+      if (!content.length) content.push([]);
     } else {
-      ruleStatus = rule.ponziRuleStatus !== PonziRuleStatus.ACTIVE;
+      content.push([]);
     }
-
-    const contract = new Contract(rule.contract.address, PonziUpdateRuleABI, web3Context.provider?.getSigner());
-    return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
-  });
-
-  const handleToggleRule = (rule: IPonziRule): (() => Promise<void>) => {
-    return (): Promise<void> => {
-      return metaToggleRule(rule);
-    };
+    return metaLoadRule(rule, content).then(() => {
+      setIsUploadDialogOpen(false);
+    });
   };
-
-  if (rule.ponziRuleStatus === PonziRuleStatus.NEW) {
-    return (
-      <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
-        <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
-          <CloudUpload />
-        </IconButton>
-      </Tooltip>
-    );
-  }
 
   return (
-    <ListAction
-      onClick={handleToggleRule(rule)}
-      icon={rule.ponziRuleStatus === PonziRuleStatus.ACTIVE ? Close : Check}
-      message={
-        rule.ponziRuleStatus === PonziRuleStatus.ACTIVE
-          ? "pages.staking.rules.deactivate"
-          : "pages.staking.rules.activate"
-      }
-      dataTestId="StakeRuleToggleButton"
-      disabled={disabled}
-      variant={variant}
-    />
+    <Fragment>
+      <ListAction
+        onClick={handleUpload}
+        icon={Add}
+        message="form.buttons.create"
+        className={className}
+        dataTestId="PonziRuleUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
+      <PonziRuleUploadDialog
+        onConfirm={handleLoadRule}
+        onCancel={handleUploadCancel}
+        open={isUploadDialogOpen}
+        initialValues={{
+          deposit: emptyPrice,
+          reward: emptyPrice,
+          durationAmount: 2592000,
+          durationUnit: DurationUnit.DAY,
+          penalty: 100,
+        }}
+      />
+    </Fragment>
   );
 };

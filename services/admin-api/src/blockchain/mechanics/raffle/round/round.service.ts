@@ -1,11 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClientProxy } from "@nestjs/microservices";
 
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
-import { RmqProviderType } from "@framework/types";
 
 import { RaffleRoundEntity } from "./round.entity";
 
@@ -14,8 +12,6 @@ export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
-    private readonly scheduleProxy: ClientProxy,
   ) {}
 
   public async search(dto: Partial<IPaginationDto>): Promise<[Array<RaffleRoundEntity>, number]> {

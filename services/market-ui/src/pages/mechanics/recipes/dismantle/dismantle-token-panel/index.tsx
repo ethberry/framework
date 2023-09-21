@@ -5,13 +5,13 @@ import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
 import {
   Card,
-  Toolbar,
   CardContent,
-  ListItemIcon,
   Grid,
   List,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { Construction } from "@mui/icons-material";
@@ -20,7 +20,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
+import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
@@ -40,7 +40,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const settings = useSettings();
 
   const { rows, isLoading } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/dismantle",
+    baseUrl: "/recipes/dismantle",
     embedded: true,
     search: {
       templateId: token.templateId,
@@ -48,20 +48,20 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   });
 
   const metaFnWithSign = useServerSignature(
-    (dismantle: IDismantle, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, DismantleABI, web3Context.provider?.getSigner());
+    (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, DismantleABI, web3Context.provider?.getSigner());
 
       return contract.dismantle(
         {
-          externalId: dismantle.id,
+          externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: dismantle.merchant!.wallet,
+          receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
         // ITEM to get after dismantle
-        dismantle.item?.components.sort(sorter("id")).map(component => ({
+        values.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -71,12 +71,12 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           amount: getDismantleMultiplier(
             component.amount,
             token.metadata,
-            dismantle.dismantleStrategy,
-            dismantle.rarityMultiplier,
+            values.dismantleStrategy,
+            values.rarityMultiplier,
           ).amount.toString(),
         })),
         // PRICE token to dismantle
-        dismantle.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: token.tokenId,
@@ -91,7 +91,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((dismantle: IDismantle, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IDismantle, web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(
@@ -102,11 +102,11 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          dismantleId: dismantle.id,
+          dismantleId: values.id,
           tokenId: token.id,
         },
       },
-      dismantle,
+      values,
       web3Context,
     ).then(() => {
       navigate("/tokens");
@@ -128,7 +128,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   return (
     <Card>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.dismantle" />
           </Typography>

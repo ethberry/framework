@@ -38,7 +38,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((otp: IOtp) => (
-              <ListItem key={otp.uuid} disableGutters={true}>
+              <ListItem key={otp.uuid} disableGutters>
                 <ListItemText>{otp.user!.displayName}</ListItemText>
                 <ListActions>
                   <ListAction icon={Delete} message="form.tips.delete" onClick={handleDelete(otp)} />
@@ -46,7 +46,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
               </ListItem>
             ))
           ) : (
-            <ListItem disableGutters={true}>
+            <ListItem disableGutters>
               <FormattedMessage id="pages.merchant.invitations.empty" />
             </ListItem>
           )}

@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
+import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
@@ -45,19 +45,19 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   });
 
   const metaFnWithSign = useServerSignature(
-    (craft: ICraft, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
+    (values: ICraft, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
 
       return contract.craft(
         {
-          externalId: craft.id,
+          externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: craft.merchant!.wallet,
+          receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        craft.item?.components.sort(sorter("id")).map(component => ({
+        values.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -66,7 +66,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
-        craft.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -74,14 +74,14 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
         })),
         sign.signature,
         {
-          value: getEthPrice(craft.price),
+          value: getEthPrice(values.price),
         },
       ) as Promise<void>;
     },
     // { error: false },
   );
 
-  const metaFn = useMetamask((craft: ICraft, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: ICraft, web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(
@@ -92,12 +92,12 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          craftId: craft.id,
+          craftId: values.id,
         },
       },
-      craft,
+      values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleCraft = (craft: ICraft) => {
@@ -115,7 +115,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   return (
     <Card>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.craft" />
           </Typography>

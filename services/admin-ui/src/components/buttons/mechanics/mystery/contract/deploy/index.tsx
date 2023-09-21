@@ -6,7 +6,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IMysteryContractDeployDto, IUser } from "@framework/types";
-import { MysteryContractTemplates } from "@framework/types";
+import { IContract, MysteryContractTemplates } from "@framework/types";
 
 import DeployMysteryBoxABI from "../../../../../../abis/mechanics/mystery-box/deploy/deployMysteryBox.abi.json";
 
@@ -24,13 +24,9 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IMysteryContractDeployDto, web3Context, sign) => {
+    (values: IMysteryContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployMysteryBoxABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployMysteryBoxABI, web3Context.provider?.getSigner());
 
       return contract.deployMysterybox(
         {
