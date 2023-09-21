@@ -3,9 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { Erc721TokenControllerEth } from "./token.controller.eth";
-import { Erc721TokenServiceEth } from "./token.service.eth";
-import { Erc721TokenLogModule } from "./log/log.module";
+import { signalServiceProvider } from "../../../../common/providers";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
@@ -17,6 +15,9 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
 import { Erc721TokenRandomLogModule } from "./log-random/log.module";
 import { Erc721TokenRandomControllerEth } from "./token.controller.random.eth";
 import { Erc721TokenRandomServiceEth } from "./token.service.random.eth";
+import { Erc721TokenControllerEth } from "./token.controller.eth";
+import { Erc721TokenServiceEth } from "./token.service.eth";
+import { Erc721TokenLogModule } from "./log/log.module";
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { Erc721TokenRandomServiceEth } from "./token.service.random.eth";
     TypeOrmModule.forFeature([TokenEntity]),
     NotificatorModule,
   ],
-  providers: [Logger, ethersRpcProvider, Erc721TokenServiceEth, Erc721TokenRandomServiceEth],
+  providers: [signalServiceProvider, Logger, ethersRpcProvider, Erc721TokenServiceEth, Erc721TokenRandomServiceEth],
   controllers: [Erc721TokenControllerEth, Erc721TokenRandomControllerEth],
   exports: [Erc721TokenServiceEth],
 })

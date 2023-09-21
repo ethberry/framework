@@ -16,7 +16,7 @@ import { Public } from "@gemunion/nest-js-utils";
 import { SkipThrottle, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
 
 @Public()
-@SkipThrottle(true)
+@SkipThrottle({ default: true })
 @Controller("/health")
 export class HealthController {
   constructor(
@@ -24,6 +24,8 @@ export class HealthController {
     private readonly db: TypeOrmHealthIndicator,
     private readonly ms: MicroserviceHealthIndicator,
     private readonly configService: ConfigService,
+    private readonly redisIndicator: RedisHealthIndicator,
+    private readonly redisManager: RedisManager,
   ) {}
 
   @Get()
@@ -42,6 +44,11 @@ export class HealthController {
           options: {
             urls: [rmqUrl],
           },
+        }),
+      async (): Promise<HealthIndicatorResult> =>
+        this.redisIndicator.checkHealth("Redis", {
+          type: "redis",
+          client: this.redisManager.getClient(THROTTLE_STORE),
         }),
     ]);
   }

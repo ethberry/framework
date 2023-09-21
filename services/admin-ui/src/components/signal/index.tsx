@@ -4,13 +4,15 @@ import { useSnackbar } from "notistack";
 import { io } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
+import { SignalEventType } from "@framework/types";
 
 export const Signal: FC = () => {
   const api = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const socket = io("http://localhost:3013", {
+  // TODO process.env.SIGNAL_URL
+  const socket = io(process.env.SIGNAL_URL, {
     extraHeaders: {
       Authorization: `Bearer ${api.getToken()?.accessToken || ""}`,
     },
@@ -26,13 +28,15 @@ export const Signal: FC = () => {
       enqueueSnackbar(formatMessage({ id: "socket.connect_failed" }), { variant: "error" });
     });
 
-    socket.emit("ping", { ping: true }, (pong: any) => {
+    socket.emit(SignalEventType.PING, { [SignalEventType.PING]: true }, (pong: any) => {
       console.log(pong);
     });
 
-    socket.on("txHash", (dto: any) => {
+    socket.on(SignalEventType.TRANSACTION_HASH, (dto: { transactionHash: string }) => {
       console.log(dto);
-      enqueueSnackbar(formatMessage({ id: "socket.txHash" }), { variant: "info" });
+      enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
+        variant: "info",
+      });
     });
 
     return () => {

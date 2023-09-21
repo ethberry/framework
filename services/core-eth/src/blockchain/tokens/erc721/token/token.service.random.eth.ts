@@ -1,13 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ExchangeType,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   IExchangePurchaseEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenMetadata,
   TokenMintType,
   TokenStatus,
@@ -31,6 +34,8 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -155,6 +160,8 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
       to: to.toLowerCase(),
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
@@ -172,6 +179,10 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     //   this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
     //   throw new NotFoundException("historyNotFound");
     // }
+
+    const { address, transactionHash } = context;
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   // get Purchase parent event and send notification about purchase

@@ -1,12 +1,14 @@
-import { APP_FILTER } from "@nestjs/core";
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
+import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
+import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
@@ -17,10 +19,13 @@ import { GameModule } from "./game/game.module";
 
 @Module({
   providers: [
-    Logger,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerBehindProxyGuard,
     },
   ],
   imports: [
@@ -32,6 +37,21 @@ import { GameModule } from "./game/game.module";
       useClass: WinstonConfigService,
     }),
     GemunionTypeormModule.forRoot(ormconfig),
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): RedisModuleOptions => {
+        const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
+        return {
+          config: [
+            {
+              namespace: THROTTLE_STORE,
+              url: redisThrottleUrl,
+            },
+          ],
+        };
+      },
+    }),
     HelmetModule.forRoot({
       contentSecurityPolicy: false,
     }),
@@ -43,6 +63,7 @@ import { GameModule } from "./game/game.module";
       },
     }),
     RequestLoggerModule,
+    GemunionThrottlerModule,
     InfrastructureModule,
     GameModule,
   ],

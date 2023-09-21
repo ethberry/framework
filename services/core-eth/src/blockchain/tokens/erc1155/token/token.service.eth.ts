@@ -1,14 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
-import {
+import type {
   IErc1155TokenApprovalForAllEvent,
   IErc1155TokenTransferBatchEvent,
   IErc1155TokenTransferSingleEvent,
   IErc1155TokenUriEvent,
 } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -21,6 +23,8 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
@@ -33,7 +37,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     const {
       args: { from, to, id /* 1155 db:tokenId */, value },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const tokenEntity = await this.tokenService.getToken(Number(id).toString(), address);
 
@@ -42,6 +46,8 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     }
     await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
 
     await this.notificatorService.tokenTransfer({
       token: tokenEntity,
@@ -55,7 +61,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     const {
       args: { from, to, ids /* 1155 db:tokenIds */, values },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -78,6 +84,8 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokensNotFound");
     }
 
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+
     await this.notificatorService.batchTransfer({
       tokens: tokensEntities,
       from: from.toLowerCase(),
@@ -88,10 +96,18 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
 
   public async approvalForAllErc1155(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
+
+    const { address, transactionHash } = context;
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   public async uri(event: ILogEvent<IErc1155TokenUriEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
+
+    const { address, transactionHash } = context;
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {

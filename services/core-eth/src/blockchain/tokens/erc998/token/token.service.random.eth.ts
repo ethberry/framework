@@ -1,19 +1,21 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IERC721TokenMintRandomEvent, IERC721TokenTransferEvent, IExchangePurchaseEvent } from "@framework/types";
 import {
   ContractEventType,
   ExchangeType,
-  IERC721TokenMintRandomEvent,
-  IERC721TokenTransferEvent,
-  IExchangePurchaseEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenMetadata,
   TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -22,8 +24,6 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { ABI } from "../../erc721/token/log/interfaces";
-import { Erc998CompositionService } from "../composition/composition.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc998TokenRandomServiceEth extends TokenServiceEth {
@@ -32,13 +32,14 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly contractService: ContractService,
     protected readonly assetService: AssetService,
-    protected readonly erc998CompositionService: Erc998CompositionService,
     private readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
@@ -143,10 +144,16 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
       to: to.toLowerCase(),
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
+
+    const { address, transactionHash } = context;
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   // get Purchase parent event and send notification about purchase
@@ -166,6 +173,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
         { historyId: exchangeEvent.id },
         { relations: { token: { template: true }, contract: true } },
       );
+
       await this.notificatorService.purchaseRandom({
         account: eventData.account.toLowerCase(),
         item: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.ITEM)[0],

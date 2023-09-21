@@ -1,18 +1,14 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { DeepPartial } from "typeorm";
 
-import {
-  IERC721ConsecutiveTransfer,
-  IERC721TokenTransferEvent,
-  ILevelUp,
-  TokenMetadata,
-  TokenStatus,
-} from "@framework/types";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent, ILevelUp } from "@framework/types";
+import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
-import { ABI } from "./log/interfaces";
 import { getMetadata } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -22,7 +18,7 @@ import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { ABI } from "./log/interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -31,6 +27,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -101,6 +99,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
 
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+
     await this.notificatorService.tokenTransfer({
       token: erc721TokenEntity,
       from: from.toLowerCase(),
@@ -113,7 +113,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const {
       args: { fromAddress, toAddress, fromTokenId, toTokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     // Mint token create batch
     if (fromAddress === ZeroAddress) {
@@ -152,6 +152,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       await this.createBalancesBatch(toAddress, entityArray);
       // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+
+      await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
     }
   }
 
@@ -169,7 +171,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const {
       args: { tokenId, attribute, value },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
@@ -182,5 +184,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 }

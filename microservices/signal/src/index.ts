@@ -24,7 +24,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({
     origin:
-      process.env.NODE_ENV === "development" || process.env.NODE_ENV === "dev"
+      process.env.NODE_ENV === "development"
         ? [
             "http://localhost:3005",
             "http://127.0.0.1:3005",
@@ -58,7 +58,7 @@ async function bootstrap(): Promise<void> {
   }
 
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueMobile = configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
+  const rmqQueueMobile = configService.get<string>("RMQ_QUEUE_SIGNAL", "signal");
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

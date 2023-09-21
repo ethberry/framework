@@ -8,6 +8,8 @@ import type {
   IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
+  IErc998BatchReceivedChildEvent,
+  IErc998BatchTransferChildEvent,
   IErc998TokenReceivedChildEvent,
   IErc998TokenSetMaxChildEvent,
   IErc998TokenTransferChildEvent,
@@ -15,12 +17,7 @@ import type {
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
 } from "@framework/types";
-import {
-  ContractEventType,
-  ContractType,
-  IErc998BatchReceivedChildEvent,
-  IErc998BatchTransferChildEvent,
-} from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
 import { Erc998TokenControllerEth } from "./token.controller.eth";
@@ -29,7 +26,7 @@ import { Erc998TokenRandomServiceEth } from "./token.service.random.eth";
 @Controller()
 export class Erc998TokenRandomControllerEth extends Erc998TokenControllerEth {
   constructor(
-    private readonly erc998TokenRandomServiceEth: Erc998TokenRandomServiceEth,
+    public readonly erc998TokenRandomServiceEth: Erc998TokenRandomServiceEth,
     public readonly erc998TokenServiceEth: Erc998TokenServiceEth,
   ) {
     super(erc998TokenServiceEth);
@@ -40,9 +37,14 @@ export class Erc998TokenRandomControllerEth extends Erc998TokenControllerEth {
     return this.erc998TokenRandomServiceEth.transfer(event, context);
   }
 
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.MintRandom })
+  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
+    return this.erc998TokenRandomServiceEth.mintRandom(event, context);
+  }
+
   @EventPattern({ contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenRandomServiceEth.approval(event, context);
+    return this.erc998TokenServiceEth.approval(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.ApprovalForAll })
@@ -51,11 +53,6 @@ export class Erc998TokenRandomControllerEth extends Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.mintRandom(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.ReceivedChild })

@@ -13,7 +13,7 @@ import { PickerProvider } from "@gemunion/provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
-// import { Signal } from "../components/signal";
+import { Signal } from "../components/signal";
 
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
@@ -28,7 +28,7 @@ export const Providers: FC<PropsWithChildren> = props => {
                   <PopupProvider>
                     <WalletProvider>
                       <PickerProvider>
-                        {/* <Signal /> */}
+                        <Signal />
                         {children}
                       </PickerProvider>
                     </WalletProvider>

@@ -3,9 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  ContractManagerEventType,
-  ContractType,
+import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
@@ -19,6 +17,7 @@ import {
   IContractManagerVestingDeployedEvent,
   IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
+import { ContractManagerEventType, ContractType } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
