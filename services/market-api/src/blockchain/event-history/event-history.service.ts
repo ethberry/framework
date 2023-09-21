@@ -26,7 +26,6 @@ export class EventHistoryService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("history.assets", "assets_filter");
-    queryBuilder.leftJoinAndSelect("assets_filter.token", "asset_token_filter");
     queryBuilder.andWhere("assets_filter.tokenId = :tokenId", { tokenId });
 
     queryBuilder.leftJoinAndSelect("history.assets", "assets");
