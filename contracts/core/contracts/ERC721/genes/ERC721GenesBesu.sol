@@ -17,7 +17,7 @@ contract ERC721GenesBesu is ERC721Genes, ChainLinkBesu {
     string memory baseTokenURI
   ) ERC721Genes(name, symbol, royalty, baseTokenURI) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC721Genes) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721Genes) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

@@ -17,7 +17,7 @@ contract ERC998GenesBesu is ERC998Genes, ChainLinkBesu {
     string memory baseTokenURI
   ) ERC998Genes(name, symbol, royalty, baseTokenURI) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC998Genes) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998Genes) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

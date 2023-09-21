@@ -6,16 +6,16 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhat.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhatV2.sol";
 
 import "../RaffleRandom.sol";
 
-contract RaffleRandomHardhat is RaffleRandom, ChainLinkHardhat {
+contract RaffleRandomHardhat is RaffleRandom, ChainLinkHardhatV2 {
   using Counters for Counters.Counter;
 
-  constructor() RaffleRandom() ChainLinkHardhat(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  constructor() RaffleRandom() ChainLinkHardhatV2(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
+  function getRandomNumber() internal override(RaffleRandom, ChainLinkBaseV2) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

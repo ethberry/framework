@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerli.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerliV2.sol";
 
 import "../ERC721BlacklistRandom.sol";
 
-contract ERC721BlacklistRandomGoerli is ERC721BlacklistRandom, ChainLinkGoerli {
+contract ERC721BlacklistRandomGoerli is ERC721BlacklistRandom, ChainLinkGoerliV2 {
   constructor(
     string memory name,
     string memory symbol,
@@ -18,10 +18,10 @@ contract ERC721BlacklistRandomGoerli is ERC721BlacklistRandom, ChainLinkGoerli {
     string memory baseTokenURI
   )
     ERC721BlacklistRandom(name, symbol, royalty, baseTokenURI)
-    ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1))
+    ChainLinkGoerliV2(uint64(1), uint16(6), uint32(600000), uint32(1))
   {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC721BlacklistRandom) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721BlacklistRandom) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

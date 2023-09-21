@@ -6,14 +6,14 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinance.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinanceV2.sol";
 
 import "../ERC721BlacklistDiscreteRentableRandom.sol";
 
 /**
  * @dev An implementation of ERC721BlacklistDiscreteRentableRandom for Binance mainnet
  */
-contract ERC721BlacklistDiscreteRentableRandomBinance is ERC721BlacklistDiscreteRentableRandom, ChainLinkBinance {
+contract ERC721BlacklistDiscreteRentableRandomBinance is ERC721BlacklistDiscreteRentableRandom, ChainLinkBinanceV2 {
   constructor(
     string memory name,
     string memory symbol,
@@ -21,7 +21,7 @@ contract ERC721BlacklistDiscreteRentableRandomBinance is ERC721BlacklistDiscrete
     string memory baseTokenURI
   )
     ERC721BlacklistDiscreteRentableRandom(name, symbol, royalty, baseTokenURI)
-    ChainLinkBinance(uint64(1), uint16(3), uint32(700000), uint32(1))
+    ChainLinkBinanceV2(uint64(1), uint16(3), uint32(700000), uint32(1))
   {}
 
   /**
@@ -29,7 +29,7 @@ contract ERC721BlacklistDiscreteRentableRandomBinance is ERC721BlacklistDiscrete
    */
   function getRandomNumber()
     internal
-    override(ChainLinkBase, ERC721BlacklistDiscreteRentableRandom)
+    override(ChainLinkBaseV2, ERC721BlacklistDiscreteRentableRandom)
     returns (uint256 requestId)
   {
     return super.getRandomNumber();
