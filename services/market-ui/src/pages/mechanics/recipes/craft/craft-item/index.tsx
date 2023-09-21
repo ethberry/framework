@@ -12,7 +12,7 @@ import { CraftItemPanel } from "../craft-item-panel";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
-    baseUrl: "/craft",
+    baseUrl: "/recipes/craft",
     empty: {
       item: emptyItem,
       price: emptyPrice,
@@ -32,10 +32,13 @@ export const CraftItem: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item?.components[0].template]} />
+      <Breadcrumbs
+        path={["dashboard", "recipes", "recipes.craft"]}
+        data={[{}, {}, selected.item?.components[0].template]}
+      />
 
       <PageHeader
-        message="pages.craft.title"
+        message="pages.recipes.craft.title"
         data={{ title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }}
       />
 

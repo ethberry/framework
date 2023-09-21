@@ -16,7 +16,7 @@ import { TokenType } from "@gemunion/types-blockchain/dist/token";
 export const CraftList: FC = () => {
   const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleChangePage, handleToggleFilters } =
     useCollection<ICraft, ICraftSearchDto>({
-      baseUrl: "/craft",
+      baseUrl: "/recipes/craft",
       search: {
         query: "",
         contractId: void 0,
@@ -25,9 +25,9 @@ export const CraftList: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "craft-list"]} />
+      <Breadcrumbs path={["dashboard", "recipes", "recipes.craft-list"]} />
 
-      <PageHeader message="pages.craft-list.title">
+      <PageHeader message="pages.recipes.craft-list.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

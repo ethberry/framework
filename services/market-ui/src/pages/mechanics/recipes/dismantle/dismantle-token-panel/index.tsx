@@ -40,7 +40,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const settings = useSettings();
 
   const { rows, isLoading } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/dismantle",
+    baseUrl: "/recipes/dismantle",
     embedded: true,
     search: {
       templateId: token.templateId,

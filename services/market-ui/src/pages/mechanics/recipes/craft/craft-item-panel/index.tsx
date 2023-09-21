@@ -21,7 +21,7 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
       <CardContent>
         <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
-            <FormattedMessage id="pages.token.craft" />
+            <FormattedMessage id="pages.recipes.ingredients" />
           </Typography>
           <AllowanceInfoPopover />
         </Toolbar>

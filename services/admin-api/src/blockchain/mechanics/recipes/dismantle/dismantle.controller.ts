@@ -22,7 +22,7 @@ import { DismantleCreateDto, DismantleSearchDto, DismantleUpdateDto } from "./dt
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/dismantle")
+@Controller("/recipes/dismantle")
 export class DismantleController {
   constructor(private readonly dismantleService: DismantleService) {}
 

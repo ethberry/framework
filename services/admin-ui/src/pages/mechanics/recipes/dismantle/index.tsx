@@ -37,7 +37,7 @@ export const Dismantle: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/dismantle",
+    baseUrl: "/recipes/dismantle",
     empty: {
       price: getEmptyTemplate(TokenType.ERC721),
       item: getEmptyTemplate(TokenType.ERC1155),
@@ -68,9 +68,9 @@ export const Dismantle: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "dismantle"]} />
+      <Breadcrumbs path={["dashboard", "recipes", "recipes.dismantle"]} />
 
-      <PageHeader message="pages.dismantle.title">
+      <PageHeader message="pages.recipes.dismantle.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

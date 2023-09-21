@@ -9,7 +9,7 @@ import { CraftEntity } from "./craft.entity";
 import { CraftCountDto, CraftSearchDto, CraftSignDto } from "./dto";
 
 @Public()
-@Controller("/craft")
+@Controller("/recipes/craft")
 export class CraftController {
   constructor(private readonly craftService: CraftService) {}
 

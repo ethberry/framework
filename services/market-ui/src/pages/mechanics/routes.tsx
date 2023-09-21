@@ -7,7 +7,7 @@ import { lotteryRoutes } from "./lottery/routes";
 import { mysteryboxRoutes } from "./mystery/routes";
 import { ponziRoutes } from "./ponzi/routes";
 import { raffleRoutes } from "./raffle/routes";
-import { recipesRoutes } from "./recipes/craft/routes";
+import { recipesRoutes } from "./recipes/routes";
 import { referralRoutes } from "./referral/routes";
 import { rentingRoutes } from "./rent/routes";
 import { stakingRoutes } from "./staking/routes";

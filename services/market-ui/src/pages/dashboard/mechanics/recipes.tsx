@@ -4,23 +4,23 @@ import { Construction } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const CraftSection: FC = () => {
+export const RecipesSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.craft" />
+            <FormattedMessage id="pages.dashboard.mechanics.recipes" />
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/craft">
+        <ListItemButton component={RouterLink} to="/recipes/craft">
           <ListItemIcon>
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.craft-list.title" />
+            <FormattedMessage id="pages.recipes.craft-list.title" />
           </ListItemText>
         </ListItemButton>
       </List>

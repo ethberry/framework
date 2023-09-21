@@ -638,18 +638,22 @@
       "rates": "Rates",
       "title": "CoinGecko"
     },
-    "craft": {
-      "approve": "Please approve ingredients to Exchange before",
-      "price": "Price",
-      "tabs": {
-        "erc1155": "ERC1155",
-        "erc721": "ERC721",
-        "erc998": "ERC998"
+    "recipes": {
+      "title": "Recipes",
+      "ingredients": "Ingredients",
+      "craft": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "tabs": {
+          "erc1155": "ERC1155",
+          "erc721": "ERC721",
+          "erc998": "ERC998"
+        },
+        "title": "Craft recipe: {title}"
       },
-      "title": "Craft recipe: {title}"
-    },
-    "craft-list": {
-      "title": "Craft recipes"
+      "craft-list": {
+        "title": "Craft recipes"
+      }
     },
     "dashboard": {
       "achievements": {
@@ -697,7 +701,7 @@
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
-        "craft": "Craft",
+        "recipes": "Recipes",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
