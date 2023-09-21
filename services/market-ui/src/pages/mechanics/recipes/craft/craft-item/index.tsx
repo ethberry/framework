@@ -23,10 +23,10 @@ export const CraftItem: FC = () => {
     return <Spinner />;
   }
 
-  const recipeLength = selected.item?.components.length;
+  const componentsLength = selected.item?.components.length;
 
   // Should never happen
-  if (!recipeLength) {
+  if (!componentsLength) {
     return null;
   }
 
@@ -41,12 +41,12 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          {selected.item?.components.map(comp => {
+          {selected.item?.components.map(component => {
             return (
               <Box
-                key={comp.id}
+                key={component.template!.id}
                 component="img"
-                src={comp.template!.imageUrl}
+                src={component.template!.imageUrl}
                 // TODO FIXME - make a better grid of multiple items
                 // TODO use MUI native multi-image list?
                 // https://mui.com/material-ui/react-image-list/ or
@@ -55,7 +55,7 @@ export const CraftItem: FC = () => {
                 sx={{
                   display: "block",
                   mx: "auto",
-                  maxWidth: `${70 / recipeLength}%`,
+                  maxWidth: `${70 / componentsLength}%`,
                 }}
               />
             );
