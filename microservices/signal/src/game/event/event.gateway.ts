@@ -20,7 +20,7 @@ import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @UsePipes(WsValidationPipe)
 @UseGuards(FirebaseWsGuard)
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   public server: Server;
