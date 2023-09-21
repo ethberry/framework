@@ -67,7 +67,7 @@
     "@mui/x-data-grid-premium": "6.14.0",
     "@mui/x-date-pickers-pro": "6.14.0",
     "@mui/x-license-pro": "6.10.2",
-    "@observablehq/plot": "0.6.10",
+    "@observablehq/plot": "0.6.11",
     "@uniswap/widgets": "2.53.2",
     "@web3-react/core": "8.2.2",
     "@web3-react/metamask": "8.2.3",
