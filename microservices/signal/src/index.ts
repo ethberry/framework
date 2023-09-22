@@ -61,22 +61,19 @@ async function bootstrap(): Promise<void> {
   }
 
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueMobile = configService.get<string>("RMQ_QUEUE_SIGNAL", "signal");
+  const rmqQueueSignal = configService.get<string>("RMQ_QUEUE_SIGNAL", "signal");
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
       urls: [rmqUrl],
-      queue: rmqQueueMobile,
-      queueOptions: {
-        durable: false,
-      },
+      queue: rmqQueueSignal,
     },
   });
 
   await app
     .startAllMicroservices()
-    .then(() => console.info(`Signal service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
+    .then(() => console.info(`Signal service is subscribed to ${rmqUrl}/${rmqQueueSignal}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<string>("PORT", "3000");

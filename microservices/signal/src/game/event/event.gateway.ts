@@ -36,9 +36,9 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     @MessageBody() ping: any,
     @User() userEntity: UserEntity,
   ): Promise<any> {
-    console.log(client);
-    console.log(ping);
-    console.log(userEntity);
+    // console.log(client);
+    console.info(ping);
+    console.info(userEntity);
     await client.join(userEntity.wallet);
     return { [SignalEventType.PONG]: true };
   }

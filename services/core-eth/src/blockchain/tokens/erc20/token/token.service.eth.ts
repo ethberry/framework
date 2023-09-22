@@ -1,4 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
@@ -23,6 +25,7 @@ export class Erc20TokenServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async transfer(event: ILogEvent<IErc20TokenTransferEvent>, context: Log): Promise<void> {

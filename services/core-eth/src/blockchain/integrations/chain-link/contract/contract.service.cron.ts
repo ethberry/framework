@@ -9,7 +9,7 @@ import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 import { EmailType, ModuleType, RmqProviderType } from "@framework/types";
 
-import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol/VRFCoordinatorMock.json";
+import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinatorV2.sol/VRFCoordinatorV2Mock.json";
 
 import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

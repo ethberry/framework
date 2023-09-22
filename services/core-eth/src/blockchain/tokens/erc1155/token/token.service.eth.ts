@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
@@ -28,6 +29,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
+    protected readonly configService: ConfigService,
     protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);

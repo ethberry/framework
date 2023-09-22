@@ -1,6 +1,6 @@
 import { Contract, hexlify, randomBytes, Wallet } from "ethers";
 
-import VrfV2Sol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol/VRFCoordinatorMock.json";
+import VrfV2Sol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinatorV2.sol/VRFCoordinatorV2Mock.json";
 
 export interface IVrfRandomWordsFulfill {
   requestId: string;

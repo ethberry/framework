@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenModule } from "../../../hierarchy/token/token.module";
@@ -12,6 +13,7 @@ import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
+    ConfigModule,
     TokenModule,
     BalanceModule,
     EventHistoryModule,

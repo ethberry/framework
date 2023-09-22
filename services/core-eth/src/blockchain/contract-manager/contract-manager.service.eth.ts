@@ -429,7 +429,7 @@ export class ContractManagerServiceEth {
     const {
       args: { account, args, externalId },
     } = event;
-    const { address, transactionHash } = context;
+    const { transactionHash } = context;
 
     const { royalty, baseTokenURI, contractTemplate } = args;
 
@@ -459,7 +459,9 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, { account: await this.getUserWalletById(externalId), transactionHash })
+      .toPromise();
   }
 
   public async mysteryBox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, context: Log): Promise<void> {
@@ -775,5 +777,14 @@ export class ContractManagerServiceEth {
       throw new NotFoundException("userNotFound");
     }
     return userEntity.merchantId;
+  }
+
+  public async getUserWalletById(userId: number): Promise<string> {
+    const userEntity = await this.userService.findOne({ id: userId });
+    if (!userEntity) {
+      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
+      throw new NotFoundException("userNotFound");
+    }
+    return userEntity.wallet;
   }
 }

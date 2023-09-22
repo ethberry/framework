@@ -28,11 +28,10 @@ export const Signal: FC = () => {
     });
 
     socket.emit(SignalEventType.PING, { [SignalEventType.PING]: true }, (pong: any) => {
-      console.log(pong);
+      console.info("PONG", pong);
     });
 
     socket.on(SignalEventType.TRANSACTION_HASH, (dto: { transactionHash: string }) => {
-      console.log(dto);
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
         variant: "info",
       });

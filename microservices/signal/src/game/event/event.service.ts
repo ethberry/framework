@@ -12,10 +12,7 @@ export class EventService {
   public sendMessage(dto: ISignalMessageDto): void {
     const { account, transactionHash } = dto;
     console.log("sendMessage", dto);
-    console.log("0xfe3b557e8fb62b89f4916b721be55ceb828dbd73");
     console.log(account);
-    this.eventGateway.server
-      .to("0xfe3b557e8fb62b89f4916b721be55ceb828dbd73")
-      .emit(SignalEventType.TRANSACTION_HASH, { transactionHash });
+    this.eventGateway.server.to(account).emit(SignalEventType.TRANSACTION_HASH, { transactionHash });
   }
 }
