@@ -85,7 +85,7 @@ async function main() {
 
   const subscriptionId = zeroPadValue(toBeHex(subId), 32);
 
-  await debug(await linkInstance.connect(receiver).transfer(_owner.address, linkAmount), "transfer to owner");
+  // await debug(await linkInstance.connect(receiver).transfer(_owner.address, linkAmount), "transfer to owner");
 
   await debug(
     await linkInstance.transferAndCall(await vrfInstance.getAddress(), linkAmount, subscriptionId),
