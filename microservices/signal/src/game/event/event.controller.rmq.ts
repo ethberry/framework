@@ -3,12 +3,15 @@ import { EventPattern } from "@nestjs/microservices";
 
 import { SignalEventType } from "@framework/types";
 
-// https://stackoverflow.com/questions/4647348/send-message-to-specific-client-with-socket-io-and-node-js
+import { EventService } from "./event.service";
+import type { ISignalMessageDto } from "./interfaces";
+
 @Controller()
 export class EventControllerRmq {
+  constructor(private readonly eventService: EventService) {}
+
   @EventPattern(SignalEventType.TRANSACTION_HASH)
-  public sendMessage(@Body() dto: { transactionHash: string }): void {
-    void dto;
-    // send to socket
+  public sendMessage(@Body() dto: ISignalMessageDto): void {
+    return this.eventService.sendMessage(dto);
   }
 }

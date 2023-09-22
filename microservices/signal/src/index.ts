@@ -10,28 +10,33 @@ import { companyName } from "@framework/constants";
 
 import { AppModule } from "./app.module";
 import { RedisIoAdapter } from "./common/adapters/redis-io";
+import { NodeEnv } from "@framework/types";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.useBodyParser("json", { limit: "500kb" });
 
   const configService = app.get(ConfigService);
-
-  const baseUrl = configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const baseUrl = configService.get<string>("SIGNAL_FE_URL", "http://localhost:3014");
 
   app.useWebSocketAdapter(new RedisIoAdapter(app));
 
   app.enableCors({
     origin:
-      process.env.NODE_ENV === "development"
+      process.env.NODE_ENV === NodeEnv.development
         ? [
-            "http://localhost:3005",
-            "http://127.0.0.1:3005",
-            "http://0.0.0.0:3005",
-            "http://localhost:3009",
-            "http://127.0.0.1:3009",
-            "http://0.0.0.0:3009",
+            "http://localhost:3002",
+            "http://127.0.0.1:3002",
+            "http://0.0.0.0:3002",
+            "http://localhost:3004",
+            "http://127.0.0.1:3004",
+            "http://0.0.0.0:3004",
+            "http://localhost:3006",
+            "http://127.0.0.1:3006",
+            "http://0.0.0.0:3006",
           ]
         : [baseUrl],
     credentials: true,
@@ -50,8 +55,6 @@ async function bootstrap(): Promise<void> {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
-
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
 
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();
@@ -73,7 +76,7 @@ async function bootstrap(): Promise<void> {
 
   await app
     .startAllMicroservices()
-    .then(() => console.info(`Mobile service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
+    .then(() => console.info(`Signal service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<string>("PORT", "3000");

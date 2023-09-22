@@ -21,9 +21,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({
     origin:
-      nodeEnv === "development"
-        ? ["http://localhost:3002", "http://127.0.0.1:3002", "http://0.0.0.0:3002"]
-        : [baseUrl, "https://st-admin.gemunion.io"],
+      nodeEnv === "development" ? ["http://localhost:3002", "http://127.0.0.1:3002", "http://0.0.0.0:3002"] : [baseUrl],
     credentials: true,
     exposedHeaders: ["Content-Disposition"],
   });

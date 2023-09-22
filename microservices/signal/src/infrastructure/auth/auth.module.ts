@@ -4,7 +4,7 @@ import admin from "firebase-admin";
 import { PassportInitialize } from "@gemunion/nest-js-module-passport";
 
 import { UserModule } from "../user/user.module";
-import { FirebaseWsStrategy } from "./strategies";
+import { FirebaseStrategy, FirebaseWsStrategy } from "./strategies";
 import { APP_PROVIDER } from "./auth.constants";
 
 @Module({
@@ -12,6 +12,7 @@ import { APP_PROVIDER } from "./auth.constants";
   providers: [
     Logger,
     FirebaseWsStrategy,
+    FirebaseStrategy,
     {
       provide: APP_PROVIDER,
       useValue: admin,

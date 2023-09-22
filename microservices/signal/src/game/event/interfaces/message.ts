@@ -1,10 +1,4 @@
-export enum SignalType {
-  DISCOVERED = "DISCOVERED",
-  PROCESSED = "PROCESSED",
-}
-
-export interface IMessageDto {
-  sub: string;
-  txHash: string;
-  signalType: SignalType;
+export interface ISignalMessageDto {
+  account: string;
+  transactionHash: string;
 }

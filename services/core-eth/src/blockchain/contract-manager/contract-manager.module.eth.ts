@@ -2,9 +2,6 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
-
-import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
-import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { UserModule } from "../../infrastructure/user/user.module";
@@ -14,7 +11,6 @@ import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
 import { Erc998TokenLogModule } from "../tokens/erc998/token/log/log.module";
 import { Erc1155TokenLogModule } from "../tokens/erc1155/token/log/log.module";
 import { VestingLogModule } from "../mechanics/vesting/log/vesting.log.module";
-import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
@@ -22,9 +18,13 @@ import { EventHistoryModule } from "../event-history/event-history.module";
 import { RentModule } from "../mechanics/rent/rent.module";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { ClaimModule } from "../mechanics/claim/claim.module";
+import { ContractManagerLogModule } from "./log/log.module";
 import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
+import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
+import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
+import { signalServiceProvider } from "../../common/providers";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
 import { PonziLogModule } from "../mechanics/ponzi/log/log.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
@@ -68,7 +68,14 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     ClaimModule,
     SecretManagerModule.deferred(),
   ],
-  providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
+  providers: [
+    signalServiceProvider,
+    Logger,
+    ContractManagerServiceEth,
+    ContractManagerServiceRmq,
+    ethersSignerProvider,
+    ethersRpcProvider,
+  ],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],
   exports: [ContractManagerServiceEth, ContractManagerServiceRmq],
 })

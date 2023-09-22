@@ -1,23 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsString, MaxLength } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsString, MaxLength } from "class-validator";
 
-import type { IMessageDto } from "../interfaces";
-import { SignalType } from "../interfaces";
+import { AccountDto } from "@gemunion/collection";
 
-export class MessageDto implements IMessageDto {
+import type { ISignalMessageDto } from "../interfaces";
+
+export class MessageDto extends AccountDto implements ISignalMessageDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MaxLength(128, { message: "rangeOverflow" })
-  public sub: string;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @MaxLength(128, { message: "rangeOverflow" })
-  public txHash: string;
-
-  @ApiProperty()
-  @Transform(({ value }) => value as SignalType)
-  @IsEnum(SignalType, { message: "badInput" })
-  public signalType: SignalType;
+  public transactionHash: string;
 }

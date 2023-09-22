@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
@@ -32,6 +33,8 @@ import {
   Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
+  RmqProviderType,
+  SignalEventType,
   StakingContractTemplates,
   TemplateStatus,
   TokenType,
@@ -74,6 +77,8 @@ export class ContractManagerServiceEth {
     protected readonly ethersSignerProvider: Wallet,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -101,14 +106,15 @@ export class ContractManagerServiceEth {
     private readonly chainLinkLogService: ChainLinkLogService,
   ) {}
 
-  public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { name, symbol, cap, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -126,7 +132,7 @@ export class ContractManagerServiceEth {
           : (Object.values(Erc20ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC20,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -147,8 +153,10 @@ export class ContractManagerServiceEth {
 
     this.erc20LogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   public parseTemplate(contractTemplate: string): {
@@ -175,14 +183,15 @@ export class ContractManagerServiceEth {
     }
   }
 
-  public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -201,7 +210,7 @@ export class ContractManagerServiceEth {
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -242,34 +251,40 @@ export class ContractManagerServiceEth {
     ) {
       this.erc721RandomLogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else if (contractEntity.contractModule === ModuleType.LOTTERY) {
       this.lotteryTicketLogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
       this.raffleTicketLogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else {
       this.erc721LogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     }
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async erc721Collection(event: ILogEvent<IContractManagerCollectionDeployedEvent>, ctx: Log): Promise<void> {
+  public async erc721Collection(
+    event: ILogEvent<IContractManagerCollectionDeployedEvent>,
+    context: Log,
+  ): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { name, symbol, royalty, baseTokenURI, batchSize, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -294,7 +309,7 @@ export class ContractManagerServiceEth {
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -328,18 +343,21 @@ export class ContractManagerServiceEth {
 
     this.erc721LogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -358,7 +376,7 @@ export class ContractManagerServiceEth {
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -395,24 +413,27 @@ export class ContractManagerServiceEth {
     ) {
       this.erc998RandomLogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else {
       this.erc998LogService.addListener({
         address: [account.toLowerCase()],
-        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+        fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     }
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { royalty, baseTokenURI, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -429,24 +450,27 @@ export class ContractManagerServiceEth {
       contractType: TokenType.ERC1155,
       chainId,
       royalty: Number(royalty),
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
     this.erc1155LogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async mysteryBox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async mysteryBox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { name, symbol, baseTokenURI, royalty, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -466,20 +490,23 @@ export class ContractManagerServiceEth {
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
     this.mysteryLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId /* <-- userId + claimId */ },
     } = event;
+    const { address, transactionHash } = context;
 
     const decodedExternalId: Record<string, number> = decodeExternalId(BigInt(externalId), ["userId", "claimId"]);
 
@@ -487,7 +514,7 @@ export class ContractManagerServiceEth {
 
     const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -506,7 +533,7 @@ export class ContractManagerServiceEth {
       contractModule: ModuleType.VESTING,
       contractSecurity: ContractSecurity.OWNABLE,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(userId),
     });
 
@@ -516,18 +543,21 @@ export class ContractManagerServiceEth {
 
     this.vestingLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async ponzi(event: ILogEvent<IContractManagerPonziDeployedEvent>, ctx: Log): Promise<void> {
+  public async ponzi(event: ILogEvent<IContractManagerPonziDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { payees, shares, contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -546,25 +576,28 @@ export class ContractManagerServiceEth {
           : (["WITHDRAW", "ALLOWANCE", "SPLITTER", "REFERRAL", "PAUSABLE"] as Array<ContractFeatures>),
       contractModule: ModuleType.PONZI,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
     this.ponziLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async lottery(event: ILogEvent<IContractManagerLotteryDeployedEvent>, ctx: Log): Promise<void> {
+  public async lottery(event: ILogEvent<IContractManagerLotteryDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { config } = args;
     const { timeLagBeforeRelease, commission } = config;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -580,7 +613,7 @@ export class ContractManagerServiceEth {
       contractFeatures: [ContractFeatures.RANDOM],
       contractModule: ModuleType.LOTTERY,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -600,16 +633,19 @@ export class ContractManagerServiceEth {
     await this.chainLinkLogService.updateListener();
     this.lotteryLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async raffle(event: ILogEvent<IContractManagerRaffleDeployedEvent>, ctx: Log): Promise<void> {
+  public async raffle(event: ILogEvent<IContractManagerRaffleDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -621,7 +657,7 @@ export class ContractManagerServiceEth {
       contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.RAFFLE,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -641,16 +677,19 @@ export class ContractManagerServiceEth {
     await this.chainLinkLogService.updateListener();
     this.raffleLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, ctx: Log): Promise<void> {
+  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -662,24 +701,27 @@ export class ContractManagerServiceEth {
       contractFeatures: [ContractFeatures.PAUSABLE],
       contractModule: ModuleType.WAITLIST,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
     this.waitListLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
-  public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, ctx: Log): Promise<void> {
+  public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
+    const { address, transactionHash } = context;
 
     const { contractTemplate } = args;
 
-    await this.eventHistoryService.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -694,14 +736,16 @@ export class ContractManagerServiceEth {
           : (Object.values(StakingContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
     this.stakingLogService.addListener({
       address: [account.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
+
+    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   private async createBalancesBatch(externalId: number, tokenArray: Array<TokenEntity>) {

@@ -11,7 +11,6 @@ export const Signal: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  // TODO process.env.SIGNAL_URL
   const socket = io(process.env.SIGNAL_URL, {
     extraHeaders: {
       Authorization: `Bearer ${api.getToken()?.accessToken || ""}`,

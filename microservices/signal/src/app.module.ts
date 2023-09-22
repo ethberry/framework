@@ -1,10 +1,11 @@
-import { Module } from "@nestjs/common";
-import { APP_FILTER, APP_GUARD } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
+import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
-import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
+import { HttpExceptionFilter, HttpValidationPipe, ValidationExceptionFilter } from "@gemunion/nest-js-utils";
+import { FirebaseHttpGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
@@ -19,6 +20,19 @@ import { GameModule } from "./game/game.module";
 
 @Module({
   providers: [
+    Logger,
+    {
+      provide: APP_PIPE,
+      useClass: HttpValidationPipe,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ValidationExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: FirebaseHttpGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
