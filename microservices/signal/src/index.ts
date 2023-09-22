@@ -7,10 +7,10 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 import { AppModule } from "./app.module";
 import { RedisIoAdapter } from "./common/adapters/redis-io";
-import { NodeEnv } from "@framework/types";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -19,7 +19,7 @@ async function bootstrap(): Promise<void> {
   app.useBodyParser("json", { limit: "500kb" });
 
   const configService = app.get(ConfigService);
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
   const baseUrl = configService.get<string>("SIGNAL_FE_URL", "http://localhost:3014");
 
   app.useWebSocketAdapter(new RedisIoAdapter(app));
@@ -40,7 +40,6 @@ async function bootstrap(): Promise<void> {
           ]
         : [baseUrl],
     credentials: true,
-    exposedHeaders: ["Content-Disposition"],
   });
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
@@ -56,7 +55,7 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  if (nodeEnv === "production" || nodeEnv === "staging") {
+  if (nodeEnv === NodeEnv.production || nodeEnv === NodeEnv.staging) {
     app.enableShutdownHooks();
   }
 
