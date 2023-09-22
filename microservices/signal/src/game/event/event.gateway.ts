@@ -10,6 +10,7 @@ import {
   WebSocketServer,
 } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 
 import { User } from "@gemunion/nest-js-utils";
 import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
@@ -44,6 +45,9 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   }
 
   public afterInit(): void {
+    instrument(this.server, {
+      auth: false,
+    });
     this.loggerService.log("Init", EventGateway.name);
   }
 

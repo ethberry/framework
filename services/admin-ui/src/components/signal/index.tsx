@@ -1,5 +1,7 @@
 import { FC, useEffect } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
+
 import { useSnackbar } from "notistack";
 import { io } from "socket.io-client";
 
@@ -11,10 +13,17 @@ export const Signal: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
+  const loc = useLocation();
+  console.log("useLocation", loc);
+
   const socket = io(process.env.SIGNAL_URL, {
     extraHeaders: {
       Authorization: `Bearer ${api.getToken()?.accessToken || ""}`,
     },
+  });
+
+  socket.emit(SignalEventType.PING, { [SignalEventType.PING]: true }, (pong: any) => {
+    console.info("PONG", pong);
   });
 
   useEffect(() => {
@@ -27,9 +36,9 @@ export const Signal: FC = () => {
       enqueueSnackbar(formatMessage({ id: "socket.connect_failed" }), { variant: "error" });
     });
 
-    socket.emit(SignalEventType.PING, { [SignalEventType.PING]: true }, (pong: any) => {
-      console.info("PONG", pong);
-    });
+    // socket.emit(SignalEventType.PING, { [SignalEventType.PING]: true }, (pong: any) => {
+    //   console.info("PONG", pong);
+    // });
 
     socket.on(SignalEventType.TRANSACTION_HASH, (dto: { transactionHash: string }) => {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {

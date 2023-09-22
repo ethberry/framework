@@ -30,7 +30,7 @@ export class RedisIoAdapter extends IoAdapter {
       cors: {
         origin:
           nodeEnv === NodeEnv.development
-            ? ["http://localhost:3002", "http://localhost:3004", "http://localhost:3006"]
+            ? ["https://admin.socket.io", "http://localhost:3002", "http://localhost:3004", "http://localhost:3006"]
             : [baseUrl],
       },
     });
