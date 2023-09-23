@@ -9,6 +9,7 @@ import type { ICraft } from "@framework/types";
 
 import { CraftTransactions } from "./transactions";
 import { CraftItemPanel } from "../craft-item-panel";
+import { StyledDescription, StyledImageList, StyledImageListItem } from "./styled";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
@@ -44,35 +45,26 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          {selected.item?.components.map(component => {
-            return (
-              <Box
-                key={component.template!.id}
-                component="img"
-                src={component.template!.imageUrl}
-                // TODO FIXME - make a better grid of multiple items
-                // TODO use MUI native multi-image list?
-                // https://mui.com/material-ui/react-image-list/ or
-                // https://mui.com/material-ui/react-masonry/
-                alt="Gemunion template image"
-                sx={{
-                  display: "block",
-                  mx: "auto",
-                  maxWidth: `${70 / componentsLength}%`,
-                }}
-              />
-            );
-          })}
-          <Typography variant="body2" color="textSecondary" component="div">
-            <RichTextDisplay data={selected.item?.components[0].template!.description} />
-          </Typography>
+          <StyledImageList count={selected.item?.components.length}>
+            {selected.item?.components.map(component => {
+              return (
+                <StyledImageListItem key={component.template!.id}>
+                  <Box component="img" src={component.template!.imageUrl} alt="Gemunion template image" />
+                </StyledImageListItem>
+              );
+            })}
+          </StyledImageList>
         </Grid>
         <Grid item xs={12} sm={3}>
           <CraftItemPanel craft={selected} />
         </Grid>
       </Grid>
 
-      <br />
+      <StyledDescription>
+        <Typography variant="body2" color="textSecondary" component="div">
+          <RichTextDisplay data={selected.item?.components[0].template!.description} />
+        </Typography>
+      </StyledDescription>
 
       {selected.id ? <CraftTransactions craft={selected} /> : null}
     </Fragment>
