@@ -71,7 +71,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const mysteryBoxTokenEntity = await this.tokenService.getToken(

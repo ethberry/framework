@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 
 import { useSnackbar } from "notistack";
 import { io } from "socket.io-client";
@@ -13,8 +13,8 @@ export const Signal: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const loc = useLocation();
-  console.log("useLocation", loc);
+  // const loc = useLocation();
+  // console.log("useLocation", loc);
 
   const socket = io(process.env.SIGNAL_URL, {
     extraHeaders: {

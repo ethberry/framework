@@ -1,9 +1,12 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+
+import { testChainId } from "@framework/constants";
 import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent, ILevelUp } from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
@@ -14,7 +17,7 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
+// import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
@@ -33,7 +36,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
-    protected readonly breedServiceEth: BreedServiceEth,
+    protected readonly configService: ConfigService,
+    // protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
   ) {
@@ -45,6 +49,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // Mint token create
     if (from === ZeroAddress) {
@@ -57,6 +62,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
+
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
         throw new NotFoundException("templateNotFound");
@@ -66,16 +72,16 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         tokenId,
         metadata,
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       address.toLowerCase(),
-      void 0,
+      chainId,
       true,
     );
 
@@ -83,6 +89,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
+
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
@@ -151,7 +159,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const entityArray = await this.tokenService.createBatch(tokenArray);
 
       await this.createBalancesBatch(toAddress, entityArray);
-      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
       await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
     }
@@ -172,8 +180,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { tokenId, attribute, value },
     } = event;
     const { address, transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);

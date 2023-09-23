@@ -27,14 +27,26 @@ export class ExchangeDismantleServiceEth {
     const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
-    await this.assetService.saveAssetHistory(history, items, price);
 
-    const dismantleEntity = await this.dismantleService.findOne({ id: externalId });
+    const dismantleEntity = await this.dismantleService.findOne(
+      { id: externalId },
+      {
+        relations: {
+          item: {
+            components: true,
+          },
+        },
+      },
+    );
 
     if (!dismantleEntity) {
       this.loggerService.error("dismantleNotFound", externalId, ExchangeDismantleServiceEth.name);
       throw new NotFoundException("dismantleNotFound");
     }
+    // const { components } = dismantleEntity.item;
+    // const dismantleItems = items.map(item => ~~item.tokenType === 4
+    //   ? Object.assign(item, {tokenId: components.filter(comp => comp.contract.address === item.token.toLowerCase() && comp.)}))
+    await this.assetService.saveAssetHistory(history, items, price);
 
     await this.notificatorService.dismantle({
       dismantle: dismantleEntity,

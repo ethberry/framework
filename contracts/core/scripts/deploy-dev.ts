@@ -105,7 +105,7 @@ async function main() {
   // contracts.link = linkInstance;
   // await debug(contracts);
   // console.info(`LINK_ADDR=${contracts.link.address}`);
-  // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock");
   // contracts.vrf = await vrfFactory.deploy(contracts.link.address);
   // await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);
@@ -119,7 +119,7 @@ async function main() {
       : network.name === "gemunion"
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
       : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
-  const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
+  const vrfInstance = await ethers.getContractAt("VRFCoordinatorV2Mock", vrfAddr);
 
   // DIAMOND CM
   const cmInstance = await deployDiamond(

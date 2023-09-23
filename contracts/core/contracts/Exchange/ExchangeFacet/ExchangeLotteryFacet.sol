@@ -55,7 +55,6 @@ contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, Paus
     item.tokenId = tokenId;
 
     emit PurchaseLottery(_msgSender(), params.externalId, item, price, roundId, params.extra);
-
     //    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }
 

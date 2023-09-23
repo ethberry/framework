@@ -54,7 +54,6 @@ contract ExchangeRaffleFacet is SignatureValidator, AccessControlInternal, Pausa
     item.tokenId = tokenId;
 
     emit PurchaseRaffle(_msgSender(), params.externalId, item, price, roundId, index);
-
     //    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }
 

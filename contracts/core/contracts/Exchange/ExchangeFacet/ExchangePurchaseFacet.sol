@@ -14,7 +14,7 @@ import "../../Exchange/lib/ExchangeUtils.sol";
 import "../override/SignatureValidator.sol";
 
 contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Purchase(address account, uint256 externalId, Asset item, Asset[] price);
+  event Purchase(address account, uint256 externalId, /* template.id */ Asset item, Asset[] price);
 
   constructor() SignatureValidator() {}
 
@@ -48,7 +48,6 @@ contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, Pau
     );
 
     emit Purchase(_msgSender(), params.externalId, item, price);
-
     // _afterPurchase(params.referrer, price);
   }
 }

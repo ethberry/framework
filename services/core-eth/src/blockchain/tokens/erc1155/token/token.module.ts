@@ -9,9 +9,18 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { signalServiceProvider } from "../../../../common/providers";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
-  imports: [ConfigModule, EventHistoryModule, Erc1155TokenLogModule, TokenModule, BalanceModule, NotificatorModule],
+  imports: [
+    ConfigModule,
+    AssetModule,
+    EventHistoryModule,
+    Erc1155TokenLogModule,
+    TokenModule,
+    BalanceModule,
+    NotificatorModule,
+  ],
   providers: [Logger, signalServiceProvider, Erc1155TokenServiceEth],
   controllers: [Erc1155TokenControllerEth],
   exports: [Erc1155TokenServiceEth],

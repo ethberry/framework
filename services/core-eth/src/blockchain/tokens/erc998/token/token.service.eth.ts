@@ -79,7 +79,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity);
     }
 
     const erc998TokenEntity = await this.tokenService.getToken(

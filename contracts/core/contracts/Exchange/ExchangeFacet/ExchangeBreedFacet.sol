@@ -52,9 +52,9 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
 
     pregnancyCheckup(item, price);
 
-    emit Breed(_msgSender(), params.externalId, item, price);
-
     IERC721Random(item.token).mintRandom(_msgSender(), params.externalId);
+
+    emit Breed(_msgSender(), params.externalId, item, price);
   }
 
   function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {

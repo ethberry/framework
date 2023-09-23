@@ -17,6 +17,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
@@ -28,6 +29,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
+    protected readonly assetService: AssetService,
     protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
@@ -45,6 +47,8 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
     await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+    await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
+
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
 
     await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();

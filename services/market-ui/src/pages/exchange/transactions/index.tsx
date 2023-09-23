@@ -65,7 +65,7 @@ export const MyTransactions: FC = () => {
           eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).account;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
-      minWidth: 160,
+      minWidth: 140,
     },
     {
       field: "chainId",
@@ -91,7 +91,7 @@ export const MyTransactions: FC = () => {
         return <TxHashLink hash={params.value as string} />;
       },
       flex: 1,
-      minWidth: 160,
+      minWidth: 180,
     },
   ];
 

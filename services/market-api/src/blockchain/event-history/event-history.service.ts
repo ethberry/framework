@@ -196,6 +196,12 @@ export class EventHistoryService {
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType203", { eventType203: ContractEventType.Dismantle });
+            qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
+          }),
+        );
 
         /* MECHANICS 2xx */
         // qb.orWhere(

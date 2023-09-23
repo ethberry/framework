@@ -74,10 +74,10 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
         tokenId,
         metadata,
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
       // if RANDOM token - update tokenId in exchange asset history
       if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {

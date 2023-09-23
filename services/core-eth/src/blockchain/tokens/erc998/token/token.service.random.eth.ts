@@ -75,7 +75,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity);
 
       // if RANDOM token - update tokenId in exchange asset history
       if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {

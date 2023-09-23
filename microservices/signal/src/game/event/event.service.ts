@@ -11,8 +11,8 @@ export class EventService {
 
   public sendMessage(dto: ISignalMessageDto): void {
     const { account, transactionHash } = dto;
-    console.log("sendMessage", dto);
-    console.log(account);
+    console.info("sendMessage", dto);
+    console.info(account);
     this.eventGateway.server.to(account).emit(SignalEventType.TRANSACTION_HASH, { transactionHash });
   }
 }

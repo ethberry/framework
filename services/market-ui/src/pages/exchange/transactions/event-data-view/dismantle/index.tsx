@@ -5,14 +5,14 @@ import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/type
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import { DataViewWrapper } from "../styled";
 
-export interface ICraftDataViewProps {
+export interface IDismantleDataViewProps {
   assets: Array<IAssetComponentHistory>;
   contract: IContract;
 }
 
-export const CraftDataView: FC<ICraftDataViewProps> = props => {
+export const DismantleDataView: FC<IDismantleDataViewProps> = props => {
   const { assets, contract } = props;
-  console.log("assets", assets);
+
   return (
     <DataViewWrapper>
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />

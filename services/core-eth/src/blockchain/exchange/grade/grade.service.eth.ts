@@ -48,7 +48,7 @@ export class ExchangeGradeServiceEth {
       price,
     );
 
-    await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+    await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
     const gradeEntity = await this.gradeService.findOneWithRelations({ id: Number(externalId) });
     if (!gradeEntity) {

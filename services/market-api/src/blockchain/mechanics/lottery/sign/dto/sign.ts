@@ -13,7 +13,7 @@ export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, Chain
   @IsString({ message: "typeMismatch" })
   @MinLength(66, { message: "rangeUnderflow" })
   @MaxLength(66, { message: "rangeOverflow" })
-  @Validate(LotteryTicketRule, [6 /* 6 from 36 */], {
+  @Validate(LotteryTicketRule, [6, 36 /* 6 from 36 */], {
     message: "typeMismatch",
   })
   public ticketNumbers: string;

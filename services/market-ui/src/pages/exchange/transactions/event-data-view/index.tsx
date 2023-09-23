@@ -5,6 +5,7 @@ import { IEventHistory } from "@framework/types";
 import { ContractEventType } from "../form";
 import { ClaimDataView } from "./claim";
 import { CraftDataView } from "./craft";
+import { DismantleDataView } from "./dismantle";
 import { DefaultDataView } from "./default";
 import { OwnershipTransferredDataView } from "./ownership-transferred";
 import { PurchaseDataView } from "./purchase";
@@ -32,6 +33,8 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
       return <ClaimDataView assets={assets} contract={contract} />;
     case ContractEventType.Craft:
       return <CraftDataView assets={assets} contract={contract} />;
+    case ContractEventType.Dismantle:
+      return <DismantleDataView assets={assets} contract={contract} />;
     case ContractEventType.WaitListRewardClaimed:
       return <WaitListRewardClaimedDataView assets={assets} contract={contract} />;
     case ContractEventType.Purchase:

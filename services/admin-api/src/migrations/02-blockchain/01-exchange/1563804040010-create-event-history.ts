@@ -138,6 +138,10 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isPrimary: true,
         },
         {
+          name: "event_type",
+          type: "varchar",
+        },
+        {
           name: "address",
           type: "varchar",
         },
@@ -148,10 +152,6 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         },
         {
           name: "transaction_hash",
-          type: "varchar",
-        },
-        {
-          name: "event_type",
           type: "varchar",
         },
         {

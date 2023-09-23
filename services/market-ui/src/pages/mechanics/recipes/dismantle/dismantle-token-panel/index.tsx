@@ -22,12 +22,12 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
-
+//
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { formatItem } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
-import { getDismantleMultiplier } from "../../../../../components/buttons/mechanics/recipes/dismantle/utils";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { getDismantleMultiplier } from "./utils";
 
 export interface IDismantleTokenPanelProps {
   token: IToken;
@@ -65,7 +65,8 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
-            component.contract!.contractType === TokenType.ERC1155
+            component.contract!.contractType === TokenType.ERC1155 ||
+            component.contract!.contractType === TokenType.ERC20
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: getDismantleMultiplier(
@@ -96,7 +97,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/dismantle/sign",
+        url: "/recipes/dismantle/sign",
         method: "POST",
         data: {
           chainId,
@@ -126,7 +127,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   }
 
   return (
-    <Card>
+    <Card sx={{ mb: 2 }}>
       <CardContent>
         <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
           <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
@@ -143,21 +144,23 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
               dismantle.rarityMultiplier,
             );
             return (
-              <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
-                <ListItemIcon>
-                  <Construction />
-                </ListItemIcon>
-                <ListItemText>
-                  <Grid container spacing={1} alignItems="flex-center">
-                    <Grid item xs={12}>
-                      {formatItem(dismantle.item)}
-                      {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
-                      ) : null}
+              <Card key={dismantle.id}>
+                <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
+                  <ListItemIcon>
+                    <Construction />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Grid container spacing={1} alignItems="flex-center">
+                      <Grid item xs={12}>
+                        {formatItem(dismantle.item)}
+                        {multiplier !== 1 ? (
+                          <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
+                        ) : null}
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </ListItemText>
-              </ListItemButton>
+                  </ListItemText>
+                </ListItemButton>
+              </Card>
             );
           })}
         </List>

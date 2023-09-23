@@ -9,10 +9,10 @@ import { useSettings } from "@gemunion/provider-settings";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { boolArrayToByte32 } from "@framework/traits-ui";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { bool36ArrayToByte32 } from "@framework/traits-ui";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;
@@ -37,7 +37,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             externalId: round.id,
             expiresAt: sign.expiresAt,
             nonce: utils.arrayify(sign.nonce),
-            extra: boolArrayToByte32(ticketNumbers),
+            extra: bool36ArrayToByte32(ticketNumbers),
             receiver: round.contract?.address,
             referrer: settings.getReferrer(),
           },
@@ -74,7 +74,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          ticketNumbers: boolArrayToByte32(ticketNumbers),
+          ticketNumbers: bool36ArrayToByte32(ticketNumbers),
           contractId: round.contractId,
         },
       },

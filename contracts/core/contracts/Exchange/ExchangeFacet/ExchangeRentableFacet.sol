@@ -44,6 +44,12 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
+    IERC4907(item.token).setUser(
+      item.tokenId,
+      params.referrer /* to */,
+      uint256(params.extra).toUint64() /* lend expires */
+    );
+
     emit Lend(
       _msgSender() /* from */,
       params.referrer /* to */,
@@ -51,12 +57,6 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
       params.externalId /* lendRule db id */,
       item,
       price
-    );
-
-    IERC4907(item.token).setUser(
-      item.tokenId,
-      params.referrer /* to */,
-      uint256(params.extra).toUint64() /* lend expires */
     );
   }
 

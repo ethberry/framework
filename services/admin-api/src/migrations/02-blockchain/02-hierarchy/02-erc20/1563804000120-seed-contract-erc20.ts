@@ -42,7 +42,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         updated_at
       ) VALUES (
         10201,
-        '${erc20TokenSimpleAddress}',
+        '${erc20TokenInactiveAddress}',
         '${chainId}',
         'Space Credits',
         '${simpleFormatting}',

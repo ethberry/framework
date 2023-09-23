@@ -72,10 +72,10 @@ export class WrapperServiceEth {
         tokenId,
         metadata: JSON.stringify(metadata),
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);

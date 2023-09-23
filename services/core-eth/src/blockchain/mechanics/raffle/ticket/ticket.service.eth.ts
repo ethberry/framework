@@ -91,12 +91,12 @@ export class RaffleTicketServiceEth {
       tokenId,
       metadata,
       royalty: templateEntity.contract.royalty,
-      templateId: templateEntity.id,
+      template: templateEntity,
       tokenStatus: TokenStatus.MINTED,
     });
 
     await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), "1");
-    await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+    await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
     return tokenEntity;
   }

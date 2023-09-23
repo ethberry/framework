@@ -190,6 +190,7 @@ export class EventHistoryService {
           ExchangeEventType.Upgrade,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
+          ExchangeEventType.Dismantle,
           ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,

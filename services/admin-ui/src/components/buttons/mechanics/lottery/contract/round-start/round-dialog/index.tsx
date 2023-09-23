@@ -52,6 +52,7 @@ export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props 
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={"dialogs.startRound"}

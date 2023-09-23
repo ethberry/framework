@@ -86,7 +86,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/craft/sign",
+        url: "/recipies/craft/sign",
         method: "POST",
         data: {
           chainId,

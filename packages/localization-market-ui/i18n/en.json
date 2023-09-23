@@ -214,6 +214,7 @@
       "Claim": "Claim",
       "ConsecutiveTransfer": "ConsecutiveTransfer",
       "Craft": "Craft",
+      "Dismantle": "Dismantle",
       "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
       "ERC20PaymentReleased": "ERC20PaymentReleased",
       "ERC20Released": "ERC20Released",
