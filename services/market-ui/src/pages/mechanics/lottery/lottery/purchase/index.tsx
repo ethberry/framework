@@ -49,8 +49,10 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   };
 
   useEffect(() => {
-    void fetchRound();
-  }, []);
+    if (contract.id) {
+      void fetchRound();
+    }
+  }, [contract.id]);
 
   const handleClick = (i: number) => {
     return () => {
