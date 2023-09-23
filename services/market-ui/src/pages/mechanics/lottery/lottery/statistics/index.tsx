@@ -38,8 +38,10 @@ export const LotteryStatistic: FC<ILotteryStatisticProps> = props => {
   };
 
   useEffect(() => {
-    void fetchRound();
-  }, []);
+    if (contract.id) {
+      void fetchRound();
+    }
+  }, [contract.id]);
 
   return (
     <ProgressOverlay isLoading={isLoading}>

@@ -57,7 +57,7 @@ export const LotteryTokenList: FC = () => {
       <LotteryTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List sx={{ overflowX: "auto" }}>
           {rows.map(token => (
             <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>

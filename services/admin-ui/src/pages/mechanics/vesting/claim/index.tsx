@@ -101,7 +101,7 @@ export const VestingClaim: FC = () => {
         <List sx={{}}>
           {rows.map(vesting => (
             <ListItem key={vesting.id} sx={{ flexWrap: "wrap", pr: 0 }}>
-              <ListItemText sx={{ mr: 0.5, overflowX: "scroll", width: 0.5 }}>
+              <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
               <ListActions>

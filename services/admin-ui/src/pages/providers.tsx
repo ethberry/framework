@@ -13,6 +13,8 @@ import { PickerProvider } from "@gemunion/provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
+import { themeProps } from "../components/theme";
+
 import { Signal } from "../components/signal";
 
 export const Providers: FC<PropsWithChildren> = props => {
@@ -22,7 +24,7 @@ export const Providers: FC<PropsWithChildren> = props => {
       <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
         <UserProviderFirebase>
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
-            <ThemeProvider>
+            <ThemeProvider {...themeProps}>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
