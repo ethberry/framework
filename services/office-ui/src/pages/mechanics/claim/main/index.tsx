@@ -101,7 +101,7 @@ export const Claim: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List sx={{ overflowX: "auto" }}>
           {rows.map(claim => (
             <ListItem key={claim.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{claim.account}</ListItemText>

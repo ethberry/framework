@@ -65,7 +65,7 @@ export const VestingContracts: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List sx={{ overflowX: "auto" }}>
           {rows.map(vesting => (
             <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.5 }}>

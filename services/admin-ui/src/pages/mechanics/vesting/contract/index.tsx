@@ -51,7 +51,7 @@ export const VestingContracts: FC = () => {
         <List>
           {rows.map(vesting => (
             <ListItem key={vesting.id} sx={{ flexWrap: "wrap", pr: 0 }}>
-              <ListItemText sx={{ mr: 0.5, overflowX: "scroll", width: 0.5 }}>
+              <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
               <ListActions dataTestId="VestingActionsMenuButton">
