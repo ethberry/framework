@@ -1,17 +1,18 @@
 import { FC, Fragment } from "react";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import type { ICraft, ICraftSearchDto } from "@framework/types";
+import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
-import type { ICraft, ICraftSearchDto } from "@framework/types";
-import { ModuleType } from "@framework/types";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { TokenType } from "@gemunion/types-blockchain";
 
+import { StyledPagination } from "../../../../../components/common/styled/pagination";
 import { CraftItem } from "./item";
-import { EntityInput } from "@gemunion/mui-inputs-entity/dist/entity";
-import { TokenType } from "@gemunion/types-blockchain/dist/token";
 
 export const CraftList: FC = () => {
   const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleChangePage, handleToggleFilters } =
@@ -61,8 +62,7 @@ export const CraftList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

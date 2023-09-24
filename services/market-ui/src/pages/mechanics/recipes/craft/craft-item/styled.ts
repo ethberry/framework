@@ -1,4 +1,4 @@
-import { Box, CSSObject } from "@mui/material";
+import { Box, BoxProps, CSSObject } from "@mui/material";
 import { Theme, styled } from "@mui/material/styles";
 
 const generateFanStyles = (count: number, angle: number, theme: Theme): CSSObject => {
@@ -19,7 +19,7 @@ const generateFanStyles = (count: number, angle: number, theme: Theme): CSSObjec
   return styles;
 };
 
-export interface IStyledImageListProps {
+export interface IStyledImageListProps extends BoxProps {
   count?: number;
 }
 
@@ -59,6 +59,8 @@ export const StyledImageListItem = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledDescription = styled(Box)(({ theme }) => ({
+  ...theme.typography.body2,
+  color: theme.palette.text.secondary,
   marginTop: theme.spacing(4),
   marginBottom: theme.spacing(4),
 }));

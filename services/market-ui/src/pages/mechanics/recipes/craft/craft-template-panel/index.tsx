@@ -2,16 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import {
-  Card,
-  CardContent,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
@@ -26,6 +17,7 @@ import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { formatItem, getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
+import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftTemplatePanelProps {
   template: ITemplate;
@@ -115,12 +107,12 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   return (
     <Card>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.craft" />
-          </Typography>
+          </StyledTitle>
           <AllowanceInfoPopover />
-        </Toolbar>
+        </StyledToolbar>
         <List>
           {rows.map(craft => {
             return (

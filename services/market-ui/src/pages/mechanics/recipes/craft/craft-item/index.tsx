@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -61,9 +61,7 @@ export const CraftItem: FC = () => {
       </Grid>
 
       <StyledDescription>
-        <Typography variant="body2" color="textSecondary" component="div">
-          <RichTextDisplay data={selected.item?.components[0].template!.description} />
-        </Typography>
+        <RichTextDisplay data={selected.item?.components[0].template!.description} />
       </StyledDescription>
 
       {selected.id ? <CraftTransactions craft={selected} /> : null}

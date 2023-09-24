@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
-import { Card, CardActions, CardContent, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material";
+import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
 
 import type { ICraft } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { formatEther } from "../../../../../utils/money";
 import { CraftButton } from "../../../../../components/buttons";
+import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftItemPanelProps {
   craft: ICraft;
@@ -19,12 +20,12 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
   return (
     <Card>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.recipes.ingredients" />
-          </Typography>
+          </StyledTitle>
           <AllowanceInfoPopover />
-        </Toolbar>
+        </StyledToolbar>
         <List>
           {craft.price?.components.map((component, i) => (
             <ListItem

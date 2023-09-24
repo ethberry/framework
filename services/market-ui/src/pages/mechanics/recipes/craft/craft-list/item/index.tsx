@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -7,6 +7,7 @@ import type { ICraft } from "@framework/types";
 
 import { CraftButton } from "../../../../../../components/buttons";
 import { CraftIngredients } from "./menu";
+import { StyledCardMedia, StyledDescription } from "./styled";
 
 interface ICraftItemProps {
   craft: ICraft;
@@ -14,9 +15,6 @@ interface ICraftItemProps {
 
 export const CraftItem: FC<ICraftItemProps> = props => {
   const { craft } = props;
-  // TODO use MUI native multi-image list
-  // https://mui.com/material-ui/react-image-list/ or
-  // https://mui.com/material-ui/react-masonry/
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/recipes/craft/${craft.id}`}>
@@ -25,11 +23,11 @@ export const CraftItem: FC<ICraftItemProps> = props => {
           title={craft.item?.components[0].template!.title}
           subheader={craft.item?.components.map(comp => comp.template?.title).join(" + ")}
         />
-        <CardMedia sx={{ height: 200 }} image={craft.item?.components[0].template!.imageUrl} />
+        <StyledCardMedia image={craft.item?.components[0].template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
+          <StyledDescription>
             <RichTextDisplay data={craft.item?.components[0].template!.description} />
-          </Typography>
+          </StyledDescription>
         </CardContent>
       </CardActionArea>
       <CardActions>
