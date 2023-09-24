@@ -11,10 +11,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PonziRulesService } from "./rules.service";
 import { PonziRulesEntity } from "./rules.entity";
 import { PonziRuleSearchDto } from "./dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/ponzi/rules")

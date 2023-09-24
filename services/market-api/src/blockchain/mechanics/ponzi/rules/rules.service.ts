@@ -2,10 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPonziRuleSearchDto, PonziRuleStatus } from "@framework/types";
+import { PonziRuleStatus } from "@framework/types";
+import type { IPonziRuleSearchDto } from "@framework/types";
 
-import { PonziRulesEntity } from "./rules.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { PonziRulesEntity } from "./rules.entity";
 
 @Injectable()
 export class PonziRulesService {

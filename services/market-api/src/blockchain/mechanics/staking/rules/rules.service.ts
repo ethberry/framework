@@ -2,10 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import type { IStakingRuleSearchDto } from "@framework/types";
 
-import { StakingRulesEntity } from "./rules.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { StakingRulesEntity } from "./rules.entity";
 
 @Injectable()
 export class StakingRulesService {
