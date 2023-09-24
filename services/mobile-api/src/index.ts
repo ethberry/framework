@@ -7,6 +7,7 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 import { AppModule } from "./app.module";
 import { RedisIoAdapter } from "./common/adapters/redis-io";
@@ -17,6 +18,7 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
+  const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
 
   const baseUrl = configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
 
@@ -24,7 +26,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({
     origin:
-      process.env.NODE_ENV === "development" || process.env.NODE_ENV === "dev"
+      process.env.NODE_ENV === NodeEnv.development
         ? [
             "http://localhost:3005",
             "http://127.0.0.1:3005",
@@ -51,9 +53,7 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
-
-  if (nodeEnv === "production" || nodeEnv === "staging") {
+  if (nodeEnv === NodeEnv.production || nodeEnv === NodeEnv.staging) {
     app.enableShutdownHooks();
   }
 

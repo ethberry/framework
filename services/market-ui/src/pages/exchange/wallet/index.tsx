@@ -19,7 +19,8 @@ export const MyWallet: FC = () => {
       <Typography sx={{ mb: 2 }}>
         <FormattedMessage id="pages.wallet.connectedWallet" />: {profile.wallet || "N/A"}
       </Typography>
-      <AttachWalletButton /> <AllowanceButton />
+      <AttachWalletButton />
+      <AllowanceButton />
     </Grid>
   );
 };

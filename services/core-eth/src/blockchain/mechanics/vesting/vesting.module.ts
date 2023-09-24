@@ -8,10 +8,11 @@ import { TokenModule } from "../../hierarchy/token/token.module";
 import { BalanceModule } from "../../hierarchy/balance/balance.module";
 import { VestingControllerEth } from "./vesting.controller.eth";
 import { VestingServiceEth } from "./vesting.service.eth";
+import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
   imports: [ConfigModule, EventHistoryModule, ContractModule, TokenModule, BalanceModule, NotificatorModule],
-  providers: [VestingServiceEth],
+  providers: [VestingServiceEth, signalServiceProvider],
   controllers: [VestingControllerEth],
   exports: [VestingServiceEth],
 })

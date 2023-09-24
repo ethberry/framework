@@ -35,8 +35,6 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
-    emit PurchaseMysteryBox(_msgSender(), params.externalId, items, price);
-
     Asset memory box = items[items.length - 1];
 
     // pop from array is not supported
@@ -51,6 +49,7 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
 
     IERC721MysteryBox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
 
+    emit PurchaseMysteryBox(_msgSender(), params.externalId, items, price);
     //    _afterPurchase(params.referrer, price);
   }
 

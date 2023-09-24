@@ -15,7 +15,12 @@ import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/e
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
-export const AllowanceButton: FC = () => {
+export interface IAllowanceButtonProps {
+  token?: any;
+}
+
+export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
+  const { token = getEmptyToken() } = props;
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
   const handleAllowance = (): void => {
@@ -66,7 +71,7 @@ export const AllowanceButton: FC = () => {
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
-          token: getEmptyToken(),
+          token,
           address: "",
         }}
       />

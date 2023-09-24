@@ -5,6 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 import { AppModule } from "./app.module";
 
@@ -25,9 +26,9 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
 
-  if (nodeEnv === "production" || nodeEnv === "staging") {
+  if (nodeEnv === NodeEnv.production || nodeEnv === NodeEnv.staging) {
     app.enableShutdownHooks();
   }
 

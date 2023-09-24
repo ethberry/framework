@@ -10,6 +10,7 @@ declare global {
       JSON_URL: string;
       GEMUNION_API_KEY: string;
       GEMUNION_URL: string;
+      SIGNAL_URL: string;
       BUSINESS_TYPE: BusinessType;
       ACCOUNT: string;
       // these addresses should be related to chainId

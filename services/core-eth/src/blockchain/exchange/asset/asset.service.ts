@@ -7,11 +7,13 @@ import {
   LoggerService,
   NotFoundException,
 } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
+import { testChainId } from "@framework/constants";
 import type { IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
-import { ExchangeType, TokenType } from "@framework/types";
+import { ContractEventType, ContractFeatures, ExchangeType, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -21,6 +23,8 @@ import { EventHistoryService } from "../../event-history/event-history.service";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { TokenEntity } from "../../hierarchy/token/token.entity";
 
 @Injectable()
 export class AssetService {
@@ -34,6 +38,8 @@ export class AssetService {
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
+    private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     @InjectDataSource()
     private dataSource: DataSource,
@@ -133,11 +139,12 @@ export class AssetService {
     return this.assetComponentHistoryEntityRepository.create(dto).save();
   }
 
-  public async updateAssetHistory(transactionHash: string, tokenId: number): Promise<void> {
+  public async updateAssetHistory(transactionHash: string, token: TokenEntity): Promise<void> {
+    const { id, template } = token;
     const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
     queryBuilder.select();
     queryBuilder.leftJoinAndSelect("assets.history", "history");
-    queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull() });
+    queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull(), contractId: template.contractId });
     queryBuilder.andWhere("history.transactionHash = :transactionHash", {
       transactionHash,
     });
@@ -145,7 +152,7 @@ export class AssetService {
     const assetHistoryEntity = await queryBuilder.getOne();
 
     if (assetHistoryEntity) {
-      Object.assign(assetHistoryEntity, { tokenId });
+      Object.assign(assetHistoryEntity, { tokenId: id });
       await assetHistoryEntity.save();
     }
   }
@@ -177,36 +184,92 @@ export class AssetService {
     items: Array<IAssetItem>,
     price: Array<IAssetItem>,
   ): Promise<{ items: Array<AssetComponentHistoryEntity>; price: Array<AssetComponentHistoryEntity> }> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
     return {
       items: await Promise.allSettled(
-        items.map(async ({ tokenType, tokenId, amount }) => {
+        items.map(async ({ tokenType, token, tokenId, amount }) => {
           const assetComponentHistoryItem = {
             history: eventHistoryEntity,
             exchangeType: ExchangeType.ITEM,
             amount,
           };
 
-          const relations =
-            ~~tokenType === 2 || ~~tokenType === 3 ? { contract: true } : { tokens: true, contract: true };
-          const templateEntity = await this.templateService.findOne(
-            {
-              id:
-                ~~tokenType === 4
-                  ? Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId)
-                  : Number(tokenId),
-            },
-            { relations },
-          );
-          if (!templateEntity) {
-            this.loggerService.error(new NotFoundException("templateNotFound"), AssetService.name);
-            throw new NotFoundException("templateNotFound");
+          const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+          if (!contractEntity) {
+            this.loggerService.error(new NotFoundException("contractNotFound"), "item", AssetService.name);
+            throw new NotFoundException("contractNotFound");
           }
-          Object.assign(assetComponentHistoryItem, {
-            // for 721 & 998 tokenId will be updated at Transfer event
-            // tokenId: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0].id : null,
-            token: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0] : null,
-            contract: templateEntity.contract,
-          });
+
+          const isRandom = contractEntity.contractFeatures.includes(ContractFeatures.RANDOM);
+          const isNft = ~~tokenType === 2 || ~~tokenType === 3; // 721 | 998
+          const isCoin = ~~tokenType === 0 || ~~tokenType === 1; // Native | 20
+          const isErc1155 = ~~tokenType === 4; // 1155
+          const isPurchase = eventHistoryEntity.eventType === ContractEventType.Purchase;
+
+          if (isCoin) {
+            // NATIVE & ERC20
+            const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase(), chainId);
+
+            if (!tokenEntity) {
+              this.loggerService.error(
+                new NotFoundException("tokenNotFound"),
+                "item",
+                tokenId,
+                token.toLowerCase(),
+                AssetService.name,
+              );
+              throw new NotFoundException("tokenNotFound");
+            }
+
+            Object.assign(assetComponentHistoryItem, {
+              token: tokenEntity,
+              contract: tokenEntity.template.contract,
+            });
+          } else if (isErc1155 && isPurchase) {
+            const templateEntity = await this.templateService.findOne(
+              {
+                id: Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId),
+              },
+              { relations: { tokens: true, contract: true } },
+            );
+
+            if (!templateEntity) {
+              this.loggerService.error(new NotFoundException("templateNotFound"), "item", AssetService.name);
+              throw new NotFoundException("templateNotFound");
+            }
+
+            Object.assign(assetComponentHistoryItem, {
+              token: templateEntity.tokens[0],
+              contract: templateEntity.contract,
+            });
+          } else if (isNft || (isErc1155 && !isPurchase)) {
+            // 721 && 998
+            const tokenNestedEventHistoryEntity = await this.eventHistoryService.findOne(
+              {
+                // transactionHash: eventHistoryEntity.transactionHash,
+                parentId: eventHistoryEntity.id,
+                contractId: contractEntity.id,
+                token: {
+                  tokenId,
+                },
+              },
+              { relations: { token: { template: true } } },
+            );
+
+            if (!tokenNestedEventHistoryEntity) {
+              this.loggerService.error(new NotFoundException("nestedEventNotFound"), "item", AssetService.name);
+              // throw new NotFoundException("nestedEventNotFound");
+            }
+
+            // for random 721 & 998: TokenID will be updated in Transfer event at next transaction
+            // if not found could be updated in Transfer event at next transaction...
+            Object.assign(assetComponentHistoryItem, {
+              token: isRandom ? null : tokenNestedEventHistoryEntity?.token || null,
+              contract: contractEntity,
+            });
+          }
 
           return this.createAssetHistory(assetComponentHistoryItem);
         }),
@@ -229,16 +292,17 @@ export class AssetService {
           const tokenEntity = await this.tokenService.getToken(
             Number(tokenId).toString(),
             token.toLowerCase(),
-            void 0,
-            false,
+            chainId,
           );
+
           if (!tokenEntity) {
-            this.loggerService.error(new NotFoundException("tokenNotFound"), AssetService.name);
+            this.loggerService.error(new NotFoundException("tokenNotFound"), "price", AssetService.name);
             throw new NotFoundException("tokenNotFound");
           }
+
           Object.assign(assetComponentHistoryPrice, {
             token: tokenEntity,
-            contractId: tokenEntity.template.contractId,
+            contract: tokenEntity.template.contract,
           });
 
           return this.createAssetHistory(assetComponentHistoryPrice);

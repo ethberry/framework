@@ -70,6 +70,7 @@ export class EventHistoryService {
 
   // TODO add All Exchange events
   public async my(dto: EventHistorySearchDto2, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
+    // @ts-ignore  (react < 5 )
     const { take, skip, order, eventTypes } = dto;
 
     const { wallet } = userEntity;
@@ -193,6 +194,12 @@ export class EventHistoryService {
         qb.orWhere(
           new Brackets(qb1 => {
             qb1.andWhere("history.event_type = :eventType202", { eventType202: ContractEventType.Craft });
+            qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType203", { eventType203: ContractEventType.Dismantle });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );

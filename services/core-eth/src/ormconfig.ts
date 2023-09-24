@@ -39,6 +39,7 @@ import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.ent
 import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
+import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -67,6 +68,7 @@ const config: PostgresConnectionOptions = {
     // mechanics
     ClaimEntity,
     BreedEntity,
+    CraftEntity,
     DismantleEntity,
     GradeEntity,
     MysteryBoxEntity,

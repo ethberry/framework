@@ -1468,7 +1468,9 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent",
+    "transactionSent": "Transaction sent: {txHash}",
+    "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
@@ -1476,5 +1478,8 @@
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
+  },
+  "socket": {
+    "connected": "WebSocket connection ON"
   }
 }

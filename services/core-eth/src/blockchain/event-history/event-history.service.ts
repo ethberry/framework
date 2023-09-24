@@ -116,7 +116,7 @@ export class EventHistoryService {
     const { transactionHash, address, blockNumber } = context;
 
     if (!contractId) {
-      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
 
       if (!parentContractEntity) {
         throw new NotFoundException("contractNotFound");
@@ -190,6 +190,7 @@ export class EventHistoryService {
           ExchangeEventType.Upgrade,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
+          ExchangeEventType.Dismantle,
           ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,

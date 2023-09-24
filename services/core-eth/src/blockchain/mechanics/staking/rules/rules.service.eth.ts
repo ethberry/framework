@@ -1,17 +1,13 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
 import { Log } from "ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import type {
-  IAssetDto,
-  IStakingBalanceWithdrawEvent,
-  IStakingRuleCreateEvent,
-  IStakingRuleUpdateEvent,
-} from "@framework/types";
-import { DurationUnit, StakingRuleStatus } from "@framework/types";
+import type { IAssetDto, IStakingRuleCreateEvent, IStakingRuleUpdateEvent } from "@framework/types";
+import { DurationUnit, RmqProviderType, SignalEventType, StakingRuleStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -25,6 +21,8 @@ export class StakingRulesServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly configService: ConfigService,
     private readonly stakingRulesService: StakingRulesService,
     private readonly templateService: TemplateService,
@@ -36,6 +34,7 @@ export class StakingRulesServiceEth {
   public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { rule, ruleId },
     } = event;
     const { address, transactionHash } = context;
@@ -89,7 +88,10 @@ export class StakingRulesServiceEth {
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+    const contractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -118,16 +120,28 @@ export class StakingRulesServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async ruleUpdate(event: ILogEvent<IStakingRuleUpdateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { ruleId, active },
     } = event;
     const { address, transactionHash } = context;
 
-    const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
+    const stakingRuleEntity = await this.stakingRulesService.findOne(
+      { externalId: ruleId },
+      { relations: { contract: { merchant: true } } },
+    );
 
     if (!stakingRuleEntity) {
       this.loggerService.error("stakingRuleNotFound", ruleId, StakingRulesServiceEth.name);
@@ -145,9 +159,13 @@ export class StakingRulesServiceEth {
       address,
       transactionHash,
     });
-  }
 
-  public async balanceWithdraw(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: stakingRuleEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

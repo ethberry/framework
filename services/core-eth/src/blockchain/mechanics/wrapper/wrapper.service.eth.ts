@@ -1,10 +1,18 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { ETHERS_RPC } from "@gemunion/nest-js-module-ethers-gcp";
-import { IERC721TokenTransferEvent, IUnpackWrapper, TokenMetadata, TokenStatus } from "@framework/types";
+import {
+  IERC721TokenTransferEvent,
+  IUnpackWrapper,
+  RmqProviderType,
+  SignalEventType,
+  TokenMetadata,
+  TokenStatus,
+} from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenService } from "../../hierarchy/token/token.service";
@@ -23,6 +31,8 @@ export class WrapperServiceEth {
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     protected readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -35,20 +45,31 @@ export class WrapperServiceEth {
 
   public async unpack(event: ILogEvent<IUnpackWrapper>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId },
     } = event;
+    const { transactionHash, address } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id, tokenEntity.template.contractId);
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: tokenEntity.template.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -72,10 +93,10 @@ export class WrapperServiceEth {
         tokenId,
         metadata: JSON.stringify(metadata),
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);
@@ -100,5 +121,13 @@ export class WrapperServiceEth {
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

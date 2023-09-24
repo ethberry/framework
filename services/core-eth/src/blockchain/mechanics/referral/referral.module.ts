@@ -8,10 +8,11 @@ import { ReferralService } from "./referral.service";
 import { ReferralEntity } from "./referral.entity";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
+import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ReferralEntity]), EventHistoryModule, ContractModule, ConfigModule],
-  providers: [Logger, ReferralService, ReferralServiceEth],
+  providers: [Logger, signalServiceProvider, ReferralService, ReferralServiceEth],
   controllers: [ReferralControllerEth],
   exports: [ReferralService, ReferralServiceEth],
 })

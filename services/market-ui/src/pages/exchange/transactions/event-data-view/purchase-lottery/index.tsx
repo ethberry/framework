@@ -9,7 +9,7 @@ import {
   IExchangePurchaseLotteryEvent,
   TContractEventData,
 } from "@framework/types";
-import { byte32ToBoolArray } from "@framework/traits-ui";
+import { byte32ToBool36Array } from "@framework/traits-ui";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
@@ -37,12 +37,12 @@ export const PurchaseLotteryDataView: FC<IPurchaseLotteryDataViewProps> = props 
         </Typography>
         <DataViewItemContentWrapper>
           <DataViewAddressLinkWrapper>
-            {byte32ToBoolArray(numbers)
+            {byte32ToBool36Array(numbers)
               .reduce((memo, current, i) => {
                 if (current) {
-                  memo.push(i);
+                  memo.push(i + 1);
                 }
-                return memo;
+                return memo as Array<number>;
               }, [] as Array<number>)
               .join(", ")}
           </DataViewAddressLinkWrapper>

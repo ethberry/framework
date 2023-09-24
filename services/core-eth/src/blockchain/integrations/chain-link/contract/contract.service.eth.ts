@@ -34,7 +34,7 @@ export class ChainLinkContractServiceEth {
 
     // DEV ONLY
     // !!!should work while on Gemunion's BESU!!!
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    // const nodeEnv = this.configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
     // if (nodeEnv === "production") {
     //   return;
     // }

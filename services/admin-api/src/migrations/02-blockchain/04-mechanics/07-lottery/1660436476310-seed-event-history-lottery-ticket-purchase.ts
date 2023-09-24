@@ -52,7 +52,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
             },
           ],
           roundId: "1",
-          numbers: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          numbers: "0x0000000000000000000000000000000000000000000000000000010203222324", // 1,2,3,34,35,36 !!!
         })}',
         null,
         '${subDays(now, 5).toISOString()}',
@@ -106,7 +106,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
             },
           ],
           roundId: "2",
-          numbers: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          numbers: "0x0000000000000000000000000000000000000000000000000000010203222324", // 1,2,3,34,35,36 !!!
         })}',
         null,
         '${subDays(now, 9).toISOString()}',
@@ -160,7 +160,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
             },
           ],
           roundId: "3",
-          numbers: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          numbers: "0x0000000000000000000000000000000000000000000000000000010203222324", // 1,2,3,34,35,36 !!!
         })}',
         null,
         '${subDays(now, 8).toISOString()}',
@@ -214,7 +214,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
             },
           ],
           roundId: "1",
-          numbers: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          numbers: "0x0000000000000000000000000000000000000000000000000000010203222324", // 1,2,3,34,35,36 !!!
         })}',
         null,
         '${subDays(now, 8).toISOString()}',
@@ -268,7 +268,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
             },
           ],
           roundId: "1",
-          numbers: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          numbers: "0x0000000000000000000000000000000000000000000000000000010203222324", // 1,2,3,34,35,36 !!!
         })}',
         null,
         '${subDays(now, 8).toISOString()}',

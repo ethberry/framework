@@ -1,13 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ExchangeType,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   IExchangePurchaseEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenMetadata,
   TokenMintType,
   TokenStatus,
@@ -31,6 +34,8 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -39,11 +44,12 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
   ) {
-    super(loggerService, tokenService, eventHistoryService);
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -69,10 +75,10 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
         tokenId,
         metadata,
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
       // if RANDOM token - update tokenId in exchange asset history
       if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
@@ -155,23 +161,32 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
       to: to.toLowerCase(),
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    // const {
-    // } = event;
-    // const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+    const {
+      name,
+      args: { to },
+    } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
-    // const entityWithRelations = await this.eventHistoryService.findOne(
-    //   { id: eventHistoryEntity.id },
-    //   { relations: { parent: true, assets: true } },
-    // );
-    //
-    // if (!entityWithRelations) {
-    //   this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
-    //   throw new NotFoundException("historyNotFound");
-    // }
+    const { transactionHash } = context;
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: to.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   // get Purchase parent event and send notification about purchase

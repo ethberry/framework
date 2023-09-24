@@ -847,7 +847,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent",
+    "transactionSent": "Transaction sent: {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",

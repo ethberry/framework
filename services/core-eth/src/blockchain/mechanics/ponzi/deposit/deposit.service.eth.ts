@@ -1,4 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -9,7 +11,7 @@ import type {
   IPonziWithdrawEvent,
   IWithdrawTokenEvent,
 } from "@framework/types";
-import { PonziDepositStatus } from "@framework/types";
+import { PonziDepositStatus, RmqProviderType, SignalEventType } from "@framework/types";
 import { PonziDepositService } from "./deposit.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { PonziRulesService } from "../rules/rules.service";
@@ -23,6 +25,8 @@ export class PonziDepositServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly ponziDepositService: PonziDepositService,
     private readonly ponziRulesService: PonziRulesService,
     private readonly eventHistoryService: EventHistoryService,
@@ -34,13 +38,17 @@ export class PonziDepositServiceEth {
   public async start(event: ILogEvent<IPonziDepositEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { stakingId, ruleId, owner, startTimestamp },
     } = event;
-    const { address } = context;
+    const { transactionHash, address } = context;
 
-    const contractEntity = await this.contractService.findOne({
-      address: address.toLowerCase(),
-    });
+    const contractEntity = await this.contractService.findOne(
+      {
+        address: address.toLowerCase(),
+      },
+      { relations: { merchant: true } },
+    );
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -61,6 +69,14 @@ export class PonziDepositServiceEth {
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       ponziRuleId: ponziRuleEntity.id,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async findStake(externalId: string, address: string): Promise<PonziDepositEntity> {
@@ -83,9 +99,10 @@ export class PonziDepositServiceEth {
   public async withdraw(event: ILogEvent<IPonziWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { stakingId },
     } = event;
-    const { address } = context;
+    const { transactionHash, address } = context;
 
     const stakeEntity = await this.findStake(stakingId, address);
 
@@ -94,14 +111,23 @@ export class PonziDepositServiceEth {
     });
 
     await stakeEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: stakeEntity.account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async finish(event: ILogEvent<IPonziFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { stakingId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const stakeEntity = await this.findStake(stakingId, address);
 
@@ -110,6 +136,14 @@ export class PonziDepositServiceEth {
     });
 
     await stakeEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: stakeEntity.account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async finishToken(event: ILogEvent<IFinalizedTokenEvent | IPonziFinishEvent>, context: Log): Promise<void> {
@@ -120,9 +154,19 @@ export class PonziDepositServiceEth {
   public async withdrawToken(event: ILogEvent<IWithdrawTokenEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { token, amount },
     } = event;
-    const { address } = context;
+    const { transactionHash, address } = context;
+
+    const ponziContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase() },
+      { relations: { merchant: true } },
+    );
+
+    if (!ponziContractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
 
     if (token.toLowerCase() === ZeroAddress) {
       const tokenEntity = await this.tokenService.getToken("0", token.toLowerCase());
@@ -133,5 +177,13 @@ export class PonziDepositServiceEth {
 
       await this.balanceService.decrement(tokenEntity.id, address.toLowerCase(), amount);
     }
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: ponziContractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

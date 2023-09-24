@@ -30,7 +30,6 @@ export interface ILotteryFinalizeData {
 export interface ILotteryPurchaseData {
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
-  index: string;
   address: string;
   transactionHash: string;
 }

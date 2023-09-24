@@ -137,7 +137,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10280,
-        '${erc20TokenSimpleAddress}',
+        '${erc20TokenInactiveAddress}',
         '${chainId}',
         'Warp Credits',
         '${simpleFormatting}',

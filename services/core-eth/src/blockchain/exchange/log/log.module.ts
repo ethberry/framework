@@ -60,6 +60,7 @@ import { testChainId } from "@framework/constants";
               ExchangeEventType.Claim,
               // MODULE:CRAFT
               ExchangeEventType.Craft,
+              ExchangeEventType.Dismantle,
               // MODULE:MYSTERYBOX
               ExchangeEventType.PurchaseMysteryBox,
               // MODULE:REFERRAL

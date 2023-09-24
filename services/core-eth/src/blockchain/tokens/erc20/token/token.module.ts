@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenModule } from "../../../hierarchy/token/token.module";
@@ -8,16 +9,18 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
 import { Erc20TokenControllerEth } from "./token.controller.eth";
 import { Erc20TokenServiceEth } from "./token.service.eth";
 import { Erc20TokenLogModule } from "./log/log.module";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
+    ConfigModule,
     TokenModule,
     BalanceModule,
     EventHistoryModule,
     Erc20TokenLogModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Erc20TokenServiceEth],
+  providers: [signalServiceProvider, Erc20TokenServiceEth],
   controllers: [Erc20TokenControllerEth],
   exports: [Erc20TokenServiceEth],
 })

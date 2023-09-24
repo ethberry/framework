@@ -19,6 +19,7 @@ import { RoundControllerRmq } from "./round.controller.rmq";
 import { LotteryRoundServiceRmq } from "./round.service.rmq";
 import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { LotteryRoundAggregationService } from "./round.service.aggregation";
     Logger,
     ethersRpcProvider,
     ethersSignerProvider,
+    signalServiceProvider,
     LotteryRoundService,
     LotteryRoundServiceEth,
     LotteryRoundServiceRmq,

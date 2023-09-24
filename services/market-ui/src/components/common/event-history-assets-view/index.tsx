@@ -34,7 +34,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC721:
       case TokenType.ERC998: {
         return (
-          <StyledDataViewAddressLinkWrapper key={asset.id}>
+          <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
@@ -47,7 +47,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       }
       case TokenType.ERC1155:
         return (
-          <StyledDataViewAddressLinkWrapper key={asset.id}>
+          <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
@@ -59,7 +59,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC20:
       default: {
         return (
-          <StyledDataViewAddressLinkWrapper>
+          <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
             {formatEther(amount, token?.template?.contract?.decimals, token?.template?.contract?.symbol)}
           </StyledDataViewAddressLinkWrapper>
         );

@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { EventHistoryModule } from "../../event-history/event-history.module";
@@ -7,10 +8,11 @@ import { AccessControlService } from "./access-control.service";
 import { AccessControlEntity } from "./access-control.entity";
 import { AccessControlServiceEth } from "./access-control.service.eth";
 import { AccessControlControllerEth } from "./access-control.controller.eth";
+import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
-  imports: [EventHistoryModule, ContractModule, TypeOrmModule.forFeature([AccessControlEntity])],
-  providers: [AccessControlService, AccessControlServiceEth],
+  imports: [EventHistoryModule, ConfigModule, ContractModule, TypeOrmModule.forFeature([AccessControlEntity])],
+  providers: [signalServiceProvider, AccessControlService, AccessControlServiceEth],
   controllers: [AccessControlControllerEth],
   exports: [AccessControlService, AccessControlServiceEth],
 })

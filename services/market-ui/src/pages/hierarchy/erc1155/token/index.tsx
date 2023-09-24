@@ -9,6 +9,7 @@ import type { IBalance, ITemplate, IToken } from "@framework/types";
 
 import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
+import { TokenHistory } from "../../../../components/common/token-history";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -57,6 +58,8 @@ export const Erc1155Token: FC = () => {
           ) : null}
         </Grid>
       </Grid>
+
+      {selected.id ? <TokenHistory token={selected} /> : null}
     </Fragment>
   );
 };

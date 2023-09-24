@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log, Wallet } from "ethers";
 
@@ -10,6 +11,8 @@ import {
   IRaffleRoundEndedEvent,
   IRaffleRoundFinalizedEvent,
   IRaffleRoundStartedEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenType,
 } from "@framework/types";
 
@@ -29,6 +32,8 @@ export class RaffleRoundServiceEth {
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
@@ -42,17 +47,21 @@ export class RaffleRoundServiceEth {
   public async raffleRoundStart(event: ILogEvent<IRaffleRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
     const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    // LOTTERY CONTRACT
-    const lotteryContract = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+    // RAFFLE CONTRACT
+    const raffleContract = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
 
-    if (!lotteryContract) {
-      throw new NotFoundException("lotteryContractNotFound");
+    if (!raffleContract) {
+      throw new NotFoundException("raffleContractNotFound");
     }
 
     // TICKET CONTRACT
@@ -93,22 +102,31 @@ export class RaffleRoundServiceEth {
     const roundEntity = await this.raffleRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
-      contractId: lotteryContract.id,
+      contractId: raffleContract.id,
       ticketContractId: ticketContract.id,
       priceId: asset.id,
       maxTickets: Number(maxTicket),
     });
 
     await this.notificatorService.raffleRoundStart({
-      round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
+      round: Object.assign(roundEntity, { contract: raffleContract, ticketContract, price: asset }),
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: raffleContract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async raffleFinalize(event: ILogEvent<IRaffleRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { round, prizeNumber, prizeIndex },
     } = event;
     const { address, transactionHash } = context;
@@ -130,22 +148,29 @@ export class RaffleRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: roundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async raffleRoundEnd(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {
-    const { address, transactionHash } = context;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
     const {
+      name,
       args: { round, endTimestamp },
     } = event;
+    const { address, transactionHash } = context;
 
     const roundEntity = await this.raffleRoundService.getRound(round, address.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
     }
+    await this.eventHistoryService.updateHistory(event, context, void 0, roundEntity.contractId);
 
     Object.assign(roundEntity, {
       endTimestamp: new Date(Number(endTimestamp) * 1000).toISOString(),
@@ -158,10 +183,19 @@ export class RaffleRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: roundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async rafflePrize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { account, roundId, ticketId, amount },
     } = event;
     const { address, transactionHash } = context;
@@ -202,9 +236,19 @@ export class RaffleRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<IRaffleReleaseEvent>, context: Log): Promise<void> {
+    // TODO use it somehow
+    //  notification?
     await this.eventHistoryService.updateHistory(event, context);
   }
 }

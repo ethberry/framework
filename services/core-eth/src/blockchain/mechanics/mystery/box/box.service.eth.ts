@@ -1,8 +1,17 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent, TokenMetadata, TokenStatus } from "@framework/types";
+import {
+  IERC721TokenTransferEvent,
+  IUnpackMysteryBoxEvent,
+  RmqProviderType,
+  SignalEventType,
+  TokenMetadata,
+  TokenStatus,
+} from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
 import { ABI } from "../../../tokens/erc721/token/log/interfaces";
@@ -23,6 +32,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
@@ -32,11 +43,12 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly mysteryBoxService: MysteryBoxService,
     protected readonly notificatorService: NotificatorService,
   ) {
-    super(loggerService, tokenService, eventHistoryService);
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -71,7 +83,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const mysteryBoxTokenEntity = await this.tokenService.getToken(
@@ -110,10 +122,18 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     // mysteryBoxTokenEntity.erc721Template
     //   ? await mysteryBoxTokenEntity.template.save()
     //   : await mysteryBoxTokenEntity.mystery.template.save();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async unpack(event: ILogEvent<IUnpackMysteryBoxEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { account, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -133,5 +153,13 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

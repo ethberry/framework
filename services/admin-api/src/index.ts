@@ -6,6 +6,7 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 import { AppModule } from "./app.module";
 
@@ -16,14 +17,14 @@ async function bootstrap(): Promise<void> {
   app.useBodyParser("json", { limit: "500kb" });
 
   const configService = app.get(ConfigService);
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
   const baseUrl = configService.get<string>("ADMIN_FE_URL", "http://localhost:3002");
 
   app.enableCors({
     origin:
-      nodeEnv === "development"
+      nodeEnv === NodeEnv.development
         ? ["http://localhost:3002", "http://127.0.0.1:3002", "http://0.0.0.0:3002"]
-        : [baseUrl, "https://st-admin.gemunion.io"],
+        : [baseUrl],
     credentials: true,
     exposedHeaders: ["Content-Disposition"],
   });
@@ -41,7 +42,7 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  if (nodeEnv === "production" || nodeEnv === "staging") {
+  if (nodeEnv === NodeEnv.production || nodeEnv === NodeEnv.staging) {
     app.enableShutdownHooks();
   }
 

@@ -4,7 +4,6 @@ export * from "./tokens/erc998/deploy";
 export * from "./tokens/erc1155/deploy";
 
 export * from "./mechanics/claim/upload";
-export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/collection/deploy";
 
 export * from "./mechanics/mystery/contract/deploy";

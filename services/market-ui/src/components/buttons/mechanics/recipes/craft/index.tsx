@@ -68,7 +68,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/craft/sign",
+        url: "/recipes/craft/sign",
         method: "POST",
         data: {
           chainId,

@@ -3,7 +3,17 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
-import { Card, CardContent, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
@@ -16,9 +26,8 @@ import { TokenType } from "@framework/types";
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
 import { formatItem } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
-import { getDismantleMultiplier } from "../../../../../components/buttons/mechanics/recipes/dismantle/utils";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { StyledTitle, StyledToolbar } from "./styled";
+import { getDismantleMultiplier } from "./utils";
 
 export interface IDismantleTokenPanelProps {
   token: IToken;
@@ -56,7 +65,8 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
-            component.contract!.contractType === TokenType.ERC1155
+            component.contract!.contractType === TokenType.ERC1155 ||
+            component.contract!.contractType === TokenType.ERC20
               ? component.template!.tokens![0].tokenId
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: getDismantleMultiplier(
@@ -87,7 +97,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/dismantle/sign",
+        url: "/recipes/dismantle/sign",
         method: "POST",
         data: {
           chainId,
@@ -99,13 +109,14 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
       },
       values,
       web3Context,
-    ).then(() => {
-      navigate("/tokens");
-    });
+    ) as Promise<void>;
   });
 
   const handleDismantle = (dismantle: IDismantle) => {
-    return async () => await metaFn(dismantle);
+    return async () =>
+      await metaFn(dismantle).then(() => {
+        navigate("/tokens");
+      });
   };
 
   if (isLoading) {
@@ -117,14 +128,14 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   }
 
   return (
-    <Card>
+    <Card sx={{ mb: 2 }}>
       <CardContent>
-        <StyledToolbar disableGutters>
-          <StyledTitle gutterBottom variant="h5" component="p">
+        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
+          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
             <FormattedMessage id="pages.token.dismantle" />
-          </StyledTitle>
+          </Typography>
           <AllowanceInfoPopover />
-        </StyledToolbar>
+        </Toolbar>
         <List>
           {rows.map(dismantle => {
             const { multiplier } = getDismantleMultiplier(
@@ -134,21 +145,23 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
               dismantle.rarityMultiplier,
             );
             return (
-              <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
-                <ListItemIcon>
-                  <Construction />
-                </ListItemIcon>
-                <ListItemText>
-                  <Grid container spacing={1} alignItems="flex-center">
-                    <Grid item xs={12}>
-                      {formatItem(dismantle.item)}
-                      {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
-                      ) : null}
+              <Card key={dismantle.id}>
+                <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
+                  <ListItemIcon>
+                    <Construction />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Grid container spacing={1} alignItems="flex-center">
+                      <Grid item xs={12}>
+                        {formatItem(dismantle.item)}
+                        {multiplier !== 1 ? (
+                          <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
+                        ) : null}
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </ListItemText>
-              </ListItemButton>
+                  </ListItemText>
+                </ListItemButton>
+              </Card>
             );
           })}
         </List>

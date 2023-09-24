@@ -179,7 +179,7 @@ export class DismantleService {
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
-          component.contract.contractType === TokenType.ERC1155
+          component.contract.contractType === TokenType.ERC1155 || component.contract.contractType === TokenType.ERC20
             ? component.template.tokens[0].tokenId
             : (component.templateId || 0).toString(), // suppression types check with 0
         amount: this.getMultiplier(

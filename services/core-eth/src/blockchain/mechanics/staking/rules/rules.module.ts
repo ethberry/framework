@@ -12,6 +12,7 @@ import { StakingRulesControllerEth } from "./rules.controller.eth";
 import { StakingRulesServiceEth } from "./rules.service.eth";
 import { StakingRulesEntity } from "./rules.entity";
 import { StakingRulesService } from "./rules.service";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { StakingRulesService } from "./rules.service";
     TypeOrmModule.forFeature([StakingRulesEntity]),
     NotificatorModule,
   ],
-  providers: [Logger, StakingRulesServiceEth, StakingRulesService],
+  providers: [Logger, signalServiceProvider, StakingRulesServiceEth, StakingRulesService],
   controllers: [StakingRulesControllerEth],
   exports: [StakingRulesServiceEth, StakingRulesService],
 })

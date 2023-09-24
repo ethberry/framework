@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -8,10 +10,13 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { AssetService } from "../asset/asset.service";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class ExchangeLotteryServiceEth {
   constructor(
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,
@@ -21,7 +26,8 @@ export class ExchangeLotteryServiceEth {
   // event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);
   public async purchaseLottery(event: ILogEvent<IExchangePurchaseLotteryEvent>, context: Log): Promise<void> {
     const {
-      args: { item, price },
+      name,
+      args: { account, item, price },
     } = event;
     const { address, transactionHash } = context;
 
@@ -48,5 +54,13 @@ export class ExchangeLotteryServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

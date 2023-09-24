@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
@@ -9,6 +10,8 @@ import {
   IRoundEndedEvent,
   IRoundFinalizedEvent,
   IRoundStartedEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenType,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -26,6 +29,8 @@ import { LotteryRoundAggregationService } from "./round.service.aggregation";
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryRoundAggregationService: LotteryRoundAggregationService,
@@ -39,6 +44,7 @@ export class LotteryRoundServiceEth {
   public async lotteryRoundStart(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
     const { address, transactionHash } = context;
@@ -46,7 +52,10 @@ export class LotteryRoundServiceEth {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // LOTTERY CONTRACT
-    const lotteryContract = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+    const lotteryContract = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
 
     if (!lotteryContract) {
       throw new NotFoundException("lotteryContractNotFound");
@@ -101,11 +110,20 @@ export class LotteryRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: lotteryContract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async lotteryFinalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { round, winValues },
     } = event;
     const { address, transactionHash } = context;
@@ -128,10 +146,19 @@ export class LotteryRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: roundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async lotteryRoundEnd(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { round, endTimestamp },
     } = event;
     const { address, transactionHash } = context;
@@ -155,17 +182,23 @@ export class LotteryRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: roundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async lotteryPrize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     const {
-      args: { roundId, ticketId },
+      name,
+      args: { account, roundId, ticketId },
     } = event;
     const { address, transactionHash } = context;
 
-    // const { address } = context;
-    // TODO use it, check ticketId?
-    // TODO find ticket.round.ticketContract.address
     // const roundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
     const roundEntity = await this.lotteryRoundService.getRound(roundId, address.toLowerCase());
 
@@ -193,6 +226,14 @@ export class LotteryRoundServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {

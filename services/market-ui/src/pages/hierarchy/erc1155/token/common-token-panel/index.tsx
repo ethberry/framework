@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { Box, Card, CardActions, CardContent, Grid, Toolbar, Typography } from "@mui/material";
 
 import type { IBalance, IToken } from "@framework/types";
 
 import { Erc1155TransferButton, TokenSellButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
+import { AllowanceButton } from "../../../../exchange/wallet/allowance";
+import { computeTokenAsset } from "../../../../../utils/token";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -39,8 +41,15 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         </Box>
       </CardContent>
       <CardActions>
-        <TokenSellButton token={token} />
-        <Erc1155TransferButton token={token} />
+        <Grid container alignItems="center">
+          <Grid item xs={12} sm={2}>
+            <TokenSellButton token={token} />
+            <Erc1155TransferButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
+            <AllowanceButton token={computeTokenAsset(token)} />
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
   );
