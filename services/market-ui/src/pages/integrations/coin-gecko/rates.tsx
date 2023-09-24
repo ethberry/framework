@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
-import { Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Grid, MenuItem, Typography } from "@mui/material";
 
 import { useCoinGecko } from "@gemunion/provider-coingecko";
 
 import { BaseCoins, TargetCoins } from "./enums";
+import { StyledPaper, StyledSelect, StyledTypography } from "./styled";
 
 export const Rates: FC = () => {
   const [targetCoinId, setTargetCoinId] = useState(TargetCoins.USD);
@@ -11,13 +12,12 @@ export const Rates: FC = () => {
   const { getPriceByTickerName, baseCoinId, setBaseCoinId } = useCoinGecko();
 
   return (
-    <Paper sx={{ p: 2 }}>
+    <StyledPaper>
       <Grid container direction="row" alignItems="center" justifyContent="center">
         <Typography variant="h4" component="span">
           1
         </Typography>
-        <Select
-          sx={{ mx: 1 }}
+        <StyledSelect
           value={baseCoinId}
           onChange={(e: any) => {
             setBaseCoinId(e.target.value);
@@ -28,15 +28,14 @@ export const Rates: FC = () => {
               {option}
             </MenuItem>
           ))}
-        </Select>
-        <Typography variant="h4" component="span" sx={{ mx: 1 }}>
+        </StyledSelect>
+        <StyledTypography variant="h4" component="span">
           =
-        </Typography>
+        </StyledTypography>
         <Typography variant="h4" component="span">
           {getPriceByTickerName(targetCoinId)}
         </Typography>{" "}
-        <Select
-          sx={{ mx: 1 }}
+        <StyledSelect
           value={targetCoinId}
           onChange={(e: any) => {
             setTargetCoinId(e.target.value);
@@ -47,8 +46,8 @@ export const Rates: FC = () => {
               {option}
             </MenuItem>
           ))}
-        </Select>
+        </StyledSelect>
       </Grid>
-    </Paper>
+    </StyledPaper>
   );
 };

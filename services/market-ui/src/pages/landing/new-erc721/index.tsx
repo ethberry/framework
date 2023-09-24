@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Typography } from "@mui/material";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,6 +9,7 @@ import { TokenType } from "@framework/types";
 
 import { Erc721TemplateListItem } from "../../hierarchy/erc721/template-list/item";
 import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
+import { StyledTitle } from "./styled";
 
 export const NewErc721: FC = () => {
   const [templates, setTemplates] = useState<Array<ITemplate>>([]);
@@ -42,9 +42,9 @@ export const NewErc721: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      <Typography variant="h4" sx={{ mt: 7 }}>
+      <StyledTitle variant="h4">
         <FormattedMessage id="pages.landing.erc721-new" />
-      </Typography>
+      </StyledTitle>
       <MultiCarouselHierarchy templates={templates} component={Erc721TemplateListItem} />
     </ProgressOverlay>
   );

@@ -10,6 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateList } from "../template-list";
 import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
+import { StyledAvatar } from "./styled";
 
 export const Contract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -40,7 +41,7 @@ export const Contract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

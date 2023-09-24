@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, MobileStepper } from "@mui/material";
+import { Button } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 
@@ -9,7 +9,7 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
 
-import { Root, StyledImage } from "./styled";
+import { Root, StyledImage, StyledMobileStepper } from "./styled";
 
 export const PromoCarousel: FC = () => {
   const navigate = useNavigate();
@@ -54,9 +54,8 @@ export const PromoCarousel: FC = () => {
   return (
     <ProgressOverlay isLoading={isLoading}>
       <Root>
-        <StyledImage onClick={handleClick} sx={{ backgroundImage: `url(${promos[activeStep]?.imageUrl})` }} />
-        <MobileStepper
-          sx={{ width: "100%" }}
+        <StyledImage onClick={handleClick} imageUrl={promos[activeStep]?.imageUrl} />
+        <StyledMobileStepper
           steps={promos.length}
           position="static"
           variant="dots"

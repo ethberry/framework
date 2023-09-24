@@ -1,11 +1,12 @@
 import { FC, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
+
+import { StyledAlert } from "./styled";
 
 export const AcceptInvitation: FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -34,8 +35,8 @@ export const AcceptInvitation: FC = () => {
   }, []);
 
   return (
-    <Alert severity="warning" sx={{ mt: 2 }}>
+    <StyledAlert severity="warning">
       <FormattedMessage id="alert.redirect" />
-    </Alert>
+    </StyledAlert>
   );
 };

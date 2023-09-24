@@ -7,10 +7,10 @@ import { ExchangeType, IAssetComponentHistory, IContract, ILevelUp, TContractEve
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface IUpgradeDataViewProps {
@@ -24,18 +24,20 @@ export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
   const { attribute } = eventData as ILevelUp;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.attribute" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{utils.toUtf8String(utils.stripZeros(attribute))}</DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
+            {utils.toUtf8String(utils.stripZeros(attribute))}
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
       <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

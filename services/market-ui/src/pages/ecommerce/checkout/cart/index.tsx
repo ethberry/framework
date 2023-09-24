@@ -1,26 +1,17 @@
 import { FC, Fragment, useContext } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  ListSubheader,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
 import { CartContext } from "../../../../components/providers/cart";
 import { formatPrice } from "../../../../utils/money";
+import { StyledListSubheader, StyledPaper } from "./styled";
 
 export const Cart: FC = () => {
   const cart = useContext(CartContext);
 
   return (
-    <Paper sx={{ mb: 2, p: 2 }}>
+    <StyledPaper>
       <Typography component="h4" variant="h5">
         <FormattedMessage id="pages.checkout.products" />
       </Typography>
@@ -50,15 +41,15 @@ export const Cart: FC = () => {
             <FormattedMessage id="pages.checkout.empty" />
           </ListItem>
         )}
-        <ListSubheader sx={{ textAlign: "right" }}>
+        <StyledListSubheader>
           <FormattedMessage
             id="pages.checkout.total"
             values={{
               amount: 100,
             }}
           />
-        </ListSubheader>
+        </StyledListSubheader>
       </List>
-    </Paper>
+    </StyledPaper>
   );
 };

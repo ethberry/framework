@@ -9,6 +9,7 @@ import { StyledPagination } from "@framework/styled";
 import { IContract, IContractSearchDto } from "@framework/types";
 
 import { ContractListItem } from "./item";
+import { StyledGrid } from "./styled";
 
 export interface IContractListProps {
   embedded?: boolean;
@@ -38,9 +39,9 @@ export const ContractList: FC<IContractListProps> = props => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(contract => (
-            <Grid item lg={4} sm={6} xs={12} key={contract.id} sx={{ display: "flex" }}>
+            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
               <ContractListItem contract={contract} />
-            </Grid>
+            </StyledGrid>
           ))}
         </Grid>
       </ProgressOverlay>

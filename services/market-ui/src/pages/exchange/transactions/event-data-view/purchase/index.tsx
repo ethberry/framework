@@ -3,7 +3,7 @@ import { FC } from "react";
 import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
-import { DataViewWrapper } from "../styled";
+import { StyledDataViewWrapper } from "../styled";
 
 export interface IPurchaseDataViewProps {
   assets: Array<IAssetComponentHistory>;
@@ -14,9 +14,9 @@ export const PurchaseDataView: FC<IPurchaseDataViewProps> = props => {
   const { assets, contract } = props;
 
   return (
-    <DataViewWrapper>
+    <StyledDataViewWrapper>
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
       <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, Fragment, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
+import { Tab } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
@@ -8,7 +8,8 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 import { ProfileAddresses } from "./adresses";
 import { ProfileGeneral } from "./general";
 import { ProfileSubscriptions } from "./subscriptions";
-import { ProfileTabs } from "./tabs";
+import { ProfileTabs } from "./interfaces";
+import { StyledTabs } from "./styled";
 
 export const Profile: FC = () => {
   const { tab = ProfileTabs.general } = useParams<{ tab: ProfileTabs }>();
@@ -26,11 +27,11 @@ export const Profile: FC = () => {
     <Fragment>
       <PageHeader message="pages.profile.title" />
 
-      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} sx={{ mb: 4 }}>
+      <StyledTabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
         {Object.values(ProfileTabs).map(tab => (
           <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
         ))}
-      </Tabs>
+      </StyledTabs>
       <ProfileGeneral open={value === ProfileTabs.general} />
       <ProfileAddresses open={value === ProfileTabs.addresses} />
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />

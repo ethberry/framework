@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
-import { ITabPanelProps } from "../tabs";
+import { ITabPanelProps } from "../interfaces";
 
 export const ProfileSubscriptions: FC<ITabPanelProps> = props => {
   const { open } = props;

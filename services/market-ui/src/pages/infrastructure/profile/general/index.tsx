@@ -12,7 +12,7 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { ITabPanelProps } from "../tabs";
+import { ITabPanelProps } from "../interfaces";
 import { validationSchema } from "./validation";
 
 export const ProfileGeneral: FC<ITabPanelProps> = props => {

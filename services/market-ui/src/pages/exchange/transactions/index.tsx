@@ -3,11 +3,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import {
-  DataGridPremium,
   DataGridPremiumProps,
-  GridCellParams,
-  gridClasses,
+  GridColDef,
+  GridRenderCellParams,
   GridRowParams,
+  GridTreeNodeWithRender,
+  GridValidRowModel,
 } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
@@ -23,6 +24,7 @@ import { ContractEventType } from "@framework/types";
 import { EventDataView } from "./event-data-view";
 import type { IEventSearchDto } from "./form";
 import { TransactionSearchForm } from "./form";
+import { StyledDataGridPremium } from "./styled";
 
 export const MyTransactions: FC = () => {
   const {
@@ -46,7 +48,7 @@ export const MyTransactions: FC = () => {
   const { formatMessage } = useIntl();
   const { profile } = useUser<IUser>();
 
-  const columns = [
+  const columns: GridColDef<GridValidRowModel>[] = [
     {
       field: "id",
       headerName: formatMessage({ id: "form.labels.id" }),
@@ -59,7 +61,7 @@ export const MyTransactions: FC = () => {
       headerName: formatMessage({ id: "form.labels.eventType" }),
       sortable: true,
       flex: 2,
-      renderCell: (params: GridCellParams<IEventHistory>) => {
+      renderCell: (params: GridRenderCellParams<GridValidRowModel, any, IEventHistory, any>) => {
         const { eventData, eventType } = params.row;
         const isBorrow =
           eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).account;
@@ -87,7 +89,7 @@ export const MyTransactions: FC = () => {
       field: "transactionHash",
       headerName: formatMessage({ id: "form.labels.tx" }),
       sortable: false,
-      renderCell: (params: GridCellParams<IEventHistory, string>) => {
+      renderCell: (params: GridRenderCellParams<GridValidRowModel, string, IEventHistory, GridTreeNodeWithRender>) => {
         return <TxHashLink hash={params.value as string} />;
       },
       flex: 1,
@@ -120,7 +122,7 @@ export const MyTransactions: FC = () => {
 
       <TransactionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
-      <DataGridPremium
+      <StyledDataGridPremium
         pagination
         paginationMode="server"
         sortingMode="server"
@@ -136,14 +138,6 @@ export const MyTransactions: FC = () => {
         getDetailPanelContent={getDetailPanelContent}
         rows={rows}
         getRowHeight={() => "auto"}
-        sx={{
-          [`& .${gridClasses.cell}`]: {
-            p: 1.5,
-          },
-          [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
-            borderBottom: "none",
-          },
-        }}
         autoHeight
         disableAggregation
         disableRowGrouping

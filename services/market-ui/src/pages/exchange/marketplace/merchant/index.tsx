@@ -9,6 +9,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ContractList } from "../contract-list";
+import { StyledAvatar } from "./styled";
 
 export const Merchant: FC = () => {
   const { selected, isLoading } = useCollection<IMerchant, IContractSearchDto>({
@@ -37,7 +38,7 @@ export const Merchant: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">
