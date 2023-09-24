@@ -45,7 +45,7 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <StyledImageList count={selected.item?.components.length}>
+          <StyledImageList count={selected.item?.components.length || 1}>
             {selected.item?.components.map(component => {
               return (
                 <StyledImageListItem key={component.template!.id}>

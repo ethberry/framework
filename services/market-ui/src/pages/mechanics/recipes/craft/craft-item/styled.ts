@@ -9,6 +9,7 @@ const generateFanStyles = (count: number, angle: number): CSSObject => {
   for (let i = 1; i <= count; i++) {
     styles[`& > div:nth-of-type(${i})`] = {
       transform: `translate(-50%, -50%) rotate(${-offset + increment * i}deg)`,
+      transformOrigin: `center ${count <= 3 ? 400 : count <= 6 ? 700 : 270}%`,
     };
   }
 
@@ -24,9 +25,9 @@ export const StyledImageList = styled(Box, { shouldForwardProp: prop => prop !==
     position: "relative",
     height: "100%",
     width: "100%",
-    ...generateFanStyles(count, 50),
+    ...generateFanStyles(count, count <= 3 ? 30 : count <= 6 ? 20 : 25),
     "&:hover": {
-      ...generateFanStyles(count, 100),
+      ...generateFanStyles(count, count <= 3 ? 35 : count <= 6 ? 25 : 30),
     },
   }),
 );
@@ -38,13 +39,13 @@ export const StyledImageListItem = styled(Box)(({ theme }) => ({
   borderRadius: "5px",
   transition: "transform 1s ease-out",
   boxShadow: theme.shadows[1],
-  transformOrigin: "center 120%",
   left: "50%",
   top: "50%",
   position: "absolute",
   "& img": {
     width: "100%",
     height: "100%",
+    objectFit: "contain",
   },
 }));
 
