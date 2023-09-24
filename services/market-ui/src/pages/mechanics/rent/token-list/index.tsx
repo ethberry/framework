@@ -1,15 +1,16 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
+import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ContractFeatures, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import { ContractFeatures, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { RentTokenListItem } from "./item";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { stringify } from "qs";
+import { RentTokenListItem } from "./item";
 
 export const Rent: FC = () => {
   const {
@@ -61,8 +62,7 @@ export const Rent: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

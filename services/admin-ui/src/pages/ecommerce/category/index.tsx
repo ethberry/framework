@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -67,7 +68,7 @@ export const Category: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

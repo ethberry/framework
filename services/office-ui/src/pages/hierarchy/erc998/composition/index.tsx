@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
@@ -11,6 +11,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -163,8 +164,7 @@ export const Erc998Composition: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

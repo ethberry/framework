@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
@@ -84,8 +85,7 @@ export const Erc721Token: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

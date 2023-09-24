@@ -3,6 +3,7 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { StyledPagination } from "@framework/styled";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -11,7 +12,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TokenType } from "@gemunion/types-blockchain";
 
-import { StyledPagination } from "../../../../../components/common/styled/pagination";
 import { CraftItem } from "./item";
 
 export const CraftList: FC = () => {

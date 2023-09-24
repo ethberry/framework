@@ -1,10 +1,11 @@
 import { FC, Fragment } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { LotteryListItem } from "./item";
@@ -34,8 +35,7 @@ export const LotteryList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

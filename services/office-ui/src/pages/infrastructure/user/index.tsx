@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -10,6 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { EnabledLanguages } from "@framework/constants";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IUser, IUserSearchDto } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
 
@@ -91,8 +92,7 @@ export const User: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

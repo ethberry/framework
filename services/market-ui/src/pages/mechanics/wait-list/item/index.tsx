@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
@@ -7,6 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
@@ -59,8 +60,7 @@ export const WaitListItem: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

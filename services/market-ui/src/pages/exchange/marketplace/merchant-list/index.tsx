@@ -1,10 +1,11 @@
 import { FC, Fragment } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMerchant } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import { IMerchant } from "@framework/types";
 
 import { MerchantListItem } from "./item";
 import { stringify } from "qs";
@@ -31,8 +32,7 @@ export const MerchantList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

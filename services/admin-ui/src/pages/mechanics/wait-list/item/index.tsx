@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -9,6 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -97,8 +98,7 @@ export const WaitListItem: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

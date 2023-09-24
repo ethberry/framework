@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -8,6 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
@@ -24,9 +25,9 @@ import { AllowanceButton } from "../../../../components/buttons/hierarchy/contra
 import { TransferButton } from "../../../../components/buttons/common/transfer";
 import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
 import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
-import { NativeTokenEditDialog } from "./edit";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
+import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
   const {
@@ -121,8 +122,7 @@ export const NativeContract: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

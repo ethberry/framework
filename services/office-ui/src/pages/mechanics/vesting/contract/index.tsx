@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -10,6 +10,7 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
@@ -82,8 +83,7 @@ export const VestingContracts: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

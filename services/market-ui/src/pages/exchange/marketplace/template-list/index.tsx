@@ -1,18 +1,19 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 import { useParams } from "react-router";
+import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { TemplateListItem } from "./item";
-import { stringify } from "qs";
 
 export interface ITemplateListProps {
   embedded?: boolean;
@@ -78,8 +79,7 @@ export const TemplateList: FC<ITemplateListProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

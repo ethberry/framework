@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,8 +9,9 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
 
 import { EditMerchantDialog } from "./edit";
 
@@ -77,7 +78,7 @@ export const Merchant: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 
 import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/contract/release";
@@ -54,8 +55,7 @@ export const RaffleRounds: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

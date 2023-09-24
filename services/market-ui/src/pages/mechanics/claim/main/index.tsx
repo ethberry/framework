@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
@@ -73,8 +74,7 @@ export const Claim: FC = () => {
           ))}
         </List>
       </ProgressOverlay>
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

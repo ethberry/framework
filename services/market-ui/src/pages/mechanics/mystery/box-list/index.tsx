@@ -1,12 +1,14 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 import { useParams } from "react-router";
+
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
 import { MysteryBoxListItem } from "./item";
 import { MysteryBoxSearchForm } from "./form";
@@ -57,8 +59,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
