@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Link, Typography } from "@mui/material";
+import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -7,7 +7,12 @@ import { TokenType } from "@framework/types";
 import type { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
-import { AssetsWrapper, DataViewAddressLinkWrapper, DataViewItemWrapper } from "./styled";
+import {
+  StyledAssetsWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemWrapper,
+  StyledTitle,
+} from "./styled";
 
 export interface ITokenLinkProps {
   assets: Array<IAssetComponentHistory>;
@@ -29,7 +34,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC721:
       case TokenType.ERC998: {
         return (
-          <DataViewAddressLinkWrapper key={asset.id}>
+          <StyledDataViewAddressLinkWrapper key={asset.id}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
@@ -37,38 +42,40 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
               #{tokenId}
             </Link>
-          </DataViewAddressLinkWrapper>
+          </StyledDataViewAddressLinkWrapper>
         );
       }
       case TokenType.ERC1155:
         return (
-          <DataViewAddressLinkWrapper key={asset.id}>
+          <StyledDataViewAddressLinkWrapper key={asset.id}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
             {` - `}
             {amount}
-          </DataViewAddressLinkWrapper>
+          </StyledDataViewAddressLinkWrapper>
         );
       case TokenType.NATIVE:
       case TokenType.ERC20:
       default: {
         return (
-          <DataViewAddressLinkWrapper>
+          <StyledDataViewAddressLinkWrapper>
             {formatEther(amount, token?.template?.contract?.decimals, token?.template?.contract?.symbol)}
-          </DataViewAddressLinkWrapper>
+          </StyledDataViewAddressLinkWrapper>
         );
       }
     }
   };
 
   return (
-    <DataViewItemWrapper>
-      <Typography fontWeight={500}>
+    <StyledDataViewItemWrapper>
+      <StyledTitle>
         <FormattedMessage id={`enums.eventDataLabel.${type.toLowerCase()}`} />:
-      </Typography>
+      </StyledTitle>
 
-      <AssetsWrapper>{assets.filter(({ exchangeType }) => exchangeType === type).map(mapAsset)}</AssetsWrapper>
-    </DataViewItemWrapper>
+      <StyledAssetsWrapper>
+        {assets.filter(({ exchangeType }) => exchangeType === type).map(mapAsset)}
+      </StyledAssetsWrapper>
+    </StyledDataViewItemWrapper>
   );
 };

@@ -10,6 +10,7 @@ import { useWallet, WALLET_CONNECT_POPUP_TYPE, WALLET_MENU_POPUP_TYPE } from "@g
 import { WalletIcon } from "./icon";
 import { WalletMenuDialog } from "../../dialogs/wallet";
 import { ConnectWallet } from "../../dialogs/connect";
+import { StyledTooltipContent } from "./styled";
 
 export const WalletButton: FC = () => {
   const { isOpenPopup, openPopup, closePopup } = usePopup();
@@ -30,13 +31,13 @@ export const WalletButton: FC = () => {
 
   const tooltipTitle = useMemo(
     () => (
-      <Box sx={{ textAlign: "center" }}>
+      <StyledTooltipContent>
         {isChainValid
           ? isActive
             ? account!
             : formatMessage({ id: "components.header.wallet.connect" })
           : formatMessage({ id: "components.header.wallet.notValid" })}
-      </Box>
+      </StyledTooltipContent>
     ),
     [account, isActive, isChainValid, profile],
   );
