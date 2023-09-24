@@ -29,6 +29,7 @@ export enum MobileEventType {
   VESTING_RELEASED = "VESTING_RELEASED",
   TOKEN_TRANSFER = "TOKEN_TRANSFER",
   BATCH_TRANSFER = "BATCH_TRANSFER",
+  BREED = "BREED",
 }
 
 export interface IMessage {

@@ -37,7 +37,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
-    private readonly notificatorService: NotificatorService,
+    protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
   }
@@ -152,6 +152,12 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       await this.createBalancesBatch(toAddress, entityArray);
       // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+
+      await this.notificatorService.consecutiveTransfer({
+        tokens: entityArray,
+        from: fromAddress.toLowerCase(),
+        to: toAddress.toLowerCase(),
+      });
     }
   }
 

@@ -20,14 +20,16 @@ export class ExchangeBreedServiceEth {
     const {
       args: { matron, sire },
     } = event;
+    const { address, transactionHash } = context;
+
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const _assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
+    const assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
 
-    // this.notificatorService.breed({
-    //   account,
-    //   ...assets,
-    //   transactionHash,
-    // });
+    await this.notificatorService.breed({
+      ...assets,
+      address,
+      transactionHash,
+    });
   }
 }

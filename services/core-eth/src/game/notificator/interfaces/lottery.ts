@@ -1,30 +1,30 @@
 import { IAssetComponentHistory, ILotteryRound, IToken, IUser } from "@framework/types";
 
-export interface IRoundStartLotteryData {
+export interface ILotteryRoundStartData {
   round: ILotteryRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IRoundEndLotteryData {
+export interface ILotteryRoundEndData {
   round: ILotteryRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IPrizeLotteryData {
+export interface ILotteryPrizeData {
   account: IUser;
   round: ILotteryRound;
   ticket: IToken;
   multiplier: string;
 }
 
-export interface IFinalizeLotteryData {
+export interface ILotteryFinalizeData {
   round: ILotteryRound;
   prizeNumbers: Array<number>;
 }
 
-export interface IPurchaseLotteryData {
+export interface ILotteryPurchaseData {
   address: string;
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;

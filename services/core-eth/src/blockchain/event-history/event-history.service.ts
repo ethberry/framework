@@ -187,7 +187,7 @@ export class EventHistoryService {
         transactionHash,
         eventType: In([
           ExchangeEventType.Purchase,
-          ExchangeEventType.Upgrade,
+          ExchangeEventType.LevelUp,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
           ExchangeEventType.PurchaseMysteryBox,

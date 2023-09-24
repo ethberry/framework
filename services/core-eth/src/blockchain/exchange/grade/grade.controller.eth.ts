@@ -12,7 +12,7 @@ import { ExchangeGradeServiceEth } from "./grade.service.eth";
 export class ExchangeGradeControllerEth {
   constructor(private readonly exchangeGradeServiceEth: ExchangeGradeServiceEth) {}
 
-  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade }])
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.LevelUp }])
   public exchange(@Payload() event: ILogEvent<IExchangeGradeEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeGradeServiceEth.upgrade(event, context);
   }

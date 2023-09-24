@@ -20,7 +20,7 @@ export enum ExchangeEventType {
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:GRADE
-  Upgrade = "Upgrade",
+  LevelUp = "LevelUp",
   // MODULE:LOTTERY
   PurchaseLottery = "PurchaseLottery",
   // MODULE:RAFFLE

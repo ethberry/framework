@@ -1,25 +1,25 @@
 import { IAssetComponentHistory, IRaffleRound, IToken, IUser } from "@framework/types";
 
-export interface IRoundStartRaffleData {
+export interface IRaffleRoundStartData {
   round: IRaffleRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IRoundEndRaffleData {
+export interface IRaffleRoundEndData {
   round: IRaffleRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IPrizeRaffleData {
+export interface IRafflePrizeData {
   account: IUser;
   round: IRaffleRound;
   ticket: IToken;
   multiplier: string;
 }
 
-export interface IFinalizeRaffleData {
+export interface IRaffleFinalizeData {
   round: IRaffleRound;
   prizeIndex: string;
   prizeNumber: string;

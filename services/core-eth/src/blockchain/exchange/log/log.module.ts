@@ -67,7 +67,7 @@ import { testChainId } from "@framework/constants";
               ReferralProgramEventType.ReferralWithdraw,
               ReferralProgramEventType.ReferralReward,
               // MODULE:GRADE
-              ExchangeEventType.Upgrade,
+              ExchangeEventType.LevelUp,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
               // MODULE:LOTTERY
