@@ -9,11 +9,12 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { PonziRulesService } from "./rules.service";
 import { PonziRulesEntity } from "./rules.entity";
 import { PonziRuleSearchDto } from "./dto";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/ponzi/rules")
@@ -23,8 +24,11 @@ export class PonziRulesController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   @UseInterceptors(ClassSerializerInterceptor)
-  public search(@Query() dto: PonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
-    return this.ponziService.search(dto);
+  public search(
+    @Query() dto: PonziRuleSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<PonziRulesEntity>, number]> {
+    return this.ponziService.search(dto, userEntity);
   }
 
   @Get("/:id")

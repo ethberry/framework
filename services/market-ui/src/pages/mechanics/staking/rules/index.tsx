@@ -24,6 +24,7 @@ import {
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
 import { StakingViewDialog } from "./view";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export const StakingRules: FC = () => {
   const {
@@ -40,6 +41,7 @@ export const StakingRules: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
@@ -95,6 +97,7 @@ export const StakingRules: FC = () => {
         open={isFiltersOpen}
         testId="StakingRuleSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <EntityInput

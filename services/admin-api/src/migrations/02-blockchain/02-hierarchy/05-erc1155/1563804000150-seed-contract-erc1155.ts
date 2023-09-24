@@ -111,6 +111,24 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10505,
+        '${erc1155ContractSimpleAddress}',
+        '${chainId}',
+        'Candy (simple)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC1155',
+        '{}',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         20501,
         '${wallet}',
         56,
