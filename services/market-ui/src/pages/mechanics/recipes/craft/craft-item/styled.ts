@@ -1,7 +1,7 @@
 import { Box, CSSObject } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 
-const generateFanStyles = (count: number, angle: number): CSSObject => {
+const generateFanStyles = (count: number, angle: number, theme: Theme): CSSObject => {
   const offset = angle / 2;
   const increment = angle / (count + 1);
   const styles: CSSObject = {};
@@ -10,6 +10,9 @@ const generateFanStyles = (count: number, angle: number): CSSObject => {
     styles[`& > div:nth-of-type(${i})`] = {
       transform: `translate(-50%, -50%) rotate(${-offset + increment * i}deg)`,
       transformOrigin: `center ${count <= 3 ? 400 : count <= 6 ? 700 : 270}%`,
+      [theme.breakpoints.down("md")]: {
+        transformOrigin: "center 50%",
+      },
     };
   }
 
@@ -21,13 +24,19 @@ export interface IStyledImageListProps {
 }
 
 export const StyledImageList = styled(Box, { shouldForwardProp: prop => prop !== "count" })<IStyledImageListProps>(
-  ({ count = 2 }) => ({
+  ({ count = 2, theme }) => ({
     position: "relative",
     height: "100%",
     width: "100%",
-    ...generateFanStyles(count, count <= 3 ? 30 : count <= 6 ? 20 : 25),
+    ...generateFanStyles(count, count <= 3 ? 30 : count <= 6 ? 20 : 25, theme),
     "&:hover": {
-      ...generateFanStyles(count, count <= 3 ? 35 : count <= 6 ? 25 : 30),
+      ...generateFanStyles(count, count <= 3 ? 35 : count <= 6 ? 25 : 30, theme),
+    },
+    [theme.breakpoints.down("md")]: {
+      minHeight: 300,
+      "&:hover": {
+        ...generateFanStyles(count, 60, theme),
+      },
     },
   }),
 );
