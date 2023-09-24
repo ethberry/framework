@@ -1,14 +1,17 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { TokenEntity } from "./token.entity";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     private readonly tokenEntityRepository: Repository<TokenEntity>,
+    protected readonly configService: ConfigService,
   ) {}
 
   public findOne(
@@ -41,6 +44,8 @@ export class TokenService {
   }
 
   public getToken(tokenId: string, address: string, chainId?: number, balance = false): Promise<TokenEntity | null> {
+    const currentChainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
@@ -61,6 +66,10 @@ export class TokenService {
     if (chainId) {
       queryBuilder.andWhere("contract.chainId = :chainId", {
         chainId,
+      });
+    } else {
+      queryBuilder.andWhere("contract.chainId = :chainId", {
+        chainId: currentChainId,
       });
     }
 

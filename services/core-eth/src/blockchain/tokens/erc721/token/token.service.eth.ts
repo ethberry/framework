@@ -46,6 +46,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -107,18 +108,25 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
-
     await this.notificatorService.tokenTransfer({
       token: erc721TokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {
     const {
+      name,
       args: { fromAddress, toAddress, fromTokenId, toTokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -160,9 +168,15 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       await this.createBalancesBatch(toAddress, entityArray);
       // await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
-
-      await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
     }
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: fromAddress === ZeroAddress ? toAddress.toLowerCase() : fromAddress.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
@@ -177,12 +191,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId, attribute, value },
     } = event;
     const { address, transactionHash } = context;
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId);
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
@@ -194,6 +209,12 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: erc721TokenEntity.balance[0].account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

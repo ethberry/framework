@@ -5,4 +5,4 @@ import { EventModule } from "./event/event.module";
 @Module({
   imports: [EventModule],
 })
-export class GameModule {}
+export class SignalModule {}

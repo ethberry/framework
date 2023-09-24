@@ -1,4 +1,5 @@
 import { Inject, Logger, LoggerService, UseGuards, UsePipes } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import {
   ConnectedSocket,
   MessageBody,
@@ -15,7 +16,7 @@ import { instrument } from "@socket.io/admin-ui";
 import { User } from "@gemunion/nest-js-utils";
 import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
 import { FirebaseWsGuard } from "@gemunion/nest-js-guards-ws";
-import { SignalEventType } from "@framework/types";
+import { SignalEventType, NodeEnv } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -29,6 +30,7 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
   ) {}
 
   @SubscribeMessage(SignalEventType.PING)
@@ -45,8 +47,21 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   }
 
   public afterInit(): void {
+    const nodeEnv = this.configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
+    const ioAdminPassw = this.configService.get<string>(
+      "ADMIN_IO_PASSWORD_HASH",
+      "$2a$10$lyWVbyeaxQmGffEpzawKNONThVPbf00QGwfAxiVKu2t1E99XWQ4f.",
+    );
+
     instrument(this.server, {
-      auth: false,
+      auth:
+        nodeEnv === NodeEnv.development
+          ? false
+          : {
+              type: "basic",
+              username: "admin",
+              password: ioAdminPassw, // encrypted with bcrypt
+            },
     });
     this.loggerService.log("Init", EventGateway.name);
   }

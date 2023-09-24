@@ -20,18 +20,20 @@ export class RedisIoAdapter extends IoAdapter {
   createIOServer(port: number, options: Partial<ServerOptions> = {}): any {
     const configService = this.app.get(ConfigService);
 
-    const baseUrl = configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
     const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
+    const baseUrl = configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
+    const ioAdminUrl = configService.get<string>("ADMIN_IO_URL", "http://localhost:3015");
 
     const server = super.createIOServer(port, {
       ...options,
       pingInterval: 1000,
       pingTimeout: 5000,
       cors: {
+        credentials: true,
         origin:
           nodeEnv === NodeEnv.development
             ? ["https://admin.socket.io", "http://localhost:3002", "http://localhost:3004", "http://localhost:3006"]
-            : [baseUrl],
+            : [baseUrl, ioAdminUrl],
       },
     });
 

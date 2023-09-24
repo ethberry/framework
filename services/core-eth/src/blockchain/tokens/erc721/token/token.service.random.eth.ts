@@ -49,6 +49,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -161,28 +162,31 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    // const {
-    // } = event;
-    // const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+    const {
+      name,
+      args: { to },
+    } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
-    // const entityWithRelations = await this.eventHistoryService.findOne(
-    //   { id: eventHistoryEntity.id },
-    //   { relations: { parent: true, assets: true } },
-    // );
-    //
-    // if (!entityWithRelations) {
-    //   this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
-    //   throw new NotFoundException("historyNotFound");
-    // }
+    const { transactionHash } = context;
 
-    const { address, transactionHash } = context;
-
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: to.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   // get Purchase parent event and send notification about purchase

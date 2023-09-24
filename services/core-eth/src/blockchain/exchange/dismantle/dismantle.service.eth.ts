@@ -1,4 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -8,12 +10,15 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { DismantleService } from "../../mechanics/recipes/dismantle/dismantle.service";
 import { AssetService } from "../asset/asset.service";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class ExchangeDismantleServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly dismantleService: DismantleService,
@@ -22,7 +27,8 @@ export class ExchangeDismantleServiceEth {
 
   public async dismantle(event: ILogEvent<IExchangeDismantleEvent>, context: Log): Promise<void> {
     const {
-      args: { items, price, externalId },
+      name,
+      args: { from, items, price, externalId },
     } = event;
     const { address, transactionHash } = context;
 
@@ -53,5 +59,13 @@ export class ExchangeDismantleServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

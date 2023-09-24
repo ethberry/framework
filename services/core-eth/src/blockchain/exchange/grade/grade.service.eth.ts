@@ -1,4 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -10,12 +12,15 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { OpenSeaService } from "../../integrations/opensea/opensea.service";
 import { GradeService } from "../../mechanics/grade/grade.service";
 import { AssetService } from "../asset/asset.service";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class ExchangeGradeServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     private readonly tokenService: TokenService,
     private readonly openSeaService: OpenSeaService,
     private readonly assetService: AssetService,
@@ -26,7 +31,8 @@ export class ExchangeGradeServiceEth {
 
   public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
     const {
-      args: { externalId, attribute, item, price },
+      name,
+      args: { account, externalId, attribute, item, price },
     } = event;
     const { transactionHash, address } = context;
 
@@ -63,6 +69,14 @@ export class ExchangeGradeServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
 
     // await this.openSeaService.metadataUpdate(tokenEntity);
   }

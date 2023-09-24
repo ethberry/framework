@@ -1189,6 +1189,8 @@
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "transactionSent": "Transaction sent: {txHash}",
+    "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",

@@ -18,6 +18,7 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
@@ -29,6 +30,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
+    protected readonly contractService: ContractService,
     protected readonly assetService: AssetService,
     protected readonly notificatorService: NotificatorService,
   ) {
@@ -37,6 +39,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingleEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, id /* 1155 db:tokenId */, value },
     } = event;
     const { address, transactionHash } = context;
@@ -51,18 +54,25 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
 
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
-
     await this.notificatorService.tokenTransfer({
       token: tokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
       amount: value, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatchEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, ids /* 1155 db:tokenIds */, values },
     } = event;
     const { address, transactionHash } = context;
@@ -88,30 +98,62 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokensNotFound");
     }
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
-
     await this.notificatorService.batchTransfer({
       tokens: tokensEntities,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
       amounts: values, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async approvalForAllErc1155(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {
+    const {
+      name,
+      args: { account },
+    } = event;
+    const { transactionHash } = context;
+
     await this.eventHistoryService.updateHistory(event, context);
 
-    const { address, transactionHash } = context;
-
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async uri(event: ILogEvent<IErc1155TokenUriEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
+    const { name } = event;
     const { address, transactionHash } = context;
 
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
+    const parentContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase() },
+      { relations: { merchant: true } },
+    );
+
+    if (!parentContractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, parentContractEntity.id);
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: parentContractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {

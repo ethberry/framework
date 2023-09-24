@@ -14,6 +14,8 @@ import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
 // import { CartProvider } from "../components/providers/cart";
+import { Signal } from "../components/signal";
+
 import { themeProps } from "../components/theme";
 
 export const Providers: FC<PropsWithChildren> = props => {
@@ -29,7 +31,10 @@ export const Providers: FC<PropsWithChildren> = props => {
                   <PopupProvider>
                     <WalletProvider>
                       {/* <CartProvider> */}
-                      <PickerProvider>{children}</PickerProvider>
+                      <PickerProvider>
+                        <Signal />
+                        {children}
+                      </PickerProvider>
                       {/* </CartProvider> */}
                     </WalletProvider>
                   </PopupProvider>

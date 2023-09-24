@@ -1,9 +1,11 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IExchangeClaimEvent } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, RmqProviderType, SignalEventType } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -15,6 +17,8 @@ export class ExchangeClaimServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    private readonly signalClientProxy: ClientProxy,
     private readonly claimService: ClaimService,
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
@@ -23,7 +27,8 @@ export class ExchangeClaimServiceEth {
 
   public async claim(event: ILogEvent<IExchangeClaimEvent>, context: Log): Promise<void> {
     const {
-      args: { items, externalId },
+      name,
+      args: { account, items, externalId },
     } = event;
     const { address, transactionHash } = context;
 
@@ -59,5 +64,13 @@ export class ExchangeClaimServiceEth {
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

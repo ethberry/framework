@@ -16,7 +16,7 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
-import { GameModule } from "./game/game.module";
+import { SignalModule } from "./signal/signal.module";
 
 @Module({
   providers: [
@@ -79,7 +79,7 @@ import { GameModule } from "./game/game.module";
     RequestLoggerModule,
     GemunionThrottlerModule,
     InfrastructureModule,
-    GameModule,
+    SignalModule,
   ],
   controllers: [AppController],
 })
