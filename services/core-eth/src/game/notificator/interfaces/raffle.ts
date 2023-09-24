@@ -1,4 +1,4 @@
-import { IAssetComponentHistory, IRaffleRound, IToken, IUser } from "@framework/types";
+import { IAssetComponentHistory, IRaffleRound, IToken } from "@framework/types";
 
 export interface IRaffleRoundStartData {
   round: IRaffleRound;
@@ -13,22 +13,25 @@ export interface IRaffleRoundEndData {
 }
 
 export interface IRafflePrizeData {
-  account: IUser;
   round: IRaffleRound;
   ticket: IToken;
   multiplier: string;
+  address: string;
+  transactionHash: string;
 }
 
 export interface IRaffleFinalizeData {
   round: IRaffleRound;
   prizeIndex: string;
   prizeNumber: string;
+  address: string;
+  transactionHash: string;
 }
 
-export interface IPurchaseRaffleData {
-  address: string;
+export interface IRafflePurchaseData {
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
   index: string; // ticket index inside round - serial number
+  address: string;
   transactionHash: string;
 }

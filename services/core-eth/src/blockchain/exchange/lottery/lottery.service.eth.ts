@@ -43,7 +43,7 @@ export class ExchangeLotteryServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [item] /* [ticket] */, [price]);
 
-    await this.notificatorService.purchaseLottery({
+    await this.notificatorService.lotteryPurchase({
       ...assets,
       address,
       transactionHash,

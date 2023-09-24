@@ -19,23 +19,23 @@ export class LotteryRoundControllerEth {
   constructor(private readonly roundServiceEth: LotteryRoundServiceEth) {}
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.RoundStarted })
-  public start(@Payload() event: ILogEvent<IRoundStartedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.start(event, context);
+  public lotteryRoundStart(@Payload() event: ILogEvent<IRoundStartedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.lotteryRoundStart(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.RoundFinalized })
-  public finalize(@Payload() event: ILogEvent<IRoundFinalizedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.finalize(event, context);
+  public lotteryFinalize(@Payload() event: ILogEvent<IRoundFinalizedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.lotteryFinalize(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.RoundEnded })
-  public end(@Payload() event: ILogEvent<IRoundEndedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.end(event, context);
+  public lotteryRoundEnd(@Payload() event: ILogEvent<IRoundEndedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.lotteryRoundEnd(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.Prize })
-  public prize(@Payload() event: ILogEvent<ILotteryPrizeEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.prize(event, context);
+  public lotteryPrize(@Payload() event: ILogEvent<ILotteryPrizeEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.lotteryPrize(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.Released })

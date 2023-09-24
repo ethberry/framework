@@ -14,15 +14,17 @@ import type {
   IDismantleData,
   IGradeData,
   ILotteryFinalizeData,
+  ILotteryPrizeData,
+  ILotteryPurchaseData,
   ILotteryRoundEndData,
   ILotteryRoundStartData,
   IMysteryPurchaseData,
   IMysteryUnpackData,
   IPurchaseData,
-  IPurchaseRaffleData,
   IPurchaseRandomData,
   IRaffleFinalizeData,
   IRafflePrizeData,
+  IRafflePurchaseData,
   IRaffleRoundEndData,
   IRaffleRoundStartData,
   IRentUserUpdateData,
@@ -191,58 +193,64 @@ export class NotificatorService {
   }
 
   // MODULE:RAFFLE
-  public purchaseRaffle(data: IPurchaseRaffleData): Promise<any> {
+  public rafflePurchase(data: IRafflePurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
     });
   }
 
-  public finalizeRaffle(data: IRaffleFinalizeData): Promise<any> {
-    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.FINALIZE_RAFFLE, data).toPromise();
-    });
-  }
-
-  public prizeRaffle(data: IRafflePrizeData): Promise<any> {
-    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PRIZE_RAFFLE, data).toPromise();
-    });
-  }
-
-  public roundStartRaffle(data: IRaffleRoundStartData): Promise<any> {
+  public raffleRoundStart(data: IRaffleRoundStartData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RAFFLE_ROUND_START, data).toPromise();
     });
   }
 
-  public roundEndRaffle(data: IRaffleRoundEndData): Promise<any> {
+  public raffleRoundEnd(data: IRaffleRoundEndData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RAFFLE_ROUND_END, data).toPromise();
     });
   }
 
+  public raffleFinalize(data: IRaffleFinalizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_FINALIZE, data).toPromise();
+    });
+  }
+
+  public rafflePrize(data: IRafflePrizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_PRIZE, data).toPromise();
+    });
+  }
+
   // MODULE:LOTTERY
-  public purchaseLottery(data: IPurchaseData): Promise<any> {
+  public lotteryPurchase(data: ILotteryPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
     });
   }
 
-  public finalizeLottery(data: ILotteryFinalizeData): Promise<any> {
-    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.FINALIZE_LOTTERY, data).toPromise();
-    });
-  }
-
-  public roundStartLottery(data: ILotteryRoundStartData): Promise<any> {
+  public lotteryRoundStart(data: ILotteryRoundStartData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_START, data).toPromise();
     });
   }
 
-  public roundEndLottery(data: ILotteryRoundEndData): Promise<any> {
+  public lotteryRoundEnd(data: ILotteryRoundEndData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_END, data).toPromise();
+    });
+  }
+
+  public lotteryFinalize(data: ILotteryFinalizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_FINALIZE, data).toPromise();
+    });
+  }
+
+  public lotteryPrize(data: ILotteryPrizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_PRIZE, data).toPromise();
     });
   }
 
