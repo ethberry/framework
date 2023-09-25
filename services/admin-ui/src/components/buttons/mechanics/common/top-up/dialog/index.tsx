@@ -28,6 +28,7 @@ export const TopUpDialog: FC<ITopUpDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.topUp"
       testId="TopUpForm"
+      disabled={false}
       {...rest}
     >
       <TokenAssetInput
