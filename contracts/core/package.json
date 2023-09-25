@@ -77,7 +77,7 @@
     "node": ">=18"
   },
   "license": "UNLICENSED",
-  "main": "./dist/index.js",
+  "main": "./typechain-types/index.ts",
   "name": "@framework/core-contracts",
   "private": true,
   "repository": {
