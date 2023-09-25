@@ -167,7 +167,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const entityArray = await this.tokenService.createBatch(tokenArray);
 
       await this.createBalancesBatch(toAddress, entityArray);
-      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
       await this.notificatorService.consecutiveTransfer({
         tokens: entityArray,

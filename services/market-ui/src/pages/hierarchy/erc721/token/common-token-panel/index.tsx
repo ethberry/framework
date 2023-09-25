@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Grid, Toolbar, Typography } from "@mui/material";
-import { CardActions, CardContent } from "@mui/material";
+import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";

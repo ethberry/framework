@@ -32,6 +32,17 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
 
     switch (contractType) {
       case TokenType.ERC721:
+        return (
+          <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
+              {name}
+            </Link>
+            {` - `}
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
+              #{tokenId}
+            </Link>
+          </StyledDataViewAddressLinkWrapper>
+        );
       case TokenType.ERC998: {
         return (
           <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
