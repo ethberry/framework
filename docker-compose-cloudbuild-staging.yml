@@ -558,6 +558,7 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
     volumes:
       - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
     ports:
