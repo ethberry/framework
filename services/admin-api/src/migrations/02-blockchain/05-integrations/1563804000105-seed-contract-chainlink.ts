@@ -54,7 +54,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 207},
         '${vrfAddressBinance.toLowerCase()}',
-        56,
+        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
         'VRF COORDINATOR (BNB)',
         '${simpleFormatting}',
         '',

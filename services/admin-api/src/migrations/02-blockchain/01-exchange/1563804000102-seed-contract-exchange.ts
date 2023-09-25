@@ -54,7 +54,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 202},
         '${exchangeAddressBinance}',
-        56,
+        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
         'EXCHANGE (BNB)',
         '${simpleFormatting}',
         '',

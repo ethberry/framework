@@ -52,7 +52,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 201},
         '${contractManagerAddressBinance}',
-        56,
+        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
         'CONTRACT MANAGER (BNB)',
         '${simpleFormatting}',
         '',
