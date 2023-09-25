@@ -100,6 +100,7 @@ export const WaitListList: FC = () => {
                 <WaitListListGenerateButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
                 />
               </ListActions>
             </ListItem>

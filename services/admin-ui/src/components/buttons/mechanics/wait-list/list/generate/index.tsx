@@ -13,6 +13,7 @@ import WaitListSetRewardABI from "../../../../../../abis/mechanics/wait-list/lis
 export interface IWailtListListGenerateButtonProps {
   className?: string;
   disabled?: boolean;
+  onRefreshPage: () => Promise<void>;
   variant?: ListActionVariant;
   waitListList: IWaitListList;
 }
@@ -23,6 +24,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
     waitListList: { id },
     disabled,
     variant,
+    onRefreshPage,
   } = props;
 
   const { fn } = useApiCall(
@@ -65,6 +67,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       // the error is handled by useApiCall
       if (proof) {
         await metaFn(proof);
+        await onRefreshPage();
       }
     });
   };
