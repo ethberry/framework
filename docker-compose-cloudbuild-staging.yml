@@ -378,8 +378,6 @@ services:
       RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL}"
-      # FE
-      FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
@@ -419,8 +417,6 @@ services:
       RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL}"
-      # FE
-      # FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
@@ -551,6 +547,7 @@ services:
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL}"
       REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
