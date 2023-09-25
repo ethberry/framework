@@ -50,10 +50,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         84111
       ), (
         84112
-      ), (
-        85111
-      ), (
-        85112
       );
     `);
 
@@ -166,18 +162,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         1010101, -- ETH
         '${WeiPerEther.toString()}',
         84112
-      ), (
-        'NATIVE',
-        10101,
-        1010101, -- ETH
-        '${WeiPerEther.toString()}',
-        85111
-      ), (
-        'NATIVE',
-        10101,
-        1010101, -- ETH
-        '${WeiPerEther.toString()}',
-        85112
       );
     `);
 
@@ -310,19 +294,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         84112,
         'INACTIVE',
         12504,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        511,
-        'NATIVE > NATIVE (2)',
-        '${simpleFormatting}',
-        604800,
-        1,
-        false,
-        85111,
-        85112,
-        'ACTIVE',
-        12505,
         '${currentDateTime}',
         '${currentDateTime}'
       );

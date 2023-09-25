@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
-import { Badge, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, SvgIcon, Tooltip } from "@mui/material";
-import { Circle } from "@mui/icons-material";
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Help } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
@@ -9,6 +9,8 @@ import { useUser } from "@gemunion/provider-user";
 import { getIconByChainId, SANDBOX_CHAINS } from "@gemunion/provider-wallet";
 import { availableChains } from "@framework/constants";
 import type { IUser } from "@framework/types";
+
+import { spinnerMixin, StyledBadge, StyledCircle, StyledSvgIcon } from "./styled";
 
 export const NetworkButton: FC = () => {
   const user = useUser<IUser>();
@@ -40,18 +42,13 @@ export const NetworkButton: FC = () => {
   const isSandbox = SANDBOX_CHAINS.includes(chainId);
 
   return (
-    <ProgressOverlay isLoading={isLoading} spinnerSx={{ svg: { color: "#FFFFFF" } }}>
+    <ProgressOverlay isLoading={isLoading} spinnerSx={spinnerMixin}>
       <Tooltip
         title={`${formatMessage({ id: `enums.chainId.${chainId}` })}${
           isSandbox ? ` (${formatMessage({ id: "components.header.wallet.test" })})` : ""
         }`}
       >
-        <Badge
-          color="primary"
-          badgeContent={<Circle sx={{ color: "#F44336", width: 12, height: 12 }} />}
-          sx={{ ".MuiBadge-badge": { minWidth: 12, height: 12, p: 0, mr: 0.7, mt: 0.7 } }}
-          invisible={!isSandbox}
-        >
+        <StyledBadge color="primary" badgeContent={<StyledCircle />} invisible={!isSandbox}>
           <IconButton
             aria-owns={anchor ? "select-chainId" : undefined}
             aria-haspopup="true"
@@ -59,9 +56,9 @@ export const NetworkButton: FC = () => {
             data-testid="OpenNetworkMenuButton"
             onClick={handleMenuOpen}
           >
-            <SvgIcon component={getIconByChainId(chainId) as any} viewBox="0 0 60 60" sx={{ width: 24, height: 24 }} />
+            <StyledSvgIcon component={(getIconByChainId(chainId) as any) || <Help />} viewBox="0 0 60 60" />
           </IconButton>
-        </Badge>
+        </StyledBadge>
       </Tooltip>
       <Menu id="select-chainId" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
         {availableChains.map(chainId => (
@@ -72,11 +69,7 @@ export const NetworkButton: FC = () => {
             color="inherit"
           >
             <ListItemIcon>
-              <SvgIcon
-                component={getIconByChainId(chainId) as any}
-                viewBox="0 0 60 60"
-                sx={{ width: 24, height: 24 }}
-              />
+              <StyledSvgIcon component={getIconByChainId(chainId) as any} viewBox="0 0 60 60" />
             </ListItemIcon>
             <ListItemText>
               <FormattedMessage id={`enums.chainId.${chainId}`} />

@@ -12,10 +12,10 @@ import {
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface IPurchaseRaffleDataViewProps {
@@ -29,18 +29,18 @@ export const PurchaseRaffleDataView: FC<IPurchaseRaffleDataViewProps> = props =>
   const { externalId } = eventData as IExchangePurchaseRaffleEvent;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.externalId" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{externalId}</DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>{externalId}</StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
       <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

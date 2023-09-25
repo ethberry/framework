@@ -39,7 +39,7 @@ export class RaffleRoundServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  public async start(event: ILogEvent<IRaffleRoundStartedEvent>, context: Log): Promise<void> {
+  public async raffleRoundStart(event: ILogEvent<IRaffleRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { roundId, startTimestamp, maxTicket, ticket, price },
@@ -99,19 +99,19 @@ export class RaffleRoundServiceEth {
       maxTickets: Number(maxTicket),
     });
 
-    await this.notificatorService.roundStartRaffle({
+    await this.notificatorService.raffleRoundStart({
       round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
       address,
       transactionHash,
     });
   }
 
-  public async finalize(event: ILogEvent<IRaffleRoundFinalizedEvent>, context: Log): Promise<void> {
+  public async raffleFinalize(event: ILogEvent<IRaffleRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { round, prizeNumber, prizeIndex },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const roundEntity = await this.raffleRoundService.getRound(round, address);
 
@@ -123,14 +123,16 @@ export class RaffleRoundServiceEth {
     await roundEntity.save();
 
     // NOTIFY
-    await this.notificatorService.finalizeRaffle({
+    await this.notificatorService.raffleFinalize({
       round: roundEntity,
       prizeIndex,
       prizeNumber,
+      address,
+      transactionHash,
     });
   }
 
-  public async end(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {
+  public async raffleRoundEnd(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {
     const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
@@ -151,17 +153,18 @@ export class RaffleRoundServiceEth {
 
     await roundEntity.save();
 
-    await this.notificatorService.roundEndRaffle({
+    await this.notificatorService.raffleRoundEnd({
       round: roundEntity,
       address,
       transactionHash,
     });
   }
 
-  public async prize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
+  public async rafflePrize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
     const {
       args: { account, roundId, ticketId, amount },
     } = event;
+    const { address, transactionHash } = context;
 
     const roundEntity = await this.raffleRoundService.findOne(
       { roundId },
@@ -192,11 +195,12 @@ export class RaffleRoundServiceEth {
     await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
 
     // NOTIFY
-    await this.notificatorService.prizeRaffle({
-      account: userEntity,
+    await this.notificatorService.rafflePrize({
       round: roundEntity,
       ticket: ticketEntity,
       multiplier: amount,
+      address,
+      transactionHash,
     });
   }
 

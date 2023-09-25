@@ -1,13 +1,14 @@
 import { FC } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
-import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 import { MysteryBoxListItem } from "../../../mechanics/mystery/box-list/item";
+import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 
 export const Mystery: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -35,8 +36,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

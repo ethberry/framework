@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -11,6 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -23,6 +24,7 @@ import {
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
 import { StakingViewDialog } from "./view";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export const StakingRules: FC = () => {
   const {
@@ -39,6 +41,7 @@ export const StakingRules: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
@@ -94,6 +97,7 @@ export const StakingRules: FC = () => {
         open={isFiltersOpen}
         testId="StakingRuleSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <EntityInput
@@ -137,8 +141,7 @@ export const StakingRules: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

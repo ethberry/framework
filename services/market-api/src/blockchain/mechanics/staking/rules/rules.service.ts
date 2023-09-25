@@ -2,8 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import type { IStakingRuleSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingRulesEntity } from "./rules.entity";
 
 @Injectable()
@@ -13,12 +15,16 @@ export class StakingRulesService {
     private readonly stakingRuleEntityRepository: Repository<StakingRulesEntity>,
   ) {}
 
-  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
+  public search(dto: IStakingRuleSearchDto, userEntity: UserEntity): Promise<[Array<StakingRulesEntity>, number]> {
     const { query, deposit, reward, contractIds, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
 
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");

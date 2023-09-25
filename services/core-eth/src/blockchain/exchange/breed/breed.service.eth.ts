@@ -26,17 +26,17 @@ export class ExchangeBreedServiceEth {
       name,
       args: { account, matron, sire },
     } = event;
-    const { transactionHash } = context;
+    const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const _assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
+    const assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
 
-    // this.notificatorService.breed({
-    //   account,
-    //   ...assets,
-    //   transactionHash,
-    // });
+    await this.notificatorService.breed({
+      ...assets,
+      address,
+      transactionHash,
+    });
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

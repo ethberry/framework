@@ -1,7 +1,9 @@
 import { FC, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, IconButton, Popover, Typography } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Help } from "@mui/icons-material";
+
+import { StyledPopover, StyledText } from "./styled";
 
 export const AllowanceInfoPopover: FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -26,14 +28,11 @@ export const AllowanceInfoPopover: FC = () => {
       >
         <Help />
       </IconButton>
-      <Popover
+      <StyledPopover
         id={"allowance-info"}
         open={open}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
-        sx={{
-          pointerEvents: "none",
-        }}
         anchorOrigin={{
           vertical: "top",
           horizontal: "left",
@@ -44,10 +43,10 @@ export const AllowanceInfoPopover: FC = () => {
         }}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>
+        <StyledText>
           <FormattedMessage id="alert.approve" />
-        </Typography>
-      </Popover>
+        </StyledText>
+      </StyledPopover>
     </Box>
   );
 };

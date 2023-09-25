@@ -1,12 +1,19 @@
 import { FC, useEffect, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { formatDuration, intervalToDuration } from "date-fns";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IAssetPromo } from "@framework/types";
 
 import { PromoPurchaseButton } from "../../../../components/buttons";
-import { StyledContainer, StyledImage } from "./styled";
+import {
+  StyledButtonWrapper,
+  StyledContainer,
+  StyledContent,
+  StyledDescription,
+  StyledImage,
+  StyledTime,
+} from "./styled";
 
 interface IBannerProps {
   promo: IAssetPromo;
@@ -38,21 +45,21 @@ export const AssetPromoBanner: FC<IBannerProps> = props => {
   }, []);
 
   return (
-    <StyledContainer container sx={{ my: 6 }} data-testid="PromoBanner">
+    <StyledContainer container data-testid="PromoBanner">
       <Grid item xs={12} sm={6}>
         <StyledImage component="img" src={promo.item?.components[0].template?.imageUrl} alt="banner" />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Box sx={{ pr: { xs: 0, sm: 6 } }}>
+        <StyledContent>
           <Typography variant="h3">{promo.item?.components[0].template?.title}</Typography>
-          <Box sx={{ my: 3 }}>
+          <StyledDescription>
             <RichTextDisplay data={promo.item?.components[0].template?.description} />
-          </Box>
-          <Box sx={{ my: 3, color: "red", height: "1em", textAlign: "center" }}>{time}</Box>
-          <Box sx={{ my: 3, textAlign: "center", pr: { xs: 0, sm: 6 } }}>
+          </StyledDescription>
+          <StyledTime>{time}</StyledTime>
+          <StyledButtonWrapper>
             <PromoPurchaseButton promo={promo} />
-          </Box>
-        </Box>
+          </StyledButtonWrapper>
+        </StyledContent>
       </Grid>
     </StyledContainer>
   );

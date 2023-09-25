@@ -2,8 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPonziRuleSearchDto, PonziRuleStatus } from "@framework/types";
+import { PonziRuleStatus } from "@framework/types";
+import type { IPonziRuleSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PonziRulesEntity } from "./rules.entity";
 
 @Injectable()
@@ -13,12 +15,16 @@ export class PonziRulesService {
     private readonly ponziRuleEntityRepository: Repository<PonziRulesEntity>,
   ) {}
 
-  public search(dto: IPonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
+  public search(dto: IPonziRuleSearchDto, userEntity: UserEntity): Promise<[Array<PonziRulesEntity>, number]> {
     const { query, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.ponziRuleEntityRepository.createQueryBuilder("rule");
 
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");

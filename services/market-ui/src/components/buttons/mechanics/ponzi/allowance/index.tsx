@@ -50,6 +50,8 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
     });
   };
 
+  const isDisabled = rule.deposit?.components.every(component => component.contract!.contractType === TokenType.NATIVE);
+
   return (
     <Fragment>
       <ListAction
@@ -58,7 +60,7 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
         message="form.tips.allowance"
         className={className}
         dataTestId="PonziAllowanceButton"
-        disabled={disabled}
+        disabled={isDisabled || disabled}
         variant={variant}
       />
       <AllowanceDialog

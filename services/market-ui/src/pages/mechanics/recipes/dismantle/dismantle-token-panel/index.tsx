@@ -3,17 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { useNavigate } from "react-router";
-import {
-  Card,
-  CardContent,
-  Grid,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
@@ -27,6 +17,7 @@ import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.
 import { formatItem } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { StyledTitle, StyledToolbar } from "./styled";
 import { getDismantleMultiplier } from "./utils";
 
 export interface IDismantleTokenPanelProps {
@@ -129,12 +120,12 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   return (
     <Card sx={{ mb: 2 }}>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.dismantle" />
-          </Typography>
+          </StyledTitle>
           <AllowanceInfoPopover />
-        </Toolbar>
+        </StyledToolbar>
         <List>
           {rows.map(dismantle => {
             const { multiplier } = getDismantleMultiplier(

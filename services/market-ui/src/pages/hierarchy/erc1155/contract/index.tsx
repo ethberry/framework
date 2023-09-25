@@ -6,6 +6,7 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledAvatar } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
@@ -39,7 +40,7 @@ export const Erc1155Contract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

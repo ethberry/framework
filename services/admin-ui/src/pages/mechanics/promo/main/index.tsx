@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
@@ -11,6 +11,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IAssetPromo } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
@@ -84,8 +85,7 @@ export const AssetPromo: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

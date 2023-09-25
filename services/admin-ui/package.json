@@ -14,6 +14,7 @@
     "@framework/core-contracts": "0.0.1",
     "@framework/localization-admin-ui": "0.0.1",
     "@framework/mui-lists": "0.0.1",
+    "@framework/styled": "0.0.1",
     "@framework/traits-ui": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.3.1",

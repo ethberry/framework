@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -8,6 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { MysteryContractListItem } from "./item";
@@ -54,8 +55,7 @@ export const MysteryContractList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

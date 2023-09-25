@@ -2,8 +2,9 @@ import { FC, Fragment } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { StyledAvatar } from "@framework/styled";
 import { IContract, IContractSearchDto } from "@framework/types";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
@@ -37,7 +38,7 @@ export const MysteryContract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

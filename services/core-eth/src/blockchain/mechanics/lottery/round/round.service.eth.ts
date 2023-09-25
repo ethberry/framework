@@ -36,7 +36,7 @@ export class LotteryRoundServiceEth {
     private readonly configService: ConfigService,
   ) {}
 
-  public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
+  public async lotteryRoundStart(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { roundId, startTimestamp, maxTicket, ticket, price },
@@ -96,19 +96,19 @@ export class LotteryRoundServiceEth {
       maxTickets: Number(maxTicket),
     });
 
-    await this.notificatorService.roundStartLottery({
+    await this.notificatorService.lotteryRoundStart({
       round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
       address,
       transactionHash,
     });
   }
 
-  public async finalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
+  public async lotteryFinalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { round, winValues },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const roundEntity = await this.lotteryRoundService.getRound(round, address);
 
@@ -122,13 +122,15 @@ export class LotteryRoundServiceEth {
     await this.aggregate(roundEntity);
 
     // NOTIFY
-    await this.notificatorService.finalizeLottery({
+    await this.notificatorService.lotteryFinalize({
       round: roundEntity,
       prizeNumbers: winValues,
+      address,
+      transactionHash,
     });
   }
 
-  public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
+  public async lotteryRoundEnd(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
     const {
       args: { round, endTimestamp },
     } = event;
@@ -148,18 +150,18 @@ export class LotteryRoundServiceEth {
 
     await roundEntity.save();
 
-    await this.notificatorService.roundEndLottery({
+    await this.notificatorService.lotteryRoundEnd({
       round: roundEntity,
       address,
       transactionHash,
     });
   }
 
-  public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
+  public async lotteryPrize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     const {
       args: { roundId, ticketId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     // const { address } = context;
     // TODO use it, check ticketId?
@@ -180,7 +182,17 @@ export class LotteryRoundServiceEth {
     // UPDATE PRIZE METADATA
     Object.assign(ticketEntity.metadata, { PRIZE: "1" });
     await ticketEntity.save();
+
     await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
+
+    // NOTIFY
+    await this.notificatorService.lotteryPrize({
+      round: roundEntity,
+      ticket: ticketEntity,
+      multiplier: "1",
+      address,
+      transactionHash,
+    });
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {

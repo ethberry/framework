@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Divider, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
-import { Root } from "./styled";
+import { Root, StyledDivider } from "./styled";
 
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
@@ -56,7 +56,7 @@ export const Dashboard: FC = () => {
           <AssetPromoSection />
           <RentSection />
           <BreedSection />
-          <Divider sx={{ m: 2 }} />
+          <StyledDivider />
           <LotterySection />
           <RaffleSection />
           <StakingSection />

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -10,11 +10,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziAllowanceButton, PonziDepositButton } from "../../../../components/buttons";
 import { PonziViewDialog } from "./view";
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export const PonziRules: FC = () => {
   const {
@@ -31,6 +33,7 @@ export const PonziRules: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<IPonziRule, IPonziRuleSearchDto>({
     baseUrl: "/ponzi/rules",
     empty: {
@@ -75,6 +78,7 @@ export const PonziRules: FC = () => {
         open={isFiltersOpen}
         testId="PonziRuleSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput
@@ -112,8 +116,7 @@ export const PonziRules: FC = () => {
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

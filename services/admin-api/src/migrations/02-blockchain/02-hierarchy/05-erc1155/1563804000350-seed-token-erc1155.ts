@@ -97,6 +97,15 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
+        105050101, -- chupa-chups
+        '${defaultJSON}',
+        100,
+        '1',
+        'MINTED',
+        1050501,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
         205010101, -- bep
         '${defaultJSON}',
         100,

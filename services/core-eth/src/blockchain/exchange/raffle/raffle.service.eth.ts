@@ -49,7 +49,7 @@ export class ExchangeRaffleServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [item], [price]);
 
-    await this.notificatorService.purchaseRaffle({
+    await this.notificatorService.rafflePurchase({
       ...assets,
       address,
       index,
