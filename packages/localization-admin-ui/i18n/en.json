@@ -1291,7 +1291,8 @@
       "tabs": {
         "addresses": "Addresses",
         "general": "General",
-        "subscriptions": "Subscriptions"
+        "subscriptions": "Subscriptions",
+        "notifications": "Notifications"
       },
       "title": "Profile"
     },

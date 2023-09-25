@@ -7,11 +7,15 @@ import { io } from "socket.io-client";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { ContractEventType, SignalEventType } from "@framework/types";
 
+import { useIndexedDB } from "react-indexed-db-hook";
+
 // TODO connect only when user logged in and wallet connected
 export const Signal: FC = () => {
   const api = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
+
+  const { add } = useIndexedDB("txs");
 
   useEffect(() => {
     const socket = io(`${process.env.SIGNAL_BE_URL}`, {
@@ -35,7 +39,7 @@ export const Signal: FC = () => {
 
     socket.on(
       SignalEventType.TRANSACTION_HASH,
-      (dto: { transactionHash: string; transactionType?: ContractEventType }) => {
+      async (dto: { transactionHash: string; transactionType?: ContractEventType }) => {
         if (dto.transactionType) {
           enqueueSnackbar(
             formatMessage(
@@ -44,6 +48,14 @@ export const Signal: FC = () => {
             ),
             {
               variant: "success",
+            },
+          );
+          await add({ txHash: dto.transactionHash, txType: dto.transactionType }).then(
+            event => {
+              console.info("DB ID Generated: ", event);
+            },
+            error => {
+              console.error(error);
             },
           );
         } else {

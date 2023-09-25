@@ -42,7 +42,7 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     // console.log(client);
     console.info(ping);
     console.info(userEntity);
-    await client.join(userEntity.wallet);
+    await client.join(userEntity.wallet); // each user.wallet gets own room
     return { [SignalEventType.PONG]: true };
   }
 
@@ -50,7 +50,7 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     const nodeEnv = this.configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
     const ioAdminPassw = this.configService.get<string>(
       "ADMIN_IO_PASSWORD_HASH",
-      "$2a$10$lyWVbyeaxQmGffEpzawKNONThVPbf00QGwfAxiVKu2t1E99XWQ4f.",
+      "$2a$10$YkfjZkHwYFjvcB.uKB.uK.3mRwcPVyMYU089MOtVS5yt/GX3UUvv2", // qwerty
     );
 
     instrument(this.server, {
