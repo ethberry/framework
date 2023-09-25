@@ -6,10 +6,10 @@ import { IContract, IOwnershipTransferredEvent, TContractEventData } from "@fram
 import { AddressLink } from "@gemunion/mui-scanner";
 
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface IOwnershipTransferredDataViewProps {
@@ -22,50 +22,50 @@ export const OwnershipTransferredDataView: FC<IOwnershipTransferredDataViewProps
   const { previousOwner, newOwner } = eventData as IOwnershipTransferredEvent;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.from" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={previousOwner} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.to" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={newOwner} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper key="0">
+      <StyledDataViewItemWrapper key="0">
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.contract" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={contract.address} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper key="2">
+      <StyledDataViewItemWrapper key="2">
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.contractModule" />:
         </Typography>
-        <DataViewItemContentWrapper>
+        <StyledDataViewItemContentWrapper>
           <Typography fontSize={16} fontWeight={400} lineHeight="24px">
             {contract.contractModule}
           </Typography>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
-    </DataViewWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
+    </StyledDataViewWrapper>
   );
 };

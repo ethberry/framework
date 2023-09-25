@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Button, Chip, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Chip, List, ListItem } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -13,7 +13,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";
 import { AddressEditDialog } from "./edit";
-import { ITabPanelProps } from "../tabs";
+import { ITabPanelProps } from "../interfaces";
+import { StyledListItemText } from "./styled";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;
@@ -71,7 +72,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
           {rows.length ? (
             rows.map((address: IAddress) => (
               <ListItem key={address.id} disableGutters>
-                <ListItemText
+                <StyledListItemText
                   primary={
                     <Fragment>
                       {formatAddress(address)}
@@ -92,7 +93,6 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                       ) : null}
                     </Fragment>
                   }
-                  sx={{ pr: 3 }}
                 />
                 <ListActions>
                   <ListAction onClick={handleEdit(address)} icon={Edit} message="form.buttons.edit" />

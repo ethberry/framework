@@ -1,10 +1,12 @@
 import { FC } from "react";
-import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
 import { Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { NodeEnv } from "@framework/types";
+
+import { StyledPaper } from "../styled";
 
 export const WrapperSection: FC = () => {
   const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
@@ -14,7 +16,7 @@ export const WrapperSection: FC = () => {
   }
 
   return (
-    <Paper sx={{ mb: 2 }}>
+    <StyledPaper>
       <List
         component="nav"
         subheader={
@@ -32,6 +34,6 @@ export const WrapperSection: FC = () => {
           </ListItemText>
         </ListItemButton>
       </List>
-    </Paper>
+    </StyledPaper>
   );
 };

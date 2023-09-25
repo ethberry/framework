@@ -1,12 +1,13 @@
 import { FC, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
+import { IconButton, Popover, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
 import { formatPrice } from "../../../utils/money";
+import { StyledPopoverWrapper, StyledTable } from "./styled";
 
 export interface IAchievementInfoProps {
   rule: IAchievementRule;
@@ -32,7 +33,7 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
   const id = open ? "achievement-info" : undefined;
 
   return (
-    <Box sx={{ zIndex: 1000 }}>
+    <StyledPopoverWrapper>
       <IconButton aria-describedby={id} onClick={handleClick}>
         <Help />
       </IconButton>
@@ -50,7 +51,7 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
           horizontal: "right",
         }}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="rule parameters">
+        <StyledTable aria-label="rule parameters">
           <TableBody>
             <TableRow key={1}>
               <TableCell>
@@ -102,9 +103,9 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </StyledTable>
       </Popover>
-    </Box>
+    </StyledPopoverWrapper>
   );
 };
 // {Object.keys(props).map(key => (

@@ -1,5 +1,6 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
+import { stringify } from "qs";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -8,7 +9,7 @@ import { StyledPagination } from "@framework/styled";
 import { IMerchant } from "@framework/types";
 
 import { MerchantListItem } from "./item";
-import { stringify } from "qs";
+import { StyledGrid } from "./styled";
 
 export const MerchantList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IMerchant, ISearchDto>({
@@ -25,9 +26,9 @@ export const MerchantList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(merchant => (
-            <Grid item lg={4} sm={6} xs={12} key={merchant.id} sx={{ display: "flex" }}>
+            <StyledGrid item lg={4} sm={6} xs={12} key={merchant.id}>
               <MerchantListItem merchant={merchant} />
-            </Grid>
+            </StyledGrid>
           ))}
         </Grid>
       </ProgressOverlay>

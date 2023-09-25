@@ -6,10 +6,10 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { TContractEventData } from "@framework/types";
 
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface IDefaultDataViewProps {
@@ -20,7 +20,7 @@ export const DefaultDataView: FC<IDefaultDataViewProps> = props => {
   const { eventData } = props;
 
   return (
-    <DataViewWrapper>
+    <StyledDataViewWrapper>
       {Object.keys(eventData).map((key: string) => {
         // @ts-ignore
         let value = eventData[key];
@@ -30,22 +30,22 @@ export const DefaultDataView: FC<IDefaultDataViewProps> = props => {
         }
 
         return (
-          <DataViewItemWrapper key={key}>
+          <StyledDataViewItemWrapper key={key}>
             <Typography fontWeight={500}>
               <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
             </Typography>
-            <DataViewItemContentWrapper>
+            <StyledDataViewItemContentWrapper>
               {key === "from" || key === "to" ? (
-                <DataViewAddressLinkWrapper sx={{}}>
+                <StyledDataViewAddressLinkWrapper>
                   <AddressLink address={value} />
-                </DataViewAddressLinkWrapper>
+                </StyledDataViewAddressLinkWrapper>
               ) : (
                 <Typography variant="body1">{value}</Typography>
               )}
-            </DataViewItemContentWrapper>
-          </DataViewItemWrapper>
+            </StyledDataViewItemContentWrapper>
+          </StyledDataViewItemWrapper>
         );
       })}
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

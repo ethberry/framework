@@ -1,8 +1,9 @@
 import { FC, Fragment } from "react";
-import { Paper } from "@mui/material";
 import { useWatch } from "react-hook-form";
 
 import { CheckboxInput, PasswordInput, TextInput } from "@gemunion/mui-inputs-core";
+
+import { StyledPaper } from "./styled";
 
 export interface IUserInputProps {
   name: string;
@@ -14,7 +15,7 @@ export const UserInput: FC<IUserInputProps> = props => {
   const saveValue = useWatch({ name: "save" });
 
   return (
-    <Paper sx={{ p: 2 }}>
+    <StyledPaper>
       <TextInput name={`${name}.email`} />
       <TextInput name={`${name}.displayName`} />
       <CheckboxInput name="save" />
@@ -24,6 +25,6 @@ export const UserInput: FC<IUserInputProps> = props => {
           <PasswordInput name={`${name}.confirm`} autoComplete="new-password" />
         </Fragment>
       ) : null}
-    </Paper>
+    </StyledPaper>
   );
 };

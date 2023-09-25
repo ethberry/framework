@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent } from "@mui/material";
 
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTemplatePanelProps {
   template: ITemplate;
@@ -16,25 +17,25 @@ export const CommonTemplatePanel: FC<ICommonTemplatePanelProps> = props => {
   const { template } = props;
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.erc721.template.price" />
-          </Typography>
+          </StyledTypography>
           <AllowanceInfoPopover />
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
+        </StyledToolbar>
+        <StyledList component="ul">
           {formatPrice(template.price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
-        </Box>
+        </StyledList>
       </CardContent>
       <CardActions>
         <TemplatePurchaseButton template={template} />
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };

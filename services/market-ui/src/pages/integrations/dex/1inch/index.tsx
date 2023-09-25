@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { OneInch as OneInchSwap } from "@framework/1inch";
+import { StyledGrid } from "./styled";
 
 export const OneInch: FC = () => {
   return (
@@ -11,9 +12,9 @@ export const OneInch: FC = () => {
 
       <PageHeader message="pages.dex.1inch.title" />
 
-      <Grid item sx={{ position: "relative" }}>
+      <StyledGrid item>
         <OneInchSwap />
-      </Grid>
+      </StyledGrid>
     </Grid>
   );
 };

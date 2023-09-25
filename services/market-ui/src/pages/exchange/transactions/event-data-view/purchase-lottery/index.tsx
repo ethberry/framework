@@ -9,14 +9,14 @@ import {
   IExchangePurchaseLotteryEvent,
   TContractEventData,
 } from "@framework/types";
-import { byte32ToBool36Array } from "@framework/traits-ui";
+import { byte32ToBoolArray } from "@framework/traits-ui";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface IPurchaseLotteryDataViewProps {
@@ -30,27 +30,27 @@ export const PurchaseLotteryDataView: FC<IPurchaseLotteryDataViewProps> = props 
   const { numbers } = eventData as IExchangePurchaseLotteryEvent;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.numbers" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
-            {byte32ToBool36Array(numbers)
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
+            {byte32ToBoolArray(numbers)
               .reduce((memo, current, i) => {
                 if (current) {
-                  memo.push(i + 1);
+                  memo.push(i);
                 }
-                return memo as Array<number>;
+                return memo;
               }, [] as Array<number>)
               .join(", ")}
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
       <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };
