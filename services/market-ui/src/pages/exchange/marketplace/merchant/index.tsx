@@ -2,14 +2,14 @@ import { FC, Fragment } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { StyledAvatar } from "@framework/styled";
 import { IContractSearchDto, IMerchant } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ContractList } from "../contract-list";
-import { StyledAvatar } from "./styled";
 
 export const Merchant: FC = () => {
   const { selected, isLoading } = useCollection<IMerchant, IContractSearchDto>({

@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { Erc721TransferButton, TokenSellButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
+import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -23,25 +24,25 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
       : token.template;
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.priceTitle" />
-          </Typography>
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
+          </StyledTypography>
+        </StyledToolbar>
+        <StyledList component="ul">
           {formatPrice(price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
-        </Box>
+        </StyledList>
       </CardContent>
       <CardActions>
         <TokenSellButton token={token} />
         <Erc721TransferButton token={token} />
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };
