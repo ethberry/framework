@@ -22,7 +22,7 @@ export class WaitListItemService {
   public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
     const queryBuilder = this.waitListItemEntityRepository.createQueryBuilder("wait_list_item");
 
-    queryBuilder.select(["wait_list_item.account", "wait_list_item.listId"]);
+    queryBuilder.select(["wait_list_item.id", "wait_list_item.account", "wait_list_item.listId"]);
 
     queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
     queryBuilder.leftJoin("wait_list_list.contract", "wait_list_list_contract");
