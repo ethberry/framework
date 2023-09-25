@@ -7,17 +7,11 @@ import { io } from "socket.io-client";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { ContractEventType, SignalEventType } from "@framework/types";
 
+// TODO connect only when user logged in and wallet connected
 export const Signal: FC = () => {
   const api = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-
-  // 0xfe3b557e8fb62b89f4916b721be55ceb828dbd73
-  // {
-  //   "account": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-  //   "transactionHash": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-  //   "transactionType": "Transfer"
-  // }
 
   useEffect(() => {
     const socket = io(`${process.env.SIGNAL_BE_URL}`, {
@@ -49,12 +43,12 @@ export const Signal: FC = () => {
               { txHash: dto.transactionHash, txType: dto.transactionType },
             ),
             {
-              variant: "info",
+              variant: "success",
             },
           );
         } else {
           enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
-            variant: "info",
+            variant: "success",
           });
         }
       },
