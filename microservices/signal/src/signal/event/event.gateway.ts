@@ -54,6 +54,7 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     );
 
     instrument(this.server, {
+      mode: nodeEnv === NodeEnv.production ? "production" : "development",
       auth:
         nodeEnv === NodeEnv.development
           ? false
