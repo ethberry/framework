@@ -1480,6 +1480,7 @@
     "web3NotDetected": "Web3 not detected"
   },
   "socket": {
-    "connected": "WebSocket connection ON"
+    "connected": "WebSocket connection ON",
+    "error": "WebSocket connection Error"
   }
 }
