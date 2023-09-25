@@ -50,7 +50,7 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
 const contracts: Record<string, any> = {};
 
 async function main() {
-  const [_owner, receiver, _stranger] = await ethers.getSigners();
+  const [_owner, _receiver, _stranger] = await ethers.getSigners();
   const block = await ethers.provider.getBlock("latest");
 
   // LINK & VRF
@@ -80,6 +80,7 @@ async function main() {
   // emit SubscriptionCreated(currentSubId, msg.sender);
   const eventFilter = vrfInstance.filters.SubscriptionCreated();
   const events = await vrfInstance.queryFilter(eventFilter, block!.number);
+  // @ts-ignore
   const { subId } = recursivelyDecodeResult(events[events.length - 1].args as unknown as Result);
   console.info("SubscriptionCreated", subId);
 
