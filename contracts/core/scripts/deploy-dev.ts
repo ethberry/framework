@@ -16,7 +16,7 @@ const delayMs = 900; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 
-const vrfSubId = 5; // VRF subscription Id
+const vrfSubId = 1; // VRF subscription Id
 
 interface IObj {
   address?: string;
@@ -88,6 +88,7 @@ const currentBlock: { number: number } = { number: 1 };
 
 async function main() {
   const [owner, receiver, stranger] = await ethers.getSigners();
+
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
   fs.appendFileSync(

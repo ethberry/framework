@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Contract, Result, toBeHex, TransactionReceipt, TransactionResponse, WeiPerEther, zeroPadValue } from "ethers";
+import { Contract, TransactionReceipt, TransactionResponse, WeiPerEther } from "ethers";
 
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
 
@@ -14,28 +14,9 @@ interface IObj {
   wait: () => Promise<TransactionReceipt> | void;
 }
 
-const recursivelyDecodeResult = (result: Result): Record<string, any> => {
-  if (typeof result !== "object") {
-    // Raw primitive value
-    return result;
-  }
-  try {
-    const obj = result.toObject();
-    if (obj._) {
-      throw new Error("Decode as array, not object");
-    }
-    Object.keys(obj).forEach(key => {
-      obj[key] = recursivelyDecodeResult(obj[key]);
-    });
-    return obj;
-  } catch (err) {
-    // Result is array.
-    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
-  }
-};
-
 const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse, name?: string) => {
   if (obj && obj.hash) {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     console.info(`${name} tx: ${obj.hash}`);
     await blockAwaitMs(delayMs);
     const transaction: TransactionResponse = obj as TransactionResponse;
@@ -49,7 +30,7 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
 const contracts: Record<string, any> = {};
 
 async function main() {
-  const block = await ethers.provider.getBlock("latest");
+  const [owner, _receiver, besuOwner, besuMoneybag] = await ethers.getSigners();
 
   // LINK & VRF
   const linkAddr =
@@ -68,13 +49,13 @@ async function main() {
 
   const linkFactory = await ethers.getContractFactory("LinkToken");
   // const linkInstance = linkFactory.attach(linkAddr);
-  const linkInstance = await linkFactory.deploy();
+  const linkInstance = await linkFactory.connect(besuOwner).deploy();
   contracts.link = linkInstance;
   const linkAddress = await contracts.link.getAddress();
   await debug(contracts);
   console.info(`LINK_ADDR=${linkAddress}`);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock");
-  const vrfInstance = await vrfFactory.deploy(linkAddress);
+  const vrfInstance = await vrfFactory.connect(besuOwner).deploy(linkAddress);
 
   // const vrfInstance = vrfFactory.attach(vrfAddr);
   contracts.vrf = vrfInstance;
@@ -88,12 +69,9 @@ async function main() {
   if (vrfAddress.toLowerCase() !== vrfAddr) {
     console.info("VRF_ADDR address mismatch, clean BESU, then try again");
   }
-  // BESU gemunion
-  // address(0x86C86939c631D53c6D812625bD6Ccd5Bf5BEb774), // vrfCoordinator
-  //   address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
+
   // SETUP CHAIN_LINK VRF-V2 TO WORK
-  const linkAmount = WeiPerEther * 1000n;
-  process.exit(0);
+
   /**
    * @notice Sets the configuration of the vrfv2 coordinator
    * @param minimumRequestConfirmations global min for request confirmations
@@ -103,27 +81,18 @@ async function main() {
    * @param fallbackWeiPerUnitLink fallback eth/link price in the case of a stale feed
    */
 
-  await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
-  await debug(await vrfInstance.createSubscription(), "createSubscription");
-  // emit SubscriptionCreated(currentSubId, msg.sender);
-  const eventFilter = vrfInstance.filters.SubscriptionCreated();
-  const events = await vrfInstance.queryFilter(eventFilter, block!.number);
-  const { subId } = recursivelyDecodeResult(events[0].args as unknown as Result);
-  console.info("SubscriptionCreated", subId);
+  await debug(await vrfInstance.connect(besuOwner).setConfig(3, 1000000, 1, 1, 1), "setConfig");
 
-  const subscriptionId = zeroPadValue(toBeHex(subId), 32);
+  // SEND ETH to FW OWNER
+  const ethAmount = WeiPerEther * 1000n;
+
   await debug(
-    await linkInstance.transferAndCall(await vrfInstance.getAddress(), linkAmount, subscriptionId),
-    "transferAndCall",
+    await besuMoneybag.sendTransaction({
+      to: owner.address,
+      value: ethAmount, // Sends exactly 1000.0 ether
+    }),
+    "fund 1000 ETH",
   );
-  // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
-  const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
-  const events1 = await vrfInstance.queryFilter(eventFilter1, block!.number);
-  const { newBalance } = recursivelyDecodeResult(events1[0].args as unknown as Result);
-  console.info("SubscriptionFunded", newBalance);
-
-  const subs = await vrfInstance.getSubscription(subId);
-  console.info("Subscription", recursivelyDecodeResult(subs as unknown as Result));
 }
 
 main()
