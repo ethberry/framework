@@ -13,7 +13,7 @@ export interface ICommonTemplatePanelProps {
   template: ITemplate;
 }
 
-export const CommonTemplatePanel: FC<ICommonTemplatePanelProps> = props => {
+export const Erc1155TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
   const { template } = props;
 
   return (

@@ -8,7 +8,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
 
 import { CraftTemplatePanel } from "../../../mechanics/recipes/craft/craft-template-panel";
-import { CommonTemplatePanel } from "../../erc721/template/common-template-panel";
+import { Erc721TemplatePanel } from "../../erc721/template/template-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc998Template: FC = () => {
@@ -40,7 +40,7 @@ export const Erc998Template: FC = () => {
         <Grid item xs={12} sm={3}>
           {selected.id ? (
             <>
-              <CommonTemplatePanel template={selected} />
+              <Erc721TemplatePanel template={selected} />
               <CraftTemplatePanel template={selected} />
             </>
           ) : null}

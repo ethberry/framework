@@ -1,16 +1,15 @@
 import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import type { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
+import type { ITemplate } from "@framework/types";
 
-import { formatPrice } from "../../../../utils/money";
-import { TemplatePurchaseButton } from "../../../../components/buttons";
-import { StyledDescription, StyledImage, StyledPaper } from "./styled";
+import { CraftTemplatePanel } from "../../../mechanics/recipes/craft/craft-template-panel";
+import { StyledDescription, StyledImage } from "./styled";
+import { Erc1155TemplatePanel } from "./template-panel";
 
 export const Erc1155Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -39,12 +38,12 @@ export const Erc1155Template: FC = () => {
           </StyledDescription>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <StyledPaper>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc1155.template.price" values={{ amount: formatPrice(selected.price) }} />
-            </Typography>
-            <TemplatePurchaseButton template={selected} />
-          </StyledPaper>
+          {selected.id ? (
+            <>
+              <Erc1155TemplatePanel template={selected} />
+              <CraftTemplatePanel template={selected} />
+            </>
+          ) : null}
         </Grid>
       </Grid>
     </Fragment>

@@ -29,7 +29,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   const settings = useSettings();
 
   const { rows, isLoading } = useCollection<ICraft, ICraftSearchDto>({
-    baseUrl: "/craft",
+    baseUrl: "/recipes/craft",
     embedded: true,
     search: {
       templateId: template.id,
