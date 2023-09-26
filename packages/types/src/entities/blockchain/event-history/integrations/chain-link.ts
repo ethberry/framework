@@ -20,4 +20,14 @@ export interface IVrfRandomWordsRequestedEvent {
   sender: string;
 }
 
-export type TChainLinkEvents = IVrfRandomnessRequestEvent | IVrfRandomRequestEvent | IVrfRandomWordsRequestedEvent;
+// event SubscriptionCreated(uint64 indexed subId, address owner);
+export interface IVrfSubscriptionCreatedEvent {
+  subId: string;
+  owner: string;
+}
+
+export type TChainLinkEvents =
+  | IVrfRandomnessRequestEvent
+  | IVrfRandomRequestEvent
+  | IVrfRandomWordsRequestedEvent
+  | IVrfSubscriptionCreatedEvent;

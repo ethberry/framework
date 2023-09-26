@@ -151,6 +151,7 @@ export enum ContractEventType {
   // MODULE:CHAINLINK
   RandomnessRequest = "RandomnessRequest",
   RandomnessRequestId = "RandomnessRequestId",
+  SubscriptionCreated = "SubscriptionCreated",
 
   // MODULE:CHAINLINKV2
   RandomWordsRequested = "RandomWordsRequested",

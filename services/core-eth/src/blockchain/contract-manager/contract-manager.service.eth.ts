@@ -197,19 +197,20 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfCoordinator = await this.contractService.findSystemByName({
-        contractModule: ModuleType.CHAIN_LINK,
-        chainId,
-      });
-      const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-      const txr: string = await addConsumer(
-        vrfCoordinator.address[0],
-        ~~subscriptionId,
-        account.toLowerCase(),
-        this.ethersSignerProvider,
-      );
-      this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+      // const vrfCoordinator = await this.contractService.findSystemByName({
+      //   contractModule: ModuleType.CHAIN_LINK,
+      //   chainId,
+      // });
+      // const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
+      // const txr: string = await addConsumer(
+      //   vrfCoordinator.address[0],
+      //   ~~subscriptionId,
+      //   account.toLowerCase(),
+      //   this.ethersSignerProvider,
+      // );
+      // this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
       await this.chainLinkLogService.updateListener();
+      // TODO probably update listener only after set subscription by admin etc..
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {

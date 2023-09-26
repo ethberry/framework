@@ -20,7 +20,7 @@ export const ChainLinkSection: FC = () => {
             <Paid />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.chain-link.fund" />
+            <FormattedMessage id="pages.chain-link.manage" />
           </ListItemText>
         </ListItemButton>
       </List>

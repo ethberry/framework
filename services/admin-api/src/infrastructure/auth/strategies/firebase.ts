@@ -34,7 +34,10 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
         throw new UnauthorizedException("unauthorized");
       });
 
-    let userEntity = await this.userService.findOne({ sub: data.sub }, { relations: { merchant: true } });
+    let userEntity = await this.userService.findOne(
+      { sub: data.sub },
+      { relations: { merchant: { chainLinkSubscriptions: true } } },
+    );
 
     if (!userEntity) {
       const firebaseUser = await this.admin

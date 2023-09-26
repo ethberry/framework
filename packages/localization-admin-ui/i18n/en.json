@@ -967,8 +967,17 @@
       "title": "Categories"
     },
     "chain-link": {
+      "manage": "Subscriptions",
+      "info": {
+        "title": "Subscription # {value}",
+        "wallet": "Wallet balance: {value}",
+        "subscription": "Subscription balance: {value}",
+        "consumers": "Consumers list",
+        "consumersInfo": "Contracts subscribed:"
+      },
       "fund": "Fund",
       "subscription": "Subscription",
+      "create": "Create Subscription",
       "title": "ChainLink"
     },
     "claims": {

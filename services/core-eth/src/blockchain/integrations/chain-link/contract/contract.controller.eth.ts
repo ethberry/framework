@@ -5,7 +5,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ChainLinkContractServiceEth } from "./contract.service.eth";
-import { ChainLinkEventType, ChainLinkType, IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
+import { ChainLinkEventType, ChainLinkType, IChainLinkRandomWordsRequestedEvent } from "../interfaces";
 
 @Controller()
 export class ChainLinkContractControllerEth {

@@ -20,6 +20,11 @@ contract ERC721BlacklistDiscreteRandomBesu is ERC721BlacklistDiscreteRandom, Cha
     ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1))
   {}
 
+  function setSubscriptionId(uint64 subId) public override onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (_subId == 0) revert InvalidSubscription();
+    _subId = subId;
+  }
+
   function getRandomNumber()
     internal
     override(ChainLinkBaseV2, ERC721BlacklistDiscreteRandom)

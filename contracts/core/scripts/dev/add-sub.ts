@@ -69,20 +69,21 @@ async function main() {
       : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
 
   const linkInstance = await ethers.getContractAt("LinkToken", linkAddr);
-  const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
+  const vrfInstance = await ethers.getContractAt("VRFCoordinatorV2Mock", vrfAddr);
 
   const linkAmount = WeiPerEther * 100n;
 
   console.info("_owner.address", _owner.address);
 
   await debug(await vrfInstance.createSubscription(), "createSubscription");
-  // await blockAwaitMs(5000);
+  await blockAwaitMs(1000);
   // emit SubscriptionCreated(currentSubId, msg.sender);
   const eventFilter = vrfInstance.filters.SubscriptionCreated();
   const events = await vrfInstance.queryFilter(eventFilter, block!.number);
   // @ts-ignore
   const { subId } = recursivelyDecodeResult(events[events.length - 1].args as unknown as Result);
   console.info("SubscriptionCreated", subId);
+  // process.exit(0);
 
   const subscriptionId = zeroPadValue(toBeHex(subId), 32);
 

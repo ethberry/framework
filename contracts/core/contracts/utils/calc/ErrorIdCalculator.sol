@@ -7,30 +7,45 @@
 pragma solidity ^0.8.13;
 
 import "hardhat/console.sol";
+// import "../../utils/errors.sol";
+// have to include all errors here
 
 contract ErrorsIdCalculator {
-  error MethodNotSupported();
-  error TemplateZero();
-  error UnsupportedTokenType();
+    error MethodNotSupported();
+    error TemplateZero();
+    error UnsupportedTokenType();
 
-  error SignerMissingRole();
-  error ExpiredSignature();
-  error NotExist();
-  error NotAnOwner();
-  error CountExceed();
-  error LimitExceed();
-  error BalanceExceed();
-  error WrongAmount();
-  error RefProgramSet();
+    error SignerMissingRole();
+    error ExpiredSignature();
+    error NotExist();
+    error AlreadyExist();
+    error NotAnOwner();
+    error CountExceed();
+    error LimitExceed();
+    error BalanceExceed();
+    error WrongAmount();
+    error RefProgramSet();
+    error WrongArrayLength();
 
-  error WrongToken();
-  error WrongStake();
-  error WrongRule();
-  error Expired();
-  error ZeroBalance();
-  error NotComplete();
-  error NotActive();
+    // CM
+    error WrongRole();
 
-  error WrongRound();
-  error WrongPrice();
+    // random
+    error ProtectedAttribute(bytes32 attribute);
+
+    // staking
+    error WrongToken();
+    error WrongStake();
+    error WrongRule();
+    error Expired();
+    error ZeroBalance();
+    error NotComplete();
+    error NotActive();
+
+    // lottery, raffle
+    error WrongRound();
+    error WrongPrice();
+
+    // waitlist
+    error NotInList();
 }

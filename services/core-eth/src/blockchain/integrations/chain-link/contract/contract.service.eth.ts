@@ -8,7 +8,7 @@ import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
+import { IChainLinkRandomWordsRequestedEvent } from "../interfaces";
 import { callRandom } from "./utils";
 
 @Injectable()
@@ -32,16 +32,10 @@ export class ChainLinkContractServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context);
 
-    // DEV ONLY
-    // !!!should work while on Gemunion's BESU!!!
-    // const nodeEnv = this.configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
-    // if (nodeEnv === "production") {
-    //   return;
-    // }
-
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    // !!!should work only on Gemunion's BESU!!!
+    // DEV ONLY
+    // !!!should work only on Gemunion's BESUs!!!
     if (chainId !== 13377 && chainId !== Number(testChainId)) {
       return;
     }
