@@ -5,7 +5,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedStakingRulesNativeAt1654751224270 implements MigrationInterface {
+export class SeedStakingRulesMixedAt1654751224270 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;

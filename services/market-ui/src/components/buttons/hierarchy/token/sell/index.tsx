@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Sell } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
@@ -24,6 +25,7 @@ export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
 
   return (
     <ListAction
+      icon={Sell}
       onClick={handleSell}
       message="form.buttons.sell"
       className={className}

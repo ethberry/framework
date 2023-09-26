@@ -308,7 +308,7 @@ import {
   SeedStakingRulesErc998At1654751224240,
   SeedStakingRulesMysteryboxAt1654751224260,
   SeedStakingRulesNativeAt1654751224210,
-  SeedStakingRulesNativeAt1654751224270,
+  SeedStakingRulesMixedAt1654751224270,
   SeedStock1683724062510,
   SeedTemplateCollectionAt1679894500230,
   SeedTemplateErc1155At1563804000250,
@@ -417,7 +417,7 @@ const config: PostgresConnectionOptions = {
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === NodeEnv.development,
+  logging: process.env.NODE_ENV !== NodeEnv.production,
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.
@@ -571,7 +571,7 @@ const config: PostgresConnectionOptions = {
     SeedStakingRulesErc998At1654751224240,
     SeedStakingRulesErc1155At1654751224250,
     SeedStakingRulesMysteryboxAt1654751224260,
-    SeedStakingRulesNativeAt1654751224270,
+    SeedStakingRulesMixedAt1654751224270,
     CreateStakingDeposit1654751224300,
     SeedStakingDepositNativeNativeAt1654751224311,
     SeedStakingDepositErc20Erc20At1654751224322,

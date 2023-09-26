@@ -61,7 +61,6 @@ export const RaffleTokenList: FC = () => {
             <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{token.metadata.NUMBER}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}

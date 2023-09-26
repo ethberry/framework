@@ -1,4 +1,5 @@
 import { FC, Fragment, useState } from "react";
+import { Send } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
@@ -57,6 +58,7 @@ export const Erc721TransferButton: FC<IErc721TransferButtonProps> = props => {
   return (
     <Fragment>
       <ListAction
+        icon={Send}
         onClick={handleTransfer}
         message="form.buttons.transfer"
         className={className}
