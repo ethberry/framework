@@ -1,11 +1,11 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Refresh } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { NodeEnv } from "@framework/types";
 
-import { StyledAlert, StyledError, StyledPreBottom, StyledPreTop } from "./styled";
+import { StyledAlert, StyledError, StyledPreBottom, StyledPreTop, StyledPreWrapper } from "./styled";
 
 interface IProps {
   children?: ReactNode;
@@ -54,12 +54,12 @@ class ErrorBoundary extends Component<IProps, IState> {
             />
           </StyledAlert>
           {process.env.NODE_ENV !== NodeEnv.production ? (
-            <Box>
+            <StyledPreWrapper>
               <StyledPreTop component="pre">{this.state.error?.toString() || ""}</StyledPreTop>
               <StyledPreBottom component="pre">
                 {this.state.errorInfo?.componentStack?.toString() || ""}
               </StyledPreBottom>
-            </Box>
+            </StyledPreWrapper>
           ) : null}
         </StyledError>
       );

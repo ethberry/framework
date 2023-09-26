@@ -21,10 +21,16 @@ export const StyledAlert = styled(Alert)({
   },
 });
 
+export const StyledPreWrapper = styled(Box)({
+  width: "100%",
+});
+
 export const StyledPreTop = styled(Box)({
   marginBottom: 0,
+  textWrap: "balance",
 });
 
 export const StyledPreBottom = styled(Box)({
   marginTop: 0,
+  textWrap: "balance",
 });
