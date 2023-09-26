@@ -32,6 +32,7 @@ export const EthListenerAddDialog: FC<IEthListenerAddDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.listenerAdd"
       testId="EthListenerAddForm"
+      disabled={false}
       {...rest}
     >
       <Alert severity="warning">
