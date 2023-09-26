@@ -118,6 +118,7 @@ export const Grade: FC = () => {
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
         initialValues={selected}
+        getTitle={(grade: IGrade) => `Attribute ${grade.attribute}`}
       />
 
       <GradeEditDialog
