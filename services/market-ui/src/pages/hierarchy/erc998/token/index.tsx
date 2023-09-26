@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -17,6 +17,7 @@ import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-toke
 import { LendTokenPanel } from "../../../mechanics/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
 import { Erc998Composition } from "./composition";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -41,15 +42,10 @@ export const Erc998Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box
-            component="img"
-            src={selected.template!.imageUrl}
-            alt="Gemunion token image"
-            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
-          />
-          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
+          <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <StyledDescription>
             <RichTextDisplay data={selected.template!.description} />
-          </Typography>
+          </StyledDescription>
           <br />
           <br />
           <Erc998Composition token={selected} />

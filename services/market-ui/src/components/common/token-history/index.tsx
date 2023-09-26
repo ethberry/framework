@@ -10,7 +10,7 @@ import { TxHashLink } from "@gemunion/mui-scanner";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { EventDataView } from "../../../pages/exchange/transactions/event-data-view";
-import { StyledDataGridPremium, StyledTitle } from "./styled";
+import { StyledDataGridPremium, StyledTitle, wrapperMixin } from "./styled";
 
 export interface ITokenHistoryProps {
   token: IToken;
@@ -73,7 +73,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   );
 
   return (
-    <ProgressOverlay isLoading={isLoading} wrapperSx={{ width: "100%" }}>
+    <ProgressOverlay isLoading={isLoading} wrapperSx={wrapperMixin}>
       <Grid item xs={12}>
         <StyledTitle variant="h5">
           <FormattedMessage id="pages.history.token.title" />

@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, Fragment, useState } from "react";
-import { IconButton, InputAdornment, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Clear } from "@mui/icons-material";
 import { useIntl } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
@@ -15,6 +15,7 @@ import ERC998TransferABI from "../../../../../abis/hierarchy/erc998/token/compos
 
 import { formatTokenTitle } from "../../../../../utils/token";
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
+import { StyledInputAdornment, StyledTitle } from "./styled";
 
 export interface IComposition {
   token: IToken;
@@ -172,9 +173,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
             showPrompt={false}
             testId="TokenCompositionDialog"
           >
-            <Typography variant="h5" sx={{ mt: 3 }}>
-              {child.child?.title}
-            </Typography>
+            <StyledTitle variant="h5">{child.child?.title}</StyledTitle>
             {new Array(filtered.length).fill(null).map((e, i) => (
               <StaticInput
                 key={i}
@@ -183,11 +182,11 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end" sx={{ ml: "auto" }}>
+                    <StyledInputAdornment position="end">
                       <IconButton onClick={handleClear(filtered[i])} edge="end" size="small">
                         <Clear fontSize="inherit" />
                       </IconButton>
-                    </InputAdornment>
+                    </StyledInputAdornment>
                   ),
                 }}
               />

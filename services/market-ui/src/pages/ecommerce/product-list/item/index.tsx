@@ -3,11 +3,11 @@ import { Card, CardActionArea, CardActions, CardContent, Grid, Typography } from
 import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IProduct } from "@framework/types";
 
 import { formatPrice } from "../../../../utils/money";
 import { AmountInput } from "../../../../components/inputs/amount-input";
-import { StyledCardMedia, StyledDescription } from "./styled";
 
 interface IProductItemProps {
   product: IProduct;
@@ -24,9 +24,9 @@ export const ProductItem: FC<IProductItemProps> = props => {
           <Typography gutterBottom variant="h5" component="h2">
             {product.title}
           </Typography>
-          <StyledDescription>
+          <StyledCardContentDescription>
             <RichTextDisplay data={product.description} />
-          </StyledDescription>
+          </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
             {formatPrice(product.productItems[0].price)}
           </Typography>

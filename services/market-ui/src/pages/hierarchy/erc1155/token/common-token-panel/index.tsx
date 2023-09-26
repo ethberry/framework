@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Grid, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IBalance, IToken } from "@framework/types";
 
@@ -8,6 +8,7 @@ import { Erc1155TransferButton, TokenSellButton } from "../../../../../component
 import { formatPrice } from "../../../../../utils/money";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { computeTokenAsset } from "../../../../../utils/token";
+import { StyledCard, StyledList, StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -17,28 +18,28 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   const { token } = props;
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.priceTitle" />
-          </Typography>
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
+          </StyledTitle>
+        </StyledToolbar>
+        <StyledList component="ul">
           {formatPrice(token.template?.price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
-        </Box>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        </StyledList>
+        <StyledToolbar disableGutters>
+          <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.balanceTitle" />
-          </Typography>
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
+          </StyledTitle>
+        </StyledToolbar>
+        <StyledList component="ul">
           {token.balance?.map((balance: IBalance, index: number) => <li key={index}>{balance.amount}</li>)}
-        </Box>
+        </StyledList>
       </CardContent>
       <CardActions>
         <Grid container alignItems="center">
@@ -51,6 +52,6 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
           </Grid>
         </Grid>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };

@@ -1,6 +1,10 @@
 import { Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { CSSObject, styled } from "@mui/material/styles";
 import { DataGridPremium, gridClasses } from "@mui/x-data-grid-premium";
+
+export const wrapperMixin: CSSObject = {
+  width: "100%",
+};
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(4),

@@ -8,6 +8,7 @@ import { StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { Erc721ContractListItem } from "./item";
+import { StyledGrid } from "./styled";
 
 export const Erc721ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
@@ -23,9 +24,9 @@ export const Erc721ContractList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(contract => (
-            <Grid item lg={4} sm={6} xs={12} key={contract.id} sx={{ display: "flex" }}>
+            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
               <Erc721ContractListItem contract={contract} />
-            </Grid>
+            </StyledGrid>
           ))}
         </Grid>
       </ProgressOverlay>

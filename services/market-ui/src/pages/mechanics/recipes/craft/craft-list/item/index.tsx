@@ -3,11 +3,11 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { ICraft } from "@framework/types";
 
 import { CraftButton } from "../../../../../../components/buttons";
 import { CraftIngredients } from "./menu";
-import { StyledCardMedia, StyledDescription } from "./styled";
 
 interface ICraftItemProps {
   craft: ICraft;
@@ -25,9 +25,9 @@ export const CraftItem: FC<ICraftItemProps> = props => {
         />
         <StyledCardMedia image={craft.item?.components[0].template!.imageUrl} />
         <CardContent>
-          <StyledDescription>
+          <StyledCardContentDescription>
             <RichTextDisplay data={craft.item?.components[0].template!.description} />
-          </StyledDescription>
+          </StyledCardContentDescription>
         </CardContent>
       </CardActionArea>
       <CardActions>

@@ -3,11 +3,11 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typog
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
-import { StyledCardMedia, StyledDescription } from "./styled";
 
 interface IErc721TemplateListItemProps {
   template: ITemplate;
@@ -20,11 +20,11 @@ export const TemplateListItem: FC<IErc721TemplateListItemProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/marketplace/templates/${template.id}`}>
         <CardHeader title={template.title} />
-        <StyledCardMedia image={template.imageUrl} />
+        <StyledCardMedia height={140} image={template.imageUrl} />
         <CardContent>
-          <StyledDescription>
+          <StyledCardContentDescription>
             <RichTextDisplay data={template.description} />
-          </StyledDescription>
+          </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
             {formatPrice(template.price)}
           </Typography>

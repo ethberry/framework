@@ -3,11 +3,11 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IToken } from "@framework/types";
 
 import { TokenSellButton } from "../../../../components/buttons";
 import { RarityBadge } from "../../../../components/common/badge";
-import { StyledCardMedia, StyledDescription } from "./styled";
 
 interface IMyTokenListItemProps {
   token: IToken;
@@ -26,9 +26,9 @@ export const MyTokenListItem: FC<IMyTokenListItemProps> = props => {
         <CardHeader title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />
         <CardContent>
-          <StyledDescription>
+          <StyledCardContentDescription>
             <RichTextDisplay data={token.template!.description} />
-          </StyledDescription>
+          </StyledCardContentDescription>
         </CardContent>
       </CardActionArea>
       <CardActions>
