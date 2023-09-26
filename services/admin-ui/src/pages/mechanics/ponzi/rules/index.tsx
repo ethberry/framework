@@ -92,7 +92,7 @@ export const PonziRules: FC = () => {
               <ListItemText>{rule.title}</ListItemText>
               <ListActions>
                 <PonziToggleRuleButton rule={rule} />
-                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
             </ListItem>
           ))}

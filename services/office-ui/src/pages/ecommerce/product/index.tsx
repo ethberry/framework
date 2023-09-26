@@ -89,7 +89,7 @@ export const Product: FC = () => {
             <ListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(product)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(product)}
                   icon={Delete}

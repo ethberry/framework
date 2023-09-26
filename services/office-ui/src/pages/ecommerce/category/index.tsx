@@ -60,8 +60,8 @@ export const Category: FC = () => {
             <ListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(category)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(category)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

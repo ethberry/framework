@@ -72,7 +72,7 @@ export const RaffleTokens: FC = () => {
               </ListItemText>
 
               <ListActions>
-                <ListAction icon={Visibility} message="form.tips.view" onClick={handleView(token)} />
+                <ListAction message="form.tips.view" icon={Visibility} onClick={handleView(token)} />
               </ListActions>
             </ListItem>
           ))}

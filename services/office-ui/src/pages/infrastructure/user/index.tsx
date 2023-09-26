@@ -84,8 +84,8 @@ export const User: FC = () => {
             <ListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(user)} icon={Create} message="form.actions.edit" />
-                <ListAction onClick={handleDelete(user)} icon={Delete} message="form.actions.delete" />
+                <ListAction onClick={handleEdit(user)} message="form.actions.edit" icon={Create} />
+                <ListAction onClick={handleDelete(user)} message="form.actions.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

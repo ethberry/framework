@@ -73,7 +73,7 @@ export const VestingContracts: FC = () => {
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
               <ListActions dataTestId="VestingActionsMenuButton">
-                <ListAction onClick={handleView(vesting)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
                 <AllowanceButton contract={vesting} />
                 <TopUpButton contract={vesting} />
                 <TransferOwnershipButton contract={vesting} />

@@ -73,7 +73,7 @@ export const LotteryTokenList: FC = () => {
               </ListItemText>
               <ListActions>
                 <LotteryRewardButton token={token} disabled={token.tokenStatus !== TokenStatus.MINTED} />
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

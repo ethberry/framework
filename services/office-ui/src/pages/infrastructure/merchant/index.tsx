@@ -70,8 +70,8 @@ export const Merchant: FC = () => {
             <ListItem key={merchant.id}>
               <ListItemText>{merchant.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(merchant)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(merchant)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(merchant)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(merchant)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

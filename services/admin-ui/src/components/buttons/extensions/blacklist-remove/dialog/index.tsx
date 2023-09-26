@@ -61,7 +61,7 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
               <ListItem key={access.id}>
                 <ListItemText>{access.account}</ListItemText>
                 <ListActions>
-                  <ListAction onClick={handleUnBlacklist(access)} icon={Delete} message="form.buttons.delete" />
+                  <ListAction onClick={handleUnBlacklist(access)} message="form.buttons.delete" icon={Delete} />
                 </ListActions>
               </ListItem>
             ))}

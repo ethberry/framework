@@ -63,7 +63,7 @@ export const PonziDeposit: FC = () => {
               <ListItemText>{stake.ponziRule?.title}</ListItemText>
               <ListActions>
                 <PonziRewardComplexButton stake={stake} />
-                <ListAction onClick={handleView(stake)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(stake)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

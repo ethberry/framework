@@ -71,7 +71,7 @@ export const RaffleTokenList: FC = () => {
                   token={token}
                   disabled={token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
                 />
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

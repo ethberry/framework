@@ -103,7 +103,7 @@ export const Erc998Token: FC = () => {
                   icon={AccountBalanceWallet}
                   message="form.buttons.withdraw"
                 />
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

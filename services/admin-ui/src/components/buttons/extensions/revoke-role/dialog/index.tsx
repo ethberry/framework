@@ -83,7 +83,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
                   {access.role}
                 </ListItemText>
                 <ListActions>
-                  <ListAction onClick={handleRevoke(access)} icon={Delete} message="dialogs.revokeRole" />
+                  <ListAction onClick={handleRevoke(access)} message="dialogs.revokeRole" icon={Delete} />
                 </ListActions>
               </ListItem>
             ))}

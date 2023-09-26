@@ -85,8 +85,8 @@ export const WaitListList: FC = () => {
             <ListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListActions dataTestId="WaitListActionsMenuButton">
-                <ListAction onClick={handleEdit(waitListList)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(waitListList)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(waitListList)} message="form.buttons.delete" icon={Delete} />
                 <WaitListListCreateButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}

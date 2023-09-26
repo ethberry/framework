@@ -59,8 +59,8 @@ export const Page: FC = () => {
             <ListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(page)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(page)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(page)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(page)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

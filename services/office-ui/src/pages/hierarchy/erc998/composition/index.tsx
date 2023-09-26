@@ -156,8 +156,8 @@ export const Erc998Composition: FC = () => {
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(composition)} icon={Visibility} message="form.tips.view" />
-                <ListAction onClick={handleDelete(composition)} icon={Delete} message="form.tips.delete" />
+                <ListAction onClick={handleView(composition)} message="form.tips.view" icon={Visibility} />
+                <ListAction onClick={handleDelete(composition)} message="form.tips.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

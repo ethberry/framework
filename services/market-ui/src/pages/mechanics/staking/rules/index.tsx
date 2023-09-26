@@ -134,7 +134,7 @@ export const StakingRules: FC = () => {
               <ListActions>
                 <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
-                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

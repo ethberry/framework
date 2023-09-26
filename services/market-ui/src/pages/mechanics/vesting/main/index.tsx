@@ -69,7 +69,7 @@ export const Vesting: FC = () => {
                   icon={AccountBalanceWallet}
                   message="form.buttons.withdraw"
                 />
-                <ListAction onClick={handleView(vesting)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
                 <VestingTransferOwnershipButton vesting={vesting} />
               </ListActions>
             </ListItem>

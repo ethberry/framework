@@ -95,8 +95,8 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                   }
                 />
                 <ListActions>
-                  <ListAction onClick={handleEdit(address)} icon={Edit} message="form.buttons.edit" />
-                  <ListAction onClick={handleDelete(address)} icon={Delete} message="form.buttons.delete" />
+                  <ListAction onClick={handleEdit(address)} message="form.buttons.edit" icon={Edit} />
+                  <ListAction onClick={handleDelete(address)} message="form.buttons.delete" icon={Delete} />
                 </ListActions>
               </ListItem>
             ))

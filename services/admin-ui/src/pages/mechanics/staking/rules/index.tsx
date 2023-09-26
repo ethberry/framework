@@ -108,7 +108,7 @@ export const StakingRules: FC = () => {
               <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
               <ListActions>
                 <StakingToggleRuleButton rule={rule} />
-                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
             </ListItem>
           ))}

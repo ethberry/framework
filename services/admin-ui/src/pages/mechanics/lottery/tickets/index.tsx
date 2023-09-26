@@ -98,7 +98,7 @@ export const LotteryTickets: FC = () => {
               <ListItem key={contract.id}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
                   <ListAction
                     onClick={handleDelete(contract)}
                     disabled={contract.contractStatus === ContractStatus.INACTIVE}

@@ -71,7 +71,7 @@ export const LotteryTokens: FC = () => {
                 {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

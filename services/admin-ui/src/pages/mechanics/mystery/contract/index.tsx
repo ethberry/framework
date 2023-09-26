@@ -103,7 +103,7 @@ export const MysteryContract: FC = () => {
             <ListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
               <ListActions dataTestId="MysteryActionsMenuButton">
-                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(contract)}
                   icon={Delete}

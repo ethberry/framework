@@ -44,7 +44,7 @@ export const BreedBreeds: FC = () => {
               {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
               <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(breed)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(breed)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

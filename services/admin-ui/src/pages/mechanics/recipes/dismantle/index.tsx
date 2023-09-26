@@ -98,8 +98,8 @@ export const Dismantle: FC = () => {
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.item)}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(dismantle)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(dismantle)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(dismantle)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(dismantle)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

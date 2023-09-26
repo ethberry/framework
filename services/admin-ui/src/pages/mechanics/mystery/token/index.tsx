@@ -72,7 +72,7 @@ export const MysteryToken: FC = () => {
             <ListItem key={token.id}>
               <ListItemText>{token.template?.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

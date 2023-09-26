@@ -109,7 +109,7 @@ export const Erc998Template: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListActions dataTestId="TemplateActionsMenuButton">
-                <ListAction onClick={handleEdit(template)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(template)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(template)}
                   disabled={template.templateStatus === TemplateStatus.INACTIVE}

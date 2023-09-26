@@ -109,7 +109,7 @@ export const PonziRules: FC = () => {
               <ListActions>
                 <PonziAllowanceButton rule={rule} />
                 <PonziDepositButton rule={rule} />
-                <ListAction onClick={handleView(rule)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

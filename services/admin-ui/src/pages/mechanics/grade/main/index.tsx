@@ -98,8 +98,13 @@ export const Grade: FC = () => {
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(grade)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(grade)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(grade)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(grade)}
+                  message="form.buttons.delete"
+                  icon={Delete}
+                  disabled={grade.gradeStatus === GradeStatus.INACTIVE}
+                />
               </ListActions>
             </ListItem>
           ))}

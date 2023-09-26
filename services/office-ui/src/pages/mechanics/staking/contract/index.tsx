@@ -97,7 +97,7 @@ export const StakingContracts: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText>{contract.parameters.maxStake}</ListItemText>
               <ListActions dataTestId="StakingActionsMenuButton">
-                <ListAction onClick={handleEdit(contract)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(contract)}
                   icon={Delete}

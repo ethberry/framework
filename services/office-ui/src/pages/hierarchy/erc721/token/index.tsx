@@ -78,7 +78,7 @@ export const Erc721Token: FC = () => {
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(token)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </ListItem>
           ))}

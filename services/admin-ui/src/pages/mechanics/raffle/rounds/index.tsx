@@ -47,7 +47,7 @@ export const RaffleRounds: FC = () => {
                 {round.roundId} - {round.number || "awaiting results"}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(round)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
                 <RaffleReleaseButton round={round} />
               </ListActions>
             </ListItem>

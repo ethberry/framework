@@ -78,7 +78,7 @@ export const AchievementRules: FC = () => {
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(rule)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
             </ListItem>
           ))}

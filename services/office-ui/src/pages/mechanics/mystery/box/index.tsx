@@ -131,7 +131,7 @@ export const MysteryBox: FC = () => {
             <ListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(mystery)} icon={Create} message="form.buttons.edit" />
+                <ListAction onClick={handleEdit(mystery)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(mystery)}
                   icon={Delete}

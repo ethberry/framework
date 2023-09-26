@@ -57,7 +57,7 @@ export const LotteryRounds: FC = () => {
                   : ""}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleView(round)} icon={Visibility} message="form.tips.view" />
+                <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
                 <LotteryReleaseButton round={round} />
               </ListActions>
             </ListItem>

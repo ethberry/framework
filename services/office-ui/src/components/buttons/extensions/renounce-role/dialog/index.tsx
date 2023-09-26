@@ -81,7 +81,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                   {access.role}
                 </ListItemText>
                 <ListActions>
-                  <ListAction onClick={handleRenounce(access)} icon={Delete} message="form.buttons.delete" />
+                  <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
                 </ListActions>
               </ListItem>
             ))}

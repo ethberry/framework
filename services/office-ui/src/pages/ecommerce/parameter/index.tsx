@@ -62,8 +62,8 @@ export const Parameter: FC = () => {
                 {parameter.parameterName} ({parameter.parameterType})
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(parameter)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(parameter)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(parameter)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(parameter)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

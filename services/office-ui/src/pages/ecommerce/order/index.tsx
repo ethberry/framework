@@ -102,8 +102,8 @@ export const Order: FC = () => {
             <ListItem key={order.id} disableGutters>
               <ListItemText>Order #{order.id}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(order)} icon={Create} message="form.buttons.edit" />
-                <ListAction onClick={handleDelete(order)} icon={Delete} message="form.buttons.delete" />
+                <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(order)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </ListItem>
           ))}

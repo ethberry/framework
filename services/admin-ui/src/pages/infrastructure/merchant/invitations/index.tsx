@@ -41,7 +41,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
               <ListItem key={otp.uuid} disableGutters>
                 <ListItemText>{otp.user!.displayName}</ListItemText>
                 <ListActions>
-                  <ListAction icon={Delete} message="form.tips.delete" onClick={handleDelete(otp)} />
+                  <ListAction message="form.tips.delete" icon={Delete} onClick={handleDelete(otp)} />
                 </ListActions>
               </ListItem>
             ))
