@@ -45,7 +45,7 @@ export const CraftContactPanel: FC<ICraftContactPanelProps> = props => {
   }
 
   return (
-    <Button type="button" variant="contained" component={RouterLink} to={`/craft?contractId=${contract.id}`}>
+    <Button type="button" variant="contained" component={RouterLink} to={`/recipes/craft?contractId=${contract.id}`}>
       <FormattedMessage id="form.buttons.craft" />
     </Button>
   );
