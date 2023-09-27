@@ -40,7 +40,7 @@ export const MysteryContractList: FC = () => {
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <EntityInput name="merchantId" controller="merchants" />
           </Grid>
         </Grid>
       </CommonSearchForm>
