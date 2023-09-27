@@ -19,6 +19,7 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { LotteryLogService } from "./log.service";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -36,6 +37,23 @@ import { LotteryLogService } from "./log.service";
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          LotteryEventType.Prize,
+          LotteryEventType.RoundEnded,
+          LotteryEventType.Released,
+          LotteryEventType.RoundStarted,
+          LotteryEventType.RoundFinalized,
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+          AccessControlEventType.RoleAdminChanged,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          ExchangeEventType.PaymentEthReceived,
+          ContractEventType.VrfSubscriptionSet,
+        ];
+        const topics = getEventsTopics(eventNames);
+        console.info("LOTTERY_TOPICS", topics);
 
         return {
           contract: {
@@ -55,6 +73,7 @@ import { LotteryLogService } from "./log.service";
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               ExchangeEventType.PaymentEthReceived,
+              ContractEventType.VrfSubscriptionSet,
             ],
           },
           block: {

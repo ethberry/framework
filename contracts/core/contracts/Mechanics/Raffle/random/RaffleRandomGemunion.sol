@@ -13,9 +13,18 @@ import "../RaffleRandom.sol";
 contract RaffleRandomGemunion is RaffleRandom, ChainLinkGemunionV2 {
   using Counters for Counters.Counter;
 
-  constructor() RaffleRandom() ChainLinkGemunionV2(uint64(2), uint16(6), uint32(600000), uint32(1)) {}
+  constructor() RaffleRandom() ChainLinkGemunionV2(uint64(0), uint16(6), uint32(600000), uint32(1)) {}
+
+  // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
+  event VrfSubscriptionSet(uint64 subId);
+  function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (subId == 0) revert InvalidSubscription();
+    emit VrfSubscriptionSet(subId);
+    _subId = subId;
+  }
 
   function getRandomNumber() internal override(RaffleRandom, ChainLinkBaseV2) returns (uint256 requestId) {
+    if (_subId == 0) revert InvalidSubscription();
     return super.getRandomNumber();
   }
 

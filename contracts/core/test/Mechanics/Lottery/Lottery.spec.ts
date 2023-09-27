@@ -22,7 +22,7 @@ const delay = (milliseconds: number) => {
 };
 
 describe("Lottery", function () {
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const lotteryConfig = {
     timeLagBeforeRelease: 100, // production: release after 2592000 seconds = 30 days

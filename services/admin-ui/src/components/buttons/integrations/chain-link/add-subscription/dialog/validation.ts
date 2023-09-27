@@ -1,8 +1,12 @@
-import { object, string } from "yup";
+import { object, number } from "yup";
 
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema = object().shape({
-  subscriptionId: string().required("form.validations.valueMissing"),
+  subscriptionId: number()
+    .typeError("form.validations.badInput")
+    .required("form.validations.valueMissing")
+    .integer("form.validations.badInput")
+    .min(1, "form.validations.rangeUnderflow"),
   address: addressValidationSchema,
 });

@@ -11,6 +11,7 @@ import { ABIRandom } from "./interfaces";
 import { Erc998TokenRandomLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -30,6 +31,33 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.BatchReceivedChild,
+          ContractEventType.BatchTransferChild,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.MintRandom,
+          ContractEventType.Paused,
+          ContractEventType.ReceivedChild,
+          ContractEventType.RedeemClaim,
+          ContractEventType.SetMaxChild,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.TransferChild,
+          ContractEventType.UnWhitelistedChild,
+          ContractEventType.UnpackClaim,
+          ContractEventType.UnpackMysteryBox,
+          ContractEventType.Unpaused,
+          ContractEventType.WhitelistedChild,
+          ContractEventType.LevelUp,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+          ContractEventType.VrfSubscriptionSet,
+        ];
+        const topics = getEventsTopics(eventNames);
+        console.info("998RANDOM_TOPICS", topics);
         return {
           contract: {
             contractType: ContractType.ERC998_TOKEN_RANDOM,
@@ -58,7 +86,8 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.LevelUp,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged
+              AccessControlEventType.RoleAdminChanged,
+              ContractEventType.VrfSubscriptionSet
             ],
           },
           block: {

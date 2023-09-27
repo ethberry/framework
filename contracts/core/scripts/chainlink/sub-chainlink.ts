@@ -50,7 +50,8 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
 const contracts: Record<string, any> = {};
 
 async function main() {
-  const [owner, _receiver, besuOwner] = await ethers.getSigners();
+  const [owner, _receiver, _stranger1, stranger2] = await ethers.getSigners();
+  const besuOwner = network.name === "besu" ? owner : stranger2;
   const block = await ethers.provider.getBlock("latest");
 
   // LINK & VRF

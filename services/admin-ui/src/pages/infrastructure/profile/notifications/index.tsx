@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { List, ListItem, ListItemText } from "@mui/material";
+import { TxHashLink } from "@gemunion/mui-scanner";
 
 // Hooks
 import { useIndexedDB } from "react-indexed-db-hook";
@@ -12,26 +13,29 @@ export const ProfileNotifications: FC<ITabPanelProps> = props => {
 
   // const db = useIndexedDB("txs");
   const { getAll } = useIndexedDB("txs");
-  const [txs, setTxs] = useState([{ id: 0, txType: "", txHash: "" }]);
+  const [txs, setTxs] = useState([{ id: 0, txType: "", txHash: "", time: "" }]);
 
   // TODO auto-refresh?
   // TODO save db items after MM transactions, then update them after io success notification
   useEffect(() => {
     void getAll().then((rec: any[]) => {
-      setTxs(rec);
+      setTxs(rec.reverse());
     });
   }, []);
 
   if (!open) {
     return null;
   }
-
+  // TODO links
   return (
     <List disablePadding={true}>
       {txs.map(tx => (
         <ListItem key={tx.id} disableGutters>
-          <ListItemText>Type # {tx.txType}</ListItemText>
-          <ListItemText>Hash # {tx.txHash}</ListItemText>
+          <ListItemText sx={{ width: 0.3 }}>Type # {tx.txType}</ListItemText>
+          <ListItemText sx={{ width: 0.7 }}>
+            <TxHashLink hash={tx.txHash} length={42} />
+          </ListItemText>
+          <ListItemText sx={{ width: 0.3 }}># {tx.time}</ListItemText>
           {/* <ListActions> */}
           {/*  <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} /> */}
           {/* </ListActions> */}

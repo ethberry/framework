@@ -1,7 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+
+import { Grid, MenuItem, Select, Typography } from "@mui/material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 
@@ -10,9 +13,8 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import GetSubscriptionABI from "../../../abis/integrations/chain-link/fund/getSubscription.abi.json";
 import LinkBalanceOfABI from "../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
 
-// import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkSubscriptionBalance } from "./subscription-balance";
-import { IUser, UserRole } from "@framework/types";
+import { IChainLinkSubscription, IUser, UserRole } from "@framework/types";
 import { Contract } from "ethers";
 import { formatEther } from "../../../utils/money";
 import { ChainLinkSubscriptionConsumer } from "./subscription-consumer";
@@ -29,25 +31,35 @@ export const ChainLink: FC = () => {
   const { account } = useWeb3React();
   const { profile } = useUser<IUser>();
 
+  if (!profile.userRoles.includes(UserRole.ADMIN)) {
+    return (
+      <Grid container spacing={2}>
+        <Breadcrumbs path={["dashboard", "chain-link"]} />
+        <PageHeader message="pages.chain-link.title" />
+      </Grid>
+    );
+  }
+
+  const [merchantSubscriptions, setMerchantSubscriptions] = useState<Array<IChainLinkSubscription> | null>(null);
+
   const [subData, setSubData] = useState<IVrfSubscriptionData>({
     owner: "",
     balance: 0,
     reqCount: 0,
     consumers: [""],
   });
+  const [currentBalance, setCurrentBalance] = useState<string>("0");
+  const [currentSubscription, setCurrentSubscription] = useState<number>(0);
 
-  const [currentBalance, setCurrentBalance] = useState<string | null>(null);
-
-  if (!profile.userRoles.includes(UserRole.ADMIN)) {
-    return null;
-  }
-
-  if (!profile.merchant) {
-    return null;
-  }
-
-  // TODO get chainId from MM?
-  const merchantSub = profile.merchant.chainLinkSubscriptions?.filter(sub => sub.chainId === profile.chainId)[0];
+  const { fn, isLoading } = useApiCall(
+    api => {
+      return api.fetchJson({
+        url: `/chain-link/subscriptions/${profile.wallet}`,
+        method: "GET",
+      });
+    },
+    { success: false },
+  );
 
   const getSubscriptionData = useMetamaskValue(
     async (subscriptionId: number, web3Context: Web3ContextType) => {
@@ -55,7 +67,6 @@ export const ChainLink: FC = () => {
       const contract = new Contract(process.env.VRF_ADDR, GetSubscriptionABI, web3Context.provider?.getSigner());
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         const data: IVrfSubscriptionData = await contract.getSubscription(subscriptionId);
-        // console.log("data", data);
         // const { owner, balance, reqCount, consumers } = data;
         // return formatEther(balance.toString(), 18, "LINK");
         return data;
@@ -85,28 +96,52 @@ export const ChainLink: FC = () => {
   );
 
   useEffect(() => {
-    if (currentBalance || !account) {
+    if (!merchantSubscriptions && !isLoading) {
+      void fn().then((rows: Array<IChainLinkSubscription>) => {
+        const filtered = rows.filter(sub => sub.merchant.wallet === profile.wallet && sub.chainId === profile.chainId);
+        setMerchantSubscriptions(filtered);
+        setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
+      });
+    }
+    if (!merchantSubscriptions || !account) {
       return;
     }
-    if (merchantSub) {
-      void getAccountBalance(18, "LINK").then(setCurrentBalance);
-      void getSubscriptionData(merchantSub.vrfSubId).then(setSubData);
-    }
-  }, [account, currentBalance]);
+    void getSubscriptionData(currentSubscription).then(setSubData);
+    void getAccountBalance(18, "LINK").then(setCurrentBalance);
+  }, [currentSubscription]);
 
-  return merchantSub ? (
+  return merchantSubscriptions ? (
     <Grid container spacing={2}>
       <Breadcrumbs path={["dashboard", "chain-link"]} />
       <PageHeader message="pages.chain-link.title" />
+      <Typography variant="h4">
+        <FormattedMessage id="pages.chain-link.select" />
+      </Typography>
+      <Select
+        sx={{ mx: 1 }}
+        value={currentSubscription}
+        onChange={(e: any) => {
+          setCurrentSubscription(e.target.value);
+        }}
+      >
+        {merchantSubscriptions.map((option, idx) => (
+          <MenuItem value={option.vrfSubId} key={idx}>
+            {option.vrfSubId}
+          </MenuItem>
+        ))}
+      </Select>
+      <Grid item xs={6}>
+        <ChainLinkSubscriptionCreateButton />
+      </Grid>
       <Grid item xs={12}>
         <ChainLinkSubscriptionBalance
-          subId={merchantSub.vrfSubId}
+          subscriptionId={currentSubscription}
           walletBalance={currentBalance}
           subBalance={subData.balance}
         />
       </Grid>
       <Grid item xs={12}>
-        <ChainLinkSubscriptionConsumer consumers={subData.consumers} />
+        <ChainLinkSubscriptionConsumer subscriptionId={currentSubscription} consumers={subData.consumers} />
       </Grid>
     </Grid>
   ) : (

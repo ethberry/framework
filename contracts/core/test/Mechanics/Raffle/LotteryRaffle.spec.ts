@@ -24,7 +24,7 @@ const delay = (milliseconds: number) => {
 };
 
 describe("Raffle", function () {
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
   const dbRoundId = 101;
   const winnerTokenId = 3;
 

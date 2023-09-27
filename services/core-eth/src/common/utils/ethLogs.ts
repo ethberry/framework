@@ -1,5 +1,36 @@
-import { Interface, JsonRpcProvider, Log, LogDescription, TransactionReceipt } from "ethers";
+import { Interface, JsonRpcProvider, Log, LogDescription, TransactionReceipt, keccak256, toUtf8Bytes } from "ethers";
+
+import {
+  AccessControlEventType,
+  ContractEventSignature,
+  ContractEventType,
+  Erc4907EventType,
+  ExchangeEventType,
+  LotteryEventType,
+  RaffleEventType,
+} from "@framework/types";
 // import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+
+export const keccak256It = function (value: string): string {
+  return keccak256(toUtf8Bytes(value));
+};
+
+export const getEventsTopics = function (
+  events: Array<
+    | ContractEventType
+    | AccessControlEventType
+    | Erc4907EventType
+    | LotteryEventType
+    | RaffleEventType
+    | ExchangeEventType
+  >,
+): [Array<string>] {
+  return [
+    events.map(event =>
+      keccak256It(Object.values(ContractEventSignature)[Object.keys(ContractEventSignature).indexOf(event)]),
+    ),
+  ];
+};
 
 export const getTransactionReceipt = async function (
   txHash: string,

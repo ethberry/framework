@@ -6,7 +6,12 @@ import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 import { ChainLinkEventType, ChainLinkType } from "../interfaces";
-import { IVrfSubscriptionCreatedEvent } from "@framework/types";
+import {
+  ContractEventType,
+  ContractType,
+  IVrfSubscriptionCreatedEvent,
+  IVrfSubscriptionSetEvent,
+} from "@framework/types";
 
 @Controller()
 export class ChainLinkSubscriptionControllerEth {
@@ -19,4 +24,17 @@ export class ChainLinkSubscriptionControllerEth {
   ): Promise<void> {
     return this.chainLinkServiceEth.createSubscription(event, context);
   }
+
+  @EventPattern([
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
+    { contractType: ContractType.LOTTERY, eventName: ContractEventType.VrfSubscriptionSet },
+    { contractType: ContractType.RAFFLE, eventName: ContractEventType.VrfSubscriptionSet },
+  ])
+  public setSubscription(@Payload() event: ILogEvent<IVrfSubscriptionSetEvent>, @Ctx() context: Log): Promise<void> {
+    return this.chainLinkServiceEth.setVrfSubscription(event, context);
+  }
+
+  // TODO process event SubscriptionConsumerAdded(subId, consumer);
+  // set contract.parameters: { isConsumer: true }
 }

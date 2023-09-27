@@ -3,9 +3,12 @@ import { Result } from "ethers";
 import { VRFCoordinatorV2Mock } from "../typechain-types";
 import { recursivelyDecodeResult } from "../test/utils";
 
-task("add-sub", "Add vRF subscription").setAction(async hre => {
+task("add-sub", "Add vRF subscription").setAction(async (_, hre) => {
+  // Get network information
+  const block = await hre.ethers.provider.getBlock("latest");
+
   const networkName = hre.network.name;
-  // console.log("networkName", networkName);
+
   // set the VRF token contract address according to the environment
   let vrfContractAddr: string;
   switch (networkName) {
@@ -32,20 +35,19 @@ task("add-sub", "Add vRF subscription").setAction(async hre => {
       vrfContractAddr = "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
   }
 
-  // Get signer information
-  // const [owner] = await hre.ethers.getSigners();
-  const block = await hre.ethers.provider.getBlock("latest");
-
   // Create connection to LINK token contract and initiate the transfer
   // const vrfTokenContract = new hre.ethers.Contract(vrfContractAddr, LINK_TOKEN_ABI, owner);
   const vrfTokenContract: VRFCoordinatorV2Mock = await hre.ethers.getContractAt(
     "VRFCoordinatorV2Mock",
     vrfContractAddr,
   );
+  // TODO doesnt work this way with events
+  // An unexpected error occurred: TypeError: Cannot read properties of undefined (reading 'args')
+
   await vrfTokenContract.createSubscription().then(async function (transaction: any) {
     // GET SUB ID
     const eventFilter = vrfTokenContract.filters.SubscriptionCreated();
-    const events = await vrfTokenContract.queryFilter(eventFilter, block.number);
+    const events = await vrfTokenContract.queryFilter(eventFilter, block!.number);
     const { subId } = recursivelyDecodeResult(events[0].args as unknown as Result);
     console.info("SubscriptionCreated", subId);
     console.info("Subscription", subId, "created", " Transaction Hash: ", transaction.hash);

@@ -8,6 +8,7 @@ export const myDBConfig = {
       storeSchema: [
         { name: "txHash", keypath: "txHash", options: { unique: false } },
         { name: "txType", keypath: "txType", options: { unique: false } },
+        { name: "time", keypath: "time", options: { unique: false } },
       ],
     },
   ],

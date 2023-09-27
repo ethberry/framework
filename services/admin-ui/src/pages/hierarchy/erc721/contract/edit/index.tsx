@@ -7,7 +7,7 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import type { IContract } from "@framework/types";
-import { BusinessType, ContractStatus } from "@framework/types";
+import { BusinessType, ContractFeatures, ContractStatus } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../components/dialogs/product-type";
@@ -36,6 +36,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     royalty,
     chainId,
     contractFeatures,
+    parameters,
   } = initialValues;
 
   const fixedValues = {
@@ -46,10 +47,11 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     description,
     contractStatus,
     imageUrl,
+    contractFeatures,
+    parameters,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-
   // there is no exception for merchantId=1, to create token use office
   if (!id && process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
@@ -86,9 +88,28 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       <RichTextEditor name="description" />
       {!id ? <TextInput name="address" /> : null}
       {id ? (
-        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+        <SelectInput
+          name="contractStatus"
+          options={ContractStatus}
+          disabledOptions={
+            parameters.vrfSubId === "0" || !parameters.vrfSubId
+              ? [ContractStatus.NEW, ContractStatus.ACTIVE]
+              : [ContractStatus.NEW]
+          }
+        />
       ) : null}
       <AvatarInput name="imageUrl" />
+      {(parameters.vrfSubId === "0" || !parameters.vrfSubId) &&
+      (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) ? (
+        <Alert severity="warning">
+          <FormattedMessage id="alert.vrfSub" />
+        </Alert>
+      ) : null}
+      {contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES) ? (
+        <Alert severity="warning">
+          <FormattedMessage id="alert.vrfConsumer" />
+        </Alert>
+      ) : null}
     </FormDialog>
   );
 };

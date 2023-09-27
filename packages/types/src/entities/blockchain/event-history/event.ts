@@ -155,6 +155,7 @@ export enum ContractEventType {
 
   // MODULE:CHAINLINKV2
   RandomWordsRequested = "RandomWordsRequested",
+  VrfSubscriptionSet = "VrfSubscriptionSet",
 
   // MODULE:ECOMMERCE
   EcommercePurchase = "EcommercePurchase",
@@ -295,6 +296,9 @@ export enum ContractEventSignature {
 
   // MODULE:CHAINLINKV2
   RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)",
+  RandomnessRequestId = "RandomnessRequestId(bytes32,address)",
+  SubscriptionCreated = "SubscriptionCreated(uint64,address)",
+  VrfSubscriptionSet = "VrfSubscriptionSet(uint64)",
 
   // MODULE:ECOMMERCE
   EcommercePurchase = "EcommercePurchase(??)",

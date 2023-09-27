@@ -103,6 +103,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'PaymentEthSent',
       --MODULE:CHAINLINKV2
        'RandomWordsRequested',
+       'SubscriptionCreated',
+       'VrfSubscriptionSet',
       --MODULE:ECOMMERCE
        'EcommercePurchase',
       --MODULE:CM

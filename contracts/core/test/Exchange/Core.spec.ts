@@ -45,7 +45,7 @@ describe("Diamond Exchange Core", function () {
     };
   };
 
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");

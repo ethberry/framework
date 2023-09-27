@@ -26,8 +26,14 @@ export interface IVrfSubscriptionCreatedEvent {
   owner: string;
 }
 
+// event VrfSubscriptionSet(uint64 subId);
+export interface IVrfSubscriptionSetEvent {
+  subId: string;
+}
+
 export type TChainLinkEvents =
   | IVrfRandomnessRequestEvent
   | IVrfRandomRequestEvent
   | IVrfRandomWordsRequestedEvent
-  | IVrfSubscriptionCreatedEvent;
+  | IVrfSubscriptionCreatedEvent
+  | IVrfSubscriptionSetEvent;

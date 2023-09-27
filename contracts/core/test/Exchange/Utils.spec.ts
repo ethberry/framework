@@ -1821,7 +1821,7 @@ describe("Diamond Exchange Utils", function () {
       });
 
       describe("ERC721", function () {
-        let vrfInstance: VRFCoordinatorMock;
+        let vrfInstance: VRFCoordinatorV2Mock;
 
         before(async function () {
           await network.provider.send("hardhat_reset");
@@ -1893,7 +1893,7 @@ describe("Diamond Exchange Utils", function () {
       });
 
       describe("ERC998", function () {
-        let vrfInstance: VRFCoordinatorMock;
+        let vrfInstance: VRFCoordinatorV2Mock;
 
         before(async function () {
           await network.provider.send("hardhat_reset");

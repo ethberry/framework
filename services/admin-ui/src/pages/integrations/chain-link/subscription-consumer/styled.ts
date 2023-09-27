@@ -60,6 +60,7 @@ export const CustomTablePagination = styled(TablePagination)(
 
   & .${classes.selectLabel} {
     margin: 0;
+    padding: 5px;
   }
 
   & .${classes.select}{

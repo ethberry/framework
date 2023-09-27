@@ -10,7 +10,9 @@
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
     "risk": "You are doing this at your own risk!",
-    "uncaughtError": "Uncaught error happened"
+    "uncaughtError": "Uncaught error happened",
+    "vrfSub": "Need to Set ChainLink VRF subscription!",
+    "vrfConsumer": "Be sure to Add this contract to VRF Consumers list!"
   },
   "components": {
     "dropzone": {
@@ -94,6 +96,7 @@
     "upload": "Upload",
     "view": "View",
     "vrfConsumer": "Add Chain-Link VRF Consumer",
+    "vrfSetSub": "Set Chain-Link VRF Subscription",
     "whitelist": "Add to whitelist",
     "withdraw": "Withdraw balance"
   },
@@ -752,6 +755,7 @@
       "shares": "Shares",
       "sire": "Sire",
       "slug": "Slug",
+      "subId": "VRF Subscription Id",
       "stakingDepositStatus": "Status",
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
@@ -876,6 +880,7 @@
       "share": "0",
       "shares": "0",
       "slug": "terms-of-services",
+      "subId": "0",
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
@@ -972,11 +977,13 @@
         "title": "Subscription # {value}",
         "wallet": "Wallet balance: {value}",
         "subscription": "Subscription balance: {value}",
-        "consumers": "Consumers list",
+        "consumers": "Subscription #{value} Consumers list",
         "consumersInfo": "Contracts subscribed:"
       },
       "fund": "Fund",
       "subscription": "Subscription",
+      "select": "Select subscription ID",
+      "set": "Set Vrf subscription ID",
       "create": "Create Subscription",
       "title": "ChainLink"
     },

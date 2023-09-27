@@ -1,4 +1,6 @@
 import { FC, useState, MouseEvent, ChangeEvent } from "react";
+import { FormattedMessage } from "react-intl";
+
 import {
   CardActions,
   CardContent,
@@ -11,17 +13,16 @@ import {
   TableRow,
 } from "@mui/material";
 
-import { FormattedMessage } from "react-intl";
-
 import { StyledCard, StyledToolbar, StyledTypography, CustomTablePagination } from "./styled";
 import { ChainLinkSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/add-subscription";
 
 export interface IChainLinkConsumerProps {
+  subscriptionId: number;
   consumers: Array<string>;
 }
 
 export const ChainLinkSubscriptionConsumer: FC<IChainLinkConsumerProps> = props => {
-  const { consumers } = props;
+  const { subscriptionId, consumers } = props;
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -40,33 +41,18 @@ export const ChainLinkSubscriptionConsumer: FC<IChainLinkConsumerProps> = props 
       <CardContent>
         <StyledToolbar disableGutters>
           <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.chain-link.info.consumers" />
+            <FormattedMessage
+              id="pages.chain-link.info.consumers"
+              values={{ value: subscriptionId || "No subscription" }}
+            />
           </StyledTypography>
         </StyledToolbar>
-        <ChainLinkSubscriptionButton />
+        <ChainLinkSubscriptionButton subscriptionId={subscriptionId} />
       </CardContent>
       <CardActions>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
-              <CustomTablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
-                count={consumers.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                slotProps={{
-                  select: {
-                    "aria-label": "rows per page",
-                  },
-                  actions: {
-                    showFirstButton: true,
-                    showLastButton: true,
-                  },
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
               <TableRow>
                 <TableCell>Contract</TableCell>
               </TableRow>
@@ -88,6 +74,24 @@ export const ChainLinkSubscriptionConsumer: FC<IChainLinkConsumerProps> = props 
                 </TableRow>
               )}
             </TableBody>
+            <CustomTablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              colSpan={3}
+              count={consumers.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              slotProps={{
+                select: {
+                  "aria-label": "rows per page",
+                },
+                actions: {
+                  showFirstButton: true,
+                  showLastButton: true,
+                },
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Table>
         </TableContainer>
       </CardActions>

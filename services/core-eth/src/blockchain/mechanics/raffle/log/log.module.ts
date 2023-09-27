@@ -19,6 +19,7 @@ import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/R
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { RaffleLogService } from "./log.service";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -35,6 +36,23 @@ import { RaffleLogService } from "./log.service";
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          RaffleEventType.Prize,
+          RaffleEventType.RoundEnded,
+          RaffleEventType.Released,
+          RaffleEventType.RoundStarted,
+          RaffleEventType.RoundFinalized,
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+          AccessControlEventType.RoleAdminChanged,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          ExchangeEventType.PaymentEthReceived,
+          ContractEventType.VrfSubscriptionSet,
+        ];
+        const topics = getEventsTopics(eventNames);
+        console.info("RAFFLE_TOPICS", topics);
 
         return {
           contract: {
@@ -54,6 +72,7 @@ import { RaffleLogService } from "./log.service";
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               ExchangeEventType.PaymentEthReceived,
+              ContractEventType.VrfSubscriptionSet,
             ],
           },
           block: {

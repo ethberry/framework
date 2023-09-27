@@ -65,7 +65,6 @@ import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.servi
 import { ClaimService } from "../mechanics/claim/claim.service";
 import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log.service";
 import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
-import { addConsumer } from "../integrations/chain-link/contract/utils";
 import { decodeExternalId } from "../../common/utils";
 
 @Injectable()
@@ -197,18 +196,6 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      // const vrfCoordinator = await this.contractService.findSystemByName({
-      //   contractModule: ModuleType.CHAIN_LINK,
-      //   chainId,
-      // });
-      // const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-      // const txr: string = await addConsumer(
-      //   vrfCoordinator.address[0],
-      //   ~~subscriptionId,
-      //   account.toLowerCase(),
-      //   this.ethersSignerProvider,
-      // );
-      // this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
       await this.chainLinkLogService.updateListener();
       // TODO probably update listener only after set subscription by admin etc..
     }
@@ -376,18 +363,6 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfCoordinator = await this.contractService.findSystemByName({
-        contractModule: ModuleType.CHAIN_LINK,
-        chainId,
-      });
-      const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-      const txr: string = await addConsumer(
-        vrfCoordinator.address[0],
-        ~~subscriptionId,
-        account.toLowerCase(),
-        this.ethersSignerProvider,
-      );
-      this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
       await this.chainLinkLogService.updateListener();
     }
 
@@ -646,19 +621,6 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfCoordinator = await this.contractService.findSystemByName({
-      contractModule: ModuleType.CHAIN_LINK,
-      chainId,
-    });
-    const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(
-      vrfCoordinator.address[0],
-      ~~subscriptionId,
-      account.toLowerCase(),
-      this.ethersSignerProvider,
-    );
-    this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
-
     await this.chainLinkLogService.updateListener();
     this.lotteryLogService.addListener({
       address: [account.toLowerCase()],
@@ -696,19 +658,6 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
-
-    const vrfCoordinator = await this.contractService.findSystemByName({
-      contractModule: ModuleType.CHAIN_LINK,
-      chainId,
-    });
-    const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(
-      vrfCoordinator.address[0],
-      ~~subscriptionId,
-      account.toLowerCase(),
-      this.ethersSignerProvider,
-    );
-    this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
     await this.chainLinkLogService.updateListener();
     this.raffleLogService.addListener({

@@ -18,10 +18,19 @@ contract ERC721GenesHardhat is ERC721Genes, ChainLinkHardhatV2 {
     string memory baseTokenURI
   )
     ERC721Genes(name, symbol, royalty, baseTokenURI)
-    ChainLinkHardhatV2(uint64(1), uint16(6), uint32(600000), uint32(1))
+    ChainLinkHardhatV2(uint64(0), uint16(6), uint32(600000), uint32(1))
   {}
 
+  // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
+  event VrfSubscriptionSet(uint64 subId);
+  function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (subId == 0) revert InvalidSubscription();
+    emit VrfSubscriptionSet(subId);
+    _subId = subId;
+  }
+
   function getRandomNumber() internal override(ChainLinkBaseV2, ERC721Genes) returns (uint256 requestId) {
+    if (_subId == 0) revert InvalidSubscription();
     return super.getRandomNumber();
   }
 

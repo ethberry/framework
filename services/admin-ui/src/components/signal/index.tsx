@@ -41,6 +41,7 @@ export const Signal: FC = () => {
       SignalEventType.TRANSACTION_HASH,
       async (dto: { transactionHash: string; transactionType?: ContractEventType }) => {
         if (dto.transactionType) {
+          const date = new Date();
           enqueueSnackbar(
             formatMessage(
               { id: "snackbar.transactionTypeExecuted" },
@@ -50,7 +51,7 @@ export const Signal: FC = () => {
               variant: "success",
             },
           );
-          await add({ txHash: dto.transactionHash, txType: dto.transactionType }).then(
+          await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(
             event => {
               console.info("DB ID Generated: ", event);
             },

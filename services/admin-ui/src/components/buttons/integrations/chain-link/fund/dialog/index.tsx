@@ -13,7 +13,7 @@ import { validationSchema } from "./validation";
 import { formatEther } from "../../../../../../utils/money";
 
 export interface IChainLinkFundDto {
-  subscriptionId: string;
+  subscriptionId: number;
   amount: string;
 }
 
@@ -40,6 +40,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
 
   return (
     <FormDialog
+      disabled={false}
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.fund"

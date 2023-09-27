@@ -8,7 +8,7 @@ export async function deployLinkVrfFixture() {
   const linkInstance = await link.deploy();
   await linkInstance.waitForDeployment();
   // console.info(`LINK_ADDR=${linkInstance.address}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock");
   const vrfInstance = await vrfFactory.deploy(await linkInstance.getAddress());
   await vrfInstance.waitForDeployment();
   // GET CHAIN_LINK V2 TO WORK

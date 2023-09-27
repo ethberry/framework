@@ -11,6 +11,7 @@ import "./get-hash";
 import "./get-uri";
 import "./flat";
 import "./grant";
+import "./get-sub";
 import "./get-receipt-by-hash";
 import "./parse-dispenser-tx";
 import "./calc/error-id";

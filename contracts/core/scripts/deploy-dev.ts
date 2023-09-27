@@ -1,90 +1,31 @@
 import { ethers, network } from "hardhat";
-import { Contract, Result, WeiPerEther, ZeroAddress } from "ethers";
+import { Result, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, camelToSnakeCase } from "@gemunion/contracts-utils";
 import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
 import { getContractName } from "../test/utils";
 import { expiresAt, externalId } from "../test/constants";
 import { deployDiamond } from "../test/Exchange/shared/fixture";
+import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils";
 
+// DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms
-// const linkAmountInEth = parseEther("1");
+const delayMs = 300; // block delay ms (low for localhost, high for binance etc.)
+
+// VRF CONFIG
+const vrfSubId = network.name === "besu" ? 1n : 2n; // !!!SET INITIAL SUB ID!!!
+
+// COLLECTION size
 const batchSize = 3; // Generative collection size
 
-const vrfSubId = 1; // VRF subscription Id
-
-interface IObj {
-  address?: string;
-  hash?: string;
-}
-
-const recursivelyDecodeResult = (result: Result): Record<string, any> => {
-  if (typeof result !== "object") {
-    // Raw primitive value
-    return result;
-  }
-  try {
-    const obj = result.toObject();
-    if (obj._) {
-      throw new Error("Decode as array, not object");
-    }
-    Object.keys(obj).forEach(key => {
-      obj[key] = recursivelyDecodeResult(obj[key]);
-    });
-    return obj;
-  } catch (err) {
-    // Result is array.
-    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
-  }
-};
-
-const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
-  if (obj && obj.hash) {
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    console.info(`${name} tx: ${obj.hash}`);
-    await blockAwaitMs(delayMs);
-  } else {
-    console.info(`${Object.keys(obj).pop()} deployed`);
-    const tx = Object.values(obj).pop();
-    const contract = tx;
-    await blockAwait(delay, delayMs);
-    const address = await contract.getAddress();
-    fs.appendFileSync(
-      `${process.cwd()}/log.txt`,
-      // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
-      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${address.toLowerCase() || "--"}\n`,
-    );
-  }
-};
-
-const grantRoles = async (contracts: Array<string>, grantee: Array<string>, roles: Array<string>) => {
-  let idx = 1;
-  const max = contracts.length * grantee.length * roles.length;
-  for (let i = 0; i < contracts.length; i++) {
-    for (let j = 0; j < grantee.length; j++) {
-      for (let k = 0; k < roles.length; k++) {
-        if (contracts[i] !== grantee[j]) {
-          const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
-          console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
-          idx++;
-          await blockAwaitMs(300);
-          await accessInstance.grantRole(roles[k], grantee[j]);
-          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
-        }
-      }
-    }
-  }
-};
-
-const contracts: Record<string, any> = {};
 const amount = WeiPerEther * 1000000000000n; // ?
 const timestamp = Math.ceil(Date.now() / 1000);
 const currentBlock: { number: number } = { number: 1 };
+const contracts: Record<string, any> = {};
 
 async function main() {
   const [owner, receiver, stranger] = await ethers.getSigners();
@@ -116,10 +57,10 @@ async function main() {
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
   const vrfAddr =
     network.name === "besu"
-      ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost
+      ? "0xa50a51c09a5c451c52bb714527e1974b686d8e77" // vrf besu localhost
       : network.name === "gemunion"
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
-      : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
+      : "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
   const vrfInstance = await ethers.getContractAt("VRFCoordinatorV2Mock", vrfAddr);
 
   // DIAMOND CM
@@ -252,9 +193,9 @@ async function main() {
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
 
-  // await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
+  await debug(await contracts.erc721Random.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc721Random.getAddress()),
+    await vrfInstance.addConsumer(vrfSubId, await contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
   await blockAwait(delay, delayMs);
@@ -272,8 +213,9 @@ async function main() {
   contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 DNA", "DNA721", royalty, baseTokenURI);
   await debug(contracts);
 
+  await debug(await contracts.erc721Genes.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc721Genes.getAddress()),
+    await vrfInstance.addConsumer(vrfSubId, await contracts.erc721Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -310,9 +252,9 @@ async function main() {
   contracts.erc998Random = erc998RandomInstance;
   await debug(contracts);
 
-  // await debug(await linkInstance.transfer(contracts.erc998Random.getAddress(), linkAmountInEth), "linkInstance.transfer");
+  await debug(await contracts.erc998Random.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc998Random.getAddress()),
+    await vrfInstance.addConsumer(vrfSubId, await contracts.erc998Random.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -326,8 +268,9 @@ async function main() {
   contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (traits)", "DNA998", royalty, baseTokenURI);
   await debug(contracts);
 
+  await debug(await contracts.erc998Genes.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.erc998Genes.getAddress()),
+    await vrfInstance.addConsumer(vrfSubId, await contracts.erc998Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -553,10 +496,8 @@ async function main() {
   });
   await debug(contracts);
 
-  await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.lottery.getAddress()),
-    "vrfInstance.addConsumer",
-  );
+  await debug(await contracts.lottery.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
+  await debug(await vrfInstance.addConsumer(vrfSubId, await contracts.lottery.getAddress()), "vrfInstance.addConsumer");
   await debug(
     await contracts.erc721LotteryTicket.grantRole(MINTER_ROLE, await contracts.lottery.getAddress()),
     "grantRole",
@@ -576,10 +517,9 @@ async function main() {
   const raffleFactory = await ethers.getContractFactory(randomContractRaffleName);
   contracts.raffle = await raffleFactory.deploy();
   await debug(contracts);
-  await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1n : vrfSubId, await contracts.raffle.getAddress()),
-    "vrfInstance.addConsumer",
-  );
+
+  await debug(await contracts.raffle.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
+  await debug(await vrfInstance.addConsumer(vrfSubId, await contracts.raffle.getAddress()), "vrfInstance.addConsumer");
   await debug(
     await contracts.erc721RaffleTicket.grantRole(MINTER_ROLE, await contracts.raffle.getAddress()),
     "grantRole",

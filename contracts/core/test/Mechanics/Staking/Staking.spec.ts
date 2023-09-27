@@ -89,7 +89,7 @@ describe("Staking", function () {
     extra: encodeBytes32String("0x"),
   };
 
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const factory = () => deployStaking();
   const erc20Factory = () => deployERC1363("ERC20Simple", { amount: parseEther("200000") });

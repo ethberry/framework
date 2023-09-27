@@ -14,7 +14,7 @@ import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
 import { deployERC1363 } from "../../../../../ERC20/shared/fixtures";
 
 export function shouldUnpackBox(factory: () => Promise<any>) {
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const erc20Factory = (name: string) => deployERC1363(name);
   const erc721Factory = (name: string) => deployERC721(name);

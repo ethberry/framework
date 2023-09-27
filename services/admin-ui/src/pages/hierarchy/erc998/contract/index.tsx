@@ -28,6 +28,7 @@ import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc998ContractEditDialog } from "./edit";
+import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
 
 export const Erc998Contract: FC = () => {
   const {
@@ -131,6 +132,14 @@ export const Erc998Contract: FC = () => {
                   />
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <ChainLinkSetSubscriptionButton
+                    address={contract.address}
+                    disabled={
+                      itemDisabled ||
+                      (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
+                        !contract.contractFeatures.includes(ContractFeatures.GENES))
+                    }
+                  />
                 </ListActions>
               </ListItem>
             );
