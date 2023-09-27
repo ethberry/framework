@@ -18,7 +18,7 @@ import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@frame
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { MintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
+import { MysteryBoxMintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { ContractInput } from "../../../../components/forms/template-search/contract-input";
 import { MysteryboxEditDialog } from "./edit";
 
@@ -138,7 +138,10 @@ export const MysteryBox: FC = () => {
                   message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-                <MintButton mystery={mystery} disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE} />
+                <MysteryBoxMintButton
+                  mystery={mystery}
+                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+                />
               </ListActions>
             </ListItem>
           ))}

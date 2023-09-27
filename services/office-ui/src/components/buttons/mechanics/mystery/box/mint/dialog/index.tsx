@@ -8,21 +8,21 @@ import { MysteryboxInput } from "../../../../../../inputs/mystery-box";
 import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
 
-export interface IMintMysteryboxDto {
+export interface IMintMysteryBoxDto {
   account: string;
   contractId: number;
   mysteryId: number;
-  mysterybox?: IMysteryBox;
+  mysteryBox?: IMysteryBox;
 }
 
-export interface IMintMysteryboxDialogProps {
+export interface IMintMysteryBoxDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IMintMysteryboxDto, form: any) => Promise<void>;
-  initialValues: IMintMysteryboxDto;
+  onConfirm: (values: IMintMysteryBoxDto, form: any) => Promise<void>;
+  initialValues: IMintMysteryBoxDto;
 }
 
-export const MintMysteryboxDialog: FC<IMintMysteryboxDialogProps> = props => {
+export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (

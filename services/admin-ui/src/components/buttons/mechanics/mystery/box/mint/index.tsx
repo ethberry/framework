@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
-import { IMintMysteryboxDto, MintMysteryboxDialog } from "./dialog";
+import { IMintMysteryBoxDto, MysteryBoxMintDialog } from "./dialog";
 
 export interface IMintButtonProps {
   className?: string;
@@ -40,22 +40,22 @@ export const MintButton: FC<IMintButtonProps> = props => {
     setIsMintTokenDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IMintMysteryboxDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
     const contractMysterybox = new Contract(
       template!.contract!.address,
       MysteryMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysterybox!.item!.components.map(item => ({
+    const items = values.mysteryBox!.item!.components.map(item => ({
       tokenType: Object.values(TokenType).indexOf(item.tokenType),
       token: item.contract!.address,
       tokenId: item.templateId,
       amount: item.amount,
     }));
-    return contractMysterybox.mintBox(values.account, values.mysterybox!.templateId, items) as Promise<any>;
+    return contractMysterybox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
 
-  const handleMintTokenConfirmed = async (values: IMintMysteryboxDto): Promise<void> => {
+  const handleMintTokenConfirmed = async (values: IMintMysteryBoxDto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsMintTokenDialogOpen(false);
     });
@@ -72,7 +72,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         disabled={disabled}
         variant={variant}
       />
-      <MintMysteryboxDialog
+      <MysteryBoxMintDialog
         onCancel={handleMintTokenCancel}
         onConfirm={handleMintTokenConfirmed}
         open={isMintTokenDialogOpen}
