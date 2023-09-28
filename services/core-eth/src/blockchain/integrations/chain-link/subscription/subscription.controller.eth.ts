@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractType,
   IVrfSubscriptionCreatedEvent,
+  IVrfSubscriptionConsumerAddedEvent,
   IVrfSubscriptionSetEvent,
 } from "@framework/types";
 
@@ -25,6 +26,14 @@ export class ChainLinkSubscriptionControllerEth {
     return this.chainLinkServiceEth.createSubscription(event, context);
   }
 
+  @EventPattern([{ contractType: ChainLinkType.VRF_SUB, eventName: ChainLinkEventType.SubscriptionConsumerAdded }])
+  public consumerAdd(
+    @Payload() event: ILogEvent<IVrfSubscriptionConsumerAddedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.chainLinkServiceEth.consumerAdd(event, context);
+  }
+
   @EventPattern([
     { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
     { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
@@ -34,7 +43,4 @@ export class ChainLinkSubscriptionControllerEth {
   public setSubscription(@Payload() event: ILogEvent<IVrfSubscriptionSetEvent>, @Ctx() context: Log): Promise<void> {
     return this.chainLinkServiceEth.setVrfSubscription(event, context);
   }
-
-  // TODO process event SubscriptionConsumerAdded(subId, consumer);
-  // set contract.parameters: { isConsumer: true }
 }

@@ -4,7 +4,13 @@ import { useFormContext } from "react-hook-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ContractFeatures } from "@framework/types";
 
-export const VrfConsumerInput: FC = () => {
+export interface IVrfConsumerInputDto {
+  contractId?: number;
+}
+
+export const VrfConsumerInput: FC<IVrfConsumerInputDto> = props => {
+  const { contractId } = props;
+
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
@@ -16,11 +22,9 @@ export const VrfConsumerInput: FC = () => {
     <EntityInput
       name="contractId"
       controller="contracts"
-      data={{
-        contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES],
-      }}
       onChange={handleChange}
-      autoselect
+      data={{ contractId, contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
+      autoselect={true}
     />
   );
 };

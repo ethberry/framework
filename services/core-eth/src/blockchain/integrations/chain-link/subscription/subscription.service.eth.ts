@@ -5,6 +5,7 @@ import { Log } from "ethers";
 
 import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  IVrfSubscriptionConsumerAddedEvent,
   IVrfSubscriptionCreatedEvent,
   IVrfSubscriptionSetEvent,
   RmqProviderType,
@@ -54,6 +55,36 @@ export class ChainLinkSubscriptionServiceEth {
         })
         .toPromise();
     }
+  }
+
+  public async consumerAdd(event: ILogEvent<IVrfSubscriptionConsumerAddedEvent>, context: Log): Promise<void> {
+    const {
+      name,
+      args: { consumer },
+    } = event;
+    const { transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractEntity = await this.contractService.findOne(
+      { address: consumer.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    Object.assign(contractEntity.parameters, { isConsumer: true });
+    await contractEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async setVrfSubscription(event: ILogEvent<IVrfSubscriptionSetEvent>, context: Log): Promise<void> {

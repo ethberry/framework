@@ -13,12 +13,13 @@ import {
   UpdateResult,
 } from "typeorm";
 
-import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
+import type { IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
 import type { IContractUpdateDto } from "./interfaces";
+import { IContractAutocompleteExtDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -120,7 +121,7 @@ export class ContractService {
   }
 
   public async autocomplete(
-    dto: Partial<IContractAutocompleteDto>,
+    dto: Partial<IContractAutocompleteExtDto>,
     userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
     const {
@@ -130,12 +131,19 @@ export class ContractService {
       contractModule = [],
       excludeFeatures = [],
       includeExternalContracts,
+      contractId,
     } = dto;
 
     const where = {
       chainId: userEntity.chainId,
       merchantId: userEntity.merchantId,
     };
+
+    if (contractId) {
+      Object.assign(where, {
+        id: contractId,
+      });
+    }
 
     if (contractType.length) {
       Object.assign(where, {

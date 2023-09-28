@@ -104,6 +104,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
       --MODULE:CHAINLINKV2
        'RandomWordsRequested',
        'SubscriptionCreated',
+       'SubscriptionConsumerAdded',
        'VrfSubscriptionSet',
       --MODULE:ECOMMERCE
        'EcommercePurchase',

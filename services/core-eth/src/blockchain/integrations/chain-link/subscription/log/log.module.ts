@@ -34,7 +34,13 @@ import { keccak256It } from "../../contract/utils";
           ];
 
         // search for all SubscriptionCreated events
-        const topics = [[keccak256It(ChainLinkEventSignatures.SubscriptionCreated as string)], null];
+        const topics = [
+          [
+            keccak256It(ChainLinkEventSignatures.SubscriptionCreated as string),
+            keccak256It(ChainLinkEventSignatures.SubscriptionConsumerAdded as string),
+          ],
+          null,
+        ];
 
         return {
           contract: {

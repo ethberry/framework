@@ -25,8 +25,8 @@ contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhat
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
     if (subId == 0) revert InvalidSubscription();
-    emit VrfSubscriptionSet(subId);
-    _subId = subId;
+        _subId = subId;
+    emit VrfSubscriptionSet(_subId);
   }
 
   function getRandomNumber() internal override(ChainLinkBaseV2, ERC998BlacklistRandom) returns (uint256 requestId) {

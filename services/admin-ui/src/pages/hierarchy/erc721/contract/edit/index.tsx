@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
@@ -12,6 +12,8 @@ import { BusinessType, ContractFeatures, ContractStatus } from "@framework/types
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../components/dialogs/product-type";
 import { validationSchema } from "./validation";
+import { ChainLinkSetSubscriptionButton } from "../../../../../components/buttons/integrations/chain-link/set-subscription";
+import { ChainLinkAddConsumerButton } from "../../../../../components/buttons/integrations/chain-link/add-subscription";
 
 export interface IErc721ContractEditDialogProps {
   open: boolean;
@@ -92,7 +94,8 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
           name="contractStatus"
           options={ContractStatus}
           disabledOptions={
-            parameters.vrfSubId === "0" || !parameters.vrfSubId
+            (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) &&
+            (!parameters.vrfSubId || !parameters.isConsumer || parameters.vrfSubId === "0")
               ? [ContractStatus.NEW, ContractStatus.ACTIVE]
               : [ContractStatus.NEW]
           }
@@ -101,14 +104,21 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       <AvatarInput name="imageUrl" />
       {(parameters.vrfSubId === "0" || !parameters.vrfSubId) &&
       (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) ? (
-        <Alert severity="warning">
-          <FormattedMessage id="alert.vrfSub" />
-        </Alert>
+        <Fragment>
+          <Alert severity="warning">
+            <FormattedMessage id="alert.vrfSub" />
+          </Alert>
+          <ChainLinkSetSubscriptionButton address={address} />
+        </Fragment>
       ) : null}
-      {contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES) ? (
-        <Alert severity="warning">
-          <FormattedMessage id="alert.vrfConsumer" />
-        </Alert>
+      {!parameters.isConsumer &&
+      (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) ? (
+        <Fragment>
+          <Alert severity="warning">
+            <FormattedMessage id="alert.vrfConsumer" />
+          </Alert>
+          <ChainLinkAddConsumerButton contractId={id} subscriptionId={0} />
+        </Fragment>
       ) : null}
     </FormDialog>
   );

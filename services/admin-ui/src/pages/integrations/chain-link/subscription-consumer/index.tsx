@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { StyledCard, StyledToolbar, StyledTypography, CustomTablePagination } from "./styled";
-import { ChainLinkSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/add-subscription";
+import { ChainLinkAddConsumerButton } from "../../../../components/buttons/integrations/chain-link/add-subscription";
 
 export interface IChainLinkConsumerProps {
   subscriptionId: number;
@@ -47,7 +47,7 @@ export const ChainLinkSubscriptionConsumer: FC<IChainLinkConsumerProps> = props 
             />
           </StyledTypography>
         </StyledToolbar>
-        <ChainLinkSubscriptionButton subscriptionId={subscriptionId} />
+        <ChainLinkAddConsumerButton subscriptionId={subscriptionId} />
       </CardContent>
       <CardActions>
         <TableContainer component={Paper}>

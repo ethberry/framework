@@ -7,7 +7,7 @@ import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorV2Mock } from "../../../../typechain-types";
 import { deployLinkVrfFixture } from "../../../shared/link";
-import { templateId, tokenAttributes, tokenId } from "../../../constants";
+import { templateId, tokenAttributes, tokenId, subscriptionId } from "../../../constants";
 import { randomFixRequest } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<any>) {
@@ -29,14 +29,14 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       // Set VRFV2 Subscription
-      const tx01 = contractInstance.setSubscriptionId(1);
+      const tx01 = contractInstance.setSubscriptionId(subscriptionId);
       await expect(tx01).to.emit(contractInstance, "VrfSubscriptionSet").withArgs(1);
 
       // Add Consumer to VRFV2
-      const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
+      const tx02 = vrfInstance.addConsumer(subscriptionId, await contractInstance.getAddress());
       await expect(tx02)
         .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-        .withArgs(1, await contractInstance.getAddress());
+        .withArgs(subscriptionId, await contractInstance.getAddress());
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {

@@ -75,16 +75,18 @@ async function main() {
   console.info(`VRF_ADDR=${vrfAddr}`);
 
   // GET LINK TOKEN to OWNER
-  const linkAmount = WeiPerEther * 1000n;
-  await debug(await linkInstance.connect(besuOwner).transfer(owner.address, linkAmount), "transfer1000LinkToOwner");
+  if (besuOwner.address !== owner.address) {
+    const linkAmount = WeiPerEther * 1000n;
+    await debug(await linkInstance.connect(besuOwner).transfer(owner.address, linkAmount), "transfer1000LinkToOwner");
+  }
 
   // CREATE VRF SUBSCRIPTION
   await debug(await vrfInstance.createSubscription(), "createSubscription");
 
-  // GET SUB ID
+  // GET new SUB ID
   const eventFilter = vrfInstance.filters.SubscriptionCreated();
   const events = await vrfInstance.queryFilter(eventFilter, block!.number);
-  const { subId } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  const { subId } = recursivelyDecodeResult(events[events.length - 1].args as unknown as Result);
   console.info("SubscriptionCreated", subId);
 
   // FUND SUBSCRIPTION
@@ -96,7 +98,7 @@ async function main() {
   // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
   const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
   const events1 = await vrfInstance.queryFilter(eventFilter1, block!.number);
-  const { newBalance } = recursivelyDecodeResult(events1[0].args as unknown as Result);
+  const { newBalance } = recursivelyDecodeResult(events1[events1.length - 1].args as unknown as Result);
   console.info("SubscriptionFunded", newBalance);
 
   const subs = await vrfInstance.getSubscription(subId);

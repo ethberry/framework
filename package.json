@@ -55,6 +55,7 @@
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream",
     "precommit": "lint-staged",
+    "prepare:env": "bash scripts/set-env.sh development",
     "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
     "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",
     "prepare:framework:dev": "sh scripts/prepare-fw.sh development besu",

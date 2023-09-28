@@ -20,9 +20,14 @@ contract ERC721RandomBesu is ERC721Random, ChainLinkBesu {
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (_subId == 0) revert InvalidSubscription();
-    emit VrfSubscriptionSet(subId);
+    if (subId == 0) revert InvalidSubscription();
     _subId = subId;
+    emit VrfSubscriptionSet(_subId);
+  }
+
+  // DEV:ONLY
+  function getSub() public view returns (uint64) {
+    return _subId;
   }
 
   function getRandomNumber() internal override(ChainLinkBaseV2, ERC721Random) returns (uint256 requestId) {

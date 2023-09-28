@@ -25,8 +25,8 @@ contract ERC998BlacklistDiscreteRandomBesu is ERC998BlacklistDiscreteRandom, Cha
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
     if (subId == 0) revert InvalidSubscription();
-    emit VrfSubscriptionSet(subId);
-    _subId = subId;
+        _subId = subId;
+    emit VrfSubscriptionSet(_subId);
   }
 
   function getRandomNumber()

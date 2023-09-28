@@ -2,14 +2,16 @@ import { ChangeEvent, FC } from "react";
 
 import { ContractFeatures } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { validationSchema } from "./validation";
+// import { VrfSubInput } from "../../set-subscription/dialog/sub-input";
+import { VrfConsumerInput } from "./contract-input";
 
 export interface IChainLinkVrfSubscriptionDto {
-  subscriptionId: number;
+  vrfSubId: number;
   address: string;
+  contractId?: number;
 }
 
 export interface IChainLinkSubscriptionDialogProps {
@@ -21,10 +23,12 @@ export interface IChainLinkSubscriptionDialogProps {
 
 export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> = props => {
   const { initialValues, ...rest } = props;
+  const { contractId } = initialValues;
 
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
+      console.log("testChangeEvent!!!");
       form.setValue("contractId", option?.id ?? 0);
       form.setValue("address", option?.address ?? "0x");
     };
@@ -40,11 +44,12 @@ export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> 
     >
       <CommonContractInput
         name="contractId"
-        data={{ contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
+        data={{ contractId, contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
         onChange={handleContractChange}
-        autoselect
+        autoselect={true}
       />
-      <TextInput name="subscriptionId" />
+      <VrfConsumerInput />
+      {/* <VrfSubInput /> */}
     </FormDialog>
   );
 };

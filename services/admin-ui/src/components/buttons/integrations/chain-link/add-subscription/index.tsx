@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 import { RecentActors } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
@@ -12,16 +12,17 @@ import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscrip
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
 
-export interface IChainLinkSubscriptionButtonProps {
+export interface IChainLinkAddConsumerButtonProps {
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
   subscriptionId: number;
+  contractId?: number;
 }
 
-export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> = props => {
-  const { subscriptionId, className, disabled, variant = ListActionVariant.button } = props;
-  const navigate = useNavigate();
+export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = props => {
+  const { contractId, subscriptionId, className, disabled, variant = ListActionVariant.button } = props;
+  // const navigate = useNavigate();
 
   const { account } = useWeb3React();
   const [isSubscriptionDialogOpen, setIsSubscriptionDialogOpen] = useState(false);
@@ -29,7 +30,7 @@ export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> 
   const metaFnAddConsumer = useMetamask(async (values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
     const contract = new Contract(process.env.VRF_ADDR, VrfAddConsumer, web3Context.provider?.getSigner());
-    const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
+    const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
     return contract.addConsumer(subId, values.address) as Promise<void>;
   });
 
@@ -38,13 +39,12 @@ export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> 
   };
 
   const handleAddConsumerConfirm = async (values: IChainLinkVrfSubscriptionDto): Promise<void> => {
-    await metaFnAddConsumer(values)
-      .then(() => {
-        setIsSubscriptionDialogOpen(false);
-      })
-      .finally(() => {
-        navigate("/chain-link", { replace: true });
-      });
+    await metaFnAddConsumer(values).then(() => {
+      setIsSubscriptionDialogOpen(false);
+    });
+    // .finally(() => {
+    //   navigate("/chain-link", { replace: true });
+    // });
   };
 
   const handleAddConsumerCancel = () => {
@@ -67,8 +67,9 @@ export const ChainLinkSubscriptionButton: FC<IChainLinkSubscriptionButtonProps> 
         onConfirm={handleAddConsumerConfirm}
         open={isSubscriptionDialogOpen}
         initialValues={{
-          subscriptionId,
+          vrfSubId: subscriptionId,
           address: "0x",
+          contractId,
         }}
       />
     </Fragment>

@@ -31,9 +31,16 @@ export interface IVrfSubscriptionSetEvent {
   subId: string;
 }
 
+// event SubscriptionConsumerAdded(uint64 indexed subId, address consumer);
+export interface IVrfSubscriptionConsumerAddedEvent {
+  subId: string;
+  consumer: string;
+}
+
 export type TChainLinkEvents =
   | IVrfRandomnessRequestEvent
   | IVrfRandomRequestEvent
   | IVrfRandomWordsRequestedEvent
   | IVrfSubscriptionCreatedEvent
-  | IVrfSubscriptionSetEvent;
+  | IVrfSubscriptionSetEvent
+  | IVrfSubscriptionConsumerAddedEvent;

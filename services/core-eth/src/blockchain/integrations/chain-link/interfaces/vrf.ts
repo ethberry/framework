@@ -6,6 +6,7 @@ export enum ChainLinkType {
 export enum ChainLinkEventType {
   RandomWordsRequested = "RandomWordsRequested",
   SubscriptionCreated = "SubscriptionCreated",
+  SubscriptionConsumerAdded = "SubscriptionConsumerAdded",
 }
 
 // event RandomWordsRequested(bytes32 indexed keyHash,uint256 requestId,uint256 preSeed,uint64 indexed subId,uint16 minimumRequestConfirmations,uint32 callbackGasLimit,uint32 numWords,address indexed sender);
@@ -13,6 +14,7 @@ export enum ChainLinkEventType {
 export enum ChainLinkEventSignatures {
   RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)",
   SubscriptionCreated = "SubscriptionCreated(uint64,address)",
+  SubscriptionConsumerAdded = "SubscriptionConsumerAdded(uint64,address)",
 }
 
 // event RandomnessRequestId(bytes32 _requestID, address indexed _sender);

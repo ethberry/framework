@@ -32,21 +32,21 @@ const contracts: Record<string, any> = {};
 async function main() {
   const [owner, _receiver, _stranger1, stranger2] = await ethers.getSigners();
   const besuOwner = network.name === "besu" ? owner : stranger2;
-
+  console.info("besuOwner", besuOwner.address);
   // LINK & VRF
   const linkAddr =
     network.name === "besu"
       ? "0x42699a7612a82f1d9c36148af9c77354759b210b"
       : network.name === "gemunion" || network.name === "gemunionprod"
-      ? ""
-      : "0xb9a219631aed55ebc3d998f17c3840b7ec39c0cc";
+      ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
+      : "0xb9a219631aed55ebc3d998f17c3840b7ec39c0cc"; // binance test
 
   const vrfAddr =
     network.name === "besu"
       ? "0xa50a51c09a5c451c52bb714527e1974b686d8e77" // vrf besu localhost
       : network.name === "gemunion" || network.name === "gemunionprod"
-      ? "" // vrf besu gemunion
-      : "0x4d2d24899c0b115a1fce8637fca610fe02f1909e";
+      ? "0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a" // vrf besu gemunion
+      : "0x4d2d24899c0b115a1fce8637fca610fe02f1909e"; // binance test
 
   const linkFactory = await ethers.getContractFactory("LinkToken");
   contracts.link = await linkFactory.connect(besuOwner).deploy();

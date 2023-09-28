@@ -14,7 +14,7 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 300; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 250; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
 const vrfSubId = network.name === "besu" ? 1n : 2n; // !!!SET INITIAL SUB ID!!!
