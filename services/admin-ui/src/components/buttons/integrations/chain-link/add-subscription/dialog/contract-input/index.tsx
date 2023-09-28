@@ -24,7 +24,7 @@ export const VrfConsumerInput: FC<IVrfConsumerInputDto> = props => {
       controller="contracts"
       onChange={handleChange}
       data={{ contractId, contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
-      autoselect={true}
+      autoselect
     />
   );
 };

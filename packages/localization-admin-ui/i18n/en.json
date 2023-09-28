@@ -11,8 +11,7 @@
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened",
-    "vrfSub": "Need to Set ChainLink VRF subscription!",
-    "vrfConsumer": "Be sure to Add this contract to VRF Consumers list!"
+    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!"
   },
   "components": {
     "dropzone": {
@@ -972,20 +971,17 @@
       "title": "Categories"
     },
     "chain-link": {
+      "id": "Subscription # {value}",
       "manage": "Subscriptions",
-      "info": {
-        "title": "Subscription # {value}",
-        "wallet": "Wallet balance: {value}",
-        "subscription": "Subscription balance: {value}",
-        "consumers": "Subscription #{value} Consumers list",
-        "consumersInfo": "Contracts subscribed:"
-      },
+      "balance": "Balance: {balance}",
+      "wallet": "Wallet balance: {value}",
+      "consumers": "Consumers list",
       "fund": "Fund",
       "subscription": "Subscription",
       "select": "Select subscription ID",
       "set": "Set Vrf subscription ID",
       "create": "Create Subscription",
-      "title": "ChainLink"
+      "title": "ChainLink Subscriptions"
     },
     "claims": {
       "defaultItemTitle": "{account}",
