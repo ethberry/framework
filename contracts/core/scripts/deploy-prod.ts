@@ -76,9 +76,6 @@ async function main() {
   contracts.contractManager = cmInstance;
   await debug(contracts);
 
-  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
-  // const factoryInstance = await ethers.getContractAt("UseFactoryFacet", "0x7794f02dd366e28c0e1d8e6231fa5caf15e9b3b6");
-
   // DIAMOND EXCHANGE
   const exchangeInstance = await deployDiamond(
     "DiamondExchange",
@@ -107,6 +104,10 @@ async function main() {
   await debug(contracts);
 
   const exchangeAddress = await exchangeInstance.getAddress();
+  // const exchangeAddress = "0x5fee6631bfa86057c5878ea170564b67774e1fe8";
+
+  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
+  // const factoryInstance = await ethers.getContractAt("UseFactoryFacet", "0x3e40ebe3dd88fb5dd927bcd6ec5cac4b6c41f0b1");
 
   await debug(await factoryInstance.addFactory(exchangeAddress, MINTER_ROLE), "contractManager.addFactory");
 

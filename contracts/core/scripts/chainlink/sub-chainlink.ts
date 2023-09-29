@@ -50,8 +50,9 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
 const contracts: Record<string, any> = {};
 
 async function main() {
-  const [owner, _receiver, _stranger1, stranger2] = await ethers.getSigners();
+  const [owner, _receiver, _moneybag, stranger2] = await ethers.getSigners();
   const besuOwner = network.name === "besu" ? owner : stranger2;
+  console.info("besuOwner", besuOwner.address);
   const block = await ethers.provider.getBlock("latest");
 
   // LINK & VRF
@@ -59,15 +60,15 @@ async function main() {
     network.name === "besu"
       ? "0x42699a7612a82f1d9c36148af9c77354759b210b"
       : network.name === "gemunion" || network.name === "gemunionprod"
-      ? "0x1fa66727cdd4e3e4a6debe4adf84985873f6cd8a"
-      : "0x42699A7612A82f1d9C36148af9C77354759b210b";
+      ? "0x1fa66727cdd4e3e4a6debe4adf84985873f6cd8a" // vrf besu gemunion
+      : "0xb9a219631aed55ebc3d998f17c3840b7ec39c0cc"; // binance test
 
   const vrfAddr =
     network.name === "besu"
       ? "0xa50a51c09a5c451c52bb714527e1974b686d8e77" // vrf besu localhost
       : network.name === "gemunion" || network.name === "gemunionprod"
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
-      : "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
+      : "0x4d2d24899c0b115a1fce8637fca610fe02f1909e"; // binance test
 
   const linkInstance = await ethers.getContractAt("LinkToken", linkAddr);
   console.info(`LINK_ADDR=${linkAddr}`);
