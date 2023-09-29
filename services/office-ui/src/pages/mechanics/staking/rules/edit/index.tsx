@@ -56,6 +56,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId="StakingEditForm"
+      disabled={false}
       {...rest}
     >
       <TextInput name="title" />
