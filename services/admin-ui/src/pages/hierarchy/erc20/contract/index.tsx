@@ -120,7 +120,8 @@ export const Erc20Contract: FC = () => {
               contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
             return (
               <ListItem key={contract.id} disableGutters>
-                <ListItemText>{contract.title}</ListItemText>
+                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                <ListItemText sx={{ width: 0.4 }}>{contract.symbol}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
                   <ListAction

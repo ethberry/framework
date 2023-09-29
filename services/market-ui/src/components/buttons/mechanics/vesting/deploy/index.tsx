@@ -3,7 +3,7 @@ import { Inventory } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IClaim, IContract, IUser } from "@framework/types";
@@ -31,10 +31,9 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
     ),
   );
 
-  const metaFnWithContract = useMetamask(
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
     async (claim: IClaim, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, VestingDeployABI, web3Context.provider?.getSigner());
-
       return contract.deployVesting(
         {
           nonce: utils.arrayify(claim.nonce),

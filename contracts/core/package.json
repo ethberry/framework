@@ -86,7 +86,7 @@
   },
   "scripts": {
     "build": "hardhat compile",
-    "clean": "hardhat clean",
+    "clean": "hardhat clean --global",
     "coverage": "hardhat coverage",
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "flatten": "scripts/flatten.sh",

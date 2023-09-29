@@ -1,9 +1,9 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
 import { useWatch } from "react-hook-form";
 
 import { TokenType } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
 export const AmountInput: FC = () => {

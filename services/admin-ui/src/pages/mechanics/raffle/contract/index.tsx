@@ -25,6 +25,7 @@ import { RaffleScheduleButton } from "../../../../components/buttons/mechanics/r
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { RaffleEditDialog } from "./edit";
+import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
 
 export const RaffleContracts: FC = () => {
   const {
@@ -115,7 +116,11 @@ export const RaffleContracts: FC = () => {
                 />
                 <RaffleRoundEndButton
                   contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    !contract.parameters.vrfSubId ||
+                    !contract.parameters.isConsumer
+                  }
                 />
                 <RaffleScheduleButton
                   contract={contract}
@@ -130,6 +135,7 @@ export const RaffleContracts: FC = () => {
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
+                <ChainLinkSetSubscriptionButton address={contract.address} />
               </ListActions>
             </ListItem>
           ))}

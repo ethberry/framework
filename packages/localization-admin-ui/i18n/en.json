@@ -1,6 +1,7 @@
 {
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
+    "allowanceClaim": "You have to allow tokens for Contract Manager contract",
     "craftItem": "Items to be crafted",
     "craftPrice": "Craft ingredients",
     "dismantleItem": "Items to get after dismantle",

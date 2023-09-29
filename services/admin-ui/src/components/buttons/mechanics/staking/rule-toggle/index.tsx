@@ -42,7 +42,7 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
       }
       className={className}
       dataTestId="StakeToggleRuleButton"
-      disabled={disabled}
+      disabled={disabled || rule.stakingRuleStatus === StakingRuleStatus.NEW}
       variant={variant}
     />
   );

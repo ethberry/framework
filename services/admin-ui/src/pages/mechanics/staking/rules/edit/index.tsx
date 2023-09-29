@@ -65,7 +65,14 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
+      <SelectInput
+        name="stakingRuleStatus"
+        options={StakingRuleStatus}
+        disabledOptions={
+          stakingRuleStatus === StakingRuleStatus.NEW ? [StakingRuleStatus.NEW, StakingRuleStatus.INACTIVE] : []
+        }
+        readOnly={stakingRuleStatus !== StakingRuleStatus.NEW}
+      />
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>

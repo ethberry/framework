@@ -25,6 +25,7 @@ import { LotteryScheduleButton } from "../../../../components/buttons/mechanics/
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { LotteryEditDialog } from "./edit";
+import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
 
 export const LotteryContracts: FC = () => {
   const {
@@ -115,7 +116,11 @@ export const LotteryContracts: FC = () => {
                 />
                 <LotteryRoundEndButton
                   contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    !contract.parameters.vrfSubId ||
+                    !contract.parameters.isConsumer
+                  }
                 />
                 <LotteryScheduleButton
                   contract={contract}
@@ -130,6 +135,7 @@ export const LotteryContracts: FC = () => {
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
+                <ChainLinkSetSubscriptionButton address={contract.address} />
               </ListActions>
             </ListItem>
           ))}

@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Alert } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -81,9 +81,15 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
       ) : null}
       <AvatarInput name="imageUrl" />
       {contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES) ? (
-        <Alert severity="warning">
-          <FormattedMessage id="alert.vrfSub" />
-        </Alert>
+        <Fragment>
+          <Alert severity="warning">
+            <Typography>
+              <a id="anchor" href={"/chain-link"}>
+                <FormattedMessage id="alert.randomChainlink" />
+              </a>
+            </Typography>
+          </Alert>
+        </Fragment>
       ) : null}
     </FormDialog>
   );

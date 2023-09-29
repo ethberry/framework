@@ -9,6 +9,7 @@ import "./fund-link";
 import "./fund-vrfsub";
 import "./get-hash";
 import "./get-uri";
+import "./get-rule";
 import "./flat";
 import "./grant";
 import "./get-sub";

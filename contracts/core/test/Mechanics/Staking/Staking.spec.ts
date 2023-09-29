@@ -14,7 +14,7 @@ import {
   TEMPLATE_ID,
 } from "@gemunion/contracts-constants";
 
-import { VRFCoordinatorMock } from "../../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../../typechain-types";
 import { expiresAt, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";

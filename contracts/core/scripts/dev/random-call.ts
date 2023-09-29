@@ -85,13 +85,6 @@ async function main() {
   const block = await ethers.provider.getBlock("latest");
   const currentBlock = block!.number;
 
-  console.log("fulfillRandomWords", eventData0.requestId, eventData0.keyHash, randomness, {
-    blockNum: currentBlock,
-    subId: eventData0.subId,
-    callbackGasLimit: eventData0.callbackGasLimit,
-    numWords: eventData0.numWords,
-    sender: eventData0.sender,
-  });
   const tx = await vrfInstance.fulfillRandomWords(
     eventData0.requestId,
     eventData0.keyHash,

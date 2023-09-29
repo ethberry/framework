@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
@@ -48,6 +50,9 @@ export const VestingClaimEditDialog: FC<IClaimEditDialogProps> = props => {
           },
         }}
       />
+      <Alert severity="warning" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.allowanceClaim" />
+      </Alert>
     </FormDialog>
   );
 };

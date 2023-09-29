@@ -33,6 +33,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       referrer: constants.AddressZero,
     };
     const tokenId = rule.deposit!.components[0].templateId;
+
     return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
