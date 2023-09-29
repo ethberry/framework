@@ -38,6 +38,8 @@ export const Claim: FC = () => {
     },
   });
 
+  const date = new Date();
+
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "claim"]} />
@@ -65,7 +67,10 @@ export const Claim: FC = () => {
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{formatItem(claim.item)}</ListItemText>
               <ListActions>
                 {claim.claimType === ClaimType.TOKEN ? (
-                  <ClaimRedeemButton claim={claim} disabled={claim.claimStatus !== ClaimStatus.NEW} />
+                  <ClaimRedeemButton
+                    claim={claim}
+                    disabled={claim.claimStatus !== ClaimStatus.NEW || new Date(claim.endTimestamp) > date}
+                  />
                 ) : (
                   <VestingDeployButton claim={claim} />
                 )}

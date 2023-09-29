@@ -9,13 +9,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
-import {
-  ContractFeatures,
-  ContractStatus,
-  IContract,
-  IContractSearchDto,
-  MysteryContractFeatures,
-} from "@framework/types";
+import { ContractFeatures, ContractStatus, MysteryContractFeatures } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
 
 import { MysteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
