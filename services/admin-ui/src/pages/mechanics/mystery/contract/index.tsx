@@ -28,7 +28,7 @@ import { WhitelistButton } from "../../../../components/buttons/extensions/white
 import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
 import { PauseButton } from "../../../../components/buttons/mechanics/common/pause";
 import { UnPauseButton } from "../../../../components/buttons/mechanics/common/unpause";
-import { MintButton } from "../../../../components/buttons/mechanics/mystery/contract/mint";
+import { MysteryBoxMintButton } from "../../../../components/buttons/mechanics/mystery/contract/mint";
 import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
 import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
 import { TransferButton } from "../../../../components/buttons/common/transfer";
@@ -122,7 +122,10 @@ export const MysteryContract: FC = () => {
                 <UnWhitelistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <MintButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <MysteryBoxMintButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
                 <AllowanceButton
                   contract={contract}
                   disabled={
