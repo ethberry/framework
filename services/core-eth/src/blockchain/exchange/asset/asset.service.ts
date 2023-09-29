@@ -245,7 +245,7 @@ export class AssetService {
               contract: templateEntity.contract,
             });
           } else if (isNft || (isErc1155 && !isPurchase)) {
-            // 721 && 998
+            // 721 && 998 and 1155 (i.e. dismantle)
             const tokenNestedEventHistoryEntity = await this.eventHistoryService.findOne(
               {
                 // transactionHash: eventHistoryEntity.transactionHash,
@@ -264,7 +264,7 @@ export class AssetService {
             }
 
             // for random 721 & 998: TokenID will be updated in Transfer event at next transaction
-            // if not found could be updated in Transfer event at next transaction...
+            // if not found history could be updated in Transfer event at next transaction...
             Object.assign(assetComponentHistoryItem, {
               token: isRandom ? null : tokenNestedEventHistoryEntity?.token || null,
               contract: contractEntity,

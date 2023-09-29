@@ -9,53 +9,55 @@ volumes:
 
 services:
 
-  adminb2b-ui:
-    container_name: adminb2b-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "Admin-UI-B2B"
+  #  adminb2b-ui:
+  #    container_name: adminb2b-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "Admin-UI-B2B"
 
-  adminb2c-ui:
-    container_name: adminb2c-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "Admin-UI-B2C"
+  #  adminb2c-ui:
+  #    container_name: adminb2c-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "Admin-UI-B2C"
 
-  market-ui:
-    container_name: market-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-market-ui:/home/node/framework/services/market-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "market-UI"
+  #  market-ui:
+  #    container_name: market-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-market-ui:/home/node/framework/services/market-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "market-UI"
 
-  office-ui:
-    container_name: office-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-office-ui:/home/node/framework/services/office-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "office-UI"
+  #  office-ui:
+  #    container_name: office-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-office-ui:/home/node/framework/services/office-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "office-UI"
 
   adminb2b-api:
     container_name: adminb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
@@ -164,6 +166,8 @@ services:
   adminb2c-api:
     container_name: adminb2c-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
@@ -267,6 +271,8 @@ services:
   market-api:
     container_name: market-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-market-ui:/home/node/framework/services/market-ui/dist/
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
@@ -313,6 +319,8 @@ services:
   office-api:
     container_name: office-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-office-ui:/home/node/framework/services/office-ui/dist/
     command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
     environment:
       # common
@@ -626,15 +634,11 @@ services:
     depends_on:
       - adminb2b-api
       - adminb2c-api
-      - adminb2b-ui
-      - adminb2c-ui
-      - market-ui
       - market-api
-      - office-ui
       - office-api
       - cron-api
       - json-api
       - game-api
       - core-eth
-      - core-eth-binance
+      #      - core-eth-binance
       - signal-api

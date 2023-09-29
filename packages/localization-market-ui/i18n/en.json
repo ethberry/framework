@@ -221,6 +221,7 @@
       "EtherReceived": "EtherReceived",
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
+      "LevelUp": "Level Up",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
       "OwnershipTransferred": "OwnershipTransferred",
@@ -1125,7 +1126,7 @@
       "price": "Base price",
       "priceTitle": "Base price:",
       "rarity": "Rarity",
-      "rarityMultiplier": "x {multiplier}",
+      "rarityMultiplier": " x {multiplier}",
       "tokenUser": "User",
       "traits": "Traits"
     },

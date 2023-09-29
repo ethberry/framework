@@ -112,7 +112,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10505,
-        '${erc1155ContractSimpleAddress}',
+        '${erc1155ContractInactiveAddress}',
         '${chainId}',
         'Candy (simple)',
         '${simpleFormatting}',

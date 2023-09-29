@@ -154,6 +154,8 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
                     <Grid container spacing={1} alignItems="flex-center">
                       <Grid item xs={12}>
                         {formatItem(dismantle.item)}
+                      </Grid>
+                      <Grid item xs={12}>
                         {multiplier !== 1 ? (
                           <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
                         ) : null}

@@ -31,7 +31,7 @@ export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
         </Typography>
         <StyledDataViewItemContentWrapper>
           <StyledDataViewAddressLinkWrapper>
-            {utils.toUtf8String(utils.stripZeros(attribute))}
+            {attribute ? utils.toUtf8String(utils.stripZeros(attribute)) : ""}
           </StyledDataViewAddressLinkWrapper>
         </StyledDataViewItemContentWrapper>
       </StyledDataViewItemWrapper>

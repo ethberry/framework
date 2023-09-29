@@ -26,8 +26,19 @@ export class EventHistoryService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("history.assets", "assets_filter");
-    queryBuilder.andWhere("assets_filter.tokenId = :tokenId", { tokenId });
+    // queryBuilder.andWhere("assets_filter.tokenId = :tokenId", { tokenId });
 
+    // include all events for given tokenId
+    queryBuilder.andWhere(
+      new Brackets(qb => {
+        qb.where("assets_filter.tokenId = :tokenId", { tokenId });
+        qb.orWhere("history.tokenId = :tokenId", { tokenId });
+      }),
+    );
+
+    queryBuilder.leftJoinAndSelect("history.token", "token");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("history.assets", "assets");
     queryBuilder.leftJoinAndSelect("assets.token", "asset_token");
     queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
@@ -69,6 +80,7 @@ export class EventHistoryService {
   }
 
   // TODO add All Exchange events
+  // TODO include others events, such as LevelUp
   public async my(dto: EventHistorySearchDto2, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
     // @ts-ignore  (react < 5 )
     const { take, skip, order, eventTypes } = dto;

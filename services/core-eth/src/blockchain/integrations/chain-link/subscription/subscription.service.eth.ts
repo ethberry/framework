@@ -95,15 +95,15 @@ export class ChainLinkSubscriptionServiceEth {
     const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    // Check if it's our merchant
     const contractEntity = await this.contractService.findOne(
       { address: address.toLowerCase(), chainId },
       { relations: { merchant: true } },
     );
-
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
     Object.assign(contractEntity.parameters, { vrfSubId: subId });
     await contractEntity.save();
