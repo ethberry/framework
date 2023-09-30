@@ -19,6 +19,7 @@ LABEL stage=deps
 
 USER node
 ENV NODE_OPTIONS=--max_old_space_size=7168
+ENV NODE_ENV=staging
 RUN mkdir -p /home/node/framework
 WORKDIR /home/node/framework
 
