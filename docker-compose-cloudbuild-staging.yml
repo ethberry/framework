@@ -3,7 +3,8 @@ version: "3.3"
 volumes:
   static-admin-ui-b2b:
   static-admin-ui-b2c:
-  static-market-ui:
+  static-market-ui-b2b:
+  static-market-ui-b2c:
   static-office-ui:
   static-signal-ui:
 
@@ -268,18 +269,19 @@ services:
       # admin-api
       - "${PORT_ADMIN_API_B2C}:${PORT_ADMIN_API_B2C}"
 
-  market-api:
-    container_name: market-api
+  marketb2b-api:
+    container_name: marketb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
     volumes:
-      - static-market-ui:/home/node/framework/services/market-ui/dist/
+      - static-market-ui-b2b:/home/node/framework/services/marketb2b-ui/dist/
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
-      PORT: "${PORT_MARKET_API}"
+      PORT: "${PORT_MARKET_API_B2B}"
+      BUSINESS_TYPE: B2B
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
@@ -291,7 +293,7 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
-      MARKET_FE_URL: "${MARKET_FE_URL}"
+      MARKET_FE_URL: "${MARKET_FE_URL_B2B}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
       # GEMUNION
@@ -313,8 +315,57 @@ services:
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
     ports:
-      # market-api
-      - "${PORT_MARKET_API}:${PORT_MARKET_API}"
+      # market-api_B2B
+      - "${PORT_MARKET_API_B2B}:${PORT_MARKET_API_B2B}"
+
+  marketb2c-api:
+    container_name: marketb2c-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-market-ui-b2c:/home/node/framework/services/marketb2c-ui/dist/
+    command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_MARKET_API_B2C}"
+      BUSINESS_TYPE: B2C
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      MARKET_FE_URL: "${MARKET_FE_URL_B2C}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      # Contracts
+    ports:
+      # market-api_B2C
+      - "${PORT_MARKET_API_B2C}:${PORT_MARKET_API_B2C}"
 
   office-api:
     container_name: office-api
@@ -613,8 +664,13 @@ services:
         volume:
           nocopy: true
       - type: volume
-        source: static-market-ui
-        target: /var/www/market-ui/static
+        source: static-market-ui-b2b
+        target: /var/www/market-ui-b2b/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-market-ui-b2c
+        target: /var/www/market-ui-b2c/static
         volume:
           nocopy: true
       - type: volume
@@ -634,11 +690,12 @@ services:
     depends_on:
       - adminb2b-api
       - adminb2c-api
-      - market-api
+      - marketb2b-api
+      - marketb2c-api
       - office-api
       - cron-api
       - json-api
       - game-api
       - core-eth
-      #      - core-eth-binance
+      # - core-eth-binance
       - signal-api

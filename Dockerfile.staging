@@ -22,16 +22,21 @@ ENV NODE_OPTIONS=--max_old_space_size=7168
 RUN mkdir -p /home/node/framework
 WORKDIR /home/node/framework
 
-# doubling admins
 COPY --chown=node:node . .
-# RUN mkdir -p /home/node/framework/services/adminb2b-ui
-# RUN mkdir -p /home/node/framework/services/adminb2c-ui
+
+# doubling admins
 COPY --chown=node:node ./services/admin-ui/ ./services/adminb2b-ui/
 RUN contents="$(jq '.name = "@framework/admin-ui-b2b"' ./services/adminb2b-ui/package.json)" && echo "${contents}" > ./services/adminb2b-ui/package.json
 COPY --chown=node:node ./services/admin-ui/ ./services/adminb2c-ui/
 RUN contents="$(jq '.name = "@framework/admin-ui-b2c"' ./services/adminb2c-ui/package.json)" && echo "${contents}" > ./services/adminb2c-ui/package.json
-
 RUN rm -rf /home/node/framework/services/admin-ui
+
+# doubling markets
+COPY --chown=node:node ./services/market-ui/ ./services/marketb2b-ui/
+RUN contents="$(jq '.name = "@framework/market-ui-b2b"' ./services/marketb2b-ui/package.json)" && echo "${contents}" > ./services/marketb2b-ui/package.json
+COPY --chown=node:node ./services/market-ui/ ./services/marketb2c-ui/
+RUN contents="$(jq '.name = "@framework/market-ui-b2c"' ./services/marketb2c-ui/package.json)" && echo "${contents}" > ./services/marketb2c-ui/package.json
+RUN rm -rf /home/node/framework/services/market-ui
 
 RUN npm i --omit=dev
 
