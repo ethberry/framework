@@ -1,23 +1,29 @@
 import { FC, useEffect } from "react";
 import { useIntl } from "react-intl";
-
+import { useIndexedDB } from "react-indexed-db-hook";
 import { useSnackbar } from "notistack";
 import { io } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
+import { useUser } from "@gemunion/provider-user";
+import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
 
-import { useIndexedDB } from "react-indexed-db-hook";
-
-// TODO connect only when user logged in and wallet connected
 export const Signal: FC = () => {
   const api = useApi();
+  const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
   const { add } = useIndexedDB("txs");
 
+  const isUserAuthenticated = user.isAuthenticated();
+
   useEffect(() => {
+    if (!isUserAuthenticated) {
+      return;
+    }
+
     const socket = io(`${process.env.SIGNAL_BE_URL}`, {
       extraHeaders: {
         Authorization: `Bearer ${api.getToken()?.accessToken || ""}`,
@@ -73,7 +79,7 @@ export const Signal: FC = () => {
       socket.off(SignalEventType.TRANSACTION_HASH);
       socket.disconnect();
     };
-  }, []);
+  }, [isUserAuthenticated]);
 
   return null;
 };
