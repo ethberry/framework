@@ -9,28 +9,13 @@ on:
         required: true
 
 jobs:
-  ssh-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: trejgun/ssh-action # 3
-          token: ${{ secrets.GITHUBTOKEN }}                # 4
-          path: ./ssh-action                               # 5
-      - name: user command via ssh
-        uses: ./ssh-action
-        with:
-          command: ${{github.event.inputs.command}}
-          host: ${{ secrets.MASTER_HOST }}
-          username: ${{ secrets.HOST_USER}}
-          passphrase:
-          privateKey: ${{ secrets.PRIVATE_KEY}}
-          tryKeyboard: true
   maintenance:
     runs-on: ubuntu-latest
     steps:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: 'test gcloud CLI'
         run: 'gcloud info'
