@@ -22,17 +22,16 @@ export const PonziChart: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
-    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const chartRef = useRef<HTMLDivElement>(null);

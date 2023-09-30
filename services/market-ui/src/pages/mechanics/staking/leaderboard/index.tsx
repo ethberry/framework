@@ -28,14 +28,13 @@ export const StakingLeaderboard: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 0,
+        contractId: undefined,
       },
     },
-    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();

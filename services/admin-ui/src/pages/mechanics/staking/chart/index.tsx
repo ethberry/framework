@@ -20,20 +20,19 @@ export const StakingChart: FC = () => {
   >({
     baseUrl: "/staking/chart",
     search: {
-      contractId: 0,
+      contractId: undefined,
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 0,
+        contractId: undefined,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
-    awaitingFieldsNames: ["contractId", "deposit.contractId", "reward.contractId"],
   });
 
   const chartRef = useRef<HTMLDivElement>(null);

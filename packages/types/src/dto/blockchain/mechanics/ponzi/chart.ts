@@ -3,11 +3,11 @@ import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IPonziChartItemSearchDto {
   tokenType: TokenType;
-  contractId: number;
+  contractId?: number;
 }
 
 export interface IPonziChartSearchDto extends IPaginationDto {
-  contractId: number;
+  contractId?: number;
   deposit: IPonziChartItemSearchDto;
   reward?: IPonziChartItemSearchDto;
   emptyReward?: boolean;

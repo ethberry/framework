@@ -28,14 +28,13 @@ export const PonziLeaderboard: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
     },
-    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();

@@ -39,17 +39,16 @@ export const StakingReport: FC = () => {
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: undefined,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 0,
+        contractId: undefined,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
-    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();
@@ -130,7 +129,6 @@ export const StakingReport: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         testId="StakingReportSearchForm"
-        awaitingFieldsNames={["deposit.contractId", "reward.contractId"]}
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

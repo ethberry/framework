@@ -5,16 +5,16 @@ import { PonziDepositStatus } from "../../../../entities";
 
 export interface IPonziReportItemSearchDto {
   tokenType: TokenType;
-  contractId: number;
+  contractId?: number;
 }
 
 export interface IPonziReportSearchDto extends IPaginationDto {
   account: string;
+  contractId?: number;
   emptyReward?: boolean;
   ponziDepositStatus: Array<PonziDepositStatus>;
   deposit: IPonziReportItemSearchDto;
   reward: IPonziReportItemSearchDto;
   startTimestamp: string;
   endTimestamp: string;
-  contractId: number;
 }

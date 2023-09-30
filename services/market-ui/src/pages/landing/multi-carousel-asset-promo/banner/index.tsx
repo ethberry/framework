@@ -23,7 +23,7 @@ export const AssetPromoBanner: FC<IBannerProps> = props => {
   const { promo } = props;
   const [time, setTime] = useState("");
 
-  let interval: NodeJS.Timer;
+  let interval: NodeJS.Timeout;
 
   useEffect(() => {
     if (!interval) {

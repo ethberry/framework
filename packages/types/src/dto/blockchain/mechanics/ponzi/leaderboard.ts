@@ -3,7 +3,7 @@ import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IPonziLeaderboardItemSearchDto {
   tokenType: TokenType;
-  contractId: number;
+  contractId?: number;
 }
 
 export interface IPonziLeaderboardSearchDto extends IPaginationDto {

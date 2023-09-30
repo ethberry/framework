@@ -21,11 +21,11 @@ export class PonziReportService {
         ...rest,
         deposit: {
           tokenType: [deposit!.tokenType],
-          contractIds: [deposit!.contractId],
+          contractIds: [deposit!.contractId!],
         },
         reward: {
           tokenType: [reward!.tokenType],
-          contractIds: [reward!.contractId],
+          contractIds: [reward!.contractId!],
         },
       },
       userEntity,
