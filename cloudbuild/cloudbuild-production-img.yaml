@@ -15,6 +15,9 @@ steps:
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/contracts/*", "contracts/"]
+  # Download firebase file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/app/gemunion-framework-production-firebase-admin.json", "gemunion-framework-production-firebase-admin.json"]
 
   # Upload docker-compose script to bucket
   - name: "gcr.io/cloud-builders/gsutil"

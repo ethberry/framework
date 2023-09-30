@@ -3,58 +3,62 @@ version: "3.3"
 volumes:
   static-admin-ui-b2b:
   static-admin-ui-b2c:
-  static-market-ui:
+  static-market-ui-b2b:
+  static-market-ui-b2c:
   static-office-ui:
+  static-signal-ui:
 
 services:
 
-  adminb2b-ui:
-    container_name: adminb2b-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "Admin-UI-B2B"
+  #  adminb2b-ui:
+  #    container_name: adminb2b-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "Admin-UI-B2B"
 
-  adminb2c-ui:
-    container_name: adminb2c-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "Admin-UI-B2C"
+  #  adminb2c-ui:
+  #    container_name: adminb2c-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "Admin-UI-B2C"
 
-  market-ui:
-    container_name: market-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-market-ui:/home/node/framework/services/market-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "market-UI"
+  #  market-ui:
+  #    container_name: market-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-market-ui:/home/node/framework/services/market-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "market-UI"
 
-  office-ui:
-    container_name: office-ui
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-    command: "sh /home/node/framework/scripts/logDna.sh"
-    volumes:
-      - static-office-ui:/home/node/framework/services/office-ui/dist/
-    environment:
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "office-UI"
+  #  office-ui:
+  #    container_name: office-ui
+  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+  #    command: "sh /home/node/framework/scripts/logDna.sh"
+  #    volumes:
+  #      - static-office-ui:/home/node/framework/services/office-ui/dist/
+  #    environment:
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      BASE_APP: "office-UI"
 
   adminb2b-api:
     container_name: adminb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
@@ -74,6 +78,8 @@ services:
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
       ADMIN_FE_URL: "${ADMIN_FE_URL_B2B}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
@@ -96,8 +102,10 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       STARTING_BLOCK: "${STARTING_BLOCK}"
+      STARTING_BINANCE_BLOCK: "${STARTING_BINANCE_BLOCK}"
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      CONTRACT_MANAGER_BINANCE_ADDR: "${CONTRACT_MANAGER_BINANCE_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
       ERC20_SIMPLE_ADDR: "${ERC20_SIMPLE_ADDR}"
@@ -146,9 +154,12 @@ services:
       ERC721_WRAPPER_ADDR: "${ERC721_WRAPPER_ADDR}"
       PONZI_ADDR: "${PONZI_ADDR}"
       DISPENSER_ADDR: "${DISPENSER_ADDR}"
+      DISPENSER_BINANCE_ADDR: "${DISPENSER_BINANCE_ADDR}"
       # CHAINLINK
       LINK_ADDR: "${LINK_ADDR}"
+      LINK_BINANCE_ADDR: "${LINK_BINANCE_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
+      VRF_BINANCE_ADDR: "${VRF_BINANCE_ADDR}"
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2B}:${PORT_ADMIN_API_B2B}"
@@ -156,6 +167,8 @@ services:
   adminb2c-api:
     container_name: adminb2c-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
@@ -175,6 +188,8 @@ services:
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
       ADMIN_FE_URL: "${ADMIN_FE_URL_B2C}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
@@ -254,16 +269,19 @@ services:
       # admin-api
       - "${PORT_ADMIN_API_B2C}:${PORT_ADMIN_API_B2C}"
 
-  market-api:
-    container_name: market-api
+  marketb2b-api:
+    container_name: marketb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-market-ui-b2b:/home/node/framework/services/marketb2b-ui/dist/
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
-      PORT: "${PORT_MARKET_API}"
+      PORT: "${PORT_MARKET_API_B2B}"
+      BUSINESS_TYPE: B2B
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
@@ -275,7 +293,7 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
-      MARKET_FE_URL: "${MARKET_FE_URL}"
+      MARKET_FE_URL: "${MARKET_FE_URL_B2B}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
       # GEMUNION
@@ -297,12 +315,63 @@ services:
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
     ports:
-      # market-api
-      - "${PORT_MARKET_API}:${PORT_MARKET_API}"
+      # market-api_B2B
+      - "${PORT_MARKET_API_B2B}:${PORT_MARKET_API_B2B}"
+
+  marketb2c-api:
+    container_name: marketb2c-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-market-ui-b2c:/home/node/framework/services/marketb2c-ui/dist/
+    command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_MARKET_API_B2C}"
+      BUSINESS_TYPE: B2C
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      MARKET_FE_URL: "${MARKET_FE_URL_B2C}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      # Contracts
+    ports:
+      # market-api_B2C
+      - "${PORT_MARKET_API_B2C}:${PORT_MARKET_API_B2C}"
 
   office-api:
     container_name: office-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    volumes:
+      - static-office-ui:/home/node/framework/services/office-ui/dist/
     command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
     environment:
       # common
@@ -364,10 +433,11 @@ services:
       PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL}"
-      # FE
-      FE_URL: "${ADMIN_FE_URL}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BESU}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
@@ -377,7 +447,6 @@ services:
       JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
       LATENCY: "${LATENCY}"
       CRON_SCHEDULE: "${CRON_SCHEDULE}"
-      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BESU}"
       STARTING_BLOCK: "${STARTING_BLOCK}"
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID}"
@@ -403,10 +472,10 @@ services:
       PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL}"
-      # FE
-      # FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
@@ -417,7 +486,7 @@ services:
       LATENCY: "${LATENCY}"
       CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
       REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE}"
-      STARTING_BLOCK: "${STARTING_BLOCK_BINANCE_TEST}"
+      STARTING_BLOCK: "${STARTING_BINANCE_BLOCK}"
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_BINANCE_TEST}"
       # Contracts
@@ -487,6 +556,74 @@ services:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
 
+  cron-api:
+    container_name: cron-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./microservices/cron start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_CRON_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH_BINANCE: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    ports:
+      # cron-api
+      - "${PORT_CRON_API}:${PORT_CRON_API}"
+
+  signal-api:
+    container_name: signal-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./microservices/signal start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_SIGNAL_API}"
+      # URLs
+      ADMIN_FE_URL: "${ADMIN_FE_URL_B2B}"
+      PUBLIC_FE_URL: "${ADMIN_FE_URL_B2C}"
+      MARKET_FE_URL: "${MARKET_FE_URL}"
+      OFFICE_FE_URL: "${OFFICE_FE_URL}"
+      # admin socket io
+      SIGNAL_FE_URL: "${SIGNAL_FE_URL}"
+      ADMIN_IO_PASSWORD_HASH: "${ADMIN_IO_PASSWORD_HASH}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL}"
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_SIGNAL: "${RMQ_QUEUE_SIGNAL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+    volumes:
+      - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
+    ports:
+      # signal-api
+      - "${PORT_SIGNAL_API}:${PORT_SIGNAL_API}"
+
   emailer:
     container_name: emailer
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
@@ -527,13 +664,23 @@ services:
         volume:
           nocopy: true
       - type: volume
-        source: static-market-ui
-        target: /var/www/market-ui/static
+        source: static-market-ui-b2b
+        target: /var/www/market-ui-b2b/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-market-ui-b2c
+        target: /var/www/market-ui-b2c/static
         volume:
           nocopy: true
       - type: volume
         source: static-office-ui
         target: /var/www/office-ui/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-signal-ui
+        target: /var/www/signal-ui/static
         volume:
           nocopy: true
     ports:
@@ -543,13 +690,12 @@ services:
     depends_on:
       - adminb2b-api
       - adminb2c-api
-      - adminb2b-ui
-      - adminb2c-ui
-      - market-ui
-      - market-api
-      - office-ui
+      - marketb2b-api
+      - marketb2c-api
       - office-api
+      - cron-api
       - json-api
       - game-api
       - core-eth
-      - core-eth-binance
+      # - core-eth-binance
+      - signal-api
