@@ -369,6 +369,8 @@
       "ok": "Ok",
       "redeem": "Redeem",
       "redeemLvl": "Redeem {level}",
+      "referralWithdraw": "Withdraw {symbol}{amount}",
+      "remove": "Remove",
       "release": "Release",
       "save": "Save",
       "search": "Search",
