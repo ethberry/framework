@@ -114,7 +114,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
             ]
           : "not yet scheduled"}
       </StyledTypography>
-      <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
+      <StyledPaper>
         <StyledTypography variant="h6">
           <FormattedMessage
             id="pages.lottery.purchase.selected"

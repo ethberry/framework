@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Link, Paper, Typography } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -7,6 +7,7 @@ import type { IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { formatEther } from "../../../../../utils/money";
+import { StyledPaper, StyledTitle } from "./styled";
 
 export interface IMysteryBoxContentProps {
   mysteryBox: IMysteryBox;
@@ -21,10 +22,10 @@ export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
 
   return (
     <>
-      <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>
+      <StyledTitle variant="h5">
         <FormattedMessage id="pages.mystery.box.content" />
-      </Typography>
-      <Paper elevation={1} sx={{ my: 2, p: 1 }}>
+      </StyledTitle>
+      <StyledPaper elevation={1}>
         <Grid container>
           <Grid xs={4} item>
             <Typography fontWeight={450}>
@@ -64,7 +65,7 @@ export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
             </Grid>
           </Grid>
         ))}
-      </Paper>
+      </StyledPaper>
     </>
   );
 };

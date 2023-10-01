@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent } from "@mui/material";
 import { constants } from "ethers";
 
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { TokenLendButton } from "../../../../../components/buttons";
+import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ILendTokenPanelProps {
   token: IToken;
@@ -20,20 +21,20 @@ export const LendTokenPanel: FC<ILendTokenPanelProps> = props => {
   }
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.tokenUser" />
-          </Typography>
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
+          </StyledTypography>
+        </StyledToolbar>
+        <StyledList component="ul">
           {!token.metadata.user || token.metadata.user === constants.AddressZero ? "N/A" : token.metadata.user}
-        </Box>
+        </StyledList>
       </CardContent>
       <CardActions>
         <TokenLendButton token={token} />
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };

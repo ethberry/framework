@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { Grid, Link, Paper, Typography } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import type { IToken } from "@framework/types";
 
 import { formatEther } from "../../../../../utils/money";
+import { StyledPaper, StyledTitle } from "./styled";
 
 export interface IWrapperContentProps {
   wrapper: IToken;
@@ -16,10 +17,10 @@ export const WrapperContent: FC<IWrapperContentProps> = props => {
 
   return (
     <>
-      <Typography variant="h5" sx={{ my: 1 }}>
+      <StyledTitle variant="h5">
         <FormattedMessage id="pages.wrapper.token.content" />
-      </Typography>
-      <Paper elevation={1} sx={{ my: 1, p: 2 }}>
+      </StyledTitle>
+      <StyledPaper elevation={1}>
         <Grid container>
           <Grid xs={4} item>
             <Typography fontWeight={500}>
@@ -59,7 +60,7 @@ export const WrapperContent: FC<IWrapperContentProps> = props => {
             </Grid>
           </Grid>
         ))}
-      </Paper>
+      </StyledPaper>
     </>
   );
 };

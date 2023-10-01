@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -9,6 +9,7 @@ import type { IMysteryBox } from "@framework/types";
 
 import { MysteryBoxContent } from "../token/mysterybox-content";
 import { MysteryBoxPanel } from "./mystery-box-panel";
+import { StyledImage } from "./styled";
 
 export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysteryBox>({
@@ -35,7 +36,7 @@ export const MysteryBox: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.imageUrl} />
+          <StyledImage component="img" src={selected.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.description} />
           </Typography>

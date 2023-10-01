@@ -1,4 +1,4 @@
-import { Card, Toolbar, Typography } from "@mui/material";
+import { Box, Card, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledCard = styled(Card)(({ theme }) => ({
@@ -12,3 +12,9 @@ export const StyledToolbar = styled(Toolbar)({
 export const StyledTypography = styled(Typography)({
   flexGrow: 1,
 }) as typeof Typography;
+
+export const StyledList = styled(Box)({
+  paddingLeft: 0,
+  margin: 0,
+  listStylePosition: "inside",
+}) as typeof Box;

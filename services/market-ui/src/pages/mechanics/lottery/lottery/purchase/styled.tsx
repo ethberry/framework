@@ -2,26 +2,27 @@ import { styled } from "@mui/material/styles";
 import { Box, IconButton, IconButtonProps, Paper, Typography } from "@mui/material";
 import { blueGrey, common, grey, indigo } from "@mui/material/colors";
 
-export const StyledWrapper = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-`;
+export const StyledWrapper = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  width: "100%",
+});
 
-export const StyledPaper = styled(Paper)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 52em;
-  margin: 1em auto;
-  padding: 1em;
-  background-color: ${grey[100]};
-  box-shadow: none;
-`;
+export const StyledPaper = styled(Paper)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+  flexWrap: "wrap",
+  width: "100%",
+  maxWidth: "36em",
+  margin: "1em auto",
+  padding: "1em",
+  backgroundColor: grey[100],
+  boxShadow: "none",
+});
 
 export const StyledIconButton = styled(({ isSelected: _, ...props }: IconButtonProps & { isSelected: boolean }) => (
   <IconButton {...props}>{props.children}</IconButton>

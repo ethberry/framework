@@ -1,11 +1,11 @@
 import { FC, useCallback } from "react";
 import { useIntl } from "react-intl";
 import {
-  DataGridPremium,
   DataGridPremiumProps,
-  GridCellParams,
-  gridClasses,
+  GridRenderCellParams,
   GridRowParams,
+  GridTreeNodeWithRender,
+  GridValidRowModel,
 } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 
@@ -15,6 +15,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { ICraft, IEventHistory } from "@framework/types";
 
 import { EventDataView } from "../../../../../exchange/transactions/event-data-view";
+import { StyledDataGridPremium } from "./styled";
 
 export interface ICraftTransactionsProps {
   craft: ICraft;
@@ -46,7 +47,7 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       field: "address",
       headerName: formatMessage({ id: "form.labels.address" }),
       sortable: false,
-      renderCell: (params: GridCellParams<IEventHistory, string>) => {
+      renderCell: (params: GridRenderCellParams<GridValidRowModel, string, IEventHistory, GridTreeNodeWithRender>) => {
         return <AddressLink address={params.value} length={15} />;
       },
       flex: 1,
@@ -64,7 +65,7 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       field: "transactionHash",
       headerName: formatMessage({ id: "form.labels.tx" }),
       sortable: false,
-      renderCell: (params: GridCellParams<IEventHistory, string>) => {
+      renderCell: (params: GridRenderCellParams<GridValidRowModel, string, IEventHistory, GridTreeNodeWithRender>) => {
         return <TxHashLink hash={params.value as string} />;
       },
       flex: 1,
@@ -83,7 +84,7 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
   );
 
   return (
-    <DataGridPremium
+    <StyledDataGridPremium
       pagination
       paginationMode="server"
       rowCount={count}
@@ -97,11 +98,6 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       getDetailPanelContent={getDetailPanelContent}
       rows={rows}
       getRowHeight={() => "auto"}
-      sx={{
-        [`& .${gridClasses.cell}`]: {
-          p: 1.5,
-        },
-      }}
       autoHeight
       disableAggregation
       disableRowGrouping

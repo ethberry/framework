@@ -4,9 +4,8 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { StyledAlert } from "@framework/styled";
 import type { IUser } from "@framework/types";
-
-import { StyledAlert } from "./styled";
 
 export const AcceptInvitation: FC = () => {
   const { uuid } = useParams<{ uuid: string }>();

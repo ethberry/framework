@@ -12,6 +12,7 @@ import { StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { MysteryContractListItem } from "./item";
+import { StyledGrid } from "./styled";
 
 export const MysteryContractList: FC = () => {
   const { rows, count, search, isLoading, isFiltersOpen, handleChangePage, handleSearch, handleToggleFilters } =
@@ -48,9 +49,9 @@ export const MysteryContractList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(contract => (
-            <Grid item lg={4} sm={6} xs={12} key={contract.id} sx={{ display: "flex" }}>
+            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
               <MysteryContractListItem contract={contract} />
-            </Grid>
+            </StyledGrid>
           ))}
         </Grid>
       </ProgressOverlay>

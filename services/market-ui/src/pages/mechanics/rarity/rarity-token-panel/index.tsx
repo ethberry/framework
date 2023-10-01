@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Card, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardContent, Typography } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
+import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IRarityTokenPanelProps {
   token: IToken;
@@ -17,15 +18,15 @@ export const RarityTokenPanel: FC<IRarityTokenPanelProps> = props => {
   }
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.rarity" />
-          </Typography>
-        </Toolbar>
+          </StyledTypography>
+        </StyledToolbar>
         <Typography>{Object.values(TokenRarity)[token.metadata[TokenMetadata.RARITY]]}</Typography>
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 };
