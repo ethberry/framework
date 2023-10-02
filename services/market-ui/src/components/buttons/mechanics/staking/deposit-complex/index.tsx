@@ -62,7 +62,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         icon={Savings}
         message="form.tips.deposit"
         className={className}
-        dataTestId="StakeDepositComplexButton"
+        dataTestId="StakingDepositComplexButton"
         disabled={disabled}
         variant={variant}
       />

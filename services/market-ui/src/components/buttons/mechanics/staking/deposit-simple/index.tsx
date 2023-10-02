@@ -41,9 +41,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
 
   const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
-      return metaDeposit(rule).then(() => {
-        // TODO reload page
-      });
+      return metaDeposit(rule);
     };
   };
 
@@ -57,7 +55,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       icon={Savings}
       message="form.tips.deposit"
       className={className}
-      dataTestId="StakeDepositSimpleButton"
+      dataTestId="StakingDepositSimpleButton"
       disabled={disabled}
       variant={variant}
     />

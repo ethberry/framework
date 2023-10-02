@@ -65,7 +65,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
         icon={Redeem}
         message="form.tips.reward"
         className={className}
-        dataTestId="StakeRewardButton"
+        dataTestId="StakingRewardComplexButton"
         disabled={disabled}
         variant={variant}
       />
