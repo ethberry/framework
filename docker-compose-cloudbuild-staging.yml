@@ -698,6 +698,4 @@ services:
       - cron-api
       - json-api
       - game-api
-      - core-eth
-      - core-eth-binance
       - signal-api
