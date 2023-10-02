@@ -699,5 +699,5 @@ services:
       - json-api
       - game-api
       - core-eth
-      # - core-eth-binance
+      - core-eth-binance
       - signal-api
