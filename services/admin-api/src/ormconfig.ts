@@ -196,7 +196,8 @@ import {
   SeedClaimMysteryboxAt1653616447860,
   SeedClaimVestingAt1687835680100,
   SeedCompositionAt1658980520010,
-  SeedContractChainLinkAt1563804000105,
+  SeedContractChainLinkAt1563804000106,
+  SeedContractChainLinkVrfAt1563804000105,
   SeedContractCollectionAt1679894500000,
   SeedContractDispenserAt1692165706800,
   SeedContractErc1155At1563804000150,
@@ -670,7 +671,8 @@ const config: PostgresConnectionOptions = {
     SeedAccessControlCollectionAt1679894502230,
 
     CreateWalletPayees1663047650500,
-    SeedContractChainLinkAt1563804000105,
+    SeedContractChainLinkAt1563804000106,
+    SeedContractChainLinkVrfAt1563804000105,
 
     CreateRent1678931845500,
     SeedAssetComponentRent1678931845520,

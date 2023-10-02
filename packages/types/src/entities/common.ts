@@ -63,6 +63,7 @@ export enum SystemModuleType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   EXCHANGE = "EXCHANGE",
   DISPENSER = "DISPENSER",
+  CHAIN_LINK = "CHAIN_LINK", // VRF
 }
 
 export enum DurationUnit {

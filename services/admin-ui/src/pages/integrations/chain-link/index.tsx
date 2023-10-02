@@ -4,7 +4,7 @@ import { Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import {
@@ -21,7 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { IChainLinkSubscription, IUser, UserRole } from "@framework/types";
+import { IChainLinkSubscription, IContract, IUser, SystemModuleType, UserRole } from "@framework/types";
 
 import GetSubscriptionABI from "../../../abis/integrations/chain-link/fund/getSubscription.abi.json";
 import LinkBalanceOfABI from "../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
@@ -72,10 +72,26 @@ export const ChainLink: FC = () => {
     { success: false },
   );
 
-  const getSubscriptionData = useMetamaskValue(
-    async (subscriptionId: number, web3Context: Web3ContextType) => {
-      // TODO get VRF contract address from backend
-      const contract = new Contract(process.env.VRF_ADDR, GetSubscriptionABI, web3Context.provider?.getSigner());
+  const getAccountBalance = useSystemContract<IContract, SystemModuleType>(
+    async (values: any, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(
+        systemContract.parameters.linkAddress.toString(),
+        LinkBalanceOfABI,
+        web3Context.provider?.getSigner(),
+      );
+      if ((await contract.provider.getCode(contract.address)) !== "0x") {
+        const value = await contract.callStatic.balanceOf(web3Context.account);
+        return formatEther(value.toString(), values.decimals, values.symbol);
+      }
+      return Number.NaN.toString();
+    },
+    { success: false },
+  );
+
+  const getSubscriptionData = useSystemContract<IContract, SystemModuleType>(
+    async (subscriptionId: number, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, GetSubscriptionABI, web3Context.provider?.getSigner());
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         const data: IVrfSubscriptionData = await contract.getSubscription(subscriptionId);
         // const { owner, balance, reqCount, consumers } = data;
@@ -92,19 +108,13 @@ export const ChainLink: FC = () => {
     { success: false },
   );
 
-  const getAccountBalance = useMetamaskValue(
-    async (decimals: number, symbol: string, web3Context: Web3ContextType) => {
-      // https://docs.chain.link/docs/link-token-contracts/
-      // TODO get LINK contract address from backend
-      const contract = new Contract(process.env.LINK_ADDR, LinkBalanceOfABI, web3Context.provider?.getSigner());
-      if ((await contract.provider.getCode(contract.address)) !== "0x") {
-        const value = await contract.callStatic.balanceOf(web3Context.account);
-        return formatEther(value.toString(), decimals, symbol);
-      }
-      return Number.NaN.toString();
-    },
-    { success: false },
-  );
+  const metaFnBalanceData = useMetamaskValue((values: any, web3Context: Web3ContextType) => {
+    return getAccountBalance(SystemModuleType.CHAIN_LINK, values, web3Context);
+  });
+
+  const metaFnSubData = useMetamaskValue((values: any, web3Context: Web3ContextType) => {
+    return getSubscriptionData(SystemModuleType.CHAIN_LINK, values, web3Context);
+  });
 
   useEffect(() => {
     if (!merchantSubscriptions && !isLoading) {
@@ -117,8 +127,8 @@ export const ChainLink: FC = () => {
     if (!merchantSubscriptions || !account) {
       return;
     }
-    void getSubscriptionData(currentSubscription).then(setSubData);
-    void getAccountBalance(18, "LINK").then(setCurrentBalance);
+    void metaFnSubData(currentSubscription).then(setSubData);
+    void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
   }, [currentSubscription]);
 
   const [page, setPage] = useState(0);

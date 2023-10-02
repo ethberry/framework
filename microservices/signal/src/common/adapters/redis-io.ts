@@ -21,8 +21,10 @@ export class RedisIoAdapter extends IoAdapter {
     const configService = this.app.get(ConfigService);
 
     const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
-    const adminBaseUrl = configService.get<string>("ADMIN_FE_URL", "http://localhost:3005");
-    const marketBaseUrl = configService.get<string>("MARKET_FE_URL", "http://localhost:3005");
+    const adminB2BBaseUrl = configService.get<string>("ADMIN_FE_URL_B2B", "http://localhost:3005");
+    const adminB2BCaseUrl = configService.get<string>("ADMIN_FE_URL_B2C", "http://localhost:3005");
+    const marketB2BBaseUrl = configService.get<string>("MARKET_FE_URL_B2B", "http://localhost:3005");
+    const marketB2CBaseUrl = configService.get<string>("MARKET_FE_URL_B2B", "http://localhost:3005");
     const officeBaseUrl = configService.get<string>("OFFICE_FE_URL", "http://localhost:3005");
     const baseUrl = configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
     const ioAdminUrl = configService.get<string>("SIGNAL_FE_URL", "http://localhost:3015");
@@ -36,7 +38,15 @@ export class RedisIoAdapter extends IoAdapter {
         origin:
           nodeEnv === NodeEnv.development
             ? ["https://admin.socket.io", "http://localhost:3002", "http://localhost:3004", "http://localhost:3006"]
-            : [adminBaseUrl, marketBaseUrl, officeBaseUrl, baseUrl, ioAdminUrl],
+            : [
+                adminB2BBaseUrl,
+                adminB2BCaseUrl,
+                marketB2BBaseUrl,
+                marketB2CBaseUrl,
+                officeBaseUrl,
+                baseUrl,
+                ioAdminUrl,
+              ],
       },
     });
 

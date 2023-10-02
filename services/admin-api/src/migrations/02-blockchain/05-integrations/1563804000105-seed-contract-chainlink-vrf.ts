@@ -5,7 +5,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedContractChainLinkAt1563804000105 implements MigrationInterface {
+export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
@@ -13,6 +13,9 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
     const vrfAddressBinance = process.env.VRF_BINANCE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
+
+    const linkBesuAddr = process.env.LINK_ADDR || wallet;
+    const linkBinanceAddr = process.env.LINK_BINANCE_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -25,6 +28,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         name,
         symbol,
         base_token_uri,
+        parameters,
         contract_status,
         contract_type,
         contract_features,
@@ -43,6 +47,9 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         'ChainLink VRF',
         '',
         '',
+        '${JSON.stringify({
+          linkAddress: linkBesuAddr.toLowerCase(),
+        })}',
         'ACTIVE',
         null,
         '{}',
@@ -61,6 +68,9 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         'ChainLink VRF',
         '',
         '',
+        '${JSON.stringify({
+          linkAddress: linkBinanceAddr.toLowerCase(),
+        })}',
         'ACTIVE',
         null,
         '{}',

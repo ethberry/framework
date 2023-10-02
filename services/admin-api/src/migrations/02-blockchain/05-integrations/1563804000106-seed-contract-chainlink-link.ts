@@ -5,12 +5,15 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface {
+export class SeedContractChainLinkAt1563804000106 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const busdAddr = process.env.BUSD_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || testChainId;
+    const linkBesuAddr = process.env.LINK_ADDR || wallet;
+    const linkBinanceAddr = process.env.LINK_BINANCE_ADDR || wallet;
 
+    // TODO add LINK for all supported networks (56 & 97 etc.)
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -32,39 +35,39 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? 31 : 10217},
-        '${busdAddr}',
-        '${testChainId}',
-        'BUSD',
+        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 10218},
+        '${linkBesuAddr}',
+        '${chainId}',
+        'LINK (BESU)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
-        'Biance USD',
-        'BUSD',
+        'ChainLink LINK (BESU)',
+        'LINK',
         18,
         0,
         '',
         'ACTIVE',
         'ERC20',
-        '{EXTERNAL,STABLE_COIN}',
+        '{EXTERNAL}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 32 : 20217},
-        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        56,
-        'BUSD',
+        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 20218},
+        '${linkBinanceAddr}',
+        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
+        'LINK (BNB)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
-        'Biance USD',
-        'BUSD',
+        'ChainLink LINK (BNB)',
+        'LINK',
         18,
         0,
         '',
         'ACTIVE',
         'ERC20',
-        '{EXTERNAL,STABLE_COIN}',
+        '{EXTERNAL}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
