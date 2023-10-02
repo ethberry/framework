@@ -8,6 +8,7 @@ export interface IChainLinkVrfSubscriptionDto {
   vrfSubId: number;
   address: string;
   contractId?: number;
+  subId?: number;
 }
 
 export interface IChainLinkSubscriptionDialogProps {

@@ -4,9 +4,10 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import VrfCreateSub from "../../../../../abis/integrations/chain-link/subscription/createSub.abi.json";
+import { IContract, SystemModuleType } from "@framework/types";
 
 export interface IChainLinkSubscriptionCreateButtonProps {
   className?: string;
@@ -19,15 +20,21 @@ export const ChainLinkSubscriptionCreateButton: FC<IChainLinkSubscriptionCreateB
 
   const { account } = useWeb3React();
 
-  const metaFnCreateSub = useMetamask((web3Context: Web3ContextType) => {
-    // https://docs.chain.link/docs/link-token-contracts/
-    // TODO get VRF contract address from backend
-    const contract = new Contract(process.env.VRF_ADDR, VrfCreateSub, web3Context.provider?.getSigner());
-    return contract.createSubscription() as Promise<void>;
+  const metaFnCreateSub = useSystemContract<IContract, SystemModuleType>(
+    (values: any, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      // TODO get VRF contract address from backend
+      const contract = new Contract(systemContract.address, VrfCreateSub, web3Context.provider?.getSigner());
+      return contract.createSubscription() as Promise<void>;
+    },
+  );
+
+  const metaFnCreateSubscription = useMetamask((web3Context: Web3ContextType) => {
+    return metaFnCreateSub(SystemModuleType.CHAIN_LINK, null, web3Context);
   });
 
   const handleCreateSub = () => {
-    return metaFnCreateSub();
+    return metaFnCreateSubscription();
   };
 
   return (

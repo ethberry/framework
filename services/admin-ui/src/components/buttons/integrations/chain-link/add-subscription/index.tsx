@@ -1,16 +1,16 @@
 import { FC, Fragment, useState } from "react";
-// import { useNavigate } from "react-router";
 
 import { RecentActors } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import { IContract, SystemModuleType } from "@framework/types";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;
@@ -22,16 +22,21 @@ export interface IChainLinkAddConsumerButtonProps {
 
 export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = props => {
   const { contractId, subscriptionId, className, disabled, variant = ListActionVariant.button } = props;
-  // const navigate = useNavigate();
 
   const { account } = useWeb3React();
   const [isSubscriptionDialogOpen, setIsSubscriptionDialogOpen] = useState(false);
 
-  const metaFnAddConsumer = useMetamask(async (values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
-    // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(process.env.VRF_ADDR, VrfAddConsumer, web3Context.provider?.getSigner());
-    const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
-    return contract.addConsumer(subId, values.address) as Promise<void>;
+  const metaAddConsumer = useSystemContract<IContract, SystemModuleType>(
+    async (values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(systemContract.address, VrfAddConsumer, web3Context.provider?.getSigner());
+      const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
+      return contract.addConsumer(subId, values.address) as Promise<void>;
+    },
+  );
+
+  const metaFnAddConsumer = useMetamask((values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
+    return metaAddConsumer(SystemModuleType.CHAIN_LINK, values, web3Context);
   });
 
   const handleAddConsumer = (): void => {
@@ -42,9 +47,6 @@ export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = 
     await metaFnAddConsumer(values).then(() => {
       setIsSubscriptionDialogOpen(false);
     });
-    // .finally(() => {
-    //   navigate("/chain-link", { replace: true });
-    // });
   };
 
   const handleAddConsumerCancel = () => {
