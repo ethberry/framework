@@ -214,8 +214,8 @@
       "Claim": "Claim",
       "ConsecutiveTransfer": "ConsecutiveTransfer",
       "Craft": "Craft",
-      "Dismantle": "Dismantle",
       "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "Dismantle": "Dismantle",
       "ERC20PaymentReleased": "ERC20PaymentReleased",
       "ERC20Released": "ERC20Released",
       "EtherReceived": "EtherReceived",
@@ -370,8 +370,8 @@
       "redeem": "Redeem",
       "redeemLvl": "Redeem {level}",
       "referralWithdraw": "Withdraw {symbol}{amount}",
-      "remove": "Remove",
       "release": "Release",
+      "remove": "Remove",
       "save": "Save",
       "search": "Search",
       "sell": "Sell",
@@ -642,23 +642,6 @@
       "rates": "Rates",
       "title": "CoinGecko"
     },
-    "recipes": {
-      "title": "Recipes",
-      "ingredients": "Ingredients",
-      "craft": {
-        "approve": "Please approve ingredients to Exchange before",
-        "price": "Price",
-        "tabs": {
-          "erc1155": "ERC1155",
-          "erc721": "ERC721",
-          "erc998": "ERC998"
-        },
-        "title": "Craft recipe: {title}"
-      },
-      "craft-list": {
-        "title": "Craft recipes"
-      }
-    },
     "dashboard": {
       "achievements": {
         "report": "Report",
@@ -705,12 +688,12 @@
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
-        "recipes": "Recipes",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
         "promo": "Promo",
         "raffle": "Raffle",
+        "recipes": "Recipes",
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
@@ -1086,6 +1069,23 @@
     "raffle-list": {
       "title": "Raffle contracts"
     },
+    "recipes": {
+      "craft": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "tabs": {
+          "erc1155": "ERC1155",
+          "erc721": "ERC721",
+          "erc998": "ERC998"
+        },
+        "title": "Craft recipe: {title}"
+      },
+      "craft-list": {
+        "title": "Craft recipes"
+      },
+      "ingredients": "Ingredients",
+      "title": "Recipes"
+    },
     "referral": {
       "cabinet": {
         "title": "Cabinet"
@@ -1191,8 +1191,8 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent: {txHash}",
     "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionSent": "Transaction sent: {txHash}",
     "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

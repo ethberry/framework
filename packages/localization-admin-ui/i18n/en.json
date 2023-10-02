@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceWarning": "You are going to allow all tokens of the contract",
     "allowanceClaim": "You have to allow tokens for Contract Manager contract",
+    "allowanceWarning": "You are going to allow all tokens of the contract",
     "craftItem": "Items to be crafted",
     "craftPrice": "Craft ingredients",
     "dismantleItem": "Items to get after dismantle",
@@ -10,9 +10,9 @@
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
+    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!",
     "risk": "You are doing this at your own risk!",
-    "uncaughtError": "Uncaught error happened",
-    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!"
+    "uncaughtError": "Uncaught error happened"
   },
   "components": {
     "dropzone": {
@@ -755,12 +755,12 @@
       "shares": "Shares",
       "sire": "Sire",
       "slug": "Slug",
-      "subId": "VRF Subscription Id",
       "stakingDepositStatus": "Status",
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "state": "State",
+      "subId": "VRF Subscription Id",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
       "template": "Template",
@@ -880,10 +880,10 @@
       "share": "0",
       "shares": "0",
       "slug": "terms-of-services",
-      "subId": "0",
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
+      "subId": "0",
       "subscriptionId": "2",
       "symbol": "XXX",
       "templateId": "Template",
@@ -972,17 +972,17 @@
       "title": "Categories"
     },
     "chain-link": {
+      "balance": "Balance: {balance}",
+      "consumers": "Consumers list",
+      "create": "Create Subscription",
+      "fund": "Fund",
       "id": "Subscription # {value}",
       "manage": "Subscriptions",
-      "balance": "Balance: {balance}",
-      "wallet": "Wallet balance: {value}",
-      "consumers": "Consumers list",
-      "fund": "Fund",
-      "subscription": "Subscription",
       "select": "Select subscription ID",
       "set": "Set Vrf subscription ID",
-      "create": "Create Subscription",
-      "title": "ChainLink Subscriptions"
+      "subscription": "Subscription",
+      "title": "ChainLink Subscriptions",
+      "wallet": "Wallet balance: {value}"
     },
     "claims": {
       "defaultItemTitle": "{account}",
@@ -1011,24 +1011,6 @@
         "title": "Collection Tokens"
       },
       "tokens": "Collection Tokens"
-    },
-    "recipes": {
-      "title": "Recipes",
-      "craft": {
-        "activate": "Activate rule",
-        "deactivate": "Deactivate rule",
-        "title": "Craft recipes"
-      },
-      "dismantle": {
-        "activate": "Activate rule",
-        "deactivate": "Deactivate rule",
-        "title": "Dismantle recipes"
-      },
-      "merge": {
-        "activate": "Activate rule",
-        "deactivate": "Deactivate rule",
-        "title": "Merge recipes"
-      }
     },
     "dashboard": {
       "achievements": {
@@ -1082,11 +1064,11 @@
         "claim": "Claim",
         "collection": "Collections",
         "dispenser": "Dispenser",
-        "promo": "Promo",
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "raffle": "Raffle",
         "recipes": "Recipes",
         "rent": "Rent",
@@ -1104,9 +1086,6 @@
     "dragons": {
       "description": "Here be dragons",
       "title": "Not implemented :)"
-    },
-    "promo": {
-      "title": "Promo"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1208,20 +1187,19 @@
       "title": "Marketplace"
     },
     "merchant": {
-      "managers": {
-        "empty": "You don't have any managers yet"
-      },
       "invitations": {
         "empty": "You don't have any invites yet"
       },
+      "managers": {
+        "empty": "You don't have any managers yet"
+      },
       "tabs": {
         "general": "General",
-        "managers": "Managers",
-        "invitations": "Invitations"
+        "invitations": "Invitations",
+        "managers": "Managers"
       },
       "title": "Merchant"
     },
-
     "mystery": {
       "boxContent": {
         "title": "Mysterybox content"
@@ -1304,10 +1282,13 @@
       "tabs": {
         "addresses": "Addresses",
         "general": "General",
-        "subscriptions": "Subscriptions",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "subscriptions": "Subscriptions"
       },
       "title": "Profile"
+    },
+    "promo": {
+      "title": "Promo"
     },
     "promos": {
       "title": "Promos"
@@ -1382,6 +1363,24 @@
         "vesting": "3000 vesting contracts"
       },
       "title": "Rate plans"
+    },
+    "recipes": {
+      "craft": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Craft recipes"
+      },
+      "dismantle": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Dismantle recipes"
+      },
+      "merge": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Merge recipes"
+      },
+      "title": "Recipes"
     },
     "rent": {
       "title": "Rent"
@@ -1482,8 +1481,8 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent: {txHash}",
     "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionSent": "Transaction sent: {txHash}",
     "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

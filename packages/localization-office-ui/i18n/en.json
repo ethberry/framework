@@ -602,10 +602,10 @@
       "mechanics": {
         "claim": "Claim",
         "dispenser": "Dispenser",
-        "promo": "Promo",
         "grade": "Grade",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
@@ -620,9 +620,6 @@
     "dragons": {
       "description": "Here be dragons",
       "title": "Not implemented :)"
-    },
-    "promo": {
-      "title": "Promos"
     },
     "emails": {
       "title": "Emails"
@@ -758,6 +755,9 @@
       },
       "title": "Profile"
     },
+    "promo": {
+      "title": "Promos"
+    },
     "rate-plan": {
       "tabs": {
         "BRONZE": "Bronze",
@@ -855,5 +855,9 @@
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
+  },
+  "socket": {
+    "connected": "WebSocket connection ON",
+    "error": "WebSocket connection Error"
   }
 }
