@@ -1203,6 +1203,7 @@
   },
   "socket": {
     "connected": "WebSocket connection ON",
+    "connect_failed": "WebSocket connection failed",
     "error": "WebSocket connection Error"
   }
 }
