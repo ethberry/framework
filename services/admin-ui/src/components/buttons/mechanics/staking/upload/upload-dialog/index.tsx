@@ -6,14 +6,14 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import type { IStakingRule } from "@framework/types";
-import { ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { ModuleType } from "@framework/types";
 
-import { validationSchema } from "./validation";
 import { DurationInput } from "../../../../../inputs/duration";
 import { ContractInput } from "../../../../../inputs/contract";
+import { validationSchema } from "./validation";
 
 export interface IStakingRuleUploadDialogProps {
   open: boolean;
@@ -61,6 +61,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       validationSchema={validationSchema}
       message={message}
       testId="StakingEditForm"
+      disabled={false}
       {...rest}
     >
       {id ? <TextInput name="title" /> : null}
