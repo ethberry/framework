@@ -55,7 +55,7 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
       disabled={false}
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message={"dialogs.startRound"}
+      message={"dialogs.raffleRoundStart"}
       testId="RaffleRoundStartForm"
       {...rest}
     >
