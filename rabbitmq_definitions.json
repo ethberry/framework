@@ -1,0 +1,76 @@
+{
+  "rabbit_version": "3.12.5",
+  "rabbitmq_version": "3.12.5",
+  "product_name": "RabbitMQ",
+  "product_version": "3.12.5",
+  "users": [
+    {
+      "name": "admin",
+      "password_hash": "yFVHxuAynS7MB2nVzWbEbpbDxUuDrEjrAfcEyvUyN7IFvnXA",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    },
+    {
+      "name": "merchant",
+      "password_hash": "GdREETAMwtVzSpdBFX243qjJl1VpcqAXIxCo4hHxyr5m3Sh2",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "merchant"
+      ],
+      "limits": {}
+    },
+    {
+      "name": "guest",
+      "password": "guest",
+      "tags": [],
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "merchant"
+    },
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "merchant",
+      "vhost": "merchant",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "merchant",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "policies": [],
+  "queues": [],
+  "exchanges": [],
+  "bindings": []
+}

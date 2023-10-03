@@ -27,6 +27,9 @@ services:
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:management
+    volumes:
+      - ${BASE_PATH}/rabbitmq.conf:/etc/rabbitmq/conf.d/rabbitmq.conf
+      - ${BASE_PATH}/rabbitmq_definitions.json:/etc/rabbitmq/rabbitmq_definitions.json
     ports:
       - "5672:5672"
       - "15672:15672"
