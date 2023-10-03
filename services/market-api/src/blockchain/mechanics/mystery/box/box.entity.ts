@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IMysteryBox, MysteryBoxStatus } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
+import { MysteryBoxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";

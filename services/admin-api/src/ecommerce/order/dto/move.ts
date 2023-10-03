@@ -4,7 +4,7 @@ import { IsEnum } from "class-validator";
 
 import { OrderStatus } from "@framework/types";
 
-import { IOrderMoveDto } from "../interfaces";
+import type { IOrderMoveDto } from "../interfaces";
 
 export class OrderMoveDto implements IOrderMoveDto {
   @ApiProperty({

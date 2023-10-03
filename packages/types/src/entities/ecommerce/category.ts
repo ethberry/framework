@@ -1,6 +1,6 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import { IProduct } from "./product";
+import type { IProduct } from "./product";
 
 export interface ICategory extends ISearchable {
   parent: ICategory;

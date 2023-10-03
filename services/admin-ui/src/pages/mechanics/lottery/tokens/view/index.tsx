@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
 
-import { ILotteryToken } from "@framework/types";
+import type { ILotteryToken } from "@framework/types";
 
 import { decodeNumbers, getNumbers } from "../../utils";
 

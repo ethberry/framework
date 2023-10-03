@@ -5,7 +5,7 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
-import { IClaimRowDto, IClaimUploadDto } from "@framework/types";
+import type { IClaimRowDto, IClaimUploadDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { claimsValidationSchema } from "../validation";

@@ -10,7 +10,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { emptyPromo } from "../../../components/common/interfaces";
 import { EditPromoDialog } from "./edit";

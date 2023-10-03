@@ -4,7 +4,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 
-import { ISignRaffleDto } from "../interfaces";
+import type { ISignRaffleDto } from "../interfaces";
 
 export class SignRaffleDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignRaffleDto {
   @ApiProperty()

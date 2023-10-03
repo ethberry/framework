@@ -1,4 +1,4 @@
-import { ICategory } from "@framework/types";
+import type { ICategory } from "@framework/types";
 
 export const emptyCategory = {
   title: "",

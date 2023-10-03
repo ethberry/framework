@@ -1,4 +1,4 @@
-import { IAssetItem } from "./common";
+import type { IAssetItem } from "./common";
 
 export interface IExchangeClaimEvent {
   account: string;

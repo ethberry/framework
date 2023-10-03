@@ -1,4 +1,4 @@
-import { IWaitListItem, IWaitListList } from "@framework/types";
+import type { IWaitListItem, IWaitListList } from "@framework/types";
 
 export interface IWaitListRewardSetData {
   waitListList: IWaitListList;

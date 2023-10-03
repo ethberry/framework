@@ -1,4 +1,4 @@
-import { ISortDto } from "@gemunion/types-collection";
+import type { ISortDto } from "@gemunion/types-collection";
 
 export interface ISortObj {
   [key: string]: any;

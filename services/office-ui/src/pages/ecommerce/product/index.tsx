@@ -14,7 +14,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";
 

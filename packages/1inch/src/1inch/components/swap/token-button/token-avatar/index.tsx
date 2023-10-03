@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Avatar, CircularProgress } from "@mui/material";
 
-import { IToken } from "../../../../provider";
+import type { IToken } from "../../../../provider";
 
 export interface ITokenAvatarProps {
   size: number;

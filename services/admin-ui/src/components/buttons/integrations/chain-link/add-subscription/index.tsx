@@ -10,7 +10,8 @@ import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import { IContract, SystemModuleType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;

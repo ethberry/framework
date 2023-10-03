@@ -1,4 +1,5 @@
-import { IContract, ListenerType, ModuleType, TokenType, ContractFeatures } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { ListenerType, ModuleType, TokenType, ContractFeatures } from "@framework/types";
 
 export const ifRandom = (contractFeatures: ContractFeatures[]) => {
   if (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) {

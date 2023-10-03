@@ -5,7 +5,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { useUser } from "@gemunion/provider-user";
-import { IUser, RatePlanType } from "@framework/types";
+import type { IUser } from "@framework/types";
+import { RatePlanType } from "@framework/types";
 
 export const MysterySection: FC = () => {
   const { profile } = useUser<IUser>();

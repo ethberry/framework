@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { ICartItem } from "./cart-item";
+import type { ICartItem } from "./cart-item";
 
 export interface ICart extends IIdDateBase {
   userId?: number;

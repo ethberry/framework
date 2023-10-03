@@ -1,6 +1,6 @@
 import { BigNumber, utils } from "ethers";
 
-import { IToken } from "../provider";
+import type { IToken } from "../provider";
 
 export const safeParseUnits = (tokenQuantity: string, fromToken: IToken): BigNumber => {
   if (!tokenQuantity) {

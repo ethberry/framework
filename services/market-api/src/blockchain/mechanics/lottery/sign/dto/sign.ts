@@ -4,7 +4,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 
-import { ISignLotteryDto } from "../interfaces";
+import type { ISignLotteryDto } from "../interfaces";
 
 import { LotteryTicketRule } from "./rule";
 

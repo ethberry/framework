@@ -4,7 +4,8 @@ import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
 import { StyledPagination } from "@framework/styled";
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IPaginationDto } from "@gemunion/types-collection";

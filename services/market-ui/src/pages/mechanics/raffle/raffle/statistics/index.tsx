@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IContract, IRaffleRound } from "@framework/types";
+import type { IContract, IRaffleRound } from "@framework/types";
 
 import { emptyRaffleRound } from "../../../../../components/common/interfaces";
 

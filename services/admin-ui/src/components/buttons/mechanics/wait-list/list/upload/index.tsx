@@ -6,7 +6,7 @@ import type { IWaitListList } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { WaitListUploadDialog } from "./dialog";
-import { IWaitListUploadDto } from "./dialog/file-input";
+import type { IWaitListUploadDto } from "./dialog/file-input";
 
 export interface IWaitListListUploadButtonProps {
   className?: string;

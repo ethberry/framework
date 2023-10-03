@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { MysteryBoxStatus } from "@framework/types";
 
-import { IMysteryBoxUpdateDto } from "../interfaces";
+import type { IMysteryBoxUpdateDto } from "../interfaces";
 import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
 
 export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {

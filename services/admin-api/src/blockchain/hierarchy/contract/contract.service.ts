@@ -18,8 +18,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
-import type { IContractUpdateDto } from "./interfaces";
-import { IContractAutocompleteExtDto } from "./interfaces";
+import type { IContractUpdateDto, IContractAutocompleteExtDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {

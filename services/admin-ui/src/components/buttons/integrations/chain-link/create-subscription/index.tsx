@@ -7,7 +7,8 @@ import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import VrfCreateSub from "../../../../../abis/integrations/chain-link/subscription/createSub.abi.json";
-import { IContract, SystemModuleType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkSubscriptionCreateButtonProps {
   className?: string;

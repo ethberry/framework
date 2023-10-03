@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import {
   IERC721TokenApprovedForAllEvent,

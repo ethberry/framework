@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { CustomParameterEntity } from "./custom-parameter.entity";
 import type { ICustomParameterCreateDto, ICustomParameterUpdateDto } from "./interfaces";

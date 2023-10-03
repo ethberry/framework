@@ -5,7 +5,7 @@ import { Transform } from "class-transformer";
 import { AddressDto } from "@gemunion/collection";
 import { ContractType } from "@framework/types";
 
-import { IContractManagerCreateDto } from "../interfaces";
+import type { IContractManagerCreateDto } from "../interfaces";
 
 export class ContractManagerCreateDto extends AddressDto implements IContractManagerCreateDto {
   @ApiProperty({

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
-import { IContract, ILotteryConfigDto } from "@framework/types";
+import type { IContract, ILotteryConfigDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

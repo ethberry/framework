@@ -7,7 +7,8 @@ import { stringify } from "qs";
 
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";

@@ -6,7 +6,7 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { validationSchema } from "./validation";
 import { WaitListItem } from "./wait-list-item";
 import { WaitListListInput } from "./wait-list-list-input";
-import { IWaitListItem } from "@framework/types";
+import type { IWaitListItem } from "@framework/types";
 
 export interface IWaitListClaimDto {
   account: string;

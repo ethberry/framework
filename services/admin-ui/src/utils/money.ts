@@ -1,5 +1,6 @@
 import { utils } from "ethers";
-import { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import type { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory } from "@framework/types";
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {
   return `${currency} ${utils.formatUnits(amount, decimals)}`;

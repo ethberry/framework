@@ -6,10 +6,10 @@ import csv2json from "csvtojson";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
 // TODO this is wrong type
-import { IClaimRowDto } from "@framework/types";
+import type { IClaimRowDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
-import { ICollectionUploadDto } from "../index";
+import type { ICollectionUploadDto } from "../index";
 import { tokensValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 

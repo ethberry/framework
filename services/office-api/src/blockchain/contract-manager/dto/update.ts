@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { IContractManagerUpdateDto } from "../interfaces";
+import type { IContractManagerUpdateDto } from "../interfaces";
 import { ContractType } from "@framework/types";
 
 export class ContractManagerUpdateDto implements IContractManagerUpdateDto {

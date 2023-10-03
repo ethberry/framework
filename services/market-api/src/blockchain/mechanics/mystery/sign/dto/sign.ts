@@ -4,7 +4,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 
-import { ISignMysteryboxDto } from "../interfaces";
+import type { ISignMysteryboxDto } from "../interfaces";
 
 export class SignMysteryboxDto
   extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto)

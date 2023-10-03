@@ -11,7 +11,8 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
-import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@framework/types";
+import type { IMerchant, IMerchantSearchDto } from "@framework/types";
+import { MerchantStatus } from "@framework/types";
 
 import { EditMerchantDialog } from "./edit";
 

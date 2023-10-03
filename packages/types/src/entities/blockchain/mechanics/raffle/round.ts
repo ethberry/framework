@@ -1,9 +1,9 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../../exchange/asset";
-import { IContract } from "../../hierarchy/contract";
-import { IToken } from "../../hierarchy/token";
-import { IAssetItem } from "../../event-history";
+import type { IAsset } from "../../exchange/asset";
+import type { IContract } from "../../hierarchy/contract";
+import type { IToken } from "../../hierarchy/token";
+import type { IAssetItem } from "../../event-history";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner

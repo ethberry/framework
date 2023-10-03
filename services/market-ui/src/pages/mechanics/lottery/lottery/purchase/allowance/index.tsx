@@ -6,7 +6,8 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IContract, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 

@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typog
 import { Link as RouterLink } from "react-router-dom";
 
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";

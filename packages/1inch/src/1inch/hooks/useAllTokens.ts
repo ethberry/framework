@@ -1,4 +1,5 @@
-import { IToken, useOneInch } from "../provider";
+import type { IToken } from "../provider";
+import { useOneInch } from "../provider";
 
 export const useAllTokens = (): Array<IToken> => {
   const oneInch = useOneInch();

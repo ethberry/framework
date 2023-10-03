@@ -1,4 +1,4 @@
-import { IOrderItem } from "@framework/types";
+import type { IOrderItem } from "@framework/types";
 
 export interface IOrderCreateDto {
   userId: number;

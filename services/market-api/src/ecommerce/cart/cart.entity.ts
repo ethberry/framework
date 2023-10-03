@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { ICart } from "@framework/types";
+import type { ICart } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { CartItemEntity } from "../cart-item/cart-item.entity";

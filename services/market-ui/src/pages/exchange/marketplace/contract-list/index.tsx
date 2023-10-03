@@ -6,7 +6,7 @@ import { stringify } from "qs";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
-import { IContract, IContractSearchDto } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
 
 import { ContractListItem } from "./item";
 import { StyledGrid } from "./styled";

@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsBoolean, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IOrderFullDto } from "../interfaces";
+import type { IOrderFullDto } from "../interfaces";
 import { IUserImportDto } from "../../../infrastructure/user/interfaces";
 import { IAddressCreateDto } from "../../address/interfaces";
 import { AddressCreateDto } from "../../address/dto";

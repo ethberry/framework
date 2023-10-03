@@ -11,7 +11,8 @@ import LinkBalanceOfABI from "../../../../../../abis/integrations/chain-link/fun
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
 import { formatEther } from "../../../../../../utils/money";
-import { IContract, SystemModuleType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkFundDto {
   subscriptionId: number;

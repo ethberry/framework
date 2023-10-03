@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
 
-import { IMerchantSocial } from "@framework/types";
+import type { IMerchantSocial } from "@framework/types";
 
 export class MerchantSocialDto implements IMerchantSocial {
   @ApiPropertyOptional()

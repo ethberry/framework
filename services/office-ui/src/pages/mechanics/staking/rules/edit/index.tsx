@@ -7,7 +7,8 @@ import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
+import { StakingRuleStatus } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";

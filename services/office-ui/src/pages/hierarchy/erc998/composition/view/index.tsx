@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 
-import { IComposition } from "@framework/types";
+import type { IComposition } from "@framework/types";
 
 export interface IErc998CompositionViewDialogProps {
   open: boolean;

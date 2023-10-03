@@ -4,7 +4,7 @@ import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposit
 
 import { ChainLinkSubscriptionEntity } from "./subscription.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { ISubscriptionAutocompleteDto } from "./dto";
+import type { ISubscriptionAutocompleteDto } from "./dto";
 
 @Injectable()
 export class ChainLinkSubscriptionService {

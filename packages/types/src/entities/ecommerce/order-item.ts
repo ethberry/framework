@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAssetComponentHistory } from "../blockchain";
-import { IProductItem } from "./product-item";
+import type { IAssetComponentHistory } from "../blockchain";
+import type { IProductItem } from "./product-item";
 
 export interface IOrderItem extends IIdDateBase {
   orderId: number;

@@ -4,7 +4,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { StakingRuleStatus } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";

@@ -1,4 +1,4 @@
-import { IAssetDto } from "../../exchange/asset/asset";
+import type { IAssetDto } from "../../exchange/asset/asset";
 
 export interface IClaimCreateDto {
   chainId: number;

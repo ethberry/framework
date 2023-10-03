@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 
-import { IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
 
 export const useFormatAddress = (): { formatAddress: (address?: IAddress) => string } => {
   const { formatMessage } = useIntl();

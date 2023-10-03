@@ -1,4 +1,4 @@
-import { IGetEmptyParameter } from "./empty";
+import type { IGetEmptyParameter } from "./empty";
 
 export const getAvailableNames: (props: IGetEmptyParameter) => string[] | null = props => {
   const { allNames = [], parameters = [] } = props;

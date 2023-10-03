@@ -15,7 +15,8 @@ import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types
 import MintBoxABI from "../../../../abis/mechanics/wrapper/mint/mintBox.abi.json";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
+import { WrapperEditDialog } from "./edit";
+import type { ICreateWrappedToken } from "./edit";
 import { WrapperTokenListItem } from "./item";
 
 export interface IWrapperTokenListProps {

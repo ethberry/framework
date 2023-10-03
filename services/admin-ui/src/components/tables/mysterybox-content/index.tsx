@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 

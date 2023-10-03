@@ -1,4 +1,4 @@
-import { IAssetComponentHistory, IGrade, IToken } from "@framework/types";
+import type { IAssetComponentHistory, IGrade, IToken } from "@framework/types";
 
 export interface IGradeData {
   grade: IGrade;

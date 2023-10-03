@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { ListActionVariant } from "@framework/mui-lists";
-import { IStakingDeposit } from "@framework/types";
+import type { IStakingDeposit } from "@framework/types";
 
 import { StakingRewardComplexButton } from "../reward-complex";
 import { StakingRewardSimpleButton } from "../reward-simple";

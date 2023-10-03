@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
-import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
+import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
 import { WaitListJoinDialog } from "../../../../components/buttons/mechanics/wait-list/join";

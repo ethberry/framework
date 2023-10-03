@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
 import { MysteryBoxListItem } from "../../mechanics/mystery/box-list/item";

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptor
 
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ICraftCountResult } from "@framework/types";
+import type { ICraftCountResult } from "@framework/types";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";

@@ -6,7 +6,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
-import { IMerchant } from "@framework/types";
+import type { IMerchant } from "@framework/types";
 
 import { MerchantListItem } from "./item";
 import { StyledGrid } from "./styled";

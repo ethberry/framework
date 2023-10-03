@@ -11,7 +11,8 @@ import { TokenType } from "@framework/types";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
-import { IMintMysteryBoxDto, MintMysteryBoxDialog } from "./dialog";
+import type { IMintMysteryBoxDto } from "./dialog";
+import { MintMysteryBoxDialog } from "./dialog";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;

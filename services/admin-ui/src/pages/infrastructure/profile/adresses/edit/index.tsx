@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { AddressInput } from "../../../../../components/inputs/address";

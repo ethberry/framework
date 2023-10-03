@@ -5,7 +5,7 @@ import { stringify } from "qs";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
-import { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
+import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
 import { MysteryBoxListItem } from "../../../mechanics/mystery/box-list/item";
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";

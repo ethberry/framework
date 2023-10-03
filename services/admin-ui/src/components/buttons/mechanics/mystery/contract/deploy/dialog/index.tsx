@@ -3,7 +3,8 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { IContract, IMysteryContractDeployDto, MysteryContractTemplates } from "@framework/types";
+import { MysteryContractTemplates } from "@framework/types";
+import type { IContract, IMysteryContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

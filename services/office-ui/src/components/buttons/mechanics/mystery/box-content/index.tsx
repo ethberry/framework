@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useWatch } from "react-hook-form";
 
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { MysteryboxContent } from "../../../../tables/mysterybox-content";
 

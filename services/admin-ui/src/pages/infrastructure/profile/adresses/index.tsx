@@ -13,7 +13,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useFormatAddress } from "../../../../utils/address";
 import { emptyAddress } from "../../../../components/common/interfaces";
 import { AddressEditDialog } from "./edit";
-import { ITabPanelProps } from "../tabs";
+import type { ITabPanelProps } from "../tabs";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;

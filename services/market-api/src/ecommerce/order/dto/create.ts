@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { IOrderCreateDto } from "../interfaces";
+import type { IOrderCreateDto } from "../interfaces";
 
 export class OrderCreateDto implements IOrderCreateDto {
   @ApiProperty({

@@ -1,4 +1,4 @@
-import { IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
 
 export const emptyAddress = {
   addressLine1: "",

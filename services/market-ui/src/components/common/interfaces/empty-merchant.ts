@@ -1,5 +1,6 @@
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IMerchant, MerchantStatus, RatePlanType } from "@framework/types";
+import type { IMerchant } from "@framework/types";
+import { MerchantStatus, RatePlanType } from "@framework/types";
 
 const date = new Date();
 

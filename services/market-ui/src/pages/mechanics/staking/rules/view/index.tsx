@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IStakingRule } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 

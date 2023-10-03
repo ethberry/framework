@@ -8,7 +8,7 @@ import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { IChainLinkRandomWordsRequestedEvent } from "../interfaces";
+import type { IChainLinkRandomWordsRequestedEvent } from "../interfaces";
 import { callRandom } from "./utils";
 
 @Injectable()

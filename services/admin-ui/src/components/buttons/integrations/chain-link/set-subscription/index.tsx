@@ -8,7 +8,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import VrfSetSub from "../../../../../abis/integrations/chain-link/subscription/setSub.abi.json";
 import { ChainLinkSetSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;

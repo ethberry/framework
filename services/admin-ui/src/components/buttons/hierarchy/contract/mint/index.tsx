@@ -15,7 +15,8 @@ import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc72
 import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
-import { IMintTokenDto, MintTokenDialog } from "./dialog";
+import type { IMintTokenDto } from "./dialog";
+import { MintTokenDialog } from "./dialog";
 
 export interface IMintButtonProps {
   className?: string;

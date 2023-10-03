@@ -5,7 +5,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
-import { ICategory } from "@framework/types";
+import type { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";

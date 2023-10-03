@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
-import { IQuote, IToken, useOneInch } from "../provider";
+import type { IQuote, IToken } from "../provider";
+import { useOneInch } from "../provider";
 
 import { useAsyncStateInOrder } from "./useAsyncStateInOrder";
 import { safeParseUnits } from "../helpers/safeParseUnits";

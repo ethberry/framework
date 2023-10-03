@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import { IOtp, OtpType } from "@framework/types";
+import type { IOtp } from "@framework/types";
+import { OtpType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { UuidDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 

@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ArrayNotEmpty, IsArray, IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IOrderItem } from "@framework/types";
+import type { IOrderItem } from "@framework/types";
 
-import { IOrderCreateDto } from "../interfaces";
+import type { IOrderCreateDto } from "../interfaces";
 import { OrderItemCreateDto } from "../../order-item/dto";
 
 export class OrderCreateDto implements IOrderCreateDto {

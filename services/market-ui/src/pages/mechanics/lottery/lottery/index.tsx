@@ -7,7 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 import { StyledAvatar } from "@framework/styled";
-import { IContract, IContractSearchDto } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
 
 import { LotteryPurchase } from "./purchase";
 import { LotteryStatistic } from "./statistics";

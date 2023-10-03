@@ -1,7 +1,8 @@
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { endOfDay, startOfDay } from "date-fns";
 
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 
 type OrdersObject = Record<OrderStatus, Array<IOrder>>;
 

@@ -2,7 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform, Type } from "class-transformer";
 import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, Matches, Min } from "class-validator";
 
-import { IOrderSearchDto, OrderStatus } from "@framework/types";
+import type { IOrderSearchDto } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { reDateRange } from "@gemunion/constants";
 import { SearchDto } from "@gemunion/collection";
 

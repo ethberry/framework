@@ -11,7 +11,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
 
-import { IMintMysteryBoxDto, MysteryBoxMintDialog } from "./dialog";
+import type { IMintMysteryBoxDto } from "./dialog";
+import { MysteryBoxMintDialog } from "./dialog";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;

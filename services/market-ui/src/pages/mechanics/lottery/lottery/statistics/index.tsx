@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IContract, ILotteryRound } from "@framework/types";
+import type { IContract, ILotteryRound } from "@framework/types";
 
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
 

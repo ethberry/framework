@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardContent, CardHeader, Typography } from "@mui/
 import { Link as RouterLink } from "react-router-dom";
 
 import { StyledCardMedia } from "@framework/styled";
-import { IMerchant } from "@framework/types";
+import type { IMerchant } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 interface IMerchantListItemProps {

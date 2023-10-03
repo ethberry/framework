@@ -5,13 +5,15 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { IStakingRule, TokenType } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
-import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
+import { StakingAllowanceDialog } from "./dialog";
+import type { IStakingAllowanceDto } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
   className?: string;

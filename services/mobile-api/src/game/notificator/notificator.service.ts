@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
-import { IMessage } from "@framework/types";
+import type { IMessage } from "@framework/types";
 
 @Injectable()
 export class NotificatorService {

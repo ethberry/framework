@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
 import { ClaimCreateDto } from "../../../claim/dto";
-import { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
+import type { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
 
 export class TokenUploadDto implements ITokenUploadDto {
   @ApiProperty({

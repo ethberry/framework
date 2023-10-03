@@ -6,7 +6,7 @@ import { SearchableOptionalDto } from "@gemunion/collection";
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { ContractStatus } from "@framework/types";
 
-import { IContractUpdateDto } from "../interfaces";
+import type { IContractUpdateDto } from "../interfaces";
 
 export class ContractUpdateDto extends SearchableOptionalDto implements IContractUpdateDto {
   @ApiPropertyOptional()

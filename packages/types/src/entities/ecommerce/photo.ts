@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IProduct } from "./product";
-import { IProductItem } from "./product-item";
+import type { IProduct } from "./product";
+import type { IProductItem } from "./product-item";
 
 export enum PhotoStatus {
   NEW = "NEW",

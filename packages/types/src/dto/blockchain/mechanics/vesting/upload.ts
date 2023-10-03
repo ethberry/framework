@@ -1,5 +1,5 @@
-import { IVestingContractDeployDto } from "./deploy";
-import { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
+import type { IVestingContractDeployDto } from "./deploy";
+import type { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
 
 export interface IVestingClaimRowDto extends IVestingContractDeployDto, IBCAssetTemplateDto {}
 

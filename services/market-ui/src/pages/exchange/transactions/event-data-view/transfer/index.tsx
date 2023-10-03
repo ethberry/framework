@@ -3,7 +3,12 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { AddressLink } from "@gemunion/mui-scanner";
-import { IContract, IErc20TokenTransferEvent, IERC721TokenTransferEvent, TContractEventData } from "@framework/types";
+import type {
+  IContract,
+  IErc20TokenTransferEvent,
+  IERC721TokenTransferEvent,
+  TContractEventData,
+} from "@framework/types";
 
 import {
   StyledDataViewAddressLinkWrapper,

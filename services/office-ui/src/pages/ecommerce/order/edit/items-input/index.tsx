@@ -6,7 +6,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IOrder, IOrderItem } from "@framework/types";
+import type { IOrder, IOrderItem } from "@framework/types";
 
 import { useStyles } from "./styles";
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
