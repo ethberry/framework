@@ -3,7 +3,13 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 import { utils } from "ethers";
 
-import { ExchangeType, IAssetComponentHistory, IContract, ILevelUp, TContractEventData } from "@framework/types";
+import {
+  ExchangeType,
+  IAssetComponentHistory,
+  IContract,
+  IExchangeGradeEvent,
+  TContractEventData,
+} from "@framework/types";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
@@ -21,7 +27,7 @@ export interface IUpgradeDataViewProps {
 
 export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
   const { assets, contract, eventData } = props;
-  const { attribute } = eventData as ILevelUp;
+  const { attribute, level } = eventData as IExchangeGradeEvent;
 
   return (
     <StyledDataViewWrapper>
@@ -33,6 +39,14 @@ export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
           <StyledDataViewAddressLinkWrapper>
             {attribute ? utils.toUtf8String(utils.stripZeros(attribute)) : ""}
           </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
+      <StyledDataViewItemWrapper>
+        <Typography fontWeight={500}>
+          <FormattedMessage id="enums.eventDataLabel.value" />:
+        </Typography>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>{level || ""}</StyledDataViewAddressLinkWrapper>
         </StyledDataViewItemContentWrapper>
       </StyledDataViewItemWrapper>
 

@@ -122,6 +122,8 @@ describe("Diamond Exchange Grade", function () {
             tokenId,
             amount,
           }),
+          params.extra,
+          1,
         )
         .to.emit(erc721Instance, "LevelUp")
         .withArgs(await exchangeInstance.getAddress(), tokenId, extra, 1);

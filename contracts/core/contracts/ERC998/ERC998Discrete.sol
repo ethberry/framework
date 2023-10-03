@@ -26,9 +26,9 @@ contract ERC998Discrete is IERC721Discrete, ERC998Simple {
    * @dev Validates and upgrades attribute
    * @param tokenId The NFT to upgrade
    * @param attribute parameter name
-   * @return The result of operation
+   * @return uint256 The upgraded level
    */
-  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (uint256) {
     // TEMPLATE_ID refers to database id
     if (attribute == TEMPLATE_ID) {
       revert ProtectedAttribute(attribute);
@@ -43,13 +43,13 @@ contract ERC998Discrete is IERC721Discrete, ERC998Simple {
    * @param attribute parameter name
    * @return The result of operation
    */
-  function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (bool) {
+  function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (uint256) {
     _requireMinted(tokenId);
     uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
     _upsertRecordField(tokenId, attribute, value + 1);
     emit LevelUp(_msgSender(), tokenId, attribute, value + 1);
     emit MetadataUpdate(tokenId);
-    return true;
+    return value + 1;
   }
 
   /**

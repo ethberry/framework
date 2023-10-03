@@ -15,7 +15,7 @@ import "../../ERC721/interfaces/IERC721Discrete.sol";
 import "../override/SignatureValidator.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Upgrade(address account, uint256 externalId, Asset item, Asset[] price);
+  event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
 
   constructor() SignatureValidator() {}
 
@@ -31,8 +31,8 @@ contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, Pausab
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
-    IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
+    uint256 level = IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
 
-    emit Upgrade(_msgSender(), params.externalId, item, price);
+    emit Upgrade(_msgSender(), params.externalId, item, price, params.extra, level);
   }
 }
