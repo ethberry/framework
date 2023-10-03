@@ -28,7 +28,7 @@ export const UpgradeDialog: FC<IUpgradeDialogProps> = props => {
     <FormDialog
       disabled={false}
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message="dialogs.grade"
       testId="UpgradeAttributeForm"
       {...rest}

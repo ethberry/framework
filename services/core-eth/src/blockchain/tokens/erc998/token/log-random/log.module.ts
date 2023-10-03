@@ -4,7 +4,14 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractFeatures, ContractType, TokenType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventSignature,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  TokenType,
+} from "@framework/types";
 
 // custom contracts
 import { ABIRandom } from "./interfaces";
@@ -57,38 +64,12 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.VrfSubscriptionSet,
         ];
         const topics = getEventsTopics(eventNames);
-        console.info("998RANDOM_TOPICS", topics);
         return {
           contract: {
             contractType: ContractType.ERC998_TOKEN_RANDOM,
             contractAddress: erc998RandomContracts.address,
             contractInterface: ABIRandom,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.BatchReceivedChild,
-              ContractEventType.BatchTransferChild,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.MintRandom,
-              ContractEventType.Paused,
-              ContractEventType.ReceivedChild,
-              ContractEventType.RedeemClaim,
-              ContractEventType.SetMaxChild,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.TransferChild,
-              ContractEventType.UnWhitelistedChild,
-              ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysteryBox,
-              ContractEventType.Unpaused,
-              ContractEventType.WhitelistedChild,
-              ContractEventType.LevelUp,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              ContractEventType.VrfSubscriptionSet
-            ],
+            topics,
           },
           block: {
             fromBlock: erc998RandomContracts.fromBlock || startingBlock,

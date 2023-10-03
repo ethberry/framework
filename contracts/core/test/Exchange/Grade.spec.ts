@@ -104,7 +104,7 @@ describe("Diamond Exchange Grade", function () {
         signature,
       );
 
-      // event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
+      // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
       await expect(tx2)
         .to.emit(exchangeInstance, "Upgrade")
         .withArgs(

@@ -53,28 +53,13 @@ import { getEventsTopics } from "../../../../common/utils";
           ContractEventType.VrfSubscriptionSet,
         ];
         const topics = getEventsTopics(eventNames);
-        console.info("LOTTERY_TOPICS", topics);
 
         return {
           contract: {
             contractType: ContractType.LOTTERY,
             contractAddress: lotteryContracts ? lotteryContracts.address : [],
             contractInterface: new Interface(LotterySol.abi),
-            // prettier-ignore
-            eventNames: [
-              LotteryEventType.Prize,
-              LotteryEventType.RoundEnded,
-              LotteryEventType.Released,
-              LotteryEventType.RoundStarted,
-              LotteryEventType.RoundFinalized,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-              AccessControlEventType.RoleAdminChanged,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              ExchangeEventType.PaymentEthReceived,
-              ContractEventType.VrfSubscriptionSet,
-            ],
+            topics,
           },
           block: {
             // fromBlock,

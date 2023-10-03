@@ -17,6 +17,7 @@ import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { WaitListLogService } from "./log.service";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -34,21 +35,24 @@ import { WaitListLogService } from "./log.service";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
         const fromBlock = waitlistContracts.fromBlock || startingBlock;
+
+        const eventNames = [
+          WaitListEventType.WaitListRewardSet,
+          WaitListEventType.WaitListRewardClaimed,
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+          AccessControlEventType.RoleAdminChanged,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+        ];
+
+        const topics = getEventsTopics(eventNames);
         return {
           contract: {
             contractType: ContractType.WAITLIST,
             contractAddress: waitlistContracts.address,
             contractInterface: new Interface(WaitListSol.abi),
-            // prettier-ignore
-            eventNames: [
-              WaitListEventType.WaitListRewardSet,
-              WaitListEventType.WaitListRewardClaimed,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-              AccessControlEventType.RoleAdminChanged,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked
-            ],
+            topics,
           },
           block: {
             fromBlock,

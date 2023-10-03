@@ -12,6 +12,7 @@ import { ABI } from "./interfaces";
 import { Erc721LogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -28,31 +29,34 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.Paused,
+          ContractEventType.RedeemClaim,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.UnpackClaim,
+          ContractEventType.UnpackMysteryBox,
+          ContractEventType.Unpaused,
+          ContractEventType.ConsecutiveTransfer,
+          ContractEventType.LevelUp,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+          Erc4907EventType.UpdateUser,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN,
             contractAddress: erc721Contracts.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-              // ContractEventType.MintRandom,
-              ContractEventType.Paused,
-              ContractEventType.RedeemClaim,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysteryBox,
-              ContractEventType.Unpaused,
-              ContractEventType.ConsecutiveTransfer,
-              ContractEventType.LevelUp,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              Erc4907EventType.UpdateUser
-            ],
+            topics,
           },
           block: {
             fromBlock: erc721Contracts.fromBlock || startingBlock,

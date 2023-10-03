@@ -11,6 +11,7 @@ import { ABI } from "./interfaces";
 import { Erc998LogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -27,36 +28,39 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.BatchReceivedChild,
+          ContractEventType.BatchTransferChild,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.MintRandom,
+          ContractEventType.Paused,
+          ContractEventType.ReceivedChild,
+          ContractEventType.RedeemClaim,
+          ContractEventType.SetMaxChild,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.TransferChild,
+          ContractEventType.UnWhitelistedChild,
+          ContractEventType.UnpackClaim,
+          ContractEventType.UnpackMysteryBox,
+          ContractEventType.Unpaused,
+          ContractEventType.WhitelistedChild,
+          ContractEventType.LevelUp,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.ERC998_TOKEN,
             contractAddress: erc998Contracts.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.BatchReceivedChild,
-              ContractEventType.BatchTransferChild,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.MintRandom,
-              ContractEventType.Paused,
-              ContractEventType.ReceivedChild,
-              ContractEventType.RedeemClaim,
-              ContractEventType.SetMaxChild,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.TransferChild,
-              ContractEventType.UnWhitelistedChild,
-              ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysteryBox,
-              ContractEventType.Unpaused,
-              ContractEventType.WhitelistedChild,
-              ContractEventType.LevelUp,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged
-            ],
+            topics,
           },
           block: {
             fromBlock: erc998Contracts.fromBlock || startingBlock,

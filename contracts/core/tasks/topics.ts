@@ -110,8 +110,8 @@ enum ContractEventSignature {
   // event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
   PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:GRADE
-  // event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
-  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[])",
+  // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
+  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",
   // MODULE:WAITLIST
   //   event WaitListRewardSet(uint256 externalId, bytes32 root, Asset[] items);
   //   event WaitListRewardClaimed(address account, uint256 externalId, Asset[] items);

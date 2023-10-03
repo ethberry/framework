@@ -11,6 +11,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerLogService } from "./log.service";
 import { ABI } from "./interfaces";
 import { testChainId } from "@framework/constants";
+import { getEventsTopics } from "../../../common/utils";
 
 @Module({
   imports: [
@@ -32,30 +33,33 @@ import { testChainId } from "@framework/constants";
           ];
         const fromBlock = contractManagerEntity.fromBlock || startingBlock;
 
+        const eventNames = [
+          ContractManagerEventType.VestingDeployed,
+          ContractManagerEventType.ERC20TokenDeployed,
+          ContractManagerEventType.ERC721TokenDeployed,
+          ContractManagerEventType.ERC998TokenDeployed,
+          ContractManagerEventType.ERC1155TokenDeployed,
+          ContractManagerEventType.MysteryboxDeployed,
+          ContractManagerEventType.CollectionDeployed,
+          ContractManagerEventType.StakingDeployed,
+          ContractManagerEventType.PonziDeployed,
+          ContractManagerEventType.LotteryDeployed,
+          ContractManagerEventType.RaffleDeployed,
+          ContractManagerEventType.WaitListDeployed,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
             contractAddress: contractManagerEntity.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractManagerEventType.VestingDeployed,
-              ContractManagerEventType.ERC20TokenDeployed,
-              ContractManagerEventType.ERC721TokenDeployed,
-              ContractManagerEventType.ERC998TokenDeployed,
-              ContractManagerEventType.ERC1155TokenDeployed,
-              ContractManagerEventType.MysteryboxDeployed,
-              ContractManagerEventType.CollectionDeployed,
-              ContractManagerEventType.StakingDeployed,
-              ContractManagerEventType.PonziDeployed,
-              ContractManagerEventType.LotteryDeployed,
-              ContractManagerEventType.RaffleDeployed,
-              ContractManagerEventType.WaitListDeployed,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-            ],
+            topics,
           },
           block: {
             fromBlock,

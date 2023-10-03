@@ -11,6 +11,7 @@ import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mech
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { LotteryTicketLogService } from "./log.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -28,22 +29,25 @@ import { LotteryTicketLogService } from "./log.service";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
 
+        const eventNames = [
+          ContractEventType.Transfer,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.DefaultRoyaltyInfo,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.LOTTERY,
             contractAddress: lotteryTicketAddr ? lotteryTicketAddr.address : [],
             contractInterface: new Interface(LotteryTicketSol.abi),
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Transfer,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-            ],
+            topics,
           },
           block: {
             fromBlock: lotteryTicketAddr.fromBlock || startingBlock,

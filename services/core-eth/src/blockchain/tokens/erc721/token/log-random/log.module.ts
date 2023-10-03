@@ -61,34 +61,13 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.VrfSubscriptionSet,
         ];
         const topics = getEventsTopics(eventNames);
-        console.info("RANDOM_TOPICS", topics);
+
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN_RANDOM,
             contractAddress: erc721RandomContracts.address,
             contractInterface: ABIRandom,
-            // topics
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.MintRandom,
-              ContractEventType.Paused,
-              ContractEventType.RedeemClaim,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysteryBox,
-              ContractEventType.Unpaused,
-              ContractEventType.ConsecutiveTransfer,
-              ContractEventType.LevelUp,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              Erc4907EventType.UpdateUser,
-              ContractEventType.VrfSubscriptionSet
-            ],
+            topics,
           },
           block: {
             fromBlock: erc721RandomContracts.fromBlock || startingBlock,

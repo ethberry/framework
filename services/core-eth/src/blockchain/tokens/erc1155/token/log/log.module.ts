@@ -11,6 +11,7 @@ import { ABI } from "./interfaces";
 import { Erc1155LogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -27,22 +28,26 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          ContractEventType.TransferSingle,
+          ContractEventType.TransferBatch,
+          ContractEventType.URI,
+          ContractEventType.ApprovalForAll,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.ERC1155_TOKEN,
             contractAddress: erc1155Contracts.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.TransferSingle,
-              ContractEventType.TransferBatch,
-              ContractEventType.URI,
-              ContractEventType.ApprovalForAll,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged
-            ],
+            topics,
           },
           block: {
             fromBlock: erc1155Contracts.fromBlock || startingBlock,

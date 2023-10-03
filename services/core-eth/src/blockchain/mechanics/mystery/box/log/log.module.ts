@@ -12,6 +12,7 @@ import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/arti
 import { MysteryLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -28,25 +29,28 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.UnpackMysteryBox,
+          AccessControlEventType.RoleAdminChanged,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+        ];
+
+        const topics = getEventsTopics(eventNames);
         return {
           contract: {
             contractType: ContractType.MYSTERY,
             contractAddress: mysteryContracts ? mysteryContracts.address : [],
             contractInterface: new Interface(ERC721MysteryBoxBlacklistPausableSol.abi),
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.UnpackMysteryBox,
-              AccessControlEventType.RoleAdminChanged,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-            ],
+            topics,
           },
           block: {
             fromBlock: mysteryContracts.fromBlock || startingBlock,

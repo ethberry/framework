@@ -52,28 +52,13 @@ import { getEventsTopics } from "../../../../common/utils";
           ContractEventType.VrfSubscriptionSet,
         ];
         const topics = getEventsTopics(eventNames);
-        console.info("RAFFLE_TOPICS", topics);
 
         return {
           contract: {
             contractType: ContractType.RAFFLE,
             contractAddress: raffleContracts.address,
             contractInterface: new Interface(RaffleSol.abi),
-            // prettier-ignore
-            eventNames: [
-              RaffleEventType.Prize,
-              RaffleEventType.RoundEnded,
-              RaffleEventType.Released,
-              RaffleEventType.RoundStarted,
-              RaffleEventType.RoundFinalized,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-              AccessControlEventType.RoleAdminChanged,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              ExchangeEventType.PaymentEthReceived,
-              ContractEventType.VrfSubscriptionSet,
-            ],
+            topics,
           },
           block: {
             // fromBlock,

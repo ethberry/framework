@@ -13,6 +13,7 @@ import { VestingLogService } from "./vesting.log.service";
 import { VestingInterface } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -30,22 +31,25 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          VestingEventType.ERC20Released,
+          VestingEventType.EtherReleased,
+          // VestingEventType.EtherReceived,
+          VestingEventType.PaymentEthReceived,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.OwnershipTransferred,
+          // MODULE:ERC1363
+          Erc1363EventType.TransferReceived,
+        ];
+
+        const topics = getEventsTopics(eventNames);
         return {
           contract: {
             contractType: ContractType.VESTING,
             contractAddress: vestingContracts.address,
             contractInterface: VestingInterface,
-            // prettier-ignore
-            eventNames: [
-              VestingEventType.ERC20Released,
-              VestingEventType.EtherReleased,
-              // VestingEventType.EtherReceived,
-              VestingEventType.PaymentEthReceived,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.OwnershipTransferred,
-              // MODULE:ERC1363
-              Erc1363EventType.TransferReceived
-            ],
+            topics,
           },
           block: {
             fromBlock: vestingContracts.fromBlock || startingBlock,

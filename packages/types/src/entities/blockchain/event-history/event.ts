@@ -251,6 +251,9 @@ export enum ContractEventSignature {
   StakingFinish = "StakingFinish(uint256,address,uint256,uint256)",
   BalanceWithdraw = "BalanceWithdraw(address,(uint8,address,uint256,uint256))",
   DepositReturn = "DepositReturn(uint256,address)",
+  DepositStart = "DepositStart(uint256,uint256,address,uint256,uint256[])",
+  DepositWithdraw = "DepositWithdraw(uint256,address,uint256)",
+  DepositFinish = "DepositFinish(uint256,address,uint256,uint256)",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -272,8 +275,8 @@ export enum ContractEventSignature {
   // event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
   PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:GRADE
-  // event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
-  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[])",
+  // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
+  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",
   // MODULE:WAITLIST
   //   event WaitListRewardSet(uint256 externalId, bytes32 root, Asset[] items);
   //   event WaitListRewardClaimed(address account, uint256 externalId, Asset[] items);
@@ -285,6 +288,8 @@ export enum ContractEventSignature {
   // MODULE:GRADE
   // event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
   LevelUp = "LevelUp(address,uint256,bytes32,uint256)",
+  // MODULE:DISMANTLE
+  Dismantle = "Dismantle(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   MetadataUpdate = "MetadataUpdate(uint256)",
   BatchMetadataUpdate = "BatchMetadataUpdate(uint256,uint256)",
   // MODULE:PAYMENT_SPLITTER
@@ -295,6 +300,11 @@ export enum ContractEventSignature {
   PaymentEthReceived = "PaymentEthReceived(address,uint256)",
   PaymentEthSent = "PaymentEthSent(address,uint256)",
 
+  // MODULE:PONZI
+  FinalizedToken = "FinalizedToken(address,uint256)",
+  WithdrawToken = "WithdrawToken(address,uint256)",
+  ReferralBonus = "ReferralBonus(address,address,uint256)",
+
   // MODULE:CHAINLINKV2
   RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)",
   RandomnessRequestId = "RandomnessRequestId(bytes32,address)",
@@ -304,6 +314,11 @@ export enum ContractEventSignature {
 
   // MODULE:ECOMMERCE
   EcommercePurchase = "EcommercePurchase(??)",
+
+  // MODULE:REFERRAL
+  ReferralProgram = "ReferralProgram((uint256,uint256,uint8,bool))",
+  ReferralReward = "ReferralReward(address,address,uint8,address,uint256)",
+  ReferralWithdraw = "ReferralWithdraw(address,address,uint256)",
 
   // MODULE:CM
   // event VestingDeployed(address account, uint256 externalId, VestingArgs args, Asset[] items);
@@ -320,6 +335,9 @@ export enum ContractEventSignature {
   LotteryDeployed = "LotteryDeployed(address,uint256,((uint256,uint256)))",
   RaffleDeployed = "RaffleDeployed(address,uint256)",
   WaitListDeployed = "WaitListDeployed(address,uint256)",
+
+  // MODULE:ERC1363
+  TransferReceived = "TransferReceived(address,address,uint256,bytes)",
 }
 
 export type TContractEventData =

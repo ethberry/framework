@@ -11,6 +11,7 @@ import WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { WrapperLogService } from "./log.service";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -28,23 +29,27 @@ import { WrapperLogService } from "./log.service";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
         const fromBlock = wrapperContracts.fromBlock || startingBlock;
+
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.UnpackWrapper,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.WRAPPER,
             contractAddress: wrapperContracts.address,
             contractInterface: new Interface(WrapperSol.abi),
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.UnpackWrapper,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-            ],
+            topics,
           },
           block: {
             fromBlock,

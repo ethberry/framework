@@ -2,12 +2,20 @@ import { Interface, JsonRpcProvider, Log, LogDescription, TransactionReceipt, ke
 
 import {
   AccessControlEventType,
+  AccessListEventType,
   ContractEventSignature,
   ContractEventType,
   Erc4907EventType,
   ExchangeEventType,
   LotteryEventType,
   RaffleEventType,
+  ContractManagerEventType,
+  ReferralProgramEventType,
+  Erc1363EventType,
+  StakingEventType,
+  VestingEventType,
+  WaitListEventType,
+  PonziEventType,
 } from "@framework/types";
 // import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
@@ -23,12 +31,25 @@ export const getEventsTopics = function (
     | LotteryEventType
     | RaffleEventType
     | ExchangeEventType
+    | AccessListEventType
+    | ContractManagerEventType
+    | ReferralProgramEventType
+    | Erc1363EventType
+    | StakingEventType
+    | VestingEventType
+    | WaitListEventType
+    | PonziEventType
   >,
 ): [Array<string>] {
   return [
-    events.map(event =>
-      keccak256It(Object.values(ContractEventSignature)[Object.keys(ContractEventSignature).indexOf(event)]),
-    ),
+    events.map(event => {
+      if (Object.keys(ContractEventSignature).some(v => v === event.toString())) {
+        return keccak256It(Object.values(ContractEventSignature)[Object.keys(ContractEventSignature).indexOf(event)]);
+      } else {
+        throw new Error(`Missing event signature: ${event}`);
+        // return "";
+      }
+    }),
   ];
 };
 
