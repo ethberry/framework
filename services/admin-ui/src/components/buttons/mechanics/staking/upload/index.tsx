@@ -44,8 +44,6 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
   );
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
-    console.log("rule", rule);
-
     const stakingRule = {
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -73,8 +71,6 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
   });
 
   const handleLoadRule = async (rule: Partial<IStakingRule>): Promise<void> => {
-    console.log("handleLoadRule rule", rule);
-
     // MODULE:MYSTERYBOX
     const content = [] as Array<any>;
     if (rule.reward) {
@@ -100,8 +96,6 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
     } else {
       content.push([]);
     }
-    console.log("content", content);
-
     return metaLoadRule(rule, content).then(() => {
       setIsUploadDialogOpen(false);
     });

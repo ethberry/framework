@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { FormWatcher, FormState } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -65,8 +64,6 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
       testId="StakingEditForm"
       {...rest}
     >
-      <FormState />
-      <FormWatcher />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput
