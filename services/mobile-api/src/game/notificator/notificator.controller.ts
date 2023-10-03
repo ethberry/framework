@@ -30,7 +30,7 @@ export class NotificatorController {
     return this.notificatorService.dummy(data);
   }
 
-  @EventPattern(MobileEventType.UPGRADE)
+  @EventPattern(MobileEventType.LEVEL_UP)
   public upgrade(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);
   }

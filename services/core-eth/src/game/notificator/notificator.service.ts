@@ -89,7 +89,7 @@ export class NotificatorService {
 
   public consecutiveTransfer(data: IConsecutiveTransferData): Promise<any> {
     return this.sendMessage(data.tokens[0].template!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.BATCH_TRANSFER, data).toPromise();
+      return clientProxy.emit(MobileEventType.CONSECUTIVE_TRANSFER, data).toPromise();
     });
   }
 
@@ -116,13 +116,13 @@ export class NotificatorService {
   // MODULE:MYSTERY
   public purchaseMystery(data: IMysteryPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.MYSTERY_PURCHASE, data).toPromise();
     });
   }
 
   public unpackMystery(data: IMysteryUnpackData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.MYSTERY_UNPACK, data).toPromise();
     });
   }
 
@@ -136,7 +136,7 @@ export class NotificatorService {
   // MODULE:CRAFT
   public async craft(data: ICraftData): Promise<any> {
     return this.sendMessage(data.craft.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+      return clientProxy.emit(MobileEventType.CRAFT, data).toPromise();
     });
   }
 
@@ -163,7 +163,7 @@ export class NotificatorService {
   // MODULE:GRADE
   public grade(data: IGradeData): Promise<any> {
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.UPGRADE, data).toPromise();
+      return clientProxy.emit(MobileEventType.LEVEL_UP, data).toPromise();
     });
   }
 
@@ -195,7 +195,7 @@ export class NotificatorService {
   // MODULE:RAFFLE
   public rafflePurchase(data: IRafflePurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
+      return clientProxy.emit(MobileEventType.RAFFLE_PURCHASE, data).toPromise();
     });
   }
 
@@ -226,7 +226,7 @@ export class NotificatorService {
   // MODULE:LOTTERY
   public lotteryPurchase(data: ILotteryPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.LOTTERY_PURCHASE, data).toPromise();
     });
   }
 
