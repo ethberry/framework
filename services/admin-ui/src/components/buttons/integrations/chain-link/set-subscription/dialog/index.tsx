@@ -9,7 +9,7 @@ export interface IChainLinkVrfSubscriptionDto {
 
 export interface IChainLinkSubscriptionDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IChainLinkVrfSubscriptionDto, form: any) => Promise<void>;
   initialValues: IChainLinkVrfSubscriptionDto;
 }

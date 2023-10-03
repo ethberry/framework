@@ -26,7 +26,7 @@ export interface IDepositRewardDto {
 
 export interface IRewardDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IDepositRewardDto, form?: any) => Promise<void>;
   initialValues: IDepositRewardDto;
 }

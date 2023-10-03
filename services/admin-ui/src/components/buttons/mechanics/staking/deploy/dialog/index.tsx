@@ -7,7 +7,7 @@ import type { IContract, IStakingContractDeployDto } from "@framework/types";
 
 export interface IStakingDeployDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 

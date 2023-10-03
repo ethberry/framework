@@ -10,8 +10,8 @@ export const VrfSubInput: FC = () => {
   const { profile } = useUser<IUser>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("subId", option?.id ?? 0);
-    form.setValue("vrfSubId", option?.vrfSubId ?? 0);
+    form.setValue("subId", option?.id ?? 0, { shouldDirty: true });
+    form.setValue("vrfSubId", option?.vrfSubId ?? 0, { shouldDirty: true });
   };
 
   return (

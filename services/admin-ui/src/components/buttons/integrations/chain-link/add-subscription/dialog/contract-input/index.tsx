@@ -14,7 +14,7 @@ export const VrfConsumerInput: FC<IVrfConsumerInputDto> = props => {
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("contractId", option?.id ?? 0);
+    form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
     form.setValue("address", option?.address ?? "0x");
   };
 

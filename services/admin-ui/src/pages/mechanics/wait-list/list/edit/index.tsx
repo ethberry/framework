@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 
 export interface IWaitListListEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IWaitListList>, form: any) => Promise<void>;
   initialValues: IWaitListList;
   testId: string;

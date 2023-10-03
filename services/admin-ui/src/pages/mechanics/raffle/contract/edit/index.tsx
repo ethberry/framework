@@ -13,7 +13,7 @@ import { BlockchainInfoPopover } from "../../../../../components/popover/contrac
 
 export interface IRaffleEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: Partial<IContract>;
 }

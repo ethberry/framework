@@ -15,7 +15,7 @@ export interface IMintTokenDto {
 
 export interface IMintTokenDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IMintTokenDto, form: any) => Promise<void>;
   initialValues: IMintTokenDto;
 }

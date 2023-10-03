@@ -15,7 +15,7 @@ import { TemplateInput } from "../../../../../components/inputs/template-asset";
 
 export interface IErc998TemplateEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
   initialValues: ITemplate;
 }

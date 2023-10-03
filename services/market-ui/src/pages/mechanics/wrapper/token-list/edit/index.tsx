@@ -19,7 +19,7 @@ export interface ICreateWrappedToken {
 
 export interface IWrapperEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: ICreateWrappedToken, form: any) => Promise<void>;
   initialValues: ICreateWrappedToken;
 }
@@ -34,7 +34,7 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
-      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);
     };

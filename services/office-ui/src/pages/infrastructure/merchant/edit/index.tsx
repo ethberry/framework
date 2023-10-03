@@ -11,7 +11,7 @@ import { validationSchema } from "./validation";
 
 export interface IEditMerchantDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: Partial<IMerchant>, formikBag: any) => Promise<void>;
   initialValues: IMerchant;
 }

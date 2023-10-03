@@ -11,7 +11,7 @@ import { validationSchema } from "./validation";
 
 export interface IEditCategoryDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: Partial<ICategory>, form: any) => Promise<void>;
   initialValues: ICategory;
 }

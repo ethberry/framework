@@ -13,7 +13,7 @@ import { validationSchema } from "./validation";
 
 export interface IErc721TemplateEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
   initialValues: ITemplate;
 }

@@ -21,7 +21,7 @@ export interface IChainLinkFundDto {
 
 export interface IChainLinkFundDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: IChainLinkFundDto, form: any) => Promise<void>;
   initialValues: IChainLinkFundDto;
 }

@@ -16,7 +16,7 @@ export interface IEthListenerRemoveDto {
 
 export interface IEthListenerRemoveDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IEthListenerRemoveDto, form: any) => Promise<void>;
   initialValues: IEthListenerRemoveDto;
 }

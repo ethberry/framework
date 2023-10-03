@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, Hidden, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -58,19 +58,23 @@ export const LotteryTokenList: FC = () => {
       <LotteryTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "auto" }}>
+        <List>
           {rows.map(token => (
-            <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
+            <ListItem key={token.id}>
+              <ListItemText sx={{ flex: 1 }}>{token.round?.contract?.title}</ListItemText>
+              <Hidden mdDown>
+                <ListItemText sx={{ flex: 1 }}>{token.id}</ListItemText>
+                <ListItemText sx={{ flex: 1 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
+              </Hidden>
+              <ListItemText sx={{ flex: 1 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
-                {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
-              </ListItemText>
+              <Hidden smDown>
+                <ListItemText sx={{ flex: 1 }}>
+                  {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
+                </ListItemText>
+              </Hidden>
               <ListActions>
                 <LotteryRewardButton token={token} disabled={token.tokenStatus !== TokenStatus.MINTED} />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />

@@ -8,7 +8,7 @@ import { CronExpression, IRaffleScheduleUpdateDto } from "@framework/types";
 
 export interface IRaffleScheduleDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IRaffleScheduleUpdateDto>, form: any) => Promise<void>;
   initialValues: IRaffleScheduleUpdateDto;
 }

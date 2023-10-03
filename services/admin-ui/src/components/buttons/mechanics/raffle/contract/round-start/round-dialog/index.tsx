@@ -19,7 +19,7 @@ export interface IRaffleRound {
 
 export interface IRaffleStartRoundDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IRaffleRound, form?: any) => Promise<void>;
   initialValues: Partial<IRaffleRound>;
 }
@@ -39,7 +39,7 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
-      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("address", option?.address ?? "0x");
     };
 

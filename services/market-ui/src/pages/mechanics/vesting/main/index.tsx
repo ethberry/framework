@@ -1,12 +1,12 @@
 import { FC, Fragment, useState } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Hidden, List, ListItem } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { StyledListItemText, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
@@ -58,11 +58,13 @@ export const Vesting: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(vesting => (
-            <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ overflowX: "auto", width: 0.5 }}>
-                <AddressLink address={vesting.parameters.account as string} />
-              </ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
+            <ListItem key={vesting.id}>
+              <StyledListItemText>
+                <AddressLink length={24} address={vesting.parameters.account as string} />
+              </StyledListItemText>
+              <Hidden mdDown>
+                <StyledListItemText>{vesting.contractFeatures.join(", ")}</StyledListItemText>
+              </Hidden>
               <ListActions>
                 <ListAction
                   onClick={handleWithdraw(vesting)}

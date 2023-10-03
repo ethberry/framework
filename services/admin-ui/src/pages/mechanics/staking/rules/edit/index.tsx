@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
+import { FormWatcher, FormState } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -17,7 +18,7 @@ import { validationSchema } from "./validation";
 export interface IStakingRuleEditDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
   initialValues: IStakingRule;
 }
@@ -64,6 +65,8 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
       testId="StakingEditForm"
       {...rest}
     >
+      <FormState />
+      <FormWatcher />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput

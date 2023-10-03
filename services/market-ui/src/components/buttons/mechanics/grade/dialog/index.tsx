@@ -13,7 +13,7 @@ export interface IUpgradeDto {
 
 export interface IUpgradeDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: IUpgradeDto, form: any) => Promise<void>;
   initialValues: IUpgradeDto;
 }

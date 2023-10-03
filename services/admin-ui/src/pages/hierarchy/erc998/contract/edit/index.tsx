@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 
 export interface IErc998ContractEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IContract;
 }

@@ -15,7 +15,7 @@ import { StrategyInput } from "./strategy-input";
 
 export interface IExchangeEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IDismantle>, form: any) => Promise<void>;
   initialValues: IDismantle;
 }

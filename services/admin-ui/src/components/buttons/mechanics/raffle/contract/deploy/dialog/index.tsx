@@ -6,7 +6,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 
 export interface IRaffleContractDeployDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: any, form?: any) => Promise<void>;
 }
 

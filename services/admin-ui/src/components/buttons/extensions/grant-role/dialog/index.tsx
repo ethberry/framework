@@ -15,7 +15,7 @@ export interface IGrantRoleDto {
 
 export interface IAccessControlGrantRoleDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IGrantRoleDto, form: any) => Promise<void>;
   initialValues: IGrantRoleDto;
 }

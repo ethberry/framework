@@ -8,7 +8,7 @@ import { CronExpression, ILotteryScheduleUpdateDto } from "@framework/types";
 
 export interface ILotteryScheduleDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<ILotteryScheduleUpdateDto>, form: any) => Promise<void>;
   initialValues: ILotteryScheduleUpdateDto;
 }

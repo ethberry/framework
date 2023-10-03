@@ -12,7 +12,7 @@ import { validationSchema } from "./validation";
 
 export interface IExchangeEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<ICraft>, form: any) => Promise<void>;
   initialValues: ICraft;
 }

@@ -9,7 +9,7 @@ import { validationSchema } from "./validation";
 
 export interface IErc1155TokenDeployDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IErc1155ContractDeployDto;
 }

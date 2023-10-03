@@ -21,7 +21,7 @@ export interface IStakingAllowanceDto {
 
 export interface IStakingAllowanceDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IStakingAllowanceDto, form: any) => Promise<void>;
   initialValues: IStakingAllowanceDto;
 }

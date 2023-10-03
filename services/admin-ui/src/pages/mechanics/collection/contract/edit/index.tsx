@@ -11,7 +11,7 @@ import { BlockchainInfoPopover } from "../../../../../components/popover/contrac
 
 export interface IErc721CollectionEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IContract;
 }

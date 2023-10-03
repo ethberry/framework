@@ -10,7 +10,7 @@ import { VestingClaimInfoPopover } from "./popover";
 
 export interface IVestingClaimUploadDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
   initialValues: IVestingClaimUploadDto;

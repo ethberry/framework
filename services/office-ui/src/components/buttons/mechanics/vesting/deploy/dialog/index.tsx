@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 
 export interface IVestingDeployDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IVestingContractDeployDto;
 }

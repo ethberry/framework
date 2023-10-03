@@ -12,7 +12,7 @@ import { BlockchainInfoPopover } from "../../../../../components/dialogs/contrac
 
 export interface IStakingEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: Partial<IContract>;
 }

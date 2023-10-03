@@ -23,7 +23,7 @@ export interface IAllowanceDto {
 
 export interface IAllowanceDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IAllowanceDto, form: any) => Promise<void>;
   initialValues: IAllowanceDto;
 }
@@ -37,7 +37,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
       setShowAlert(option?.title === "USDT");
-      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);

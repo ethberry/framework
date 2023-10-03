@@ -12,7 +12,7 @@ import { GrowthRateInput } from "./growth-rate-input";
 
 export interface IGradeEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IGrade>, form: any) => Promise<void>;
   initialValues: IGrade;
 }

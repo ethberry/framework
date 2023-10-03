@@ -18,7 +18,7 @@ import { ContractInput } from "../../../../../inputs/contract";
 export interface IStakingRuleUploadDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IStakingRule>, form?: any) => Promise<void>;
   initialValues: Partial<IStakingRule>;
 }

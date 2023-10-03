@@ -17,7 +17,7 @@ export const AttributeInput: FC<IAttributeInputProps> = props => {
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue(name, option?.id ?? 0);
+    form.setValue(name, option?.id ?? 0, { shouldDirty: true });
     form.setValue("attribute", option?.attribute);
     form.setValue("price", option?.price);
   };

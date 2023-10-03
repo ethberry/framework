@@ -11,7 +11,7 @@ import { validationSchema } from "./validation";
 
 export interface IClaimEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form: any) => void;
   onConfirm: (values: Partial<IClaim>, form: any) => Promise<void>;
   initialValues: IClaim;
 }

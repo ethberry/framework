@@ -21,7 +21,7 @@ export interface IStakingAllowanceDto {
 
 export interface IStakingAllowanceDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: IStakingAllowanceDto, form: any) => Promise<void>;
   initialValues: IStakingAllowanceDto;
 }
@@ -32,7 +32,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
-      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);

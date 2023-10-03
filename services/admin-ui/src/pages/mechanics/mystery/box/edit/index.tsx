@@ -12,7 +12,7 @@ import { validationSchema } from "./validation";
 
 export interface IMysteryboxEditDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onCancel: (form?: any) => void;
   onConfirm: (values: Partial<IMysteryBox>, form: any) => Promise<void>;
   initialValues: IMysteryBox;
 }
