@@ -63,7 +63,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
   };
 
   // round already started
-  if (parameters.rountId) {
+  if (parameters.roundId) {
     return null;
   }
 

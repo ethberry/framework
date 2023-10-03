@@ -8,9 +8,10 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
-import { CronExpression } from "@framework/types";
+import { ContractStatus, CronExpression } from "@framework/types";
 
 import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/contract/release";
+import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/lottery/contract/round-end";
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
 
@@ -59,6 +60,15 @@ export const LotteryRounds: FC = () => {
               <ListActions>
                 <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
                 <LotteryReleaseButton round={round} />
+                <LotteryRoundEndButton
+                  contract={round.contract!}
+                  disabled={
+                    round.contract!.parameters.roundId !== round.id ||
+                    round.contract!.contractStatus === ContractStatus.INACTIVE ||
+                    !round.contract!.parameters.vrfSubId ||
+                    !round.contract!.parameters.isConsumer
+                  }
+                />
               </ListActions>
             </ListItem>
           ))}

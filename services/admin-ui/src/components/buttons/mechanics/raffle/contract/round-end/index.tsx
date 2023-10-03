@@ -34,7 +34,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   };
 
   // round not started
-  if (!parameters.rountId) {
+  if (!parameters.roundId) {
     return null;
   }
 

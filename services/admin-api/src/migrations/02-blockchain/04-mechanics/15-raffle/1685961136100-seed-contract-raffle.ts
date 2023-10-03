@@ -51,7 +51,7 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
             timeLagBeforeRelease: "100",
             commission: "30",
             schedule: CronExpression.EVERY_WEEKEND,
-            roundId: "103",
+            roundId: 103,
           })}',
           'ACTIVE',
           null,

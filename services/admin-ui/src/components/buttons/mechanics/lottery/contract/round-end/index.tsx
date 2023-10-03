@@ -34,7 +34,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   };
 
   // round not started
-  if (!parameters.rountId) {
+  if (!parameters.roundId) {
     return null;
   }
 
