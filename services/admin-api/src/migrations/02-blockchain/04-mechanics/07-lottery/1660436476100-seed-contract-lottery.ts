@@ -51,6 +51,7 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
             timeLagBeforeRelease: "100",
             commission: "30",
             schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+            roundId: "103",
           })}',
           'ACTIVE',
           null,

@@ -8,7 +8,7 @@ import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { NodeEnv, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import RaffleStartRoundABI from "../../../../../../abis/mechanics/raffle/round/start/startRound.abi.json";
 
@@ -24,7 +24,7 @@ export interface IRaffleRoundStartButtonProps {
 export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props => {
   const {
     className,
-    contract: { address, id },
+    contract: { address, id, parameters },
     disabled,
     variant,
   } = props;
@@ -63,7 +63,8 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
     setIsStartRoundDialogOpen(false);
   };
 
-  if (process.env.NODE_ENV === NodeEnv.production) {
+  // round already started
+  if (parameters.rountId) {
     return null;
   }
 

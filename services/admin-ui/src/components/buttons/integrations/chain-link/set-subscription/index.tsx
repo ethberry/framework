@@ -8,16 +8,22 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import VrfSetSub from "../../../../../abis/integrations/chain-link/subscription/setSub.abi.json";
 import { ChainLinkSetSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import { IContract } from "@framework/types";
 
 export interface IChainLinkSetSubscriptionButtonProps {
-  address: string;
+  contract: IContract;
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
 export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonProps> = props => {
-  const { address, className, disabled, variant = ListActionVariant.button } = props;
+  const {
+    className,
+    disabled,
+    contract: { address },
+    variant = ListActionVariant.button,
+  } = props;
   const { account } = useWeb3React();
 
   const [isSetSubscriptionDialogOpen, setIsSetSubscriptionDialogOpen] = useState(false);

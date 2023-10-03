@@ -112,7 +112,11 @@ export const RaffleContracts: FC = () => {
                 <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <RaffleRoundStartButton
                   contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    !contract.parameters.vrfSubId ||
+                    !contract.parameters.isConsumer
+                  }
                 />
                 <RaffleRoundEndButton
                   contract={contract}
@@ -135,7 +139,7 @@ export const RaffleContracts: FC = () => {
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <ChainLinkSetSubscriptionButton address={contract.address} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
               </ListActions>
             </ListItem>
           ))}

@@ -160,7 +160,7 @@ export const Erc721Contract: FC = () => {
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
                   <ChainLinkSetSubscriptionButton
-                    address={contract.address}
+                    contract={contract}
                     disabled={
                       itemDisabled ||
                       (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&

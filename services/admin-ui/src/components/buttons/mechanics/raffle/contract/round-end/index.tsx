@@ -6,7 +6,6 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { NodeEnv } from "@framework/types";
 
 import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 
@@ -20,7 +19,7 @@ export interface IRaffleRoundEndButtonProps {
 export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   const {
     className,
-    contract: { address },
+    contract: { address, parameters },
     disabled,
     variant,
   } = props;
@@ -34,7 +33,8 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
     return metaFn();
   };
 
-  if (process.env.NODE_ENV === NodeEnv.production) {
+  // round not started
+  if (!parameters.rountId) {
     return null;
   }
 

@@ -19,7 +19,7 @@ export interface ILotteryRoundEndButtonProps {
 export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   const {
     className,
-    contract: { address },
+    contract: { address, parameters },
     disabled,
     variant,
   } = props;
@@ -32,6 +32,11 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   const handleEndRound = () => {
     return metaFn();
   };
+
+  // round not started
+  if (!parameters.rountId) {
+    return null;
+  }
 
   return (
     <ListAction
