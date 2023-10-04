@@ -5,6 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";
@@ -30,6 +31,15 @@ describe("ContractService", () => {
           inject: [ConfigService],
           useFactory: (configService: ConfigService): string => {
             return configService.get<string>("GEMUNION_API_KEY", "");
+          },
+        }),
+        SecretManagerModule.forRootAsync(SecretManagerModule, {
+          imports: [ConfigModule],
+          inject: [ConfigService],
+          useFactory: (configService: ConfigService) => {
+            return {
+              keyFile: configService.get<string>("GCLOUD_KEYFILE_BASE64_PATH", ""),
+            };
           },
         }),
         GemunionTypeormModule.forRoot(ormconfig),
@@ -152,7 +162,5 @@ describe("ContractService", () => {
       expect(contractEntities[0].id).toEqual(entities.contracts[4].id);
       expect(contractEntities[1].id).toEqual(entities.contracts[5].id);
     });
-
-    // TODD
   });
 });

@@ -1,15 +1,19 @@
 import { v4 } from "uuid";
 import { ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
+import { addDays } from "date-fns";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
-import type { IContract, IMerchant, IUser } from "@framework/types";
+import type { IAsset, IAssetComponent, IClaim, IContract, IMerchant, ITemplate, IUser } from "@framework/types";
 import {
+  ClaimStatus,
+  ClaimType,
   ContractStatus,
   MerchantStatus,
   ModuleType,
   RatePlanType,
+  TemplateStatus,
   TokenType,
   UserRole,
   UserStatus,
@@ -73,6 +77,62 @@ export const generateTestContract = (data: Partial<IContract> = {}): Record<stri
       contractType: TokenType.NATIVE,
       contractModule: ModuleType.HIERARCHY,
       contractFeatures: [],
+    },
+    data,
+  );
+};
+
+export const generateTestTemplate = (data: Partial<ITemplate> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      title: "Native token",
+      description: simpleFormatting,
+      imageUrl,
+      cap: 0,
+      amount: 0,
+      cid: "test",
+      templateStatus: TemplateStatus.ACTIVE,
+    },
+    data,
+  );
+};
+
+export interface IAssetDto {}
+
+export const generateTestAsset = (data: Partial<IAsset> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      components: [],
+    },
+    data,
+  );
+};
+
+export interface IAssetComponentDto {
+  contract: IContract;
+  template: ITemplate;
+  asset: IAsset;
+}
+
+export const generateTestAssetComponent = (data: Partial<IAssetComponent> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      tokenType: TokenType.ERC20,
+      amount: 10_000,
+    },
+    data,
+  );
+};
+
+export const generateTestClaim = (data: Partial<IClaim> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      account: ZeroAddress,
+      claimStatus: ClaimStatus.NEW,
+      claimType: ClaimType.TOKEN,
+      signature: "",
+      nonce: "",
+      endTimestamp: `${addDays(new Date(), 1).toISOString()}`,
     },
     data,
   );

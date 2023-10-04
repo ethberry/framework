@@ -10,6 +10,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ApiError } from "@gemunion/provider-api-firebase";
 import { useApiCall } from "@gemunion/react-hooks";
 
+import { emptyPage } from "../../../components/common/interfaces";
 import { StyledContentWrapper } from "./styled";
 
 export const Page: FC = () => {
@@ -18,7 +19,7 @@ export const Page: FC = () => {
   const { formatMessage } = useIntl();
 
   const [notFound, setNotFound] = useState<boolean>(false);
-  const [page, setPage] = useState<IPage>({} as IPage);
+  const [page, setPage] = useState<IPage>(emptyPage);
 
   const { fn: fetchPage, isLoading } = useApiCall(
     (api, slug: string) =>
@@ -50,14 +51,12 @@ export const Page: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      {page?.description ? (
-        <Box>
-          <PageHeader message="pages.page.title" data={page} />
-          <StyledContentWrapper>
-            <RichTextDisplay data={page.description} />
-          </StyledContentWrapper>
-        </Box>
-      ) : null}
+      <Box>
+        <PageHeader message="pages.page.title" data={page} />
+        <StyledContentWrapper>
+          <RichTextDisplay data={page.description} />
+        </StyledContentWrapper>
+      </Box>
     </ProgressOverlay>
   );
 };

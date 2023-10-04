@@ -22,8 +22,21 @@ export class ContractSeedService {
   ) {}
 
   public async setup(): Promise<any> {
-    const merchant1 = await this.merchantEntityRepository.create(generateTestMerchant({ wallet: wallets[0] })).save();
-    const merchant2 = await this.merchantEntityRepository.create(generateTestMerchant({ wallet: wallets[1] })).save();
+    const merchant1 = await this.merchantEntityRepository
+      .create(
+        generateTestMerchant({
+          wallet: wallets[0],
+        }),
+      )
+      .save();
+
+    const merchant2 = await this.merchantEntityRepository
+      .create(
+        generateTestMerchant({
+          wallet: wallets[1],
+        }),
+      )
+      .save();
 
     const user1 = await this.userEntityRepository
       .create(
