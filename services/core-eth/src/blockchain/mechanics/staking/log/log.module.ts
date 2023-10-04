@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
+  NodeEnv,
   StakingEventType,
 } from "@framework/types";
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -28,6 +29,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const stakingContracts = await contractService.findAllByType([ModuleType.STAKING]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -62,7 +64,7 @@ import { getEventsTopics } from "../../../../common/utils";
           block: {
             // fromBlock,
             fromBlock: stakingContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

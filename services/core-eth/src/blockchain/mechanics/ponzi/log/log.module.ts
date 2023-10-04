@@ -9,6 +9,7 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
+  NodeEnv,
   PonziEventType,
   ReferralProgramEventType,
 } from "@framework/types";
@@ -29,6 +30,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const ponziContracts = await contractService.findAllByType([ModuleType.PONZI]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -74,7 +76,7 @@ import { getEventsTopics } from "../../../../common/utils";
           },
           block: {
             fromBlock: ponziContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

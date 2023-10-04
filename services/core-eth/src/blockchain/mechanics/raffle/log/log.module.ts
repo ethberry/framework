@@ -12,6 +12,7 @@ import {
   ContractType,
   ExchangeEventType,
   ModuleType,
+  NodeEnv,
   RaffleEventType,
 } from "@framework/types";
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
@@ -29,6 +30,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const raffleContracts = await contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
@@ -63,7 +65,7 @@ import { getEventsTopics } from "../../../../common/utils";
           block: {
             // fromBlock,
             fromBlock: raffleContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

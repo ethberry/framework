@@ -5,7 +5,7 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
 import WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Wrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
@@ -21,6 +21,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const wrapperContracts = await contractService.findAllByType([ModuleType.WRAPPER]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
@@ -53,7 +54,7 @@ import { getEventsTopics } from "../../../../common/utils";
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

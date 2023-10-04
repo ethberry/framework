@@ -13,6 +13,7 @@ import {
   ExchangeEventType,
   LotteryEventType,
   ModuleType,
+  NodeEnv,
 } from "@framework/types";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
@@ -29,6 +30,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
 
         const lotteryContracts = await contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
@@ -64,7 +66,7 @@ import { getEventsTopics } from "../../../../common/utils";
           block: {
             // fromBlock,
             fromBlock: lotteryContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

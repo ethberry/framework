@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractFeatures,
   ContractType,
+  NodeEnv,
   TokenType,
 } from "@framework/types";
 
@@ -29,6 +30,7 @@ import { getEventsTopics } from "../../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const erc998RandomContracts = await contractService.findAllRandomTokensByType(TokenType.ERC998, [
           ContractFeatures.RANDOM,
           ContractFeatures.GENES,
@@ -73,7 +75,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           },
           block: {
             fromBlock: erc998RandomContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

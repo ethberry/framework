@@ -4,7 +4,7 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractManagerEventType, ContractType, ModuleType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
 
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -21,6 +21,7 @@ import { getEventsTopics } from "../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
         const contractManagerEntity = await contractService.findSystemByName({
           contractModule: ModuleType.CONTRACT_MANAGER,
@@ -63,7 +64,7 @@ import { getEventsTopics } from "../../../common/utils";
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

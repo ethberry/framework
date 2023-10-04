@@ -31,13 +31,27 @@
   ],
   "vhosts": [
     {
-      "name": "merchant"
+      "name": "/"
     },
     {
-      "name": "/"
+      "name": "merchant"
     }
   ],
   "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "admin",
+      "vhost": "merchant",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
     {
       "user": "merchant",
       "vhost": "merchant",
@@ -48,20 +62,6 @@
     {
       "user": "guest",
       "vhost": "/",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "admin",
-      "vhost": "/",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
-    {
-      "user": "admin",
-      "vhost": "merchant",
       "configure": ".*",
       "write": ".*",
       "read": ".*"

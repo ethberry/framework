@@ -5,7 +5,7 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
 
 import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
 
@@ -23,6 +23,7 @@ import { getEventsTopics } from "../../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const mysteryContracts = await contractService.findAllByType([ModuleType.MYSTERY]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -54,7 +55,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           },
           block: {
             fromBlock: mysteryContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

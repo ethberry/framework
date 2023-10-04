@@ -5,7 +5,14 @@ import { CronExpression } from "@nestjs/schedule";
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractType,
+  Erc1363EventType,
+  ModuleType,
+  NodeEnv,
+  VestingEventType,
+} from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
@@ -25,6 +32,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const vestingContracts = await contractService.findAllByType([ModuleType.VESTING]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -53,7 +61,7 @@ import { getEventsTopics } from "../../../../common/utils";
           },
           block: {
             fromBlock: vestingContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

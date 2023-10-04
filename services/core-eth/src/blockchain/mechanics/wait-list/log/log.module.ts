@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
+  NodeEnv,
   WaitListEventType,
 } from "@framework/types";
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
@@ -27,6 +28,7 @@ import { getEventsTopics } from "../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const waitlistContracts = await contractService.findAllByType([ModuleType.WAITLIST]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
@@ -56,7 +58,7 @@ import { getEventsTopics } from "../../../../common/utils";
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

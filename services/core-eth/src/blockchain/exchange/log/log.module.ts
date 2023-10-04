@@ -12,6 +12,7 @@ import {
   Erc1363EventType,
   ExchangeEventType,
   ModuleType,
+  NodeEnv,
   ReferralProgramEventType,
 } from "@framework/types";
 
@@ -30,6 +31,7 @@ import { getEventsTopics } from "../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
         const exchangeEntity = await contractService.findSystemByName({
           contractModule: ModuleType.EXCHANGE,
@@ -94,7 +96,7 @@ import { getEventsTopics } from "../../../common/utils";
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

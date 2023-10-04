@@ -9,6 +9,7 @@ import {
   AccessListEventType,
   ContractEventType,
   ContractType,
+  NodeEnv,
   TokenType,
 } from "@framework/types";
 
@@ -27,6 +28,7 @@ import { getEventsTopics } from "../../../../../common/utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const erc20Contracts = await contractService.findAllTokensByType(TokenType.ERC20);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -58,7 +60,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           },
           block: {
             fromBlock: erc20Contracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };
