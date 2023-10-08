@@ -19,7 +19,7 @@ export interface IMintMysteryBoxDto {
 
 export interface IMintMysteryBoxDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IMintMysteryBoxDto, form: any) => Promise<void>;
   initialValues: IMintMysteryBoxDto;
 }

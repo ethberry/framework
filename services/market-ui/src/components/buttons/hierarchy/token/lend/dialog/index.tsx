@@ -17,7 +17,7 @@ export interface ILendDto {
 
 export interface ILendDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: ILendDto, form: any) => Promise<void>;
   initialValues: ILendDto;
   message: string;

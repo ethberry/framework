@@ -18,7 +18,7 @@ export interface IEthListenerAddDto {
 
 export interface IEthListenerAddDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IEthListenerAddDto, form: any) => Promise<void>;
   initialValues: IEthListenerAddDto;
 }

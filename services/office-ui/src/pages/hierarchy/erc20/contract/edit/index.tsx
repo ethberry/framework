@@ -15,7 +15,7 @@ import { createValidationSchema, editValidationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IContract;
 }

@@ -9,7 +9,7 @@ import { ContractStatus, IWaitListItem } from "@framework/types";
 
 export interface IWaitListDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IWaitListItem>, form: any) => Promise<void>;
   initialValues: Partial<IWaitListItem>;
   testId: string;

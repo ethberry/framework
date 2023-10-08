@@ -11,7 +11,7 @@ export interface IRoyaltyDto {
 
 export interface IRoyaltyEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IRoyaltyDto, form: any) => Promise<void>;
   initialValues: IRoyaltyDto;
 }

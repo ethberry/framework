@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 
 export interface IAssetPromoEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IAssetPromo>, form: any) => Promise<void>;
   initialValues: IAssetPromo;
 }

@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 
 export interface IEditPageDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IPage>, formikBag: any) => Promise<void>;
   initialValues: IPage;
 }

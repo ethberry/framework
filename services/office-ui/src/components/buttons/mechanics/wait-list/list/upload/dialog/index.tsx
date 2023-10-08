@@ -10,7 +10,7 @@ import { WaitListInfoPopover } from "./popover";
 
 export interface IWaitListUploadDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
   initialValues: IWaitListUploadDto;

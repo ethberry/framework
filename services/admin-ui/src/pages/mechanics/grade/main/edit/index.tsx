@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-import { FormWatcher } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -12,7 +11,7 @@ import { GrowthRateInput } from "./growth-rate-input";
 
 export interface IGradeEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IGrade>, form: any) => Promise<void>;
   initialValues: IGrade;
 }
@@ -41,7 +40,6 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <FormWatcher />
       <EntityInput
         name="contractId"
         controller="contracts"

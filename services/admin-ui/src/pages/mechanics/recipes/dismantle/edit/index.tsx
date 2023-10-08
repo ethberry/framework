@@ -3,7 +3,6 @@ import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { FormWatcher } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IDismantle } from "@framework/types";
@@ -15,7 +14,7 @@ import { StrategyInput } from "./strategy-input";
 
 export interface IExchangeEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IDismantle>, form: any) => Promise<void>;
   initialValues: IDismantle;
 }
@@ -74,7 +73,6 @@ export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
         tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         multiple
       />
-      <FormWatcher />
       <StrategyInput name="dismantleStrategy" />
       <RarityMultiplierInput name="rarityMultiplier" />
       {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}

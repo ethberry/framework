@@ -13,7 +13,7 @@ export interface IUpgradeDto {
 
 export interface IUpgradeDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IUpgradeDto, form: any) => Promise<void>;
   initialValues: IUpgradeDto;
 }
@@ -28,7 +28,7 @@ export const UpgradeDialog: FC<IUpgradeDialogProps> = props => {
     <FormDialog
       disabled={false}
       initialValues={fixedValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message="dialogs.grade"
       testId="UpgradeAttributeForm"
       {...rest}

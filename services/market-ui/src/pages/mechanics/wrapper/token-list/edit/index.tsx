@@ -19,7 +19,7 @@ export interface ICreateWrappedToken {
 
 export interface IWrapperEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: ICreateWrappedToken, form: any) => Promise<void>;
   initialValues: ICreateWrappedToken;
 }

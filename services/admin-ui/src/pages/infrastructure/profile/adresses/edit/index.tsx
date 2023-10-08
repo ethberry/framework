@@ -8,7 +8,7 @@ import { validationSchema } from "./validation";
 
 export interface IAddUserDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (item: IAddress, form: any) => Promise<void>;
   initialValues: IAddress;
 }

@@ -16,7 +16,7 @@ import { validationSchema } from "./validation";
 export interface IPonziStakingEditDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IPonziRule>, form: any) => Promise<void>;
   initialValues: IPonziRule;
 }

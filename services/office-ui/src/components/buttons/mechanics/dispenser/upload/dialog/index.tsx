@@ -11,7 +11,7 @@ import { DispenserInfoPopover } from "./popover";
 
 export interface IDispenserUploadDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   initialValues: IDispenserUploadDto;
   isLoading: boolean;

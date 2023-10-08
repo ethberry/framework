@@ -18,7 +18,7 @@ import { ContractInput } from "../../../../../inputs/contract";
 export interface IPonziRuleUploadDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IPonziRule>, form?: any) => Promise<void>;
   initialValues: Partial<IPonziRule>;
 }

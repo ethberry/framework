@@ -21,7 +21,7 @@ export interface IErc998CompositionCreateDto {
 
 export interface IErc998CompositionCreateDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IErc998CompositionCreateDto, form: any) => Promise<void>;
 }
 

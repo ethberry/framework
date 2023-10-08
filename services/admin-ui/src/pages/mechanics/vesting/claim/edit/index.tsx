@@ -12,7 +12,7 @@ import { VestingParametersInput } from "./parameters-input";
 
 export interface IClaimEditDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IClaim>, form: any) => Promise<void>;
   initialValues: IClaim;
 }

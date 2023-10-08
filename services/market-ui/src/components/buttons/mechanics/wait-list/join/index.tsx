@@ -15,7 +15,7 @@ export interface IWaitListClaimDto {
 
 export interface IWaitListJoinDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IWaitListItem>, form: any) => Promise<void>;
   initialValues: IWaitListItem;
 }

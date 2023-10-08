@@ -10,7 +10,7 @@ import { ClaimInfoPopover } from "./popover";
 
 export interface IClaimUploadDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
   initialValues: IClaimUploadDto;

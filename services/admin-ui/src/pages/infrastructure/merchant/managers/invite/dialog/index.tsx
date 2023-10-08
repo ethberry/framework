@@ -11,7 +11,7 @@ import { validationSchema } from "./validation";
 
 export interface IInviteDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
   initialValues: IInvitationCreateDto;

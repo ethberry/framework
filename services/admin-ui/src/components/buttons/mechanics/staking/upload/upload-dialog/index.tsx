@@ -3,7 +3,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
-import { FormWatcher, FormState } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import type { IStakingRule } from "@framework/types";
@@ -19,7 +18,7 @@ import { validationSchema } from "./validation";
 export interface IStakingRuleUploadDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IStakingRule>, form?: any) => Promise<void>;
   initialValues: Partial<IStakingRule>;
 }
@@ -50,8 +49,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       disabled={false}
       {...rest}
     >
-      <FormState />
-      <FormWatcher />
       {id ? <TextInput name="title" /> : null}
       {id ? <RichTextEditor name="description" /> : null}
       <Grid container spacing={2}>

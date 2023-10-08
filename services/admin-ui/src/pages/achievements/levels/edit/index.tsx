@@ -12,7 +12,7 @@ import { validationSchema } from "./validation";
 
 export interface IAchievementLevelEditDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IAchievementLevel>, form: any) => Promise<void>;
   initialValues: IAchievementLevel;
 }

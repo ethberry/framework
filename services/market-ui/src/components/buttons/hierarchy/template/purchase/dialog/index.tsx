@@ -11,7 +11,7 @@ export interface IAmountDto {
 
 export interface IAmountDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IAmountDto, form: any) => Promise<void>;
   initialValues: IAmountDto;
 }

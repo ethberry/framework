@@ -16,7 +16,7 @@ import { validationSchema } from "./validation";
 export interface IStakingRuleEditDialogProps {
   open: boolean;
   readOnly?: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
   initialValues: IStakingRule;
 }

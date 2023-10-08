@@ -19,7 +19,7 @@ export interface IRaffleRound {
 
 export interface IRaffleStartRoundDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IRaffleRound, form?: any) => Promise<void>;
   initialValues: Partial<IRaffleRound>;
 }

@@ -11,7 +11,7 @@ export interface IAccountDto {
 
 export interface IAccountDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IAccountDto, form: any) => Promise<void>;
   initialValues: IAccountDto;
   message: string;

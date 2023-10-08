@@ -13,7 +13,7 @@ import { TemplateInput } from "../../../../../components/inputs/template-asset";
 
 export interface IMysteryboxEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IMysteryBox>, form: any) => Promise<void>;
   initialValues: IMysteryBox;
 }

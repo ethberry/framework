@@ -13,7 +13,7 @@ export interface IStakingDepositDto {
 
 export interface IStakingDepositDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IStakingDepositDto, form?: any) => Promise<void>;
   initialValues: IStakingDepositDto;
 }

@@ -13,7 +13,7 @@ import { validationSchema } from "./validation";
 
 export interface ICollectionTemplateEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
   initialValues: ITemplate;
 }

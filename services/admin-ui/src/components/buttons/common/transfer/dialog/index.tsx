@@ -15,7 +15,7 @@ export interface ITransferDto {
 
 export interface ITransferDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: ITransferDto, form: any) => Promise<void>;
   initialValues: ITransferDto;
 }

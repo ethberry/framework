@@ -15,7 +15,7 @@ export interface ICollectionUploadDto {
 
 export interface ICollectionUploadDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   initialValues: ICollectionUploadDto;
   isLoading: boolean;

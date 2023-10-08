@@ -11,7 +11,7 @@ import { BlockchainInfoPopover } from "../../../../../components/popover/contrac
 
 export interface IWaitListEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: Partial<IContract>;
 }

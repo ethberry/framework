@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IAchievementRule>, form: any) => Promise<void>;
   initialValues: IAchievementRule;
 }

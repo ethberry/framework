@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 
 export interface IEditOrderDialogProps {
   open: boolean;
-  onCancel: (form: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IOrder>, form: any) => Promise<void>;
   initialValues: IOrder;
 }

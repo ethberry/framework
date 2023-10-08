@@ -13,7 +13,7 @@ export interface IBreedLimitDto {
 
 export interface IBreedLimitDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IBreedLimitDto, form: any) => Promise<void>;
   initialValues: IBreedLimitDto;
 }

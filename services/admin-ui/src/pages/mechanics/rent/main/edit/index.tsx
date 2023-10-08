@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 
 export interface IRentEditDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IRent>, form: any) => Promise<void>;
   initialValues: IRent;
 }

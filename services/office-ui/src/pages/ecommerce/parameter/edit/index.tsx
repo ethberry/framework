@@ -8,7 +8,7 @@ import { validationSchema } from "./validation";
 
 export interface IEditParameterDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: Partial<IParameter>, form: any) => Promise<void>;
   initialValues: IParameter;
   parameters: IParameter[];

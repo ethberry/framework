@@ -12,7 +12,7 @@ export interface IComposeTokenDto {
 
 export interface IComposeTokenDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IComposeTokenDto, form: any) => Promise<void>;
   initialValues: IComposeTokenDto;
 }

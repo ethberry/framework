@@ -19,7 +19,7 @@ export interface ILotteryRound {
 
 export interface ILotteryStartRoundDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: ILotteryRound, form?: any) => Promise<void>;
   initialValues: Partial<ILotteryRound>;
 }

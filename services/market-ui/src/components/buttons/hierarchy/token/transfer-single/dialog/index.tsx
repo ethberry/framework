@@ -13,7 +13,7 @@ export interface IErc1155TransferDto {
 
 export interface IErc1155TransferDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: IErc1155TransferDto, form: any) => Promise<void>;
   initialValues: IErc1155TransferDto;
   message: string;

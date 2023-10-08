@@ -14,7 +14,7 @@ export interface ITopUpDto {
 
 export interface ITopUpDialogProps {
   open: boolean;
-  onCancel: (form?: any) => void;
+  onCancel: () => void;
   onConfirm: (values: ITopUpDto, form: any) => Promise<void>;
   initialValues: ITopUpDto;
 }
