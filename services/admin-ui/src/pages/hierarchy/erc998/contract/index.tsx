@@ -52,6 +52,9 @@ export const Erc998Contract: FC = () => {
     handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc998/contracts",
+    empty: {
+      contractFeatures: [],
+    },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
