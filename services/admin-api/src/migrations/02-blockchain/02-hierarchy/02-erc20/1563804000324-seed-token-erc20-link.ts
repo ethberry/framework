@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedTokenErc20WethAt1563804000322 implements MigrationInterface {
+export class SeedTokenErc20LinkAt1563804000324 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
@@ -19,39 +19,39 @@ export class SeedTokenErc20WethAt1563804000322 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? 21 : 102160101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 102180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 21 : 1021601},
+        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 1021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 22 : 202160101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 202180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 22 : 2021601},
+        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 2021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 23 : 302160101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 302180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 23 : 3021601},
+        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 3021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 24 : 402160101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 402180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 24 : 4021601},
+        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 4021801},
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -5,7 +5,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface {
+export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
