@@ -36,7 +36,7 @@ export const ProductList: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
 
       <PageHeader message="pages.products.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>

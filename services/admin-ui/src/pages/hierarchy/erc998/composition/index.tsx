@@ -96,10 +96,7 @@ export const Erc998Composition: FC = () => {
 
       <PageHeader message="pages.erc998.composition.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button
           variant="outlined"

@@ -61,10 +61,7 @@ export const Claim: FC = () => {
 
       <PageHeader message="pages.claims.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <ClaimUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">

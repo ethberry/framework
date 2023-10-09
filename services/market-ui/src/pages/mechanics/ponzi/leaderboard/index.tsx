@@ -95,11 +95,8 @@ export const PonziLeaderboard: FC = () => {
       <Breadcrumbs path={["dashboard", "ponzi", "ponzi.leaderboard"]} />
 
       <PageHeader message="pages.ponzi.leaderboard.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 

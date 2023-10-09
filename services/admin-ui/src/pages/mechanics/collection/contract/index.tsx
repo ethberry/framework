@@ -82,10 +82,7 @@ export const CollectionContract: FC = () => {
 
       <PageHeader message="pages.collection.contracts">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <CollectionContractDeployButton />
       </PageHeader>

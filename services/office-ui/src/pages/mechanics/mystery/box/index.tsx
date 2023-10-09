@@ -89,10 +89,7 @@ export const MysteryBox: FC = () => {
 
       <PageHeader message="pages.mystery.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
           <FormattedMessage id="form.buttons.create" />

@@ -73,10 +73,7 @@ export const Dismantle: FC = () => {
 
       <PageHeader message="pages.recipes.dismantle.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="DismantleCreateButton">
           <FormattedMessage id="form.buttons.create" />

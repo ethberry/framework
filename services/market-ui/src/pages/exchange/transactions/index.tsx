@@ -112,11 +112,8 @@ export const MyTransactions: FC = () => {
       <Breadcrumbs path={["dashboard", "transactions"]} />
 
       <PageHeader message="pages.transactions.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 

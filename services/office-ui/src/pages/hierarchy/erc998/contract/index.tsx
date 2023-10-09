@@ -74,10 +74,7 @@ export const Erc998Contract: FC = () => {
 
       <PageHeader message="pages.erc998.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Erc998ContractDeployButton />
       </PageHeader>

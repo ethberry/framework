@@ -74,10 +74,7 @@ export const RaffleTickets: FC = () => {
 
       <PageHeader message="pages.raffle.tickets.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Erc721ContractDeployButton contractTemplate={Erc721ContractTemplates.RAFFLE} />
       </PageHeader>

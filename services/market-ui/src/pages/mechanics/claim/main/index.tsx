@@ -44,11 +44,8 @@ export const Claim: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "claim"]} />
       <PageHeader message="pages.claim.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 

@@ -52,7 +52,7 @@ export const Merchant: FC = () => {
       <Breadcrumbs path={["dashboard", "merchants"]} />
 
       <PageHeader message="pages.merchants.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>

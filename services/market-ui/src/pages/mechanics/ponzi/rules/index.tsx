@@ -64,11 +64,8 @@ export const PonziRules: FC = () => {
       <Breadcrumbs path={["dashboard", "ponzi", "ponzi.rules"]} />
 
       <PageHeader message="pages.ponzi.rules.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 

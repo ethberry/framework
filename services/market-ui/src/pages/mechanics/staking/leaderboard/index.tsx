@@ -95,11 +95,8 @@ export const StakingLeaderboard: FC = () => {
       <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
       <PageHeader message="pages.staking.leaderboard.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 
