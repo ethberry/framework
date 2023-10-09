@@ -63,7 +63,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         icon={Add}
         message="form.buttons.deploy"
         className={className}
-        data-testid="Erc1155ContractDeployButton"
+        dataTestId="Erc1155ContractDeployButton"
         disabled={disabled}
         variant={variant}
       />
