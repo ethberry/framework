@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import type { IContract } from "../hierarchy/contract";
+import type { IContract } from "../../../../entities";
 
 export interface IWalletPayee extends IIdDateBase {
   contractId: number;

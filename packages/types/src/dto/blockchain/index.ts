@@ -79,6 +79,9 @@ export * from "./mechanics/ponzi/rule";
 export * from "./mechanics/ponzi/deposit";
 export * from "./mechanics/collection/deploy";
 
+export * from "./mechanics/wallet/deploy";
+export * from "./mechanics/wallet/payee";
+
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";
 export * from "./tokens/erc20/contract/deploy";

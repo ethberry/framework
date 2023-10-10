@@ -15,6 +15,7 @@ import type {
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
+  IWalletContractDeployDto,
 } from "@framework/types";
 import {
   CollectionContractTemplates,
@@ -640,6 +641,58 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
+  // MODULE:WALLET
+  public async wallet(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const { bytecode } = await this.getBytecodeByWalletContractTemplate(dto, userEntity.chainId);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: ModuleType.CONTRACT_MANAGER,
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "WalletArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        WalletArgs: [
+          { name: "payees", type: "address[]" },
+          { name: "shares", type: "uint256[]" },
+        ],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          payees: dto.payees,
+          shares: dto.shares,
+        },
+      },
+    );
+
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
   // MODULE:COLLECTION
   public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
@@ -1032,6 +1085,14 @@ export class ContractManagerSignService {
   public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto, chainId: number) {
     return getContractABI(
       "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandom.sol/LotteryRandom.json",
+      chainId,
+    );
+  }
+
+  // MODULE:WALLET
+  public getBytecodeByWalletContractTemplate(_dto: IWalletContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Wallet/SplitterWallet.sol/SplitterWallet.json",
       chainId,
     );
   }

@@ -8,7 +8,6 @@ export * from "./exchange/asset";
 export * from "./exchange/asset-history";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
-export * from "./exchange/payee";
 
 export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
