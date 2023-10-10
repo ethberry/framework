@@ -18,7 +18,7 @@ export const TokenDepositInput: () => any = () => {
   };
 
   return deposit.map(dep =>
-    dep.tokenType === TokenType.ERC721 ? (
+    dep.tokenType === TokenType.ERC721 || dep.tokenType === TokenType.ERC998 ? (
       <EntityInput
         key={dep.id}
         name="tokenId"
