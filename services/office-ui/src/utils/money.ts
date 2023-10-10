@@ -9,6 +9,9 @@ export const formatMoney = (amount = 0, currency = "$"): string => {
   return `${currency} ${amount.toFixed(2)}`;
 };
 
+/**
+ * @deprecated use formatItem
+ */
 export const formatPrice = (asset?: IAsset): string => {
   return (
     asset?.components

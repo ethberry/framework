@@ -7,7 +7,7 @@ import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 
 interface IErc721TemplateListItemProps {
   template: ITemplate;
@@ -26,7 +26,7 @@ export const TemplateListItem: FC<IErc721TemplateListItemProps> = props => {
             <RichTextDisplay data={template.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(template.price)}
+            {formatItem(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

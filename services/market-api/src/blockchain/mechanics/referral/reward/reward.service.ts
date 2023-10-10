@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
-import { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
+import type { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
 
-import { ReferralRewardEntity } from "./reward.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { parse } from "json2csv";
+import { ReferralRewardEntity } from "./reward.entity";
 import { formatEther } from "./reward.utils";
 
 @Injectable()

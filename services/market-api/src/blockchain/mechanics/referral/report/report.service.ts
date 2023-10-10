@@ -8,8 +8,8 @@ import { ns } from "@framework/constants";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "../reward/reward.entity";
-import { formatEther } from "../reward/reward.utils";
 import { ReferralRewardService } from "../reward/reward.service";
+import { formatEther } from "../reward/reward.utils";
 
 @Injectable()
 export class ReferralReportService {
