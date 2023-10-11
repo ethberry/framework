@@ -190,7 +190,7 @@ export class ContractService {
       },
     });
 
-    if (includeExternalContracts) {
+    if (includeExternalContracts && userEntity.merchantId !== 1) {
       const externalContractEntities = await this.autocomplete(
         {
           contractStatus,
