@@ -7,6 +7,7 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { InputType } from "@gemunion/types-collection";
 import type { IPonziLeaderboard, IPonziLeaderboardSearchDto } from "@framework/types";
 import { PonziLeaderboardRank, TokenType } from "@framework/types";
 
@@ -28,11 +29,11 @@ export const PonziLeaderboard: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
     },
   });

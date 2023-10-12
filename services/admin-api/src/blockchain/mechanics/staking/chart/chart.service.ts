@@ -21,7 +21,7 @@ export class StakingChartService {
     const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
 
     const contractEntity = await this.stakingContractService.findOne({
-      id: contractId,
+      id: contractId as number,
     });
 
     if (!contractEntity) {

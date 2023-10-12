@@ -1,13 +1,13 @@
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto, InputType } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IStakingChartItemSearchDto {
   tokenType: TokenType;
-  contractId?: number;
+  contractId?: number | InputType;
 }
 
 export interface IStakingChartSearchDto extends IPaginationDto {
-  contractId?: number;
+  contractId?: number | InputType;
   deposit: IStakingChartItemSearchDto;
   reward?: IStakingChartItemSearchDto;
   emptyReward?: boolean;

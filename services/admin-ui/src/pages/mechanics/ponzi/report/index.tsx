@@ -13,6 +13,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { InputType } from "@gemunion/types-collection";
 import type { IPonziDeposit, IPonziReportSearchDto } from "@framework/types";
 import { ModuleType, PonziDepositStatus, TokenType } from "@framework/types";
 
@@ -36,16 +37,16 @@ export const PonziReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      contractId: undefined,
+      contractId: InputType.awaited,
       account: "",
       ponziDepositStatus: [PonziDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
