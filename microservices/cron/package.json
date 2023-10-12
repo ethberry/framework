@@ -9,7 +9,7 @@
     "@framework/types": "0.0.1",
     "@gemunion/nest-js-module-license": "4.0.14",
     "@gemunion/nest-js-module-request-logger": "3.0.14",
-    "@gemunion/nest-js-module-typeorm-postgres": "1.0.19",
+    "@gemunion/nest-js-module-typeorm-postgres": "1.0.20",
     "@gemunion/nest-js-module-typeorm-debug": "3.0.17",
     "@gemunion/nest-js-module-winston-logdna": "3.0.14",
     "@nestjs/common": "10.2.7",
