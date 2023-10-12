@@ -39,7 +39,7 @@ export const PageEditDialog: FC<IEditPageDialogProps> = props => {
     >
       <TextInput name="slug" />
       <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <RichTextEditor name="description" customControls={["media", "link"]} />
       {id ? <SelectInput name="pageStatus" options={PageStatus} /> : null}
     </FormDialog>
   );

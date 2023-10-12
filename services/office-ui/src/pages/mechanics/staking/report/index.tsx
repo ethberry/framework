@@ -12,6 +12,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { InputType } from "@gemunion/types-collection";
 import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
@@ -39,11 +40,11 @@ export const StakingReport: FC = () => {
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),

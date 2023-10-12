@@ -8,6 +8,7 @@ import { utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { InputType } from "@gemunion/types-collection";
 import type { IPonziChartSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -22,11 +23,11 @@ export const PonziChart: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: undefined,
+        contractId: InputType.awaited,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
