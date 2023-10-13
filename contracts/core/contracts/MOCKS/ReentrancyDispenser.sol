@@ -26,7 +26,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     address operator,
     address from,
     uint256 tokenId,
-    bytes calldata data
+    bytes memory data
   ) public override returns (bytes4) {
     Asset[] memory items = new Asset[](1);
     items[0] = Asset(TokenType.ERC721, token, 2, 1);
@@ -41,7 +41,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     address from,
     uint256 id,
     uint256 value,
-    bytes calldata data
+    bytes memory data
   ) public virtual override returns (bytes4) {
     Asset[] memory items = new Asset[](1);
     items[0] = Asset(TokenType.ERC1155, token, 1, 100000);

@@ -86,7 +86,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
     address operator,
     address from,
     uint256 tokenId,
-    bytes calldata data
+    bytes memory data
   ) public override returns (bytes4) {
     _reenter();
     return super.onERC721Received(operator, from, tokenId, data);
@@ -97,7 +97,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
     address from,
     uint256 id,
     uint256 value,
-    bytes calldata data
+    bytes memory data
   ) public virtual override returns (bytes4) {
     _reenter();
     return super.onERC1155Received(operator, from, id, value, data);
@@ -106,9 +106,9 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
   function onERC1155BatchReceived(
     address operator,
     address from,
-    uint256[] calldata ids,
-    uint256[] calldata values,
-    bytes calldata data
+    uint256[] memory ids,
+    uint256[] memory values,
+    bytes memory data
   ) public virtual override returns (bytes4) {
     _reenter();
     return super.onERC1155BatchReceived(operator, from, ids, values, data);
