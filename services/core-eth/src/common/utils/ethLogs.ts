@@ -53,6 +53,14 @@ export const getEventsTopics = function (
   ];
 };
 
+export const delayMs = function (ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export const getBlockNumber = async function (provider: JsonRpcProvider): Promise<number> {
+  return provider.getBlockNumber();
+};
+
 export const getTransactionReceipt = async function (
   txHash: string,
   provider: JsonRpcProvider,

@@ -1,16 +1,11 @@
 import { NestFactory } from "@nestjs/core";
-import { MessageHandler, MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { PATTERN_METADATA } from "@nestjs/microservices/constants";
-import { transformPatternToRoute } from "@nestjs/microservices/utils";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
-import { DiscoveredMethodWithMeta, DiscoveryService } from "@golevelup/nestjs-discovery";
-import { EMPTY, from, Observable } from "rxjs";
 import { Log } from "ethers";
-import Queue from "bee-queue";
 
 import { companyName } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
@@ -27,18 +22,6 @@ export interface IRedisJob {
 }
 
 let app: NestExpressApplication;
-
-async function getHandlerByPattern<T extends Array<Record<string, string>>>(
-  route: string,
-  discoveryService: DiscoveryService,
-): Promise<Array<DiscoveredMethodWithMeta<T>>> {
-  const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return methods.filter(method => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return method.meta.some(meta => transformPatternToRoute(meta) === route);
-  });
-}
 
 async function bootstrap(): Promise<void> {
   app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -74,6 +57,7 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
+  /*
   // Process jobs from as many servers or processes as you like
   const redisQueueName = configService.get<string>("REDIS_QUEUE_NAME", "ETH_EVENTS");
   const sharedConfigWorker = {
@@ -113,24 +97,8 @@ async function bootstrap(): Promise<void> {
       });
       return from(["OK"]);
     });
-    // await Promise.allSettled(
-    //   discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
-    //     return (
-    //       discoveredMethodWithMeta.discoveredMethod.handler.bind(
-    //         discoveredMethodWithMeta.discoveredMethod.parentClass.instance,
-    //       ) as MessageHandler
-    //     )(job.data.decoded, job.data.context);
-    //   }),
-    // ).then(res => {
-    //   res.forEach(r => {
-    //     if (r.status === "rejected") {
-    //       console.error(r);
-    //     }
-    //   });
-    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    //   return from(["OK"]);
-    // });
   });
+   */
 
   await app
     .startAllMicroservices()

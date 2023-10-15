@@ -72,10 +72,8 @@ export class ChainLinkSubscriptionServiceEth {
 
     // IF it is our contract
     if (contractEntity) {
+      await this.contractService.updateParameter({ id: contractEntity.id }, "isConsumer", "true");
       await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
-      Object.assign(contractEntity.parameters, { isConsumer: true });
-      await contractEntity.save();
-
       await this.signalClientProxy
         .emit(SignalEventType.TRANSACTION_HASH, {
           account: contractEntity.merchant.wallet.toLowerCase(),
@@ -98,15 +96,13 @@ export class ChainLinkSubscriptionServiceEth {
       { address: address.toLowerCase(), chainId },
       { relations: { merchant: true } },
     );
+
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
+    await this.contractService.updateParameter({ id: contractEntity.id }, "vrfSubId", subId);
     await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
-
-    Object.assign(contractEntity.parameters, { vrfSubId: subId });
-    await contractEntity.save();
-
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: contractEntity.merchant.wallet.toLowerCase(),

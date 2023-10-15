@@ -1,3 +1,4 @@
+export * from "./transaction/transaction";
 export * from "./event-history";
 export * from "./contract-manager";
 

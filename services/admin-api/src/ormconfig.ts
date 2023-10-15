@@ -135,6 +135,7 @@ import {
   CreateStock1683724062500,
   CreateTemplate1563804000200,
   CreateToken1563804000300,
+  CreateTransactionHistory1563804040009,
   CreateUser1563803000130,
   CreateWaitListItem1663047650300,
   CreateWaitListList1663047650200,
@@ -597,6 +598,7 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc998GradeAt1687481746410,
     SeedEventHistoryErc998GradeComponentsAt1687481746420,
 
+    CreateTransactionHistory1563804040009,
     CreateEventHistory1563804040010,
     CreateEventHistoryComponents1563804040020,
     SeedEventHistoryErc20TransferAt1563804040120,

@@ -40,6 +40,7 @@ import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -51,6 +52,7 @@ const config: PostgresConnectionOptions = {
     ChainLinkSubscriptionEntity,
     // Blockchain
     // exchange
+    TransactionEntity,
     EventHistoryEntity,
     AssetEntity,
     AssetComponentEntity,
