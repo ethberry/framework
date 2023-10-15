@@ -19,9 +19,6 @@ export class RmqService {
     const rmqUserName = `merchant${merchant.id}`;
 
     // MUST GET HASH
-    console.log("rmqUserPass", merchant.apiKey);
-    console.log("rmqUserPasswordHash", rmqUserPasswordHash);
-    console.log("rmqUserPasswordHash.ok", rmqUserPasswordHash!.ok);
     if (rmqUserPasswordHash && rmqUserPasswordHash.ok && rmqUserPasswordHash.ok.length > 1) {
       return this.httpService
         .post<Record<string, any>>(
