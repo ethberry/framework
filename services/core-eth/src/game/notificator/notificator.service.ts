@@ -53,15 +53,12 @@ export class NotificatorService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    const rmqUrl = this.configService.get<string>(
-      "RMQ_URL_MERCHANT",
-      "amqp://merchant:merchant@127.0.0.1:5672/merchant",
-    );
+    const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://admin:admin@127.0.0.1:5672");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: [rmqUrl],
-        queue: merchantId.toString(),
+        urls: [`${rmqUrl}/merchant`],
+        queue: `merchant${merchantId.toString()}`, // "merchant1"
         queueOptions: {
           durable: false,
         },
