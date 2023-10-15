@@ -7,7 +7,7 @@ export enum TokenRarity {
 }
 
 export enum EventSignature {
-  MintRandom = "MintRandom(uint256,address,uint256,uint256,uint256)",
+  MintRandom = "MintRandom(uint256,address,uint256[],uint256,uint256)",
   Transfer = "Transfer(address,address,uint256)",
 }
 

@@ -7,7 +7,7 @@ export interface IERC721TokenTransferEvent {
 export interface IERC721TokenMintRandomEvent {
   requestId: string;
   to: string;
-  randomness: string;
+  randomWords: Array<string>;
   templateId: string;
   tokenId: string;
 }

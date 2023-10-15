@@ -8,7 +8,7 @@ import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from ".
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 

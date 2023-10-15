@@ -71,7 +71,7 @@ abstract contract ERC721BlacklistDiscreteRentableRandom is
 
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords, request.templateId, tokenId);
 
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 

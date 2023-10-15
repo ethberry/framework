@@ -171,7 +171,7 @@ export enum ContractEventSignature {
   // MODULE:ERC721
   ApprovalForAll = "ApprovalForAll(address,address,bool)",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo(address,uint96)",
-  MintRandom = "MintRandom(uint256,address,uint256,uint256,uint256)",
+  MintRandom = "MintRandom(uint256,address,uint256[],uint256,uint256)",
 
   TokenRoyaltyInfo = "TokenRoyaltyInfo(uint256,address,uint96)",
   ConsecutiveTransfer = "ConsecutiveTransfer(uint256,uint256,address,address)",

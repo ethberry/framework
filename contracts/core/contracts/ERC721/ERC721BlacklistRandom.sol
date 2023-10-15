@@ -51,7 +51,7 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords, request.templateId, tokenId);
 
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 

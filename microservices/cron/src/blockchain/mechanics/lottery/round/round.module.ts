@@ -15,7 +15,6 @@ import { LotteryRoundServiceRmq } from "./round.service.rmq";
 export class LotteryRoundModule implements OnModuleInit {
   constructor(private readonly lotteryRoundServiceRmq: LotteryRoundServiceRmq) {}
 
-  // save last block on SIGTERM
   public async onModuleInit(): Promise<void> {
     return this.lotteryRoundServiceRmq.initSchedule();
   }
