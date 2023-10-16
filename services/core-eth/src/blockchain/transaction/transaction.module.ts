@@ -34,10 +34,14 @@ import { TransactionServiceRedis } from "./transaction.service.redis";
   exports: [TransactionService, TransactionServiceCron, TransactionServiceRedis],
 })
 export class TransactionModule implements OnModuleInit {
-  constructor(private readonly transactionServiceRedis: TransactionServiceRedis) {}
+  constructor(
+    private readonly transactionServiceRedis: TransactionServiceRedis,
+    private readonly transactionServiceCron: TransactionServiceCron,
+  ) {}
 
   // run worker
-  public onModuleInit(): void {
-    return this.transactionServiceRedis.processQueue();
+  public async onModuleInit(): Promise<void> {
+    this.transactionServiceRedis.processQueue();
+    return this.transactionServiceCron.checkTransaction();
   }
 }

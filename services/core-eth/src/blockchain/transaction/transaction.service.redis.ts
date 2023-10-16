@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 import Queue from "bee-queue";
 
+import { testChainId } from "@framework/constants";
 import { TransactionStatus } from "@framework/types";
 import { TransactionService } from "./transaction.service";
 import { TransactionEntity } from "./transaction.entity";
@@ -30,6 +31,7 @@ export class TransactionServiceRedis {
   ) {}
 
   public processQueue(): void {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const redisQueueName = this.configService.get<string>("REDIS_QUEUE_NAME", "ETH_EVENTS");
     const sharedConfigWorker = {
       redis: {
@@ -49,6 +51,7 @@ export class TransactionServiceRedis {
       const { route, decoded, context } = job.data;
       const { transactionHash, blockNumber, transactionIndex, logIndex } = context;
       return await this.transactionService.create({
+        chainId,
         transactionHash,
         blockNumber: Number(blockNumber),
         transactionIndex: Number(transactionIndex),
