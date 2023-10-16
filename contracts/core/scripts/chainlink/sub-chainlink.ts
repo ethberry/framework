@@ -96,7 +96,7 @@ async function main() {
     await linkInstance.transferAndCall(await vrfInstance.getAddress(), WeiPerEther * 100n, subscriptionId),
     "transferAndCall 100 LINK",
   );
-  // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
+
   const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
   const events1 = await vrfInstance.queryFilter(eventFilter1, block!.number);
   const { newBalance } = recursivelyDecodeResult(events1[events1.length - 1].args as unknown as Result);

@@ -14,13 +14,13 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 600; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 900; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 1n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 3n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
-const batchSize = 3; // Generative collection size
+// const batchSize = 3; // Generative collection size
 
 const amount = WeiPerEther * 1000000000000n; // ?
 const timestamp = Math.ceil(Date.now() / 1000);
@@ -67,7 +67,7 @@ async function main() {
   const cmInstance = await deployDiamond(
     "DiamondCM",
     [
-      "CollectionFactoryFacet",
+      // "CollectionFactoryFacet",
       "ERC20FactoryFacet",
       "ERC721FactoryFacet",
       "ERC998FactoryFacet",
@@ -526,16 +526,16 @@ async function main() {
   );
 
   // GENERATIVE
-  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CSimple");
-  contracts.erc721Generative = await erc721CollectionFactory.deploy(
-    "COLLECTION SIMPLE",
-    "COLL721",
-    royalty,
-    baseTokenURI,
-    batchSize,
-    owner.address,
-  );
-  await debug(contracts);
+  // const erc721CollectionFactory = await ethers.getContractFactory("ERC721CSimple");
+  // contracts.erc721Generative = await erc721CollectionFactory.deploy(
+  //   "COLLECTION SIMPLE",
+  //   "COLL721",
+  //   royalty,
+  //   baseTokenURI,
+  //   batchSize,
+  //   owner.address,
+  // );
+  // await debug(contracts);
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
@@ -614,7 +614,7 @@ async function main() {
       await contracts.erc721Rentable.getAddress(),
       await contracts.erc721Soulbound.getAddress(),
       await contracts.erc721Genes.getAddress(),
-      await contracts.erc721Generative.getAddress(),
+      // await contracts.erc721Generative.getAddress(),
       await contracts.erc998Blacklist.getAddress(),
       await contracts.erc998New.getAddress(),
       await contracts.erc998Random.getAddress(),
