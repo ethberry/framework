@@ -6,7 +6,7 @@ export enum ContractManagerEventType {
   ERC721TokenDeployed = "ERC721TokenDeployed",
   ERC998TokenDeployed = "ERC998TokenDeployed",
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
-  MysteryboxDeployed = "MysteryboxDeployed",
+  MysteryBoxDeployed = "MysteryBoxDeployed",
   CollectionDeployed = "CollectionDeployed",
   PonziDeployed = "PonziDeployed",
   StakingDeployed = "StakingDeployed",

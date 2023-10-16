@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { baseTokenURI, royalty } from "@gemunion/contracts-constants";
 
 export async function deployERC1155(contracts: Record<string, any>) {

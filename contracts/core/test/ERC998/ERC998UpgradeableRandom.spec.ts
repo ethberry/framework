@@ -1,4 +1,5 @@
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { FrameworkInterfaceId } from "../constants";

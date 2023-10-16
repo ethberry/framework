@@ -328,7 +328,7 @@ export enum ContractEventSignature {
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC1155TokenDeployed = "ERC1155TokenDeployed(address,uint256,(uint96,string,string))",
-  MysteryboxDeployed = "MysteryboxDeployed(address,uint256,(string,string,uint96,string,string))",
+  MysteryBoxDeployed = "MysteryBoxDeployed(address,uint256,(string,string,uint96,string,string))",
   CollectionDeployed = "CollectionDeployed(address,uint256,(string,string,uint96,string,uint96,string))",
   PonziDeployed = "PonziDeployed(address,uint256,(address[],uint256[],string))",
   StakingDeployed = "StakingDeployed(address,uint256,(string))",

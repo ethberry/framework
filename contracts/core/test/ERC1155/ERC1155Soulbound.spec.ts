@@ -1,7 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
 import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import {
   shouldBalanceOf,
@@ -40,7 +41,7 @@ describe("ERC1155Soulbound", function () {
       const contractInstance = await factory();
       await contractInstance.mint(owner.address, tokenId, amount, "0x");
       const tx = contractInstance.safeTransferFrom(owner.address, receiver.address, tokenId, amount, "0x");
-      await expect(tx).to.be.revertedWith("ERC1155Soulbound: can't be transferred");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "Soulbound");
     });
   });
 
@@ -50,7 +51,7 @@ describe("ERC1155Soulbound", function () {
       const contractInstance = await factory();
       await contractInstance.mint(owner.address, tokenId, amount, "0x");
       const tx = contractInstance.safeBatchTransferFrom(owner.address, receiver.address, [tokenId], [amount], "0x");
-      await expect(tx).to.be.revertedWith("ERC1155Soulbound: can't be transferred");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "Soulbound");
     });
   });
 

@@ -90,7 +90,7 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.MysteryboxDeployed,
+    eventName: ContractManagerEventType.MysteryBoxDeployed,
   })
   public mysterybox(
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,

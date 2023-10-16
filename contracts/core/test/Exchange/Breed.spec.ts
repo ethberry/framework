@@ -3,12 +3,12 @@ import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, extra, params, tokenId } from "../constants";
+import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { concat, Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
 import { deployDiamond, deployErc721Base } from "./shared/fixture";
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeMetadata } from "../shared/metadata";
@@ -66,6 +66,11 @@ describe("Diamond Exchange Breed", function () {
         const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
+
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
         await expect(tx02)
@@ -201,6 +206,11 @@ describe("Diamond Exchange Breed", function () {
         const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
         await expect(tx02)
@@ -376,6 +386,11 @@ describe("Diamond Exchange Breed", function () {
         const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
         await expect(tx02)
@@ -641,6 +656,11 @@ describe("Diamond Exchange Breed", function () {
         const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
+
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
         await expect(tx02)

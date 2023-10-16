@@ -26,7 +26,9 @@ export function shouldGetRecordFieldValue(factory: () => Promise<any>, options: 
       const contractInstance = await factory();
 
       const tx = contractInstance.getRecordFieldValue(defaultTokenId, TEMPLATE_ID);
-      await expect(tx).to.be.revertedWith("GC: field not found");
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "FieldNotFound")
+        .withArgs(defaultTokenId, TEMPLATE_ID);
     });
   });
 }

@@ -5,27 +5,22 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
 
 contract WaitList is AccessControl, Pausable, TopUp {
-  using Counters for Counters.Counter;
-
   mapping(uint256 => bytes32) internal _roots;
   mapping(uint256 => mapping(address => bool)) internal _expired;
   mapping(uint256 => Asset[]) internal _items;
-
-  Counters.Counter internal _itemsCounter;
 
   event WaitListRewardSet(uint256 externalId, bytes32 root, Asset[] items);
   event WaitListRewardClaimed(address account, uint256 externalId, Asset[] items);

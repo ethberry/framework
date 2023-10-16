@@ -1,7 +1,7 @@
 import fs from "fs";
 import { ethers } from "hardhat";
 import { Contract, Result } from "ethers";
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 
 export interface IObj {
   address?: string;

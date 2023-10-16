@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { wallet } from "@gemunion/constants";
 
 export async function deployVesting(contracts: Record<string, any>) {

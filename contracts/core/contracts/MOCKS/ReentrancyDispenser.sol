@@ -4,12 +4,13 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import {ERC1155Holder, IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "../Mechanics/Dispenser/interfaces/IDispenser.sol";
 
@@ -33,6 +34,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
     (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
+    success;
     return super.onERC721Received(operator, from, tokenId, data);
   }
 
@@ -48,6 +50,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
     (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
+    success;
     return super.onERC1155Received(operator, from, id, value, data);
   }
 
@@ -59,13 +62,14 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
       address[] memory receivers = new address[](1);
       receivers[0] = address(this);
       (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
+      success;
     }
   }
 
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, ERC1155Receiver) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, ERC1155Holder) returns (bool) {
     return
       interfaceId == type(IERC721Receiver).interfaceId ||
       interfaceId == type(IERC1155Receiver).interfaceId ||

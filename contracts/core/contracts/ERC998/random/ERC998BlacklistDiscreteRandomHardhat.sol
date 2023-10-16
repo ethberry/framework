@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhatV2.sol";
 
@@ -43,5 +43,19 @@ contract ERC998BlacklistDiscreteRandomHardhat is ERC998BlacklistDiscreteRandom, 
     uint256[] memory randomWords
   ) internal override(ERC998BlacklistDiscreteRandom, VRFConsumerBaseV2) {
     return super.fulfillRandomWords(requestId, randomWords);
+  }
+
+  /**
+   * @dev See {ERC721-_increaseBalance}.
+   */
+  function _increaseBalance(address account, uint128 amount) internal virtual override {
+    super._increaseBalance(account, amount);
+  }
+
+  /**
+   * @dev See {ERC721-_baseURI}.
+   */
+  function _baseURI() internal view virtual override returns (string memory) {
+    return super._baseURI();
   }
 }

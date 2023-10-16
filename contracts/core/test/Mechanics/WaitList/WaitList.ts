@@ -4,7 +4,8 @@ import { ZeroAddress } from "ethers";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikePausable } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { deployERC20 } from "../../ERC20/shared/fixtures";
@@ -81,9 +82,9 @@ describe("WaitList", function () {
       };
 
       const tx = contractInstance.connect(receiver).setReward(params, []);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
     });
 
     it("should fail: WrongAmount", async function () {
@@ -457,7 +458,7 @@ describe("WaitList", function () {
 
       await contractInstance.pause();
       const tx1 = contractInstance.claim(proof, externalId);
-      await expect(tx1).to.be.revertedWith("Pausable: paused");
+      await expect(tx1).to.be.revertedWithCustomError(contractInstance, "EnforcedPause");
     });
 
     it("should fail: Not yet started", async function () {

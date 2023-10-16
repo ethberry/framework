@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 contract Rarity {
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {

@@ -1,6 +1,7 @@
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikeBlackList } from "@gemunion/contracts-access";
+
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeERC721Blacklist } from "./shared/blacklist";

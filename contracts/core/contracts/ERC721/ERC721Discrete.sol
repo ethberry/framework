@@ -4,9 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-misc/contracts/interfaces.sol";
+import "@gemunion/contracts-utils/contracts/interfaces.sol";
 
 import "../utils/constants.sol";
 import "./ERC721Simple.sol";
@@ -44,7 +44,7 @@ contract ERC721Discrete is IERC721Discrete, ERC721Simple {
    * @return uint256 The upgraded level
    */
   function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (uint256) {
-    _requireMinted(tokenId);
+    _requireOwned(tokenId);
     uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
     _upsertRecordField(tokenId, attribute, value + 1);
     emit LevelUp(_msgSender(), tokenId, attribute, value + 1);

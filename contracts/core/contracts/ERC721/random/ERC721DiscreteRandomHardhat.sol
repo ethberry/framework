@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhatV2.sol";
 

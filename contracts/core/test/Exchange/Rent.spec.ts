@@ -2,10 +2,10 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { deployDiamond, deployErc721Base } from "./shared/fixture";
-import { amount, nonce, METADATA_ROLE } from "@gemunion/contracts-constants";
+import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { Contract, toBeHex, ZeroAddress, zeroPadValue, ZeroHash } from "ethers";
+import { Contract, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualArray, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
 
@@ -359,7 +359,7 @@ describe("Diamond Exchange Rent", function () {
       await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
-    it("should fail: Transfer caller is not owner nor approved", async function () {
+    it("should fail: ERC721InsufficientApproval", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -430,10 +430,12 @@ describe("Diamond Exchange Rent", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+        .withArgs(await exchangeInstance.getAddress(), tokenId);
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -834,7 +836,7 @@ describe("Diamond Exchange Rent", function () {
       await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongAmount");
     });
 
-    it("should fail: Transfer caller is not owner nor approved", async function () {
+    it("should fail: ERC721InsufficientApproval", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -910,10 +912,12 @@ describe("Diamond Exchange Rent", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+        .withArgs(await exchangeInstance.getAddress(), tokenId);
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateManyToManySignature } = await getSignatures(exchangeInstance);

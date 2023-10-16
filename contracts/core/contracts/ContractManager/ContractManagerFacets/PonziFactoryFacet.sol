@@ -4,7 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
+
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "./AbstractFactoryFacet.sol";
 

@@ -7,7 +7,7 @@ import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { subscriptionId, templateId, tokenId } from "../constants";
 import { ZeroAddress } from "ethers";
 import { deployDiamond } from "./shared/fixture";
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
@@ -138,7 +138,7 @@ describe("Diamond Exchange Utils", function () {
           await expect(tx).changeEtherBalances([owner, walletInstance], [-amount, amount]);
         });
 
-        it("should spendFrom: ETH => Reverter", async function () {
+        it("should spendFrom: ETH => Reverter (FailedInnerCall)", async function () {
           const [owner] = await ethers.getSigners();
 
           const jerkInstance = await deployJerk();
@@ -159,7 +159,7 @@ describe("Diamond Exchange Utils", function () {
             { value: amount },
           );
 
-          await expect(tx).to.be.revertedWith("Address: unable to send value, recipient may have reverted");
+          await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "FailedInnerCall");
         });
       });
 
@@ -306,10 +306,12 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+            .withArgs(owner.address, 0, amount);
         });
 
-        it("should spendFrom: ERC20 => EOA (insufficient allowance)", async function () {
+        it("should spendFrom: ERC20 => EOA (ERC20InsufficientAllowance)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -332,7 +334,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC20: insufficient allowance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+            .withArgs(await exchangeInstance.getAddress(), 0, amount);
         });
 
         it("should spendFrom: ERC1363 => ERC1363 non Holder", async function () {
@@ -483,7 +487,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spendFrom: ERC721 => Holder", async function () {
@@ -570,7 +576,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
 
         it("should spendFrom: ERC721 => EOA (not approved)", async function () {
@@ -596,7 +604,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -626,7 +636,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spendFrom: ERC998 => Holder", async function () {
@@ -713,7 +725,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
 
         it("should spendFrom: ERC998 => EOA (not approved)", async function () {
@@ -739,7 +753,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -769,7 +785,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: transfer to non-ERC1155Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spendFrom: ERC1155 => Holder", async function () {
@@ -865,10 +883,12 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: insufficient balance for transfer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InsufficientBalance")
+            .withArgs(owner.address, 0, amount, tokenId);
         });
 
-        it("should spendFrom: ERC1155 => EOA (insufficient allowance)", async function () {
+        it("should spendFrom: ERC1155 => EOA (ERC1155MissingApprovalForAll)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -891,7 +911,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155MissingApprovalForAll")
+            .withArgs(await exchangeInstance.getAddress(), owner.address);
         });
       });
 
@@ -1093,7 +1115,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("Address: insufficient balance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(exchangeInstance, "AddressInsufficientBalance")
+            .withArgs(await exchangeInstance.getAddress());
         });
       });
 
@@ -1203,7 +1227,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+            .withArgs(await exchangeInstance.getAddress(), 0, amount);
         });
 
         it("should spend: ERC1363 => ERC1363 non Holder", async function () {
@@ -1312,7 +1338,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spend: ERC721 => Holder ", async function () {
@@ -1373,7 +1401,7 @@ describe("Diamond Exchange Utils", function () {
           expect(balance).to.equal(1);
         });
 
-        it("should spend: ERC721 => EOA (not an owner)", async function () {
+        it("should spend: ERC721 => EOA (ERC721InsufficientApproval)", async function () {
           const [_owner, receiver, stranger] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -1394,7 +1422,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -1420,7 +1450,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spend: ERC998 => Holder ", async function () {
@@ -1480,7 +1512,7 @@ describe("Diamond Exchange Utils", function () {
           expect(balance).to.equal(1);
         });
 
-        it("should spend: ERC998 => EOA (not an owner)", async function () {
+        it("should spend: ERC998 => EOA (ERC721InsufficientApproval)", async function () {
           const [_owner, receiver, stranger] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -1501,7 +1533,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -1529,7 +1563,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: transfer to non-ERC1155Receiver implementer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InvalidReceiver")
+            .withArgs(await jerkInstance.getAddress());
         });
 
         it("should spend: ERC1155 => Holder", async function () {
@@ -1604,7 +1640,7 @@ describe("Diamond Exchange Utils", function () {
           expect(balance).to.equal(amount);
         });
 
-        it("should spend: ERC1155 => EOA (insufficient amount)", async function () {
+        it("should spend: ERC1155 => EOA (ERC1155InsufficientBalance)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -1625,7 +1661,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: insufficient balance for transfer");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InsufficientBalance")
+            .withArgs(await exchangeInstance.getAddress(), 0, amount, tokenId);
         });
       });
 
@@ -1868,6 +1906,7 @@ describe("Diamond Exchange Utils", function () {
           await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
 
           await erc721Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
+          await erc721Instance.setSubscriptionId(subscriptionId);
           await vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
 
           await exchangeInstance.testAcquire(
@@ -1939,7 +1978,9 @@ describe("Diamond Exchange Utils", function () {
           const erc998Instance = await deployERC721("ERC998Random");
           await erc998Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
 
+          // Set VRFV2 Subscription
           await erc998Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
+          await erc998Instance.setSubscriptionId(subscriptionId);
           await vrfInstance.addConsumer(subscriptionId, await erc998Instance.getAddress());
 
           await exchangeInstance.testAcquire(
@@ -2207,7 +2248,7 @@ describe("Diamond Exchange Utils", function () {
           await expect(tx).changeEtherBalances([owner, walletInstance], [-amount, amount]);
         });
 
-        it("should burnFrom: ETH => Reverter", async function () {
+        it("should burnFrom: ETH => Reverter (FailedInnerCall)", async function () {
           const [owner] = await ethers.getSigners();
 
           const jerkInstance = await deployJerk();
@@ -2228,7 +2269,7 @@ describe("Diamond Exchange Utils", function () {
             { value: amount },
           );
 
-          await expect(tx).to.be.revertedWith("Address: unable to send value, recipient may have reverted");
+          await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "FailedInnerCall");
         });
       });
 
@@ -2375,10 +2416,12 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+            .withArgs(owner.address, 0, amount);
         });
 
-        it("should spendFrom: ERC20 => EOA (insufficient allowance)", async function () {
+        it("should spendFrom: ERC20 => EOA (ERC20InsufficientAllowance)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
@@ -2401,7 +2444,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC20: insufficient allowance");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+            .withArgs(await exchangeInstance.getAddress(), 0, amount);
         });
 
         it("should spendFrom: ERC1363 => ERC1363 non Holder", async function () {
@@ -2558,13 +2603,14 @@ describe("Diamond Exchange Utils", function () {
           expect(balance).to.equal(0);
         });
 
-        it("should burnFrom: ERC721 => EOA (not an owner)", async function () {
+        it("should burnFrom: ERC721 => EOA (ERC721InsufficientApproval)", async function () {
           const [owner, receiver, stranger] = await ethers.getSigners();
 
           const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(stranger.address, templateId);
+          // await erc721Instance.approve(exchangeInstance, templateId);
 
           const tx = exchangeInstance.testBurnFrom(
             [
@@ -2580,7 +2626,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
 
         it("should burnFrom: ERC721 => EOA (not approved)", async function () {
@@ -2590,7 +2638,7 @@ describe("Diamond Exchange Utils", function () {
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
-          // await erc721Instance.approve(await exchangeInstance.getAddress(), templateId);
+          // await erc721Instance.approve(exchangeInstance, templateId);
 
           const tx = exchangeInstance.testBurnFrom(
             [
@@ -2606,7 +2654,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc721Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -2647,6 +2697,7 @@ describe("Diamond Exchange Utils", function () {
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(stranger.address, templateId);
+          // await erc998Instance.approve(exchangeInstance, templateId);
 
           const tx = exchangeInstance.testBurnFrom(
             [
@@ -2662,7 +2713,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
 
         it("should burnFrom: ERC998 => EOA (not approved)", async function () {
@@ -2688,7 +2741,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc998Instance, "ERC721InsufficientApproval")
+            .withArgs(await exchangeInstance.getAddress(), tokenId);
         });
       });
 
@@ -2747,7 +2802,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: burn amount exceeds totalSupply");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InsufficientBalance")
+            .withArgs(owner.address, 0, amount, tokenId);
         });
 
         it("should burnFrom: ERC1155 => EOA (insufficient allowance)", async function () {
@@ -2773,7 +2830,9 @@ describe("Diamond Exchange Utils", function () {
             enabled,
           );
 
-          await expect(tx).to.be.revertedWith("ERC1155: caller is not token owner or approved");
+          await expect(tx)
+            .to.be.revertedWithCustomError(erc1155Instance, "ERC1155MissingApprovalForAll")
+            .withArgs(await exchangeInstance.getAddress(), owner.address);
         });
       });
 

@@ -269,6 +269,10 @@ describe("Diamond Exchange Claim", function () {
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
           .withArgs(subscriptionId, await erc721Instance.getAddress());
 
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
         const signature = await generateManyToManySignature({
           account: receiver.address,
           params,
@@ -549,7 +553,7 @@ describe("Diamond Exchange Claim", function () {
         await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
       });
 
-      it("should fail: signer is missing role", async function () {
+      it("should fail: SignerMissingRole", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);

@@ -4,19 +4,17 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";
@@ -28,7 +26,6 @@ import "./interfaces/IRaffle.sol";
 abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
-  using Counters for Counters.Counter;
 
   event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
@@ -57,10 +54,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   Round[] internal _rounds;
 
   constructor() {
-    address account = _msgSender();
-    _grantRole(DEFAULT_ADMIN_ROLE, account);
-    _grantRole(PAUSER_ROLE, account);
-    _grantRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;

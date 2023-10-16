@@ -4,18 +4,15 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@gemunion/contracts-misc/contracts/attributes.sol";
+import "@gemunion/contracts-utils/contracts/attributes.sol";
 
 import "./interfaces/IERC721Random.sol";
 import "./ERC721Simple.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
 abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
-  using Counters for Counters.Counter;
-
   struct Request {
     address account;
     uint256 templateId;
@@ -46,12 +43,11 @@ abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
-    uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords, request.templateId, _nextTokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
+    _upsertRecordField(_nextTokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(_nextTokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
 

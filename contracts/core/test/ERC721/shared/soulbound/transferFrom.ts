@@ -15,8 +15,8 @@ export function shouldTransferFrom(factory: () => Promise<any>, options: IERC721
       const contractInstance = await factory();
 
       await mint(contractInstance, owner, owner.address);
-      const tx1 = contractInstance.transferFrom(owner.address, receiver.address, defaultTokenId);
-      await expect(tx1).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+      const tx = contractInstance.transferFrom(owner.address, receiver.address, defaultTokenId);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "Soulbound");
     });
 
     it("should fail: can't be transferred by approved", async function () {
@@ -26,8 +26,8 @@ export function shouldTransferFrom(factory: () => Promise<any>, options: IERC721
       await mint(contractInstance, owner, owner.address);
       await contractInstance.approve(receiver.address, defaultTokenId);
 
-      const tx1 = contractInstance.connect(receiver).transferFrom(owner.address, receiver.address, defaultTokenId);
-      await expect(tx1).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+      const tx = contractInstance.connect(receiver).transferFrom(owner.address, receiver.address, defaultTokenId);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "Soulbound");
     });
   });
 }

@@ -4,15 +4,13 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerliV2.sol";
 
 import "../RaffleRandom.sol";
 
 contract RaffleRandomGoerli is RaffleRandom, ChainLinkGoerliV2 {
-  using Counters for Counters.Counter;
-
   constructor() RaffleRandom() ChainLinkGoerliV2(uint64(0), uint16(6), uint32(600000), uint32(1)) {}
 
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY

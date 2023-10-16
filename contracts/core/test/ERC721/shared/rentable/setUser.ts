@@ -37,9 +37,9 @@ export function shouldSetUser(factory: () => Promise<any>, options: IERC721EnumO
       const deadline = current.add(web3.utils.toBN(100));
 
       const tx = contractInstance.connect(receiver).setUser(defaultTokenId, receiver.address, deadline.toString());
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, METADATA_ROLE);
     });
 
     it("should set a user from approved address", async function () {

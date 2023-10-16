@@ -1,24 +1,41 @@
 import { expect } from "chai";
-import { Signer } from "ethers";
+import { BaseContract, Signer } from "ethers";
+import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
-import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeWhiteList } from "@gemunion/contracts-access-list";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikeWhiteList } from "@gemunion/contracts-access";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC1363 } from "./shared/fixtures";
 import { shouldWhiteList } from "./shared/whitelist/whitelist";
 import { shouldBehaveLikeERC20Whitelist } from "./shared/whitelist";
 
-const customMint = async (contractInstance: any, signer: Signer, receiver: string, value = amount): Promise<any> => {
+const getAddress = async (receiver: SignerWithAddress | BaseContract | string) => {
+  if (receiver instanceof SignerWithAddress) {
+    return receiver.address;
+  } else if (receiver instanceof BaseContract) {
+    return receiver.getAddress();
+  }
+  return receiver;
+};
+
+const customMint = async (
+  contractInstance: any,
+  signer: Signer,
+  receiver: SignerWithAddress | BaseContract | string,
+  value = amount,
+): Promise<any> => {
   const tx = contractInstance.whitelist(receiver);
-  await expect(tx).to.emit(contractInstance, "Whitelisted").withArgs(receiver);
+  await expect(tx)
+    .to.emit(contractInstance, "Whitelisted")
+    .withArgs(await getAddress(receiver));
   return contractInstance.connect(signer).mint(receiver, value) as Promise<any>;
 };
 
 describe("ERC20Whitelist", function () {
   const factory = () => deployERC1363(this.title);
 
-  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeWhiteList(factory);
   shouldWhiteList(factory);
 

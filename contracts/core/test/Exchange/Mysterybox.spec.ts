@@ -8,7 +8,7 @@ import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature 
 import { Contract, encodeBytes32String, ZeroAddress } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
 
-describe("Diamond Exchange Mysterybox", function () {
+describe("Diamond Exchange MysteryBox", function () {
   const factory = async (facetName = "ExchangeMysteryBoxFacet"): Promise<any> => {
     const diamondInstance = await deployDiamond(
       "DiamondExchange",
@@ -447,7 +447,7 @@ describe("Diamond Exchange Mysterybox", function () {
     });
   });
 
-  it("should fail: signer is missing role", async function () {
+  it("should fail: SignerMissingRole", async function () {
     const [owner, receiver] = await ethers.getSigners();
     const exchangeInstance = await factory();
     const { generateManyToManySignature } = await getSignatures(exchangeInstance);

@@ -55,7 +55,9 @@ export function shouldBehaveLikeDiscrete(factory: () => Promise<any>) {
       await contractInstance.mintCommon(receiver.address, templateId);
 
       const tx = contractInstance.getRecordFieldValue(tokenId, tokenAttributes.LEVEL);
-      await expect(tx).to.be.revertedWith("GC: field not found");
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "FieldNotFound")
+        .withArgs(tokenId, tokenAttributes.LEVEL);
     });
 
     it("should fail: wrong role", async function () {
@@ -66,9 +68,9 @@ export function shouldBehaveLikeDiscrete(factory: () => Promise<any>) {
       await contractInstance.mintCommon(receiver.address, templateId);
 
       const tx = contractInstance.connect(receiver).upgrade(tokenId, tokenAttributes.LEVEL);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, METADATA_ROLE);
     });
   });
 }

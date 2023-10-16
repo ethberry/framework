@@ -16,7 +16,7 @@ library ACStorage {
         mapping(bytes32 => RoleData) _roles;
     }
 
-    bytes32 internal constant STORAGE_SLOT = 
+    bytes32 internal constant STORAGE_SLOT =
         keccak256('access-control.contracts.storage.AC');
 
     function layout() internal pure returns (Layout storage l) {
@@ -29,12 +29,22 @@ library ACStorage {
 
 abstract contract AccessControlInternal is Context {
     /**
+     * @dev The `account` is missing a role.
+     */
+    error AccessControlUnauthorizedAccount(address account, bytes32 neededRole);
+
+    /**
+     * @dev The caller of a function is not the expected one.
+     *
+     * NOTE: Don't confuse with {AccessControlUnauthorizedAccount}.
+     */
+    error AccessControlBadConfirmation();
+
+    /**
      * @dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`
      *
      * `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite
      * {RoleAdminChanged} not being emitted signaling this.
-     *
-     * _Available since v3.1._
      */
     event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);
 
@@ -100,16 +110,7 @@ abstract contract AccessControlInternal is Context {
      */
     function _checkRole(bytes32 role, address account) internal view virtual {
         if (!_hasRole(role, account)) {
-            revert(
-                string(
-                    abi.encodePacked(
-                        "AccessControl: account ",
-                        Strings.toHexString(account),
-                        " is missing role ",
-                        Strings.toHexString(uint256(role), 32)
-                    )
-                )
-            );
+            revert AccessControlUnauthorizedAccount(account, role);
         }
     }
 

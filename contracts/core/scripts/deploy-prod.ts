@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 import fs from "fs";
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { deployDiamond } from "../test/Exchange/shared/fixture";
 

@@ -4,9 +4,10 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC721Burnable} from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
@@ -17,8 +18,6 @@ import "../../utils/constants.sol";
 import "./interfaces/IERC721LotteryTicket.sol";
 
 contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
-  using Counters for Counters.Counter;
-
   mapping(uint256 => Ticket) private _data;
 
   constructor(
@@ -27,7 +26,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721ABER(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
-    _tokenIdTracker.increment();
+    _nextTokenId++;
   }
 
   // TICKET
@@ -36,16 +35,15 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     uint256 roundId,
     uint256 externalId,
     bytes32 numbers
-  ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
+  ) external onlyRole(MINTER_ROLE) returns (uint256) {
+    _data[_nextTokenId] = Ticket(roundId, externalId, numbers, false);
 
-    _data[tokenId] = Ticket(roundId, externalId, numbers, false);
+    _upsertRecordField(_nextTokenId, ROUND, externalId);
+    _upsertRecordField(_nextTokenId, NUMBERS, _encodeNumbers(numbers, 6));
 
-    _upsertRecordField(tokenId, ROUND, externalId);
-    _upsertRecordField(tokenId, NUMBERS, _encodeNumbers(numbers, 6));
+    _safeMint(account, _nextTokenId);
 
-    _safeMint(account, tokenId);
+    return _nextTokenId++;
   }
 
   function _encodeNumbers(bytes32 numbers, uint8 count /* 6 */) internal pure returns (uint256 encoded) {
@@ -60,16 +58,12 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   }
 
   function getTicketData(uint256 tokenId) external view returns (Ticket memory) {
-    if (!_exists(tokenId)) {
-      revert WrongToken();
-    }
+    _requireOwned(tokenId);
     return _data[tokenId];
   }
 
   function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
-    if (!_exists(tokenId)) {
-      revert WrongToken();
-    }
+    _requireOwned(tokenId);
     // TODO use only metadata as storage?
     _data[tokenId].prize = true;
     _upsertRecordField(tokenId, PRIZE, 1);

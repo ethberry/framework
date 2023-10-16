@@ -4,7 +4,7 @@ import fs from "fs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
 import { getContractName } from "../../test/utils";

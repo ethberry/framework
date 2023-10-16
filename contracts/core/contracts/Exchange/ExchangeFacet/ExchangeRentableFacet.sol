@@ -4,12 +4,12 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";

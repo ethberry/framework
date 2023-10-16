@@ -4,12 +4,12 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Create2.sol";
+import {AccessControl, IAccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Create2} from "@openzeppelin/contracts/utils/Create2.sol";
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import {MINTER_ROLE, METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../override/SignatureValidator.sol";

@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { baseTokenURI, royalty, tokenName } from "@gemunion/contracts-constants";
 
 export async function deployLottery(contracts: Record<string, any>) {

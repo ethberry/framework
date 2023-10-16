@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 
 export async function deployUsdt(contracts: Record<string, any>) {
   const usdtFactory = await ethers.getContractFactory("TetherToken");

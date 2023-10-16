@@ -483,8 +483,7 @@
       "METADATA_ROLE": "METADATA_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
-      "PREDICATE_ROLE": "PREDICATE_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+      "PREDICATE_ROLE": "PREDICATE_ROLE"
     },
     "stakingDepositStatus": {
       "ACTIVE": "Active",

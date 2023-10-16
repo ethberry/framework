@@ -22,7 +22,7 @@ import { ClaimEntity } from "./claim.entity";
 import { ClaimSeedModule } from "./claim.seed.module";
 import { ClaimSeedService } from "./claim.seed.service";
 
-describe.only("ClaimService", () => {
+describe("ClaimService", () => {
   let claimService: ClaimService;
   let claimSeedService: ClaimSeedService;
 

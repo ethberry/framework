@@ -4,11 +4,12 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-access-list/contracts/extension/WhiteList.sol";
+import {WhiteList} from "@gemunion/contracts-access/contracts/extension/WhiteList.sol";
+import {ERC20AB} from "@gemunion/contracts-erc20/contracts/preset/ERC20AB.sol";
 
-import "./ERC20Simple.sol";
+import {ERC20Simple} from "./ERC20Simple.sol";
 
 contract ERC20Whitelist is ERC20Simple, WhiteList {
   constructor(string memory name, string memory symbol, uint256 cap) ERC20Simple(name, symbol, cap) {}
@@ -16,17 +17,22 @@ contract ERC20Whitelist is ERC20Simple, WhiteList {
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC20AB) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC20AB, WhiteList) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
-   * @dev See {ERC20-_beforeTokenTransfer}.
-   * Override that checks the access list
+   * @dev See {ERC20-_update}.
    */
-  function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
-    require(from == address(0) || _isWhitelisted(from), "Whitelist: sender is not whitelisted");
-    require(to == address(0) || _isWhitelisted(to), "Whitelist: receiver is not whitelisted");
-    super._beforeTokenTransfer(from, to, amount);
+  function _update(address from, address to, uint256 value) internal virtual override {
+    super._update(from, to, value);
+
+    if (from != address(0) && !_isWhitelisted(from)) {
+      revert WhiteListError(from);
+    }
+
+    if (to != address(0) && !_isWhitelisted(to)) {
+      revert WhiteListError(to);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { ethers, network } from "hardhat";
 import { hexlify, randomBytes, Result, toBeHex, WeiPerEther, zeroPadValue } from "ethers";
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { ERC721RandomBesu, VRFCoordinatorV2Mock } from "../../typechain-types";
 import { baseTokenURI, royalty } from "@gemunion/contracts-constants";
 import { recursivelyDecodeResult } from "../../test/utils";

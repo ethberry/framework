@@ -7,7 +7,7 @@ import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorV2Mock } from "../../../../typechain-types";
 import { deployLinkVrfFixture } from "../../../shared/link";
-import { templateId, tokenAttributes, tokenId, subscriptionId } from "../../../constants";
+import { subscriptionId, templateId, tokenAttributes, tokenId } from "../../../constants";
 import { randomFixRequest } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<any>) {
@@ -88,9 +88,9 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintRandom(receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, MINTER_ROLE);
     });
 
     it("should fail: TemplateZero", async function () {
@@ -123,6 +123,10 @@ export function shouldMintRandomGenes(factory: () => Promise<any>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      // Set VRFV2 Subscription
+      const tx01 = contractInstance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(contractInstance, "VrfSubscriptionSet").withArgs(1);
+
       // Add Consumer to VRFV2
       const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
       await expect(tx02)
@@ -152,9 +156,9 @@ export function shouldMintRandomGenes(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintRandom(receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, MINTER_ROLE);
     });
 
     it("should fail: TemplateZero", async function () {

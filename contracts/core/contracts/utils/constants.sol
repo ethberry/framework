@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 bytes4 constant IERC721_SIMPLE_ID = 0xbf290e49;
 bytes4 constant IERC721_GRADE_ID = 0x1b7abe93;

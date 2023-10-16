@@ -36,12 +36,6 @@ export class SeedAccessControlErc20At1653616447220 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc20TokenSimpleAddress}',
-        '${wallet}',
-        'SNAPSHOT_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         '${erc20TokenInactiveAddress}',
         '${wallet}',
         'DEFAULT_ADMIN_ROLE',
@@ -51,12 +45,6 @@ export class SeedAccessControlErc20At1653616447220 implements MigrationInterface
         '${erc20TokenInactiveAddress}',
         '${wallet}',
         'MINTER_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc20TokenInactiveAddress}',
-        '${wallet}',
-        'SNAPSHOT_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -72,12 +60,6 @@ export class SeedAccessControlErc20At1653616447220 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc20TokenNewAddress}',
-        '${wallet}',
-        'SNAPSHOT_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         '${erc20TokenBlackListAddress}',
         '${wallet}',
         'DEFAULT_ADMIN_ROLE',
@@ -87,12 +69,6 @@ export class SeedAccessControlErc20At1653616447220 implements MigrationInterface
         '${erc20TokenBlackListAddress}',
         '${wallet}',
         'MINTER_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc20TokenBlackListAddress}',
-        '${wallet}',
-        'SNAPSHOT_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

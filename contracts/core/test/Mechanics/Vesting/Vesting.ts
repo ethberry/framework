@@ -1,4 +1,5 @@
-import { shouldBehaveLikeOwnable, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeOwnable } from "@gemunion/contracts-access";
 import { InterfaceId } from "@gemunion/contracts-constants";
 
 import { deployVesting } from "./shared/fixture";
