@@ -1,11 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { PATTERN_METADATA } from "@nestjs/microservices/constants";
-import { transformPatternToRoute } from "@nestjs/microservices/utils";
 import { Log } from "ethers";
 import Queue from "bee-queue";
-
-import { DiscoveredMethodWithMeta, DiscoveryService } from "@golevelup/nestjs-discovery";
 
 import { TransactionStatus } from "@framework/types";
 import { TransactionService } from "./transaction.service";
@@ -30,15 +26,14 @@ export class TransactionServiceRedis {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
-    private readonly transactionService: TransactionService,
-    private readonly discoveryService: DiscoveryService,
+    private readonly transactionService: TransactionService, // private readonly discoveryService: DiscoveryService,
   ) {}
 
   public processQueue(): void {
     const redisQueueName = this.configService.get<string>("REDIS_QUEUE_NAME", "ETH_EVENTS");
     const sharedConfigWorker = {
       redis: {
-        url: ~~this.configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
+        url: this.configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
       },
       storeJobs: false,
       sendEvents: false,
@@ -88,15 +83,15 @@ export class TransactionServiceRedis {
     });
   }
 
-  protected async getHandlerByPattern<T extends Array<Record<string, string>>>(
-    route: string,
-    discoveryService: DiscoveryService,
-  ): Promise<Array<DiscoveredMethodWithMeta<T>>> {
-    const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return methods.filter(method => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return method.meta.some(meta => transformPatternToRoute(meta) === route);
-    });
-  }
+  // protected async getHandlerByPattern<T extends Array<Record<string, string>>>(
+  //   route: string,
+  //   discoveryService: DiscoveryService,
+  // ): Promise<Array<DiscoveredMethodWithMeta<T>>> {
+  //   const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //   return methods.filter(method => {
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //     return method.meta.some(meta => transformPatternToRoute(meta) === route);
+  //   });
+  // }
 }
