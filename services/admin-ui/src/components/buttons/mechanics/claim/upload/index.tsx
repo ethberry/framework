@@ -35,7 +35,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
           method: "POST",
         })
         .then((json: IClaim[]) => {
-          if (json?.length) {
+          if (!json?.length || json[0] === null) {
             enqueueSnackbar(formatMessage({ id: "snackbar.claimsNotUploaded" }), { variant: "error" });
           } else {
             enqueueSnackbar(
