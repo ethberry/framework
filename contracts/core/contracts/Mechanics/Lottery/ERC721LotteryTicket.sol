@@ -7,18 +7,18 @@
 pragma solidity ^0.8.20;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {ERC721Burnable} from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import {ERC721Burnable, ERC721} from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
-import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
+import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {ERC721ABaseUrl} from "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import {ERC721ABER} from "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
-import "../../utils/errors.sol";
-import "../../utils/constants.sol";
-import "./interfaces/IERC721LotteryTicket.sol";
+import {ERC721GeneralizedCollection} from "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
+import {PRIZE, NUMBERS, ROUND} from "../../utils/constants.sol";
+import {IERC721LotteryTicket, TicketLottery} from "./interfaces/IERC721LotteryTicket.sol";
 
 contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
-  mapping(uint256 => Ticket) private _data;
+  mapping(uint256 => TicketLottery) private _data;
 
   constructor(
     string memory name,
@@ -36,7 +36,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     uint256 externalId,
     bytes32 numbers
   ) external onlyRole(MINTER_ROLE) returns (uint256) {
-    _data[_nextTokenId] = Ticket(roundId, externalId, numbers, false);
+    _data[_nextTokenId] = TicketLottery(roundId, externalId, numbers, false);
 
     _upsertRecordField(_nextTokenId, ROUND, externalId);
     _upsertRecordField(_nextTokenId, NUMBERS, _encodeNumbers(numbers, 6));
@@ -57,7 +57,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     return bytes32(numbers >> 8);
   }
 
-  function getTicketData(uint256 tokenId) external view returns (Ticket memory) {
+  function getTicketData(uint256 tokenId) external view returns (TicketLottery memory) {
     _requireOwned(tokenId);
     return _data[tokenId];
   }

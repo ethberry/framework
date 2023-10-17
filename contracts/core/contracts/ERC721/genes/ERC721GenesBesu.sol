@@ -6,8 +6,13 @@
 
 pragma solidity ^0.8.20;
 
-import "../ERC721Genes.sol";
-import "../../MOCKS/ChainLinkBesu.sol";
+import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+
+import {ChainLinkBaseV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBaseV2.sol";
+
+import {ChainLinkBesu} from "../../MOCKS/ChainLinkBesu.sol";
+import {InvalidSubscription} from "../../utils/errors.sol";
+import {ERC721Genes} from "../ERC721Genes.sol";
 
 contract ERC721GenesBesu is ERC721Genes, ChainLinkBesu {
   constructor(

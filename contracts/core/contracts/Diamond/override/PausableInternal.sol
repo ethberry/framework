@@ -3,14 +3,14 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/Context.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 
 library PausableStorage {
     struct Layout {
         bool _paused;
     }
 
-    bytes32 internal constant STORAGE_SLOT = 
+    bytes32 internal constant STORAGE_SLOT =
         keccak256('pausable.contracts.storage');
 
     function layout() internal pure returns (Layout storage l) {

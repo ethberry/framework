@@ -6,13 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../ERC721/interfaces/IERC721Discrete.sol";
-import "../override/SignatureValidator.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {IERC721Discrete} from "../../ERC721/interfaces/IERC721Discrete.sol";
+import {SignatureValidator} from "../override/SignatureValidator.sol";
+import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
+import {SignerMissingRole} from "../../utils/errors.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);

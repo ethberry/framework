@@ -6,11 +6,17 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-utils/contracts/interfaces.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
-import "../utils/constants.sol";
-import "../ERC721/interfaces/IERC721Discrete.sol";
-import "./ERC998Simple.sol";
+import {METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {IERC4906_ID} from "@gemunion/contracts-utils/contracts/interfaces.sol";
+import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
+
+import {IERC721_DISCRETE_ID} from "../utils/interfaces.sol";
+import {ProtectedAttribute} from "../utils/errors.sol";
+import {ERC721Simple} from "../ERC721/ERC721Simple.sol";
+import {IERC721Discrete} from "../ERC721/interfaces/IERC721Discrete.sol";
+import {ERC998Simple} from "./ERC998Simple.sol";
 
 contract ERC998Discrete is IERC721Discrete, ERC998Simple {
   event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
@@ -56,7 +62,7 @@ contract ERC998Discrete is IERC721Discrete, ERC998Simple {
    * @dev See {IERC165-supportsInterface}.
    */
   function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC998Simple) returns (bool) {
-    return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
+    return interfaceId == IERC4906_ID || interfaceId == IERC721_DISCRETE_ID || super.supportsInterface(interfaceId);
   }
 
   /**

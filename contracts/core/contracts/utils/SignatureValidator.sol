@@ -6,15 +6,13 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
+import {EIP712} from "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
-import "./constants.sol";
-import "./errors.sol";
-
-import "../Exchange/lib/interfaces/IAsset.sol";
+import {Params, Asset} from "../Exchange/lib/interfaces/IAsset.sol";
+import {ExpiredSignature, ExpiredSignature} from "./errors.sol";
 
 contract SignatureValidator is EIP712, Context {
   using ECDSA for bytes32;

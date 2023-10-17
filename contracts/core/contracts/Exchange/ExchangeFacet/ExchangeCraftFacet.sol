@@ -6,12 +6,14 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../override/SignatureValidator.sol";
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
+import {SignatureValidator} from "../override/SignatureValidator.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
+import {SignerMissingRole} from "../../utils/errors.sol";
 
 contract ExchangeCraftFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Craft(address account, uint256 externalId, Asset[] items, Asset[] price);

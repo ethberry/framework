@@ -6,13 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
-import "../override/SignatureValidator.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {IERC721MysteryBox} from "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
+import {SignatureValidator} from "../override/SignatureValidator.sol";
+import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
+import {SignerMissingRole, WrongAmount} from "../../utils/errors.sol";
 
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseMysteryBox(address account, uint256 externalId, Asset[] items, Asset[] price);

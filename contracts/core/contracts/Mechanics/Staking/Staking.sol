@@ -6,27 +6,29 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {EnumerableMap} from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-utils/contracts/roles.sol";
-import "@gemunion/contracts-utils/contracts/attributes.sol";
+import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
 
-import "../../ERC721/interfaces/IERC721Random.sol";
-import "../../ERC721/interfaces/IERC721Simple.sol";
-import "../../ERC1155/interfaces/IERC1155Simple.sol";
-import "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../Referral/LinearReferral.sol";
-import "../../utils/constants.sol";
-import "../../utils/TopUp.sol";
-import "../../utils/errors.sol";
-import "../MysteryBox/interfaces/IERC721MysteryBox.sol";
-import "./interfaces/IStaking.sol";
+import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
+import {IERC721Simple} from "../../ERC721/interfaces/IERC721Simple.sol";
+import {IERC1155Simple} from "../../ERC1155/interfaces/IERC1155Simple.sol";
+import {IERC721GeneralizedCollection} from "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {LinearReferral} from "../../Referral/LinearReferral.sol";
+import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
+import {TopUp} from "../../utils/TopUp.sol";
+import {ZeroBalance,NotExist,WrongRule,UnsupportedTokenType,NotComplete,Expired,NotAnOwner,WrongStake,WrongToken,LimitExceed,NotActive} from "../../utils/errors.sol";
+import {IERC721MysteryBox} from "../MysteryBox/interfaces/IERC721MysteryBox.sol";
+import {IStaking} from "./interfaces/IStaking.sol";
+import {Asset,Params,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time

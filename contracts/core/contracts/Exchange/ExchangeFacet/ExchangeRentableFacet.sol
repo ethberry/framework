@@ -6,15 +6,17 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
+import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import {IERC4907} from "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../override/SignatureValidator.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {SignatureValidator} from "../override/SignatureValidator.sol";
+import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
+import {SignerMissingRole, WrongAmount} from "../../utils/errors.sol";
 
 contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   using SafeCast for uint256;

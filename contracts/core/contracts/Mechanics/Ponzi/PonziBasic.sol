@@ -6,17 +6,18 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../utils/constants.sol";
-import "./interfaces/IPonzi.sol";
-import "./LinearReferralPonzi.sol";
+// import {constants} from "../../utils/constants.sol";
+import {IPonzi} from "./interfaces/IPonzi.sol";
+import {LinearReferralPonzi} from "./LinearReferralPonzi.sol";
+import {Asset, TokenType} from "../../Exchange/lib/interfaces/IAsset.sol";
 
 contract PonziBasic is IPonzi, AccessControl, Pausable {
   using Address for address;

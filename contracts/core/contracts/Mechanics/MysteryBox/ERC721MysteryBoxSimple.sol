@@ -6,11 +6,17 @@
 
 pragma solidity ^0.8.20;
 
-import "./interfaces/IERC721MysteryBox.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../ERC721/ERC721Simple.sol";
-import "../../utils/errors.sol";
-import "../../utils/TopUp.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+
+import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+
+import {IERC721MysteryBox} from "./interfaces/IERC721MysteryBox.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {ERC721Simple} from "../../ERC721/ERC721Simple.sol";
+import {TopUp} from "../../utils/TopUp.sol";
+import {Asset, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
+import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
+import {MethodNotSupported} from "../../utils/errors.sol";
 
 contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   using Address for address;

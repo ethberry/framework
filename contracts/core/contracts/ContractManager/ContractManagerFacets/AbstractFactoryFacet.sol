@@ -8,12 +8,13 @@ pragma solidity ^0.8.20;
 
 import {AccessControl, IAccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Create2} from "@openzeppelin/contracts/utils/Create2.sol";
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 import {MINTER_ROLE, METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../override/SignatureValidator.sol";
-import "../storage/CMStorage.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {SignatureValidatorCM} from "../override/SignatureValidator.sol";
+import {CMStorage} from "../storage/CMStorage.sol";
 
 /**
  * @title AbstractFactory

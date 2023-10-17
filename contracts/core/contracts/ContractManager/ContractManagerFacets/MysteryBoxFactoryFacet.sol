@@ -6,7 +6,14 @@
 
 pragma solidity ^0.8.20;
 
-import "./AbstractFactoryFacet.sol";
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+
+import {MINTER_ROLE, DEFAULT_ADMIN_ROLE, PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+
+import {SignerMissingRole} from "../../utils/errors.sol";
+import {SignatureValidatorCM} from "../override/SignatureValidator.sol";
+import {CMStorage} from "../storage/CMStorage.sol";
+import {AbstractFactoryFacet} from "./AbstractFactoryFacet.sol";
 
 contract MysteryBoxFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
   constructor() SignatureValidatorCM() {}
@@ -49,9 +56,10 @@ contract MysteryBoxFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
 
     emit MysteryBoxDeployed(account, params.externalId, args);
 
-    bytes32[] memory roles = new bytes32[](2);
+    bytes32[] memory roles = new bytes32[](3);
     roles[0] = MINTER_ROLE;
-    roles[1] = DEFAULT_ADMIN_ROLE;
+    roles[1] = PAUSER_ROLE;
+    roles[2] = DEFAULT_ADMIN_ROLE;
 
     grantFactoryMintPermission(account);
     grantFactoryMetadataPermission(account);

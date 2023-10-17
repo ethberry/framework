@@ -6,8 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "../LotteryRandom.sol";
-import "../../../MOCKS/ChainLinkBesu.sol";
+import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+
+import {ChainLinkBaseV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBaseV2.sol";
+
+import {LotteryRandom} from "../LotteryRandom.sol";
+import {ChainLinkBesu} from "../../../MOCKS/ChainLinkBesu.sol";
+import {LotteryConfig} from "../interfaces/ILottery.sol";
+import {Asset} from "../../../Exchange/lib/interfaces/IAsset.sol";
+import {InvalidSubscription} from "../../../utils/errors.sol";
 
 contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
   constructor(

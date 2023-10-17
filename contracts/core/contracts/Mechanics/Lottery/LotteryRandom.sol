@@ -6,20 +6,21 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import {MINTER_ROLE, PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../utils/constants.sol";
-import "./interfaces/ILottery.sol";
-import "./interfaces/IERC721LotteryTicket.sol";
+import {Asset, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {LotteryConfig, LotteryRoundInfo} from "./interfaces/ILottery.sol";
+import {IERC721LotteryTicket, TicketLottery} from "./interfaces/IERC721LotteryTicket.sol";
+import {ZeroBalance, NotComplete, WrongRound, BalanceExceed, WrongToken, NotAnOwner, Expired, NotActive, LimitExceed} from "../../utils/errors.sol";
 
 abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   using Address for address;
@@ -224,7 +225,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
 
     IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(ticketRound.ticketAsset.token);
 
-    Ticket memory data = ticketFactory.getTicketData(tokenId);
+    TicketLottery memory data = ticketFactory.getTicketData(tokenId);
 
     // revert if prize already set
     if (data.prize) {
