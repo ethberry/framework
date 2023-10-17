@@ -91,7 +91,9 @@ export class TransactionService {
     const txs = await this.findAll(where);
     // update status
     txs.map(async tx => {
-      Object.assign(tx, { transactionStatus: status });
+      if (tx.transactionStatus === TransactionStatus.PENDING) {
+        Object.assign(tx, { transactionStatus: status });
+      }
       await tx.save();
     });
   }

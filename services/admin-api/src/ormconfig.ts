@@ -417,7 +417,8 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
-  migrationsRun: process.env.BUSINESS_TYPE === BusinessType.B2B || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
+  migrationsRun:
+    process.env.BUSINESS_TYPE === BusinessType.B2B.toString() || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
   // migrationsRun: true,
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
