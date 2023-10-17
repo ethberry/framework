@@ -420,5 +420,4 @@ services:
       - json-api
       - game-api
       - cron-api
-      - core-eth
       - signal-api

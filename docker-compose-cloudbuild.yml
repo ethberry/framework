@@ -4,41 +4,10 @@ volumes:
   static-admin-ui:
   static-market-ui:
   static-office-ui:
+  static-signal-ui:
+
 
 services:
-
-  #  admin-ui:
-  #    container_name: admin-ui
-  #    image: gcr.io/halogen-framing-335807/framework-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-admin-ui:/home/node/framework/services/admin-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "Admin-UI"
-  #
-  #  market-ui:
-  #    container_name: market-ui
-  #    image: gcr.io/halogen-framing-335807/framework-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-market-ui:/home/node/framework/services/market-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "market-UI"
-  #
-  #  office-ui:
-  #    container_name: office-ui
-  #    image: gcr.io/halogen-framing-335807/framework-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-office-ui:/home/node/framework/services/office-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "office-UI"
 
   admin-api:
     container_name: admin-api
@@ -118,6 +87,7 @@ services:
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL}"
+      RMQ_ADMIN_URL: "${RMQ_ADMIN_URL}"
       REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
       REDIS_WATCHER_URL: "${REDIS_WATCHER_URL}"
       REDIS_CACHE_URL: "${REDIS_CACHE_URL}"
@@ -149,13 +119,6 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
-      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
-      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
-      DISPENSER_ADDR: "${DISPENSER_ADDR}"
-      # DEV
-      LINK_ADDR: "${LINK_ADDR}"
-      VRF_ADDR: "${VRF_ADDR}"
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
@@ -209,13 +172,6 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
-      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
-      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
-      DISPENSER_ADDR: "${DISPENSER_ADDR}"
-      # DEV
-      LINK_ADDR: "${LINK_ADDR}"
-      VRF_ADDR: "${VRF_ADDR}"
     ports:
       # office-api
       - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
@@ -244,6 +200,7 @@ services:
       REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BESU}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
+      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
       # FE
@@ -384,6 +341,48 @@ services:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
 
+
+  signal-api:
+    container_name: signal-api
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./microservices/signal start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_SIGNAL_API}"
+      # CORS URLS
+      ADMIN_FE_URL_B2B: "${ADMIN_FE_URL}"
+      ADMIN_FE_URL_B2C: "${ADMIN_FE_URL}"
+      MARKET_FE_URL_B2B: "${MARKET_FE_URL}"
+      MARKET_FE_URL_B2C: "${MARKET_FE_URL}"
+      OFFICE_FE_URL: "${OFFICE_FE_URL}"
+      PUBLIC_FE_URL: "${ADMIN_FE_URL}"
+      # admin socket io
+      SIGNAL_FE_URL: "${SIGNAL_FE_URL}"
+      ADMIN_IO_PASSWORD_HASH: "${ADMIN_IO_PASSWORD_HASH}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL}"
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_SIGNAL: "${RMQ_QUEUE_SIGNAL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+    volumes:
+      - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
+    ports:
+      # signal-api
+      - "${PORT_SIGNAL_API}:${PORT_SIGNAL_API}"
+
   nginx:
     container_name: nginx
     image: nginx
@@ -405,6 +404,11 @@ services:
         target: /var/www/office-ui/static
         volume:
           nocopy: true
+      - type: volume
+        source: static-signal-ui
+        target: /var/www/signal-ui/static
+        volume:
+          nocopy: true
     ports:
       - "80:80"
       - "443:443"
@@ -416,4 +420,4 @@ services:
       - json-api
       - game-api
       - cron-api
-      - core-eth
+      - signal-api
