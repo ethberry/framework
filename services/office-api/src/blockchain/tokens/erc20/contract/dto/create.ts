@@ -3,7 +3,7 @@ import { IsInt, IsString, Max, MaxLength, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AddressDto, SearchableDto } from "@gemunion/collection";
-import { IErc20ContractCreateDto } from "@framework/types";
+import type { IErc20ContractCreateDto } from "@framework/types";
 
 export class Erc20ContractCreateDto extends Mixin(AddressDto, SearchableDto) implements IErc20ContractCreateDto {
   @ApiProperty()

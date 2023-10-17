@@ -12,8 +12,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
-import type { IWaitListListAutocompleteDto, IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
-import { IWaitListListSearchDto } from "@framework/types";
+
+import type {
+  IWaitListListAutocompleteDto,
+  IWaitListListCreateDto,
+  IWaitListListUpdateDto,
+  IWaitListListSearchDto,
+} from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

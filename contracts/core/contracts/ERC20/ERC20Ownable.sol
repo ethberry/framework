@@ -4,12 +4,12 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-erc20/contracts/preset/ERC20OBCS.sol";
+import "@gemunion/contracts-erc20/contracts/preset/ERC20OBC.sol";
 
-contract ERC20Ownable is ERC20OBCS {
-  constructor(string memory name, string memory symbol, uint256 cap) ERC20OBCS(name, symbol, cap) {}
+contract ERC20Ownable is ERC20OBC {
+  constructor(string memory name, string memory symbol, uint256 cap) ERC20OBC(name, symbol, cap) {}
 
   receive() external payable {
     revert();

@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { IPromo } from "@framework/types";
+import { IProductPromo } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -11,8 +11,8 @@ import { validationSchema } from "./validation";
 export interface IEditPromoDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IPromo>, form: any) => Promise<void>;
-  initialValues: IPromo;
+  onConfirm: (values: Partial<IProductPromo>, form: any) => Promise<void>;
+  initialValues: IProductPromo;
 }
 
 export const EditPromoDialog: FC<IEditPromoDialogProps> = props => {

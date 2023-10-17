@@ -12,6 +12,7 @@ import {
   ContractType,
   ExchangeEventType,
   ModuleType,
+  NodeEnv,
   RaffleEventType,
 } from "@framework/types";
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
@@ -19,6 +20,7 @@ import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/R
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { RaffleLogService } from "./log.service";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import { RaffleLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const raffleContracts = await contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
@@ -36,30 +39,33 @@ import { RaffleLogService } from "./log.service";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
 
+        const eventNames = [
+          RaffleEventType.Prize,
+          RaffleEventType.RoundEnded,
+          RaffleEventType.Released,
+          RaffleEventType.RoundStarted,
+          RaffleEventType.RoundFinalized,
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+          AccessControlEventType.RoleAdminChanged,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          ExchangeEventType.PaymentEthReceived,
+          ContractEventType.VrfSubscriptionSet,
+        ];
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.RAFFLE,
             contractAddress: raffleContracts.address,
             contractInterface: new Interface(RaffleSol.abi),
-            // prettier-ignore
-            eventNames: [
-              RaffleEventType.Prize,
-              RaffleEventType.RoundEnded,
-              RaffleEventType.Released,
-              RaffleEventType.RoundStarted,
-              RaffleEventType.RoundFinalized,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-              AccessControlEventType.RoleAdminChanged,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              ExchangeEventType.PaymentEthReceived,
-            ],
+            topics,
           },
           block: {
             // fromBlock,
             fromBlock: raffleContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

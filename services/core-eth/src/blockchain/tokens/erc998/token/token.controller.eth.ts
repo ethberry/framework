@@ -6,8 +6,9 @@ import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
-  IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
+  IErc998BatchReceivedChildEvent,
+  IErc998BatchTransferChildEvent,
   IErc998TokenReceivedChildEvent,
   IErc998TokenSetMaxChildEvent,
   IErc998TokenTransferChildEvent,
@@ -15,12 +16,7 @@ import type {
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
 } from "@framework/types";
-import {
-  ContractEventType,
-  ContractType,
-  IErc998BatchReceivedChildEvent,
-  IErc998BatchTransferChildEvent,
-} from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
 
@@ -44,11 +40,6 @@ export class Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.mintRandom(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.ReceivedChild })

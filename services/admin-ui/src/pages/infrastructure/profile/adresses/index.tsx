@@ -1,27 +1,19 @@
 import { FC, Fragment } from "react";
-import {
-  Button,
-  Chip,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Tooltip,
-} from "@mui/material";
+import { Button, Chip, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";
+import { emptyAddress } from "../../../../components/common/interfaces";
 import { AddressEditDialog } from "./edit";
-import { ITabPanelProps } from "../tabs";
+import type { ITabPanelProps } from "../tabs";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;
@@ -78,7 +70,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((address: IAddress) => (
-              <ListItem key={address.id} disableGutters={true}>
+              <ListItem key={address.id} disableGutters>
                 <ListItemText
                   primary={
                     <Fragment>
@@ -102,22 +94,14 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                   }
                   sx={{ pr: 3 }}
                 />
-                <ListItemSecondaryAction>
-                  <Tooltip title={formatMessage({ id: "form.tips.edit" })}>
-                    <IconButton edge="end" aria-label="edit" onClick={handleEdit(address)} sx={{ mr: 0.5 }}>
-                      <Edit />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                    <IconButton edge="end" aria-label="delete" onClick={handleDelete(address)}>
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
+                <ListActions>
+                  <ListAction onClick={handleEdit(address)} message="form.tips.edit" icon={Edit} />
+                  <ListAction onClick={handleDelete(address)} message="form.tips.delete" icon={Delete} />
+                </ListActions>
               </ListItem>
             ))
           ) : (
-            <ListItem disableGutters={true}>
+            <ListItem disableGutters>
               <FormattedMessage id="pages.profile.addresses.empty" />
             </ListItem>
           )}

@@ -1,11 +1,15 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IToken } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
-import { Erc721TransferButton, TokenLendButton, TokenSellButton } from "../../../../../components/buttons";
+import { Erc721TransferButton, TokenSellButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
+import { AllowanceButton } from "../../../../exchange/wallet/allowance";
+import { computeTokenAsset } from "../../../../../utils/token";
+import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -14,27 +18,42 @@ export interface ICommonTokenPanelProps {
 export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   const { token } = props;
 
+  const { price } =
+    token.template?.contract?.contractModule === ModuleType.LOTTERY ||
+    token.template?.contract?.contractModule === ModuleType.RAFFLE
+      ? // @ts-ignore
+        token.round
+      : token.template;
+
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.priceTitle" />
-          </Typography>
-        </Toolbar>
-        <Box component="ul" sx={{ pl: 0, m: 0, listStylePosition: "inside" }}>
-          {formatPrice(token.template?.price)
+          </StyledTypography>
+        </StyledToolbar>
+        <StyledList component="ul">
+          {formatPrice(price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
-        </Box>
+        </StyledList>
       </CardContent>
       <CardActions>
-        <TokenSellButton token={token} />
-        <Erc721TransferButton token={token} />
-        <TokenLendButton token={token} />
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12}>
+            <TokenSellButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
+            <Erc721TransferButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
+            <AllowanceButton token={computeTokenAsset(token)} />
+          </Grid>
+        </Grid>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };

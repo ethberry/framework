@@ -1,6 +1,7 @@
 export enum ProfileTabs {
   general = "general",
   subscriptions = "subscriptions",
+  notifications = "notifications",
   addresses = "addresses",
 }
 

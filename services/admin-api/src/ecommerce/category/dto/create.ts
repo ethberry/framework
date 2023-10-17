@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsJSON, IsString } from "class-validator";
 
-import { ICategoryCreateDto } from "../interfaces";
+import type { ICategoryCreateDto } from "../interfaces";
 
 export class CategoryCreateDto implements ICategoryCreateDto {
   @ApiProperty()

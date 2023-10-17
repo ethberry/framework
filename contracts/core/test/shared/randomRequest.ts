@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
 import { toBeHex, hexlify, randomBytes } from "ethers";
 
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 
-export async function randomFixRequest(rndInstance: any, vrfInstance: VRFCoordinatorMock) {
+export async function randomFixRequest(rndInstance: any, vrfInstance: VRFCoordinatorV2Mock) {
   const eventFilter = vrfInstance.filters.RandomWordsRequested();
   const events = await vrfInstance.queryFilter(eventFilter);
   for (const e of events) {
@@ -23,7 +23,7 @@ export async function randomFixRequest(rndInstance: any, vrfInstance: VRFCoordin
   }
 }
 
-export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinatorMock) {
+export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinatorV2Mock) {
   const eventFilter = vrfInstance.filters.RandomWordsRequested();
   const events = await vrfInstance.queryFilter(eventFilter);
   for (const e of events) {

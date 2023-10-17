@@ -4,7 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
+
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "@gemunion/contracts-erc998td/contracts/extensions/ERC998ERC721.sol";
 import "@gemunion/contracts-erc998td/contracts/extensions/WhiteListChild.sol";
@@ -20,21 +22,33 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function ownerOf(uint256 tokenId) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (address) {
+  /**
+   * @dev See {IERC721-ownerOf}.
+   */
+  function ownerOf(uint256 tokenId) public view virtual override(IERC721, ERC721) returns (address) {
     return super.ownerOf(tokenId);
   }
 
+  /**
+   * @dev See {IERC721-isApprovedForAll}.
+   */
   function isApprovedForAll(
     address owner,
     address operator
-  ) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (bool) {
+  ) public view virtual override(IERC721, ERC721) returns (bool) {
     return super.isApprovedForAll(owner, operator);
   }
 
+  /**
+   * @dev See {IERC721-approve}.
+   */
   function approve(address to, uint256 _tokenId) public virtual override(IERC721, ERC721, ERC998ERC721) {
     ERC998ERC721.approve(to, _tokenId);
   }
 
+  /**
+   * @dev See {IERC721-getApproved}.
+   */
   function getApproved(uint256 _tokenId) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (address) {
     return ERC998ERC721.getApproved(_tokenId);
   }
@@ -43,15 +57,16 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
    * @dev See {ERC721-_beforeTokenTransfer}.
    * Override that checks parent token
    */
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal virtual override(ERC721ABER, ERC998ERC721) {
-    ERC998ERC721._beforeTokenTransfer(from, to, firstTokenId, batchSize);
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
-  }
+// TODO FIX ME
+//  function _beforeTokenTransfer(
+//    address from,
+//    address to,
+//    uint256 firstTokenId,
+//    uint256 batchSize
+//  ) internal virtual override(ERC721ABER, ERC998ERC721) {
+//    ERC998ERC721._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+//    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+//  }
 
   /**
    * @dev See {IERC165-supportsInterface}.
@@ -77,5 +92,26 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     uint256 _childTokenId
   ) internal override virtual onlyWhiteListedWithIncrement(_childContract) {
     super.receiveChild(_from, _tokenId, _childContract, _childTokenId);
+  }
+
+  /**
+   * @dev See {ERC721-_update}.
+   */
+  function _update(address to, uint256 tokenId, address auth) internal virtual override(ERC721, ERC721ABER) returns (address) {
+    return super._update(to, tokenId, auth);
+  }
+
+  /**
+   * @dev See {ERC721-_increaseBalance}.
+   */
+  function _increaseBalance(address account, uint128 amount) internal virtual override(ERC721, ERC721ABER) {
+    super._increaseBalance(account, amount);
+  }
+
+  /**
+   * @dev See {ERC721-_baseURI}.
+   */
+  function _baseURI() internal view virtual override(ERC721, ERC721Simple) returns (string memory) {
+    return super._baseURI();
   }
 }

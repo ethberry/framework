@@ -13,7 +13,10 @@ export class ExchangeLotteryControllerEth {
   constructor(private readonly exchangeLotteryServiceEth: ExchangeLotteryServiceEth) {}
 
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.PurchaseLottery }])
-  public purchase(@Payload() event: ILogEvent<IExchangePurchaseLotteryEvent>, @Ctx() context: Log): Promise<void> {
+  public purchaseLottery(
+    @Payload() event: ILogEvent<IExchangePurchaseLotteryEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
     return this.exchangeLotteryServiceEth.purchaseLottery(event, context);
   }
 }

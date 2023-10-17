@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Paper } from "@mui/material";
 
 import { EnabledCountries } from "@gemunion/constants";
 import { SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
 import { useLicense } from "@gemunion/provider-license";
+
+import { StyledPaper } from "./styled";
 
 export interface IAddressInputProps {
   outlined?: boolean;
@@ -24,7 +25,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   };
 
   return (
-    <Paper elevation={outlined ? 1 : 0} sx={{ px: outlined ? 2 : 0 }}>
+    <StyledPaper elevation={outlined ? 1 : 0} outlined={outlined}>
       <TextInput name={handlePrefix("addressLine1")} />
       <TextInput name={handlePrefix("addressLine2")} />
       <TextInput name={handlePrefix("city")} />
@@ -32,6 +33,6 @@ export const AddressInput: FC<IAddressInputProps> = props => {
       <TextInput name={handlePrefix("state")} />
       <TextInput name={handlePrefix("zip")} />
       <SwitchInput name={handlePrefix("isDefault")} />
-    </Paper>
+    </StyledPaper>
   );
 };

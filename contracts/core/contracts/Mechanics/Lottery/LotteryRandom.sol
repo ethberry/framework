@@ -4,17 +4,17 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";
@@ -57,10 +57,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   Round[] internal _rounds;
 
   constructor(LotteryConfig memory config) {
-    address account = _msgSender();
-    _grantRole(DEFAULT_ADMIN_ROLE, account);
-    _grantRole(PAUSER_ROLE, account);
-    _grantRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
 
     // SET Lottery Config
     _timeLag = config.timeLagBeforeRelease;

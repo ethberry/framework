@@ -5,7 +5,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@gemunion/collection";
 
-import { IClaimRowDto, IClaimUploadDto } from "../interfaces";
+import type { IClaimRowDto, IClaimUploadDto } from "../interfaces";
 import { BCAssetTemplateDto } from "../../../exchange/asset/dto";
 
 export class ClaimRowDto extends Mixin(BCAssetTemplateDto, AccountDto) implements IClaimRowDto {

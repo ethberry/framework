@@ -205,8 +205,7 @@
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
-      "PREDICATE_ROLE": "PREDICATE_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+      "PREDICATE_ROLE": "PREDICATE_ROLE"
     },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
@@ -270,6 +269,7 @@
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "finishRound": "Finish round",
@@ -601,10 +601,10 @@
       "mechanics": {
         "claim": "Claim",
         "dispenser": "Dispenser",
-        "drop": "Drop",
         "grade": "Grade",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
@@ -619,9 +619,6 @@
     "dragons": {
       "description": "Here be dragons",
       "title": "Not implemented :)"
-    },
-    "drop": {
-      "title": "Drops"
     },
     "emails": {
       "title": "Emails"
@@ -757,6 +754,9 @@
       },
       "title": "Profile"
     },
+    "promo": {
+      "title": "Promos"
+    },
     "rate-plan": {
       "tabs": {
         "BRONZE": "Bronze",
@@ -846,7 +846,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent",
+    "transactionSent": "Transaction sent: {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
@@ -854,5 +854,10 @@
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
+  },
+  "socket": {
+    "connected": "WebSocket connection ON",
+    "connect_failed": "WebSocket connection failed",
+    "error": "WebSocket connection Error"
   }
 }

@@ -18,7 +18,7 @@ export class OtpService {
     return this.otpEntityRepository.findOne({ where, ...options });
   }
 
-  public async getOtp(otpType: OtpType, userEntity: UserEntity): Promise<OtpEntity> {
+  public async getOtp(otpType: OtpType, userEntity: UserEntity, data?: Record<string, any>): Promise<OtpEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
     const otpEntity = await this.findOne({
       otpType,
@@ -33,6 +33,7 @@ export class OtpService {
         .create({
           otpType,
           user: userEntity,
+          data,
         })
         .save();
     }

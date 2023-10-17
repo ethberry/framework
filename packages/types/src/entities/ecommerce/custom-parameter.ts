@@ -1,4 +1,4 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { IUser } from "../infrastructure";
 import { ParameterType } from "./parameter";

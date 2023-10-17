@@ -1,11 +1,11 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../blockchain";
-import { IPhoto } from "./photo";
-import { IProduct } from "./product";
-import { IOrderItem } from "./order-item";
-import { IParameter } from "./parameter";
-import { ICustomParameter } from "./custom-parameter";
+import type { IAsset } from "../blockchain";
+import type { IPhoto } from "./photo";
+import type { IProduct } from "./product";
+import type { IOrderItem } from "./order-item";
+import type { IParameter } from "./parameter";
+import type { ICustomParameter } from "./custom-parameter";
 
 export interface IProductItem extends IIdDateBase {
   productId: number;

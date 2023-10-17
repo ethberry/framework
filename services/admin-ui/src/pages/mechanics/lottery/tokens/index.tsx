@@ -1,19 +1,12 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
 import { LotteryTokenViewDialog } from "./view";
@@ -53,10 +46,7 @@ export const LotteryTokens: FC = () => {
 
       <PageHeader message="pages.lottery.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 
@@ -77,18 +67,15 @@ export const LotteryTokens: FC = () => {
                 {token.metadata.PRIZE ? "Prize " : ""}
                 {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

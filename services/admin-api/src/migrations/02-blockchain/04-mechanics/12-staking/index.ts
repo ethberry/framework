@@ -6,6 +6,7 @@ export * from "./1654751224220-seed-staking-rules-erc20";
 export * from "./1654751224240-seed-staking-rules-erc998";
 export * from "./1654751224250-seed-staking-rules-erc1155";
 export * from "./1654751224260-seed-staking-rules-mysterybox";
+export * from "./1654751224270-seed-staking-rules-mix";
 export * from "./1654751224300-create-staking-deposit";
 export * from "./1654751224311-seed-staking-deposit-native-native";
 export * from "./1654751224322-seed-staking-deposit-erc20-erc20";

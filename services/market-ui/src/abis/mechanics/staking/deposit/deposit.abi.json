@@ -4,16 +4,6 @@
       {
         "components": [
           {
-            "internalType": "bytes32",
-            "name": "nonce",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "referrer",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "externalId",
             "type": "uint256"
@@ -22,6 +12,26 @@
             "internalType": "uint256",
             "name": "expiresAt",
             "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "nonce",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "extra",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "referrer",
+            "type": "address"
           }
         ],
         "internalType": "struct Params",

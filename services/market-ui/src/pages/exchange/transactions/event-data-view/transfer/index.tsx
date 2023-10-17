@@ -3,13 +3,18 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { AddressLink } from "@gemunion/mui-scanner";
-import { IContract, IErc20TokenTransferEvent, IERC721TokenTransferEvent, TContractEventData } from "@framework/types";
+import type {
+  IContract,
+  IErc20TokenTransferEvent,
+  IERC721TokenTransferEvent,
+  TContractEventData,
+} from "@framework/types";
 
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 import { formatEther } from "../../../../../utils/money";
 
@@ -26,52 +31,52 @@ export const TransferDataView: FC<ITransferDataViewProps> = props => {
   const { tokenId = null } = eventData as IERC721TokenTransferEvent;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.from" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={from} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.to" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={to} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
       {tokenId && (
-        <DataViewItemWrapper>
+        <StyledDataViewItemWrapper>
           <Typography fontWeight={500}>
             <FormattedMessage id="enums.eventDataLabel.tokenId" />:
           </Typography>
-          <DataViewItemContentWrapper>
-            <DataViewAddressLinkWrapper>#{tokenId}</DataViewAddressLinkWrapper>
-          </DataViewItemContentWrapper>
-        </DataViewItemWrapper>
+          <StyledDataViewItemContentWrapper>
+            <StyledDataViewAddressLinkWrapper>#{tokenId}</StyledDataViewAddressLinkWrapper>
+          </StyledDataViewItemContentWrapper>
+        </StyledDataViewItemWrapper>
       )}
 
       {value && (
-        <DataViewItemWrapper>
+        <StyledDataViewItemWrapper>
           <Typography fontWeight={500}>
             <FormattedMessage id="enums.eventDataLabel.value" />:
           </Typography>
-          <DataViewItemContentWrapper>
-            <DataViewAddressLinkWrapper>
+          <StyledDataViewItemContentWrapper>
+            <StyledDataViewAddressLinkWrapper>
               {formatEther(value, contract?.decimals, contract?.symbol)}
-            </DataViewAddressLinkWrapper>
-          </DataViewItemContentWrapper>
-        </DataViewItemWrapper>
+            </StyledDataViewAddressLinkWrapper>
+          </StyledDataViewItemContentWrapper>
+        </StyledDataViewItemWrapper>
       )}
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

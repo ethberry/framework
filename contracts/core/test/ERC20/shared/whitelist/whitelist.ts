@@ -14,12 +14,12 @@ export function shouldWhiteList(factory: () => Promise<any>) {
       await contractInstance.unWhitelist(owner.address);
 
       const tx1 = contractInstance.transfer(receiver.address, amount);
-      await expect(tx1).to.be.revertedWith("Whitelist: sender is not whitelisted");
+      await expect(tx1).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(owner.address);
 
       await contractInstance.approve(owner.address, amount);
 
       const tx2 = contractInstance.transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Whitelist: sender is not whitelisted");
+      await expect(tx2).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(owner.address);
     });
 
     it("should fail: transferFrom to", async function () {
@@ -31,12 +31,12 @@ export function shouldWhiteList(factory: () => Promise<any>) {
       await contractInstance.unWhitelist(receiver.address);
 
       const tx1 = contractInstance.transfer(receiver.address, amount);
-      await expect(tx1).to.be.revertedWith("Whitelist: receiver is not whitelisted");
+      await expect(tx1).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(receiver.address);
 
       await contractInstance.approve(owner.address, amount);
 
       const tx2 = contractInstance.transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Whitelist: receiver is not whitelisted");
+      await expect(tx2).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(receiver.address);
     });
 
     it("should fail: transfer approved", async function () {
@@ -48,16 +48,16 @@ export function shouldWhiteList(factory: () => Promise<any>) {
       await contractInstance.unWhitelist(owner.address);
       await contractInstance.approve(stranger.address, amount);
 
-      const tx2 = contractInstance.connect(stranger).transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Whitelist: sender is not whitelisted");
+      const tx = contractInstance.connect(stranger).transferFrom(owner.address, receiver.address, amount);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(owner.address);
     });
 
     it("should fail: mint", async function () {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      const tx2 = contractInstance.mint(owner.address, amount);
-      await expect(tx2).to.be.revertedWith("Whitelist: receiver is not whitelisted");
+      const tx = contractInstance.mint(owner.address, amount);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(owner.address);
     });
 
     it("should fail: burn", async function () {
@@ -68,8 +68,8 @@ export function shouldWhiteList(factory: () => Promise<any>) {
       await contractInstance.mint(owner.address, amount);
       await contractInstance.unWhitelist(owner.address);
 
-      const tx2 = contractInstance.burn(amount);
-      await expect(tx2).to.be.revertedWith("Whitelist: sender is not whitelisted");
+      const tx = contractInstance.burn(amount);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "WhiteListError").withArgs(owner.address);
     });
   });
 }

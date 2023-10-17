@@ -8,7 +8,7 @@ import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from ".
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 
@@ -40,7 +40,7 @@ describe("Diamond Exchange Claim", function () {
     };
   };
 
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -268,6 +268,10 @@ describe("Diamond Exchange Claim", function () {
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
           .withArgs(subscriptionId, await erc721Instance.getAddress());
+
+        // Set VRFV2 Subscription
+        const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -549,7 +553,7 @@ describe("Diamond Exchange Claim", function () {
         await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
       });
 
-      it("should fail: signer is missing role", async function () {
+      it("should fail: SignerMissingRole", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);

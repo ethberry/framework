@@ -6,7 +6,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { Contract, encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualArray, isEqualEventArgArrObj } from "../utils";
-import { wrapOneToOneSignature, wrapOneToManySignature, wrapManyToManySignature } from "./shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 
 describe("Diamond Exchange Craft", function () {
   const factory = async (facetName = "ExchangeCraftFacet"): Promise<any> => {
@@ -397,7 +397,7 @@ describe("Diamond Exchange Craft", function () {
           .withArgs(receiver.address, owner.address, amount);
       });
 
-      it("should fail: insufficient allowance", async function () {
+      it("should fail: ERC20InsufficientAllowance", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -449,10 +449,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+          .withArgs(await exchangeInstance.getAddress(), 0, amount);
       });
 
-      it("should fail: transfer amount exceeds balance", async function () {
+      it("should fail: ERC20InsufficientBalance", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -518,10 +520,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+          .withArgs(receiver.address, 0, amount);
       });
 
-      it("should fail: transfer to the zero address", async function () {
+      it("should fail: ERC20InvalidReceiver", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -573,7 +577,7 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer to the zero address`);
+        await expect(tx1).to.be.revertedWithCustomError(erc20Instance, "ERC20InvalidReceiver").withArgs(ZeroAddress);
       });
     });
 
@@ -667,7 +671,7 @@ describe("Diamond Exchange Craft", function () {
           .withArgs(await exchangeInstance.getAddress(), receiver.address, ZeroAddress, tokenId, amount);
       });
 
-      it("should fail: caller is not token owner nor approved", async function () {
+      it("should fail: ERC1155MissingApprovalForAll", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -719,10 +723,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner or approved`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc1155Instance, "ERC1155MissingApprovalForAll")
+          .withArgs(await exchangeInstance.getAddress(), receiver.address);
       });
 
-      it("should fail: burn amount exceeds totalSupply", async function () {
+      it("should fail: ERC1155InsufficientBalance", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -774,7 +780,9 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: burn amount exceeds totalSupply`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InsufficientBalance")
+          .withArgs(receiver.address, 0, amount, tokenId);
       });
     });
 
@@ -1013,7 +1021,7 @@ describe("Diamond Exchange Craft", function () {
           .withArgs(receiver.address, owner.address, amount);
       });
 
-      it("should fail: insufficient allowance", async function () {
+      it("should fail: ERC20InsufficientAllowance", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1065,10 +1073,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+          .withArgs(await exchangeInstance.getAddress(), 0, amount);
       });
 
-      it("should fail: transfer amount exceeds balance", async function () {
+      it("should fail: ERC20InsufficientBalance", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1134,10 +1144,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+          .withArgs(receiver.address, 0, amount);
       });
 
-      it("should fail: transfer to the zero address", async function () {
+      it("should fail: ERC20InvalidReceiver", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1189,7 +1201,7 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer to the zero address`);
+        await expect(tx1).to.be.revertedWithCustomError(erc20Instance, "ERC20InvalidReceiver").withArgs(ZeroAddress);
       });
     });
 
@@ -1281,7 +1293,7 @@ describe("Diamond Exchange Craft", function () {
           .withArgs(await exchangeInstance.getAddress(), receiver.address, ZeroAddress, tokenId, amount);
       });
 
-      it("should fail: caller is not token owner nor approved", async function () {
+      it("should fail: ERC1155MissingApprovalForAll", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1332,10 +1344,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner or approved`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc1155Instance, "ERC1155MissingApprovalForAll")
+          .withArgs(await exchangeInstance.getAddress(), receiver.address);
       });
 
-      it("should fail: burn amount exceeds totalSupply", async function () {
+      it("should fail: ERC1155InsufficientBalance", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1386,7 +1400,9 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: burn amount exceeds totalSupply`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc1155Instance, "ERC1155InsufficientBalance")
+          .withArgs(receiver.address, 0, amount, 2);
       });
     });
 
@@ -1532,7 +1548,7 @@ describe("Diamond Exchange Craft", function () {
           .withArgs(owner.address, receiver.address, amount);
       });
 
-      it("should fail: insufficient allowance", async function () {
+      it("should fail: ERC20InsufficientAllowance", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1629,10 +1645,12 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+          .withArgs(await exchangeInstance.getAddress(), 0, amount);
       });
 
-      it("should fail: insufficient balance", async function () {
+      it("should fail: ERC20InsufficientBalance", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1640,7 +1658,7 @@ describe("Diamond Exchange Craft", function () {
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
         await erc20Instance.mint(owner.address, amount - 1n);
-        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount * 2n);
 
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
@@ -1729,13 +1747,15 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+        await expect(tx1)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+          .withArgs(owner.address, amount * 2n - 1n, amount * 2n);
       });
     });
   });
 
   describe("ERROR", function () {
-    it("should fail: duplicate mint", async function () {
+    it("should fail: ExpiredSignature (duplicate mint)", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1755,24 +1775,24 @@ describe("Diamond Exchange Craft", function () {
       await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
-    it("should fail for wrong signer role", async function () {
+    it("should fail: ECDSAInvalidSignature", async function () {
       const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
 
       const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature").padEnd(132, "0"));
 
-      await expect(tx).to.be.revertedWith("ECDSA: invalid signature");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ECDSAInvalidSignature");
     });
 
-    it("should fail for wrong signature", async function () {
+    it("should fail: ECDSAInvalidSignatureLength", async function () {
       const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature"));
 
-      await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ECDSAInvalidSignatureLength");
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateManyToManySignature } = await getSignatures(exchangeInstance);

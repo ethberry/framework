@@ -1,8 +1,11 @@
 import { FC, Fragment } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid } from "@mui/material";
 import { DateRange } from "@mui/x-date-pickers-pro";
+import { stringify } from "qs";
 
-import { IOrder, OrderStatus } from "@framework/types";
+import { StyledPagination } from "@framework/styled";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IPaginationDto } from "@gemunion/types-collection";
@@ -10,7 +13,6 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 import { OrderItem } from "./item";
 import { OrderSearchForm } from "./form";
 import { parseDateRange, stringifyDateRange } from "./utils";
-import { stringify } from "qs";
 
 export type TTransformedSearch = Omit<IOrderSearchDto, "dateRange"> & { dateRange: DateRange<Date> };
 
@@ -63,9 +65,8 @@ export const OrderList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
+      <StyledPagination
         shape="rounded"
-        sx={{ my: 2 }}
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}

@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Card, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardContent } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { TokenTraitsView } from "./traits";
+import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ITraitTokenPanelProps {
   token: IToken;
@@ -19,15 +20,15 @@ export const TraitTokenPanel: FC<ITraitTokenPanelProps> = props => {
   }
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.traits" />
-          </Typography>
-        </Toolbar>
+          </StyledTypography>
+        </StyledToolbar>
         <TokenTraitsView metadata={token.metadata} />
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 };

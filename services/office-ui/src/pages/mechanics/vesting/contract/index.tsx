@@ -1,17 +1,7 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-  Tooltip,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -19,11 +9,15 @@ import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
+import { AllowanceButton } from "../../../../components/buttons/mechanics/common/allowance";
+import { TopUpButton } from "../../../../components/buttons/mechanics/common/top-up";
+import { TransferOwnershipButton } from "../../../../components/buttons/extensions/transfer-ownership";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -52,8 +46,6 @@ export const VestingContracts: FC = () => {
     empty: emptyVestingContract,
   });
 
-  const { formatMessage } = useIntl();
-
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
@@ -74,32 +66,24 @@ export const VestingContracts: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List sx={{ overflowX: "auto" }}>
           {rows.map(vesting => (
             <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
-              <ListItemSecondaryAction
-                sx={{
-                  top: { xs: "80%", sm: "50%" },
-                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
-                }}
-              >
-                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleView(vesting)}>
-                    <Visibility />
-                  </IconButton>
-                </Tooltip>
-                <VestingActionsMenu contract={vesting} />
-              </ListItemSecondaryAction>
+              <ListActions dataTestId="VestingActionsMenuButton">
+                <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
+                <AllowanceButton contract={vesting} />
+                <TopUpButton contract={vesting} />
+                <TransferOwnershipButton contract={vesting} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

@@ -23,6 +23,7 @@ export const Erc1155ContractDeployDialog: FC<IErc1155TokenDeployDialogProps> = p
       validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="Erc1155ContractDeployForm"
+      disabled={false}
       {...rest}
     >
       <SelectInput name="contractTemplate" options={Erc1155ContractTemplates} />

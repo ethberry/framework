@@ -1,39 +1,49 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Contract, JsonRpcProvider, Wallet } from "ethers";
+
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import type { ILotteryScheduleUpdateRmq } from "@framework/types";
 
-import { LotteryRoundServiceCron } from "./round.service.cron";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+
+import { blockAwait, getCurrentLotteryRound } from "../../../../common/utils";
 
 @Injectable()
 export class LotteryRoundServiceRmq {
   constructor(
-    private readonly lotteryRoundServiceCron: LotteryRoundServiceCron,
-    private readonly contractService: ContractService,
+    @Inject(ETHERS_RPC)
+    protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(ETHERS_SIGNER)
+    private readonly signer: Wallet,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
   ) {}
 
-  public async updateSchedule(dto: ILotteryScheduleUpdateRmq): Promise<void> {
-    const lotteryEntity = await this.contractService.findOne({ address: dto.address });
+  public async startRound(dto: ILotteryScheduleUpdateRmq): Promise<void> {
+    const contract = new Contract(dto.address, LotterySol.abi, this.signer);
+    const currentRound = await getCurrentLotteryRound(dto.address, LotterySol.abi, this.jsonRpcProvider);
+    this.loggerService.log(JSON.stringify(currentRound, null, "\t"), LotteryRoundServiceRmq.name);
 
-    if (!lotteryEntity) {
-      throw new NotFoundException("contractNotFound");
+    const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;
+
+    // if not dummy round
+    if (BigInt(roundId) !== 0n) {
+      // if current round still active - end round
+      if (BigInt(endTimestamp) === 0n) {
+        try {
+          await contract.endRound();
+        } catch (e) {
+          this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceRmq.name);
+        }
+      }
+      // wait block
+      await blockAwait(1, this.jsonRpcProvider);
+      try {
+        // start round with the same parameters
+        await contract.startRound(acceptedAsset, ticketAsset, maxTicket);
+      } catch (e) {
+        this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceRmq.name);
+      }
     }
-
-    // TODO test it?
-    // const currentParams = lotteryEntity.parameters;
-    // Object.assign(currentParams, {
-    //   schedule: dto.schedule,
-    // });
-    // Object.assign(lotteryEntity.parameters, currentParams);
-
-    Object.assign(
-      lotteryEntity.parameters,
-      Object.assign(lotteryEntity.parameters, {
-        schedule: dto.schedule,
-      }),
-    );
-
-    await lotteryEntity.save();
-
-    this.lotteryRoundServiceCron.updateOrCreateRoundCronJob(dto);
   }
 }

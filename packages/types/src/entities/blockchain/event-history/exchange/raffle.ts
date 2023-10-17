@@ -1,4 +1,4 @@
-import { IAssetItem } from "./common";
+import type { IAssetItem } from "./common";
 
 // event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, uint256 index);
 export interface IExchangePurchaseRaffleEvent {

@@ -4,12 +4,13 @@ import { encodeBytes32String, getUint, parseEther, toBeHex, toQuantity, WeiPerEt
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
+import { shouldBehaveLikePausable } from "@gemunion/contracts-utils";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, extra, params, tokenId } from "../../constants";
+import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
-import { VRFCoordinatorMock } from "../../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLottery } from "./fixture";
 import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
@@ -22,7 +23,7 @@ const delay = (milliseconds: number) => {
 };
 
 describe("Lottery", function () {
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const lotteryConfig = {
     timeLagBeforeRelease: 100, // production: release after 2592000 seconds = 30 days
@@ -172,6 +173,10 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -192,7 +197,7 @@ describe("Lottery", function () {
       }
     });
 
-    it("should get current round info ", async function () {
+    it("should get current round info", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
@@ -238,6 +243,10 @@ describe("Lottery", function () {
         await delay(10000).then(() => console.info("delay 10000 done"));
       }
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -438,6 +447,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -590,6 +603,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -620,7 +637,6 @@ describe("Lottery", function () {
       const dbRoundId = 101;
       const values = [8, 5, 3, 2, 1, 0];
       const defNumbers = getNumbersBytes(values);
-      console.info("defNumbers", defNumbers);
       const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
@@ -744,6 +760,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -931,6 +951,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -1113,6 +1137,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)
@@ -1492,6 +1520,10 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
         await expect(tx02)

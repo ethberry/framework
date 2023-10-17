@@ -11,6 +11,7 @@ import {
   ContractFeatures,
   ContractType,
   Erc4907EventType,
+  NodeEnv,
   TokenType,
 } from "@framework/types";
 
@@ -19,6 +20,7 @@ import { ABIRandom } from "./interfaces";
 import { Erc721TokenRandomLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -29,6 +31,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const erc721RandomContracts = await contractService.findAllRandomTokensByType(TokenType.ERC721, [
           ContractFeatures.RANDOM,
           ContractFeatures.GENES,
@@ -39,35 +42,38 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.ApprovalForAll,
+          ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.MintRandom,
+          ContractEventType.Paused,
+          ContractEventType.RedeemClaim,
+          ContractEventType.TokenRoyaltyInfo,
+          ContractEventType.Transfer,
+          ContractEventType.UnpackClaim,
+          ContractEventType.UnpackMysteryBox,
+          ContractEventType.Unpaused,
+          ContractEventType.ConsecutiveTransfer,
+          ContractEventType.LevelUp,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+          Erc4907EventType.UpdateUser,
+          ContractEventType.VrfSubscriptionSet,
+        ];
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN_RANDOM,
             contractAddress: erc721RandomContracts.address,
             contractInterface: ABIRandom,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.ApprovalForAll,
-              ContractEventType.DefaultRoyaltyInfo,
-              ContractEventType.MintRandom,
-              ContractEventType.Paused,
-              ContractEventType.RedeemClaim,
-              ContractEventType.TokenRoyaltyInfo,
-              ContractEventType.Transfer,
-              ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysteryBox,
-              ContractEventType.Unpaused,
-              ContractEventType.ConsecutiveTransfer,
-              ContractEventType.LevelUp,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              Erc4907EventType.UpdateUser
-            ],
+            topics,
           },
           block: {
             fromBlock: erc721RandomContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

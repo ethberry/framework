@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Typography } from "@mui/material";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
 import { MysteryBoxListItem } from "../../mechanics/mystery/box-list/item";
+import { StyledTitle } from "./styled";
 
 export const NewMysterybox: FC = () => {
   const [mysteryboxes, setMysteryboxes] = useState<Array<IMysteryBox>>([]);
@@ -38,9 +38,9 @@ export const NewMysterybox: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      <Typography variant="h4" sx={{ mt: 7 }}>
+      <StyledTitle variant="h4">
         <FormattedMessage id="pages.landing.mysterybox-new" />
-      </Typography>
+      </StyledTitle>
       {mysteryboxes.length ? (
         <MultiCarouselMysterybox mysteryBoxes={mysteryboxes} component={MysteryBoxListItem} />
       ) : null}

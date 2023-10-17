@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -8,10 +10,13 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { AssetService } from "../asset/asset.service";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class ExchangeRaffleServiceEth {
   constructor(
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly assetService: AssetService,
     private readonly templateService: TemplateService,
     private readonly eventHistoryService: EventHistoryService,
@@ -21,7 +26,8 @@ export class ExchangeRaffleServiceEth {
   // event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, uint256 index);
   public async purchaseRaffle(event: ILogEvent<IExchangePurchaseRaffleEvent>, context: Log): Promise<void> {
     const {
-      args: { item, price, index },
+      name,
+      args: { account, item, price, index },
     } = event;
     const { address, transactionHash } = context;
 
@@ -43,11 +49,19 @@ export class ExchangeRaffleServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [item], [price]);
 
-    await this.notificatorService.purchaseRaffle({
+    await this.notificatorService.rafflePurchase({
       ...assets,
       address,
       index,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

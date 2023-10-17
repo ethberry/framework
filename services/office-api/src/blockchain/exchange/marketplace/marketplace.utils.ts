@@ -6,6 +6,9 @@ export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): strin
   return `${currency} ${formatUnits(amount, decimals)}`;
 };
 
+/**
+ * @deprecated use formatItem
+ */
 export const formatPrice = (asset?: IAsset): string => {
   return (
     asset?.components

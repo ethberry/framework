@@ -2,7 +2,8 @@ import { FC } from "react";
 import { format, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { IOrder, IUser, OrderStatus } from "@framework/types";
+import type { IOrder, IUser } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, StaticInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";

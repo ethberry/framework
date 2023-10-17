@@ -2,31 +2,31 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { PromoEntity } from "./promo.entity";
-import type { IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto } from "./interfaces";
+import { ProductPromoEntity } from "./promo.entity";
+import type { IProductPromoCreateDto, IProductPromoSearchDto, IProductPromoUpdateDto } from "./interfaces";
 
 @Injectable()
-export class PromoService {
+export class ProductPromoService {
   constructor(
-    @InjectRepository(PromoEntity)
-    private readonly promoEntityRepository: Repository<PromoEntity>,
+    @InjectRepository(ProductPromoEntity)
+    private readonly productPromoEntityRepository: Repository<ProductPromoEntity>,
   ) {}
 
   public findAndCount(
-    where: FindOptionsWhere<PromoEntity>,
-    options?: FindManyOptions<PromoEntity>,
-  ): Promise<[Array<PromoEntity>, number]> {
-    return this.promoEntityRepository.findAndCount({
+    where: FindOptionsWhere<ProductPromoEntity>,
+    options?: FindManyOptions<ProductPromoEntity>,
+  ): Promise<[Array<ProductPromoEntity>, number]> {
+    return this.productPromoEntityRepository.findAndCount({
       where,
       relations: ["product"],
       ...options,
     });
   }
 
-  public async search(dto: Partial<IPromoSearchDto>): Promise<[Array<PromoEntity>, number]> {
+  public async search(dto: Partial<IProductPromoSearchDto>): Promise<[Array<ProductPromoEntity>, number]> {
     const { query, skip, take } = dto;
 
-    const queryBuilder = this.promoEntityRepository.createQueryBuilder("promo");
+    const queryBuilder = this.productPromoEntityRepository.createQueryBuilder("promo");
 
     queryBuilder.select();
 
@@ -49,8 +49,11 @@ export class PromoService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async update(where: FindOptionsWhere<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | undefined> {
-    const promoEntity = await this.promoEntityRepository.findOne({ where });
+  public async update(
+    where: FindOptionsWhere<ProductPromoEntity>,
+    dto: IProductPromoUpdateDto,
+  ): Promise<ProductPromoEntity | undefined> {
+    const promoEntity = await this.productPromoEntityRepository.findOne({ where });
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
@@ -60,12 +63,12 @@ export class PromoService {
     return promoEntity.save();
   }
 
-  public create(data: IPromoCreateDto): Promise<PromoEntity> {
-    return this.promoEntityRepository.create({ ...data }).save();
+  public create(data: IProductPromoCreateDto): Promise<ProductPromoEntity> {
+    return this.productPromoEntityRepository.create({ ...data }).save();
   }
 
-  public async delete(where: FindOptionsWhere<PromoEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<ProductPromoEntity>): Promise<void> {
     // TODO delete images
-    await this.promoEntityRepository.delete(where);
+    await this.productPromoEntityRepository.delete(where);
   }
 }

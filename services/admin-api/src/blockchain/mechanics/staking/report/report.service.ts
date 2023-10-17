@@ -18,14 +18,14 @@ export class StakingReportService {
     const { deposit, reward, contractId, ...rest } = dto;
     return this.stakingDepositService.search(
       {
-        contractIds: [contractId!],
+        contractIds: [contractId as number],
         deposit: {
           tokenType: [deposit!.tokenType],
-          contractIds: [deposit!.contractId],
+          contractIds: [deposit!.contractId as number],
         },
         reward: {
           tokenType: [reward!.tokenType],
-          contractIds: [reward!.contractId],
+          contractIds: [reward!.contractId as number],
         },
         ...rest,
       },

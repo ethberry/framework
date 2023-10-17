@@ -1,25 +1,18 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IPonziDeposit, IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { PonziRewardComplexButton } from "../../../../components/buttons";
 import { PonziDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
-import { PonziRewardComplexButton } from "../../../../components/buttons";
 
 export const PonziDeposit: FC = () => {
   const {
@@ -68,19 +61,16 @@ export const PonziDeposit: FC = () => {
           {rows.map(stake => (
             <ListItem key={stake.id}>
               <ListItemText>{stake.ponziRule?.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListActions>
                 <PonziRewardComplexButton stake={stake} />
-                <IconButton onClick={handleView(stake)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+                <ListAction onClick={handleView(stake)} message="form.tips.view" icon={Visibility} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

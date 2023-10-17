@@ -1,25 +1,18 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, Hidden, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import { ILotteryToken, ILotteryTokenSearchDto, TokenStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { LotteryRewardButton } from "../../../../components/buttons";
+import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryTokenSearchForm } from "./form";
 import { LotteryTokenViewDialog } from "./view";
-import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
-import { LotteryRewardButton } from "../../../../components/buttons";
 
 export const LotteryTokenList: FC = () => {
   const {
@@ -65,32 +58,33 @@ export const LotteryTokenList: FC = () => {
       <LotteryTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List>
           {rows.map(token => (
-            <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
+            <ListItem key={token.id}>
+              <ListItemText sx={{ flex: 1 }}>{token.round?.contract?.title}</ListItemText>
+              <Hidden mdDown>
+                <ListItemText sx={{ flex: 1 }}>{token.id}</ListItemText>
+                <ListItemText sx={{ flex: 1 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
+              </Hidden>
+              <ListItemText sx={{ flex: 1 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
-                {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
-              </ListItemText>
-              <ListItemSecondaryAction>
-                <LotteryRewardButton token={token} />
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <Hidden smDown>
+                <ListItemText sx={{ flex: 1 }}>
+                  {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}
+                </ListItemText>
+              </Hidden>
+              <ListActions>
+                <LotteryRewardButton token={token} disabled={token.tokenStatus !== TokenStatus.MINTED} />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

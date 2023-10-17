@@ -10,17 +10,17 @@ async function main() {
   // ERC721 contract - discrete
   const itemDiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
   const itemDiscreteInstance = await itemDiscreteFactory.deploy("ITEMG", "ITEMG", rlNum, baseTokenURI);
-  console.info(`ERC721_U_ADDR=${itemDiscreteInstance.address.toLowerCase()}`);
+  console.info(`ERC721_U_ADDR=${(await itemDiscreteInstance.getAddress()).toLowerCase()}`);
 
   // ERC721 contract - random
   const itemRandomFactory = await ethers.getContractFactory("ERC721Random");
   const itemRandomInstance = await itemRandomFactory.deploy("ITEMR", "ITEMR", rlNum, baseTokenURI);
-  console.info(`ERC721_R_ADDR=${itemRandomInstance.address.toLowerCase()}`);
+  console.info(`ERC721_R_ADDR=${(await itemRandomInstance.getAddress()).toLowerCase()}`);
 
   // ERC721 contract - traits
   const itemGenesFactory = await ethers.getContractFactory("ERC721Genes");
   const itemGenesInstance = await itemGenesFactory.deploy("ITEMG", "ITEMG", rlNum, baseTokenURI);
-  console.info(`ERC721_G_ADDR=${itemGenesInstance.address.toLowerCase()}`);
+  console.info(`ERC721_G_ADDR=${(await itemGenesInstance.getAddress()).toLowerCase()}`);
 
   // Setup Contracts
   // await blockAwait(ethers.provider);

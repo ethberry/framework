@@ -30,8 +30,8 @@ export function shouldGetRecordFieldKeyCount(factory: () => Promise<any>, option
     it("should get count (never set)", async function () {
       const contractInstance = await factory();
 
-      const tx = contractInstance.getRecordFieldKeyCount(0);
-      await expect(tx).to.be.revertedWith("GC: record not found");
+      const tx = contractInstance.getRecordFieldKeyCount(defaultTokenId);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "RecordNotFound").withArgs(defaultTokenId);
     });
   });
 }

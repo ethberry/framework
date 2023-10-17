@@ -1,8 +1,8 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IOrderItem } from "./order-item";
-import { IAddress } from "./address";
-import { IMerchant, IUser } from "../infrastructure";
+import type { IOrderItem } from "./order-item";
+import type { IAddress } from "./address";
+import type { IMerchant, IUser } from "../infrastructure";
 
 export enum OrderStatus {
   NEW = "NEW",

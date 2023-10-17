@@ -8,6 +8,8 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
+import {IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Receiver.sol";
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Spender.sol";
 

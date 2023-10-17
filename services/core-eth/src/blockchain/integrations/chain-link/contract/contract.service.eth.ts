@@ -8,7 +8,7 @@ import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
+import type { IChainLinkRandomWordsRequestedEvent } from "../interfaces";
 import { callRandom } from "./utils";
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ChainLinkContractServiceEth {
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(ETHERS_SIGNER)
-    protected readonly ethersSignerProviderAws: Wallet,
+    protected readonly ethersSignerProvider: Wallet,
     protected readonly configService: ConfigService,
     protected readonly contractService: ContractService,
     protected readonly eventHistoryService: EventHistoryService,
@@ -32,16 +32,10 @@ export class ChainLinkContractServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context);
 
-    // DEV ONLY
-    // !!!should work while on Gemunion's BESU!!!
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    // if (nodeEnv === "production") {
-    //   return;
-    // }
-
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    // !!!should work only on Gemunion's BESU!!!
+    // DEV ONLY
+    // !!!should work only on Gemunion's BESUs!!!
     if (chainId !== 13377 && chainId !== Number(testChainId)) {
       return;
     }
@@ -61,7 +55,7 @@ export class ChainLinkContractServiceEth {
         numWords,
         keyHash,
       },
-      this.ethersSignerProviderAws,
+      this.ethersSignerProvider,
     );
     this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkContractServiceEth.name);
   }

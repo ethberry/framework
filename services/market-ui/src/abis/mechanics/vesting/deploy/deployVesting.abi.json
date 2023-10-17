@@ -46,7 +46,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct VestingFactory.VestingArgs",
+        "internalType": "struct VestingFactoryFacet.VestingArgs",
         "name": "args",
         "type": "tuple"
       },

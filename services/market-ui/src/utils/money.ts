@@ -5,6 +5,9 @@ export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): strin
   return `${currency} ${utils.formatUnits(amount, decimals)}`;
 };
 
+/**
+ * @deprecated use formatItem
+ */
 export const formatPrice = (asset?: IAsset): string => {
   return (
     asset?.components
@@ -26,7 +29,7 @@ export const formatItem = (asset?: IAsset): string => {
             return component.template?.title;
           case TokenType.ERC1155:
             return BigInt(component.amount) > 1n
-              ? `${component.amount} ${component.template?.title}`
+              ? `${component.amount} x ${component.template?.title}`
               : component.template?.title;
           default:
             return "unsupported token type";
@@ -36,6 +39,9 @@ export const formatItem = (asset?: IAsset): string => {
   );
 };
 
+/**
+ * @deprecated use formatItem
+ */
 export const formatComplexPrice = (asset?: IAsset): string => {
   return (
     asset?.components

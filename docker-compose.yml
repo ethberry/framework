@@ -24,9 +24,25 @@ services:
     sysctls:
       net.core.somaxconn: "65535"
 
+#  arena:
+#    container_name: arena
+#    image: bee-arena
+#    ports:
+#      # arena
+#      - "${ARENA_PORT}:${ARENA_PORT}"
+#    environment:
+#      REDIS_WS_URL: "${REDIS_WS_URL}"
+#      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME}"
+#      ARENA_PORT: "${ARENA_PORT}"
+#    depends_on:
+#      - redis
+
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:management
+    volumes:
+      - ${BASE_PATH}/rabbitmq.conf:/etc/rabbitmq/conf.d/rabbitmq.conf
+      - ${BASE_PATH}/rabbitmq_definitions.json:/etc/rabbitmq/rabbitmq_definitions.json
     ports:
       - "5672:5672"
       - "15672:15672"

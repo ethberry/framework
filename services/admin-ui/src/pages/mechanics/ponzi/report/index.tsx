@@ -13,6 +13,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { InputType } from "@gemunion/types-collection";
 import type { IPonziDeposit, IPonziReportSearchDto } from "@framework/types";
 import { ModuleType, PonziDepositStatus, TokenType } from "@framework/types";
 
@@ -36,22 +37,21 @@ export const PonziReport: FC = () => {
       createdAt: new Date().toISOString(),
     },
     search: {
-      contractId: 0,
+      contractId: InputType.awaited,
       account: "",
       ponziDepositStatus: [PonziDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: InputType.awaited,
       },
       emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
-    awaitingFieldsNames: ["contractId", "deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();
@@ -117,10 +117,7 @@ export const PonziReport: FC = () => {
 
       <PageHeader message="pages.ponzi.report.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button startIcon={<CloudDownload />} onClick={handleExport}>
           <FormattedMessage id="form.buttons.export" />
@@ -133,7 +130,6 @@ export const PonziReport: FC = () => {
         open={isFiltersOpen}
         name="account"
         testId="PonziReportSearchForm"
-        awaitingFieldsNames={["contractId", "deposit.contractId", "reward.contractId"]}
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

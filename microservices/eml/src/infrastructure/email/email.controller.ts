@@ -37,7 +37,7 @@ export class EmailController {
   async invite(@Payload() payload: IPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
       template: 5074828,
-      to: [payload.user.email],
+      to: [payload.invitee.email],
       data: {
         displayName: payload.user.displayName,
         companyName: payload.user.merchant.title,

@@ -34,7 +34,7 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
-      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);
     };

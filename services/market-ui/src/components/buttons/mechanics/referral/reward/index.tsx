@@ -1,25 +1,40 @@
 import { FC, useEffect, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
 import { constants, Contract } from "ethers";
 
-import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { useMetamask, useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import ReferralWithdrawRewardABI from "../../../../../abis/exchange/referral/reward/withdrawReward.abi.json";
 import ReferralGetBalanceABI from "../../../../../abis/exchange/referral/reward/getBalance.abi.json";
 
-export const ReferralRewardButton: FC = () => {
+export interface IReferralRewardButtonProps {
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
+}
+
+export const ReferralRewardButton: FC<IReferralRewardButtonProps> = props => {
+  const { className, disabled, variant = ListActionVariant.button } = props;
+
   const [balance, setBalance] = useState("");
   const { isActive, account } = useWeb3React();
 
+  const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(
+        systemContract.address,
+        ReferralWithdrawRewardABI,
+        web3Context.provider?.getSigner(),
+      );
+      return contract.withdrawReward() as Promise<void>;
+    },
+  );
+
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      process.env.EXCHANGE_ADDR,
-      ReferralWithdrawRewardABI,
-      web3Context.provider?.getSigner(),
-    );
-    return contract.withdrawReward() as Promise<void>;
+    return metaFnWithContract(SystemModuleType.EXCHANGE, null, web3Context);
   });
 
   const handleWithdraw = () => {
@@ -27,17 +42,17 @@ export const ReferralRewardButton: FC = () => {
   };
 
   // TODO add token selector for balance and get balances on demand only
-  const getBalance = useMetamaskValue(
-    (web3Context: Web3ContextType) => {
-      const contract = new Contract(
-        process.env.EXCHANGE_ADDR,
-        ReferralGetBalanceABI,
-        web3Context.provider?.getSigner(),
-      );
+  const getBalanceWithContract = useSystemContract<IContract, SystemModuleType>(
+    (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, ReferralGetBalanceABI, web3Context.provider?.getSigner());
       return contract.getBalance(account, constants.AddressZero) as Promise<string>;
     },
     { success: false },
   );
+
+  const getBalance = useMetamaskValue((web3Context: Web3ContextType) => {
+    return getBalanceWithContract(SystemModuleType.EXCHANGE, null, web3Context);
+  });
 
   useEffect(() => {
     if (isActive) {
@@ -48,9 +63,17 @@ export const ReferralRewardButton: FC = () => {
   }, [isActive]);
 
   return (
-    <Button onClick={handleWithdraw} disabled={balance === "0"}>
-      <FormattedMessage id="form.buttons.withdraw" /> {constants.EtherSymbol}
-      {balance}
-    </Button>
+    <ListAction
+      onClick={handleWithdraw}
+      message="form.buttons.referralWithdraw"
+      messageValues={{
+        symbol: constants.EtherSymbol,
+        amount: balance || "0",
+      }}
+      className={className}
+      dataTestId="ReferralRewardButton"
+      disabled={disabled || !balance || balance === "0"}
+      variant={variant}
+    />
   );
 };

@@ -1,5 +1,5 @@
-import { IAssetDto } from "../../exchange/asset/asset";
-import { IVestingContractDeployDto } from "./deploy";
+import type { IAssetDto } from "../../exchange/asset/asset";
+import type { IVestingContractDeployDto } from "./deploy";
 
 export interface IVestingClaimCreateDto {
   item: IAssetDto;

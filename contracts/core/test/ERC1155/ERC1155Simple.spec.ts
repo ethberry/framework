@@ -1,5 +1,6 @@
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 
 import { deployERC1155 } from "./shared/fixtures";
 import { shouldBehaveLikeERC1155Simple } from "./shared/simple";

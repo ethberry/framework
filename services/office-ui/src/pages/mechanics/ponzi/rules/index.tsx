@@ -1,17 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
-
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -20,10 +10,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } from "@framework/types";
 
-import { PonziUploadButton } from "../../../../components/buttons";
+import { PonziRuleCreateButton } from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { PonziEditDialog } from "./edit";
 
@@ -37,7 +29,6 @@ export const PonziRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -84,14 +75,9 @@ export const PonziRules: FC = () => {
 
       <PageHeader message="pages.ponzi.rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="PonziCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        <PonziRuleCreateButton />
       </PageHeader>
 
       <CommonSearchForm
@@ -120,22 +106,16 @@ export const PonziRules: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
               <div></div>
               <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
-              <ListItemSecondaryAction>
-                <PonziUploadButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.ponziRuleStatus !== PonziRuleStatus.NEW}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(rule)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

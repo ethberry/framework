@@ -9,6 +9,7 @@ import {
   AccessListEventType,
   ContractEventType,
   ContractType,
+  NodeEnv,
   TokenType,
 } from "@framework/types";
 
@@ -17,6 +18,7 @@ import { ABI } from "./interfaces";
 import { Erc20LogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getEventsTopics } from "../../../../../common/utils";
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const erc20Contracts = await contractService.findAllTokensByType(TokenType.ERC20);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -33,28 +36,31 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
 
+        const eventNames = [
+          ContractEventType.Approval,
+          ContractEventType.Snapshot,
+          ContractEventType.Transfer,
+          AccessListEventType.Blacklisted,
+          AccessListEventType.UnBlacklisted,
+          AccessListEventType.Whitelisted,
+          AccessListEventType.UnWhitelisted,
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.ERC20_TOKEN,
             contractAddress: erc20Contracts.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractEventType.Approval,
-              ContractEventType.Snapshot,
-              ContractEventType.Transfer,
-              AccessListEventType.Blacklisted,
-              AccessListEventType.UnBlacklisted,
-              AccessListEventType.Whitelisted,
-              AccessListEventType.UnWhitelisted,
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged
-            ],
+            topics,
           },
           block: {
             fromBlock: erc20Contracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

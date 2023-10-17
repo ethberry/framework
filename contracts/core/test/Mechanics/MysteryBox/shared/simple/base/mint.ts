@@ -22,9 +22,9 @@ export function shouldMintBox(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintBox(receiver.address, templateId, []);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, MINTER_ROLE);
     });
   });
 }

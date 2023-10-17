@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { Typography } from "@mui/material";
 
-import { IToken } from "../provider";
+import type { IToken } from "../provider";
 
 import { abbreviateNumber } from "../helpers/abbreviateNumber";
 import { useCoinPriceUSD } from "../hooks/useCoinPriceUSD";

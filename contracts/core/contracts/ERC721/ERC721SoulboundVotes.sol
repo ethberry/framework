@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Votes.sol";
 import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
@@ -20,37 +20,6 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
   ) ERC721Soulbound(name, symbol, royalty, baseTokenURI) EIP712(name, "1") {}
 
   /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   */
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal override(ERC721, ERC721Soulbound) {
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
-  }
-
-  /**
-   * @dev See {ERC721-_afterTokenTransfer}.
-   */
-  function _afterTokenTransfer(
-    address from,
-    address to,
-    uint256 tokenId,
-    uint256 batchSize
-  ) internal override(ERC721, ERC721Votes) {
-    super._afterTokenTransfer(from, to, tokenId, batchSize);
-  }
-
-  /**
-   * @dev See {ERC721-_burn}.
-   */
-  function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721ABER) {
-    super._burn(tokenId);
-  }
-
-  /**
    * @dev See {ERC721-_baseURI}.
    */
   function _baseURI() internal view virtual override(ERC721, ERC721Simple) returns (string memory) {
@@ -62,5 +31,19 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
    */
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Simple) returns (bool) {
     return super.supportsInterface(interfaceId);
+  }
+
+  /**
+   * @dev See {ERC721-_update}.
+   */
+  function _update(address to, uint256 tokenId, address auth) internal virtual override(ERC721Soulbound, ERC721Votes) returns (address) {
+    return super._update(to, tokenId, auth);
+  }
+
+  /**
+   * @dev See {ERC721-_increaseBalance}.
+   */
+  function _increaseBalance(address account, uint128 amount) internal virtual override(ERC721ABER, ERC721Votes) {
+    super._increaseBalance(account, amount);
   }
 }

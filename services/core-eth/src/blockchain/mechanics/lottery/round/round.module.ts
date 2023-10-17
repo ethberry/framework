@@ -13,13 +13,13 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundService } from "./round.service";
-import { LotteryRoundServiceCron } from "./round.service.cron";
 import { LotteryRoundControllerEth } from "./round.controller.eth";
 import { LotteryRoundServiceEth } from "./round.service.eth";
 import { RoundControllerRmq } from "./round.controller.rmq";
 import { LotteryRoundServiceRmq } from "./round.service.rmq";
 import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -38,18 +38,12 @@ import { LotteryRoundAggregationService } from "./round.service.aggregation";
     Logger,
     ethersRpcProvider,
     ethersSignerProvider,
+    signalServiceProvider,
     LotteryRoundService,
     LotteryRoundServiceEth,
-    LotteryRoundServiceCron,
     LotteryRoundServiceRmq,
     LotteryRoundAggregationService,
   ],
-  exports: [
-    LotteryRoundService,
-    LotteryRoundServiceEth,
-    LotteryRoundServiceCron,
-    LotteryRoundServiceRmq,
-    LotteryRoundAggregationService,
-  ],
+  exports: [LotteryRoundService, LotteryRoundServiceEth, LotteryRoundServiceRmq, LotteryRoundAggregationService],
 })
 export class LotteryRoundModule {}

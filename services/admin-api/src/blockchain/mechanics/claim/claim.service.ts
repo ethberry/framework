@@ -229,7 +229,7 @@ export class ClaimService {
           });
 
           if (!contractEntity) {
-            throw new NotFoundException("contractNotFound");
+            return null;
           }
 
           return this.create(
@@ -255,7 +255,7 @@ export class ClaimService {
           if (e) {
             this.loggerService.error(e, ClaimService.name);
           }
-          resolve(results as Array<ClaimEntity>);
+          resolve(results?.filter(Boolean) as Array<ClaimEntity>);
         },
       );
     });

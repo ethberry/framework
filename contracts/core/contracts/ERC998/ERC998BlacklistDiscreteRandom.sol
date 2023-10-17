@@ -4,9 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
+pragma solidity ^0.8.20;
 
 import "../utils/constants.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
@@ -14,8 +12,6 @@ import "../Mechanics/Rarity/Rarity.sol";
 import "./ERC998BlacklistDiscrete.sol";
 
 abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998BlacklistDiscrete, Rarity {
-  using Counters for Counters.Counter;
-
   struct Request {
     address account;
     uint256 templateId;
@@ -30,21 +26,10 @@ abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998Blacklis
     string memory baseTokenURI
   ) ERC998BlacklistDiscrete(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address account,
-    uint256 templateId
-  ) external override(ERC998BlacklistDiscrete) onlyRole(MINTER_ROLE) {
-    if (templateId == 0) {
-      revert TemplateZero();
-    }
+  function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
+    uint256 tokenId = _mintCommon(account, templateId);
 
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     _upsertRecordField(tokenId, RARITY, 0);
-
-    _safeMint(account, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -62,9 +47,9 @@ abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998Blacklis
    * @dev Validates and upgrades attribute
    * @param tokenId The NFT to upgrade
    * @param attribute parameter name
-   * @return The result of operation
+   * @return uint256 The upgraded level
    */
-  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (uint256) {
     // TEMPLATE_ID refers to database id
     // RARITY refers ChainLink integration
     if (attribute == TEMPLATE_ID || attribute == RARITY) {
@@ -75,12 +60,11 @@ abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998Blacklis
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
-    uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords, request.templateId, _nextTokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
+    _upsertRecordField(_nextTokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(_nextTokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
 
@@ -95,4 +79,18 @@ abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998Blacklis
   }
 
   function getRandomNumber() internal virtual returns (uint256 requestId);
+
+  /**
+   * @dev See {ERC721-_increaseBalance}.
+   */
+  function _increaseBalance(address account, uint128 amount) internal virtual override {
+    super._increaseBalance(account, amount);
+  }
+
+  /**
+   * @dev See {ERC721-_baseURI}.
+   */
+  function _baseURI() internal view virtual override returns (string memory) {
+    return super._baseURI();
+  }
 }

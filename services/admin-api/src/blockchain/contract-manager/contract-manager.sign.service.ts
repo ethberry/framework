@@ -15,6 +15,7 @@ import type {
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
+  IWalletContractDeployDto,
 } from "@framework/types";
 import {
   CollectionContractTemplates,
@@ -31,12 +32,9 @@ import {
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractService } from "../hierarchy/contract/contract.service";
-import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
+import { ContractManagerService } from "./contract-manager.service";
 import { getContractABI } from "./utils";
-
-import { ConfigService } from "@nestjs/config";
-// import Queue from "bee-queue";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -45,7 +43,6 @@ export class ContractManagerSignService {
     private readonly signer: Wallet,
     private readonly contractService: ContractService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -271,33 +268,6 @@ export class ContractManagerSignService {
         },
       },
     );
-
-    // producer queues running on the web server
-    // const sharedConfigSend = {
-    //   getEvents: false,
-    //   isWorker: false,
-    //   redis: {
-    //     url: this.configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
-    //   },
-    // };
-
-    // const sendQueue = new Queue("ETH_EVENTS", sharedConfigSend);
-    // const job = sendQueue.createJob({ x: 2, y: 3 });
-    //
-    // await job
-    //   .timeout(3000)
-    //   .retries(2)
-    //   .save()
-    //   .then((job: any) => {
-    //     console.log("JOB CREATED", job.id);
-    //     // job enqueued, job.id populated
-    //   });
-
-    // await sendQueue.saveAll([sendQueue.createJob({ x: 3, y: 4 }), sendQueue.createJob({ x: 4, y: 5 })]).then(errors => {
-    //   // The errors value is a Map associating Jobs with Errors. This will often be an empty Map.
-    //   console.error("errors", errors);
-    // });
-
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
@@ -664,6 +634,58 @@ export class ContractManagerSignService {
         },
         args: {
           config: dto.config,
+        },
+      },
+    );
+
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:WALLET
+  public async wallet(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const { bytecode } = await this.getBytecodeByWalletContractTemplate(dto, userEntity.chainId);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: ModuleType.CONTRACT_MANAGER,
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "WalletArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        WalletArgs: [
+          { name: "payees", type: "address[]" },
+          { name: "shares", type: "uint256[]" },
+        ],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          payees: dto.payees,
+          shares: dto.shares,
         },
       },
     );
@@ -1063,6 +1085,14 @@ export class ContractManagerSignService {
   public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto, chainId: number) {
     return getContractABI(
       "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandom.sol/LotteryRandom.json",
+      chainId,
+    );
+  }
+
+  // MODULE:WALLET
+  public getBytecodeByWalletContractTemplate(_dto: IWalletContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Wallet/SplitterWallet.sol/SplitterWallet.json",
       chainId,
     );
   }

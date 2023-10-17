@@ -7,7 +7,7 @@ export enum TokenRarity {
 }
 
 export enum EventSignature {
-  MintRandom = "MintRandom(uint256,address,uint256,uint256,uint256)",
+  MintRandom = "MintRandom(uint256,address,uint256[],uint256,uint256)",
   Transfer = "Transfer(address,address,uint256)",
 }
 
@@ -24,6 +24,7 @@ export enum TokenMintType {
 export enum ModuleType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   EXCHANGE = "EXCHANGE",
+  DISPENSER = "DISPENSER",
   CHAIN_LINK = "CHAIN_LINK",
   HIERARCHY = "HIERARCHY",
   COLLECTION = "COLLECTION",
@@ -36,7 +37,33 @@ export enum ModuleType {
   POLYGON = "POLYGON",
   STAKING = "STAKING",
   WAITLIST = "WAITLIST",
+}
+
+export enum ListenerType {
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC721_RANDOM = "ERC721_RANDOM",
+  ERC998 = "ERC998",
+  ERC998_RANDOM = "ERC998_RANDOM",
+  ERC1155 = "ERC1155",
+  MYSTERYBOX = "MYSTERYBOX",
+  VESTING = "VESTING",
+  STAKING = "STAKING",
+  PONZI = "PONZI",
+  LOTTERY = "LOTTERY",
+  LOTTERY_TICKET = "LOTTERY_TICKET",
+  RAFFLE = "RAFFLE",
+  RAFFLE_TICKET = "RAFFLE_TICKET",
+  WAITLIST = "WAITLIST",
+  CONTRACT_MANAGER = "CONTRACT_MANAGER",
+  CHAIN_LINK = "CHAIN_LINK",
+}
+
+export enum SystemModuleType {
+  CONTRACT_MANAGER = "CONTRACT_MANAGER",
+  EXCHANGE = "EXCHANGE",
   DISPENSER = "DISPENSER",
+  CHAIN_LINK = "CHAIN_LINK", // VRF
 }
 
 export enum DurationUnit {
@@ -46,18 +73,6 @@ export enum DurationUnit {
   DAY = "DAY",
   HOUR = "HOUR",
   MINUTE = "MINUTE",
-}
-
-export enum ListenerType {
-  NATIVE = "NATIVE",
-  ERC20 = "ERC20",
-  ERC721 = "ERC721",
-  ERC998 = "ERC998",
-  ERC1155 = "ERC1155",
-  MYSTERYBOX = "MYSTERYBOX",
-  PONZI = "PONZI",
-  VESTING = "VESTING",
-  STAKING = "STAKING",
 }
 
 export enum CronExpression {

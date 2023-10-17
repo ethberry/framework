@@ -3,7 +3,7 @@ import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { MultiCarouselButtonGroup } from "./button-group";

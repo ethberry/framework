@@ -1,5 +1,6 @@
 {
   "alert": {
+    "allowanceClaim": "You have to allow tokens for Contract Manager contract",
     "allowanceWarning": "You are going to allow all tokens of the contract",
     "craftItem": "Items to be crafted",
     "craftPrice": "Craft ingredients",
@@ -8,6 +9,8 @@
     "editNotAllowed": "Editing of this rule is not allowed",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
+    "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
+    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
@@ -58,7 +61,6 @@
     }
   },
   "dialogs": {
-    "addConsumer": "Add VRF Consumer",
     "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
@@ -69,20 +71,23 @@
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
-    "endRound": "End Lottery Round",
     "fund": "Fund",
     "grantRole": "Grant role",
+    "invite": "Invite",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
+    "lotteryRoundEnd": "End Lottery Round",
+    "lotteryRoundStart": "Start Lottery Round",
     "mintBox": "Mint Mysterybox",
     "mintToken": "Mint tokens",
     "ponziBalance": "Ponzi Balances Withdraw",
+    "raffleRoundEnd": "End Raffle Round",
+    "raffleRoundStart": "Start Raffle Round",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
     "stakingInfo": "Staking Info",
-    "startRound": "Start Lottery Round",
     "subBalance": "Subscription balance: {value}",
     "topUp": "Top up",
     "transfer": "Transfer",
@@ -93,6 +98,7 @@
     "upload": "Upload",
     "view": "View",
     "vrfConsumer": "Add Chain-Link VRF Consumer",
+    "vrfSetSub": "Set Chain-Link VRF Subscription",
     "whitelist": "Add to whitelist",
     "withdraw": "Withdraw balance"
   },
@@ -477,8 +483,7 @@
       "METADATA_ROLE": "METADATA_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
-      "PREDICATE_ROLE": "PREDICATE_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+      "PREDICATE_ROLE": "PREDICATE_ROLE"
     },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
@@ -536,9 +541,10 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
-      "addConsumer": "Add Consumer",
+      "addConsumer": "Add VRF Consumer",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
+      "approve": "Approve",
       "archive": "Archive",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
@@ -548,6 +554,7 @@
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "finishRound": "Finish round",
@@ -556,6 +563,7 @@
       "fundEth": "Fund ETH",
       "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
+      "invite": "Invite",
       "load": "Load",
       "loaded": "Done",
       "login": "Login",
@@ -577,6 +585,7 @@
       "save": "Save",
       "schedule": "Schedule",
       "search": "Search",
+      "setAmount": "Set amount",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
@@ -752,6 +761,7 @@
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "state": "State",
+      "subId": "VRF Subscription Id",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
       "template": "Template",
@@ -874,6 +884,7 @@
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
+      "subId": "0",
       "subscriptionId": "2",
       "symbol": "XXX",
       "templateId": "Template",
@@ -962,9 +973,17 @@
       "title": "Categories"
     },
     "chain-link": {
+      "balance": "Balance: {balance}",
+      "consumers": "Consumers list",
+      "create": "Create Subscription",
       "fund": "Fund",
+      "id": "Subscription # {value}",
+      "manage": "Subscriptions",
+      "select": "Select subscription ID",
+      "set": "Set Vrf subscription ID",
       "subscription": "Subscription",
-      "title": "ChainLink"
+      "title": "ChainLink Subscriptions",
+      "wallet": "Wallet balance: {value}"
     },
     "claims": {
       "defaultItemTitle": "{account}",
@@ -993,11 +1012,6 @@
         "title": "Collection Tokens"
       },
       "tokens": "Collection Tokens"
-    },
-    "craft": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Craft recipes"
     },
     "dashboard": {
       "achievements": {
@@ -1051,11 +1065,11 @@
         "claim": "Claim",
         "collection": "Collections",
         "dispenser": "Dispenser",
-        "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "raffle": "Raffle",
         "recipes": "Recipes",
         "rent": "Rent",
@@ -1066,11 +1080,6 @@
       },
       "title": "Dashboard"
     },
-    "dismantle": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Dismantle recipes"
-    },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
       "title": "Dispenser"
@@ -1078,9 +1087,6 @@
     "dragons": {
       "description": "Here be dragons",
       "title": "Not implemented :)"
-    },
-    "drop": {
-      "title": "Drops"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1182,19 +1188,18 @@
       "title": "Marketplace"
     },
     "merchant": {
+      "invitations": {
+        "empty": "You don't have any invites yet"
+      },
       "managers": {
         "empty": "You don't have any managers yet"
       },
       "tabs": {
         "general": "General",
+        "invitations": "Invitations",
         "managers": "Managers"
       },
       "title": "Merchant"
-    },
-    "merge": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Merge recipes"
     },
     "mystery": {
       "boxContent": {
@@ -1278,9 +1283,13 @@
       "tabs": {
         "addresses": "Addresses",
         "general": "General",
+        "notifications": "Notifications",
         "subscriptions": "Subscriptions"
       },
       "title": "Profile"
+    },
+    "promo": {
+      "title": "Promo"
     },
     "promos": {
       "title": "Promos"
@@ -1356,6 +1365,24 @@
       },
       "title": "Rate plans"
     },
+    "recipes": {
+      "craft": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Craft recipes"
+      },
+      "dismantle": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Dismantle recipes"
+      },
+      "merge": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Merge recipes"
+      },
+      "title": "Recipes"
+    },
     "rent": {
       "title": "Rent"
     },
@@ -1423,8 +1450,8 @@
     "cartNotFound": "Cart not found",
     "categoryNotFound": "Category not found",
     "claimNotFound": "Claim not found",
-    "claimsUploaded": "Successfully uploaded {amount} from {total}",
     "claimsNotUploaded": "No claims were uploaded",
+    "claimsUploaded": "Successfully uploaded {amount} from {total}",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",
@@ -1455,7 +1482,9 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent",
+    "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionSent": "Transaction sent: {txHash}",
+    "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
@@ -1463,5 +1492,10 @@
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
+  },
+  "socket": {
+    "connected": "WebSocket connection ON",
+    "connect_failed": "WebSocket connection failed",
+    "error": "WebSocket connection Error"
   }
 }

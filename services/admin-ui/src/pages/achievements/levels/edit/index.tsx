@@ -6,7 +6,7 @@ import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IAchievementLevel } from "@framework/types";
+import type { IAchievementLevel } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

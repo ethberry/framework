@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 
-import { IParameter } from "@framework/types";
+import type { IParameter } from "@framework/types";
 
 import { ParameterMinValueInput } from "./minValue";
 import { ParameterMaxValueInput } from "./maxValue";

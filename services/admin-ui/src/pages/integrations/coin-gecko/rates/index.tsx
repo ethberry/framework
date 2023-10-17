@@ -3,7 +3,7 @@ import { Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ICoinGeckoCoinTicker } from "@gemunion/types-coin-gecko";
+import type { ICoinGeckoCoinTicker } from "@gemunion/types-coin-gecko";
 
 import { BaseCoins, TargetCoins } from "./enums";
 

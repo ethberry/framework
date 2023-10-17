@@ -1,11 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
-import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { StakingDepositStatus } from "@framework/types";
+import type { IStakingDeposit } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
@@ -13,15 +13,16 @@ import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IStakingRewardComplexButtonProps {
+  className?: string;
+  disabled?: boolean;
   stake: IStakingDeposit;
+  variant?: ListActionVariant;
 }
 
 export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = props => {
-  const { stake } = props;
+  const { className, disabled, stake, variant } = props;
 
   const [isRewardDialogOpen, setIsRewardDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask(
     async (stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
@@ -60,11 +61,15 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.reward" })}>
-        <IconButton onClick={handleReward} data-testid="StakeRewardButton">
-          <Redeem />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleReward}
+        icon={Redeem}
+        message="form.tips.reward"
+        className={className}
+        dataTestId="StakingRewardComplexButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <DepositRewardDialog
         onConfirm={handleRewardConfirm}
         onCancel={handleRewardCancel}

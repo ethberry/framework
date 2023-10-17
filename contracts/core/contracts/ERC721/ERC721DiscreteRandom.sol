@@ -4,9 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
+pragma solidity ^0.8.20;
 
 import "../Mechanics/Rarity/Rarity.sol";
 import "../utils/constants.sol";
@@ -14,8 +12,6 @@ import "./interfaces/IERC721Random.sol";
 import "./ERC721Discrete.sol";
 
 abstract contract ERC721DiscreteRandom is IERC721Random, ERC721Discrete, Rarity {
-  using Counters for Counters.Counter;
-
   struct Request {
     address account;
     uint256 templateId;
@@ -48,9 +44,9 @@ abstract contract ERC721DiscreteRandom is IERC721Random, ERC721Discrete, Rarity 
    * @dev Validates and upgrades attribute
    * @param tokenId The NFT to upgrade
    * @param attribute parameter name
-   * @return The result of operation
+   * @return uint256 The upgraded level
    */
-  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (uint256) {
     // TEMPLATE_ID refers to database id
     // RARITY refers ChainLink integration
     if (attribute == TEMPLATE_ID || attribute == RARITY) {
@@ -61,12 +57,11 @@ abstract contract ERC721DiscreteRandom is IERC721Random, ERC721Discrete, Rarity 
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
-    uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords, request.templateId, _nextTokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
+    _upsertRecordField(_nextTokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(_nextTokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
 

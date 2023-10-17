@@ -6,7 +6,7 @@ import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractManagerSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
-import { IContractManagerCreateDto } from "./interfaces";
+import type { IContractManagerCreateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { RatePlanService } from "../../infrastructure/rate-plan/rate-plan.service";
 import { ContractService } from "../hierarchy/contract/contract.service";

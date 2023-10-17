@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import type { ICraft } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, ICraft } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
@@ -16,17 +15,20 @@ import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface ICraftButtonProps {
+  className?: string;
   craft: ICraft;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const CraftButton: FC<ICraftButtonProps> = props => {
-  const { craft } = props;
+  const { className, craft, disabled, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
 
       return contract.craft(
         {
@@ -66,7 +68,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/craft/sign",
+        url: "/recipes/craft/sign",
         method: "POST",
         data: {
           chainId,
@@ -77,7 +79,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleCraft = async () => {
@@ -85,8 +87,13 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleCraft} data-testid="CraftButton">
-      <FormattedMessage id="form.buttons.craft" />
-    </Button>
+    <ListAction
+      onClick={handleCraft}
+      message="form.buttons.craft"
+      className={className}
+      dataTestId="CraftButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

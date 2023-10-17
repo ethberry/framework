@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -18,11 +9,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
+import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
 import { cleanUpAsset } from "../../../../utils/money";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -76,10 +69,7 @@ export const Erc1155Template: FC = () => {
 
       <PageHeader message="pages.erc1155.templates.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TemplateCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -98,31 +88,32 @@ export const Erc1155Template: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(template => (
-            <ListItem key={template.id} sx={{ flexWrap: "wrap" }}>
+            <ListItem key={template.id} disableGutters sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(template)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="TemplateActionsMenuButton">
+                <ListAction onClick={handleEdit(template)} message="form.buttons.edit" icon={Create} />
+                <ListAction
                   onClick={handleDelete(template)}
                   disabled={template.templateStatus === TemplateStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <TemplateActionsMenu
-                  template={template}
-                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  icon={Delete}
+                  message="form.buttons.delete"
                 />
-              </ListItemSecondaryAction>
+                <MintButton
+                  template={template}
+                  disabled={
+                    template.templateStatus === TemplateStatus.INACTIVE ||
+                    template.contract?.contractType === TokenType.NATIVE ||
+                    template.contract?.contractFeatures.includes(ContractFeatures.GENES)
+                  }
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

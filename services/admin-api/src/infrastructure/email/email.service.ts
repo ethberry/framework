@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
+
 import { EmailType, OtpType, RmqProviderType } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
@@ -45,11 +46,14 @@ export class EmailService {
       .toPromise();
   }
 
-  public async invite(userEntity: UserEntity, data: Record<string, any>): Promise<any> {
-    const otpEntity = await this.otpService.getOtp(OtpType.INVITE, userEntity, data);
+  public async invite(inviteeEntity: UserEntity, userEntity: UserEntity): Promise<any> {
+    const otpEntity = await this.otpService.getOtp(OtpType.INVITE, inviteeEntity, {
+      merchantId: userEntity.merchantId,
+    });
 
     return this.emailClientProxy
       .emit(EmailType.INVITE, {
+        invitee: inviteeEntity,
         user: userEntity,
         otp: otpEntity,
         baseUrl: this.configService.get<string>("MARKET_FE_URL", "http://localhost:3006"),

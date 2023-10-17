@@ -4,11 +4,11 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+import {ERC1155Holder, IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Receiver.sol";
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Spender.sol";
@@ -86,7 +86,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
     address operator,
     address from,
     uint256 tokenId,
-    bytes calldata data
+    bytes memory data
   ) public override returns (bytes4) {
     _reenter();
     return super.onERC721Received(operator, from, tokenId, data);
@@ -97,7 +97,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
     address from,
     uint256 id,
     uint256 value,
-    bytes calldata data
+    bytes memory data
   ) public virtual override returns (bytes4) {
     _reenter();
     return super.onERC1155Received(operator, from, id, value, data);
@@ -106,9 +106,9 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
   function onERC1155BatchReceived(
     address operator,
     address from,
-    uint256[] calldata ids,
-    uint256[] calldata values,
-    bytes calldata data
+    uint256[] memory ids,
+    uint256[] memory values,
+    bytes memory data
   ) public virtual override returns (bytes4) {
     _reenter();
     return super.onERC1155BatchReceived(operator, from, ids, values, data);
@@ -134,7 +134,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, ERC1155Receiver) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, ERC1155Holder) returns (bool) {
     return
       interfaceId == type(IERC1363Receiver).interfaceId ||
       interfaceId == type(IERC1363Spender).interfaceId ||

@@ -3,7 +3,8 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { IPage, PageStatus } from "@framework/types";
+import type { IPage } from "@framework/types";
+import { PageStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -38,7 +39,7 @@ export const PageEditDialog: FC<IEditPageDialogProps> = props => {
     >
       <TextInput name="slug" />
       <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <RichTextEditor name="description" customControls={["media", "link"]} />
       {id ? <SelectInput name="pageStatus" options={PageStatus} /> : null}
     </FormDialog>
   );

@@ -1,4 +1,4 @@
-import { IClaim } from "@framework/types";
+import type { IClaim } from "@framework/types";
 
 export interface IClaimData {
   claim: IClaim;

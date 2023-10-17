@@ -3,7 +3,8 @@ import { ethers } from "hardhat";
 import { ZeroAddress } from "ethers";
 
 import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { templateId, tokenId } from "../../constants";
@@ -43,7 +44,7 @@ describe("Wrapper", function () {
   });
 
   describe("mint/unpack", function () {
-    it("should fail for not an owner", async function () {
+    it("should fail: ERC721InsufficientApproval", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const erc721WrapperInstance = await factory();
@@ -64,7 +65,9 @@ describe("Wrapper", function () {
       await expect(tx).to.changeEtherBalances([owner, erc721WrapperInstance], [-amount, amount]);
 
       const tx1 = erc721WrapperInstance.connect(receiver).unpack(tokenId);
-      await expect(tx1).to.be.rejectedWith("Wrapper: unpack caller is not owner nor approved");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc721WrapperInstance, "ERC721InsufficientApproval")
+        .withArgs(receiver.address, tokenId);
     });
 
     describe("NATIVE", function () {
@@ -240,7 +243,7 @@ describe("Wrapper", function () {
     });
 
     describe("MIX", function () {
-      it("should fail: not an owner", async function () {
+      it("should fail: ERC20InsufficientAllowance", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const erc20Instance = await erc20Factory("ERC20Simple");
@@ -257,7 +260,9 @@ describe("Wrapper", function () {
             amount,
           },
         ]);
-        await expect(tx).to.be.revertedWith("ERC20: insufficient allowance");
+        await expect(tx)
+          .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+          .withArgs(await erc721WrapperInstance.getAddress(), 0, amount);
       });
 
       it("should mint/unpack ALL", async function () {

@@ -16,7 +16,7 @@ import { AccessControlEntity } from "./blockchain/extensions/access-control/acce
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 // infrastructure
 import { PageEntity } from "./infrastructure/page/page.entity";
-import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
@@ -41,7 +41,7 @@ import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity"
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 /* ecommerce */
-import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
 import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
@@ -82,7 +82,7 @@ const config: PostgresConnectionOptions = {
     MysteryBoxEntity,
     GradeEntity,
     ClaimEntity,
-    DropEntity,
+    AssetPromoEntity,
     EventHistoryEntity,
     StakingDepositEntity,
     StakingRulesEntity,
@@ -105,7 +105,7 @@ const config: PostgresConnectionOptions = {
     OrderItemEntity,
     PhotoEntity,
     ProductEntity,
-    PromoEntity,
+    ProductPromoEntity,
     ParameterEntity,
     ProductItemEntity,
     ProductItemParameterEntity,

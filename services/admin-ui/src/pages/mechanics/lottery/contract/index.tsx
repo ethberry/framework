@@ -1,28 +1,31 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { LotteryActionsMenu } from "../../../../components/menu/mechanics/lottery/contract";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { PauseButton } from "../../../../components/buttons/mechanics/common/pause";
+import { UnPauseButton } from "../../../../components/buttons/mechanics/common/unpause";
+import { LotteryRoundStartButton } from "../../../../components/buttons/mechanics/lottery/contract/round-start";
+import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/lottery/contract/round-end";
+import { LotteryScheduleButton } from "../../../../components/buttons/mechanics/lottery/contract/schedule";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { LotteryEditDialog } from "./edit";
+import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
 
 export const LotteryContracts: FC = () => {
   const {
@@ -70,10 +73,7 @@ export const LotteryContracts: FC = () => {
 
       <PageHeader message="pages.lottery.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <LotteryContractDeployButton />
       </PageHeader>
@@ -91,29 +91,59 @@ export const LotteryContracts: FC = () => {
           {rows.map(contract => (
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="LotteryActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
                   onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <LotteryActionsMenu
+                />
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  onRefreshPage={handleRefreshPage}
                 />
-              </ListItemSecondaryAction>
+                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <LotteryRoundStartButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    !contract.parameters.vrfSubId ||
+                    !contract.parameters.isConsumer
+                  }
+                />
+                <LotteryRoundEndButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    !contract.parameters.vrfSubId ||
+                    !contract.parameters.isConsumer
+                  }
+                />
+                <LotteryScheduleButton
+                  contract={contract}
+                  refreshPage={handleRefreshPage}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerAddButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <ChainLinkSetSubscriptionButton contract={contract} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

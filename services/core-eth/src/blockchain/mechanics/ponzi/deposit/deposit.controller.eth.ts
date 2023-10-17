@@ -3,15 +3,14 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  ContractType,
+import type {
   IFinalizedTokenEvent,
   IPonziDepositEvent,
   IPonziFinishEvent,
   IPonziWithdrawEvent,
   IWithdrawTokenEvent,
-  PonziEventType,
 } from "@framework/types";
+import { ContractType, PonziEventType } from "@framework/types";
 
 import { PonziDepositServiceEth } from "./deposit.service.eth";
 

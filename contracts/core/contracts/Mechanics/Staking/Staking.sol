@@ -4,18 +4,17 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/roles.sol";
-import "@gemunion/contracts-misc/contracts/attributes.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/attributes.sol";
 
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
@@ -38,12 +37,11 @@ import "./interfaces/IStaking.sol";
  */
 contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearReferral, ReentrancyGuard {
   using Address for address;
-  using Counters for Counters.Counter;
   using EnumerableMap for EnumerableMap.AddressToUintMap;
   using EnumerableMap for EnumerableMap.UintToUintMap;
 
-  Counters.Counter internal _ruleIdCounter;
-  Counters.Counter internal _stakeIdCounter;
+  uint256 internal _ruleIdCounter;
+  uint256 internal _stakeIdCounter;
 
   EnumerableMap.AddressToUintMap internal _depositBalancesMap;
   EnumerableMap.AddressToUintMap internal _walletStakeCounterMap;
@@ -105,8 +103,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     }
 
     // Increment counters and set a new stake.
-    _stakeIdCounter.increment();
-    uint256 stakeId = _stakeIdCounter.current();
+    uint256 stakeId = ++_stakeIdCounter;
     _stakeCounter[_msgSender()].set(ruleId, _stakeRuleCounter + 1);
     (, uint256 _walletStakeCounter) = _walletStakeCounterMap.tryGet(_msgSender());
     _walletStakeCounterMap.set(_msgSender(), _walletStakeCounter + 1);
@@ -507,8 +504,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    * @param rule The staking rule to store.
    */
   function _setRule(Rule memory rule) internal {
-    _ruleIdCounter.increment();
-    uint256 ruleId = _ruleIdCounter.current();
+    uint256 ruleId = ++_ruleIdCounter;
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _rules[ruleId] = rule
@@ -595,7 +591,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     // All users who ever staked
     allUsers = _walletStakeCounterMap.length();
     // Total number of stakes
-    allStakes = _stakeIdCounter.current();
+    allStakes = _stakeIdCounter;
     // User stake counter
     (, userStakes) = _walletStakeCounterMap.tryGet(account);
     // User stake counter for given rule

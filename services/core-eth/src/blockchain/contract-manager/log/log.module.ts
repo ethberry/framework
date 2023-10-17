@@ -4,13 +4,14 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractManagerEventType, ContractType, ModuleType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
 
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerLogService } from "./log.service";
 import { ABI } from "./interfaces";
 import { testChainId } from "@framework/constants";
+import { getEventsTopics } from "../../../common/utils";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { testChainId } from "@framework/constants";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
         const contractManagerEntity = await contractService.findSystemByName({
           contractModule: ModuleType.CONTRACT_MANAGER,
@@ -32,34 +34,37 @@ import { testChainId } from "@framework/constants";
           ];
         const fromBlock = contractManagerEntity.fromBlock || startingBlock;
 
+        const eventNames = [
+          ContractManagerEventType.VestingDeployed,
+          ContractManagerEventType.ERC20TokenDeployed,
+          ContractManagerEventType.ERC721TokenDeployed,
+          ContractManagerEventType.ERC998TokenDeployed,
+          ContractManagerEventType.ERC1155TokenDeployed,
+          ContractManagerEventType.MysteryBoxDeployed,
+          ContractManagerEventType.CollectionDeployed,
+          ContractManagerEventType.StakingDeployed,
+          ContractManagerEventType.PonziDeployed,
+          ContractManagerEventType.LotteryDeployed,
+          ContractManagerEventType.RaffleDeployed,
+          ContractManagerEventType.WaitListDeployed,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+        ];
+
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
             contractAddress: contractManagerEntity.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ContractManagerEventType.VestingDeployed,
-              ContractManagerEventType.ERC20TokenDeployed,
-              ContractManagerEventType.ERC721TokenDeployed,
-              ContractManagerEventType.ERC998TokenDeployed,
-              ContractManagerEventType.ERC1155TokenDeployed,
-              ContractManagerEventType.MysteryboxDeployed,
-              ContractManagerEventType.CollectionDeployed,
-              ContractManagerEventType.StakingDeployed,
-              ContractManagerEventType.PonziDeployed,
-              ContractManagerEventType.LotteryDeployed,
-              ContractManagerEventType.RaffleDeployed,
-              ContractManagerEventType.WaitListDeployed,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-            ],
+            topics,
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

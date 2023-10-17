@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "./AbstractFactoryFacet.sol";
 
@@ -26,7 +26,7 @@ contract MysteryBoxFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
     string contractTemplate;
   }
 
-  event MysteryboxDeployed(address account, uint256 externalId, MysteryArgs args);
+  event MysteryBoxDeployed(address account, uint256 externalId, MysteryArgs args);
 
   function deployMysterybox(
     Params calldata params,
@@ -47,7 +47,7 @@ contract MysteryBoxFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
       params.nonce
     );
 
-    emit MysteryboxDeployed(account, params.externalId, args);
+    emit MysteryBoxDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;

@@ -1,10 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Tooltip } from "@mui/material";
+import { Send } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
@@ -13,15 +13,16 @@ import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/tran
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
 interface IErc721TransferButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const Erc721TransferButton: FC<IErc721TransferButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const [isTransferTokenDialogOpen, setIsTransferTokenDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -56,15 +57,15 @@ export const Erc721TransferButton: FC<IErc721TransferButtonProps> = props => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
-        <Button
-          onClick={handleTransfer}
-          disabled={token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-          data-testid="Erc721TransferButton"
-        >
-          <FormattedMessage id="form.buttons.transfer" />
-        </Button>
-      </Tooltip>
+      <ListAction
+        icon={Send}
+        onClick={handleTransfer}
+        message="form.buttons.transfer"
+        className={className}
+        dataTestId="Erc721TransferButton"
+        disabled={disabled || token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        variant={variant}
+      />
       <AccountDialog
         onConfirm={handleTransferConfirm}
         onCancel={handleTransferCancel}

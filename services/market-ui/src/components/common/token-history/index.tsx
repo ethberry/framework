@@ -1,13 +1,7 @@
 import { FC, useCallback } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  DataGridPremium,
-  DataGridPremiumProps,
-  GridCellParams,
-  gridClasses,
-  GridRowParams,
-} from "@mui/x-data-grid-premium";
+import { DataGridPremiumProps, GridCellParams, GridRowParams } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 
 import { IEventHistory, IToken } from "@framework/types";
@@ -16,6 +10,7 @@ import { TxHashLink } from "@gemunion/mui-scanner";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { EventDataView } from "../../../pages/exchange/transactions/event-data-view";
+import { StyledDataGridPremium, StyledTitle, wrapperMixin } from "./styled";
 
 export interface ITokenHistoryProps {
   token: IToken;
@@ -78,12 +73,12 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   );
 
   return (
-    <ProgressOverlay isLoading={isLoading} wrapperSx={{ width: "100%" }}>
+    <ProgressOverlay isLoading={isLoading} wrapperSx={wrapperMixin}>
       <Grid item xs={12}>
-        <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>
+        <StyledTitle variant="h5">
           <FormattedMessage id="pages.history.token.title" />
-        </Typography>
-        <DataGridPremium
+        </StyledTitle>
+        <StyledDataGridPremium
           pagination
           paginationMode="server"
           rowCount={count || 0}
@@ -97,14 +92,6 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
           getDetailPanelContent={getDetailPanelContent}
           rows={rows || []}
           getRowHeight={() => "auto"}
-          sx={{
-            [`& .${gridClasses.cell}`]: {
-              p: 1.5,
-            },
-            [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
-              borderBottom: "none",
-            },
-          }}
           autoHeight
           disableAggregation
           disableRowGrouping

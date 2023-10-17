@@ -1,4 +1,6 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert, Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -48,6 +50,15 @@ export const RaffleEditDialog: FC<IRaffleEditDialogProps> = props => {
       <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
+      <Fragment>
+        <Alert severity="warning">
+          <Typography>
+            <a id="anchor" href={"/chain-link"}>
+              <FormattedMessage id="alert.randomChainlink" />
+            </a>
+          </Typography>
+        </Alert>
+      </Fragment>
     </FormDialog>
   );
 };

@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 
-import { IMysteryBoxCreateDto } from "../interfaces";
+import type { IMysteryBoxCreateDto } from "../interfaces";
 import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
 
 export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCreateDto {

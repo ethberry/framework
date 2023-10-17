@@ -4,12 +4,12 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
@@ -44,6 +44,12 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
+    IERC4907(item.token).setUser(
+      item.tokenId,
+      params.referrer /* to */,
+      uint256(params.extra).toUint64() /* lend expires */
+    );
+
     emit Lend(
       _msgSender() /* from */,
       params.referrer /* to */,
@@ -51,12 +57,6 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
       params.externalId /* lendRule db id */,
       item,
       price
-    );
-
-    IERC4907(item.token).setUser(
-      item.tokenId,
-      params.referrer /* to */,
-      uint256(params.extra).toUint64() /* lend expires */
     );
   }
 

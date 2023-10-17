@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Box, Button } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
 
-import { IToken } from "../../../provider";
+import type { IToken } from "../../../provider";
 
 import { TokenAvatar } from "./token-avatar";
 

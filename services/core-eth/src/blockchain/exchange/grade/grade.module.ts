@@ -13,6 +13,7 @@ import { GradeEntity } from "../../mechanics/grade/grade.entity";
 import { AssetModule } from "../asset/asset.module";
 import { ExchangeGradeControllerEth } from "./grade.controller.eth";
 import { ExchangeGradeServiceEth } from "./grade.service.eth";
+import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { ExchangeGradeServiceEth } from "./grade.service.eth";
     NotificatorModule,
     TypeOrmModule.forFeature([GradeEntity]),
   ],
-  providers: [Logger, ExchangeGradeServiceEth, GradeService],
+  providers: [signalServiceProvider, Logger, ExchangeGradeServiceEth, GradeService],
   controllers: [ExchangeGradeControllerEth],
   exports: [ExchangeGradeServiceEth, GradeService],
 })

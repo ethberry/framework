@@ -1,35 +1,34 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
-import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { IMysteryBox, TokenType } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, IMysteryBox } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import MysteryboxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purchase/mysterybox.abi.json";
+import MysteryBoxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purchase/mysterybox.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IMysteryBoxBuyButtonProps {
+  className?: string;
+  disabled?: boolean;
   mysteryBox: IMysteryBox;
+  variant?: ListActionVariant;
 }
 
-export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => {
-  const { mysteryBox } = props;
+export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => {
+  const { className, disabled, mysteryBox, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(
-        process.env.EXCHANGE_ADDR,
-        MysteryboxPurchaseABI,
-        web3Context.provider?.getSigner(),
-      );
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
       return contract.purchaseMystery(
         {
@@ -88,7 +87,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {
@@ -96,8 +95,13 @@ export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
   };
 
   return (
-    <Button onClick={handleBuy} data-testid="MysteryboxTemplateBuyButton">
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+    <ListAction
+      onClick={handleBuy}
+      message="form.buttons.buy"
+      className={className}
+      dataTestId="MysteryBoxPurchaseButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

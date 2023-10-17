@@ -1,4 +1,4 @@
-import { IStakingDeposit, IStakingRule } from "@framework/types";
+import type { IStakingDeposit, IStakingRule } from "@framework/types";
 
 export interface IStakingDepositStartData {
   stakingDeposit: IStakingDeposit;

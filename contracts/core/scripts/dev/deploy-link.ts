@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { Contract, TransactionReceipt, TransactionResponse } from "ethers";
 
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
@@ -34,7 +34,7 @@ async function main() {
   const linkAddress = await contracts.link.getAddress();
   await debug(contracts);
   // console.info(`LINK_ADDR=${linkAddress}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock");
   contracts.vrf = await vrfFactory.deploy(linkAddress);
   await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);

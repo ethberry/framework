@@ -6,7 +6,7 @@ import { Mixin } from "ts-mixer";
 import { emailMaxLength } from "@gemunion/constants";
 import { SearchableOptionalDto, WalletOptionalDto } from "@gemunion/collection";
 
-import { IMerchantUpdateDto } from "../interfaces";
+import type { IMerchantUpdateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";
 
 export class MerchantUpdateDto extends Mixin(WalletOptionalDto, SearchableOptionalDto) implements IMerchantUpdateDto {

@@ -1,22 +1,24 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { PauseCircleOutline, PlayCircleOutline } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IStakingRule } from "@framework/types";
+import { StakingRuleStatus } from "@framework/types";
 
 import StakingUpdateRuleABI from "../../../../../abis/mechanics/staking/rule-toggle/updateRule.abi.json";
 
 export interface IStakingToggleRuleButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 
 export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { className, disabled, rule, variant } = props;
 
   const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
@@ -31,17 +33,18 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
   };
 
   return (
-    <Tooltip
-      title={formatMessage({
-        id:
-          rule.stakingRuleStatus === StakingRuleStatus.ACTIVE
-            ? "pages.staking.rules.deactivate"
-            : "pages.staking.rules.activate",
-      })}
-    >
-      <IconButton onClick={handleToggleRule(rule)} data-testid="StakeToggleRuleButton">
-        {rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? <PauseCircleOutline /> : <PlayCircleOutline />}
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleToggleRule(rule)}
+      icon={rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? PauseCircleOutline : PlayCircleOutline}
+      message={
+        rule.stakingRuleStatus === StakingRuleStatus.ACTIVE
+          ? "pages.staking.rules.deactivate"
+          : "pages.staking.rules.activate"
+      }
+      className={className}
+      dataTestId="StakeToggleRuleButton"
+      disabled={disabled || rule.stakingRuleStatus === StakingRuleStatus.NEW}
+      variant={variant}
+    />
   );
 };

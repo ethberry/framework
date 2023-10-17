@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { IMerchant, MerchantStatus } from "@framework/types";
+import type { IMerchant } from "@framework/types";
+import { MerchantStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

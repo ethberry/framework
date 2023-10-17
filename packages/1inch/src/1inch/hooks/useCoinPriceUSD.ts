@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 
-import { IToken, stableCoinSymbol } from "../provider";
+import { stableCoinSymbol } from "../provider";
+import type { IToken } from "../provider";
 
 import { useAllTokens } from "./useAllTokens";
 import { useQuote } from "./useQuote";

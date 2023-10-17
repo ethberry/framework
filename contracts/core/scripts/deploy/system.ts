@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 export async function deploySystem(contracts: Record<string, any>) {

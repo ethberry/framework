@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ILotteryTokenSearchDto } from "@framework/types";
+import type { ILotteryTokenSearchDto } from "@framework/types";
 
 interface ILotteryTokenSearchFormProps {
   onSubmit: (values: ILotteryTokenSearchDto) => Promise<void>;

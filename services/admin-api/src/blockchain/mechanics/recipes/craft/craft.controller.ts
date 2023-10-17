@@ -22,7 +22,7 @@ import { CraftCreateDto, CraftSearchDto, CraftUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/craft")
+@Controller("/recipes/craft")
 export class CraftController {
   constructor(private readonly craftService: CraftService) {}
 

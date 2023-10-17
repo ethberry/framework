@@ -1,4 +1,5 @@
-import { IParameter, ParameterType } from "@framework/types";
+import type { IParameter } from "@framework/types";
+import { ParameterType } from "@framework/types";
 
 import { getAvailableNames } from "./utils";
 

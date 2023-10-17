@@ -9,7 +9,7 @@ export * from "./wallet";
 
 export * from "./mechanics/claim/redeem";
 export * from "./mechanics/recipes/craft";
-export * from "./mechanics/drop/purchase";
+export * from "./mechanics/promo/purchase";
 export * from "./mechanics/lottery/purchase";
 export * from "./mechanics/lottery/reward";
 export * from "./mechanics/raffle/purchase";

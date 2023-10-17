@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ZeroAddress, getAddress } from "ethers";
+import { getAddress, ZeroAddress } from "ethers";
 
 import {
   amount,
@@ -105,7 +105,7 @@ describe("MysteryBoxFactoryDiamond", function () {
       const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
 
       await expect(tx)
-        .to.emit(contractInstance, "MysteryboxDeployed")
+        .to.emit(contractInstance, "MysteryBoxDeployed")
         .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc721Instance = await ethers.getContractAt("ERC721MysteryBoxSimple", address);

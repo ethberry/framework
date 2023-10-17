@@ -12,6 +12,7 @@ import { TemplateModule } from "../../hierarchy/template/template.module";
 import { BalanceModule } from "../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../exchange/asset/asset.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
+import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { EventHistoryModule } from "../../event-history/event-history.module";
     EventHistoryModule,
     WrapperLogModule,
   ],
-  providers: [Logger, ethersRpcProvider, WrapperServiceEth],
+  providers: [Logger, signalServiceProvider, ethersRpcProvider, WrapperServiceEth],
   controllers: [WrapperControllerEth],
   exports: [WrapperServiceEth],
 })

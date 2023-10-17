@@ -1,8 +1,8 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { ICustomParameter } from "./custom-parameter";
-import { IParameter } from "./parameter";
-import { IProductItem } from "./product-item";
+import type { ICustomParameter } from "./custom-parameter";
+import type { IParameter } from "./parameter";
+import type { IProductItem } from "./product-item";
 
 export interface IProductItemParameter extends IIdDateBase {
   productItemId: number;

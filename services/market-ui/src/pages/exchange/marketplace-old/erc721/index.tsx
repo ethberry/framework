@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid } from "@mui/material";
 import { stringify } from "qs";
 
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721TemplateListItem } from "../../../hierarchy/erc721/template-list/item";
@@ -38,8 +39,7 @@ export const Erc721: FC<ITabPanelProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

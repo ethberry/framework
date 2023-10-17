@@ -5,15 +5,15 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
+import { LinkToken, VRFCoordinatorV2Mock } from "../../../../typechain-types";
 import { deployLinkVrfFixture } from "../../../shared/link";
-import { templateId, tokenAttributes, tokenId } from "../../../constants";
+import { subscriptionId, templateId, tokenAttributes, tokenId } from "../../../constants";
 import { randomFixRequest } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<any>) {
   describe("mintRandom", function () {
     let linkInstance: LinkToken;
-    let vrfInstance: VRFCoordinatorMock;
+    let vrfInstance: VRFCoordinatorV2Mock;
 
     before(async function () {
       await network.provider.send("hardhat_reset");
@@ -28,11 +28,15 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      // Set VRFV2 Subscription
+      const tx01 = contractInstance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(contractInstance, "VrfSubscriptionSet").withArgs(1);
+
       // Add Consumer to VRFV2
-      const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
+      const tx02 = vrfInstance.addConsumer(subscriptionId, await contractInstance.getAddress());
       await expect(tx02)
         .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-        .withArgs(1, await contractInstance.getAddress());
+        .withArgs(subscriptionId, await contractInstance.getAddress());
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {
@@ -49,6 +53,33 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       expect(value2).to.equal(2);
     });
 
+    it("should fail: invalid subscription", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      // Set VRFV2 Subscription
+      // const tx01 = contractInstance.setSubscriptionId(1);
+      // await expect(tx01).to.emit(contractInstance, "VrfSubscriptionSet").withArgs(1);
+
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
+      await expect(tx02)
+        .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+        .withArgs(1, await contractInstance.getAddress());
+
+      const tx03 = contractInstance.mintRandom(receiver.address, templateId);
+      await expect(tx03).to.be.revertedWithCustomError(contractInstance, "InvalidSubscription");
+    });
+
+    it("should fail: set invalid subscription", async function () {
+      const [_owner, _receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      // Set VRFV2 Subscription
+      const tx01 = contractInstance.setSubscriptionId(0);
+      await expect(tx01).to.be.revertedWithCustomError(contractInstance, "InvalidSubscription");
+    });
+
     // TODO mintRandom to receiver
     // TODO mintRandom to nonReceiver
 
@@ -57,9 +88,9 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintRandom(receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, MINTER_ROLE);
     });
 
     it("should fail: TemplateZero", async function () {
@@ -77,7 +108,7 @@ export function shouldMintRandom(factory: () => Promise<any>) {
 export function shouldMintRandomGenes(factory: () => Promise<any>) {
   describe("mintRandom (genes)", function () {
     let linkInstance: LinkToken;
-    let vrfInstance: VRFCoordinatorMock;
+    let vrfInstance: VRFCoordinatorV2Mock;
 
     before(async function () {
       await network.provider.send("hardhat_reset");
@@ -91,6 +122,10 @@ export function shouldMintRandomGenes(factory: () => Promise<any>) {
     it("should mintRandom", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
+
+      // Set VRFV2 Subscription
+      const tx01 = contractInstance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(contractInstance, "VrfSubscriptionSet").withArgs(1);
 
       // Add Consumer to VRFV2
       const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
@@ -121,9 +156,9 @@ export function shouldMintRandomGenes(factory: () => Promise<any>) {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintRandom(receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, MINTER_ROLE);
     });
 
     it("should fail: TemplateZero", async function () {

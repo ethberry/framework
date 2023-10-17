@@ -1,6 +1,6 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IProductItem } from "./product-item";
+import type { IProductItem } from "./product-item";
 
 export interface IStock extends IIdDateBase {
   productItemId: number;

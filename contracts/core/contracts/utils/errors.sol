@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 error MethodNotSupported();
 error TemplateZero();
@@ -43,3 +43,6 @@ error WrongPrice();
 
 // waitlist
 error NotInList();
+
+// Chain-Link
+error InvalidSubscription();

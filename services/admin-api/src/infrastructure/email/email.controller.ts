@@ -33,6 +33,6 @@ export class EmailController {
   @Post(EmailType.INVITE)
   @HttpCode(HttpStatus.NO_CONTENT)
   public invite(@User() userEntity: UserEntity): Promise<any> {
-    return this.emailService.invite(userEntity, { merchantId: userEntity.merchantId });
+    return this.emailService.invite(userEntity, userEntity);
   }
 }

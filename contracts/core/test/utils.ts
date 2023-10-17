@@ -1,5 +1,5 @@
 import { snakeToCamelCase } from "@gemunion/utils";
-import { concat, id, Provider, AbiCoder, Result, toBeHex, toBeArray, zeroPadValue, keccak256 } from "ethers";
+import { AbiCoder, concat, id, keccak256, Provider, Result, toBeArray, toBeHex, zeroPadValue } from "ethers";
 
 // Patch BigNumber
 // https://github.com/GoogleChromeLabs/jsbi/issues/30
@@ -68,8 +68,8 @@ export const isEqualEventArgObj = (args: any): any => {
   return (eventValues: any): boolean => {
     for (const key of Object.keys(args)) {
       if (JSON.stringify(eventValues[key]) !== JSON.stringify(args[key])) {
-        console.error(`eventValues[${key}]`, JSON.stringify(eventValues[key]));
-        console.error(`args[${key}]`, JSON.stringify(args[key]));
+        // console.error(`eventValues[${key}]`, JSON.stringify(eventValues[key]));
+        // console.error(`args[${key}]`, JSON.stringify(args[key]));
         return false;
       }
     }

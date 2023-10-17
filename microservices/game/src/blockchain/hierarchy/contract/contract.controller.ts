@@ -1,10 +1,10 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
-import { ContractAutocompleteDto, ContractSearchDto } from "./dto";
+import { ContractAutocompleteDto, ContractSearchDto, SystemContractSearchDto } from "./dto";
 import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
 
@@ -33,6 +33,15 @@ export class ContractController {
     @User() merchantEntity: MerchantEntity,
   ): Promise<Array<ContractEntity>> {
     return this.contractService.autocomplete(dto, merchantEntity);
+  }
+
+  @Post("/system")
+  @UseInterceptors(NotFoundInterceptor)
+  public system(@Body() dto: SystemContractSearchDto): Promise<ContractEntity | null> {
+    return this.contractService.findOne({
+      contractModule: dto.contractModule as unknown as ModuleType,
+      chainId: dto.chainId,
+    });
   }
 
   @Get("/:id")

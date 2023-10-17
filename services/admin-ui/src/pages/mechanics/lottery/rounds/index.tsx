@@ -1,16 +1,19 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
-import { CronExpression } from "@framework/types";
+import { ContractStatus, CronExpression } from "@framework/types";
 
+import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/contract/release";
+import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/lottery/contract/round-end";
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
-import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/release";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -54,19 +57,25 @@ export const LotteryRounds: FC = () => {
                     ]
                   : ""}
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleView(round)}>
-                  <Visibility />
-                </IconButton>
+              <ListActions>
+                <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
                 <LotteryReleaseButton round={round} />
-              </ListItemSecondaryAction>
+                <LotteryRoundEndButton
+                  contract={round.contract!}
+                  disabled={
+                    round.contract!.parameters.roundId !== round.id ||
+                    round.contract!.contractStatus === ContractStatus.INACTIVE ||
+                    !round.contract!.parameters.vrfSubId ||
+                    !round.contract!.parameters.isConsumer
+                  }
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

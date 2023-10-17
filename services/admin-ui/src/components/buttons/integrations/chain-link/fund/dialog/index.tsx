@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import LinkBalanceOfABI from "../../../../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
@@ -11,9 +11,11 @@ import LinkBalanceOfABI from "../../../../../../abis/integrations/chain-link/fun
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
 import { formatEther } from "../../../../../../utils/money";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkFundDto {
-  subscriptionId: string;
+  subscriptionId: number;
   amount: string;
 }
 
@@ -27,10 +29,14 @@ export interface IChainLinkFundDialogProps {
 export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const getCurrentBalance = useMetamaskValue(
-    async (_decimals: number, web3Context: Web3ContextType) => {
+  const getAccountBalance = useSystemContract<IContract, SystemModuleType>(
+    async (_decimals: number, web3Context: Web3ContextType, systemContract: IContract) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(process.env.LINK_ADDR, LinkBalanceOfABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.parameters.linkAddress.toString(),
+        LinkBalanceOfABI,
+        web3Context.provider?.getSigner(),
+      );
       const value = await contract.callStatic.balanceOf(web3Context.account);
 
       return formatEther(value.sub(value.mod(1e14)), _decimals, "LINK ");
@@ -38,8 +44,13 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
     { success: false },
   );
 
+  const metaFnBalanceData = useMetamaskValue((values: any, web3Context: Web3ContextType) => {
+    return getAccountBalance(SystemModuleType.CHAIN_LINK, values, web3Context);
+  });
+
   return (
     <FormDialog
+      disabled={false}
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.fund"
@@ -47,7 +58,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       {...rest}
     >
       <TextInput name="subscriptionId" />
-      <AmountInput symbol="LINK " decimals={18} getCurrentBalance={getCurrentBalance} />
+      <AmountInput symbol="LINK " decimals={18} getCurrentBalance={metaFnBalanceData} />
     </FormDialog>
   );
 };

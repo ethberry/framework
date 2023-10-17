@@ -8,6 +8,7 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 import { MerchantTabs } from "./tabs";
 import { MerchantGeneral } from "./general";
 import { MerchantManagers } from "./managers";
+import { MerchantInvitations } from "./invitations";
 
 export const Merchant: FC = () => {
   const { tab = MerchantTabs.general } = useParams<{ tab: MerchantTabs }>();
@@ -32,6 +33,7 @@ export const Merchant: FC = () => {
       </Tabs>
       <MerchantGeneral open={value === MerchantTabs.general} />
       <MerchantManagers open={value === MerchantTabs.managers} />
+      <MerchantInvitations open={value === MerchantTabs.invitations} />
     </Fragment>
   );
 };

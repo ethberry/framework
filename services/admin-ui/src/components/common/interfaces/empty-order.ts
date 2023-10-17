@@ -1,4 +1,5 @@
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 
 const date = new Date();
 

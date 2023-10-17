@@ -2,14 +2,15 @@ import { FC, Fragment } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IContract, IContractSearchDto } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { StyledAvatar } from "@framework/styled";
+import type { IContract, IContractSearchDto } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { TemplateList } from "../template-list";
 import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
+import { TemplateList } from "../template-list";
 
 export const Contract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -40,7 +41,7 @@ export const Contract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

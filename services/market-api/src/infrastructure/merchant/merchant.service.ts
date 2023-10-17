@@ -1,19 +1,21 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, NotFoundException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MerchantStatus } from "@framework/types";
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "./merchant.entity";
 import type { IMerchantCreateDto } from "./interfaces";
+import { RmqService } from "./rmq/rmq.service";
 
 @Injectable()
 export class MerchantService {
   constructor(
     @InjectRepository(MerchantEntity)
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
+    private readonly rmqService: RmqService,
   ) {}
 
   public async search(dto: Partial<ISearchDto>): Promise<[Array<MerchantEntity>, number]> {
@@ -79,12 +81,22 @@ export class MerchantService {
       throw new ConflictException("duplicateAccount");
     }
 
-    return this.merchantEntityRepository
+    const merchantEntity = await this.merchantEntityRepository
       .create({
         ...dto,
         users: [userEntity],
       })
       .save();
+
+    const merchant = await this.findOne({ id: merchantEntity.id }, { select: { apiKey: true } });
+
+    if (!merchant) {
+      throw new NotFoundException("merchantNotFound");
+    }
+
+    await this.rmqService.setMerchant(merchant);
+
+    return merchantEntity;
   }
 
   public count(where: FindOptionsWhere<UserEntity>): Promise<number> {

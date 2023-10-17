@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Card, CardActions, CardContent, Toolbar, Typography } from "@mui/material";
+import { CardActions, CardContent } from "@mui/material";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IToken, IUser } from "@framework/types";
@@ -8,7 +8,9 @@ import { ContractFeatures } from "@framework/types";
 
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { GradeButton } from "../../../../components/buttons";
+import { AllowanceInfoPopover } from "../../../../components/dialogs/allowance";
 import { TokenDiscreteView } from "./discrete";
+import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IDiscreteTokenPanelProps {
   token: IToken;
@@ -40,18 +42,19 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
   }
 
   return (
-    <Card sx={{ mb: 2 }}>
+    <StyledCard>
       <CardContent>
-        <Toolbar disableGutters={true} sx={{ minHeight: "1em !important" }}>
-          <Typography gutterBottom variant="h5" component="p" sx={{ flexGrow: 1 }}>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.discrete" />
-          </Typography>
-        </Toolbar>
+          </StyledTypography>
+          <AllowanceInfoPopover />
+        </StyledToolbar>
         <TokenDiscreteView metadata={token.metadata} />
       </CardContent>
       <CardActions>
         <GradeButton token={token} disabled={!hasAccess} />
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };

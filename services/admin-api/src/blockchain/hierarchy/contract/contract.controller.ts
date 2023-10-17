@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -36,14 +36,11 @@ export class ContractController {
     return this.contractService.autocomplete(dto, userEntity);
   }
 
-  @Get("/system/:contractModule")
+  @Post("/system")
   @UseInterceptors(NotFoundInterceptor)
-  public system(
-    @Param() params: SystemContractSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<ContractEntity | null> {
+  public system(@Body() dto: SystemContractSearchDto, @User() userEntity: UserEntity): Promise<ContractEntity | null> {
     return this.contractService.findOne({
-      contractModule: params.contractModule as unknown as ModuleType,
+      contractModule: dto.contractModule as unknown as ModuleType,
       chainId: userEntity.chainId,
     });
   }

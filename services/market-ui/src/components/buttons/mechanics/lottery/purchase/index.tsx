@@ -1,34 +1,35 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
-import type { ILotteryRound } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { boolArrayToByte32 } from "@framework/traits-ui";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { bool36ArrayToByte32 } from "@framework/traits-ui";
 
 export interface ILotteryPurchaseButtonProps {
-  round: Partial<ILotteryRound>;
-  ticketNumbers: Array<boolean>;
+  className?: string;
   clearForm: () => void;
   disabled: boolean;
+  round: Partial<ILotteryRound>;
+  ticketNumbers: Array<boolean>;
+  variant?: ListActionVariant;
 }
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { clearForm, ticketNumbers, round, disabled } = props;
+  const { clearForm, ticketNumbers, round, disabled, className, variant = ListActionVariant.button } = props;
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, LotteryPurchaseABI, web3Context.provider?.getSigner());
 
       return contract
         .purchaseLottery(
@@ -36,7 +37,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             externalId: round.id,
             expiresAt: sign.expiresAt,
             nonce: utils.arrayify(sign.nonce),
-            extra: boolArrayToByte32(ticketNumbers),
+            extra: bool36ArrayToByte32(ticketNumbers),
             receiver: round.contract?.address,
             referrer: settings.getReferrer(),
           },
@@ -73,13 +74,13 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
           chainId,
           account,
           referrer: settings.getReferrer(),
-          ticketNumbers: boolArrayToByte32(ticketNumbers),
+          ticketNumbers: bool36ArrayToByte32(ticketNumbers),
           contractId: round.contractId,
         },
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handlePurchase = () => {
@@ -87,8 +88,15 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="LotteryBuyTicket">
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+    <ListAction
+      onClick={handlePurchase}
+      icon={Casino}
+      message="form.buttons.buy"
+      buttonVariant="contained"
+      className={className}
+      dataTestId="LotteryPurchaseButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
+import type { IStakingDeposit } from "@framework/types";
+import { StakingDepositStatus } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { StakingRulesEntity } from "../rules/rules.entity";

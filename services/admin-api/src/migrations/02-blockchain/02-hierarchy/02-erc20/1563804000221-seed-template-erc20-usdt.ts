@@ -4,7 +4,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface {
+export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 

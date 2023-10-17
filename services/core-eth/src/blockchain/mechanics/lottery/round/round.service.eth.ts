@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
@@ -9,6 +10,8 @@ import {
   IRoundEndedEvent,
   IRoundFinalizedEvent,
   IRoundStartedEvent,
+  RmqProviderType,
+  SignalEventType,
   TokenType,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -26,6 +29,8 @@ import { LotteryRoundAggregationService } from "./round.service.aggregation";
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryRoundAggregationService: LotteryRoundAggregationService,
@@ -36,142 +41,198 @@ export class LotteryRoundServiceEth {
     private readonly configService: ConfigService,
   ) {}
 
-  public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
+  public async lotteryRoundStart(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
     const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    // LOTTERY CONTRACT
-    const lotteryContract = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+    const lotteryContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
 
-    if (!lotteryContract) {
-      throw new NotFoundException("lotteryContractNotFound");
+    if (!lotteryContractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
     // TICKET CONTRACT
     const { token } = ticket;
-    const ticketContract = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+    const ticketContractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
-    if (!ticketContract) {
-      throw new NotFoundException("ticketContractNotFound");
+    if (!ticketContractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
     // PRICE ASSET
-    const asset = await this.lotteryRoundService.createEmptyPrice();
+    const assetEntity = await this.lotteryRoundService.createEmptyPrice();
 
     const { tokenId, amount } = price;
 
-    const priceTemplate = await this.templateService.findOne(
+    const priceTemplateEntity = await this.templateService.findOne(
       { id: Number(tokenId) },
       { relations: { contract: true } },
     );
 
-    if (!priceTemplate) {
-      throw new NotFoundException("priceTemplateNotFound");
+    if (!priceTemplateEntity) {
+      throw new NotFoundException("templateNotFound");
     }
 
-    const priceAsset = {
+    await this.lotteryRoundService.updatePrice(assetEntity, {
       components: [
         {
-          tokenType: priceTemplate.contract.contractType || TokenType.NATIVE,
-          contractId: priceTemplate.contract.id,
-          templateId: priceTemplate.id,
+          tokenType: priceTemplateEntity.contract.contractType || TokenType.NATIVE,
+          contractId: priceTemplateEntity.contract.id,
+          templateId: priceTemplateEntity.id,
           amount: Number(amount).toString(),
         },
       ],
-    };
+    });
 
-    await this.lotteryRoundService.updatePrice(asset, priceAsset);
-
-    const roundEntity = await this.lotteryRoundService.create({
+    const lotteryRoundEntity = await this.lotteryRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
-      contractId: lotteryContract.id,
-      ticketContractId: ticketContract.id,
-      priceId: asset.id,
+      contractId: lotteryContractEntity.id,
+      ticketContractId: ticketContractEntity.id,
+      priceId: assetEntity.id,
       maxTickets: Number(maxTicket),
     });
 
-    await this.notificatorService.roundStartLottery({
-      round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
+    Object.assign(
+      lotteryContractEntity.parameters,
+      Object.assign(lotteryContractEntity.parameters, {
+        roundId: lotteryRoundEntity.id,
+      }),
+    );
+    await lotteryContractEntity.save();
+
+    await this.notificatorService.lotteryRoundStart({
+      round: Object.assign(lotteryRoundEntity, {
+        contract: lotteryContractEntity,
+        ticketContract: ticketContractEntity,
+        price: assetEntity,
+      }),
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: lotteryContractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
-  public async finalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
+  public async lotteryFinalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { round, winValues },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    const roundEntity = await this.lotteryRoundService.getRound(round, address);
+    const lotteryRoundEntity = await this.lotteryRoundService.getRound(round, address);
 
-    if (!roundEntity) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    Object.assign(roundEntity, { numbers: getLotteryNumbers(winValues) });
-    await roundEntity.save();
+    Object.assign(lotteryRoundEntity, { numbers: getLotteryNumbers(winValues) });
+    await lotteryRoundEntity.save();
 
-    await this.aggregate(roundEntity);
+    await this.aggregate(lotteryRoundEntity);
 
     // NOTIFY
-    await this.notificatorService.finalizeLottery({
-      round: roundEntity,
+    await this.notificatorService.lotteryFinalize({
+      round: lotteryRoundEntity,
       prizeNumbers: winValues,
+      address,
+      transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: lotteryRoundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
-  public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
+  public async lotteryRoundEnd(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { round, endTimestamp },
     } = event;
     const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
-    const roundEntity = await this.lotteryRoundService.getRound(round, address.toLowerCase());
+    const lotteryRoundEntity = await this.lotteryRoundService.getRound(round, address.toLowerCase());
 
-    if (!roundEntity) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    Object.assign(roundEntity, {
+    Object.assign(lotteryRoundEntity, {
       endTimestamp: new Date(Number(endTimestamp) * 1000).toISOString(),
     });
 
-    await roundEntity.save();
+    await lotteryRoundEntity.save();
 
-    await this.notificatorService.roundEndLottery({
-      round: roundEntity,
+    const lotteryContractEntity = await this.contractService.findOne({ id: lotteryRoundEntity.contractId });
+
+    if (!lotteryContractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    Object.assign(
+      lotteryContractEntity.parameters,
+      Object.assign(lotteryContractEntity.parameters, {
+        roundId: null,
+      }),
+    );
+    await lotteryContractEntity.save();
+
+    await this.notificatorService.lotteryRoundEnd({
+      round: lotteryRoundEntity,
       address,
       transactionHash,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: lotteryRoundEntity.contract.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
-  public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
+  public async lotteryPrize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     const {
-      args: { roundId, ticketId },
+      name,
+      args: { account, roundId, ticketId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    // const { address } = context;
-    // TODO use it, check ticketId?
-    // TODO find ticket.round.ticketContract.address
-    // const roundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
-    const roundEntity = await this.lotteryRoundService.getRound(roundId, address.toLowerCase());
+    // const lotteryRoundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+    const lotteryRoundEntity = await this.lotteryRoundService.getRound(roundId, address.toLowerCase());
 
-    if (!roundEntity) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketEntity = await this.tokenService.getToken(ticketId, roundEntity.ticketContract.address.toLowerCase());
+    const ticketEntity = await this.tokenService.getToken(
+      ticketId,
+      lotteryRoundEntity.ticketContract.address.toLowerCase(),
+    );
 
     if (!ticketEntity) {
       throw new NotFoundException("ticketNotFound");
@@ -180,7 +241,25 @@ export class LotteryRoundServiceEth {
     // UPDATE PRIZE METADATA
     Object.assign(ticketEntity.metadata, { PRIZE: "1" });
     await ticketEntity.save();
+
     await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
+
+    // NOTIFY
+    await this.notificatorService.lotteryPrize({
+      round: lotteryRoundEntity,
+      ticket: ticketEntity,
+      multiplier: "1",
+      address,
+      transactionHash,
+    });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: account.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {

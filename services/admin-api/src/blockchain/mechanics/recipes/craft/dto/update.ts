@@ -4,7 +4,7 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { CraftStatus } from "@framework/types";
 
-import { ICraftUpdateDto } from "../interfaces";
+import type { ICraftUpdateDto } from "../interfaces";
 import { CraftCreateDto } from "./index";
 
 export class CraftUpdateDto extends CraftCreateDto implements ICraftUpdateDto {

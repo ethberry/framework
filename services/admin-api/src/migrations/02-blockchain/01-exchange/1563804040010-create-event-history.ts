@@ -103,6 +103,9 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'PaymentEthSent',
       --MODULE:CHAINLINKV2
        'RandomWordsRequested',
+       'SubscriptionCreated',
+       'SubscriptionConsumerAdded',
+       'VrfSubscriptionSet',
       --MODULE:ECOMMERCE
        'EcommercePurchase',
       --MODULE:CM
@@ -111,7 +114,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'ERC721TokenDeployed',
        'ERC998TokenDeployed',
        'ERC1155TokenDeployed',
-       'MysteryboxDeployed',
+       'MysteryBoxDeployed',
        'CollectionDeployed',
        'PonziDeployed',
        'StakingDeployed',
@@ -138,6 +141,10 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isPrimary: true,
         },
         {
+          name: "event_type",
+          type: "varchar",
+        },
+        {
           name: "address",
           type: "varchar",
         },
@@ -148,10 +155,6 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         },
         {
           name: "transaction_hash",
-          type: "varchar",
-        },
-        {
-          name: "event_type",
           type: "varchar",
         },
         {

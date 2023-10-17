@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { PonziRulesEntity } from "./rules.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { PonziRulesEntity } from "./rules.entity";
 
 @Injectable()
 export class PonziRulesService {

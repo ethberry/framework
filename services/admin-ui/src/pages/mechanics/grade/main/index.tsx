@@ -1,14 +1,5 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -18,6 +9,8 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IGrade, IGradeSearchDto } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
@@ -81,10 +74,7 @@ export const Grade: FC = () => {
 
       <PageHeader message="pages.grade.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="GradeCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -104,21 +94,21 @@ export const Grade: FC = () => {
               <ListItemText>
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(grade)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(grade)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(grade)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(grade)}
+                  message="form.buttons.delete"
+                  icon={Delete}
+                  disabled={grade.gradeStatus === GradeStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
@@ -130,6 +120,7 @@ export const Grade: FC = () => {
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
         initialValues={selected}
+        getTitle={(grade: IGrade) => `Attribute ${grade.attribute}`}
       />
 
       <GradeEditDialog

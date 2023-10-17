@@ -4,9 +4,8 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
@@ -22,7 +21,7 @@ import "../../Exchange/lib/ExchangeUtils.sol";
  *      - TopUp (Gemunion)
  *      This contract abstracts all common functions and is used as an foundation for other vesting contracts
  */
-contract Vesting is VestingWallet, Ownable, TopUp {
+contract Vesting is VestingWallet, TopUp {
   using SafeCast for uint256;
 
   uint64 public constant _monthInSeconds = 2592000; // The number of seconds in month
@@ -72,13 +71,6 @@ contract Vesting is VestingWallet, Ownable, TopUp {
    */
   receive() external payable override(VestingWallet, TopUp) {
     revert();
-  }
-
-  /**
-   * @dev Returns the beneficiary of the vesting contract.
-   */
-  function beneficiary() public view virtual override returns (address) {
-    return owner();
   }
 
   /**

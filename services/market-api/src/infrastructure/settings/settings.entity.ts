@@ -1,6 +1,7 @@
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
-import { ISettings, SettingsKeys } from "@framework/types";
+import type { ISettings } from "@framework/types";
+import { SettingsKeys } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "settings" })

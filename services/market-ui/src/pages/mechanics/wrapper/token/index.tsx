@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -12,6 +12,7 @@ import { ModuleType } from "@framework/types";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { WrapperContent } from "./wrapper-content";
+import { StyledImage, StyledPaper } from "./styled";
 
 export const WrapperToken: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -43,7 +44,7 @@ export const WrapperToken: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
+          <StyledImage component="img" src={selected.template!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
@@ -51,7 +52,7 @@ export const WrapperToken: FC = () => {
         <Grid item xs={3}>
           {selected.template?.contract?.contractModule === ModuleType.HIERARCHY ||
           selected.template?.contract?.contractModule === ModuleType.MYSTERY ? (
-            <Paper sx={{ p: 2, mb: 2 }}>
+            <StyledPaper>
               <Typography>
                 <FormattedMessage
                   id="pages.wrapper.token.price"
@@ -59,7 +60,7 @@ export const WrapperToken: FC = () => {
                 />
               </Typography>
               <TokenSellButton token={selected} />
-            </Paper>
+            </StyledPaper>
           ) : null}
         </Grid>
       </Grid>

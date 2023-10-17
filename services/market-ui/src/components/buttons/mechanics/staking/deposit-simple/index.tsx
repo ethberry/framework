@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { StakingRuleStatus } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
@@ -13,12 +13,14 @@ import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/dep
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IStakingDepositSimpleButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 
 export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { className, disabled, rule, variant } = props;
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
@@ -32,6 +34,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       referrer: constants.AddressZero,
     };
     const tokenId = rule.deposit!.components[0].templateId;
+
     return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
@@ -39,9 +42,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
 
   const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
-      return metaDeposit(rule).then(() => {
-        // TODO reload page
-      });
+      return metaDeposit(rule);
     };
   };
 
@@ -50,10 +51,14 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.deposit" })}>
-      <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositSimpleButton">
-        <Savings />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleDeposit(rule)}
+      icon={Savings}
+      message="form.tips.deposit"
+      className={className}
+      dataTestId="StakingDepositSimpleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

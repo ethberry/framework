@@ -1,11 +1,12 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { testChainId } from "@framework/constants";
-import { IERC721TokenTransferEvent, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
 
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryRoundService } from "../round/round.service";
@@ -26,6 +27,8 @@ export class LotteryTicketServiceEth {
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly lotteryTicketService: LotteryTicketService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly eventHistoryService: EventHistoryService,
@@ -39,6 +42,7 @@ export class LotteryTicketServiceEth {
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
@@ -66,6 +70,14 @@ export class LotteryTicketServiceEth {
       await erc721TokenEntity.balance[0].save();
       await erc721TokenEntity.save();
     }
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async createTicketToken(
@@ -92,12 +104,12 @@ export class LotteryTicketServiceEth {
       tokenId,
       metadata,
       royalty: templateEntity.contract.royalty,
-      templateId: templateEntity.id,
+      template: templateEntity,
       tokenStatus: TokenStatus.MINTED,
     });
 
     await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), "1");
-    await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+    await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
     return tokenEntity;
   }

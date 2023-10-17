@@ -20,23 +20,23 @@ export class RaffleRoundControllerEth {
   constructor(private readonly roundServiceEth: RaffleRoundServiceEth) {}
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.RoundStarted })
-  public start(@Payload() event: ILogEvent<IRaffleRoundStartedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.start(event, context);
+  public raffleRoundStart(@Payload() event: ILogEvent<IRaffleRoundStartedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.raffleRoundStart(event, context);
   }
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.RoundFinalized })
-  public finalize(@Payload() event: ILogEvent<IRaffleRoundFinalizedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.finalize(event, context);
+  public raffleFinalize(@Payload() event: ILogEvent<IRaffleRoundFinalizedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.raffleFinalize(event, context);
   }
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.RoundEnded })
-  public end(@Payload() event: ILogEvent<IRaffleRoundEndedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.end(event, context);
+  public raffleRoundEnd(@Payload() event: ILogEvent<IRaffleRoundEndedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.roundServiceEth.raffleRoundEnd(event, context);
   }
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.Prize })
   public prize(@Payload() event: ILogEvent<IRafflePrizeEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.prize(event, context);
+    return this.roundServiceEth.rafflePrize(event, context);
   }
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.Released })

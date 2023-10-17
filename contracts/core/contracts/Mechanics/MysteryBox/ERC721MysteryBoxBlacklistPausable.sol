@@ -4,11 +4,11 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 
-import "@gemunion/contracts-misc/contracts/attributes.sol";
+import "@gemunion/contracts-utils/contracts/attributes.sol";
 
 import "./ERC721MysteryBoxBlacklist.sol";
 
@@ -44,19 +44,7 @@ contract ERC721MysteryBoxBlacklistPausable is ERC721MysteryBoxBlacklist, Pausabl
     _unpause();
   }
 
-  /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   *
-   * Requirements:
-   *
-   * - the contract must not be paused.
-   */
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal virtual override whenNotPaused {
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+  function unpack(uint256 tokenId) public override whenNotPaused {
+    super.unpack(tokenId);
   }
 }

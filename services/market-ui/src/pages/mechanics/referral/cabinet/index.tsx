@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useClipboard } from "use-clipboard-copy";
 
@@ -8,6 +8,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 
 import { ReferralRewardButton } from "../../../../components/buttons";
+import { StyledTextField } from "./styled";
 
 export const ReferralCabinet: FC = () => {
   const { isActive, account = "" } = useWeb3React();
@@ -30,10 +31,9 @@ export const ReferralCabinet: FC = () => {
         <ReferralRewardButton />
       </PageHeader>
 
-      <TextField
+      <StyledTextField
         value={`${process.env.MARKET_FE_URL}/?referrer=${account}`}
         variant="standard"
-        sx={{ width: 650 }}
         inputRef={clipboard.target}
       />
       <Button onClick={clipboard.copy}>

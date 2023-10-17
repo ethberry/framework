@@ -1,17 +1,10 @@
 import { FC } from "react";
-import {
-  Avatar,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-} from "@mui/material";
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
-import { IPhoto, PhotoStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import type { IPhoto } from "@framework/types";
+import { PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 
@@ -61,14 +54,18 @@ export const Photo: FC = () => {
                 <Avatar alt={photo.title} src={photo.imageUrl} />
               </ListItemAvatar>
               <ListItemText primary={photo.title} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="approve" onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}>
-                  <Done />
-                </IconButton>
-                <IconButton edge="end" aria-label="delete" onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}>
-                  <Clear />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction
+                  onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}
+                  message="form.buttons.approve"
+                  icon={Done}
+                />
+                <ListAction
+                  onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}
+                  message="form.buttons.delete"
+                  icon={Clear}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>

@@ -1,20 +1,14 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
-import { IOrder, OrderStatus } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -87,10 +81,7 @@ export const Order: FC = () => {
 
       <PageHeader message="pages.orders.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommerceOrderCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -106,22 +97,18 @@ export const Order: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {rows.map(order => (
-            <ListItem key={order.id} disableGutters={true}>
+            <ListItem key={order.id} disableGutters>
               <ListItemText>Order #{order.id}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(order)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(order)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(order)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

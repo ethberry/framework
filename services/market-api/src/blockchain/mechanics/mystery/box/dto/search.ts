@@ -3,7 +3,8 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMysteryBoxSearchDto, MysteryBoxStatus } from "@framework/types";
+import type { IMysteryBoxSearchDto } from "@framework/types";
+import { MysteryBoxStatus } from "@framework/types";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchDto {

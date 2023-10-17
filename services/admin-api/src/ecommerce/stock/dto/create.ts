@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { IStockCreateDto } from "../interfaces";
+import type { IStockCreateDto } from "../interfaces";
 
 export class StockCreateDto implements IStockCreateDto {
   @ApiProperty({

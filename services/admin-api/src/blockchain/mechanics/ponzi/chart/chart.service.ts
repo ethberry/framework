@@ -21,7 +21,7 @@ export class PonziChartService {
     const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
 
     const contractEntity = await this.ponziContractService.findOne({
-      id: contractId,
+      id: contractId as number,
     });
 
     if (!contractEntity) {

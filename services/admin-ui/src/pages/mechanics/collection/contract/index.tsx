@@ -1,26 +1,35 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { CollectionContractFeatures, ContractStatus, IContract, IContractSearchDto } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import {
+  CollectionContractFeatures,
+  ContractFeatures,
+  ContractStatus,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 
 import { CollectionContractDeployButton } from "../../../../components/buttons";
-import { CollectionActionsMenu } from "../../../../components/menu/mechanics/collection";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
+import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
+import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
+import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
+import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
+import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
+import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
+import { TransferButton } from "../../../../components/buttons/common/transfer";
+import { CollectionUploadButton } from "../../../../components/buttons/mechanics/collection/upload";
+import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
+import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc721CollectionEditDialog } from "./edit";
 
 export const CollectionContract: FC = () => {
@@ -73,10 +82,7 @@ export const CollectionContract: FC = () => {
 
       <PageHeader message="pages.collection.contracts">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <CollectionContractDeployButton />
       </PageHeader>
@@ -95,28 +101,63 @@ export const CollectionContract: FC = () => {
             <ListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText>{contract.parameters.batchSize}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(contract)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions dataTestId="CollectionActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
                   onClick={handleDelete(contract)}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <CollectionActionsMenu
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <RenounceRoleButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+                <AllowanceButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <RoyaltyButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <BlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <UnBlacklistButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <TransferButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.SOULBOUND)
+                  }
+                />
+                <CollectionUploadButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  onRefreshPage={handleRefreshPage}
+                />
+                <EthListenerAddButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <EthListenerRemoveButton
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

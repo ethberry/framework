@@ -1,31 +1,33 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
-import type { IRaffleRound } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, IRaffleRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IRafflePurchaseButtonProps {
-  round: Partial<IRaffleRound>;
+  className?: string;
   disabled: boolean;
+  round: Partial<IRaffleRound>;
+  variant?: ListActionVariant;
 }
+
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
-  const { round, disabled } = props;
+  const { className, disabled, round, variant = ListActionVariant.button } = props;
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, RafflePurchaseABI, web3Context.provider?.getSigner());
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, RafflePurchaseABI, web3Context.provider?.getSigner());
 
       return contract.purchaseRaffle(
         {
@@ -73,7 +75,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       },
       null,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handlePurchase = () => {
@@ -81,8 +83,15 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="RaffleBuyTicket">
-      <FormattedMessage id="form.buttons.buy" />
-    </Button>
+    <ListAction
+      onClick={handlePurchase}
+      icon={Casino}
+      message="form.buttons.buy"
+      buttonVariant="contained"
+      className={className}
+      dataTestId="RafflePurchaseButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

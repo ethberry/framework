@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMerchantSearchDto, MerchantStatus } from "@framework/types";
+import type { IMerchantSearchDto } from "@framework/types";
+import { MerchantStatus } from "@framework/types";
 
 export class MerchantSearchDto extends SearchDto implements IMerchantSearchDto {
   @ApiPropertyOptional({

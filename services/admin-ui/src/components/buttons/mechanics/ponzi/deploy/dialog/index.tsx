@@ -2,7 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { IContract, PonziContractTemplates } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { PonziContractTemplates } from "@framework/types";
 
 import { emptyShare, SharesInput } from "./shares";
 import { validationSchema } from "./validation";

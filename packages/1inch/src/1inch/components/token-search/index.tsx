@@ -16,7 +16,7 @@ import { grey } from "@mui/material/colors";
 import { FormattedMessage } from "react-intl";
 import { FixedSizeList } from "react-window";
 
-import { IToken } from "../../provider";
+import type { IToken } from "../../provider";
 
 import { useAllTokens } from "../../hooks/useAllTokens";
 import { useDebounce } from "../../hooks/useDebounce";

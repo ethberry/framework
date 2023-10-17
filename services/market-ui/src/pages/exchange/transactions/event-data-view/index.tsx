@@ -5,6 +5,7 @@ import { IEventHistory } from "@framework/types";
 import { ContractEventType } from "../form";
 import { ClaimDataView } from "./claim";
 import { CraftDataView } from "./craft";
+import { DismantleDataView } from "./dismantle";
 import { DefaultDataView } from "./default";
 import { OwnershipTransferredDataView } from "./ownership-transferred";
 import { PurchaseDataView } from "./purchase";
@@ -17,6 +18,7 @@ import { TransferSingleDataView } from "./transfer-single";
 import { UnpackMysteryBoxDataView } from "./unpack-mystery-box";
 import { UpgradeDataView } from "./upgrade";
 import { WaitListRewardClaimedDataView } from "./wait-list-reward-claimed";
+import { LevelUpDataView } from "./levelUp";
 
 export interface IEventDataViewProps {
   row: IEventHistory;
@@ -25,13 +27,15 @@ export interface IEventDataViewProps {
 export const EventDataView: FC<IEventDataViewProps> = props => {
   const { row } = props;
 
-  const { assets, contract, eventData, eventType } = row as unknown as Required<IEventHistory>;
+  const { assets, contract, eventData, eventType, token } = row as unknown as Required<IEventHistory>;
 
   switch (eventType) {
     case ContractEventType.Claim:
       return <ClaimDataView assets={assets} contract={contract} />;
     case ContractEventType.Craft:
       return <CraftDataView assets={assets} contract={contract} />;
+    case ContractEventType.Dismantle:
+      return <DismantleDataView assets={assets} contract={contract} />;
     case ContractEventType.WaitListRewardClaimed:
       return <WaitListRewardClaimedDataView assets={assets} contract={contract} />;
     case ContractEventType.Purchase:
@@ -46,6 +50,8 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
       return <UnpackMysteryBoxDataView assets={assets} contract={contract} />;
     case ContractEventType.Upgrade:
       return <UpgradeDataView assets={assets} contract={contract} eventData={eventData} />;
+    case ContractEventType.LevelUp:
+      return <LevelUpDataView token={token} contract={contract} eventData={eventData} />;
     case ContractEventType.Transfer:
       return <TransferDataView eventData={eventData} contract={contract} />;
     case ContractEventType.TransferSingle:

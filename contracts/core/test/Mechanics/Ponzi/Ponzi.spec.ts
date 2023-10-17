@@ -3,7 +3,7 @@ import { ethers, web3 } from "hardhat";
 import { parseEther, WeiPerEther, ZeroAddress } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 
 import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
@@ -850,7 +850,7 @@ describe("Ponzi", function () {
         .withArgs(await ponziInstance.getAddress(), WeiPerEther);
     });
 
-    it("should finalize by selfdestruct", async function () {
+    it("should finalize", async function () {
       const [owner] = await ethers.getSigners();
 
       const ponziInstance = await deployPonzi();

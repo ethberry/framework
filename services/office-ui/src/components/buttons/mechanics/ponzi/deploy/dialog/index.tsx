@@ -1,9 +1,11 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { IContract, IPonziContractDeployDto, PonziContractTemplates } from "@framework/types";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import type { IContract } from "@framework/types";
+import { PonziContractTemplates } from "@framework/types";
 
+import { emptyShare, SharesInput } from "./shares";
 import { validationSchema } from "./validation";
 
 export interface IPonziContractDeployDialogProps {
@@ -13,10 +15,9 @@ export interface IPonziContractDeployDialogProps {
 }
 
 export const PonziContractDeployDialog: FC<IPonziContractDeployDialogProps> = props => {
-  const fixedValues: IPonziContractDeployDto = {
+  const fixedValues: Record<string, any> = {
     contractTemplate: PonziContractTemplates.SIMPLE,
-    payees: [],
-    shares: [],
+    shares: [emptyShare],
   };
 
   return (
@@ -27,9 +28,12 @@ export const PonziContractDeployDialog: FC<IPonziContractDeployDialogProps> = pr
       testId="PonziContractDeployForm"
       {...props}
     >
-      <SelectInput name="contractTemplate" options={PonziContractTemplates} />
-      <TextInput name="payees" />
-      <TextInput name="shares" />
+      <SelectInput
+        name="contractTemplate"
+        options={PonziContractTemplates}
+        disabledOptions={[PonziContractTemplates.SPLITTER]}
+      />
+      <SharesInput />
     </FormDialog>
   );
 };

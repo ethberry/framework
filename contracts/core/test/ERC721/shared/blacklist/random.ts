@@ -4,12 +4,12 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { subscriptionId, templateId } from "../../../constants";
 import { deployLinkVrfFixture } from "../../../shared/link";
-import { VRFCoordinatorMock } from "../../../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../../../typechain-types";
 import { randomRequest } from "../../../shared/randomRequest";
 
 export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<any>) {
   describe("Black list", function () {
-    let vrfInstance: VRFCoordinatorMock;
+    let vrfInstance: VRFCoordinatorV2Mock;
 
     before(async function () {
       await network.provider.send("hardhat_reset");

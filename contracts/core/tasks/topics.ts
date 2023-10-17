@@ -55,7 +55,7 @@ enum ContractEventSignature {
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper(uint256)",
 
-  // MODULE MYSTERY
+  // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox(address,uint256)",
 
   // MODULE:PAUSE
@@ -110,8 +110,8 @@ enum ContractEventSignature {
   // event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
   PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:GRADE
-  // event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
-  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[])",
+  // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
+  Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",
   // MODULE:WAITLIST
   //   event WaitListRewardSet(uint256 externalId, bytes32 root, Asset[] items);
   //   event WaitListRewardClaimed(address account, uint256 externalId, Asset[] items);
@@ -147,7 +147,7 @@ enum ContractEventSignature {
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC1155TokenDeployed = "ERC1155TokenDeployed(address,uint256,(uint96,string,string))",
-  MysteryboxDeployed = "MysteryboxDeployed(address,uint256,(string,string,uint96,string,string))",
+  MysteryBoxDeployed = "MysteryBoxDeployed(address,uint256,(string,string,uint96,string,string))",
   CollectionDeployed = "CollectionDeployed(address,uint256,(string,string,uint96,string,uint96,string))",
   PonziDeployed = "PonziDeployed(address,uint256,(address[],uint256[],string))",
   StakingDeployed = "StakingDeployed(address,uint256,(string))",

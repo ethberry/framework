@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 
 import { OtpModule } from "../otp/otp.module";
 import { UserModule } from "../user/user.module";
@@ -8,7 +8,7 @@ import { InvitationController } from "./invitation.controller";
 
 @Module({
   imports: [UserModule, OtpModule, EmailModule],
-  providers: [InvitationService],
+  providers: [Logger, InvitationService],
   controllers: [InvitationController],
   exports: [InvitationService],
 })

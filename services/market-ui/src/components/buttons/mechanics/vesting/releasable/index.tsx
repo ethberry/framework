@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -15,11 +14,13 @@ import { formatEther } from "../../../../../utils/money";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props => {
-  const { balance } = props;
-  const { formatMessage } = useIntl();
+  const { balance, className, disabled, variant } = props;
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
@@ -47,10 +48,14 @@ export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props 
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.releasable" })}>
-      <IconButton onClick={handleClick} data-testid="VestingReleasableButton">
-        <Visibility />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleClick}
+      icon={Visibility}
+      message="form.tips.releasable"
+      className={className}
+      dataTestId="VestingReleasableButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

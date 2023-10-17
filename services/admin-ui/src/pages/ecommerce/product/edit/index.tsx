@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ICategory, IProduct, ProductStatus } from "@framework/types";
+import { ProductStatus } from "@framework/types";
+import type { ICategory, IProduct } from "@framework/types";
 
 import { ParameterSelectInput } from "../../../../components/inputs/parameter-select";
 import { validationSchema } from "./validation";

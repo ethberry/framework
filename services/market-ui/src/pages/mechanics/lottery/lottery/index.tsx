@@ -6,8 +6,8 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
-
-import { IContract, IContractSearchDto } from "@framework/types";
+import { StyledAvatar } from "@framework/styled";
+import type { IContract, IContractSearchDto } from "@framework/types";
 
 import { LotteryPurchase } from "./purchase";
 import { LotteryStatistic } from "./statistics";
@@ -42,7 +42,7 @@ export const LotteryContract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

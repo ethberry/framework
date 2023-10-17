@@ -9,8 +9,10 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 export enum ContractEventType {
   WaitListRewardClaimed = "WaitListRewardClaimed", // +
   Claim = "Claim", // +
+  Dismantle = "Dismantle", // ???
   Craft = "Craft", // +
-  Upgrade = "Upgrade", // +
+  Upgrade = "Upgrade", // ???? upgrade is an exchange event
+  LevelUp = "LevelUp", // ???? levelUp is a contract event
   Purchase = "Purchase", // +
   PurchaseRaffle = "PurchaseRaffle", // assets; lucky number
   PurchaseLottery = "PurchaseLottery", // assets; numbers - array

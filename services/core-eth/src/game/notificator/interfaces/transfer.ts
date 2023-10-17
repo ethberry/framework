@@ -13,3 +13,9 @@ export interface IBatchTransferData {
   to: string;
   amounts: Array<string>;
 }
+
+export interface IConsecutiveTransferData {
+  tokens: Array<IToken>;
+  from: string;
+  to: string;
+}

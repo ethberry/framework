@@ -16,6 +16,11 @@ import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
 import { achievementsRoutes } from "./achievements/routes";
 
+import { myDBConfig } from "../components/dbstorage/db.config";
+import { initDB } from "react-indexed-db-hook";
+
+initDB(myDBConfig);
+
 const router = createBrowserRouter([
   {
     path: "/",

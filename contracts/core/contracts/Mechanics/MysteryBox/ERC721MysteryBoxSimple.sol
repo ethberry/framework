@@ -4,9 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
+pragma solidity ^0.8.20;
 
 import "./interfaces/IERC721MysteryBox.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
@@ -15,8 +13,6 @@ import "../../utils/errors.sol";
 import "../../utils/TopUp.sol";
 
 contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
-  using Counters for Counters.Counter;
-
   using Address for address;
 
   mapping(uint256 => Asset[]) internal _itemData;
@@ -52,7 +48,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   }
 
   function unpack(uint256 tokenId) public virtual {
-    require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
+    _checkAuthorized(_ownerOf(tokenId), _msgSender(), tokenId);
 
     emit UnpackMysteryBox(_msgSender(), tokenId);
 

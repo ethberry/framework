@@ -4,9 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
@@ -15,7 +15,7 @@ import "../../ERC721/interfaces/IERC721Discrete.sol";
 import "../override/SignatureValidator.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Upgrade(address account, uint256 externalId, Asset item, Asset[] price);
+  event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
 
   constructor() SignatureValidator() {}
 
@@ -31,8 +31,8 @@ contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, Pausab
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
-    emit Upgrade(_msgSender(), params.externalId, item, price);
+    uint256 level = IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
 
-    IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
+    emit Upgrade(_msgSender(), params.externalId, item, price, params.extra, level);
   }
 }

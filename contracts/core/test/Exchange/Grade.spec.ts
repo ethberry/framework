@@ -5,7 +5,7 @@ import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixtu
 import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { Contract, ZeroAddress, ZeroHash, encodeBytes32String } from "ethers";
+import { Contract, encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
 describe("Diamond Exchange Grade", function () {
@@ -104,7 +104,7 @@ describe("Diamond Exchange Grade", function () {
         signature,
       );
 
-      // event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
+      // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
       await expect(tx2)
         .to.emit(exchangeInstance, "Upgrade")
         .withArgs(
@@ -122,6 +122,8 @@ describe("Diamond Exchange Grade", function () {
             tokenId,
             amount,
           }),
+          params.extra,
+          1,
         )
         .to.emit(erc721Instance, "LevelUp")
         .withArgs(await exchangeInstance.getAddress(), tokenId, extra, 1);
@@ -129,7 +131,7 @@ describe("Diamond Exchange Grade", function () {
       await expect(tx2).changeTokenBalances(erc20Instance, [owner, receiver], [amount, -amount]);
     });
 
-    it("should fail: insufficient allowance", async function () {
+    it("should fail: ERC20InsufficientAllowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -182,10 +184,12 @@ describe("Diamond Exchange Grade", function () {
         signature,
       );
 
-      await expect(tx2).to.be.revertedWith(`ERC20: insufficient allowance`);
+      await expect(tx2)
+        .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+        .withArgs(await exchangeInstance.getAddress(), 0, amount);
     });
 
-    it("should fail: transfer amount exceeds balance", async function () {
+    it("should fail: ERC20InsufficientBalance", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -253,7 +257,9 @@ describe("Diamond Exchange Grade", function () {
         signature,
       );
 
-      await expect(tx2).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+      await expect(tx2)
+        .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+        .withArgs(receiver.address, 0, amount);
     });
 
     it("should fail: invalid token ID", async function () {
@@ -320,10 +326,10 @@ describe("Diamond Exchange Grade", function () {
         signature,
       );
 
-      await expect(tx2).to.be.revertedWith("ERC721: invalid token ID");
+      await expect(tx2).to.be.revertedWithCustomError(erc721Instance, "ERC721NonexistentToken").withArgs(tokenId);
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);

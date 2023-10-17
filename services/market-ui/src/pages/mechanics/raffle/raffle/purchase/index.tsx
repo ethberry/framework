@@ -8,7 +8,8 @@ import { CronExpression, IContract, IRaffleRound } from "@framework/types";
 import { formatPrice } from "../../../../../utils/money";
 import { RafflePurchaseButton } from "../../../../../components/buttons";
 import { emptyRaffleRound } from "../../../../../components/common/interfaces";
-import { StyledPaper, StyledTypography } from "./styled";
+import { StyledTypography } from "./styled";
+import { AllowanceButton } from "./allowance";
 
 interface IRafflePurchaseProps {
   contract: IContract;
@@ -51,17 +52,9 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.raffle.purchase.title">
-          <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
-            {round ? (
-              <RafflePurchaseButton
-                round={round}
-                // @ts-ignore
-                disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
-              />
-            ) : null}
-            {round && round ? formatPrice(round.price) : "Round not Active!"}
-          </StyledPaper>
-          <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
+          <StyledTypography>{round ? formatPrice(round.price) : "Round not Active!"}</StyledTypography>
+
+          <StyledTypography>
             {round && round && round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.raffle.purchase.count"
@@ -75,7 +68,17 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
                 values={{ count: round ? round.ticketCount : 0 }}
               />
             )}
-          </StyledPaper>
+          </StyledTypography>
+
+          <AllowanceButton contract={contract} />
+
+          {round ? (
+            <RafflePurchaseButton
+              round={round}
+              // @ts-ignore
+              disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
+            />
+          ) : null}
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">

@@ -3,7 +3,7 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 import type { IUser } from "./user";
 import type { IOrder, IProduct } from "../ecommerce";
 import { RatePlanType } from "./rate-plan";
-import { IChainLinkSubscription } from "../blockchain";
+import type { IChainLinkSubscription } from "../blockchain";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",

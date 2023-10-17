@@ -5,7 +5,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { useUser } from "@gemunion/provider-user";
-import { IUser, UserRole } from "@framework/types";
+import type { IUser } from "@framework/types";
+import { UserRole } from "@framework/types";
 
 export const MarketplaceSection: FC = () => {
   const { profile } = useUser<IUser>();

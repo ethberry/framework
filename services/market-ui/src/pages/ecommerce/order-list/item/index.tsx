@@ -4,8 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { format, parseISO } from "date-fns";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IOrder } from "@framework/types";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import type { IOrder } from "@framework/types";
 
 interface IOrderItemProps {
   order: IOrder;

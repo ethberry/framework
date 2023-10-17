@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "./AbstractFactoryFacet.sol";
 
@@ -44,10 +44,9 @@ contract ERC20FactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
 
     emit ERC20TokenDeployed(account, params.externalId, args);
 
-    bytes32[] memory roles = new bytes32[](3);
+    bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
-    roles[1] = SNAPSHOT_ROLE;
-    roles[2] = DEFAULT_ADMIN_ROLE;
+    roles[1] = DEFAULT_ADMIN_ROLE;
 
     grantFactoryMintPermission(account);
     fixPermissions(account, roles);

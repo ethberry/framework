@@ -1,24 +1,17 @@
 import { FC } from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto, TokenStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { RaffleRewardButton } from "../../../../components/buttons";
 import { RaffleTokenSearchForm } from "./form";
 import { RaffleTokenViewDialog } from "./view";
-import { RaffleRewardButton } from "../../../../components/buttons";
 
 export const RaffleTokenList: FC = () => {
   const {
@@ -63,30 +56,29 @@ export const RaffleTokenList: FC = () => {
       <RaffleTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List sx={{ overflowX: "auto" }}>
           {rows.map(token => (
             <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{token.metadata.NUMBER}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
-              <ListItemSecondaryAction>
-                <RaffleRewardButton token={token} />
-                <IconButton onClick={handleView(token)}>
-                  <Visibility />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <RaffleRewardButton
+                  token={token}
+                  disabled={token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
+                />
+                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

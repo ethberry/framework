@@ -1,4 +1,4 @@
-import { IMerchantSocial } from "@framework/types";
+import type { IMerchantSocial } from "@framework/types";
 
 export interface IMerchantUpdateDto {
   title: string;

@@ -19,29 +19,29 @@ export const RecipesSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/craft">
+        <ListItemButton component={RouterLink} to="/recipes/craft">
           <ListItemIcon>
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.craft.title" />
+            <FormattedMessage id="pages.recipes.craft.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/dismantle">
+        <ListItemButton component={RouterLink} to="/recipes/dismantle">
           <ListItemIcon>
             <Hardware />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dismantle.title" />
+            <FormattedMessage id="pages.recipes.dismantle.title" />
           </ListItemText>
         </ListItemButton>
         {isDevelopment ? (
-          <ListItemButton component={RouterLink} to="/merge">
+          <ListItemButton component={RouterLink} to="/recipes/merge">
             <ListItemIcon>
               <Merge />
             </ListItemIcon>
             <ListItemText>
-              <FormattedMessage id="pages.merge.title" />
+              <FormattedMessage id="pages.recipes.merge.title" />
             </ListItemText>
           </ListItemButton>
         ) : null}

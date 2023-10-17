@@ -4,9 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-misc/contracts/interfaces.sol";
+import "@gemunion/contracts-utils/contracts/interfaces.sol";
 
 import "../utils/constants.sol";
 import "./ERC721Blacklist.sol";
@@ -26,9 +26,9 @@ contract ERC721BlacklistDiscrete is IERC721Discrete, ERC721Blacklist {
    * @dev Validates and upgrades attribute
    * @param tokenId The NFT to upgrade
    * @param attribute parameter name
-   * @return The result of operation
+   * @return uint256 The upgraded level
    */
-  function upgrade(uint256 tokenId, bytes32 attribute) public virtual onlyRole(METADATA_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual onlyRole(METADATA_ROLE) returns (uint256) {
     // TEMPLATE_ID refers to database id
     if (attribute == TEMPLATE_ID) {
       revert ProtectedAttribute(attribute);
@@ -41,15 +41,15 @@ contract ERC721BlacklistDiscrete is IERC721Discrete, ERC721Blacklist {
    * @dev Does actual upgrade
    * @param tokenId The NFT to upgrade
    * @param attribute parameter name
-   * @return The result of operation
+   * @return uint256 The upgraded level
    */
-  function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (bool) {
-    _requireMinted(tokenId);
+  function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (uint256) {
+    _requireOwned(tokenId);
     uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
     _upsertRecordField(tokenId, attribute, value + 1);
     emit LevelUp(_msgSender(), tokenId, attribute, value + 1);
     emit MetadataUpdate(tokenId);
-    return true;
+    return value + 1;
   }
 
   /**

@@ -5,7 +5,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";

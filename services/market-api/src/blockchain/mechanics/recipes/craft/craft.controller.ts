@@ -2,14 +2,14 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptor
 
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ICraftCountResult } from "@framework/types";
+import type { ICraftCountResult } from "@framework/types";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
 import { CraftCountDto, CraftSearchDto, CraftSignDto } from "./dto";
 
 @Public()
-@Controller("/craft")
+@Controller("/recipes/craft")
 export class CraftController {
   constructor(private readonly craftService: CraftService) {}
 

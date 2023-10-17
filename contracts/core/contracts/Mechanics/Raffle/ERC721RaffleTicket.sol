@@ -4,9 +4,10 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC721Burnable} from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
@@ -17,8 +18,6 @@ import "../../utils/constants.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
 
 contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
-  using Counters for Counters.Counter;
-
   mapping(uint256 => TicketRaffle) private _data;
 
   constructor(
@@ -27,7 +26,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721ABER(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
-    _tokenIdTracker.increment();
+    _nextTokenId++;
   }
 
   // TICKET
@@ -36,15 +35,14 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     address account,
     uint256 roundId,
     uint256 externalId
-  ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
+  ) external onlyRole(MINTER_ROLE) returns (uint256) {
+    _data[_nextTokenId] = TicketRaffle(roundId, externalId, false);
 
-    _data[tokenId] = TicketRaffle(roundId, externalId, false);
+    _upsertRecordField(_nextTokenId, ROUND, externalId);
 
-    _upsertRecordField(tokenId, ROUND, externalId);
+    _safeMint(account, _nextTokenId);
 
-    _safeMint(account, tokenId);
+    return _nextTokenId++;
   }
 
   /**
@@ -59,16 +57,12 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
   }
 
   function getTicketData(uint256 tokenId) external view returns (TicketRaffle memory) {
-    if (!_exists(tokenId)) {
-      revert WrongToken();
-    }
+    _requireOwned(tokenId);
     return _data[tokenId];
   }
 
   function setPrize(uint256 tokenId, uint256 multiplier) external onlyRole(MINTER_ROLE) {
-    if (!_exists(tokenId)) {
-      revert WrongToken();
-    }
+    _requireOwned(tokenId);
     // TODO use only metadata as storage?
     _data[tokenId].prize = true;
     _upsertRecordField(tokenId, PRIZE, multiplier);

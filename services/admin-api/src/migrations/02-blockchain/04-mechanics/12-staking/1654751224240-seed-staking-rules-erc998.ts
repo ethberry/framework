@@ -51,7 +51,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ) VALUES (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81411
       ), (
@@ -63,7 +63,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81421
       ), (
@@ -75,7 +75,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81431
       ), (
@@ -87,19 +87,19 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81441
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81442
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81451
       ), (
@@ -111,7 +111,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040602, -- rouge
         1,
         81499
       );

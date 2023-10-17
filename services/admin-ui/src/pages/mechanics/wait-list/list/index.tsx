@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Button, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -10,11 +10,15 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/wait-list-list";
 import { cleanUpAsset } from "../../../../utils/money";
+import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
+import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
+import { WaitListListGenerateButton } from "../../../../components/buttons/mechanics/wait-list/list/generate";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -35,6 +39,7 @@ export const WaitListList: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IWaitListList, ISearchDto>({
     baseUrl: "/wait-list/list",
     empty: {
@@ -79,25 +84,31 @@ export const WaitListList: FC = () => {
           {rows.map(waitListList => (
             <ListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(waitListList)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(waitListList)}>
-                  <Delete />
-                </IconButton>
-                <WaitListListActionsMenu
+              <ListActions dataTestId="WaitListActionsMenuButton">
+                <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(waitListList)} message="form.buttons.delete" icon={Delete} />
+                <WaitListListCreateButton
                   waitListList={waitListList}
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
                 />
-              </ListItemSecondaryAction>
+                <WaitListListUploadButton
+                  waitListList={waitListList}
+                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
+                />
+                <WaitListListGenerateButton
+                  waitListList={waitListList}
+                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                  onRefreshPage={handleRefreshPage}
+                />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

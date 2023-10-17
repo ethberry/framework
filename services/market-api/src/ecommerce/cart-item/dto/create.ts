@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { ICartItemCreateDto } from "../interfaces";
+import type { ICartItemCreateDto } from "../interfaces";
 
 export class CartItemCreateDto implements ICartItemCreateDto {
   @ApiProperty({

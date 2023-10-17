@@ -11,7 +11,8 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || testChainId;
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR || wallet;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
+    const fromBlock = process.env.STARTING_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -53,7 +54,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 202},
         '${exchangeAddressBinance}',
-        56,
+        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
         'EXCHANGE (BNB)',
         '${simpleFormatting}',
         '',
@@ -64,7 +65,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         null,
         '{WITHDRAW,ALLOWANCE,SPLITTER,REFERRAL}',
         'EXCHANGE',
-        '${fromBlock}',
+        '${fromBlockBinance}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

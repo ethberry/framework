@@ -17,6 +17,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { AssetModule } from "../../../exchange/asset/asset.module";
     EventHistoryModule,
     TypeOrmModule.forFeature([RaffleTicketEntity]),
   ],
-  providers: [Logger, ethersRpcProvider, RaffleTicketService, RaffleTicketServiceEth],
+  providers: [Logger, signalServiceProvider, ethersRpcProvider, RaffleTicketService, RaffleTicketServiceEth],
   controllers: [RaffleTicketControllerEth],
   exports: [RaffleTicketService, RaffleTicketServiceEth],
 })

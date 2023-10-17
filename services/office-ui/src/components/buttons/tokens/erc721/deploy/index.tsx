@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc721ContractTemplates, IErc721ContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, IErc721ContractDeployDto, IUser } from "@framework/types";
+import { Erc721ContractTemplates } from "@framework/types";
 
 import DeployERC721TokenABI from "../../../../../abis/hierarchy/erc721/contract-deploy/deployERC721Token.abi.json";
 
@@ -13,26 +14,40 @@ import { Erc721ContractDeployDialog } from "./dialog";
 
 export interface IErc721ContractDeployButtonProps {
   className?: string;
+  contractTemplate?: Erc721ContractTemplates;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = props => {
-  const { className } = props;
+  const {
+    className,
+    contractTemplate = Erc721ContractTemplates.SIMPLE,
+    disabled,
+    variant = ListActionVariant.button,
+  } = props;
+
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc721ContractDeployDto, web3Context, sign) => {
+    (values: IErc721ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployERC721TokenABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployERC721TokenABI, web3Context.provider?.getSigner());
 
       return contract.deployERC721Token(
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: profile.id,
         },
-        values,
+        // values,
+        {
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(values.contractTemplate).toString(),
+          name: values.name,
+          symbol: values.symbol,
+          baseTokenURI: values.baseTokenURI,
+          royalty: values.royalty,
+        },
         sign.signature,
       ) as Promise<void>;
     },
@@ -51,21 +66,21 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="Erc721ContractDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="Erc721ContractDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <Erc721ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          contractTemplate: Erc721ContractTemplates.SIMPLE,
+          contractTemplate,
           name: "",
           symbol: "",
           baseTokenURI: `${process.env.JSON_URL}/metadata`,

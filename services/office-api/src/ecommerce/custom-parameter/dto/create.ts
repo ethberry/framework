@@ -3,7 +3,7 @@ import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 
 import { ParameterType } from "@framework/types";
 
-import { ICustomParameterCreateDto } from "../interfaces";
+import type { ICustomParameterCreateDto } from "../interfaces";
 
 export class CustomParameterCreateDto implements ICustomParameterCreateDto {
   @ApiProperty()

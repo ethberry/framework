@@ -14,7 +14,7 @@ import {
 import { testChainId } from "@framework/constants";
 
 import { AchievementsRuleService } from "../../achievements/rule/rule.service";
-import { ChainLinkEventType } from "../integrations/chain-link/contract/log/interfaces";
+import { ChainLinkEventType } from "../integrations/chain-link/interfaces";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { EventHistoryEntity } from "./event-history.entity";
 
@@ -116,7 +116,7 @@ export class EventHistoryService {
     const { transactionHash, address, blockNumber } = context;
 
     if (!contractId) {
-      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
 
       if (!parentContractEntity) {
         throw new NotFoundException("contractNotFound");
@@ -190,6 +190,7 @@ export class EventHistoryService {
           ExchangeEventType.Upgrade,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
+          ExchangeEventType.Dismantle,
           ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,

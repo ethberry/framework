@@ -1,12 +1,11 @@
 import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import type { IUser, IVestingContractDeployDto } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
@@ -14,10 +13,12 @@ import { VestingDeployDialog } from "./dialog";
 
 export interface IVestingDeployButtonProps {
   className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
   // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
@@ -28,16 +29,12 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   );
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IVestingContractDeployDto, web3Context, sign) => {
+    (values: IVestingContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = values;
 
       const nonce = utils.arrayify(sign.nonce);
 
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployVestingABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, DeployVestingABI, web3Context.provider?.getSigner());
 
       return contract.deployVesting(
         {
@@ -70,15 +67,15 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleDeploy}
-        data-testid="VestingDeployButton"
+        icon={Add}
+        message="form.buttons.deploy"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.deploy" />
-      </Button>
+        dataTestId="VestingDeployButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <VestingDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}

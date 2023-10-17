@@ -1,10 +1,12 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert, Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { BusinessType, ContractStatus, IContract } from "@framework/types";
+import { BusinessType, ContractFeatures, ContractStatus, IContract } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../components/dialogs/product-type";
@@ -78,6 +80,17 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
       <AvatarInput name="imageUrl" />
+      {contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES) ? (
+        <Fragment>
+          <Alert severity="warning">
+            <Typography>
+              <a id="anchor" href={"/chain-link"}>
+                <FormattedMessage id="alert.randomChainlink" />
+              </a>
+            </Typography>
+          </Alert>
+        </Fragment>
+      ) : null}
     </FormDialog>
   );
 };

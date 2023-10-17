@@ -1,3 +1,4 @@
+export * from "./transaction/transaction";
 export * from "./event-history";
 export * from "./contract-manager";
 
@@ -8,13 +9,12 @@ export * from "./exchange/asset";
 export * from "./exchange/asset-history";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
-export * from "./exchange/payee";
 
 export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
-export * from "./mechanics/craft/craft";
-export * from "./mechanics/dismantle/dismantle";
-export * from "./mechanics/drop/drop";
+export * from "./mechanics/recipes/craft";
+export * from "./mechanics/recipes/dismantle";
+export * from "./mechanics/promo/promo";
 export * from "./mechanics/grade/grade";
 
 export * from "./mechanics/lottery/aggregation";
@@ -22,7 +22,7 @@ export * from "./mechanics/lottery/round";
 export * from "./mechanics/lottery/ticket";
 export * from "./mechanics/lottery/token";
 
-export * from "./mechanics/mysterybox/mysterybox";
+export * from "./mechanics/mystery/box";
 export * from "./mechanics/ponzi/leaderboard";
 export * from "./mechanics/ponzi/rule";
 export * from "./mechanics/ponzi/deposit";

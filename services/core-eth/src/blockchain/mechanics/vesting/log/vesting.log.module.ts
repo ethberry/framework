@@ -5,7 +5,14 @@ import { CronExpression } from "@nestjs/schedule";
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractType,
+  Erc1363EventType,
+  ModuleType,
+  NodeEnv,
+  VestingEventType,
+} from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
@@ -13,6 +20,7 @@ import { VestingLogService } from "./vesting.log.service";
 import { VestingInterface } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { getEventsTopics } from "../../../../common/utils";
 
 @Module({
   imports: [
@@ -24,32 +32,36 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const vestingContracts = await contractService.findAllByType([ModuleType.VESTING]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
+
+        const eventNames = [
+          VestingEventType.ERC20Released,
+          VestingEventType.EtherReleased,
+          // VestingEventType.EtherReceived,
+          VestingEventType.PaymentEthReceived,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.OwnershipTransferred,
+          // MODULE:ERC1363
+          Erc1363EventType.TransferReceived,
+        ];
+
+        const topics = getEventsTopics(eventNames);
         return {
           contract: {
             contractType: ContractType.VESTING,
             contractAddress: vestingContracts.address,
             contractInterface: VestingInterface,
-            // prettier-ignore
-            eventNames: [
-              VestingEventType.ERC20Released,
-              VestingEventType.EtherReleased,
-              // VestingEventType.EtherReceived,
-              VestingEventType.PaymentEthReceived,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.OwnershipTransferred,
-              // MODULE:ERC1363
-              Erc1363EventType.TransferReceived
-            ],
+            topics,
           },
           block: {
             fromBlock: vestingContracts.fromBlock || startingBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -18,11 +9,13 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IDismantle, IDismantleSearchDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, TokenType } from "@framework/types";
 
-import { DismantleEditDialog } from "./edit";
 import { cleanUpAsset, formatItem } from "../../../../utils/money";
+import { DismantleEditDialog } from "./edit";
 
 export const Dismantle: FC = () => {
   const {
@@ -45,7 +38,7 @@ export const Dismantle: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/dismantle",
+    baseUrl: "/recipes/dismantle",
     empty: {
       price: getEmptyTemplate(TokenType.ERC721),
       item: getEmptyTemplate(TokenType.ERC1155),
@@ -76,14 +69,11 @@ export const Dismantle: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "dismantle"]} />
+      <Breadcrumbs path={["dashboard", "recipes", "recipes.dismantle"]} />
 
-      <PageHeader message="pages.dismantle.title">
+      <PageHeader message="pages.recipes.dismantle.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="DismantleCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -104,21 +94,16 @@ export const Dismantle: FC = () => {
             <ListItem key={dismantle.id} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.item)}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(dismantle)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(dismantle)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(dismantle)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(dismantle)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

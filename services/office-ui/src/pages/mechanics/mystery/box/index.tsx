@@ -1,15 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -21,13 +12,15 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
-import { IUser, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
+import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
-import { MysteryboxEditDialog } from "./edit";
+import { MysteryBoxMintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { ContractInput } from "../../../../components/forms/template-search/contract-input";
+import { MysteryboxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
   const { profile } = useUser<IUser>();
@@ -96,10 +89,7 @@ export const MysteryBox: FC = () => {
 
       <PageHeader message="pages.mystery.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -137,28 +127,25 @@ export const MysteryBox: FC = () => {
           {rows.map(mystery => (
             <ListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(mystery)}>
-                  <Create />
-                </IconButton>
-                <IconButton
+              <ListActions>
+                <ListAction onClick={handleEdit(mystery)} message="form.buttons.edit" icon={Create} />
+                <ListAction
                   onClick={handleDelete(mystery)}
+                  icon={Delete}
+                  message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                >
-                  <Delete />
-                </IconButton>
-                <MysteryActionsMenu
+                />
+                <MysteryBoxMintButton
                   mystery={mystery}
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-              </ListItemSecondaryAction>
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

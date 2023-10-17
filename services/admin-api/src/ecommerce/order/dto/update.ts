@@ -4,7 +4,7 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { OrderStatus } from "@framework/types";
 
-import { IOrderUpdateDto } from "../interfaces";
+import type { IOrderUpdateDto } from "../interfaces";
 import { OrderCreateDto } from "./create";
 
 export class OrderUpdateDto extends OrderCreateDto implements IOrderUpdateDto {

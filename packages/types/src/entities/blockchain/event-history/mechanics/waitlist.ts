@@ -1,4 +1,4 @@
-import { IAssetItem } from "../exchange/common";
+import type { IAssetItem } from "../exchange/common";
 
 export enum WaitListEventType {
   WaitListRewardSet = "WaitListRewardSet",

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IOrder } from "@framework/types";
+import type { IOrder } from "@framework/types";
 
 import { OrderList } from "../order-list";
 import { StyledContainer, StyledHeader } from "./styled";

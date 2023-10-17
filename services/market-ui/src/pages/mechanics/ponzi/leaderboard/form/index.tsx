@@ -55,7 +55,7 @@ export const PonziLeaderboardSearchForm: FC<IPonziLeaderboardSearchFormProps> = 
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["deposit.contractId", "reward.contractId"]} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

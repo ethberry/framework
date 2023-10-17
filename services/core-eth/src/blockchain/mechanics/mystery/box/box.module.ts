@@ -16,6 +16,7 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
     NotificatorModule,
     TypeOrmModule.forFeature([MysteryBoxEntity]),
   ],
-  providers: [Logger, MysteryBoxService, MysteryBoxServiceEth, ethersRpcProvider],
+  providers: [Logger, signalServiceProvider, MysteryBoxService, MysteryBoxServiceEth, ethersRpcProvider],
   controllers: [MysteryBoxControllerEth],
   exports: [MysteryBoxService, MysteryBoxServiceEth],
 })

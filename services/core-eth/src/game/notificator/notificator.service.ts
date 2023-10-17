@@ -7,32 +7,35 @@ import { MobileEventType } from "@framework/types";
 import { MerchantService } from "../../infrastructure/merchant/merchant.service";
 import type {
   IBatchTransferData,
+  IBreedData,
   IClaimData,
+  IConsecutiveTransferData,
+  ICraftData,
+  IDismantleData,
   IGradeData,
+  ILotteryFinalizeData,
+  ILotteryPrizeData,
+  ILotteryPurchaseData,
+  ILotteryRoundEndData,
+  ILotteryRoundStartData,
+  IMysteryPurchaseData,
+  IMysteryUnpackData,
   IPurchaseData,
   IPurchaseRandomData,
+  IRaffleFinalizeData,
+  IRafflePrizeData,
+  IRafflePurchaseData,
+  IRaffleRoundEndData,
+  IRaffleRoundStartData,
   IRentUserUpdateData,
-  IRoundEndLotteryData,
-  IRoundEndRaffleData,
-  IRoundStartRaffleData,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
   IStakingRuleUpdatedData,
-  IWaitListRewardClaimedData,
-  IWaitListRewardSetData,
-} from "./interfaces";
-import {
-  ICraftData,
-  IFinalizeLotteryData,
-  IFinalizeRaffleData,
-  IPrizeRaffleData,
-  IPurchaseRaffleData,
-  IRoundStartLotteryData,
   ITokenTransferData,
   IVestingReleaseData,
-  IUnpackMysteryData,
-  IDismantleData,
+  IWaitListRewardClaimedData,
+  IWaitListRewardSetData,
 } from "./interfaces";
 
 @Injectable()
@@ -50,12 +53,12 @@ export class NotificatorService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
+    const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://admin:admin@127.0.0.1:5672");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: [rmqUrl],
-        queue: merchantId.toString(),
+        urls: [`${rmqUrl}/merchant`],
+        queue: `merchant${merchantId.toString()}`, // "merchant1"
         queueOptions: {
           durable: false,
         },
@@ -84,6 +87,12 @@ export class NotificatorService {
     });
   }
 
+  public consecutiveTransfer(data: IConsecutiveTransferData): Promise<any> {
+    return this.sendMessage(data.tokens[0].template!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.CONSECUTIVE_TRANSFER, data).toPromise();
+    });
+  }
+
   // MODULE:RENT
   public updateUser(data: IRentUserUpdateData): Promise<any> {
     return this.sendMessage(data.merchantId, clientProxy => {
@@ -91,7 +100,7 @@ export class NotificatorService {
     });
   }
 
-  // MODULE:CORE
+  // MODULE:EXCHANGE
   public purchase(data: IPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE, data).toPromise();
@@ -105,15 +114,15 @@ export class NotificatorService {
   }
 
   // MODULE:MYSTERY
-  public purchaseMystery(data: IPurchaseData): Promise<any> {
+  public purchaseMystery(data: IMysteryPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.MYSTERY_PURCHASE, data).toPromise();
     });
   }
 
-  public unpackMystery(data: IUnpackMysteryData): Promise<any> {
+  public unpackMystery(data: IMysteryUnpackData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.MYSTERY_UNPACK, data).toPromise();
     });
   }
 
@@ -127,7 +136,7 @@ export class NotificatorService {
   // MODULE:CRAFT
   public async craft(data: ICraftData): Promise<any> {
     return this.sendMessage(data.craft.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+      return clientProxy.emit(MobileEventType.CRAFT, data).toPromise();
     });
   }
 
@@ -154,7 +163,7 @@ export class NotificatorService {
   // MODULE:GRADE
   public grade(data: IGradeData): Promise<any> {
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.UPGRADE, data).toPromise();
+      return clientProxy.emit(MobileEventType.LEVEL_UP, data).toPromise();
     });
   }
 
@@ -184,58 +193,64 @@ export class NotificatorService {
   }
 
   // MODULE:RAFFLE
-  public purchaseRaffle(data: IPurchaseRaffleData): Promise<any> {
+  public rafflePurchase(data: IRafflePurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
+      return clientProxy.emit(MobileEventType.RAFFLE_PURCHASE, data).toPromise();
     });
   }
 
-  public finalizeRaffle(data: IFinalizeRaffleData): Promise<any> {
-    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.FINALIZE_RAFFLE, data).toPromise();
-    });
-  }
-
-  public prizeRaffle(data: IPrizeRaffleData): Promise<any> {
-    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PRIZE_RAFFLE, data).toPromise();
-    });
-  }
-
-  public roundStartRaffle(data: IRoundStartRaffleData): Promise<any> {
+  public raffleRoundStart(data: IRaffleRoundStartData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RAFFLE_ROUND_START, data).toPromise();
     });
   }
 
-  public roundEndRaffle(data: IRoundEndRaffleData): Promise<any> {
+  public raffleRoundEnd(data: IRaffleRoundEndData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RAFFLE_ROUND_END, data).toPromise();
     });
   }
 
-  // MODULE:LOTTERY
-  public purchaseLottery(data: IPurchaseData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
-    });
-  }
-
-  public finalizeLottery(data: IFinalizeLotteryData): Promise<any> {
+  public raffleFinalize(data: IRaffleFinalizeData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.FINALIZE_LOTTERY, data).toPromise();
+      return clientProxy.emit(MobileEventType.RAFFLE_FINALIZE, data).toPromise();
     });
   }
 
-  public roundStartLottery(data: IRoundStartLotteryData): Promise<any> {
+  public rafflePrize(data: IRafflePrizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_PRIZE, data).toPromise();
+    });
+  }
+
+  // MODULE:LOTTERY
+  public lotteryPurchase(data: ILotteryPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_PURCHASE, data).toPromise();
+    });
+  }
+
+  public lotteryRoundStart(data: ILotteryRoundStartData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_START, data).toPromise();
     });
   }
 
-  public roundEndLottery(data: IRoundEndLotteryData): Promise<any> {
+  public lotteryRoundEnd(data: ILotteryRoundEndData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_END, data).toPromise();
+    });
+  }
+
+  public lotteryFinalize(data: ILotteryFinalizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_FINALIZE, data).toPromise();
+    });
+  }
+
+  public lotteryPrize(data: ILotteryPrizeData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_PRIZE, data).toPromise();
     });
   }
 
@@ -243,6 +258,13 @@ export class NotificatorService {
   public vestingRelease(data: IVestingReleaseData): Promise<any> {
     return this.sendMessage(data.vesting.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.VESTING_RELEASED, data).toPromise();
+    });
+  }
+
+  // MODULE:BREED
+  public breed(data: IBreedData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.BREED, data).toPromise();
     });
   }
 }

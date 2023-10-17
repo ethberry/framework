@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Divider, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
-import { Root } from "./styled";
+import { Root, StyledDivider } from "./styled";
 
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
@@ -17,8 +17,8 @@ import { RaffleSection } from "./mechanics/raffle";
 import { LotterySection } from "./mechanics/lottery";
 import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
-import { CraftSection } from "./mechanics/craft";
-import { DropSection } from "./mechanics/drop";
+import { RecipesSection } from "./mechanics/recipes";
+import { AssetPromoSection } from "./mechanics/promo";
 import { ReferralSection } from "./exchange/referral";
 import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
@@ -52,11 +52,11 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <VestingSection />
-          <CraftSection />
-          <DropSection />
+          <RecipesSection />
+          <AssetPromoSection />
           <RentSection />
           <BreedSection />
-          <Divider sx={{ m: 2 }} />
+          <StyledDivider />
           <LotterySection />
           <RaffleSection />
           <StakingSection />

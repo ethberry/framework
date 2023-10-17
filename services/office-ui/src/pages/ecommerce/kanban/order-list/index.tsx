@@ -7,7 +7,7 @@ import {
   DroppableProvided,
 } from "react-beautiful-dnd";
 
-import { IOrder } from "@framework/types";
+import type { IOrder } from "@framework/types";
 
 import { OrderListItem } from "../order-item";
 import { useStyles } from "./styles";

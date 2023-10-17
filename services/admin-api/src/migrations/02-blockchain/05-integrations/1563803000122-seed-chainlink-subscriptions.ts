@@ -6,8 +6,8 @@ import { NodeEnv } from "@framework/types";
 export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = BigInt(process.env.CHAIN_ID || testChainId);
-    const subId = BigInt(process.env.CHAINLINK_SUBSCRIPTION_ID || 1n);
+    const chainId = process.env.CHAIN_ID || testChainId;
+    const subId = process.env.CHAINLINK_SUBSCRIPTION_ID || 1;
 
     if (process.env.NODE_ENV === NodeEnv.production) {
       // this is commented out while we are on test network
@@ -30,7 +30,7 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
       ), (
         1,
         '13377',
-        '${subId}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -28,6 +28,7 @@ export class RaffleRoundService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("round.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     queryBuilder.andWhere("round.roundId = :roundId", {
       roundId: Number(roundId).toString(),

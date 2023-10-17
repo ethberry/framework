@@ -7,6 +7,7 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { InputType } from "@gemunion/types-collection";
 import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
@@ -28,14 +29,13 @@ export const StakingLeaderboard: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 0,
+        contractId: InputType.awaited,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 0,
+        contractId: InputType.awaited,
       },
     },
-    awaitingFieldsNames: ["deposit.contractId", "reward.contractId"],
   });
 
   const { formatMessage } = useIntl();
@@ -96,11 +96,8 @@ export const StakingLeaderboard: FC = () => {
       <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
       <PageHeader message="pages.staking.leaderboard.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 

@@ -26,7 +26,7 @@ import { ClaimSection } from "./mechanics/claim";
 import { CollectionSection } from "./mechanics/collection";
 import { RecipesSection } from "./mechanics/recipes";
 import { DispenserSection } from "./mechanics/dispenser";
-import { DropSection } from "./mechanics/drop";
+import { AssetPromoSection } from "./mechanics/promo";
 import { GradeSection } from "./mechanics/grade";
 import { LotterySection } from "./mechanics/lottery";
 import { RaffleSection } from "./mechanics/raffle";
@@ -60,7 +60,7 @@ export const Dashboard: FC = () => {
           <VestingSection />
           <GradeSection />
           <RecipesSection />
-          <DropSection />
+          <AssetPromoSection />
           <RentSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />

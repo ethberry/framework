@@ -8,6 +8,7 @@ import { NodeEnv } from "@framework/types";
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,7 +32,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 1 : 10101},
         '${ZeroAddress}',
-        '${testChainId}',
+        '${chainId}',
         'Native token (BESU)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
@@ -49,7 +50,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 2 : 10102},
         '${ZeroAddress}',
-        '${testChainId}',
+        '${chainId}',
         'Inactive token (BESU)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
@@ -147,7 +148,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ) VALUES (
         10108,
         '${ZeroAddress}',
-        '${testChainId}',
+        '${chainId}',
         'Fake token (BESU)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { IWaitListClaimDto } from "../interfaces";
+import type { IWaitListClaimDto } from "../interfaces";
 
 export class WaitListProofDto implements IWaitListClaimDto {
   @ApiProperty()

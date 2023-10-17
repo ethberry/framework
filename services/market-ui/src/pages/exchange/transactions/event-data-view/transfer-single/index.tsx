@@ -6,10 +6,10 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { IErc1155TokenTransferSingleEvent, TContractEventData } from "@framework/types";
 
 import {
-  DataViewAddressLinkWrapper,
-  DataViewItemContentWrapper,
-  DataViewItemWrapper,
-  DataViewWrapper,
+  StyledDataViewAddressLinkWrapper,
+  StyledDataViewItemContentWrapper,
+  StyledDataViewItemWrapper,
+  StyledDataViewWrapper,
 } from "../styled";
 
 export interface ITransferSingleDataViewProps {
@@ -21,46 +21,46 @@ export const TransferSingleDataView: FC<ITransferSingleDataViewProps> = props =>
   const { from, to, id, value } = eventData as IErc1155TokenTransferSingleEvent;
 
   return (
-    <DataViewWrapper>
-      <DataViewItemWrapper>
+    <StyledDataViewWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.from" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={from} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.to" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>
             <AddressLink address={to} />
-          </DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+          </StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.id" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{id}</DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>{id}</StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
 
-      <DataViewItemWrapper>
+      <StyledDataViewItemWrapper>
         <Typography fontWeight={500}>
           <FormattedMessage id="enums.eventDataLabel.value" />:
         </Typography>
-        <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{value}</DataViewAddressLinkWrapper>
-        </DataViewItemContentWrapper>
-      </DataViewItemWrapper>
-    </DataViewWrapper>
+        <StyledDataViewItemContentWrapper>
+          <StyledDataViewAddressLinkWrapper>{value}</StyledDataViewAddressLinkWrapper>
+        </StyledDataViewItemContentWrapper>
+      </StyledDataViewItemWrapper>
+    </StyledDataViewWrapper>
   );
 };

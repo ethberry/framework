@@ -469,7 +469,7 @@ describe("Diamond Exchange Lottery", function () {
         },
         signature,
       );
-      await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ECDSAInvalidSignatureLength");
     });
 
     it("should fail: expired signature", async function () {
@@ -603,7 +603,7 @@ describe("Diamond Exchange Lottery", function () {
       await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
-    it("should fail: insufficient allowance", async function () {
+    it("should fail: ERC20InsufficientAllowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const exchangeInstance = await factory();
@@ -687,10 +687,12 @@ describe("Diamond Exchange Lottery", function () {
         },
         signature,
       );
-      await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+        .withArgs(await exchangeInstance.getAddress(), 0, amount);
     });
 
-    it("should fail: transfer amount exceeds balance", async function () {
+    it("should fail: ERC20InsufficientBalance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const exchangeInstance = await factory();
@@ -721,7 +723,6 @@ describe("Diamond Exchange Lottery", function () {
         0, // maxTicket count
       );
 
-      await erc20Instance.mint(receiver.address, 1);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
 
       await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.getAddress());
@@ -775,10 +776,12 @@ describe("Diamond Exchange Lottery", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientBalance")
+        .withArgs(receiver.address, 0, amount);
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const exchangeInstance = await factory();

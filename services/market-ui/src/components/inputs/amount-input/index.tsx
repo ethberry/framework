@@ -1,11 +1,12 @@
 import { FC, Fragment, useContext } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
 import { IProduct } from "@framework/types";
 
 import { CartContext } from "../../providers/cart";
+import { StyledGrid } from "./styled";
 
 interface IPriceInputProps {
   product: IProduct;
@@ -19,7 +20,7 @@ export const AmountInput: FC<IPriceInputProps> = props => {
   const amount = cart.items.find(item => item.product.id === product.id)?.amount;
 
   return (
-    <Grid item container alignItems="center" justifyContent="center" sx={{ height: 36 }}>
+    <StyledGrid item container>
       {amount ? (
         <Fragment>
           <IconButton aria-label="remove" size="small" onClick={cart.alter(amount - 1, product)}>
@@ -35,6 +36,6 @@ export const AmountInput: FC<IPriceInputProps> = props => {
           <FormattedMessage id="form.buttons.add" />
         </Button>
       )}
-    </Grid>
+    </StyledGrid>
   );
 };

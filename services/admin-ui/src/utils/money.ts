@@ -1,5 +1,6 @@
 import { utils } from "ethers";
-import { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import type { IAsset, IAssetComponent, IAssetComponentHistory, IAssetHistory } from "@framework/types";
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {
   return `${currency} ${utils.formatUnits(amount, decimals)}`;
@@ -9,6 +10,9 @@ export const formatMoney = (amount = 0, currency = "$"): string => {
   return `${currency} ${amount.toFixed(2)}`;
 };
 
+/**
+ * @deprecated use formatItem
+ */
 export const formatPrice = (asset?: IAsset | IAssetHistory): string => {
   return (
     asset?.components
@@ -32,7 +36,7 @@ export const formatItem = (asset?: IAsset): string => {
             return component.template?.title;
           case TokenType.ERC1155:
             return BigInt(component.amount) > 1n
-              ? `${component.amount} ${component.template?.title}`
+              ? `${component.amount} x ${component.template?.title}`
               : component.template?.title;
           default:
             return "unsupported token type";

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
-import { DataViewWrapper } from "../styled";
+import { StyledDataViewWrapper } from "../styled";
 
 export interface IWaitListRewardClaimedDataViewProps {
   assets: Array<IAssetComponentHistory>;
@@ -14,8 +14,8 @@ export const WaitListRewardClaimedDataView: FC<IWaitListRewardClaimedDataViewPro
   const { assets, contract } = props;
 
   return (
-    <DataViewWrapper>
+    <StyledDataViewWrapper>
       <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
-    </DataViewWrapper>
+    </StyledDataViewWrapper>
   );
 };

@@ -3,7 +3,7 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { ICompositionSearchDto } from "@framework/types";
+import type { ICompositionSearchDto } from "@framework/types";
 
 export class CompositionSearchDto extends SearchDto implements ICompositionSearchDto {
   @ApiPropertyOptional({

@@ -13,7 +13,7 @@ export const TokenInput: FC = () => {
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("tokenId", option?.id ?? 0);
+    form.setValue("tokenId", option?.id ?? 0, { shouldDirty: true });
     form.setValue("token.tokenId", option?.tokenId ?? 0);
   };
 

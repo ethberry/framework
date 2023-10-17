@@ -4,7 +4,8 @@ import { WinstonModule } from "nest-winston";
 
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { IMailjetOptions, MailjetModule } from "@gemunion/nest-js-module-mailjet";
+import type { IMailjetOptions } from "@gemunion/nest-js-module-mailjet";
+import { MailjetModule } from "@gemunion/nest-js-module-mailjet";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { companyName } from "@framework/constants";
 

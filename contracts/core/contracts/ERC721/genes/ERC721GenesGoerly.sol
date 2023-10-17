@@ -4,21 +4,30 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerli.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerliV2.sol";
 
 import "../ERC721Genes.sol";
 
-contract ERC721GenesGoerli is ERC721Genes, ChainLinkGoerli {
+contract ERC721GenesGoerli is ERC721Genes, ChainLinkGoerliV2 {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Genes(name, symbol, royalty, baseTokenURI) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  ) ERC721Genes(name, symbol, royalty, baseTokenURI) ChainLinkGoerliV2(uint64(0), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC721Genes) returns (uint256 requestId) {
+  // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
+  event VrfSubscriptionSet(uint64 subId);
+  function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (subId == 0) revert InvalidSubscription();
+        _subId = subId;
+    emit VrfSubscriptionSet(_subId);
+  }
+
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721Genes) returns (uint256 requestId) {
+    if (_subId == 0) revert InvalidSubscription();
     return super.getRandomNumber();
   }
 

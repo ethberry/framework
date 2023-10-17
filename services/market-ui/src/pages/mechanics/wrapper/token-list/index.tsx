@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Add, FilterList } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
@@ -9,12 +9,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
+import { StyledPagination } from "@framework/styled";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import MintBoxABI from "../../../../abis/mechanics/wrapper/mint/mintBox.abi.json";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
+import { WrapperEditDialog } from "./edit";
+import type { ICreateWrappedToken } from "./edit";
 import { WrapperTokenListItem } from "./item";
 
 export interface IWrapperTokenListProps {
@@ -72,10 +74,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
 
       <PageHeader message="pages.wrapper.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WrapperCreateButton">
           <FormattedMessage id="form.buttons.create" />
@@ -101,8 +100,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

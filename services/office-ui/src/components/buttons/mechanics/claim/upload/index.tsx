@@ -1,40 +1,60 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
+import { enqueueSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IClaim, IClaimUploadDto } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";
-import type { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimUploadButtonProps {
   className?: string;
+  disabled?: boolean;
+  onRefreshPage: () => Promise<void>;
+  variant?: ListActionVariant;
 }
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
-  const { className } = props;
+  const { className, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
+
+  const { formatMessage } = useIntl();
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
-    const { claims } = values;
-    return api.fetchJson({
-      url: "/claims/upload",
-      data: {
-        claims: claims.map(({ id: _id, ...rest }) => rest),
-      },
-      method: "POST",
-    });
-  });
+  const { fn, isLoading } = useApiCall(
+    (api, values: IClaimUploadDto) => {
+      const { claims } = values;
+      return api
+        .fetchJson({
+          url: "/claims/upload",
+          data: {
+            claims: claims.map(({ id: _id, ...rest }) => rest),
+          },
+          method: "POST",
+        })
+        .then((json: IClaim[]) => {
+          if (json?.length) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.claimsNotUploaded" }), { variant: "error" });
+          } else {
+            enqueueSnackbar(
+              formatMessage({ id: "snackbar.claimsUploaded" }, { amount: json.length, total: claims.length }),
+              { variant: "success" },
+            );
+          }
+        });
+    },
+    { success: false },
+  );
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    return fn(form, values).then(() => {
-      // TODO refresh page
+    return fn(form, values).then(async () => {
+      await onRefreshPage();
       setIsUploadDialogOpen(false);
     });
   };
@@ -45,15 +65,15 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button
-        variant="outlined"
-        startIcon={<Add />}
+      <ListAction
         onClick={handleUpload}
-        data-testid="ClaimUploadButton"
+        icon={Add}
+        message="form.buttons.upload"
         className={className}
-      >
-        <FormattedMessage id="form.buttons.upload" />
-      </Button>
+        dataTestId="ClaimUploadButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <ClaimUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}

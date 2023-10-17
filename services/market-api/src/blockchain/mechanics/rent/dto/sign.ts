@@ -2,10 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerDto } from "@gemunion/collection";
+import { AccountDto, ReferrerDto, ChainIdDto } from "@gemunion/collection";
 
-import { ISignRentTokenDto } from "../interfaces";
-import { ChainIdDto } from "../../../../common/dto";
+import type { ISignRentTokenDto } from "../interfaces";
 
 export class SignRentTokenDto extends Mixin(ReferrerDto, AccountDto, ChainIdDto) implements ISignRentTokenDto {
   @ApiProperty({

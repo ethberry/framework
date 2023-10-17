@@ -9,8 +9,8 @@ export const MysteryboxInput: FC = () => {
   const form = useFormContext();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("mysterybox", option);
-    form.setValue("mysteryId", option?.id ?? 0);
+    form.setValue("mysterybox", option, { shouldDirty: true });
+    form.setValue("mysteryId", option?.id ?? 0, { shouldDirty: true });
   };
 
   useEffect(() => {

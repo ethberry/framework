@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { ICreateListenerPayload } from "../../../../common/interfaces";
+import type { ICreateListenerPayload } from "../../../../common/interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ModuleType } from "@framework/types";
 

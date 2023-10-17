@@ -1,25 +1,18 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { EnabledLanguages } from "@framework/constants";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
 import type { IUser, IUserSearchDto } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
-import { EnabledLanguages } from "@framework/constants";
-import { useCollection } from "@gemunion/react-hooks";
 
 import { UserEditDialog } from "./edit";
 
@@ -67,10 +60,7 @@ export const User: FC = () => {
 
       <PageHeader message="pages.users.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 
@@ -90,21 +80,16 @@ export const User: FC = () => {
           {rows.map(user => (
             <ListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(user)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(user)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
+              <ListActions>
+                <ListAction onClick={handleEdit(user)} message="form.actions.edit" icon={Create} />
+                <ListAction onClick={handleDelete(user)} message="form.actions.delete" icon={Delete} />
+              </ListActions>
             </ListItem>
           ))}
         </List>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

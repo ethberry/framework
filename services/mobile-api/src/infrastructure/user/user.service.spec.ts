@@ -42,6 +42,10 @@ describe("UserService", () => {
     userSeedService = module.get<UserSeedService>(UserSeedService);
   });
 
+  afterEach(async () => {
+    await userSeedService.tearDown();
+  });
+
   describe("findOne", () => {
     it("should find user", async () => {
       const entities = await userSeedService.setup();

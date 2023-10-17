@@ -1,36 +1,39 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ContractFeatures, IGrade, IToken, TokenType } from "@framework/types";
+
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, IGrade, IToken } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
-import { IUpgradeDto, UpgradeDialog } from "./dialog";
+import type { IUpgradeDto } from "./dialog";
+import { UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
+  className?: string;
   disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const GradeButton: FC<IUpgradeButtonProps> = props => {
-  const { disabled = false, token } = props;
+  const { className, disabled = false, token, variant = ListActionVariant.button } = props;
 
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
-  const { account, chainId } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
   const metaFnWithSign = useServerSignature(
-    (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature) => {
+    (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       return api
         .fetchJson({
           url: `/grade`,
@@ -51,7 +54,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
               amount: getMultiplier(level, component.amount, grade),
             })) || [];
 
-          const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
+          const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
           return contract.upgrade(
             {
               externalId: grade.id,
@@ -80,6 +83,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
+    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/grade/sign",
@@ -93,7 +97,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
       },
       values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleUpgrade = (): void => {
@@ -116,9 +120,14 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button disabled={disabled} onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
-        <FormattedMessage id={`form.buttons.upgrade`} />
-      </Button>
+      <ListAction
+        onClick={handleUpgrade}
+        message="form.buttons.upgrade"
+        className={className}
+        dataTestId="ExchangeUpgradeButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <UpgradeDialog
         onCancel={handleUpgradeCancel}
         onConfirm={handleUpgradeConfirm}

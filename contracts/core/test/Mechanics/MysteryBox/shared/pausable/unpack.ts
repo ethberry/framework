@@ -36,7 +36,7 @@ export function shouldBehaveLikeERC721MysteryBoxPausable(
       await mysteryboxInstance.pause();
 
       const tx2 = mysteryboxInstance.unpack(tokenId);
-      await expect(tx2).to.be.revertedWith("Pausable: paused");
+      await expect(tx2).to.be.revertedWithCustomError(mysteryboxInstance, "EnforcedPause");
     });
   });
 }

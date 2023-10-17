@@ -43,11 +43,14 @@ export class EmailService {
       .toPromise();
   }
 
-  public async invite(userEntity: UserEntity): Promise<any> {
-    const otpEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity);
+  public async invite(inviteeEntity: UserEntity, userEntity: UserEntity): Promise<any> {
+    const otpEntity = await this.otpService.getOtp(OtpType.INVITE, inviteeEntity, {
+      merchantId: userEntity.merchantId,
+    });
 
     return this.emailClientProxy
       .emit(EmailType.INVITE, {
+        invitee: inviteeEntity,
         user: userEntity,
         otp: otpEntity,
         baseUrl: this.configService.get<string>("MARKET_FE_URL", "http://localhost:3006"),

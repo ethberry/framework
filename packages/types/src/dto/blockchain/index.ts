@@ -2,6 +2,7 @@ export * from "./contract-manager/search";
 
 export * from "./hierarchy/contract/autocomplete";
 export * from "./hierarchy/contract/search";
+export * from "./hierarchy/contract/system";
 export * from "./hierarchy/template/autocomplete";
 export * from "./hierarchy/template/search";
 export * from "./hierarchy/token/autocomplete";
@@ -34,7 +35,7 @@ export * from "./mechanics/dismantle/sign";
 
 export * from "./mechanics/rent/search";
 
-export * from "./mechanics/drop/search";
+export * from "./mechanics/promo/search";
 
 export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/lottery/search";
@@ -77,6 +78,9 @@ export * from "./mechanics/ponzi/report";
 export * from "./mechanics/ponzi/rule";
 export * from "./mechanics/ponzi/deposit";
 export * from "./mechanics/collection/deploy";
+
+export * from "./mechanics/wallet/deploy";
+export * from "./mechanics/wallet/payee";
 
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";

@@ -1,7 +1,8 @@
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { Controller } from "@nestjs/common";
 
-import { IMessage, MobileEventType } from "@framework/types";
+import type { IMessage } from "@framework/types";
+import { MobileEventType } from "@framework/types";
 
 import { NotificatorService } from "./notificator.service";
 
@@ -29,7 +30,7 @@ export class NotificatorController {
     return this.notificatorService.dummy(data);
   }
 
-  @EventPattern(MobileEventType.UPGRADE)
+  @EventPattern(MobileEventType.LEVEL_UP)
   public upgrade(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);
   }

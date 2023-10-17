@@ -1,5 +1,6 @@
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 
 import { shouldBehaveLikeERC20Simple } from "./shared/simple";
 import { deployERC1363 } from "./shared/fixtures";
@@ -7,7 +8,7 @@ import { deployERC1363 } from "./shared/fixtures";
 describe("ERC20Simple", function () {
   const factory = () => deployERC1363(this.title);
 
-  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   shouldBehaveLikeERC20Simple(factory);
 

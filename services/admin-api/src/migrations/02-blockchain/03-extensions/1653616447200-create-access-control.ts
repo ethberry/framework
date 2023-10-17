@@ -9,7 +9,6 @@ export class CreateAccessControl1653616447200 implements MigrationInterface {
         'DEFAULT_ADMIN_ROLE',
         'MINTER_ROLE',
         'PAUSER_ROLE',
-        'SNAPSHOT_ROLE',
         'PREDICATE_ROLE',
         'DEPOSITOR_ROLE',
         'METADATA_ROLE'

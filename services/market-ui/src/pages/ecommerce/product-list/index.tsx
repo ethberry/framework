@@ -1,15 +1,16 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import type { IProduct } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
+import { StyledPagination } from "@framework/styled";
+import type { IProduct } from "@framework/types";
 
 import { ProductItem } from "./item";
 
@@ -35,7 +36,7 @@ export const ProductList: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
 
       <PageHeader message="pages.products.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
@@ -58,9 +59,8 @@ export const ProductList: FC = () => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
+      <StyledPagination
         shape="rounded"
-        sx={{ my: 2 }}
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}

@@ -4,17 +4,24 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "../RaffleRandom.sol";
 import "../../../MOCKS/ChainLinkBesu.sol";
 
 contract RaffleRandomBesu is RaffleRandom, ChainLinkBesu {
-  using Counters for Counters.Counter;
+  constructor() RaffleRandom() ChainLinkBesu(uint64(0), uint16(6), uint32(600000), uint32(1)) {}
 
-  constructor() RaffleRandom() ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
+  event VrfSubscriptionSet(uint64 subId);
+  function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (subId == 0) revert InvalidSubscription();
+        _subId = subId;
+    emit VrfSubscriptionSet(_subId);
+  }
 
-  function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
+  function getRandomNumber() internal override(RaffleRandom, ChainLinkBaseV2) returns (uint256 requestId) {
+    if (_subId == 0) revert InvalidSubscription();
     return super.getRandomNumber();
   }
 

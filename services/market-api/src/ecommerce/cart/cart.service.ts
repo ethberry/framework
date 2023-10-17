@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CartEntity } from "./cart.entity";
 import { CartItemService } from "../cart-item/cart-item.service";
-import { ICartItemCreateDto } from "../cart-item/interfaces";
+import type { ICartItemCreateDto } from "../cart-item/interfaces";
 import type { ICartUpdateDto } from "./interfaces";
 import { CartItemEntity } from "../cart-item/cart-item.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";

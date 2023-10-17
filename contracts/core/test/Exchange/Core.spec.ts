@@ -3,13 +3,13 @@ import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
-import { amount, nonce, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { amount, METADATA_ROLE, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { deployBusd, deployERC1363, deployUsdt, deployWeth } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
@@ -45,7 +45,7 @@ describe("Diamond Exchange Core", function () {
     };
   };
 
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -150,6 +150,10 @@ describe("Diamond Exchange Core", function () {
       const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
       expect(erc20Allowance).to.equal(amount);
 
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
       const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
       await expect(tx02)
         .to.emit(vrfInstance, "SubscriptionConsumerAdded")
@@ -240,6 +244,10 @@ describe("Diamond Exchange Core", function () {
 
       const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
       expect(erc20Allowance).to.equal(amount);
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
       const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
       await expect(tx02)
@@ -336,6 +344,10 @@ describe("Diamond Exchange Core", function () {
       const usdtAllowance = await usdtInstance.allowance(receiver.address, await exchangeInstance.getAddress());
       expect(usdtAllowance).to.equal(amount);
 
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
       // ADD CONSUMER TO VRFV2
       const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
       await expect(tx02)
@@ -426,6 +438,10 @@ describe("Diamond Exchange Core", function () {
 
       const busdAllowance = await busdInstance.allowance(receiver.address, await exchangeInstance.getAddress());
       expect(busdAllowance).to.equal(amount);
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
       // ADD CONSUMER TO VRFV2
       const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
@@ -518,6 +534,10 @@ describe("Diamond Exchange Core", function () {
 
       const wethAllowance = await wethInstance.allowance(receiver.address, await exchangeInstance.getAddress());
       expect(wethAllowance).to.equal(amount);
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
       // ADD CONSUMER TO VRFV2
       const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
@@ -792,6 +812,10 @@ describe("Diamond Exchange Core", function () {
         ],
       });
 
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
       const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
       await expect(tx02)
         .to.emit(vrfInstance, "SubscriptionConsumerAdded")
@@ -936,7 +960,7 @@ describe("Diamond Exchange Core", function () {
       await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
-    it("should fail: signer is missing role", async function () {
+    it("should fail: SignerMissingRole", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -1001,7 +1025,7 @@ describe("Diamond Exchange Core", function () {
       await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
-    it("should fail: insufficient allowance", async function () {
+    it("should fail: ERC20InsufficientAllowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -1060,11 +1084,12 @@ describe("Diamond Exchange Core", function () {
         signature,
       );
 
-      // ECDSA always returns an address
-      await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
+      await expect(tx1)
+        .to.be.revertedWithCustomError(erc20Instance, "ERC20InsufficientAllowance")
+        .withArgs(await exchangeInstance.getAddress(), 0, amount);
     });
 
-    it("should fail: wrong signature", async function () {
+    it("should fail: ECDSAInvalidSignatureLength", async function () {
       const exchangeInstance = await factory();
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -1096,10 +1121,10 @@ describe("Diamond Exchange Core", function () {
         ZeroHash,
       );
 
-      await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ECDSAInvalidSignatureLength");
     });
 
-    it("should fail: expired signature 1", async function () {
+    it("should fail: ExpiredSignature", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -1164,7 +1189,7 @@ describe("Diamond Exchange Core", function () {
       await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
-    it("should fail: expired signature 2", async function () {
+    it("should fail: ExpiredSignature 2", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -1258,7 +1283,7 @@ describe("Diamond Exchange Core", function () {
       await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
-    it("should fail: InvalidConsumer", async function () {
+    it("should fail: InvalidSubscription", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -1269,6 +1294,10 @@ describe("Diamond Exchange Core", function () {
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       // DO NOT ADD SUBSCRIPTION CONSUMER FOR THIS TEST
+      // Set VRFV2 Subscription
+      // const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      // await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
       // const tx02 = vrfInstance.addConsumer(subId, await erc721Instance.getAddress());
       // await expect(tx02)
       //   .to.emit(vrfInstance, "SubscriptionConsumerAdded")
@@ -1326,9 +1355,7 @@ describe("Diamond Exchange Core", function () {
         signature,
       );
 
-      await expect(tx1)
-        .to.be.revertedWithCustomError(vrfInstance, `InvalidConsumer`)
-        .withArgs(subscriptionId, await erc721Instance.getAddress());
+      await expect(tx1).to.be.revertedWithCustomError(vrfInstance, "InvalidSubscription");
     });
   });
 

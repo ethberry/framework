@@ -1,5 +1,6 @@
 import { EnabledLanguages } from "@framework/constants";
-import { IUser, UserStatus } from "@framework/types";
+import type { IUser } from "@framework/types";
+import { UserStatus } from "@framework/types";
 
 import { emptyAddress } from "./empty-address";
 

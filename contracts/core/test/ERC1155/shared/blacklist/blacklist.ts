@@ -15,7 +15,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       await contractInstance.blacklist(owner.address);
 
       const tx = contractInstance.safeTransferFrom(owner.address, receiver.address, tokenId, amount, "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: sender is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(owner.address);
     });
 
     it("should fail: safeTransferFrom to", async function () {
@@ -26,7 +26,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       await contractInstance.blacklist(receiver.address);
 
       const tx = contractInstance.safeTransferFrom(owner.address, receiver.address, tokenId, amount, "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(receiver.address);
     });
 
     it("should fail: safeTransferFrom approved", async function () {
@@ -40,7 +40,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       const tx = contractInstance
         .connect(stranger)
         .safeTransferFrom(owner.address, receiver.address, tokenId, amount, "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(receiver.address);
     });
 
     it("should fail: safeBatchTransferFrom from", async function () {
@@ -51,7 +51,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       await contractInstance.blacklist(owner.address);
 
       const tx = contractInstance.safeBatchTransferFrom(owner.address, receiver.address, [tokenId], [amount], "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: sender is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(owner.address);
     });
 
     it("should fail: safeBatchTransferFrom to", async function () {
@@ -62,7 +62,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       await contractInstance.blacklist(receiver.address);
 
       const tx = contractInstance.safeBatchTransferFrom(owner.address, receiver.address, [tokenId], [amount], "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(receiver.address);
     });
 
     it("should fail: safeBatchTransferFrom approve", async function () {
@@ -76,7 +76,7 @@ export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
       const tx = contractInstance
         .connect(stranger)
         .safeBatchTransferFrom(owner.address, receiver.address, [tokenId], [amount], "0x");
-      await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(receiver.address);
     });
   });
 }

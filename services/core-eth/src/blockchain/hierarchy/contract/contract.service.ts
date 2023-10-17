@@ -1,7 +1,16 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { ArrayOverlap, DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import {
+  ArrayOverlap,
+  DeepPartial,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  In,
+  Repository,
+  UpdateResult,
+} from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
@@ -49,6 +58,19 @@ export class ContractService {
     Object.assign(contractEntity, dto);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return contractEntity.save();
+  }
+
+  public async updateParameter(
+    where: FindOptionsWhere<ContractEntity>,
+    key: string,
+    value: string | number | boolean,
+  ): Promise<UpdateResult> {
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      parameters: () => `jsonb_set(parameters::jsonb, '{${key}}', '"${value}"', true)`,
+    });
+    queryBuilder.where(where);
+    return queryBuilder.execute();
   }
 
   public async getLastBlock(address: string): Promise<number | null> {

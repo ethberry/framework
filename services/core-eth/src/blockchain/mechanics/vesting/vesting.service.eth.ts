@@ -1,10 +1,10 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
-  IErc1363TransferReceivedEvent,
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
@@ -17,12 +17,13 @@ import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class VestingServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
@@ -33,18 +34,24 @@ export class VestingServiceEth {
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { token, amount },
     } = event;
-    const { address } = context;
-    await this.eventHistoryService.updateHistory(event, context);
+    const { transactionHash, address } = context;
 
-    const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const vestingEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
 
     if (!vestingEntity) {
       throw new NotFoundException("vestingNotFound");
     }
 
-    const contractEntity = await this.contractService.findOne({ address: token.toLowerCase() });
+    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
+
+    const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -55,15 +62,36 @@ export class VestingServiceEth {
       token: contractEntity,
       amount,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: vestingEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async ethReleased(event: ILogEvent<IVestingEtherReleasedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { amount },
     } = event;
-    await this.eventHistoryService.updateHistory(event, context);
+    const { transactionHash, address } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const vestingEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
+
+    if (!vestingEntity) {
+      throw new NotFoundException("vestingNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
+
+    // get NATIVE token
     const tokenEntity = await this.tokenService.getToken("0", ZeroAddress.toLowerCase(), chainId);
 
     if (!tokenEntity) {
@@ -71,16 +99,36 @@ export class VestingServiceEth {
     }
 
     await this.balanceService.decrement(tokenEntity.id, context.address.toLowerCase(), amount);
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: vestingEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async ethReceived(event: ILogEvent<IVestingEtherReceivedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { amount },
     } = event;
-    await this.eventHistoryService.updateHistory(event, context);
+    const { transactionHash, address } = context;
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const vestingEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
+
+    if (!vestingEntity) {
+      throw new NotFoundException("vestingNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
 
     // get NATIVE token
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const tokenEntity = await this.tokenService.getToken("0", ZeroAddress, chainId);
 
     if (!tokenEntity) {
@@ -88,14 +136,18 @@ export class VestingServiceEth {
     }
 
     await this.balanceService.increment(tokenEntity.id, context.address.toLowerCase(), amount);
-  }
 
-  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: vestingEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
-    // history processed by AccessControlServiceEth
+    // history and notifications processed by AccessControlServiceEth
     // await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { newOwner, previousOwner },

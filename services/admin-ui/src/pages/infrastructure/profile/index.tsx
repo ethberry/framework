@@ -7,6 +7,7 @@ import { ProfileTabs } from "./tabs";
 import { ProfileGeneral } from "./general";
 import { ProfileSubscriptions } from "./subscriptions";
 import { ProfileAddresses } from "./adresses";
+import { ProfileNotifications } from "./notifications";
 
 export const Profile: FC = () => {
   const { tab = ProfileTabs.general } = useParams<{ tab: ProfileTabs }>();
@@ -30,6 +31,7 @@ export const Profile: FC = () => {
       <ProfileGeneral open={value === ProfileTabs.general} />
       <ProfileAddresses open={value === ProfileTabs.addresses} />
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
+      <ProfileNotifications open={value === ProfileTabs.notifications} />
     </Fragment>
   );
 };

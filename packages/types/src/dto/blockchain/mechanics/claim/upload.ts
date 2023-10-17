@@ -1,4 +1,4 @@
-import { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
+import type { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
 
 export interface IClaimRowDto extends IBCAssetTemplateDto {
   id?: string;

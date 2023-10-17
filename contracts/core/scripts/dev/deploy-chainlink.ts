@@ -1,7 +1,7 @@
 import { ethers, network } from "hardhat";
 import { Contract, Result, toBeHex, TransactionReceipt, TransactionResponse, WeiPerEther, zeroPadValue } from "ethers";
 
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
@@ -54,17 +54,17 @@ async function main() {
   // LINK & VRF
   const linkAddr =
     network.name === "besu"
-      ? "0x42699A7612A82f1d9C36148af9C77354759b210b"
+      ? "0x42699a7612a82f1d9c36148af9c77354759b210b"
       : network.name === "gemunion" || network.name === "gemunionprod"
-      ? "0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"
+      ? "0x1fa66727cdd4e3e4a6debe4adf84985873f6cd8a"
       : "0x42699A7612A82f1d9C36148af9C77354759b210b";
 
   const vrfAddr =
     network.name === "besu"
-      ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost
+      ? "0xa50a51c09a5c451c52bb714527e1974b686d8e77" // vrf besu localhost
       : network.name === "gemunion" || network.name === "gemunionprod"
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
-      : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
+      : "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
 
   const linkFactory = await ethers.getContractFactory("LinkToken");
   // const linkInstance = linkFactory.attach(linkAddr);
@@ -72,20 +72,20 @@ async function main() {
   contracts.link = linkInstance;
   const linkAddress = await contracts.link.getAddress();
   await debug(contracts);
-  // console.info(`LINK_ADDR=${contracts.link.address}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  console.info(`LINK_ADDR=${linkAddress}`);
+  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock");
   const vrfInstance = await vrfFactory.deploy(linkAddress);
 
   // const vrfInstance = vrfFactory.attach(vrfAddr);
   contracts.vrf = vrfInstance;
   const vrfAddress = await contracts.vrf.getAddress();
   await debug(contracts);
-  // console.info(`VRF_ADDR=${contracts.vrf.address}`);
+  console.info(`VRF_ADDR=${vrfAddress}`);
 
-  if (linkAddress !== linkAddr) {
+  if (linkAddress.toLowerCase() !== linkAddr) {
     console.info("LINK_ADDR address mismatch, clean BESU, then try again");
   }
-  if (vrfAddress !== vrfAddr) {
+  if (vrfAddress.toLowerCase() !== vrfAddr) {
     console.info("VRF_ADDR address mismatch, clean BESU, then try again");
   }
   // BESU gemunion
@@ -93,7 +93,7 @@ async function main() {
   //   address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
   // SETUP CHAIN_LINK VRF-V2 TO WORK
   const linkAmount = WeiPerEther * 1000n;
-
+  process.exit(0);
   /**
    * @notice Sets the configuration of the vrfv2 coordinator
    * @param minimumRequestConfirmations global min for request confirmations

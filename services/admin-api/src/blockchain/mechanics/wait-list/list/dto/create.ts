@@ -3,7 +3,7 @@ import { IsBoolean, IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { IWaitListListCreateDto } from "@framework/types";
+import type { IWaitListListCreateDto } from "@framework/types";
 
 import { ItemDto } from "../../../../exchange/asset/dto";
 

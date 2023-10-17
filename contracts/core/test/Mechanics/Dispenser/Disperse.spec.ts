@@ -4,7 +4,7 @@ import { ZeroAddress } from "ethers";
 
 import { amount, InterfaceId } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
-import { shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
 
 import { FrameworkInterfaceId, templateId, tokenId } from "../../constants";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
@@ -119,7 +119,9 @@ describe("Dispenser", function () {
         { value: amount },
       );
 
-      await expect(tx).to.be.revertedWith("Address: insufficient balance");
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "AddressInsufficientBalance")
+        .withArgs(await contractInstance.getAddress());
     });
 
     it("should fail: WrongArrayLength", async function () {

@@ -8,8 +8,9 @@ import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
+  ILevelUp,
 } from "@framework/types";
-import { ContractEventType, ContractType, ILevelUp } from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 

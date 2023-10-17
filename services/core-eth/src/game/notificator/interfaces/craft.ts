@@ -1,4 +1,4 @@
-import { ICraft } from "@framework/types";
+import type { ICraft } from "@framework/types";
 
 export interface ICraftData {
   craft: ICraft;

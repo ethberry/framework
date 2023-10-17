@@ -1,28 +1,27 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { DeepPartial } from "typeorm";
 
-import {
-  IERC721ConsecutiveTransfer,
-  IERC721TokenTransferEvent,
-  ILevelUp,
-  TokenMetadata,
-  TokenStatus,
-} from "@framework/types";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { ABI } from "./log/interfaces";
+import { testChainId } from "@framework/constants";
+import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent, ILevelUp } from "@framework/types";
+import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
+
 import { getMetadata } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
+// import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { ABI } from "./log/interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -31,22 +30,27 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
-    protected readonly breedServiceEth: BreedServiceEth,
+    protected readonly configService: ConfigService,
+    // protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
-    private readonly notificatorService: NotificatorService,
+    protected readonly notificatorService: NotificatorService,
   ) {
-    super(loggerService, tokenService, eventHistoryService);
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // Mint token create
     if (from === ZeroAddress) {
@@ -59,6 +63,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
+
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
         throw new NotFoundException("templateNotFound");
@@ -68,16 +73,16 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         tokenId,
         metadata,
         royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
+        template: templateEntity,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       address.toLowerCase(),
-      void 0,
+      chainId,
       true,
     );
 
@@ -85,6 +90,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
+
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
@@ -107,13 +114,22 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       to: to.toLowerCase(),
       amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {
     const {
+      name,
       args: { fromAddress, toAddress, fromTokenId, toTokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     // Mint token create batch
     if (fromAddress === ZeroAddress) {
@@ -151,8 +167,22 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const entityArray = await this.tokenService.createBatch(tokenArray);
 
       await this.createBalancesBatch(toAddress, entityArray);
-      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
+
+      await this.notificatorService.consecutiveTransfer({
+        tokens: entityArray,
+        from: fromAddress.toLowerCase(),
+        to: toAddress.toLowerCase(),
+      });
     }
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: fromAddress === ZeroAddress ? toAddress.toLowerCase() : fromAddress.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
@@ -167,11 +197,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId, attribute, value },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
@@ -181,6 +213,19 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     Object.assign(erc721TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
     await erc721TokenEntity.save();
 
-    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(
+      event,
+      context,
+      erc721TokenEntity.id,
+      erc721TokenEntity.template.contractId,
+    );
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: erc721TokenEntity.balance[0].account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

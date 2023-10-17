@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IWalletPayee } from "@framework/types";
+import type { IWalletPayee } from "@framework/types";
 import { ns } from "@framework/constants";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 

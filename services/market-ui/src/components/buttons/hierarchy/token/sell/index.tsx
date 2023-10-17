@@ -1,16 +1,19 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Sell } from "@mui/icons-material";
 
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
 interface ITokenSellButtonProps {
+  className?: string;
+  disabled?: boolean;
   token: IToken;
+  variant?: ListActionVariant;
 }
 
 export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
-  const { token } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const handleSell = (): void => {
     alert("Not implemented");
@@ -21,12 +24,14 @@ export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
   }
 
   return (
-    <Button
+    <ListAction
+      icon={Sell}
       onClick={handleSell}
-      disabled={token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-      data-testid="TokenSellButton"
-    >
-      <FormattedMessage id="form.buttons.sell" />
-    </Button>
+      message="form.buttons.sell"
+      className={className}
+      dataTestId="TokenSellButton"
+      disabled={disabled || token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+      variant={variant}
+    />
   );
 };

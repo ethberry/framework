@@ -1,7 +1,7 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { Box, Grid, Hidden, Paper, Typography } from "@mui/material";
+import { Box, Grid, Hidden, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -11,6 +11,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { formatPrice } from "../../../utils/money";
 import { Carousel } from "./carousel";
+import { StyledPaper } from "./styled";
 
 export const Product: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -68,11 +69,11 @@ export const Product: FC = () => {
           <Carousel product={product} />
           <Hidden mdUp>
             <Box py={2}>
-              <Paper sx={{ p: 2 }}>
+              <StyledPaper>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {formatPrice(product.productItems[0].price)}
                 </Typography>
-              </Paper>
+              </StyledPaper>
             </Box>
           </Hidden>
           <Typography variant="body2" color="textSecondary" component="div">
@@ -81,11 +82,11 @@ export const Product: FC = () => {
         </Grid>
         <Hidden mdDown>
           <Grid item xs={12} md={3}>
-            <Paper sx={{ p: 2 }}>
+            <StyledPaper>
               <Typography variant="body2" color="textSecondary" component="p">
                 {formatPrice(product.productItems[0].price)}
               </Typography>
-            </Paper>
+            </StyledPaper>
           </Grid>
         </Hidden>
       </Grid>

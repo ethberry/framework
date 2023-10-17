@@ -8,7 +8,8 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IStakingRule, ModuleType, StakingRuleStatus } from "@framework/types";
+import { ModuleType, StakingRuleStatus } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
@@ -65,7 +66,14 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
+      <SelectInput
+        name="stakingRuleStatus"
+        options={StakingRuleStatus}
+        disabledOptions={
+          stakingRuleStatus === StakingRuleStatus.NEW ? [StakingRuleStatus.NEW, StakingRuleStatus.INACTIVE] : []
+        }
+        readOnly={stakingRuleStatus !== StakingRuleStatus.NEW}
+      />
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>

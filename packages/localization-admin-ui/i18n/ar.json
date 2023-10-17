@@ -165,8 +165,7 @@
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
-      "PREDICATE_ROLE": "PREDICATE_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+      "PREDICATE_ROLE": "PREDICATE_ROLE"
     },
     "stakingDepositStatus": {
       "ACTIVE": "نشيط",
@@ -537,7 +536,6 @@
         "breed": "تربية",
         "claim": "مطالبة",
         "craft": "حرفة",
-        "drop": "قطرة",
         "grade": "رتبة",
         "lottery": "اليانصيب",
         "mystery": "الغموض",
@@ -548,9 +546,6 @@
         "waitlist": "قائمة الانتظار"
       },
       "title": "لوحة القيادة"
-    },
-    "drop": {
-      "title": "قطرات"
     },
     "emails": {
       "title": "رسائل البريد الإلكتروني"

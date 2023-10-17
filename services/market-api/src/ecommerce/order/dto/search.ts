@@ -6,7 +6,7 @@ import { reDateRange } from "@gemunion/constants";
 import { SearchDto } from "@gemunion/collection";
 import { OrderStatus } from "@framework/types";
 
-import { IOrderSearchDto } from "../interfaces";
+import type { IOrderSearchDto } from "../interfaces";
 
 export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @ApiPropertyOptional()

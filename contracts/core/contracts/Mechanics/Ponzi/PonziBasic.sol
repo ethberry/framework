@@ -4,17 +4,15 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-//import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-utils/contracts/roles.sol";
 
 import "../../utils/constants.sol";
 import "./interfaces/IPonzi.sol";
@@ -22,11 +20,10 @@ import "./LinearReferralPonzi.sol";
 
 contract PonziBasic is IPonzi, AccessControl, Pausable {
   using Address for address;
-  using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
 
-  Counters.Counter internal _ruleIdCounter;
-  Counters.Counter internal _stakeIdCounter;
+  uint256 internal _ruleIdCounter;
+  uint256 internal _stakeIdCounter;
 
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
@@ -58,8 +55,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
     require(rule.externalId != 0, "Ponzi: rule doesn't exist");
     require(rule.active, "Ponzi: rule doesn't active");
 
-    _stakeIdCounter.increment();
-    uint256 stakeId = _stakeIdCounter.current();
+    uint256 stakeId = _stakeIdCounter++;
 
     Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, 0, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
@@ -164,8 +160,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
   }
 
   function _setRule(Rule memory rule) internal {
-    _ruleIdCounter.increment();
-    uint256 ruleId = _ruleIdCounter.current();
+    uint256 ruleId = _ruleIdCounter++;
     _rules[ruleId] = rule;
     emit RuleCreated(ruleId, rule, rule.externalId);
   }
@@ -227,7 +222,8 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
 
   // USE WITH CAUTION
   function finalize() public onlyRole(DEFAULT_ADMIN_ROLE) {
-    selfdestruct(payable(_msgSender()));
+    // TODO UNCOMMENT
+    // selfdestruct(payable(_msgSender()));
   }
 
   // ETH FUND

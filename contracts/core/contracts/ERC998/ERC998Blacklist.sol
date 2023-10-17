@@ -4,9 +4,9 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
+import "@gemunion/contracts-access/contracts/extension/BlackList.sol";
 
 import "./ERC998Simple.sol";
 
@@ -24,17 +24,38 @@ contract ERC998Blacklist is ERC998Simple, BlackList {
    */
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC998Simple) returns (bool) {
+  ) public view virtual override(ERC998Simple, BlackList) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   * Override that checks the access list
+   * @dev See {ERC721-_update}.
    */
-  function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
-    require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
-    require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+  function _update(address to, uint256 tokenId, address auth) internal virtual override returns (address) {
+    address from = super._update(to, tokenId, auth);
+
+    if (from != address(0) && _isBlacklisted(from)) {
+      revert BlackListError(from);
+    }
+
+    if (to != address(0) && _isBlacklisted(to)) {
+      revert BlackListError(to);
+    }
+
+    return from;
+  }
+
+  /**
+   * @dev See {ERC721-_increaseBalance}.
+   */
+  function _increaseBalance(address account, uint128 amount) internal virtual override {
+    super._increaseBalance(account, amount);
+  }
+
+  /**
+   * @dev See {ERC721-_baseURI}.
+   */
+  function _baseURI() internal view virtual override returns (string memory) {
+    return super._baseURI();
   }
 }

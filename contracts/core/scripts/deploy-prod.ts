@@ -1,11 +1,11 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 import fs from "fs";
-import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { deployDiamond } from "../test/Exchange/shared/fixture";
 
-const delay = 1; // block delay
+const delay = 2; // block delay
 const delayMs = 1100; // block delay ms
 
 interface IObj {
@@ -46,19 +46,11 @@ async function main() {
 
   // LINK & VRF
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  // const vrfAddr =
-  //   network.name === "besu"
-  //     ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost
-  //     : network.name === "gemunion"
-  //     ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
-  //     : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
-  // const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
 
   // DIAMOND CM
   const cmInstance = await deployDiamond(
     "DiamondCM",
     [
-      "CollectionFactoryFacet",
       "ERC20FactoryFacet",
       "ERC721FactoryFacet",
       "ERC998FactoryFacet",
@@ -76,15 +68,12 @@ async function main() {
     ],
     "DiamondCMInit",
     {
-      log: false,
+      log: true,
       logSelectors: false,
     },
   );
   contracts.contractManager = cmInstance;
   await debug(contracts);
-  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
-
-  // console.info("contracts.contractManager.address", contracts.contractManager.address);
 
   // DIAMOND EXCHANGE
   const exchangeInstance = await deployDiamond(
@@ -113,15 +102,15 @@ async function main() {
   contracts.exchange = exchangeInstance;
   await debug(contracts);
 
-  await debug(
-    await factoryInstance.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE),
-    "contractManager.addFactory",
-  );
+  const exchangeAddress = await exchangeInstance.getAddress();
+  // const exchangeAddress = "0x5fee6631bfa86057c5878ea170564b67774e1fe8";
 
-  await debug(
-    await factoryInstance.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE),
-    "contractManager.addFactory",
-  );
+  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
+  // const factoryInstance = await ethers.getContractAt("UseFactoryFacet", "0x3e40ebe3dd88fb5dd927bcd6ec5cac4b6c41f0b1");
+
+  await debug(await factoryInstance.addFactory(exchangeAddress, MINTER_ROLE), "contractManager.addFactory");
+
+  await debug(await factoryInstance.addFactory(exchangeAddress, METADATA_ROLE), "contractManager.addFactory");
 
   const dispenserFactory = await ethers.getContractFactory("Dispenser");
   contracts.dispenser = await dispenserFactory.deploy();

@@ -2,10 +2,11 @@ import { FC, Fragment } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IContractSearchDto, IMerchant } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { StyledAvatar } from "@framework/styled";
+import type { IContractSearchDto, IMerchant } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ContractList } from "../contract-list";
@@ -37,7 +38,7 @@ export const Merchant: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
+            <StyledAvatar src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">

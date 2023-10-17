@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IToken } from "@framework/types";
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
+import type { IToken } from "@framework/types";
 
 import { TokenSellButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
@@ -20,11 +21,11 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
       <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
-        <CardMedia sx={{ height: 140 }} image={token.template!.imageUrl} />
+        <StyledCardMedia height={140} image={token.template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
+          <StyledCardContentDescription>
             <RichTextDisplay data={token.template!.description} />
-          </Typography>
+          </StyledCardContentDescription>
         </CardContent>
       </CardActionArea>
       <CardActions>

@@ -4,7 +4,8 @@ import { encodeBytes32String, parseEther, ZeroAddress } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikePausable } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 import {
   amount,
   DEFAULT_ADMIN_ROLE,
@@ -14,8 +15,8 @@ import {
   TEMPLATE_ID,
 } from "@gemunion/contracts-constants";
 
-import { VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { VRFCoordinatorV2Mock } from "../../../typechain-types";
+import { expiresAt, subscriptionId, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -89,7 +90,7 @@ describe("Staking", function () {
     extra: encodeBytes32String("0x"),
   };
 
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const factory = () => deployStaking();
   const erc20Factory = () => deployERC1363("ERC20Simple", { amount: parseEther("200000") });
@@ -251,9 +252,9 @@ describe("Staking", function () {
 
       const tx = stakingInstance.connect(receiver).setRules([stakeRule]);
 
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(stakingInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
     });
 
     it("should fail: edit when Rule not exist", async function () {
@@ -395,9 +396,9 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.connect(receiver).updateRule(1, false);
-      await expect(tx1).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
+      await expect(tx1)
+        .to.be.revertedWithCustomError(stakingInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
     });
   });
 
@@ -706,7 +707,7 @@ describe("Staking", function () {
       await stakingInstance.pause();
 
       const tx1 = stakingInstance.deposit(params, tokenIds, { value: amount });
-      await expect(tx1).to.be.rejectedWith("Pausable: paused");
+      await expect(tx1).to.be.revertedWithCustomError(stakingInstance, "EnforcedPause");
     });
 
     it("should fail deposit for wrong tokenId", async function () {
@@ -1194,7 +1195,7 @@ describe("Staking", function () {
       await stakingInstance.pause();
 
       const tx1 = stakingInstance.receiveReward(1, true, true);
-      await expect(tx1).to.be.rejectedWith("Pausable: paused");
+      await expect(tx1).to.be.revertedWithCustomError(stakingInstance, "EnforcedPause");
     });
 
     it("should automatically withdraw with reward (not recurrent)", async function () {
@@ -1727,6 +1728,10 @@ describe("Staking", function () {
       await erc721Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc721Instance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
+
       // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
       await expect(tx02)
@@ -2176,6 +2181,10 @@ describe("Staking", function () {
 
       await erc721Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc721Instance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
       // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
@@ -2892,6 +2901,10 @@ describe("Staking", function () {
 
       await erc721Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc721Instance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721Instance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721Instance, "VrfSubscriptionSet").withArgs(1);
 
       // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
@@ -3632,6 +3645,10 @@ describe("Staking", function () {
       await erc998RandomInstance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc998RandomInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
+      // Set VRFV2 Subscription
+      const tx01 = erc998RandomInstance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc998RandomInstance, "VrfSubscriptionSet").withArgs(1);
+
       // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, await erc998RandomInstance.getAddress());
       await expect(tx02)
@@ -3712,12 +3729,6 @@ describe("Staking", function () {
 
       await erc998Instance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc998Instance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
-
-      // Add Consumer to VRF_V2
-      const tx02 = vrfInstance.addConsumer(1, await erc998Instance.getAddress());
-      await expect(tx02)
-        .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-        .withArgs(1, await erc998Instance.getAddress());
 
       const stakeRule: IRule = {
         deposit: [
@@ -4049,6 +4060,10 @@ describe("Staking", function () {
 
       await erc721RandomInstance.grantRole(MINTER_ROLE, await vrfInstance.getAddress());
       await erc721RandomInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
+
+      // Set VRFV2 Subscription
+      const tx01 = erc721RandomInstance.setSubscriptionId(subscriptionId);
+      await expect(tx01).to.emit(erc721RandomInstance, "VrfSubscriptionSet").withArgs(1);
 
       // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, await erc721RandomInstance.getAddress());
@@ -5789,9 +5804,9 @@ describe("Staking", function () {
         tokenId: 0,
         amount,
       });
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
+      await expect(tx)
+        .to.be.revertedWithCustomError(stakingInstance, "AccessControlUnauthorizedAccount")
+        .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
     });
   });
 

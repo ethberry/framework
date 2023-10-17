@@ -72,7 +72,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} awaitingFieldsNames={["contractId", "deposit.contractId", "reward.contractId"]} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

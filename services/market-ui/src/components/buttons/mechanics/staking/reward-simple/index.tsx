@@ -1,26 +1,26 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
-import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IStakingDeposit } from "@framework/types";
+import { StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
 
 export interface IStakingRewardSimpleButtonProps {
+  className?: string;
+  disabled?: boolean;
   stake: IStakingDeposit;
+  variant?: ListActionVariant;
 }
 
 export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = props => {
-  const { stake } = props;
-
-  const { formatMessage } = useIntl();
+  const { className, disabled, stake, variant } = props;
 
   const metaFn = useMetamask((stake: IStakingDeposit, web3Context: Web3ContextType) => {
-    // const contract = new Contract(process.env.STAKING_ADDR, StakingReceiveRewardABI, web3Context.provider?.getSigner());
     const contract = new Contract(
       stake.stakingRule!.contract!.address,
       StakingReceiveRewardABI,
@@ -40,10 +40,14 @@ export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = pr
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.reward" })}>
-      <IconButton onClick={handleReward(stake)} data-testid="StakeRewardButton">
-        <Redeem />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      onClick={handleReward(stake)}
+      icon={Redeem}
+      message="form.tips.reward"
+      className={className}
+      dataTestId="StakingRewardSimpleButton"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };

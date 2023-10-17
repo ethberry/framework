@@ -1,26 +1,27 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton, Tooltip } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
+
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import type { IContract } from "@framework/types";
-import { useIntl } from "react-intl";
 
 import VestingTransferOwnershipABI from "../../../../../abis/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
 interface IVestingTransferOwnershipButtonProps {
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
   vesting: IContract;
 }
 
 export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonProps> = props => {
-  const { vesting } = props;
+  const { className, disabled, variant, vesting } = props;
 
   const [isTransferOwnershipDialogOpen, setIsTransferOwnershipDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.address, VestingTransferOwnershipABI, web3Context.provider?.getSigner());
@@ -43,11 +44,15 @@ export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonP
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.transferOwnership" })}>
-        <IconButton onClick={handleTransferOwnership} data-testid="VestingTransferOwnershipButton">
-          <Send />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleTransferOwnership}
+        icon={Send}
+        message="form.tips.transferOwnership"
+        className={className}
+        dataTestId="VestingTransferOwnershipButton"
+        disabled={disabled}
+        variant={variant}
+      />
       <AccountDialog
         onConfirm={handleTransferOwnershipConfirm}
         onCancel={handleTransferOwnershipCancel}

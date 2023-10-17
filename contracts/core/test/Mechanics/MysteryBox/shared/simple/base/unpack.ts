@@ -5,8 +5,8 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { VRFCoordinatorMock } from "../../../../../../typechain-types";
-import { templateId, tokenId } from "../../../../../constants";
+import { VRFCoordinatorV2Mock } from "../../../../../../typechain-types";
+import { subscriptionId, templateId, tokenId } from "../../../../../constants";
 import { randomRequest } from "../../../../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../../../../shared/link";
 import { deployERC1155 } from "../../../../../ERC1155/shared/fixtures";
@@ -14,7 +14,7 @@ import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
 import { deployERC1363 } from "../../../../../ERC20/shared/fixtures";
 
 export function shouldUnpackBox(factory: () => Promise<any>) {
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const erc20Factory = (name: string) => deployERC1363(name);
   const erc721Factory = (name: string) => deployERC721(name);
@@ -36,8 +36,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
     it("should fail to unpack: caller is not owner nor approved", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
-      const mysteryboxInstance = await factory();
-      await mysteryboxInstance.topUp(
+      const mysteryBoxInstance = await factory();
+      await mysteryBoxInstance.topUp(
         [
           {
             tokenType: 0,
@@ -49,7 +49,7 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         { value: parseEther("1.0") },
       );
 
-      const tx1 = mysteryboxInstance.mintBox(owner.address, templateId, [
+      const tx1 = mysteryBoxInstance.mintBox(owner.address, templateId, [
         {
           tokenType: 0,
           token: ZeroAddress,
@@ -57,10 +57,12 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
           amount,
         },
       ]);
-      await expect(tx1).to.emit(mysteryboxInstance, "Transfer").withArgs(ZeroAddress, owner.address, tokenId);
+      await expect(tx1).to.emit(mysteryBoxInstance, "Transfer").withArgs(ZeroAddress, owner.address, tokenId);
 
-      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
-      await expect(tx2).to.be.revertedWith("Mysterybox: unpack caller is not owner nor approved");
+      const tx2 = mysteryBoxInstance.connect(receiver).unpack(tokenId);
+      await expect(tx2)
+        .to.be.revertedWithCustomError(mysteryBoxInstance, "ERC721InsufficientApproval")
+        .withArgs(receiver.address, tokenId);
     });
 
     describe("NATIVE", function () {
@@ -166,6 +168,10 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         const erc721RandomInstance = await erc721Factory("ERC721Random");
         await erc721RandomInstance.grantRole(MINTER_ROLE, await mysteryboxInstance.getAddress());
 
+        // Set VRFV2 Subscription
+        const tx01 = erc721RandomInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc721RandomInstance, "VrfSubscriptionSet").withArgs(1);
+
         const tx02 = vrfInstance.addConsumer(1, await erc721RandomInstance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
@@ -234,6 +240,10 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         const mysteryboxInstance = await factory();
         const erc998RandomInstance = await erc998Factory("ERC998Random");
         await erc998RandomInstance.grantRole(MINTER_ROLE, await mysteryboxInstance.getAddress());
+
+        // Set VRFV2 Subscription
+        const tx01 = erc998RandomInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(erc998RandomInstance, "VrfSubscriptionSet").withArgs(1);
 
         const tx02 = vrfInstance.addConsumer(1, await erc998RandomInstance.getAddress());
         await expect(tx02)

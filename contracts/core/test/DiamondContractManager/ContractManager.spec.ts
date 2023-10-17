@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-access";
 import { DEFAULT_ADMIN_ROLE, METADATA_ROLE, MINTER_ROLE, PREDICATE_ROLE } from "@gemunion/contracts-constants";
 import { deployDiamond } from "./shared/fixture";
 
@@ -10,7 +10,6 @@ describe("ContractManagerDiamond", function () {
     const diamondInstance = await deployDiamond(
       "DiamondCM",
       [
-        "CollectionFactoryFacet",
         "ERC20FactoryFacet",
         "ERC721FactoryFacet",
         "ERC998FactoryFacet",
@@ -127,15 +126,15 @@ describe("ContractManagerDiamond", function () {
         await expect(tx).to.be.revertedWithCustomError(contractInstance, "WrongRole");
       });
 
-      it("should fail: account is missing role", async function () {
+      it("should fail: AccessControlUnauthorizedAccount", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const contractInstance = await factory("UseFactoryFacet");
 
         const tx = contractInstance.connect(receiver).addFactory(receiver.address, PREDICATE_ROLE);
-        await expect(tx).to.be.revertedWith(
-          `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-        );
+        await expect(tx)
+          .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+          .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
       });
     });
   });
@@ -228,9 +227,9 @@ describe("ContractManagerDiamond", function () {
         const contractInstance = await factory("UseFactoryFacet");
 
         const tx = contractInstance.connect(receiver).removeFactory(receiver.address, PREDICATE_ROLE);
-        await expect(tx).to.be.revertedWith(
-          `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-        );
+        await expect(tx)
+          .to.be.revertedWithCustomError(contractInstance, "AccessControlUnauthorizedAccount")
+          .withArgs(receiver.address, DEFAULT_ADMIN_ROLE);
       });
     });
   });

@@ -11,6 +11,7 @@ import { LotteryPurchaseButton } from "../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
 import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
+import { AllowanceButton } from "./allowance";
 
 const maxNumbers = 6;
 
@@ -48,12 +49,14 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   };
 
   useEffect(() => {
-    void fetchRound();
-  }, []);
+    if (contract.id) {
+      void fetchRound();
+    }
+  }, [contract.id]);
 
   const handleClick = (i: number) => {
     return () => {
-      if (ticketNumbers.filter(e => e).length >= maxNumbers && !ticketNumbers[i]) {
+      if (ticketNumbers.filter(Boolean).length >= maxNumbers && !ticketNumbers[i]) {
         return;
       }
       const newNumbers = [...ticketNumbers];
@@ -70,19 +73,9 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
-            {round ? (
-              <LotteryPurchaseButton
-                round={round}
-                clearForm={clearForm}
-                ticketNumbers={ticketNumbers}
-                // @ts-ignore
-                disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
-              />
-            ) : null}
-            {round ? formatPrice(round.price) : "Round not Active!"}
-          </StyledPaper>
-          <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
+          <StyledTypography>{round ? formatPrice(round.price) : "Round not Active!"}</StyledTypography>
+
+          <StyledTypography>
             {round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.lottery.purchase.count"
@@ -96,7 +89,22 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
                 values={{ count: round ? round.ticketCount : 0 }}
               />
             )}
-          </StyledPaper>
+          </StyledTypography>
+
+          <AllowanceButton contract={contract} />
+
+          {round ? (
+            <LotteryPurchaseButton
+              round={round}
+              clearForm={clearForm}
+              ticketNumbers={ticketNumbers}
+              disabled={
+                ticketNumbers.filter(Boolean).length < maxNumbers ||
+                // @ts-ignore
+                (round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
+              }
+            />
+          ) : null}
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">
@@ -106,7 +114,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
             ]
           : "not yet scheduled"}
       </StyledTypography>
-      <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
+      <StyledPaper>
         <StyledTypography variant="h6">
           <FormattedMessage
             id="pages.lottery.purchase.selected"

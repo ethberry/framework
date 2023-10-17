@@ -12,6 +12,7 @@ import {
   Erc1363EventType,
   ExchangeEventType,
   ModuleType,
+  NodeEnv,
   ReferralProgramEventType,
 } from "@framework/types";
 
@@ -20,6 +21,7 @@ import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ABI } from "./interfaces";
 import { testChainId } from "@framework/constants";
+import { getEventsTopics } from "../../../common/utils";
 
 @Module({
   imports: [
@@ -29,6 +31,7 @@ import { testChainId } from "@framework/constants";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
         const exchangeEntity = await contractService.findSystemByName({
           contractModule: ModuleType.EXCHANGE,
@@ -40,56 +43,60 @@ import { testChainId } from "@framework/constants";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
         const fromBlock = exchangeEntity.fromBlock || startingBlock;
+
+        const eventNames = [
+          // MODULE:PAUSE
+          ContractEventType.Paused,
+          ContractEventType.Unpaused,
+          // MODULE:CORE
+          ExchangeEventType.Purchase,
+          ExchangeEventType.PaymentEthReceived,
+          ExchangeEventType.PaymentEthSent,
+          // MODULE:RENTABLE
+          ExchangeEventType.Lend,
+          // MODULE:CLAIM
+          ExchangeEventType.Claim,
+          // MODULE:CRAFT
+          ExchangeEventType.Craft,
+          ExchangeEventType.Dismantle,
+          // MODULE:MYSTERYBOX
+          ExchangeEventType.PurchaseMysteryBox,
+          // MODULE:REFERRAL
+          ReferralProgramEventType.ReferralProgram,
+          ReferralProgramEventType.ReferralWithdraw,
+          ReferralProgramEventType.ReferralReward,
+          // MODULE:GRADE
+          ExchangeEventType.Upgrade,
+          // MODULE:BREEDING
+          ExchangeEventType.Breed,
+          // MODULE:LOTTERY
+          ExchangeEventType.PurchaseLottery,
+          // MODULE:RAFFLE
+          ExchangeEventType.PurchaseRaffle,
+          // MODULE:PAYMENT_SPLITTER
+          ExchangeEventType.PayeeAdded,
+          ExchangeEventType.PaymentReceived,
+          ExchangeEventType.PaymentReleased,
+          ExchangeEventType.ERC20PaymentReleased,
+          // MODULE:ACCESS_CONTROL
+          AccessControlEventType.RoleGranted,
+          AccessControlEventType.RoleRevoked,
+          AccessControlEventType.RoleAdminChanged,
+          // MODULE:ERC1363
+          Erc1363EventType.TransferReceived,
+        ];
+        const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.EXCHANGE,
             contractAddress: exchangeEntity.address,
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              // MODULE:PAUSE
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
-              // MODULE:CORE
-              ExchangeEventType.Purchase,
-              ExchangeEventType.PaymentEthReceived,
-              ExchangeEventType.PaymentEthSent,
-              // MODULE:RENTABLE
-              ExchangeEventType.Lend,
-              // MODULE:CLAIM
-              ExchangeEventType.Claim,
-              // MODULE:CRAFT
-              ExchangeEventType.Craft,
-              // MODULE:MYSTERYBOX
-              ExchangeEventType.PurchaseMysteryBox,
-              // MODULE:REFERRAL
-              ReferralProgramEventType.ReferralProgram,
-              ReferralProgramEventType.ReferralWithdraw,
-              ReferralProgramEventType.ReferralReward,
-              // MODULE:GRADE
-              ExchangeEventType.Upgrade,
-              // MODULE:BREEDING
-              ExchangeEventType.Breed,
-              // MODULE:LOTTERY
-              ExchangeEventType.PurchaseLottery,
-              // MODULE:RAFFLE
-              ExchangeEventType.PurchaseRaffle,
-              // MODULE:PAYMENT_SPLITTER
-              ExchangeEventType.PayeeAdded,
-              ExchangeEventType.PaymentReceived,
-              ExchangeEventType.PaymentReleased,
-              ExchangeEventType.ERC20PaymentReleased,
-              // MODULE:ACCESS_CONTROL
-              AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
-              // MODULE:ERC1363
-              Erc1363EventType.TransferReceived,
-            ],
+            topics,
           },
           block: {
             fromBlock,
-            debug: false,
+            debug: nodeEnv === NodeEnv.development,
             cron,
           },
         };

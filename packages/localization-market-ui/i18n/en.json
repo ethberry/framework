@@ -215,11 +215,13 @@
       "ConsecutiveTransfer": "ConsecutiveTransfer",
       "Craft": "Craft",
       "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "Dismantle": "Dismantle",
       "ERC20PaymentReleased": "ERC20PaymentReleased",
       "ERC20Released": "ERC20Released",
       "EtherReceived": "EtherReceived",
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
+      "LevelUp": "Level Up",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
       "OwnershipTransferred": "OwnershipTransferred",
@@ -351,6 +353,7 @@
       "create": "Create",
       "delete": "Delete",
       "disconnect": "Disconnect",
+      "edit": "Edit",
       "empty": "\uFEFF",
       "export": "Export",
       "forgot": "Forgot password?",
@@ -366,7 +369,9 @@
       "ok": "Ok",
       "redeem": "Redeem",
       "redeemLvl": "Redeem {level}",
+      "referralWithdraw": "Withdraw {symbol}{amount}",
       "release": "Release",
+      "remove": "Remove",
       "save": "Save",
       "search": "Search",
       "sell": "Sell",
@@ -377,7 +382,8 @@
       "unpack": "Unwrap",
       "upgrade": "Upgrade",
       "upload": "Upload",
-      "withdraw": "Withdraw"
+      "withdraw": "Withdraw",
+      "withdrawReferral": "Withdraw {symbol} {amount}"
     },
     "hints": {
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
@@ -636,19 +642,6 @@
       "rates": "Rates",
       "title": "CoinGecko"
     },
-    "craft": {
-      "approve": "Please approve ingredients to Exchange before",
-      "price": "Price",
-      "tabs": {
-        "erc1155": "ERC1155",
-        "erc721": "ERC721",
-        "erc998": "ERC998"
-      },
-      "title": "Craft recipe: {title}"
-    },
-    "craft-list": {
-      "title": "Craft recipes"
-    },
     "dashboard": {
       "achievements": {
         "report": "Report",
@@ -695,12 +688,12 @@
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
-        "craft": "Craft",
-        "drop": "Drop",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
+        "promo": "Promo",
         "raffle": "Raffle",
+        "recipes": "Recipes",
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
@@ -794,9 +787,6 @@
       "uniswap": {
         "title": "Uniswap"
       }
-    },
-    "drop-list": {
-      "title": "Drops"
     },
     "ecommerce": {
       "title": "Ecommerce"
@@ -1057,6 +1047,9 @@
       },
       "title": "Profile"
     },
+    "promo-list": {
+      "title": "Promos"
+    },
     "raffle": {
       "contract": {
         "title": "Contract: {title}"
@@ -1075,6 +1068,23 @@
     },
     "raffle-list": {
       "title": "Raffle contracts"
+    },
+    "recipes": {
+      "craft": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "tabs": {
+          "erc1155": "ERC1155",
+          "erc721": "ERC721",
+          "erc998": "ERC998"
+        },
+        "title": "Craft recipe: {title}"
+      },
+      "craft-list": {
+        "title": "Craft recipes"
+      },
+      "ingredients": "Ingredients",
+      "title": "Recipes"
     },
     "referral": {
       "cabinet": {
@@ -1118,7 +1128,8 @@
       "price": "Base price",
       "priceTitle": "Base price:",
       "rarity": "Rarity",
-      "rarityMultiplier": "x {multiplier}",
+      "rarityMultiplier": " x {multiplier}",
+      "tokenUser": "User",
       "traits": "Traits"
     },
     "tokens": {
@@ -1180,12 +1191,19 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
-    "transactionSent": "Transaction sent",
+    "transactionExecuted": "Transaction executed: {txHash}",
+    "transactionSent": "Transaction sent: {txHash}",
+    "transactionTypeExecuted": "Transaction executed: {txType} {txHash}",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "walletAlreadyInUse": "Wallet already in use",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
+  },
+  "socket": {
+    "connected": "WebSocket connection ON",
+    "connect_failed": "WebSocket connection failed",
+    "error": "WebSocket connection Error"
   }
 }

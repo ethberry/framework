@@ -4,7 +4,6 @@ import {
   shouldBalanceOf,
   shouldBehaveLikeERC20Burnable,
   shouldBehaveLikeERC20Capped,
-  shouldBehaveLikeERC20Snapshot,
   shouldMint,
 } from "@gemunion/contracts-erc20";
 
@@ -21,6 +20,5 @@ export function shouldBehaveLikeERC20Whitelist(factory: () => Promise<any>, opti
 
   shouldBehaveLikeERC20Burnable(factory, options);
   shouldBehaveLikeERC20Capped(factory);
-  shouldBehaveLikeERC20Snapshot(factory, options);
   shouldReceive(factory);
 }

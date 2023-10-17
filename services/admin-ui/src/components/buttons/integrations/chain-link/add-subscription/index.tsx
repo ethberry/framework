@@ -1,33 +1,51 @@
 import { FC, Fragment, useState } from "react";
-import { BigNumber, Contract, utils } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button, Typography } from "@mui/material";
+
 import { RecentActors } from "@mui/icons-material";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { BigNumber, Contract, utils } from "ethers";
 
-import { FormattedMessage } from "react-intl";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
 import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
-import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDDto } from "./dialog";
+import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
-export const ChainLinkSubscriptionButton: FC = () => {
+export interface IChainLinkAddConsumerButtonProps {
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
+  subscriptionId: number;
+  contractId?: number;
+}
+
+export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = props => {
+  const { contractId, subscriptionId, className, disabled, variant = ListActionVariant.button } = props;
+
   const { account } = useWeb3React();
   const [isSubscriptionDialogOpen, setIsSubscriptionDialogOpen] = useState(false);
 
-  const metaFnAddConsumer = useMetamask(async (values: IChainLinkVrfSubscriptionDDto, web3Context: Web3ContextType) => {
-    // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(process.env.VRF_ADDR, VrfAddConsumer, web3Context.provider?.getSigner());
-    const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
-    return contract.addConsumer(subId, values.address) as Promise<void>;
+  const metaAddConsumer = useSystemContract<IContract, SystemModuleType>(
+    async (values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(systemContract.address, VrfAddConsumer, web3Context.provider?.getSigner());
+      const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
+      return contract.addConsumer(subId, values.address) as Promise<void>;
+    },
+  );
+
+  const metaFnAddConsumer = useMetamask((values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
+    return metaAddConsumer(SystemModuleType.CHAIN_LINK, values, web3Context);
   });
 
   const handleAddConsumer = (): void => {
     setIsSubscriptionDialogOpen(true);
   };
 
-  const handleAddConsumerConfirm = async (values: IChainLinkVrfSubscriptionDDto): Promise<void> => {
-    await metaFnAddConsumer(values).finally(() => {
+  const handleAddConsumerConfirm = async (values: IChainLinkVrfSubscriptionDto): Promise<void> => {
+    await metaFnAddConsumer(values).then(() => {
       setIsSubscriptionDialogOpen(false);
     });
   };
@@ -38,25 +56,23 @@ export const ChainLinkSubscriptionButton: FC = () => {
 
   return (
     <Fragment>
-      <Typography variant="body1">
-        <FormattedMessage id="dialogs.addConsumer" />
-      </Typography>
-      <Button
-        variant="outlined"
-        startIcon={<RecentActors />}
+      <ListAction
         onClick={handleAddConsumer}
-        data-testid="ChainLinkAddConsumerButton"
-        disabled={!account}
-      >
-        <FormattedMessage id="form.buttons.addConsumer" />
-      </Button>
+        icon={RecentActors}
+        message="form.buttons.addConsumer"
+        className={className}
+        dataTestId="ChainLinkAddConsumerButton"
+        disabled={disabled || !account}
+        variant={variant}
+      />
       <ChainLinkSubscriptionDialog
         onCancel={handleAddConsumerCancel}
         onConfirm={handleAddConsumerConfirm}
         open={isSubscriptionDialogOpen}
         initialValues={{
-          subscriptionId: "1",
+          vrfSubId: subscriptionId,
           address: "0x",
+          contractId,
         }}
       />
     </Fragment>

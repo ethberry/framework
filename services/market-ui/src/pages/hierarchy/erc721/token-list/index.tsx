@@ -1,14 +1,15 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { Erc721TokenListItem } from "./item";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { Erc721TokenListItem } from "./item";
 
 export interface IErc721TokenListProps {
   embedded?: boolean;
@@ -38,10 +39,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
 
       <PageHeader message="pages.erc721.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage
-            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
-            data-testid="ToggleFiltersButton"
-          />
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
 
@@ -64,8 +62,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

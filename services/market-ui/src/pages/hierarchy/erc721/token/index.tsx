@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -14,7 +14,9 @@ import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
 import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
 import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
 import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
+import { LendTokenPanel } from "../../../mechanics/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -42,15 +44,10 @@ export const Erc721Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box
-            component="img"
-            src={selected.template!.imageUrl}
-            alt="Gemunion token image"
-            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
-          />
-          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
+          <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <StyledDescription>
             <RichTextDisplay data={selected.template!.description} />
-          </Typography>
+          </StyledDescription>
         </Grid>
         <Grid item xs={12} sm={3}>
           {selected.templateId ? (
@@ -62,6 +59,7 @@ export const Erc721Token: FC = () => {
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
+              <LendTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

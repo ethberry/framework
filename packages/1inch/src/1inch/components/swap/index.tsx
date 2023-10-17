@@ -57,7 +57,7 @@ export const Swap: FC = memo(() => {
   const { formatMessage } = useIntl();
 
   const [searchState, setSearchState] = useState<{
-    onSelect: typeof setFromToken | typeof setToToken;
+    onSelect: typeof setFromToken;
     isVisible: boolean;
     filter: (t: IToken) => boolean;
   }>({

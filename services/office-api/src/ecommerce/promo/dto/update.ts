@@ -1,4 +1,4 @@
-import { IPromoUpdateDto } from "../interfaces";
-import { PromoCreateDto } from "./create";
+import type { IProductPromoUpdateDto } from "../interfaces";
+import { ProductPromoCreateDto } from "./create";
 
-export class PromoUpdateDto extends PromoCreateDto implements IPromoUpdateDto {}
+export class ProductPromoUpdateDto extends ProductPromoCreateDto implements IProductPromoUpdateDto {}

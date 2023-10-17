@@ -1,14 +1,13 @@
 import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
-import { FormattedMessage } from "react-intl";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import type { ITemplate } from "@framework/types";
-import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IContract, ITemplate } from "@framework/types";
+import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 
@@ -17,18 +16,21 @@ import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
+  className?: string;
+  disabled?: boolean;
   template: ITemplate;
+  variant?: ListActionVariant;
 }
 
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
-  const { template } = props;
+  const { className, disabled, template, variant = ListActionVariant.button } = props;
   const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
-    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
+    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
 
       return contract.purchase(
         {
@@ -59,7 +61,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     },
   );
 
-  const metaFn = useMetamask((dto: IAmountDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAmountDto, web3Context: Web3ContextType) => {
     const { chainId, account } = web3Context;
 
     return metaFnWithSign(
@@ -71,12 +73,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           account,
           referrer: settings.getReferrer(),
           templateId: template.id,
-          amount: dto.amount,
+          amount: values.amount,
         },
       },
-      dto,
+      values,
       web3Context,
-    );
+    ) as Promise<void>;
   });
 
   const handleBuy = async () => {
@@ -107,15 +109,29 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
+  // Random contract must be registered in Chain-link VRF
+  // TODO may-be hide BUY button completely, but it brakes formatting
+  let rndBuyEnabled = true;
+  if (
+    (template.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ||
+      template.contract?.contractFeatures.includes(ContractFeatures.GENES)) &&
+    (!template.contract?.parameters.vrfSubId || !template.contract?.parameters.isConsumer)
+  ) {
+    rndBuyEnabled = false;
+  }
+
   return (
     <Fragment>
-      <Button
-        disabled={template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap)}
+      <ListAction
         onClick={handleBuy}
-        data-testid="TemplatePurchaseButton"
-      >
-        <FormattedMessage id="form.buttons.buy" />
-      </Button>
+        message="form.buttons.buy"
+        className={className}
+        dataTestId="TemplatePurchaseButton"
+        disabled={
+          disabled || !rndBuyEnabled || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))
+        }
+        variant={variant}
+      />
       <AmountDialog
         onCancel={handleAmountCancel}
         onConfirm={handleAmountConfirm}

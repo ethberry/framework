@@ -1,36 +1,59 @@
 import { FC, Fragment } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IContract } from "@framework/types";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useCollection } from "@gemunion/react-hooks";
+import { StyledPagination } from "@framework/styled";
+import type { IContract } from "@framework/types";
 
 import { MysteryContractListItem } from "./item";
+import { StyledGrid } from "./styled";
 
 export const MysteryContractList: FC = () => {
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
-    baseUrl: "/mystery/contracts",
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleChangePage, handleSearch, handleToggleFilters } =
+    useCollection<IContract, ISearchDto>({
+      baseUrl: "/mystery/contracts",
+    });
 
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "mystery", "mystery.contracts"]} />
 
-      <PageHeader message="pages.mystery.contracts.title" />
+      <PageHeader message="pages.mystery.contracts.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+      </PageHeader>
+
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="WaitListListSearchForm"
+      >
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(contract => (
-            <Grid item lg={4} sm={6} xs={12} key={contract.id} sx={{ display: "flex" }}>
+            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
               <MysteryContractListItem contract={contract} />
-            </Grid>
+            </StyledGrid>
           ))}
         </Grid>
       </ProgressOverlay>
 
-      <Pagination
-        sx={{ mt: 2 }}
+      <StyledPagination
         shape="rounded"
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}

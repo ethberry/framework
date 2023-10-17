@@ -1,7 +1,8 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import { IAchievementLevel } from "./level";
-import { ContractEventType, IAsset, IContract } from "../blockchain";
+import type { IAchievementLevel } from "./level";
+import { ContractEventType } from "../blockchain";
+import type { IAsset, IContract } from "../blockchain";
 
 export enum AchievementType {
   MARKETPLACE = "MARKETPLACE",

@@ -2,7 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { IContract, IStakingContractDeployDto, StakingContractTemplates } from "@framework/types";
+import { StakingContractTemplates } from "@framework/types";
+import type { IContract, IStakingContractDeployDto } from "@framework/types";
 
 export interface IStakingDeployDialogProps {
   open: boolean;

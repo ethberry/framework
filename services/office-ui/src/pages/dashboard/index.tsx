@@ -14,7 +14,7 @@ import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
 
 import { ClaimSection } from "./mechanics/claim";
-import { DropSection } from "./mechanics/drop";
+import { AssetPromoSection } from "./mechanics/promo";
 import { GradeSection } from "./mechanics/grade";
 import { AdminSection } from "./infrastructure";
 import { PonziSection } from "./mechanics/ponzi";
@@ -47,7 +47,7 @@ export const Dashboard: FC = () => {
           <ClaimSection />
           <VestingSection />
           <GradeSection />
-          <DropSection />
+          <AssetPromoSection />
           <StakingSection />
           <PonziSection />
         </Grid>

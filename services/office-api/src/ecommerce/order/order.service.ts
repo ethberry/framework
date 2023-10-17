@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IOrderSearchDto, UserRole } from "@framework/types";
+import type { IOrderSearchDto } from "@framework/types";
+import { UserRole } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
 import type { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";

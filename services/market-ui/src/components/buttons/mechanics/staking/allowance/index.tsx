@@ -1,27 +1,30 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
 import { HowToVote } from "@mui/icons-material";
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IStakingRule, TokenType } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import type { IStakingRule } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
-import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
+import { StakingAllowanceDialog } from "./dialog";
+import type { IStakingAllowanceDto } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IStakingRule;
+  variant?: ListActionVariant;
 }
 // TODO allowance for deposit array
 // TODO allowance for exact 721 or 998 token
 export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { className, disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -67,13 +70,19 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     });
   };
 
+  const isDisabled = rule.deposit?.components.every(component => component.contract!.contractType === TokenType.NATIVE);
+
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.allowance" })}>
-        <IconButton onClick={handleAllowance} data-testid="StakeDepositAllowanceButton">
-          <HowToVote />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleAllowance}
+        icon={HowToVote}
+        message="form.tips.allowance"
+        className={className}
+        dataTestId="StakeDepositAllowanceButton"
+        disabled={isDisabled || disabled}
+        variant={variant}
+      />
       <StakingAllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}

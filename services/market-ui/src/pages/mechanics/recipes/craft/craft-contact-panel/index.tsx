@@ -19,7 +19,7 @@ export const CraftContactPanel: FC<ICraftContactPanelProps> = props => {
     async api => {
       return contract.id
         ? api.fetchJson({
-            url: "/craft/count",
+            url: "/recipes/craft/count",
             method: "POST",
             data: {
               contractId: contract.id,
@@ -45,7 +45,7 @@ export const CraftContactPanel: FC<ICraftContactPanelProps> = props => {
   }
 
   return (
-    <Button type="button" variant="contained" component={RouterLink} to={`/craft?contractId=${contract.id}`}>
+    <Button type="button" variant="contained" component={RouterLink} to={`/recipes/craft?contractId=${contract.id}`}>
       <FormattedMessage id="form.buttons.craft" />
     </Button>
   );

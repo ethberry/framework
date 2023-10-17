@@ -18,7 +18,7 @@ export interface IDispenserUploadDialogProps {
 }
 
 export const DispenserUploadDialog: FC<IDispenserUploadDialogProps> = props => {
-  const { initialValues, isLoading, onConfirm, ...rest } = props;
+  const { initialValues, isLoading, ...rest } = props;
 
   return (
     <FormDialog
@@ -26,7 +26,6 @@ export const DispenserUploadDialog: FC<IDispenserUploadDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.upload"
       testId="ClaimUploadDialog"
-      onConfirm={onConfirm}
       action={<DispenserInfoPopover />}
       {...rest}
     >

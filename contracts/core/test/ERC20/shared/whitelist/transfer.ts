@@ -14,13 +14,15 @@ export function shouldTransfer(factory: () => Promise<any>, options: IERC20Optio
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await mint(contractInstance, owner, owner.address, 0);
+      await mint(contractInstance, owner, owner.address, 0n);
 
       const tx1 = contractInstance.whitelist(receiver.address);
       await expect(tx1).to.emit(contractInstance, "Whitelisted").withArgs(receiver.address);
 
       const tx2 = contractInstance.transfer(receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+      await expect(tx2)
+        .to.be.revertedWithCustomError(contractInstance, "ERC20InsufficientBalance")
+        .withArgs(owner.address, 0, amount);
     });
 
     it("should transfer", async function () {

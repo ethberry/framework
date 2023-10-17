@@ -2,16 +2,16 @@ import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
-import { RmqProviderType } from "@framework/types";
+import { CoreEthType } from "@framework/types";
 
-import { RoundServiceRmq } from "./round.service.rmq";
+import { RaffleRoundServiceRmq } from "./round.service.rmq";
 
 @Controller()
 export class RoundControllerRmq {
-  constructor(private readonly roundServiceRmq: RoundServiceRmq) {}
+  constructor(private readonly raffleRoundServiceRmq: RaffleRoundServiceRmq) {}
 
-  @EventPattern(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
+  @EventPattern(CoreEthType.START_RAFFLE_ROUND)
   async updateSchedule(@Payload() dto: IRaffleScheduleUpdateRmq): Promise<void> {
-    return this.roundServiceRmq.updateSchedule(dto);
+    return this.raffleRoundServiceRmq.startRound(dto);
   }
 }

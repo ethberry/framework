@@ -4,7 +4,7 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363.sol";
-import "@gemunion/contracts-misc/contracts/interfaces.sol";
+import "@gemunion/contracts-utils/contracts/interfaces.sol";
 
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
@@ -333,7 +333,7 @@ library ExchangeUtils {
   function _isERC1363Supported(address receiver, address token) internal view returns (bool) {
     return
       (receiver == address(this) ||
-        (receiver.isContract() && _tryGetSupportedInterface(receiver, IERC1363_RECEIVER_ID))) &&
+        (receiver.code.length != 0 && _tryGetSupportedInterface(receiver, IERC1363_RECEIVER_ID))) &&
       _tryGetSupportedInterface(token, IERC1363_ID);
   }
 

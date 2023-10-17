@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
-import { IOrder, OrderStatus } from "@framework/types";
+import type { IOrder } from "@framework/types";
+import { OrderStatus } from "@framework/types";
 
 import { Column } from "../column";
 import { StyledContainer } from "./styled";

@@ -1,9 +1,10 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  IERC721TokenMintRandomEvent,
+import type {
   IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
   IErc998BatchTransferChildEvent,
@@ -13,11 +14,13 @@ import {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
-  TokenMetadata,
-  TokenStatus,
 } from "@framework/types";
+import { testChainId } from "@framework/constants";
+
+import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -27,7 +30,6 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { ABI } from "../../erc721/token/log/interfaces";
 import { Erc998CompositionService } from "../composition/composition.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -36,23 +38,27 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly contractService: ContractService,
     protected readonly assetService: AssetService,
+    protected readonly configService: ConfigService,
     protected readonly erc998CompositionService: Erc998CompositionService,
     private readonly notificatorService: NotificatorService,
   ) {
-    super(loggerService, tokenService, eventHistoryService);
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { from, to, tokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     // Mint token create
     if (from === ZeroAddress) {
@@ -78,7 +84,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
+      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity);
     }
 
     const erc998TokenEntity = await this.tokenService.getToken(
@@ -118,6 +124,14 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
 
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
+
     await this.notificatorService.tokenTransfer({
       token: erc998TokenEntity,
       from: from.toLowerCase(),
@@ -128,12 +142,18 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
   public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId, childContract, childTokenId },
     } = event;
+    const { transactionHash } = context;
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const erc998TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       context.address.toLowerCase(),
+      chainId,
+      true,
     );
 
     if (!erc998TokenEntity) {
@@ -147,7 +167,11 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       erc998TokenEntity.id,
     );
 
-    const tokenEntity = await this.tokenService.getToken(Number(childTokenId).toString(), childContract.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(
+      Number(childTokenId).toString(),
+      childContract.toLowerCase(),
+      chainId,
+    );
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -159,16 +183,28 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       tokenId: tokenEntity.id,
       amount: "1",
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: erc998TokenEntity.balance[0].account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async receivedChildBatch(event: ILogEvent<IErc998BatchReceivedChildEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId, childContract, childTokenIds, amounts },
     } = event;
+    const { transactionHash } = context;
 
     const erc998TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       context.address.toLowerCase(),
+      void 0,
+      true,
     );
 
     if (!erc998TokenEntity) {
@@ -199,12 +235,22 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
         amount: amounts[i],
       });
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: erc998TokenEntity.balance[0].account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async transferChild(event: ILogEvent<IErc998TokenTransferChildEvent>, context: Log): Promise<void> {
     const {
-      args: { childContract, childTokenId },
+      name,
+      args: { to, childContract, childTokenId },
     } = event;
+    const { transactionHash } = context;
 
     const erc721TokenEntity = await this.tokenService.getToken(
       Number(childTokenId).toString(),
@@ -227,12 +273,22 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     // await balanceEntity.remove();
     await this.balanceService.delete({ id: balanceEntity.id });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: to.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async transferChildBatch(event: ILogEvent<IErc998BatchTransferChildEvent>, context: Log): Promise<void> {
     const {
-      args: { childContract, childTokenIds, amounts },
+      name,
+      args: { to, childContract, childTokenIds, amounts },
     } = event;
+    const { transactionHash } = context;
 
     await Promise.all(
       childTokenIds.map(async (childTokenId, i) => {
@@ -261,18 +317,26 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
         }
       }),
     );
-  }
 
-  public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: to.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChildEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { addr, maxCount },
     } = event;
-    const { address } = context;
-    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const { address, transactionHash } = context;
+    const parentContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase() },
+      { relations: { merchant: true } },
+    );
 
     if (!parentContractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -291,15 +355,27 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       childId: childContractEntity.id,
       amount: Number(maxCount),
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: parentContractEntity.merchant.wallet,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async unWhitelistChild(event: ILogEvent<IErc998TokenUnWhitelistedChildEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { addr },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const parentContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase() },
+      { relations: { merchant: true } },
+    );
 
     if (!parentContractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -317,15 +393,27 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       parentId: parentContractEntity.id,
       childId: childContractEntity.id,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: parentContractEntity.merchant.wallet,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async setMaxChild(event: ILogEvent<IErc998TokenSetMaxChildEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { addr, maxCount },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const parentContractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase() },
+      { relations: { merchant: true } },
+    );
 
     if (!parentContractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -350,15 +438,24 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     Object.assign(compositionEntity, { amount: Number(maxCount) });
     await compositionEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: parentContractEntity.merchant.wallet,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
+      name,
       args: { tokenId, attribute, value },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);
 
     if (!erc998TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);
@@ -370,5 +467,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await erc998TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: erc998TokenEntity.balance[0].account,
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

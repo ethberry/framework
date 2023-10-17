@@ -1,6 +1,6 @@
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldSupportsInterface } from "@gemunion/contracts-utils";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikeBlackList } from "@gemunion/contracts-access";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 
 import { FrameworkInterfaceId } from "../constants";
 import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";

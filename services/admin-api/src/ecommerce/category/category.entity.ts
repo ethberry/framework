@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { ICategory } from "@framework/types";
+import type { ICategory } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";

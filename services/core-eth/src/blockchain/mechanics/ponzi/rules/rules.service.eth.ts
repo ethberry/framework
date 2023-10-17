@@ -1,8 +1,11 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { IPonziCreateEvent, IPonziUpdateEvent, PonziRuleStatus } from "@framework/types";
+import type { IPonziCreateEvent, IPonziUpdateEvent } from "@framework/types";
+import { PonziRuleStatus, RmqProviderType, SignalEventType } from "@framework/types";
 import { PonziRulesService } from "./rules.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
@@ -10,8 +13,8 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class PonziRulesServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    @Inject(RmqProviderType.SIGNAL_SERVICE)
+    protected readonly signalClientProxy: ClientProxy,
     private readonly ponziRulesService: PonziRulesService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -20,15 +23,19 @@ export class PonziRulesServiceEth {
   public async create(event: ILogEvent<IPonziCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { rule, ruleId, externalId },
     } = event;
-    const { address } = context;
+    const { transactionHash, address } = context;
 
     const { active } = rule;
 
-    const contractEntity = await this.contractService.findOne({
-      address: address.toLowerCase(),
-    });
+    const contractEntity = await this.contractService.findOne(
+      {
+        address: address.toLowerCase(),
+      },
+      { relations: { merchant: true } },
+    );
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -49,18 +56,30 @@ export class PonziRulesServiceEth {
     });
 
     await ponziRuleEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async update(event: ILogEvent<IPonziUpdateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
+      name,
       args: { ruleId, active },
     } = event;
-    const { address } = context;
+    const { transactionHash, address } = context;
 
-    const contractEntity = await this.contractService.findOne({
-      address: address.toLowerCase(),
-    });
+    const contractEntity = await this.contractService.findOne(
+      {
+        address: address.toLowerCase(),
+      },
+      { relations: { merchant: true } },
+    );
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -80,5 +99,13 @@ export class PonziRulesServiceEth {
     });
 
     await ponziRuleEntity.save();
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 }

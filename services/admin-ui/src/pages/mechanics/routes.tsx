@@ -4,7 +4,7 @@ import { breedRoutes } from "./breed/routes";
 import { claimRoutes } from "./claim/routes";
 import { dispenserRoutes } from "./dispenser/routes";
 import { collectionRoutes } from "./collection/routes";
-import { dropRoutes } from "./drop/routes";
+import { promoRoutes } from "./promo/routes";
 import { gradeRoutes } from "./grade/routes";
 import { lotteryRoutes } from "./lottery/routes";
 import { mysteryRoutes } from "./mystery/routes";
@@ -21,7 +21,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
   ...collectionRoutes,
   ...dispenserRoutes,
-  ...dropRoutes,
+  ...promoRoutes,
   ...gradeRoutes,
   ...lotteryRoutes,
   ...mysteryRoutes,

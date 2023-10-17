@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { IRaffleToken } from "@framework/types";
+import type { IRaffleToken } from "@framework/types";
 
 export interface IRaffleTokenViewDialogProps {
   open: boolean;

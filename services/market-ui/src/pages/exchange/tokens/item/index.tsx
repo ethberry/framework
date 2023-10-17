@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IToken } from "@framework/types";
+import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
+import { IToken, ModuleType } from "@framework/types";
 
 import { TokenSellButton } from "../../../../components/buttons";
 import { RarityBadge } from "../../../../components/common/badge";
@@ -15,19 +16,22 @@ interface IMyTokenListItemProps {
 export const MyTokenListItem: FC<IMyTokenListItemProps> = props => {
   const { token } = props;
 
+  const navigateTo =
+    token.template?.contract?.contractModule === ModuleType.LOTTERY ||
+    token.template?.contract?.contractModule === ModuleType.RAFFLE
+      ? `/${token.template?.contract?.contractModule?.toLowerCase()}/tokens/${token.id}`
+      : `/${token.template?.contract?.contractType?.toLowerCase()}/tokens/${token.id}`;
+
   return (
     <Card>
-      <CardActionArea
-        component={RouterLink}
-        to={`/${token.template?.contract?.contractType?.toLowerCase()}/tokens/${token.id}`}
-      >
+      <CardActionArea component={RouterLink} to={navigateTo}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
-        <CardMedia sx={{ height: 200 }} image={token.template!.imageUrl} />
+        <StyledCardMedia image={token.template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
+          <StyledCardContentDescription>
             <RichTextDisplay data={token.template!.description} />
-          </Typography>
+          </StyledCardContentDescription>
         </CardContent>
       </CardActionArea>
       <CardActions>

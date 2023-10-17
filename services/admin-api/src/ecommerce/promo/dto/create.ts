@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min } from "class-validator";
 
-import { IPromoCreateDto } from "../interfaces";
+import { IProductPromoCreateDto } from "../interfaces";
 
-export class PromoCreateDto implements IPromoCreateDto {
+export class ProductPromoCreateDto implements IProductPromoCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;

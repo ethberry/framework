@@ -1,13 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-
-import { IconButton, Tooltip } from "@mui/material";
 import { HowToVote } from "@mui/icons-material";
-
-import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { IPonziRule, TokenType } from "@framework/types";
 
 import AllowanceABI from "../../../../../abis/mechanics/ponzi/allowance/allowance.abi.json";
@@ -15,12 +12,14 @@ import AllowanceABI from "../../../../../abis/mechanics/ponzi/allowance/allowanc
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IPonziAllowanceButtonProps {
+  className?: string;
+  disabled?: boolean;
   rule: IPonziRule;
+  variant?: ListActionVariant;
 }
 
 export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+  const { className, disabled, rule, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -51,13 +50,19 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
     });
   };
 
+  const isDisabled = rule.deposit?.components.every(component => component.contract!.contractType === TokenType.NATIVE);
+
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.allowance" })}>
-        <IconButton onClick={handleAllowance} data-testid="PonziAllowanceButton">
-          <HowToVote />
-        </IconButton>
-      </Tooltip>
+      <ListAction
+        onClick={handleAllowance}
+        icon={HowToVote}
+        message="form.tips.allowance"
+        className={className}
+        dataTestId="PonziAllowanceButton"
+        disabled={isDisabled || disabled}
+        variant={variant}
+      />
       <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}

@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { WeiPerEther, ZeroAddress } from "ethers";
 
-import { blockAwait } from "@gemunion/contracts-utils";
+import { blockAwait } from "@gemunion/contracts-helpers";
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 export async function deployStaking(contracts: Record<string, any>) {

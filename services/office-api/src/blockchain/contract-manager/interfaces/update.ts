@@ -1,3 +1,3 @@
-import { IContractManagerCreateDto } from "./create";
+import type { IContractManagerCreateDto } from "./create";
 
 export interface IContractManagerUpdateDto extends IContractManagerCreateDto {}

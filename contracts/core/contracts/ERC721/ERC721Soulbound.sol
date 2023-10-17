@@ -4,11 +4,13 @@
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "./ERC721Simple.sol";
 
 contract ERC721Soulbound is ERC721Simple {
+  error Soulbound();
+
   constructor(
     string memory name,
     string memory symbol,
@@ -17,16 +19,15 @@ contract ERC721Soulbound is ERC721Simple {
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   * Override that disables transfer
+   * @dev See {ERC721-_update}.
    */
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal virtual override {
-    require(from == address(0) || to == address(0), "ERC721Soulbound: can't be transferred");
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+  function _update(address to, uint256 tokenId, address auth) internal virtual override returns (address) {
+    address from = super._update(to, tokenId, auth);
+
+    if (!(from == address(0) || to == address(0))) {
+      revert Soulbound();
+    }
+
+    return from;
   }
 }

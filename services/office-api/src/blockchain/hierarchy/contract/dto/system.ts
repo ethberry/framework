@@ -2,15 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum } from "class-validator";
 import { Transform } from "class-transformer";
 
-// import { ModuleType } from "@framework/types";
+import { ChainIdDto } from "@gemunion/collection";
+import type { ISystemContractSearchDto } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
-export enum SystemModuleType {
-  CONTRACT_MANAGER = "CONTRACT_MANAGER",
-  EXCHANGE = "EXCHANGE",
-  DISPENSER = "DISPENSER",
-}
-
-export class SystemContractSearchDto {
+export class SystemContractSearchDto extends ChainIdDto implements ISystemContractSearchDto {
   @ApiProperty({
     enum: SystemModuleType,
   })

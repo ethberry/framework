@@ -18,6 +18,7 @@ import { NotificatorModule } from "../../../../game/notificator/notificator.modu
 import { Erc998TokenRandomLogModule } from "./log-random/log.module";
 import { Erc998TokenRandomControllerEth } from "./token.controller.random.eth";
 import { Erc998TokenRandomServiceEth } from "./token.service.random.eth";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { Erc998TokenRandomServiceEth } from "./token.service.random.eth";
     NotificatorModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth, Erc998TokenRandomServiceEth],
+  providers: [signalServiceProvider, Logger, ethersRpcProvider, Erc998TokenServiceEth, Erc998TokenRandomServiceEth],
   controllers: [Erc998TokenControllerEth, Erc998TokenRandomControllerEth],
   exports: [Erc998TokenServiceEth, Erc998TokenRandomServiceEth],
 })

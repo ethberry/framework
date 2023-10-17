@@ -8,7 +8,7 @@ import {
 } from "react-beautiful-dnd";
 import { Box } from "@mui/material";
 
-import { IOrder } from "@framework/types";
+import type { IOrder } from "@framework/types";
 
 import { OrderListItem } from "../order-item";
 import { Wrapper } from "./styled";
