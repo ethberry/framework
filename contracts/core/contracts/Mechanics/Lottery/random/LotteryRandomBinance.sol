@@ -23,7 +23,7 @@ contract LotteryRandomBinance is LotteryRandom, ChainLinkBinanceV2 {
     emit VrfSubscriptionSet(_subId);
   }
 
-  function getRandomNumber() internal override(LotteryRandom, ChainLinkBinanceV2) returns (uint256 requestId) {
+  function getRandomNumber() internal override(LotteryRandom, ChainLinkBaseV2) returns (uint256 requestId) {
     if (_subId == 0) revert InvalidSubscription();
     return super.getRandomNumber();
   }
