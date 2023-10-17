@@ -29,7 +29,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
       ) VALUES (
         '${process.env.NODE_ENV === NodeEnv.production ? "gemunion@gemunion.io" : "trejgun@gmail.com"}',
         '${
-          process.env.NODE_ENV === NodeEnv.production ? "t99AarxE3vT9yBM1YtVHgyCEkAo1" : "nmuQTQhyQ1X5nla2i061Wsc4cIj1"
+          process.env.NODE_ENV === NodeEnv.production ? "L0gf2QaRw2dVJfbueSft7Aqmyqe2" : "nmuQTQhyQ1X5nla2i061Wsc4cIj1"
         }',
         'GemUnion Admin',
         '${avatarWhiteUrl}',
