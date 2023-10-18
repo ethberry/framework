@@ -25,11 +25,11 @@
     "notistack": "3.0.1",
     "react-intl": "6.5.0",
     "react-window": "1.8.9",
-    "type-fest": "4.4.0"
+    "type-fest": "4.5.0"
   },
   "devDependencies": {
     "@types/react": "18.2.29",
-    "@types/react-window": "1.8.6",
+    "@types/react-window": "1.8.7",
     "react": "18.2.0"
   },
   "engines": {
