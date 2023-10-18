@@ -63,12 +63,20 @@ export class TransactionServiceCron {
               );
 
               // process all controllers
-              discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
-                return (
-                  discoveredMethodWithMeta.discoveredMethod.handler.bind(
-                    discoveredMethodWithMeta.discoveredMethod.parentClass.instance,
-                  ) as MessageHandler
-                )(logData.decoded, logData.context);
+              await Promise.allSettled(
+                discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
+                  return (
+                    discoveredMethodWithMeta.discoveredMethod.handler.bind(
+                      discoveredMethodWithMeta.discoveredMethod.parentClass.instance,
+                    ) as MessageHandler
+                  )(logData.decoded, logData.context);
+                }),
+              ).then(res => {
+                res.forEach(r => {
+                  if (r.status === "rejected") {
+                    console.error(r);
+                  }
+                });
               });
 
               // update success status

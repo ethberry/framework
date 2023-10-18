@@ -93,7 +93,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === NodeEnv.development,
+  logging: process.env.NODE_ENV !== "production",
 };
 
 export default config;
