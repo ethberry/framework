@@ -56,8 +56,6 @@ export class TransactionService {
   }
 
   public async findAllTxHashes(where: FindOptionsWhere<TransactionEntity>): Promise<Array<string> | null> {
-    // return await this.findAll(where);
-
     const queryBuilder = this.transactionEntityRepository.createQueryBuilder("transactions");
     queryBuilder.select(["transactions.transactionHash"]);
     queryBuilder.where(where);
@@ -88,14 +86,7 @@ export class TransactionService {
   }
 
   public async updateTxsStatus(where: FindOptionsWhere<TransactionEntity>, status: TransactionStatus): Promise<void> {
-    const txs = await this.findAll(where);
-    // update status
-    txs.map(async tx => {
-      if (tx.transactionStatus === TransactionStatus.PENDING) {
-        Object.assign(tx, { transactionStatus: status });
-      }
-      await tx.save();
-    });
+    await this.transactionEntityRepository.update(where, { transactionStatus: status });
   }
 
   public async findAllLogsByHash(transactionHash: string, chainId: number): Promise<Array<TransactionEntity>> {
