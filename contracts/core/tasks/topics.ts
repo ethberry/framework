@@ -81,8 +81,8 @@ enum ContractEventSignature {
   OwnershipTransferred = "OwnershipTransferred(address,address)",
 
   // MODULE:STAKING
-  // event RuleCreated(uint256 ruleId, Rule rule, uint256 externalId);
-  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],uint256,uint256,uint256,bool,bool),uint256)",
+  // event RuleCreated(uint256 ruleId, Rule rule);
+  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],uint256,uint256,uint256,bool,bool))",
   RuleUpdated = "RuleUpdated(uint256,bool)",
   StakingStart = "StakingStart(uint256,uint256,address,uint256,uint256)",
   StakingWithdraw = "StakingWithdraw(uint256,address,uint256)",
