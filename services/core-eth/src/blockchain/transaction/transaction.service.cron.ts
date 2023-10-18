@@ -44,9 +44,6 @@ export class TransactionServiceCron {
 
     if (uniqueTxs && uniqueTxs.length > 0) {
       uniqueTxs.map(async transactionHash => {
-        // change tx status
-        await this.transactionService.updateTxsStatus({ transactionHash, chainId }, TransactionStatus.PROCESS);
-
         try {
           const txReceipt = await getTransactionReceipt(transactionHash, this.jsonRpcProvider);
           // transaction must exist in blockchain
@@ -54,6 +51,9 @@ export class TransactionServiceCron {
             const allLogs = await this.transactionService.findAllLogsByHash(transactionHash, chainId);
             // process all transaction's logs
             allLogs.map(async logEntity => {
+              // change tx status - PROCESS
+              await this.transactionService.updateTxsStatus({ id: logEntity.id }, TransactionStatus.PROCESS);
+
               console.info(`PROCESSING JOB ${logEntity.logData.id}, route: ${logEntity.logData.route}`);
               const { logData } = logEntity;
 
