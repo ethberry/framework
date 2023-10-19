@@ -16,7 +16,7 @@ import {ERC721Simple} from "../../ERC721/ERC721Simple.sol";
 import {TopUp} from "../../utils/TopUp.sol";
 import {Asset, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
-import {MethodNotSupported} from "../../utils/errors.sol";
+import {MethodNotSupported, NoContent} from "../../utils/errors.sol";
 
 contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   using Address for address;
@@ -39,7 +39,9 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   function mintBox(address account, uint256 templateId, Asset[] memory items) external onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
-    require(items.length > 0, "Mysterybox: no content");
+    if (items.length == 0) {
+      revert NoContent();
+    }
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _itemData[tokenId] = items;

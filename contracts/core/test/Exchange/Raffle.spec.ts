@@ -831,7 +831,7 @@ describe("Diamond Exchange Raffle", function () {
     });
   });
 
-  it("should fail: paused", async function () {
+  it("should fail: EnforcedPause", async function () {
     const exchangeInstance = await factory();
     const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
 
@@ -861,6 +861,6 @@ describe("Diamond Exchange Raffle", function () {
       ZeroHash,
     );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });

@@ -9,6 +9,7 @@ pragma solidity ^0.8.20;
 import {AccessControl, IAccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Create2} from "@openzeppelin/contracts/utils/Create2.sol";
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import {MINTER_ROLE, METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
@@ -97,5 +98,9 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
         i++;
       }
     }
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
+    return interfaceId == type(IAccessControl).interfaceId;
   }
 }

@@ -1,19 +1,20 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { concat, Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { decodeNumber, decodeTraits } from "@framework/traits-api";
+import { TokenMetadata } from "@framework/types";
+
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { concat, Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
 import { deployDiamond, deployErc721Base } from "./shared/fixture";
 import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeMetadata } from "../shared/metadata";
-import { decodeNumber, decodeTraits } from "@framework/traits-api";
-import { TokenMetadata } from "@framework/types";
 
 describe("Diamond Exchange Breed", function () {
   const factory = async (facetName = "ExchangeBreedFacet"): Promise<any> => {
@@ -764,7 +765,7 @@ describe("Diamond Exchange Breed", function () {
     });
   });
 
-  it("should fail: paused", async function () {
+  it("should fail: EnforcedPause", async function () {
     const [_owner] = await ethers.getSigners();
 
     const exchangeInstance = await factory();
@@ -788,6 +789,6 @@ describe("Diamond Exchange Breed", function () {
       ZeroHash,
     );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });

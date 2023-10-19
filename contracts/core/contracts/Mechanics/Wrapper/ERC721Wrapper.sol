@@ -16,7 +16,7 @@ import {IERC721Wrapper} from "./interfaces/IERC721Wrapper.sol";
 import {ERC721Simple} from "../../ERC721/ERC721Simple.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {Asset,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
-import {MethodNotSupported} from "../../utils/errors.sol";
+import {MethodNotSupported, NoContent} from "../../utils/errors.sol";
 
 contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   mapping(uint256 => Asset[]) internal _itemData;
@@ -33,7 +33,9 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Hol
   }
 
   function mintBox(address account, uint256 templateId, Asset[] memory items) external payable onlyRole(MINTER_ROLE) {
-    require(items.length > 0, "Wrapper: no content");
+    if (items.length == 0) {
+      revert NoContent();
+    }
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _itemData[tokenId] = items;

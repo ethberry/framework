@@ -33,13 +33,13 @@ describe("Wrapper", function () {
   ]);
 
   describe("mintBox", function () {
-    it("should fail no content", async function () {
+    it("should fail: NoContent", async function () {
       const [owner] = await ethers.getSigners();
 
-      const erc721WrapperInstance = await factory();
+      const contractInstance = await factory();
 
-      const tx = erc721WrapperInstance.mintBox(owner.address, templateId, [], { value: amount });
-      await expect(tx).to.be.rejectedWith("Wrapper: no content");
+      const tx = contractInstance.mintBox(owner.address, templateId, [], { value: amount });
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "NoContent");
     });
   });
 

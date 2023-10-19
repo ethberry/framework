@@ -22,6 +22,9 @@ error WrongAmount();
 error RefProgramSet();
 error WrongArrayLength();
 
+// Mystery/Wrapper
+  error NoContent();
+
 // CM
 error WrongRole();
 

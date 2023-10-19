@@ -1510,7 +1510,7 @@ describe("Diamond Exchange Core", function () {
     await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotExist");
   });
 
-  it("should fail: paused", async function () {
+  it("should fail: EnforcedPause", async function () {
     const exchangeInstance = await factory();
     const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
 
@@ -1535,6 +1535,6 @@ describe("Diamond Exchange Core", function () {
       ZeroHash,
     );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });

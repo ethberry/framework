@@ -988,7 +988,7 @@ describe("Diamond Exchange Rent", function () {
     });
   });
 
-  it("should fail: paused", async function () {
+  it("should fail: EnforcedPause", async function () {
     const [_owner] = await ethers.getSigners();
 
     const exchangeInstance = await factory();
@@ -1014,6 +1014,6 @@ describe("Diamond Exchange Rent", function () {
       ZeroHash,
     );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });

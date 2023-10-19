@@ -595,7 +595,7 @@ describe("Diamond Exchange Claim", function () {
         await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
 
-      it("should fail: paused", async function () {
+      it("should fail: EnforcedPause", async function () {
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
@@ -616,12 +616,12 @@ describe("Diamond Exchange Claim", function () {
           ZeroHash,
         );
 
-        await expect(tx1).to.be.revertedWith("Pausable: paused");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
       });
     });
   });
 
-  it("should fail: paused", async function () {
+  it("should fail: EnforcedPause", async function () {
     const [owner, receiver] = await ethers.getSigners();
 
     const diamondInstance = await factory();
@@ -680,6 +680,6 @@ describe("Diamond Exchange Claim", function () {
       signature,
     );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });
