@@ -99,8 +99,4 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
       }
     }
   }
-
-  function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
-    return interfaceId == type(IAccessControl).interfaceId;
-  }
 }
