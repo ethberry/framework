@@ -25,13 +25,17 @@ contract ERC998GenesGoerli is ERC998Genes, ChainLinkGoerliV2 {
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (subId == 0) revert InvalidSubscription();
-        _subId = subId;
+    if (subId == 0) {
+      revert InvalidSubscription();
+    }
+    _subId = subId;
     emit VrfSubscriptionSet(_subId);
   }
 
   function getRandomNumber() internal override(ChainLinkBaseV2, ERC998Genes) returns (uint256 requestId) {
-    if (_subId == 0) revert InvalidSubscription();
+    if (_subId == 0) {
+      revert InvalidSubscription();
+    }
     return super.getRandomNumber();
   }
 

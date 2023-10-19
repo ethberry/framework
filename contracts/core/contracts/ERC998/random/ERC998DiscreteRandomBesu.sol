@@ -8,21 +8,21 @@ pragma solidity ^0.8.20;
 
 import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 
-import {ChainLinkHardhatV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhatV2.sol";
+import {ChainLinkBesuV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBesuV2.sol";
 import {ChainLinkBaseV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBaseV2.sol";
 
-import {ERC998BlacklistRandom} from "../ERC998BlacklistRandom.sol";
+import {ERC998DiscreteRandom} from "../ERC998DiscreteRandom.sol";
 import {InvalidSubscription} from "../../utils/errors.sol";
 
-contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhatV2 {
+contract ERC998DiscreteRandomGemunion is ERC998DiscreteRandom, ChainLinkBesuV2 {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
   )
-    ERC998BlacklistRandom(name, symbol, royalty, baseTokenURI)
-    ChainLinkHardhatV2(uint64(0), uint16(6), uint32(600000), uint32(1))
+    ERC998DiscreteRandom(name, symbol, royalty, baseTokenURI)
+    ChainLinkBesuV2(uint64(0), uint16(6), uint32(600000), uint32(1))
   {}
 
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
@@ -35,7 +35,7 @@ contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhat
     emit VrfSubscriptionSet(_subId);
   }
 
-  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998BlacklistRandom) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998DiscreteRandom) returns (uint256 requestId) {
     if (_subId == 0) {
       revert InvalidSubscription();
     }
@@ -45,7 +45,7 @@ contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhat
   function fulfillRandomWords(
     uint256 requestId,
     uint256[] memory randomWords
-  ) internal override(ERC998BlacklistRandom, VRFConsumerBaseV2) {
+  ) internal override(ERC998DiscreteRandom, VRFConsumerBaseV2) {
     return super.fulfillRandomWords(requestId, randomWords);
   }
 

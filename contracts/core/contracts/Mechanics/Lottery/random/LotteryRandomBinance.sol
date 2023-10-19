@@ -23,13 +23,17 @@ contract LotteryRandomBinance is LotteryRandom, ChainLinkBinanceV2 {
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (subId == 0) revert InvalidSubscription();
-        _subId = subId;
+    if (subId == 0) {
+      revert InvalidSubscription();
+    }
+    _subId = subId;
     emit VrfSubscriptionSet(_subId);
   }
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBaseV2) returns (uint256 requestId) {
-    if (_subId == 0) revert InvalidSubscription();
+    if (_subId == 0) {
+      revert InvalidSubscription();
+    }
     return super.getRandomNumber();
   }
 
