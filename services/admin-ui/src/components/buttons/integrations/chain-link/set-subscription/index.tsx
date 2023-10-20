@@ -30,7 +30,6 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
-    // TODO get VRF contract address from backend
     const contract = new Contract(address, VrfSetSub, web3Context.provider?.getSigner());
     return contract.setSubscriptionId(options.vrfSubId) as Promise<void>;
   });

@@ -11,7 +11,6 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const linkAddr = process.env.LINK_ADDR || wallet;
 
-    // TODO add LINK for all supported networks (56 & 97 etc.)
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,

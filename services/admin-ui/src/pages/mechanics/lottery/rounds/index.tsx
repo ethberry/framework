@@ -27,6 +27,7 @@ export const LotteryRounds: FC = () => {
     handleViewConfirm,
     handleViewCancel,
     handleChangePage,
+    handleRefreshPage,
   } = useCollection<ILotteryRound, ISearchDto>({
     baseUrl: "/lottery/rounds",
     empty: {
@@ -59,7 +60,7 @@ export const LotteryRounds: FC = () => {
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
-                <LotteryReleaseButton round={round} />
+                <LotteryReleaseButton round={round} onRefreshPage={handleRefreshPage} />
                 <LotteryRoundEndButton
                   contract={round.contract!}
                   disabled={
