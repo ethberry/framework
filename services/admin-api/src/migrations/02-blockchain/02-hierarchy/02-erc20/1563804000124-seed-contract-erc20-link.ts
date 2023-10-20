@@ -108,6 +108,25 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
+        '0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06',
+        97,
+        'LINK',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        'ChainLink LINK',
+        'LINK',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }
