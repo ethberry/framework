@@ -42,7 +42,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={({ tokenId, ...rest }: any) => onSubmit(tokenId === "" ? rest : { tokenId, ...rest })}
       showButtons={false}
       showPrompt={false}
       testId="TokenSearchForm"
@@ -65,7 +65,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
             <TemplateInput />
           </Grid>
           <Grid item xs={6}>
-            <TextInput name="tokenId" />
+            <TextInput name="tokenId" normalizeValue={(value: string | undefined) => value ?? ""} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="tokenStatus" options={TokenStatus} multiple />
@@ -89,7 +89,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave onSubmit={onSubmit} />
+      <AutoSave onSubmit={({ tokenId, ...rest }: any) => onSubmit(tokenId === "" ? rest : { tokenId, ...rest })} />
     </FormWrapper>
   );
 };

@@ -22,14 +22,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
 
   @ApiPropertyOptional({
     type: Number,
-    minimum: 1,
-  })
-  @IsOptional()
-  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
-  public tokenId: string;
-
-  @ApiPropertyOptional({
-    type: Number,
   })
   @IsOptional()
   @IsBigInt({}, { message: "typeMismatch" })

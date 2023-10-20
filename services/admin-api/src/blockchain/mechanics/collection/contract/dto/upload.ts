@@ -12,7 +12,7 @@ export class TokenUploadDto implements ITokenUploadDto {
     type: Number,
     minimum: 0,
   })
-  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
 
   @ApiProperty()
