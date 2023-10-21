@@ -85,7 +85,7 @@ contract ERC998SimpleEnum is ERC721Simple, ERC998ERC721Enumerable, WhiteListChil
   /**
    * @dev See {ERC721-_update}.
    */
-  function _update(address to, uint256 tokenId, address auth) internal virtual override(ERC721, ERC721ABER) returns (address) {
+  function _update(address to, uint256 tokenId, address auth) internal virtual override(ERC721ABER, ERC998ERC721) returns (address) {
     return super._update(to, tokenId, auth);
   }
 
