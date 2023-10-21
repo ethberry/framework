@@ -903,7 +903,24 @@
     },
     "lottery": {
       "contract": {
-        "title": "Contract: {title}"
+        "title": "Contract: {title}",
+        "statistics": {
+          "collapse": {
+            "open": "Details",
+            "close": "Hide"
+          },
+          "matches": {
+            "title": "Match the winning number in the same order to share prizes",
+            "match": {
+              "burn": "Burn",
+              "title": "Match {amount}",
+              "win": "{amount} Winning tickets"
+            }
+          },
+          "prizePot": "Prize pot",
+          "title": "Finished rounds",
+          "totalPlayers": "Total players this round"
+        }
       },
       "purchase": {
         "count": "{current} of {max} sold",

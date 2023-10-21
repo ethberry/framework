@@ -155,22 +155,24 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
       </StyledTypography>
 
       <StyledPaper>
-        {new Array(36).fill(null).map((e, i) => {
-          const isSelected = ticketNumbers[i];
+        <StyledWrapper>
+          {new Array(36).fill(null).map((e, i) => {
+            const isSelected = ticketNumbers[i];
 
-          return (
-            <StyledIconButton
-              size="medium"
-              key={i}
-              color="default"
-              isSelected={isSelected}
-              onClick={handleClick(i)}
-              disabled={!isSelected && selectedNumbers.length === maxNumbers}
-            >
-              {i + 1}
-            </StyledIconButton>
-          );
-        })}
+            return (
+              <StyledIconButton
+                size="medium"
+                key={i}
+                color="default"
+                isSelected={isSelected}
+                onClick={handleClick(i)}
+                disabled={!isSelected && selectedNumbers.length === maxNumbers}
+              >
+                {i + 1}
+              </StyledIconButton>
+            );
+          })}
+        </StyledWrapper>
       </StyledPaper>
     </Fragment>
   );

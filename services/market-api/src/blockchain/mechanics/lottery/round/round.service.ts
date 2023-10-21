@@ -93,7 +93,44 @@ export class LotteryRoundService {
     return queryBuilder.getOne();
   }
 
+  public async findAllRoundIds(dto: ILotteryCurrentDto): Promise<[Array<number>, number]> {
+    const { contractId } = dto;
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.andWhere("round.contractId = :contractId", {
+      contractId,
+    });
+
+    queryBuilder.andWhere("round.endTimestamp IS NOT NULL");
+
+    queryBuilder.orderBy({
+      "round.endTimestamp": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount().then(result => [result[0].map(r => r.id), result[1]]);
+  }
+
   public async statistic(roundId: number): Promise<LotteryRoundEntity | null> {
-    return this.findOne({ id: roundId }, { relations: { aggregation: true } });
+    return this.findOne(
+      { id: roundId },
+      {
+        relations: {
+          aggregation: {
+            price: {
+              components: {
+                contract: true,
+                template: true,
+              },
+            },
+          },
+          price: {
+            components: {
+              contract: true,
+              template: true,
+            },
+          },
+        },
+      },
+    );
   }
 }

@@ -12,6 +12,11 @@ import { LotteryCurrentDto } from "./dto";
 export class LotteryRoundController {
   constructor(private readonly lotteryRoundService: LotteryRoundService) {}
 
+  @Get("/all")
+  public all(@Query() dto: LotteryCurrentDto): Promise<[Array<number>, number]> {
+    return this.lotteryRoundService.findAllRoundIds(dto);
+  }
+
   @Get("/autocomplete")
   public autocomplete(): Promise<Array<LotteryRoundEntity>> {
     return this.lotteryRoundService.autocomplete();

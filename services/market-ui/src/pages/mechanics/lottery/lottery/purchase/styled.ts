@@ -22,38 +22,31 @@ export const StyledPaper = styled(Paper)({
   padding: "1em",
   backgroundColor: grey[100],
   boxShadow: "none",
+  borderRadius: 10,
 });
 
-export const StyledIconButton = styled(({ isSelected: _, ...props }: IconButtonProps & { isSelected: boolean }) => (
-  <IconButton {...props}>{props.children}</IconButton>
-))`
-  border-radius: 0.35em;
-  margin: 0.35em;
-  padding: 1em 1.5em;
-  width: 1em;
-  height: 3em;
+export interface IStyledIconButtonProps extends IconButtonProps {
+  isSelected: boolean;
+}
 
-  ${({ isSelected }) =>
-    isSelected
-      ? `
-        background-color: ${indigo[500]};
-        color: ${common.white};
-        &:hover {
-          background-color: ${blueGrey[200]};
-        }
-      `
-      : `
-        background-color: ${common.white};
-        color: ${indigo[500]};
-        &:hover {
-          background-color: ${blueGrey[200]};
-        }
-        &:disabled {
-          background-color: ${common.white};
-          color: ${indigo[200]};
-        }
-  `}
-`;
+export const StyledIconButton = styled(IconButton, {
+  shouldForwardProp: prop => prop !== "isSelected",
+})<IStyledIconButtonProps>(({ isSelected, theme }) => ({
+  borderRadius: theme.spacing(1),
+  margin: theme.spacing(1),
+  padding: theme.spacing(3, 4.5),
+  width: theme.spacing(3),
+  height: theme.spacing(9),
+  backgroundColor: isSelected ? indigo[500] : common.white,
+  color: isSelected ? common.white : indigo[500],
+  "&:hover": {
+    backgroundColor: blueGrey[200],
+  },
+  "&:disabled": {
+    backgroundColor: common.white,
+    color: indigo[200],
+  },
+}));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
