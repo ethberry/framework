@@ -12,7 +12,7 @@ import { StyledPagination } from "@framework/styled";
 import { ContractStatus, IContract, IContractSearchDto, PonziContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { PonziDeployButton } from "../../../../components/buttons";
+import { PonziContractDeployButton } from "../../../../components/buttons";
 import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
 import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
 import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
@@ -71,7 +71,7 @@ export const PonziContract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <PonziDeployButton />
+        <PonziContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm

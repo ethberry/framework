@@ -513,7 +513,7 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByWaitListContractTemplate(dto, userEntity.chainId);
 
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAIT_LIST, null);
 
     const signature = await this.signer.signTypedData(
       // Domain

@@ -27,10 +27,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'RAFFLE',
         'STAKING',
         'PONZI',
-        'WAITLIST',
+        'WAIT_LIST',
         'VESTING',
         'POLYGON',
-        'COLLECTION'
+        'COLLECTION',
+        'PAYMENT_SPLITTER'
       );
     `);
 

@@ -1076,7 +1076,8 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "wait-list": "Waitlist"
+        "wait-list": "Waitlist",
+        "payment-splitter": "Payment Splitter"
       },
       "title": "Dashboard"
     },
@@ -1437,6 +1438,12 @@
         "title": "Lists"
       },
       "title": "Waitlist"
+    },
+    "payment-splitter": {
+      "contracts": {
+        "title": "Contracts"
+      },
+      "title": "Payment Splitter"
     }
   },
   "snackbar": {

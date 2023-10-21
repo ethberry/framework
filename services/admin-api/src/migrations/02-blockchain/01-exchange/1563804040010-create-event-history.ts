@@ -85,7 +85,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'PurchaseMysteryBox',
       --MODULE:GRADE
        'Upgrade',
-      --MODULE:WAITLIST
+      --MODULE:WAIT_LIST
        'WaitListRewardSet',
        'WaitListRewardClaimed',
       --MODULE:BREEDING
@@ -101,7 +101,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'PaymentReceived',
        'PaymentEthReceived',
        'PaymentEthSent',
-      --MODULE:CHAINLINKV2
+      --MODULE:CHAIN_LINK V2
        'RandomWordsRequested',
        'SubscriptionCreated',
        'SubscriptionConsumerAdded',

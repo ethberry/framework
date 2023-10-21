@@ -18,7 +18,7 @@ export class PauseControllerEth {
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Paused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Paused },
     { contractType: ContractType.PONZI, eventName: ContractEventType.Paused },
-    { contractType: ContractType.WAITLIST, eventName: ContractEventType.Paused },
+    { contractType: ContractType.WAIT_LIST, eventName: ContractEventType.Paused },
   ])
   public pause(@Payload() event: ILogEvent<IPausedEvent>, @Ctx() context: Log): Promise<void> {
     return this.pauseServiceEth.pause(event, context);
@@ -31,7 +31,7 @@ export class PauseControllerEth {
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.PONZI, eventName: ContractEventType.Unpaused },
-    { contractType: ContractType.WAITLIST, eventName: ContractEventType.Unpaused },
+    { contractType: ContractType.WAIT_LIST, eventName: ContractEventType.Unpaused },
   ])
   public unpause(@Payload() event: ILogEvent<IPausedEvent>, @Ctx() context: Log): Promise<void> {
     return this.pauseServiceEth.unpause(event, context);

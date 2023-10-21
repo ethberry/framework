@@ -44,6 +44,7 @@ import { getEventsTopics } from "../../../common/utils";
           ContractManagerEventType.CollectionDeployed,
           ContractManagerEventType.StakingDeployed,
           ContractManagerEventType.PonziDeployed,
+          ContractManagerEventType.PaymentSplitterDeployed,
           ContractManagerEventType.LotteryDeployed,
           ContractManagerEventType.RaffleDeployed,
           ContractManagerEventType.WaitListDeployed,

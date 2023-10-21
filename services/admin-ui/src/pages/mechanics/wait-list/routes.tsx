@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { WaitListSection } from "../../dashboard/mechanics/wait-list";
+import { PaymentSplitterSection } from "../../dashboard/mechanics/payment-splitter";
 import { IndexWrapper } from "../../index-wrapper";
 import { WaitListList } from "./list";
 import { WaitListItem } from "./item";
@@ -16,7 +16,7 @@ export const waitListRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="wait-list">
-            <WaitListSection />
+            <PaymentSplitterSection />
           </IndexWrapper>
         ),
       },

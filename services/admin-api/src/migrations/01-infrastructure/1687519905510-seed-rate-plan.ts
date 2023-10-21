@@ -37,7 +37,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         2
       ), (
         'BRONZE',
-        'WAITLIST',
+        'WAIT_LIST',
         null,
         1
       ), (
@@ -80,6 +80,11 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'STAKING',
         null,
         1
+      ), (
+        'BRONZE',
+        'PAYMENT_SPLITTER',
+        null,
+        0
       ), (
         'SILVER',
         'HIERARCHY',
@@ -107,7 +112,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         2
       ), (
         'SILVER',
-        'WAITLIST',
+        'WAIT_LIST',
         null,
         1
       ), (
@@ -150,6 +155,11 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'STAKING',
         null,
         1
+      ), (
+        'SILVER',
+        'PAYMENT_SPLITTER',
+        null,
+        0
       ), (
         'GOLD',
         'HIERARCHY',
@@ -177,7 +187,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         2
       ), (
         'GOLD',
-        'WAITLIST',
+        'WAIT_LIST',
         null,
         1
       ), (
@@ -218,6 +228,11 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
       ), (
         'GOLD',
         'STAKING',
+        null,
+        1
+      ), (
+        'GOLD',
+        'PAYMENT_SPLITTER',
         null,
         1
       );

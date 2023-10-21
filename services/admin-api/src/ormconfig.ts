@@ -217,6 +217,7 @@ import {
   SeedContractManagerAt1563804000101,
   SeedContractMysteryAt1563804000160,
   SeedContractNativeAt1563804000110,
+  SeedContractPaymentSplitterAt1697876719370,
   SeedContractPonziAt1660436477100,
   SeedContractRaffleAt1685961136100,
   SeedContractRaffleTicketAt1685961134180,
@@ -417,8 +418,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
-  migrationsRun:
-    process.env.BUSINESS_TYPE === BusinessType.B2B.toString() || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
+  migrationsRun: process.env.BUSINESS_TYPE === BusinessType.B2B || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
   // migrationsRun: true,
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
@@ -690,6 +690,8 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721LendComponentsAt1678931845540,
 
     SeedContractDispenserAt1692165706800,
+
+    SeedContractPaymentSplitterAt1697876719370,
 
     /* ecommerce */
     CreateCategory1683724061300,

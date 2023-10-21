@@ -37,6 +37,8 @@ export * from "./mechanics/rent/search";
 
 export * from "./mechanics/promo/search";
 
+export * from "./mechanics/payment-splitter/deploy";
+
 export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/schedule";

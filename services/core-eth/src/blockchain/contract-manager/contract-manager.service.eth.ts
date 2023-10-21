@@ -31,6 +31,7 @@ import {
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  IContractManagerPaymentSplitterDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   RmqProviderType,
@@ -687,11 +688,56 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: account.toLowerCase(),
-      title: `${ModuleType.WAITLIST} (new)`,
+      title: `${ModuleType.WAIT_LIST} (new)`,
       description: emptyStateString,
       imageUrl,
       contractFeatures: [ContractFeatures.PAUSABLE],
-      contractModule: ModuleType.WAITLIST,
+      contractModule: ModuleType.WAIT_LIST,
+      chainId,
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.waitListLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+    });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.getUserWalletById(externalId),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
+  }
+
+  public async paymentSplitter(
+    event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>,
+    context: Log,
+  ): Promise<void> {
+    const {
+      name,
+      args: { account, externalId, args },
+    } = event;
+    const { transactionHash } = context;
+
+    const { payees, shares } = args;
+
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: `${ModuleType.PAYMENT_SPLITTER} (new)`,
+      description: emptyStateString,
+      parameters: {
+        payees: payees.toString(),
+        shares: shares.toString(),
+      },
+      imageUrl,
+      contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),

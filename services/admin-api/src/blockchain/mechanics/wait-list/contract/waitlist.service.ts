@@ -21,6 +21,6 @@ export class WaitListService extends ContractService {
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, [ModuleType.WAITLIST], null);
+    return super.search(dto, userEntity, [ModuleType.WAIT_LIST], null);
   }
 }

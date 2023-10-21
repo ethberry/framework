@@ -15,3 +15,4 @@ import {ERC998ERC721ABERS} from "@gemunion/contracts-erc998td/contracts/preset/E
 import {ERC721ABEC} from "@gemunion/contracts-erc721e/contracts/preset/ERC721ABEC.sol";
 import {ERC20ABC} from "@gemunion/contracts-erc20/contracts/preset/ERC20ABC.sol";
 import {ERC20ABNon1363} from "@gemunion/contracts-erc20/contracts/mocks/ERC20ABNon1363.sol";
+import {PaymentSplitter} from "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";

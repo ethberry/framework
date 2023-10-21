@@ -7,6 +7,7 @@ import { AssetPromoModule } from "./promo/promo.module";
 import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
+import { PaymentSplitterModule } from "./payment-splitter/payment-splitter.module";
 import { PonziModule } from "./ponzi/ponzi.module";
 import { RaffleModule } from "./raffle/raffle.module";
 import { RecipesModule } from "./recipes/recipes.module";
@@ -28,6 +29,7 @@ import { WaitListModule } from "./wait-list/waitlist.module";
     RecipesModule,
     RentModule,
     StakingModule,
+    PaymentSplitterModule,
     PonziModule,
     VestingModule,
     WaitListModule,

@@ -18,7 +18,7 @@ export interface IPonziContractDeployButtonProps {
   variant?: ListActionVariant;
 }
 
-export const PonziDeployButton: FC<IPonziContractDeployButtonProps> = props => {
+export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = props => {
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();

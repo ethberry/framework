@@ -11,7 +11,7 @@ export class SeedEventHistoryWaitListAt1663047650350 implements MigrationInterfa
       return;
     }
 
-    const waitListAddr = process.env.WAITLIST_ADDR || wallet;
+    const waitListAddr = process.env.WAIT_LIST_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
     const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;

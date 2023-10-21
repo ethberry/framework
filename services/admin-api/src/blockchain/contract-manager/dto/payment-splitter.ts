@@ -1,10 +1,10 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsString, IsEthereumAddress } from "class-validator";
+import { IsArray, IsEthereumAddress, IsString } from "class-validator";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
 import type { IWalletContractDeployDto } from "@framework/types";
 
-export class WaitListContractDeployDto implements IWalletContractDeployDto {
+export class PaymentSplitterContractDeployDto implements IWalletContractDeployDto {
   @ApiPropertyOptional({
     type: String,
     isArray: true,
