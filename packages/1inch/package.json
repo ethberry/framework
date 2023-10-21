@@ -28,7 +28,7 @@
     "type-fest": "4.5.0"
   },
   "devDependencies": {
-    "@types/react": "18.2.30",
+    "@types/react": "18.2.31",
     "@types/react-window": "1.8.7",
     "react": "18.2.0"
   },
