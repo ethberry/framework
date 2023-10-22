@@ -9,7 +9,7 @@ import { ZeroAddress } from "ethers";
 import { deployDiamond } from "./shared/fixture";
 import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
-import { deployERC1363 } from "../ERC20/shared/fixtures";
+import { deployERC1363, deployERC20 } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
@@ -170,7 +170,7 @@ describe("Diamond Exchange Utils", function () {
           const jerkInstance = await deployJerk();
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -200,7 +200,7 @@ describe("Diamond Exchange Utils", function () {
           const walletInstance = await deployWallet();
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -231,7 +231,7 @@ describe("Diamond Exchange Utils", function () {
           const exchangeInstance = await factory();
           const walletInstance = await ethers.getContractAt("WalletFacet", await exchangeInstance.getAddress());
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -261,7 +261,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -288,7 +288,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           // await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -316,7 +316,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           // await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -948,7 +948,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -1127,7 +1127,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testSpend(
@@ -1155,7 +1155,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testSpend(
@@ -1184,7 +1184,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testSpend(
@@ -1211,7 +1211,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           // await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testSpend(
@@ -1694,7 +1694,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testSpend(
@@ -1834,7 +1834,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Simple");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testAcquire(
@@ -2063,7 +2063,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Simple");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
           const tx = exchangeInstance.testAcquire(
@@ -2280,7 +2280,7 @@ describe("Diamond Exchange Utils", function () {
           const jerkInstance = await deployJerk();
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2310,7 +2310,7 @@ describe("Diamond Exchange Utils", function () {
           const walletInstance = await deployWallet();
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2341,7 +2341,7 @@ describe("Diamond Exchange Utils", function () {
           const exchangeInstance = await factory();
           const walletInstance = await ethers.getContractAt("WalletFacet", await exchangeInstance.getAddress());
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2371,7 +2371,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2398,7 +2398,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           // await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2426,7 +2426,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           // await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
@@ -2867,7 +2867,7 @@ describe("Diamond Exchange Utils", function () {
 
           const exchangeInstance = await factory();
 
-          const erc20Instance = await deployERC1363("ERC20Mock");
+          const erc20Instance = await deployERC20("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
           await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 

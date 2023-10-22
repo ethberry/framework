@@ -50,7 +50,7 @@ contract ERC721Discrete is IERC721Discrete, ERC721Simple {
    */
   function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (uint256) {
     _requireOwned(tokenId);
-    uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
+    uint256 value = _isRecordFieldKey(tokenId, attribute) ? _getRecordFieldValue(tokenId, attribute) : 0;
     _upsertRecordField(tokenId, attribute, value + 1);
     emit LevelUp(_msgSender(), tokenId, attribute, value + 1);
     emit MetadataUpdate(tokenId);

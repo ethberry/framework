@@ -747,11 +747,11 @@ describe("Staking", function () {
 
       // STAKE
       await erc721Instance.mintCommon(owner.address, templateId);
-      await erc721Instance.mintCommon(owner.address, templateId + 1);
+      await erc721Instance.mintCommon(owner.address, templateId + 1n);
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(2);
       expect(await erc721Instance.getRecordFieldValue(1, TEMPLATE_ID)).to.equal(templateId);
-      expect(await erc721Instance.getRecordFieldValue(2, TEMPLATE_ID)).to.equal(templateId + 1);
+      expect(await erc721Instance.getRecordFieldValue(2, TEMPLATE_ID)).to.equal(templateId + 1n);
 
       // APPROVE
       await erc721Instance.approve(await stakingInstance.getAddress(), 1);
@@ -1075,11 +1075,11 @@ describe("Staking", function () {
 
       // STAKE
       await erc721Instance.mintCommon(owner.address, templateId);
-      await erc721Instance.mintCommon(owner.address, templateId + 1);
+      await erc721Instance.mintCommon(owner.address, templateId + 1n);
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(2);
       expect(await erc721Instance.getRecordFieldValue(1, TEMPLATE_ID)).to.equal(templateId);
-      expect(await erc721Instance.getRecordFieldValue(2, TEMPLATE_ID)).to.equal(templateId + 1);
+      expect(await erc721Instance.getRecordFieldValue(2, TEMPLATE_ID)).to.equal(templateId + 1n);
 
       // APPROVE
       await erc721Instance.approve(await stakingInstance.getAddress(), 1);

@@ -12,15 +12,16 @@ import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {EnumerableMap} from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
+import {IERC721GeneralizedCollection} from "@gemunion/contracts-erc721/contracts/interfaces/IERC721GeneralizedCollection.sol";
 
 import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
 import {IERC721Simple} from "../../ERC721/interfaces/IERC721Simple.sol";
 import {IERC1155Simple} from "../../ERC1155/interfaces/IERC1155Simple.sol";
-import {IERC721GeneralizedCollection} from "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {LinearReferral} from "../../Referral/LinearReferral.sol";
 import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
@@ -374,7 +375,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
       // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
       for (uint256 k = 0; k < multiplier; ) {
-        if (IERC721GeneralizedCollection(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+        if (IERC165(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
           // If the token supports the Mysterybox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
           IERC721MysteryBox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
         } else {

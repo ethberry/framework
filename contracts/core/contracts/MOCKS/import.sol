@@ -14,5 +14,6 @@ import {VRFCoordinatorV2Mock} from "@gemunion/contracts-chain-link-v2/contracts/
 import {ERC998ERC721ABERS} from "@gemunion/contracts-erc998td/contracts/preset/ERC998ERC721ABERS.sol";
 import {ERC721ABEC} from "@gemunion/contracts-erc721e/contracts/preset/ERC721ABEC.sol";
 import {ERC20ABC} from "@gemunion/contracts-erc20/contracts/preset/ERC20ABC.sol";
-import {ERC20ABNon1363} from "@gemunion/contracts-erc20/contracts/mocks/ERC20ABNon1363.sol";
+import {ERC20Mock} from "@gemunion/contracts-mocks/contracts/ERC20Mock.sol";
+import {ERC1363Mock} from "@gemunion/contracts-mocks/contracts/ERC1363Mock.sol";
 import {PaymentSplitter} from "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";
