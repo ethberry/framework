@@ -45,6 +45,7 @@ import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/dep
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
+import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 /* lottery */
@@ -111,6 +112,7 @@ import {
   CreateLotteryRoundAggregationAt1660436476130,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
+  CreateMerge1697979517000,
   CreateMysterybox1653616447910,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
@@ -381,6 +383,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     CraftEntity,
     DismantleEntity,
+    MergeEntity,
     AssetPromoEntity,
     GradeEntity,
     LotteryRoundEntity,
@@ -572,6 +575,8 @@ const config: PostgresConnectionOptions = {
     CreateDismantle1693120862000,
     SeedDismantleErc721Erc155RecipesAt1693120862350,
     SeedDismantleErc1155Erc155RecipesAt1693120862550,
+
+    CreateMerge1697979517000,
 
     SeedContractStakingAt1654751224100,
     CreateStakingRules1654751224200,

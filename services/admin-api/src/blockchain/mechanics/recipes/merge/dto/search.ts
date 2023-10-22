@@ -3,21 +3,22 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { DismantleStatus } from "@framework/types";
-import type { IDismantleSearchDto } from "@framework/types";
+import { MergeStatus } from "@framework/types";
+import type { IMergeSearchDto } from "@framework/types";
 
-export class DismantleSearchDto extends SearchDto implements IDismantleSearchDto {
+export class MergeSearchDto extends SearchDto implements IMergeSearchDto {
   @ApiPropertyOptional({
-    enum: DismantleStatus,
+    enum: MergeStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<DismantleStatus>)
-  @IsEnum(DismantleStatus, { each: true, message: "badInput" })
-  public dismantleStatus: Array<DismantleStatus>;
+  @Transform(({ value }) => value as Array<MergeStatus>)
+  @IsEnum(MergeStatus, { each: true, message: "badInput" })
+  public mergeStatus: Array<MergeStatus>;
 
   public templateId: number;
+  public contractId: number;
 }

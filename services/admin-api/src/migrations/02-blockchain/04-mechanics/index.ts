@@ -16,3 +16,4 @@ export * from "./15-raffle";
 export * from "./16-dispenser";
 export * from "./17-dismantle";
 export * from "./18-payment-splitter";
+export * from "./19-merge";

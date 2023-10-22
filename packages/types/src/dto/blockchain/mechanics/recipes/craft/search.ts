@@ -1,6 +1,6 @@
 import type { ISearchDto } from "@gemunion/types-collection";
 
-import { CraftStatus } from "../../../../entities";
+import { CraftStatus } from "../../../../../entities";
 
 export interface ICraftSearchDto extends ISearchDto {
   templateId: number;

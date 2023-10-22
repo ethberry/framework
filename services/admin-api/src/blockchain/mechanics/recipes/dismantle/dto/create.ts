@@ -2,9 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested, IsInt, IsEnum, Min } from "class-validator";
 import { Type } from "class-transformer";
 
+import { DismantleStrategy } from "@framework/types";
+
 import type { IDismantleCreateDto } from "../interfaces";
 import { DismantleItemDto, DismantlePriceDto } from "./custom";
-import { DismantleStrategy } from "@framework/types";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
