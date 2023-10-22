@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
-import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
-import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { Contract, encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
+
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
+
 import { isEqualArray, isEqualEventArgArrObj } from "../utils";
+import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 
 describe("Diamond Exchange Dismantle", function () {
@@ -1223,7 +1224,7 @@ describe("Diamond Exchange Dismantle", function () {
             {
               tokenType: 2,
               token: await erc721Instance.getAddress(),
-              tokenId, // dismantleed 721 token
+              tokenId, // dismantled 721 token
               amount: 1,
             },
           ],
@@ -1359,7 +1360,7 @@ describe("Diamond Exchange Dismantle", function () {
         {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
-          tokenId, // dismantleed 721 token
+          tokenId, // dismantled 721 token
           amount: 1,
         },
         encodeBytes32String("signature").padEnd(132, "0"),
@@ -1379,7 +1380,7 @@ describe("Diamond Exchange Dismantle", function () {
         {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
-          tokenId, // dismantleed 721 token
+          tokenId, // dismantled 721 token
           amount: 1,
         },
         encodeBytes32String("signature"),
@@ -1443,34 +1444,34 @@ describe("Diamond Exchange Dismantle", function () {
 
       await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
-  });
 
-  it("should fail: EnforcedPause", async function () {
-    const [_owner] = await ethers.getSigners();
+    it("should fail: EnforcedPause", async function () {
+      const [_owner] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", exchangeInstance);
-    await pausableInstance.pause();
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", exchangeInstance);
+      await pausableInstance.pause();
 
-    const tx1 = exchangeInstance.dismantle(
-      params,
-      [
+      const tx1 = exchangeInstance.dismantle(
+        params,
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
         {
           tokenType: 0,
           token: ZeroAddress,
           tokenId,
           amount,
         },
-      ],
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      ZeroHash,
-    );
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

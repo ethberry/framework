@@ -7,11 +7,11 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { decodeNumber, decodeTraits } from "@framework/traits-api";
 import { TokenMetadata } from "@framework/types";
 
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
 import { deployDiamond, deployErc721Base } from "./shared/fixture";
-import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeMetadata } from "../shared/metadata";
@@ -765,30 +765,32 @@ describe("Diamond Exchange Breed", function () {
     });
   });
 
-  it("should fail: EnforcedPause", async function () {
-    const [_owner] = await ethers.getSigners();
+  describe("ERROR", function () {
+    it("should fail: EnforcedPause", async function () {
+      const [_owner] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
-    await pausableInstance.pause();
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
+      await pausableInstance.pause();
 
-    const tx1 = exchangeInstance.breed(
-      params,
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      ZeroHash,
-    );
+      const tx1 = exchangeInstance.breed(
+        params,
+        {
+          tokenType: 0,
+          token: ZeroAddress,
+          tokenId,
+          amount,
+        },
+        {
+          tokenType: 0,
+          token: ZeroAddress,
+          tokenId,
+          amount,
+        },
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

@@ -7,16 +7,18 @@
 pragma solidity ^0.8.20;
 
 import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
+import {IERC721GeneralizedCollection} from "@gemunion/contracts-erc721/contracts/interfaces/IERC721GeneralizedCollection.sol";
 
 import {SignatureValidator} from "../override/SignatureValidator.sol";
 import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
 import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
-import {SignerMissingRole} from "../../utils/errors.sol";
+import {SignerMissingRole, WrongToken} from "../../utils/errors.sol";
 
 contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Craft(address account, uint256 externalId, Asset[] items, Asset[] price);
+  event Merge(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 
@@ -30,12 +32,26 @@ contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, Pausab
       revert SignerMissingRole();
     }
 
+    uint256 expectedId = uint256(params.extra);
 
+    uint256 length = price.length;
+    for (uint256 i = 0; i < length; ) {
+      Asset memory item = price[i];
+      uint256 templateId = IERC721GeneralizedCollection(item.token).getRecordFieldValue(item.tokenId, TEMPLATE_ID);
+
+      if (templateId != expectedId) {
+        revert WrongToken();
+      }
+
+      unchecked {
+        i++;
+      }
+    }
 
     // burn or send price to receiver
     ExchangeUtils.burnFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
     ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    emit Craft(_msgSender(), params.externalId, items, price);
+    emit Merge(_msgSender(), params.externalId, items, price);
   }
 }

@@ -1,13 +1,15 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, extra } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, parseEther, ZeroAddress, ZeroHash } from "ethers";
+
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, extra } from "../constants";
 import { getContractName, isEqualEventArgObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { deployERC721 } from "../ERC721/shared/fixtures";
+import { deployDiamond } from "./shared/fixture";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 
 describe("Diamond Exchange Raffle", function () {
   const factory = async (facetName = "ExchangeRaffleFacet"): Promise<any> => {
@@ -831,36 +833,38 @@ describe("Diamond Exchange Raffle", function () {
     });
   });
 
-  it("should fail: EnforcedPause", async function () {
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
+  describe("ERROR", function () {
+    it("should fail: EnforcedPause", async function () {
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
 
-    await pausableInstance.pause();
+      await pausableInstance.pause();
 
-    const tx1 = exchangeInstance.purchaseRaffle(
-      {
-        externalId,
-        expiresAt,
-        nonce: encodeBytes32String("nonce"),
-        extra,
-        receiver: ZeroAddress,
-        referrer: ZeroAddress,
-      },
-      {
-        tokenType: 2n,
-        token: ZeroAddress,
-        tokenId: 0,
-        amount: 1,
-      },
-      {
-        tokenType: 1n,
-        token: ZeroAddress,
-        tokenId: 121n,
-        amount,
-      },
-      ZeroHash,
-    );
+      const tx1 = exchangeInstance.purchaseRaffle(
+        {
+          externalId,
+          expiresAt,
+          nonce: encodeBytes32String("nonce"),
+          extra,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
+        },
+        {
+          tokenType: 2n,
+          token: ZeroAddress,
+          tokenId: 0,
+          amount: 1,
+        },
+        {
+          tokenType: 1n,
+          token: ZeroAddress,
+          tokenId: 121n,
+          amount,
+        },
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

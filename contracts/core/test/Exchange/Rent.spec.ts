@@ -1,13 +1,14 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
-import { deployDiamond, deployErc721Base } from "./shared/fixture";
-import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
+
+import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
+
 import { isEqualArray, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
+import { deployDiamond, deployErc721Base } from "./shared/fixture";
+import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 
 describe("Diamond Exchange Rent", function () {
   const factory = async (facetName = "ExchangeRentableFacet"): Promise<any> => {
@@ -988,32 +989,34 @@ describe("Diamond Exchange Rent", function () {
     });
   });
 
-  it("should fail: EnforcedPause", async function () {
-    const [_owner] = await ethers.getSigners();
+  describe("ERROR", function () {
+    it("should fail: EnforcedPause", async function () {
+      const [_owner] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
-    await pausableInstance.pause();
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
+      await pausableInstance.pause();
 
-    const tx1 = exchangeInstance.lend(
-      params,
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      [
+      const tx1 = exchangeInstance.lend(
+        params,
         {
           tokenType: 0,
           token: ZeroAddress,
           tokenId,
           amount,
         },
-      ],
-      ZeroHash,
-    );
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

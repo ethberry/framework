@@ -1,14 +1,15 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-
-import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
-import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
-import { isEqualEventArgArrObj } from "../utils";
+
+import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
+
 import { VRFCoordinatorV2Mock } from "../../typechain-types";
+import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
+import { isEqualEventArgArrObj } from "../utils";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 
@@ -621,65 +622,67 @@ describe("Diamond Exchange Claim", function () {
     });
   });
 
-  it("should fail: EnforcedPause", async function () {
-    const [owner, receiver] = await ethers.getSigners();
+  describe("ERROR", function () {
+    it("should fail: EnforcedPause", async function () {
+      const [owner, receiver] = await ethers.getSigners();
 
-    const diamondInstance = await factory();
-    const diamondAddress = await diamondInstance.getAddress();
+      const diamondInstance = await factory();
+      const diamondAddress = await diamondInstance.getAddress();
 
-    const exchangeInstance = await ethers.getContractAt("ExchangeClaimFacet", diamondAddress);
-    const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
-    await pausableInstance.pause();
+      const exchangeInstance = await ethers.getContractAt("ExchangeClaimFacet", diamondAddress);
+      const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
+      await pausableInstance.pause();
 
-    const { generateManyToManySignature } = await getSignatures(diamondInstance);
+      const { generateManyToManySignature } = await getSignatures(diamondInstance);
 
-    const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-    await erc20Instance.mint(owner.address, amount);
-    await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
+      const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+      await erc20Instance.mint(owner.address, amount);
+      await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
-    const extra = zeroPadValue(toBeHex(Math.ceil(new Date("2030-01-01T00:00:00.000Z").getTime() / 1000)), 32);
+      const extra = zeroPadValue(toBeHex(Math.ceil(new Date("2030-01-01T00:00:00.000Z").getTime() / 1000)), 32);
 
-    const signature = await generateManyToManySignature({
-      account: receiver.address,
-      params: {
-        nonce,
-        externalId,
-        expiresAt,
-        receiver: ZeroAddress,
-        referrer: ZeroAddress,
-        extra,
-      },
-      items: [
-        {
-          tokenType: 1,
-          token: await erc20Instance.getAddress(),
-          tokenId,
-          amount,
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
+        params: {
+          nonce,
+          externalId,
+          expiresAt,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
+          extra,
         },
-      ],
-      price: [],
+        items: [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
+        price: [],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).claim(
+        {
+          nonce,
+          externalId,
+          expiresAt,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
+          extra,
+        },
+        [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
     });
-
-    const tx1 = exchangeInstance.connect(receiver).claim(
-      {
-        nonce,
-        externalId,
-        expiresAt,
-        receiver: ZeroAddress,
-        referrer: ZeroAddress,
-        extra,
-      },
-      [
-        {
-          tokenType: 1,
-          token: await erc20Instance.getAddress(),
-          tokenId,
-          amount,
-        },
-      ],
-      signature,
-    );
-
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
   });
 });
