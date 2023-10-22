@@ -1777,7 +1777,6 @@ describe("Diamond Exchange Craft", function () {
     });
 
     it("should fail: ECDSAInvalidSignature", async function () {
-      const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
 
       const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature").padEnd(132, "0"));
@@ -1786,7 +1785,6 @@ describe("Diamond Exchange Craft", function () {
     });
 
     it("should fail: ECDSAInvalidSignatureLength", async function () {
-      const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature"));
 

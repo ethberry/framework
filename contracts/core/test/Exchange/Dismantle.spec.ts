@@ -1350,7 +1350,6 @@ describe("Diamond Exchange Dismantle", function () {
     });
 
     it("should fail: ECDSAInvalidSignature", async function () {
-      const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
@@ -1370,17 +1369,15 @@ describe("Diamond Exchange Dismantle", function () {
     });
 
     it("should fail: ECDSAInvalidSignatureLength", async function () {
-      const [_owner] = await ethers.getSigners();
       const exchangeInstance = await factory();
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       const tx = exchangeInstance.dismantle(
         params,
         [],
         {
-          tokenType: 2,
-          token: await erc721Instance.getAddress(),
-          tokenId, // dismantled 721 token
+          tokenType: 0,
+          token: ZeroAddress,
+          tokenId,
           amount: 1,
         },
         encodeBytes32String("signature"),
