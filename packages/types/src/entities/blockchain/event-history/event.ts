@@ -335,6 +335,8 @@ export enum ContractEventSignature {
   LotteryDeployed = "LotteryDeployed(address,uint256,((uint256,uint256)))",
   RaffleDeployed = "RaffleDeployed(address,uint256)",
   WaitListDeployed = "WaitListDeployed(address,uint256)",
+  // event PaymentSplitterDeployed(address account, uint256 externalId, PaymentSplitterArgs args);
+  PaymentSplitterDeployed = "PaymentSplitterDeployed(address,uint256,(address[],uint256[]))",
 
   // MODULE:ERC1363
   TransferReceived = "TransferReceived(address,address,uint256,bytes)",
