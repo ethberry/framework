@@ -10,6 +10,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const usdtAddr = process.env.USDT_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -34,7 +35,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 11 : 10215},
         '${usdtAddr}',
-        '${testChainId}',
+        '${chainId}',
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',

@@ -10,6 +10,7 @@ export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const busdAddr = process.env.BUSD_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -34,7 +35,7 @@ export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface 
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 31 : 10217},
         '${busdAddr}',
-        '${testChainId}',
+        '${chainId}',
         'BUSD',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',

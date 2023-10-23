@@ -10,6 +10,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -34,7 +35,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 21 : 10216},
         '${wethAddr}',
-        '${testChainId}',
+        '${chainId}',
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
