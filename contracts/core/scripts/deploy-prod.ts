@@ -51,6 +51,7 @@ async function main() {
   const cmInstance = await deployDiamond(
     "DiamondCM",
     [
+      "CollectionFactoryFacet",
       "ERC20FactoryFacet",
       "ERC721FactoryFacet",
       "ERC998FactoryFacet",
@@ -86,6 +87,7 @@ async function main() {
       "ExchangeDismantleFacet",
       "ExchangeGradeFacet",
       "ExchangeLotteryFacet",
+      "ExchangeMergeFacet",
       "ExchangeRaffleFacet",
       "ExchangeMysteryBoxFacet",
       "ExchangeRentableFacet",

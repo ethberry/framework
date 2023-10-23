@@ -11,6 +11,7 @@ import { ExchangeLotteryModule } from "./lottery/lottery.module";
 import { ExchangeMysteryModule } from "./mystery/mystery.module";
 import { ExchangeRentModule } from "./rent/rent.module";
 import { ExchangeRaffleModule } from "./raffle/raffle.module";
+import { ExchangeMergeModule } from "./merge/merge.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ExchangeRaffleModule } from "./raffle/raffle.module";
     ExchangeRentModule,
     ExchangeLotteryModule,
     ExchangeRaffleModule,
+    ExchangeMergeModule,
   ],
 })
 export class ExchangeModule {}

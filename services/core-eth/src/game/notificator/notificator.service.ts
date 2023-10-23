@@ -37,6 +37,7 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
+import { IMergeData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -136,6 +137,13 @@ export class NotificatorService {
   // MODULE:CRAFT
   public async craft(data: ICraftData): Promise<any> {
     return this.sendMessage(data.craft.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.CRAFT, data).toPromise();
+    });
+  }
+
+  // MODULE:MERGE
+  public async merge(data: IMergeData): Promise<any> {
+    return this.sendMessage(data.merge.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CRAFT, data).toPromise();
     });
   }

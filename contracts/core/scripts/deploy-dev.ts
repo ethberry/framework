@@ -17,7 +17,7 @@ const delay = 1; // block delay
 const delayMs = 900; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 3n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 5n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size
@@ -109,6 +109,7 @@ async function main() {
       "ExchangeRaffleFacet",
       "ExchangeMysteryBoxFacet",
       "ExchangeRentableFacet",
+      "ExchangeMergeFacet",
       "PausableFacet",
       "AccessControlFacet",
       "WalletFacet",
@@ -379,7 +380,7 @@ async function main() {
           {
             tokenType: 0,
             token: ZeroAddress,
-            tokenId: 0,
+            tokenId: 1010101, // -- ETH
             amount: WeiPerEther,
           },
         ],
@@ -387,7 +388,7 @@ async function main() {
           {
             tokenType: 0,
             token: ZeroAddress,
-            tokenId: 0,
+            tokenId: 1010101, // -- ETH
             amount: (WeiPerEther / 100n) * 5n, // 5%
           },
         ],
@@ -410,7 +411,7 @@ async function main() {
           {
             tokenType: 1,
             token: await contracts.erc20Simple.getAddress(),
-            tokenId: 0,
+            tokenId: 1020101, // -- Space Credits
             amount: WeiPerEther,
           },
         ],
@@ -418,7 +419,7 @@ async function main() {
           {
             tokenType: 2,
             token: await contracts.erc721Random.getAddress(),
-            tokenId: 306001,
+            tokenId: 1030601, // -- sword
             amount: 1,
           },
         ],
@@ -436,12 +437,12 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        // ERC998 > ERC1155
+        // ERC998 > MYSTERY
         deposit: [
           {
             tokenType: 3,
             token: await contracts.erc998Random.getAddress(),
-            tokenId: 0,
+            tokenId: 1040601, // -- warrior
             amount: 1,
           },
         ],
@@ -449,7 +450,7 @@ async function main() {
           {
             tokenType: 2,
             token: await contracts.erc721MysteryboxSimple.getAddress(),
-            tokenId: 601001,
+            tokenId: 1110101, // -- sword mysterybox
             amount: 1,
           },
         ],
@@ -458,7 +459,7 @@ async function main() {
             {
               tokenType: 2,
               token: await contracts.erc721Random.getAddress(),
-              tokenId: 306001,
+              tokenId: 1030601, // -- sword
               amount: 1,
             },
           ],

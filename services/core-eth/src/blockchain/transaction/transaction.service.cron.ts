@@ -80,10 +80,7 @@ export class TransactionServiceCron {
               });
 
               // update success status
-              return await this.transactionService.updateTxsStatus(
-                { transactionHash, chainId },
-                TransactionStatus.PROCESSED,
-              );
+              return await this.transactionService.updateTxsStatus({ id: logEntity.id }, TransactionStatus.PROCESSED);
             });
           }
         } catch (e) {

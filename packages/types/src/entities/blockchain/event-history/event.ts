@@ -197,6 +197,10 @@ export enum ContractEventSignature {
   RedeemClaim = "RedeemClaim()",
   UnpackClaim = "UnpackClaim()",
 
+  // event Merge(address account, uint256 externalId, Asset[] items, Asset[] price);
+  // MODULE:MERGE
+  Merge = "Merge(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
+
   // MODULE:LOTTERY
   RoundFinalized = "RoundFinalized(uint256,uint8[6])",
   // event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
