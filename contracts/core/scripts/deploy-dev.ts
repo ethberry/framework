@@ -14,7 +14,7 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 1100; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 300; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
 const vrfSubId = network.name === "besu" ? 1n : 8n; // !!!SET INITIAL SUB ID!!!
@@ -640,6 +640,7 @@ async function main() {
       await contracts.exchange.getAddress(),
       await contracts.staking.getAddress(),
       await contracts.waitlist.getAddress(),
+      await contracts.erc721MysteryboxBlacklistPausable.getAddress(),
       await contracts.erc721MysteryboxBlacklist.getAddress(),
       await contracts.erc721MysteryboxPausable.getAddress(),
       await contracts.erc721MysteryboxSimple.getAddress(),

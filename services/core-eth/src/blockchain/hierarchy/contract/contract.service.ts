@@ -73,6 +73,19 @@ export class ContractService {
     return queryBuilder.execute();
   }
 
+  // TODO throw not found error?
+  public async getMerchantWalletByContract(address: string): Promise<string | null> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractEntity = await this.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
+    if (contractEntity) {
+      return contractEntity.merchant.wallet;
+    }
+    return null;
+  }
+
   public async getLastBlock(address: string): Promise<number | null> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractEntity = await this.findOne({ address: address.toLowerCase(), chainId });

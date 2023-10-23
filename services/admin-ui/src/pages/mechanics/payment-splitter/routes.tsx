@@ -13,7 +13,7 @@ export const paymentSplitterRoutes: Array<RouteObject> = [
       {
         index: true,
         element: (
-          <IndexWrapper index="wait-list">
+          <IndexWrapper index="payment-splitter">
             <PaymentSplitterSection />
           </IndexWrapper>
         ),

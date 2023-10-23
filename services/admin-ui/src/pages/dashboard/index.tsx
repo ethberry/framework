@@ -36,6 +36,7 @@ import { RentSection } from "./mechanics/rent";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
 import { PaymentSplitterSection } from "./mechanics/payment-splitter";
+import { WaitListSection } from "./mechanics/wait-list";
 
 export const Dashboard: FC = () => {
   return (
@@ -68,6 +69,7 @@ export const Dashboard: FC = () => {
           <StakingSection />
           <PonziSection />
           <PaymentSplitterSection />
+          <WaitListSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <ChainLinkSection />

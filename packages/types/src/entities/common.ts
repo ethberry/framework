@@ -59,6 +59,7 @@ export enum ListenerType {
   WAIT_LIST = "WAIT_LIST",
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   CHAIN_LINK = "CHAIN_LINK",
+  COLLECTION = "COLLECTION",
 }
 
 export enum SystemModuleType {

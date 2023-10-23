@@ -4,7 +4,7 @@ import { MessageHandler } from "@nestjs/microservices";
 import { PATTERN_METADATA } from "@nestjs/microservices/constants";
 import { transformPatternToRoute } from "@nestjs/microservices/utils";
 
-import { Cron, CronExpression } from "@nestjs/schedule";
+import { Cron } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider } from "ethers";
 import { LessThan } from "typeorm";
@@ -30,7 +30,7 @@ export class TransactionServiceCron {
   ) {}
 
   // TODO set up checking schedule by mean block producing time
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron("*/15 * * * * *")
   public async checkTransaction(): Promise<void> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const latency = ~~this.configService.get<number>("LATENCY", 32);

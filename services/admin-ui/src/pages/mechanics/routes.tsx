@@ -9,7 +9,7 @@ import { gradeRoutes } from "./grade/routes";
 import { lotteryRoutes } from "./lottery/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { ponziRoutes } from "./ponzi/routes";
-import { paymentSplitterRoutes } from "./paymnet-splitter/routes";
+import { paymentSplitterRoutes } from "./payment-splitter/routes";
 import { raffleRoutes } from "./raffle/routes";
 import { rentingRoutes } from "./rent/routes";
 import { recipesRoutes } from "./recipes/routes";

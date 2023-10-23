@@ -9,8 +9,8 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const usdtAddr = process.env.USDT_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
+    const usdtAddr = process.env.USDT_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

@@ -12,6 +12,8 @@ export const ifRandom = (contractFeatures: ContractFeatures[]) => {
 export const getListenerType = (contract: IContract) => {
   const { contractType, contractModule, contractFeatures } = contract;
   switch (contractModule) {
+    case ModuleType.COLLECTION:
+      return ListenerType.COLLECTION;
     case ModuleType.MYSTERY:
       return ListenerType.MYSTERYBOX;
     case ModuleType.VESTING:

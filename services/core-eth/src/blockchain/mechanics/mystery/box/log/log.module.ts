@@ -5,7 +5,14 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
+import {
+  AccessControlEventType,
+  AccessListEventType,
+  ContractEventType,
+  ContractType,
+  ModuleType,
+  NodeEnv,
+} from "@framework/types";
 
 import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
 
@@ -43,6 +50,9 @@ import { getEventsTopics } from "../../../../../common/utils";
           AccessControlEventType.RoleRevoked,
           ContractEventType.Paused,
           ContractEventType.Unpaused,
+          // MODULE:ACCESS_LIST
+          AccessListEventType.Blacklisted,
+          AccessListEventType.UnBlacklisted,
         ];
 
         const topics = getEventsTopics(eventNames);

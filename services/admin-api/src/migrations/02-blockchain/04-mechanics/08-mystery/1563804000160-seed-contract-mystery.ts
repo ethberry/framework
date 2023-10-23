@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
+import { baseTokenURI, dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
@@ -53,7 +53,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -61,7 +61,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11102,
-        '${erc721ContractMysteryPausableAddress}',
+        '${dummyContractAddrs[0]}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
         '${simpleFormatting}',
@@ -72,7 +72,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC721',
-        '{PAUSABLE}',
+        '{PAUSABLE,ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -91,7 +91,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC721',
-        '{}',
+        '{ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -110,7 +110,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{PAUSABLE}',
+        '{PAUSABLE,ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -129,7 +129,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{BLACKLIST}',
+        '{BLACKLIST,ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -137,7 +137,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11180,
-        '${erc721ContractMysterySimpleAddress}',
+        '${dummyContractAddrs[1]}',
         '${chainId}',
         'LOOT BOX',
         '${simpleFormatting}',
@@ -148,7 +148,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         2,
@@ -167,7 +167,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{BLACKLIST,PAUSABLE}',
+        '{BLACKLIST,PAUSABLE,ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -175,7 +175,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         21101,
-        '${erc721ContractMysterySimpleAddress}',
+        '${dummyContractAddrs[2]}',
         56,
         'MYSTERY BOX (BEP)',
         '${simpleFormatting}',
@@ -186,7 +186,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{ALLOWANCE}',
         'MYSTERY',
         '${fromBlock}',
         1,
