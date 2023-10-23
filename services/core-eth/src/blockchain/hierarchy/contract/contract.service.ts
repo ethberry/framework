@@ -82,6 +82,10 @@ export class ContractService {
     return 0;
   }
 
+  public async updateLastBlockById(id: number, lastBlock: number): Promise<void> {
+    await this.contractEntityRepository.update({ id }, { fromBlock: lastBlock + 1 });
+  }
+
   public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 

@@ -12,6 +12,14 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.rate_plan_enum AS ENUM (
+        'BRONZE',
+        'SILVER',
+        'GOLD'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.merchant`,
       columns: [
@@ -51,6 +59,11 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           name: "merchant_status",
           type: `${ns}.merchant_status_enum`,
           default: "'PENDING'",
+        },
+        {
+          name: "rate_plan",
+          type: `${ns}.rate_plan_enum`,
+          default: "'BRONZE'",
         },
         {
           name: "wallet",

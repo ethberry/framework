@@ -138,7 +138,7 @@ export class EventHistoryService {
 
     await this.achievementsRuleService.processEvent(contractEventEntity.id);
 
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.contractService.updateLastBlockById(contractId, parseInt(blockNumber.toString(), 16));
 
     return contractEventEntity;
   }

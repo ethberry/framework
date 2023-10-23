@@ -14,10 +14,10 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 1100; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 5n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 7n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size

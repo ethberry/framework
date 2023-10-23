@@ -51,7 +51,7 @@ export class TransactionServiceCron {
             const allLogs = await this.transactionService.findAllLogsByHash(transactionHash, chainId);
             // process all transaction's logs
             allLogs.map(async logEntity => {
-              // change tx status - PROCESS
+              // update tx status - PROCESS
               await this.transactionService.updateTxsStatus({ id: logEntity.id }, TransactionStatus.PROCESS);
 
               console.info(`PROCESSING JOB ${logEntity.logData.id}, route: ${logEntity.logData.route}`);
@@ -63,7 +63,7 @@ export class TransactionServiceCron {
               );
 
               // process all controllers
-              await Promise.allSettled(
+              await Promise.all(
                 discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
                   return (
                     discoveredMethodWithMeta.discoveredMethod.handler.bind(
@@ -78,8 +78,7 @@ export class TransactionServiceCron {
                   }
                 });
               });
-
-              // update success status
+              // update tx status - PROCESSED
               return await this.transactionService.updateTxsStatus({ id: logEntity.id }, TransactionStatus.PROCESSED);
             });
           }
