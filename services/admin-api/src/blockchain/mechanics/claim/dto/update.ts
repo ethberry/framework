@@ -5,16 +5,16 @@ import { Type } from "class-transformer";
 import { AccountOptionalDto } from "@gemunion/collection";
 import type { IClaimUpdateDto } from "@framework/types";
 
-import { ItemDto } from "../../../exchange/asset/dto";
+import { AllTypesDto } from "../../../exchange/asset/dto/custom";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => AllTypesDto)
+  public item: InstanceType<typeof AllTypesDto>;
 
   @ApiPropertyOptional()
   @IsOptional()

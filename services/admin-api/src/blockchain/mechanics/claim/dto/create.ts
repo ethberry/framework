@@ -5,15 +5,15 @@ import { Type } from "class-transformer";
 import { AccountDto } from "@gemunion/collection";
 import type { IClaimCreateDto } from "@framework/types";
 
-import { ItemDto } from "../../../exchange/asset/dto";
+import { AllTypesDto } from "../../../exchange/asset/dto/custom";
 
 export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => AllTypesDto)
+  public item: InstanceType<typeof AllTypesDto>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

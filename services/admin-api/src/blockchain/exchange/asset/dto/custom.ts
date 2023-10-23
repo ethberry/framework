@@ -18,7 +18,7 @@ export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenTyp
       enum: TokenType,
     })
     @Transform(({ value }) => value as TokenType)
-    @Validate(ForbidEnumValues, disabledTokenTypes)
+    @Validate(ForbidEnumValues, Object.values(TokenType).filter(x => disabledTokenTypes.includes(x)))
     @IsEnum(TokenType, { message: "badInput" })
     public tokenType: TokenType;
 
@@ -30,14 +30,13 @@ export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenTyp
     @ApiProperty()
     @IsInt({ message: "typeMismatch" })
     @Min(1, { message: "rangeUnderflow" })
-    @ValidateIf(o => disabledTokenTypes.includes(o.TokenType))
+    @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
     public templateId: number;
 
     @ApiProperty({
       type: Number,
     })
     @IsBigInt({}, { message: "typeMismatch" })
-    @ValidateIf(o => disabledTokenTypes.includes(o.TokenType))
     public amount: string;
   }
 
@@ -60,14 +59,21 @@ export const createCustomAssetDto = (disabledTokenTypes: Array<TokenType>) => {
   return CustomAssertDto;
 };
 
-// ERC721 or ERC998
-export const NftDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]);
+export const NftDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998]);
 
-// NATIVE or ERC20
-export const CoinDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]);
+export const SemiNftDto = createCustomAssetDto([TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]);
 
-// NATIVE
-export const NativeDto = createCustomAssetDto([TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]);
+export const CoinDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20]);
 
-// ALL TOKEN TYPES
-export const AnyTypesDto = createCustomAssetDto([]);
+export const SemiCoinDto = createCustomAssetDto([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]);
+
+export const NativeDto = createCustomAssetDto([TokenType.NATIVE]);
+
+export const NotNativeDto = createCustomAssetDto([
+  TokenType.ERC20,
+  TokenType.ERC721,
+  TokenType.ERC998,
+  TokenType.ERC1155,
+]);
+
+export const AllTypesDto = createCustomAssetDto([]);

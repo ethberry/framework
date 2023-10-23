@@ -43,6 +43,7 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+        forceAmount
       />
       <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />
     </FormDialog>

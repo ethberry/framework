@@ -3,20 +3,20 @@ import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import type { IMergeCreateDto } from "../interfaces";
-import { MergeItemDto, MergePriceDto } from "./custom";
+import { NftDto } from "../../../../exchange/asset/dto/custom";
 
 export class MergeCreateDto implements IMergeCreateDto {
   @ApiProperty({
-    type: MergeItemDto,
+    type: NftDto,
   })
   @ValidateNested()
-  @Type(() => MergeItemDto)
-  public item: InstanceType<typeof MergeItemDto>;
+  @Type(() => NftDto)
+  public item: InstanceType<typeof NftDto>;
 
   @ApiProperty({
-    type: MergePriceDto,
+    type: NftDto,
   })
   @ValidateNested()
-  @Type(() => MergePriceDto)
-  public price: InstanceType<typeof MergePriceDto>;
+  @Type(() => NftDto)
+  public price: InstanceType<typeof NftDto>;
 }

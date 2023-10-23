@@ -34,6 +34,6 @@ export class ItemComponentDto implements IAssetComponentDto {
     type: Number,
   })
   @IsBigInt({}, { message: "typeMismatch" })
-  @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
+  // @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
   public amount: string;
 }

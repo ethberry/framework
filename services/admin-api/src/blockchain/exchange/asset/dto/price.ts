@@ -6,6 +6,9 @@ import { IAssetDto } from "@framework/types";
 
 import { PriceComponentDto } from "./price-components";
 
+/**
+ * @deprecated use SemiCoinDto
+ */
 export class PriceDto implements IAssetDto {
   @ApiProperty({
     type: PriceComponentDto,

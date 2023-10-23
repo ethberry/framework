@@ -4,23 +4,23 @@ import { Type } from "class-transformer";
 
 import { DismantleStrategy } from "@framework/types";
 
+import { NotNativeDto, SemiNftDto } from "../../../../exchange/asset/dto/custom";
 import type { IDismantleCreateDto } from "../interfaces";
-import { DismantleItemDto, DismantlePriceDto } from "./custom";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
   @ApiProperty({
-    type: DismantleItemDto,
+    type: NotNativeDto,
   })
   @ValidateNested()
-  @Type(() => DismantleItemDto)
-  public item: InstanceType<typeof DismantleItemDto>;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty({
-    type: DismantlePriceDto,
+    type: SemiNftDto,
   })
   @ValidateNested()
-  @Type(() => DismantlePriceDto)
-  public price: InstanceType<typeof DismantlePriceDto>;
+  @Type(() => SemiNftDto)
+  public price: InstanceType<typeof SemiNftDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
