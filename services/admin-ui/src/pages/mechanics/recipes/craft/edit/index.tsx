@@ -10,14 +10,14 @@ import { CraftStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IExchangeEditDialogProps {
+export interface ICraftEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<ICraft>, form: any) => Promise<void>;
   initialValues: ICraft;
 }
 
-export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
+export const CraftEditDialog: FC<ICraftEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, item, price, craftStatus } = initialValues;

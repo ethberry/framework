@@ -5,32 +5,28 @@ import { Alert } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import type { IDismantle } from "@framework/types";
-import { ContractStatus, DismantleStatus, ModuleType, TokenType } from "@framework/types";
+import type { IMerge } from "@framework/types";
+import { ContractStatus, MergeStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { RarityMultiplierInput } from "./rarity-multiplier-input";
-import { StrategyInput } from "./strategy-input";
 
-export interface IDismantleEditDialogProps {
+export interface IMergeEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IDismantle>, form: any) => Promise<void>;
-  initialValues: IDismantle;
+  onConfirm: (values: Partial<IMerge>, form: any) => Promise<void>;
+  initialValues: IMerge;
 }
 
-export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
+export const MergeEditDialog: FC<IMergeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy } = initialValues;
+  const { id, item, price, mergeStatus } = initialValues;
 
   const fixedValues = {
     id,
     item,
     price,
-    dismantleStatus,
-    dismantleStrategy,
-    rarityMultiplier,
+    mergeStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -40,12 +36,12 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId="DismantleEditForm"
+      testId="MergeEditForm"
       disabled={false}
       {...rest}
     >
       <Alert severity="info" sx={{ mt: 2 }}>
-        <FormattedMessage id="alert.dismantlePrice" />
+        <FormattedMessage id="alert.mergePrice" />
       </Alert>
       <TemplateAssetInput
         autoSelect
@@ -56,10 +52,11 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },
         }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
+        forceAmount
       />
       <Alert severity="info" sx={{ mt: 2 }}>
-        <FormattedMessage id="alert.dismantleItem" />
+        <FormattedMessage id="alert.mergeItem" />
       </Alert>
       <TemplateAssetInput
         autoSelect
@@ -70,12 +67,10 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },
         }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
         multiple
       />
-      <StrategyInput name="dismantleStrategy" />
-      <RarityMultiplierInput name="rarityMultiplier" />
-      {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}
+      {id ? <SelectInput name="mergeStatus" options={MergeStatus} /> : null}
     </FormDialog>
   );
 };

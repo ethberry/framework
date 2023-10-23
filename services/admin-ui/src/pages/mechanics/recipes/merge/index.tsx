@@ -1,7 +1,122 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { Dragons } from "../../dragons";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { useCollection } from "@gemunion/react-hooks";
+import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { ListAction, ListActions } from "@framework/mui-lists";
+import { StyledPagination } from "@framework/styled";
+import type { IMerge, IMergeSearchDto } from "@framework/types";
+import { MergeStatus, TokenType } from "@framework/types";
+
+import { cleanUpAsset, formatItem } from "../../../../utils/money";
+import { MergeEditDialog } from "./edit";
 
 export const Merge: FC = () => {
-  return <Dragons />;
+  const {
+    rows,
+    count,
+    search,
+    selected,
+    isLoading,
+    isFiltersOpen,
+    isEditDialogOpen,
+    isDeleteDialogOpen,
+    handleCreate,
+    handleToggleFilters,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleSearch,
+    handleChangePage,
+    handleDeleteConfirm,
+  } = useCollection<IMerge, IMergeSearchDto>({
+    baseUrl: "/recipes/merge",
+    empty: {
+      price: getEmptyTemplate(TokenType.ERC721),
+      item: getEmptyTemplate(TokenType.ERC721),
+      mergeStatus: MergeStatus.ACTIVE,
+    },
+    search: {
+      query: "",
+      mergeStatus: [MergeStatus.ACTIVE],
+    },
+    filter: ({ id, item, price, mergeStatus }) =>
+      id
+        ? {
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+            mergeStatus,
+          }
+        : {
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+          },
+  });
+
+  return (
+    <Grid>
+      <Breadcrumbs path={["dashboard", "recipes", "recipes.merge"]} />
+
+      <PageHeader message="pages.recipes.merge.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MergeCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
+
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ExchangeSearchForm">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput multiple name="mergeStatus" options={MergeStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
+
+      <ProgressOverlay isLoading={isLoading}>
+        <List>
+          {rows.map(merge => (
+            <ListItem key={merge.id} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.price)}</ListItemText>
+              <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.item)}</ListItemText>
+              <ListActions>
+                <ListAction onClick={handleEdit(merge)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(merge)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
+            </ListItem>
+          ))}
+        </List>
+      </ProgressOverlay>
+
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={{ ...selected, title: selected.item?.components[0]?.template?.title }}
+      />
+
+      <MergeEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={isEditDialogOpen}
+        initialValues={selected}
+      />
+    </Grid>
+  );
 };

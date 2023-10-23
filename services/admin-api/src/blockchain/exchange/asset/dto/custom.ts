@@ -18,7 +18,7 @@ export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenTyp
       enum: TokenType,
     })
     @Transform(({ value }) => value as TokenType)
-    @Validate(ForbidEnumValues, Object.values(TokenType).filter(x => disabledTokenTypes.includes(x)))
+    @Validate(ForbidEnumValues, Object.values(TokenType).filter(x => !disabledTokenTypes.includes(x)))
     @IsEnum(TokenType, { message: "badInput" })
     public tokenType: TokenType;
 

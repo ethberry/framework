@@ -279,6 +279,7 @@ import {
   SeedLotteryRoundAggregationAt1660436476140,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
+  SeedMergeErc721Erc721RecipesAt1697979517330,
   SeedMysteryBoxErc1155At1653616447950,
   SeedMysteryBoxErc721At1653616447930,
   SeedMysteryBoxErc998At1653616447940,
@@ -577,6 +578,7 @@ const config: PostgresConnectionOptions = {
     SeedDismantleErc1155Erc155RecipesAt1693120862550,
 
     CreateMerge1697979517000,
+    SeedMergeErc721Erc721RecipesAt1697979517330,
 
     SeedContractStakingAt1654751224100,
     CreateStakingRules1654751224200,
