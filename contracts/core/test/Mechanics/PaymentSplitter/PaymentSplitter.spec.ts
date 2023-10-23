@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import { deployPaymentSplitter } from "./fixture";
 
-describe("deployPaymentSplitter", function () {
+describe("PaymentSplitter", function () {
   describe("totalShares", function () {
     it("should get total shares", async function () {
       const contractInstance = await deployPaymentSplitter();
