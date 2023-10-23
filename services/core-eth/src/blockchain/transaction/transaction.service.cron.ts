@@ -63,7 +63,7 @@ export class TransactionServiceCron {
               );
 
               // process all controllers
-              await Promise.all(
+              await Promise.allSettled(
                 discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
                   return (
                     discoveredMethodWithMeta.discoveredMethod.handler.bind(
