@@ -1,4 +1,3 @@
-import { ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { IToken, TokenType } from "@framework/types";
 
 export const formatTokenTitle = (token: IToken): string => {
