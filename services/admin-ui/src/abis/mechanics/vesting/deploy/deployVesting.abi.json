@@ -27,7 +27,7 @@
         "components": [
           {
             "internalType": "address",
-            "name": "beneficiary",
+            "name": "owner",
             "type": "address"
           },
           {

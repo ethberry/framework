@@ -27,7 +27,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   const { formatMessage } = useIntl();
 
   const headers = [
-    "beneficiary",
+    "owner",
     "startTimestamp",
     "cliffInMonth",
     "monthlyRelease",
@@ -77,8 +77,8 @@ export const FileInput: FC<IFileInputProps> = props => {
 
   const columns = [
     {
-      field: "beneficiary",
-      headerName: formatMessage({ id: "form.labels.beneficiary" }),
+      field: "owner",
+      headerName: formatMessage({ id: "form.labels.owner" }),
       sortable: true,
       flex: 3,
       minWidth: 260,

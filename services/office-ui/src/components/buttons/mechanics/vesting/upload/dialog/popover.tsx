@@ -38,7 +38,7 @@ export const VestingClaimInfoPopover: FC<Record<string, string | number>> = () =
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>beneficiary,startTimestamp,cliffInMonth,monthlyRelease,tokenType,address,templateId,amount</pre>
+          <pre>owner,startTimestamp,cliffInMonth,monthlyRelease,tokenType,address,templateId,amount</pre>
           <Typography>Example: </Typography>
           <pre>
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,2020-01-01T00:00:00.000Z,12,1000,ERC20,0x0000000000000000000000000000000000C0FFEE,0,1000000000000000000

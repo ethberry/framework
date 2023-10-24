@@ -748,6 +748,8 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
+
+    /* alter prod migrations */
   ],
 };
 

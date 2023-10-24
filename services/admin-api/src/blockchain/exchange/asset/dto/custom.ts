@@ -76,4 +76,4 @@ export const NotNativeDto = createCustomAssetDto([
   TokenType.ERC1155,
 ]);
 
-export const AllTypesDto = createCustomAssetDto([]);
+export const AllTypesDto = createCustomAssetDto(Object.values(TokenType));

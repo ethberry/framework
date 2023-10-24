@@ -5,7 +5,7 @@ import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 import { reISO8601 } from "@gemunion/constants";
 
 export const vestingValidationSchema = object().shape({
-  beneficiary: addressValidationSchema,
+  owner: addressValidationSchema,
   startTimestamp: string()
     .matches(reISO8601, "form.validations.patternMismatch")
     .required("form.validations.valueMissing"),

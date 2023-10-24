@@ -22,7 +22,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
   constructor() SignatureValidatorCM() {}
 
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =
-    "VestingArgs(address beneficiary,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
+    "VestingArgs(address owner,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
   bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(VESTING_ARGUMENTS_SIGNATURE);
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -40,7 +40,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
 
   // Structure representing Vesting template and arguments
   struct VestingArgs {
-    address beneficiary;
+    address owner;
     uint64 startTimestamp; // in sec
     uint16 cliffInMonth; // in sec
     uint16 monthlyRelease;
@@ -75,7 +75,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
     // Deploy the contract
     account = deploy2(
       params.bytecode,
-      abi.encode(args.beneficiary, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
+      abi.encode(args.owner, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
       params.nonce
     );
 
@@ -122,7 +122,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
       keccak256(
         abi.encode(
           VESTING_ARGUMENTS_TYPEHASH,
-          args.beneficiary,
+          args.owner,
           args.startTimestamp,
           args.cliffInMonth,
           args.monthlyRelease

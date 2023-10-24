@@ -45,7 +45,7 @@ export const VestingClaim: FC = () => {
     empty: {
       parameters: {
         externalId: "",
-        beneficiary: "",
+        owner: "",
         startTimestamp: new Date().toISOString(),
         cliffInMonth: 12,
         monthlyRelease: 1000,
@@ -59,7 +59,7 @@ export const VestingClaim: FC = () => {
     filter: ({ item, parameters }) => ({
       parameters: {
         externalId: "",
-        beneficiary: parameters.beneficiary,
+        owner: parameters.owner,
         monthlyRelease: parameters.monthlyRelease,
         cliffInMonth: parameters.cliffInMonth,
         startTimestamp: parameters.startTimestamp,

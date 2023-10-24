@@ -47,7 +47,7 @@ export interface IContractManagerCollectionDeployedEvent {
 // }
 
 export interface IVestingDeployedEventArgs {
-  beneficiary: string;
+  owner: string;
   startTimestamp: string;
   cliffInMonth: number;
   monthlyRelease: number;

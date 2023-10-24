@@ -27,7 +27,7 @@
         "components": [
           {
             "internalType": "address",
-            "name": "beneficiary",
+            "name": "owner",
             "type": "address"
           },
           {
@@ -46,7 +46,7 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct VestingFactoryFacet.VestingArgs",
+        "internalType": "struct VestingFactory.VestingArgs",
         "name": "args",
         "type": "tuple"
       },

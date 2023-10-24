@@ -24,6 +24,9 @@ export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = 
       <Alert severity="warning" sx={{ mt: 2 }}>
         <FormattedMessage id="alert.minterRole" />
       </Alert>
+      <Alert severity="warning" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.randomChainlink" />
+      </Alert>
       <Typography>This contract has no options, you can click `OK` to continue</Typography>
     </FormDialog>
   );

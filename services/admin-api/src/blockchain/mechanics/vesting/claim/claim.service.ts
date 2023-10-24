@@ -98,7 +98,7 @@ export class VestingClaimService {
 
     const claimEntity = await this.claimEntityRepository
       .create({
-        account: parameters.beneficiary.toLowerCase(),
+        account: parameters.owner.toLowerCase(),
         item: assetEntity,
         signature: "0x",
         nonce: "",
@@ -153,7 +153,7 @@ export class VestingClaimService {
 
     const { signature, bytecode, nonce } = await this.contractManagerSignService.vesting(
       {
-        beneficiary: parameters.beneficiary,
+        owner: parameters.owner,
         startTimestamp: parameters.startTimestamp,
         cliffInMonth: parameters.cliffInMonth,
         monthlyRelease: parameters.monthlyRelease,
@@ -163,7 +163,7 @@ export class VestingClaimService {
       claimEntity.item,
     );
 
-    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.beneficiary.toLowerCase() });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.owner.toLowerCase() });
     // TODO simplify it?
     Object.assign(parameters, { bytecode });
     Object.assign(claimEntity, { parameters });
@@ -177,7 +177,7 @@ export class VestingClaimService {
         claims,
         10,
         async ({
-          beneficiary,
+          owner,
           startTimestamp,
           cliffInMonth,
           monthlyRelease,
@@ -197,7 +197,7 @@ export class VestingClaimService {
 
           return this.create(
             {
-              parameters: { beneficiary, startTimestamp, cliffInMonth, monthlyRelease },
+              parameters: { owner, startTimestamp, cliffInMonth, monthlyRelease },
               item: {
                 components: [
                   {

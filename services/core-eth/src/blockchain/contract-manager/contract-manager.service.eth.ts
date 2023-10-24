@@ -503,7 +503,7 @@ export class ContractManagerServiceEth {
 
     const { userId, claimId } = decodedExternalId;
 
-    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = args;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -515,7 +515,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       parameters: {
-        account: beneficiary.toLowerCase(),
+        account: owner.toLowerCase(),
         startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
         cliffInMonth,
         monthlyRelease,
@@ -539,7 +539,7 @@ export class ContractManagerServiceEth {
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
+        account: await this.getUserWalletById(userId),
         transactionHash,
         transactionType: name,
       })

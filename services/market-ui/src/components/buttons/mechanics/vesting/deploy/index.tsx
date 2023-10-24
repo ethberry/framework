@@ -41,7 +41,7 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
           externalId: encodedExternalId,
         },
         {
-          beneficiary: claim.parameters.beneficiary,
+          owner: claim.parameters.owner,
           startTimestamp: Math.ceil(new Date(claim.parameters.startTimestamp).getTime() / 1000),
           cliffInMonth: claim.parameters.cliffInMonth,
           monthlyRelease: claim.parameters.monthlyRelease,

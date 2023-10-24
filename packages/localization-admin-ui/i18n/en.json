@@ -12,7 +12,7 @@
     "mergePrice": "Token to be merged and burned",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
-    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!",
+    "randomChainlink": "Random Chain-Link VRF: Must Set Subscription and Add to Consumers list!",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
@@ -798,6 +798,8 @@
       "userStakes": "User Stakes",
       "userStatus": "Status",
       "wallet": "Wallet",
+      "vrfSubscription": "Chain-Link Subscription ID",
+      "vrfConsumer": "Chain-Link Consumer Status",
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
       "year": "Year",
@@ -989,7 +991,7 @@
       "select": "Select subscription ID",
       "set": "Set Vrf subscription ID",
       "subscription": "Subscription",
-      "title": "ChainLink Subscriptions",
+      "title": "Chain-Link Subscriptions",
       "wallet": "Wallet balance: {value}"
     },
     "claims": {
@@ -1063,7 +1065,7 @@
         }
       },
       "integrations": {
-        "chain-link": "ChainLink",
+        "chain-link": "Chain-Link",
         "coin-gecko": "CoinGecko",
         "coin-market-cap": "CoinMarketCap"
       },

@@ -91,7 +91,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         '${wallets[0]}',
         102130001,
         '${JSON.stringify({
-          beneficiary: wallets[0],
+          owner: wallets[0],
           bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
@@ -110,7 +110,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         '${wallets[0]}',
         102130002,
         '${JSON.stringify({
-          beneficiary: wallets[0],
+          owner: wallets[0],
           bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
@@ -129,7 +129,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         '${wallets[0]}',
         102130003,
         '${JSON.stringify({
-          beneficiary: wallets[0],
+          owner: wallets[0],
           bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
@@ -148,7 +148,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         '${wallets[1]}',
         102130004,
         '${JSON.stringify({
-          beneficiary: wallets[1],
+          owner: wallets[1],
           bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
@@ -167,7 +167,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         '${wallets[2]}',
         102130005,
         '${JSON.stringify({
-          beneficiary: wallets[2],
+          owner: wallets[2],
           bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
