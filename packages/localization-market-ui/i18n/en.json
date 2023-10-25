@@ -222,6 +222,7 @@
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
       "LevelUp": "Level Up",
+      "Merge": "Merge",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
       "OwnershipTransferred": "OwnershipTransferred",
@@ -364,6 +365,7 @@
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
+      "merge": "Merge",
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
@@ -788,6 +790,10 @@
         "title": "Uniswap"
       }
     },
+    "dragons": {
+      "description": "Here be dragons",
+      "title": "Not implemented :)"
+    },
     "ecommerce": {
       "title": "Ecommerce"
     },
@@ -903,24 +909,24 @@
     },
     "lottery": {
       "contract": {
-        "title": "Contract: {title}",
         "statistics": {
           "collapse": {
-            "open": "Details",
-            "close": "Hide"
+            "close": "Hide",
+            "open": "Details"
           },
           "matches": {
-            "title": "Match the winning number in the same order to share prizes",
             "match": {
               "burn": "Burn",
               "title": "Match {amount}",
               "win": "{amount} Winning tickets"
-            }
+            },
+            "title": "Match the winning number in the same order to share prizes"
           },
           "prizePot": "Prize pot",
           "title": "Finished rounds",
           "totalPlayers": "Total players this round"
-        }
+        },
+        "title": "Contract: {title}"
       },
       "purchase": {
         "count": "{current} of {max} sold",
@@ -1090,17 +1096,20 @@
       "craft": {
         "approve": "Please approve ingredients to Exchange before",
         "price": "Price",
-        "tabs": {
-          "erc1155": "ERC1155",
-          "erc721": "ERC721",
-          "erc998": "ERC998"
-        },
         "title": "Craft recipe: {title}"
       },
       "craft-list": {
         "title": "Craft recipes"
       },
       "ingredients": "Ingredients",
+      "merge": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "title": "Merge recipe: {title}"
+      },
+      "merge-list": {
+        "title": "Merge recipes"
+      },
       "title": "Recipes"
     },
     "referral": {
@@ -1219,8 +1228,8 @@
     "web3NotDetected": "Web3 not detected"
   },
   "socket": {
-    "connected": "WebSocket connection ON",
     "connect_failed": "WebSocket connection failed",
+    "connected": "WebSocket connection ON",
     "error": "WebSocket connection Error"
   }
 }

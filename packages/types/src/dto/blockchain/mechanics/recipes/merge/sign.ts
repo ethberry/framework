@@ -2,5 +2,6 @@ export interface IMergeSignDto {
   chainId: number;
   account: string;
   referrer: string;
-  craftId: number;
+  mergeId: number;
+  tokenIds: Array<number>;
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-import { Construction } from "@mui/icons-material";
+import { Construction, Merge } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -23,6 +23,14 @@ export const RecipesSection: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.recipes.craft-list.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/recipes/merge">
+          <ListItemIcon>
+            <Merge />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.recipes.merge-list.title" />
           </ListItemText>
         </ListItemButton>
       </List>
