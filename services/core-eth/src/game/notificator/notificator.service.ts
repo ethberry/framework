@@ -18,6 +18,7 @@ import type {
   ILotteryPurchaseData,
   ILotteryRoundEndData,
   ILotteryRoundStartData,
+  IMergeData,
   IMysteryPurchaseData,
   IMysteryUnpackData,
   IPurchaseData,
@@ -37,7 +38,6 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
-import { IMergeData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -144,7 +144,7 @@ export class NotificatorService {
   // MODULE:MERGE
   public async merge(data: IMergeData): Promise<any> {
     return this.sendMessage(data.merge.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.CRAFT, data).toPromise();
+      return clientProxy.emit(MobileEventType.MERGE, data).toPromise();
     });
   }
 
