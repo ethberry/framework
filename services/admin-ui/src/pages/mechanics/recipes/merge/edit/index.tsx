@@ -68,7 +68,6 @@ export const MergeEditDialog: FC<IMergeEditDialogProps> = props => {
           },
         }}
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
-        multiple
       />
       {id ? <SelectInput name="mergeStatus" options={MergeStatus} /> : null}
     </FormDialog>
