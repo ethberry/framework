@@ -30,14 +30,13 @@ contract Vesting is VestingWallet, TopUp {
   uint16 private immutable _monthlyRelease; // The amount of tokens that can be released daily
 
   constructor(
-    address beneficiaryAddress,
+    address beneficiary,
     uint64 startTimestamp,
     uint16 cliffInMonth,
     uint16 monthlyRelease
-  ) VestingWallet(beneficiaryAddress, startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
+  ) VestingWallet(beneficiary, startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
     _cliffInMonth = cliffInMonth;
     _monthlyRelease = monthlyRelease;
-    _transferOwnership(beneficiaryAddress);
   }
 
   /**
