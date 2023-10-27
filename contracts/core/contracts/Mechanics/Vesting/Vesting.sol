@@ -34,7 +34,7 @@ contract Vesting is VestingWallet, TopUp {
     uint64 startTimestamp,
     uint16 cliffInMonth,
     uint16 monthlyRelease
-  ) VestingWallet(address(1), startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
+  ) VestingWallet(beneficiaryAddress, startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
     _cliffInMonth = cliffInMonth;
     _monthlyRelease = monthlyRelease;
     _transferOwnership(beneficiaryAddress);
