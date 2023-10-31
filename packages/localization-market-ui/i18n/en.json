@@ -39,6 +39,7 @@
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
+    "staking-duration": "First period ends {duration}",
     "deposit-allowance": "Set Deposit Allowance",
     "edit": "Edit",
     "fund": "Fund",

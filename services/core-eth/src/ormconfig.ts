@@ -42,6 +42,7 @@ import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/disman
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -83,6 +84,7 @@ const config: PostgresConnectionOptions = {
     RaffleTicketEntity,
     StakingRulesEntity,
     StakingDepositEntity,
+    StakingPenaltyEntity,
     PonziDepositEntity,
     PonziRulesEntity,
     WaitListListEntity,

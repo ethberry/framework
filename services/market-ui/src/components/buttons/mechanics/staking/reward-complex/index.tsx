@@ -48,7 +48,9 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
   };
 
   const handleRewardConfirm = (values: IDepositRewardDto) => {
-    return metaFn(stake, values);
+    return metaFn(stake, values).finally(() => {
+      setIsRewardDialogOpen(false);
+    });
   };
 
   const handleRewardCancel = () => {
@@ -77,6 +79,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
         initialValues={{
           rule: stake.stakingRule!,
           withdrawDeposit: false,
+          startTimeStamp: stake.startTimestamp,
           breakLastPeriod: false,
         }}
       />

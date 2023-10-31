@@ -161,6 +161,64 @@ export class ContractService {
     return lastBlock;
   }
 
+  public async updateLastBlockByTokenTypeModuleType(
+    contractModule: ModuleType,
+    contractType: TokenType,
+    lastBlock: number,
+  ): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const entity = await this.findOne({
+      contractType,
+      contractModule,
+      chainId,
+    });
+
+    if (entity) {
+      await this.updateLastBlockById(entity.id, lastBlock);
+      return lastBlock + 1;
+    }
+    return lastBlock;
+  }
+
+  public async updateLastBlockByTokenTypeRandom(contractType: TokenType, lastBlock: number): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const entity = await this.findOne({
+      contractType,
+      contractModule: ModuleType.HIERARCHY,
+      contractFeatures: ArrayOverlap([ContractFeatures.RANDOM, ContractFeatures.GENES]),
+      chainId,
+    });
+
+    if (entity) {
+      await this.update(
+        {
+          id: entity.id,
+        },
+        { fromBlock: lastBlock + 1 },
+      );
+      return entity.fromBlock;
+    }
+    return lastBlock;
+  }
+
+  public async updateLastBlockByModuleTypeRandom(contractModule: ModuleType, lastBlock: number): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const entity = await this.findOne({
+      contractModule,
+      contractFeatures: ArrayOverlap([ContractFeatures.RANDOM, ContractFeatures.GENES]),
+      chainId,
+    });
+
+    if (entity) {
+      await this.updateLastBlockById(entity.id, lastBlock);
+      return lastBlock + 1;
+    }
+    return lastBlock;
+  }
+
   public async findSystemByName(where: FindOptionsWhere<ContractEntity>): Promise<ISystemContractListenerResult> {
     const contractEntity = await this.findOne(where);
 

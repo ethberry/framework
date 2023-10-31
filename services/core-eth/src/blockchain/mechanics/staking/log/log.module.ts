@@ -44,6 +44,7 @@ import { getEventsTopics } from "../../../../common/utils";
           StakingEventType.DepositFinish,
           StakingEventType.BalanceWithdraw,
           StakingEventType.DepositReturn,
+          StakingEventType.PenaltySet,
           // MODULE:PAUSE
           ContractEventType.Paused,
           ContractEventType.Unpaused,

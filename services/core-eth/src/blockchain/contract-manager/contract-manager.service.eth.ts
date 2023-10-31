@@ -36,7 +36,8 @@ import {
   MysteryContractTemplates,
   RmqProviderType,
   SignalEventType,
-  StakingContractTemplates,
+  StakingContractFeatures,
+  // StakingContractTemplates,
   TemplateStatus,
   TokenType,
 } from "@framework/types";
@@ -775,10 +776,11 @@ export class ContractManagerServiceEth {
       title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
       imageUrl,
+      // TODO better set ContractFeatures
       contractFeatures:
         contractTemplate === "0"
-          ? []
-          : (Object.values(StakingContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+          ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
+          : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),

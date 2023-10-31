@@ -227,6 +227,7 @@
       "REFERRAL": "Referral",
       "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",

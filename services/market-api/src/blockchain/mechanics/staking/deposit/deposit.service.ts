@@ -42,6 +42,7 @@ export class StakingDepositService {
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
     queryBuilder.leftJoinAndSelect("deposit_components.contract", "deposit_contract");
@@ -163,6 +164,7 @@ export class StakingDepositService {
         alias: "stake",
         leftJoinAndSelect: {
           rule: "stake.stakingRule",
+          contract: "rule.contract",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",

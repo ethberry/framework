@@ -50,7 +50,6 @@ export const Vesting: FC = () => {
     setIsWithdrawDialogOpen(false);
   };
 
-  console.log("rows", rows);
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "vesting"]} />

@@ -137,7 +137,9 @@ export enum PonziContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
-export enum StakingContractFeatures {}
+export enum StakingContractFeatures {
+  "SIMPLE" = "WITHDRAW_ALLOWANCE_REFERRAL",
+}
 
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",

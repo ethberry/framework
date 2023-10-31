@@ -67,6 +67,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   event DepositFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
   event DepositReturn(uint256 stakingId, address owner);
   event BalanceWithdraw(address account, Asset item);
+  event PenaltySet(uint256 stakingId, Asset item);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -301,7 +302,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       if (penaltyDeposit > 0) {
         depositItem.amount = stakeAmount - penaltyDeposit;
         // Store penalties
-        _penalties[depositItem.token][depositItem.tokenId] += penaltyDeposit;
+        setPenalty(stakeId, Asset(depositItem.tokenType, depositItem.token, depositItem.tokenId, penaltyDeposit));
+        // _penalties[depositItem.token][depositItem.tokenId] += penaltyDeposit;
         // Update deposit balance
         if (depositTokenType == TokenType.ERC20 || depositTokenType == TokenType.NATIVE) {
           // Deduct deposit balance
@@ -320,7 +322,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       // Empty current stake deposit item amount
       depositItem.amount = 0;
       // Set penalty amount
-      _penalties[depositItem.token][depositItem.tokenId] = 1;
+      setPenalty(stakeId, Asset(depositItem.tokenType, depositItem.token, depositItem.tokenId, 1));
+      // _penalties[depositItem.token][depositItem.tokenId] = 1;
     } else {
       if (depositItem.amount > 0) {
         Asset memory depositItemWithdraw = depositItem;
@@ -642,6 +645,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     _penalties[item.token][item.tokenId] = 0;
 
     ExchangeUtils.spend(ExchangeUtils._toArray(item), _msgSender(), _disabledTypes);
+  }
+
+  /**
+   * @dev Set the penalty for given asset
+   * @param stakeId id,
+   * @param item penalty.
+   */
+  function setPenalty(uint256 stakeId, Asset memory item) internal {
+    // Emit an event indicating that penalty set.
+    emit PenaltySet(stakeId, item);
+    // append penalty
+    _penalties[item.token][item.tokenId] += item.amount;
   }
 
   /**

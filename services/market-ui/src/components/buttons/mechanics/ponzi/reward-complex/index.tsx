@@ -70,6 +70,7 @@ export const PonziRewardComplexButton: FC<IPonziRewardComplexButtonProps> = prop
         initialValues={{
           rule: stake.ponziRule!,
           withdrawDeposit: false,
+          startTimeStamp: stake.startTimestamp,
         }}
       />
     </Fragment>

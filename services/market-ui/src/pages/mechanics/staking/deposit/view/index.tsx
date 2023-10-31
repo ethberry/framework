@@ -50,6 +50,12 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{stakingRule?.contract!.title}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
               <TableCell align="right">{formatComplexPrice(stakingRule?.deposit)}</TableCell>
@@ -93,12 +99,6 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell align="right">
                 {withdrawTimestamp ? format(new Date(withdrawTimestamp), humanReadableDateTimeFormat) : null}
               </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.penalty" />
-              </TableCell>
-              <TableCell align="right">{formatPenalty(stakingRule?.penalty)}%</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

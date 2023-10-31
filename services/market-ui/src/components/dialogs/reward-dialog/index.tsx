@@ -8,6 +8,7 @@ import { DurationUnit, IAsset } from "@framework/types";
 import { validationSchema } from "./validation";
 import { formatComplexPrice, formatPenalty } from "../../../utils/money";
 import { normalizeDuration } from "../../../utils/time";
+import { addSeconds, formatDistance } from "date-fns";
 
 export interface IDepositRule {
   deposit?: IAsset;
@@ -20,6 +21,7 @@ export interface IDepositRule {
 
 export interface IDepositRewardDto {
   rule: IDepositRule;
+  startTimeStamp: string;
   withdrawDeposit: boolean;
   breakLastPeriod?: boolean;
 }
@@ -33,7 +35,7 @@ export interface IRewardDialogProps {
 
 export const DepositRewardDialog: FC<IRewardDialogProps> = props => {
   const { initialValues, ...rest } = props;
-  const { rule } = initialValues;
+  const { rule, startTimeStamp } = initialValues;
 
   const { formatMessage } = useIntl();
 
@@ -68,6 +70,16 @@ export const DepositRewardDialog: FC<IRewardDialogProps> = props => {
           values={{
             item: formatPenalty(rule.penalty),
             description: "",
+          }}
+        />
+      </Typography>
+      <Typography variant="body1" color="textSecondary" component="div">
+        <FormattedMessage
+          id="dialogs.staking-duration"
+          values={{
+            duration: formatDistance(addSeconds(new Date(startTimeStamp), rule.durationAmount || 0), Date.now(), {
+              addSuffix: true,
+            }),
           }}
         />
       </Typography>

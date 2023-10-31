@@ -133,6 +133,7 @@ import {
   CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
+  CreateStakingPenalty1654751224535,
   CreateStakingRules1654751224200,
   CreateStock1683724062500,
   CreateTemplate1563804000200,
@@ -597,6 +598,7 @@ const config: PostgresConnectionOptions = {
     SeedStakingDepositErc721NoneAt1654751224339,
     SeedStakingDepositErc998Erc1155At1654751224345,
     SeedBalanceStakingAt1654751224530,
+    CreateStakingPenalty1654751224535,
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,

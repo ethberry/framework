@@ -34,6 +34,7 @@ export * from "./mechanics/raffle/ticket";
 
 export * from "./mechanics/rent/rent";
 export * from "./mechanics/staking/leaderboard";
+export * from "./mechanics/staking/penalty";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/vesting";

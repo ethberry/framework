@@ -8,6 +8,7 @@ import type {
   IStakingDepositReturnEvent,
   IStakingDepositStartEvent,
   IStakingDepositWithdrawEvent,
+  IStakingPenaltyEvent,
 } from "@framework/types";
 import { ContractType, StakingEventType } from "@framework/types";
 
@@ -38,5 +39,10 @@ export class StakingDepositControllerEth {
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.DepositFinish })
   public depositFinish(@Payload() event: ILogEvent<IStakingDepositFinishEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingDepositServiceEth.depositFinish(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.PenaltySet })
+  public penaltySet(@Payload() event: ILogEvent<IStakingPenaltyEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingDepositServiceEth.penalty(event, context);
   }
 }

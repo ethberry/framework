@@ -6,10 +6,14 @@
 
 pragma solidity ^0.8.20;
 
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+
 import {MINTER_ROLE, DEFAULT_ADMIN_ROLE, PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
 import {SignerMissingRole} from "../../utils/errors.sol";
 import {SignatureValidatorCM} from "../override/SignatureValidator.sol";
+import {CMStorage} from "../storage/CMStorage.sol";
+
 import {AbstractFactoryFacet} from "./AbstractFactoryFacet.sol";
 
 contract StakingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
@@ -43,6 +47,13 @@ contract StakingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
     account = deploy2(params.bytecode, "", params.nonce);
 
     emit StakingDeployed(account, params.externalId, args);
+
+    bytes32[] memory roles = new bytes32[](2);
+    roles[0] = PAUSER_ROLE;
+    roles[1] = DEFAULT_ADMIN_ROLE;
+
+    fixPermissions(account, roles);
+    EnumerableSet.add(CMStorage.layout()._minters, account);
   }
 
   function _hashStaking(Params calldata params, StakingArgs calldata args) internal view returns (bytes32) {

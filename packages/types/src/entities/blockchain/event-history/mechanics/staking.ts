@@ -8,6 +8,7 @@ export enum StakingEventType {
   DepositFinish = "DepositFinish",
   BalanceWithdraw = "BalanceWithdraw",
   DepositReturn = "DepositReturn",
+  PenaltySet = "PenaltySet",
 }
 
 export interface IStakingRuleStruct {
@@ -86,6 +87,11 @@ export interface IStakingDepositReturnEvent {
   owner: string;
 }
 
+export interface IStakingPenaltyEvent {
+  stakingId: string;
+  item: IAssetItem;
+}
+
 export type TStakingEvents =
   | IStakingRuleCreateEvent
   | IStakingRuleUpdateEvent
@@ -93,4 +99,5 @@ export type TStakingEvents =
   | IStakingDepositWithdrawEvent
   | IStakingDepositFinishEvent
   | IStakingBalanceWithdrawEvent
-  | IStakingDepositReturnEvent;
+  | IStakingDepositReturnEvent
+  | IStakingPenaltyEvent;

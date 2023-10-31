@@ -5256,7 +5256,13 @@ describe("Staking", function () {
           owner.address,
           tokenId,
           amount / 2n,
-        );
+        )
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [0, ZeroAddress, 0, amount / 2n])
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [1, await erc20Instance.getAddress(), 0, amount / 2n])
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [4, await erc1155Instance.getAddress(), tokenId, amount / 2n]);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
       const balance4 = await erc20Instance.balanceOf(owner.address);
@@ -5304,6 +5310,8 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx6)
+        .to.emit(stakingInstance, "BalanceWithdraw")
+        .withArgs(owner.address, [4, await erc1155Instance.getAddress(), tokenId, amount / 2n])
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
           await stakingInstance.getAddress(),
@@ -5431,7 +5439,17 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2)
+        .to.emit(stakingInstance, "DepositWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [0, ZeroAddress, 0, amount])
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [1, await erc20Instance.getAddress(), 0, amount])
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [2, await erc721SimpleInstance.getAddress(), tokenId, 1])
+        .to.emit(stakingInstance, "PenaltySet")
+        .withArgs(1, [4, await erc1155Instance.getAddress(), tokenId, amount]);
 
       const balance4 = await erc20Instance.balanceOf(owner.address);
       expect(balance4).to.equal(0);

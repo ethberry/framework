@@ -200,6 +200,8 @@ export class NotificatorService {
     });
   }
 
+  // TODO add deposit return event notification?
+
   // MODULE:RAFFLE
   public rafflePurchase(data: IRafflePurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {

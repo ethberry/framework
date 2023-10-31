@@ -15,7 +15,7 @@ declare global {
       STAKING_ADDR: string;
       CHAIN_ID: string;
       LINK_ADDR: string;
-      WAITLIST_ADDR: string;
+      WAIT_LIST_ADDR: string;
       LOTTERY_ADDR: string;
     }
   }

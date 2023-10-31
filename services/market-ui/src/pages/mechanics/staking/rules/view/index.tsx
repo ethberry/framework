@@ -48,6 +48,12 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{contract!.title}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
               <TableCell align="right">{formatPrice(deposit)}</TableCell>
