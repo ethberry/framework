@@ -827,6 +827,7 @@
       "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Root",
+      "chainId": "ChainId",
       "childId": "Contract",
       "childIds": "Contract",
       "city": "Hamburg",

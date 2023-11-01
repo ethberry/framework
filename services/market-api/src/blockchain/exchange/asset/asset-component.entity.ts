@@ -7,6 +7,7 @@ import { ns } from "@framework/constants";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { AssetEntity } from "./asset.entity";
+import { TokenEntity } from "../../hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
 export class AssetComponentEntity extends IdBaseEntity implements IAssetComponent {
@@ -29,6 +30,13 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   @JoinColumn()
   @OneToOne(_type => TemplateEntity)
   public template: TemplateEntity;
+
+  @Column({ type: "int", nullable: true })
+  public tokenId: number | null;
+
+  @JoinColumn()
+  @OneToOne(_type => TokenEntity)
+  public token: TokenEntity;
 
   @Column({ type: "numeric" })
   public amount: string;

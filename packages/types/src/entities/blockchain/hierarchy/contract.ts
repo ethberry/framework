@@ -138,7 +138,7 @@ export enum PonziContractTemplates {
 }
 
 export enum StakingContractFeatures {
-  "SIMPLE" = "WITHDRAW_ALLOWANCE_REFERRAL",
+  "SIMPLE" = "SIMPLE",
 }
 
 export enum StakingContractTemplates {

@@ -66,7 +66,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   event DepositWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event DepositFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
   event DepositReturn(uint256 stakingId, address owner);
-  event BalanceWithdraw(address account, Asset item);
+  event BalanceWithdraw(address owner, Asset item);
   event DepositPenalty(uint256 stakingId, Asset item);
 
   constructor() {

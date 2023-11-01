@@ -46,7 +46,9 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   };
 
   const handleDepositConfirm = (values: IStakingDepositDto) => {
-    return metaFn(rule, values);
+    return metaFn(rule, values).finally(() => {
+      setIsDepositDialogOpen(false);
+    });
   };
 
   const handleDepositCancel = () => {

@@ -27,6 +27,11 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "token_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "amount",
           type: "uint256",
         },
@@ -52,6 +57,12 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           columnNames: ["template_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.template`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

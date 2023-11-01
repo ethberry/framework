@@ -10,7 +10,7 @@ import type {
   IStakingDepositStartEvent,
   IStakingPenaltyEvent,
 } from "@framework/types";
-import { RmqProviderType, SignalEventType, StakingDepositStatus } from "@framework/types";
+import { RmqProviderType, SignalEventType, StakingDepositStatus, TokenType } from "@framework/types";
 
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
@@ -19,6 +19,9 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { StakingPenaltyService } from "../penalty/penalty.service";
 import { StakingRulesService } from "../rules/rules.service";
 import { StakingDepositService } from "./deposit.service";
+import { TokenService } from "../../../hierarchy/token/token.service";
+import { TemplateEntity } from "../../../hierarchy/template/template.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class StakingDepositServiceEth {
@@ -33,6 +36,7 @@ export class StakingDepositServiceEth {
     private readonly notificatorService: NotificatorService,
     protected readonly assetService: AssetService,
     private readonly templateService: TemplateService,
+    private readonly tokenService: TokenService,
     private readonly penaltyService: StakingPenaltyService,
   ) {}
 
@@ -194,7 +198,7 @@ export class StakingDepositServiceEth {
       name,
       args: { stakingId, item },
     } = event;
-    const { /* tokenType, token, */ tokenId, amount } = item;
+    const { tokenType, token, tokenId, amount } = item;
     const { address, transactionHash } = context;
 
     // CHECK DEPOSIT
@@ -216,11 +220,23 @@ export class StakingDepositServiceEth {
       { relations: { penalty: { components: { template: true, contract: true } }, staking: { merchant: true } } },
     );
 
-    // FIND PENALTY TEMPLATE
-    const penaltyTemplate = await this.templateService.findOne(
-      { id: Number(tokenId) },
-      { relations: { contract: true } },
-    );
+    const isNft =
+      Object.values(TokenType)[Number(tokenType)] === TokenType.ERC721 ||
+      Object.values(TokenType)[Number(tokenType)] === TokenType.ERC998;
+
+    let penaltyTemplate: TemplateEntity | null;
+    let penaltyToken: TokenEntity | null = null;
+
+    // FIND PENALTY TEMPLATE OR TOKEN (for ERC721 and ERC998)
+    if (isNft) {
+      penaltyToken = await this.tokenService.getToken(tokenId, token.toLowerCase());
+      if (!penaltyToken) {
+        throw new NotFoundException("penaltyTokenNotFound");
+      }
+      penaltyTemplate = penaltyToken.template;
+    } else {
+      penaltyTemplate = await this.templateService.findOne({ id: Number(tokenId) }, { relations: { contract: true } });
+    }
 
     if (!penaltyTemplate) {
       throw new NotFoundException("penaltyTemplateNotFound");
@@ -234,6 +250,7 @@ export class StakingDepositServiceEth {
         tokenType: penaltyTemplate.contract.contractType!,
         contractId: penaltyTemplate.contractId,
         templateId: penaltyTemplate.id,
+        tokenId: isNft ? penaltyToken!.id : null,
         amount,
       });
     } else {
@@ -243,6 +260,7 @@ export class StakingDepositServiceEth {
         tokenType: penaltyTemplate.contract.contractType!,
         contractId: penaltyTemplate.contractId,
         templateId: penaltyTemplate.id,
+        tokenId: isNft ? penaltyToken!.id : null,
         amount,
       });
       // create penalty

@@ -45,7 +45,10 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
     return contract.withdrawBalance({
       tokenType: Object.keys(TokenType).indexOf(values.tokenType),
       token: values.contract?.address,
-      tokenId: values.templateId, // must match with staking.penalties[item.token][item.tokenId];
+      tokenId:
+        values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998
+          ? values.token!.tokenId
+          : values.templateId, // must match with staking.penalties[item.token][item.tokenId];
       amount: 0, // whatever
     }) as Promise<any>;
   });
@@ -79,7 +82,9 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
           <List>
             {rows.map(comp => (
               <ListItem key={comp.id}>
-                <ListItemText sx={{ width: 0.6 }}>{comp.template!.title}</ListItemText>
+                <ListItemText sx={{ width: 0.6 }}>{`${comp.template!.title} ${
+                  comp.token ? ` #${comp.token.tokenId}` : ""
+                }`}</ListItemText>
                 <ListItemText>{formatEther(comp.amount, comp.contract!.decimals, comp.contract!.symbol)}</ListItemText>
                 <ListActions>
                   <ListAction onClick={handleWithdraw(comp)} message="form.buttons.withdraw" icon={PriceChange} />

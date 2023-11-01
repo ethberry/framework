@@ -15,7 +15,12 @@ export class StakingPenaltyController {
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingPenaltyEntity | null> {
     return this.stakingPenaltyService.findOne(
       { stakingId: id },
-      { relations: { penalty: { components: { template: true, contract: true } }, staking: { merchant: true } } },
+      {
+        relations: {
+          penalty: { components: { template: true, token: true, contract: true } },
+          staking: { merchant: true },
+        },
+      },
     );
   }
 }

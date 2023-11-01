@@ -163,7 +163,7 @@ async function main() {
 
   await debug(await erc20BlacklistInstance.blacklist(wallets[2]), "erc20BlacklistInstance.blacklist");
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Simple = await erc721SimpleFactory.deploy("RUNE", "GEM721", royalty, baseTokenURI);
+  contracts.erc721Simple = await erc721SimpleFactory.deploy("GEMSTONES", "GEM721", royalty, baseTokenURI);
   await debug(contracts);
 
   const erc721InactiveFactory = await ethers.getContractFactory("ERC721Simple");
@@ -555,7 +555,7 @@ async function main() {
   // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
   const waitlistFactory = await ethers.getContractFactory("WaitList");
-  contracts.waitlist = await waitlistFactory.deploy();
+  contracts.waitList = await waitlistFactory.deploy();
   await debug(contracts);
 
   // function setReward(Params memory params, Asset[] memory items)
@@ -580,7 +580,7 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitlist.setReward(params, items), "waitlist.setReward");
+  await debug(await contracts.waitList.setReward(params, items), "waitlist.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
@@ -639,7 +639,7 @@ async function main() {
       await contracts.erc721Wrapper.getAddress(),
       await contracts.exchange.getAddress(),
       await contracts.staking.getAddress(),
-      await contracts.waitlist.getAddress(),
+      await contracts.waitList.getAddress(),
       await contracts.erc721MysteryboxBlacklistPausable.getAddress(),
       await contracts.erc721MysteryboxBlacklist.getAddress(),
       await contracts.erc721MysteryboxPausable.getAddress(),

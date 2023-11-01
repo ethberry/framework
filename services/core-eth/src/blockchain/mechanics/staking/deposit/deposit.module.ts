@@ -14,11 +14,13 @@ import { signalServiceProvider } from "../../../../common/providers";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { StakingPenaltyModule } from "../penalty/penalty.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
   imports: [
     ConfigModule,
     AssetModule,
+    TokenModule,
     TemplateModule,
     StakingRulesModule,
     StakingPenaltyModule,

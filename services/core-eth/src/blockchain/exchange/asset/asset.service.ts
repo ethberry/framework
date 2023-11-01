@@ -119,6 +119,9 @@ export class AssetService {
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
+      } else {
+        // remove all components
+        await Promise.allSettled(asset.components.map(oldItem => queryRunner.manager.remove(oldItem)));
       }
       await queryRunner.manager.save(asset);
 
@@ -145,24 +148,31 @@ export class AssetService {
           tokenType: item.contract.contractType!,
           contractId: item.contractId,
           templateId: item.templateId,
+          tokenId: item.tokenId,
           amount: item.amount,
         };
       }),
     };
-    const componentsToUpdate = oldAsset.components.filter(item => item.templateId === dto.templateId);
+
+    const componentsToUpdate = oldAsset.components.filter(
+      item => item.templateId === dto.templateId && item.tokenId === dto.tokenId,
+    );
 
     if (componentsToUpdate.length > 0) {
       const updatedAsset = oldAsset.components.map(comp => {
-        if (comp.templateId === dto.templateId) {
+        if (comp.templateId === dto.templateId && comp.tokenId === dto.tokenId) {
           return Object.assign(comp, { amount: (BigInt(comp.amount) + BigInt(dto.amount)).toString() });
         } else return comp;
       });
-      await this.update(asset, { components: updatedAsset });
+      // TODO negative result throw error? must not happen
+      const noZeroAsset = updatedAsset.filter(item => BigInt(item.amount) > BigInt(0));
+      await this.update(asset, { components: noZeroAsset });
     } else {
       oldAsset.components.push({
         tokenType: dto.tokenType,
         contractId: dto.contractId,
         templateId: dto.templateId,
+        tokenId: dto.tokenId,
         amount: dto.amount,
       });
       await this.update(asset, oldAsset);
@@ -177,6 +187,7 @@ export class AssetService {
           tokenType: dto.tokenType,
           contractId: dto.contractId,
           templateId: dto.templateId,
+          tokenId: dto.tokenId,
           amount: dto.amount,
         },
       ],
