@@ -255,8 +255,12 @@ export class ContractService {
     const contractEntities = await this.findAll(where);
 
     if (contractEntities.length) {
+      const unique = [
+        ...new Set(contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet)),
+      ];
+
       return {
-        address: contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet),
+        address: unique,
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }

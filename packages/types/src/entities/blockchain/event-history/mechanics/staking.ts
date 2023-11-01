@@ -8,7 +8,7 @@ export enum StakingEventType {
   DepositFinish = "DepositFinish",
   BalanceWithdraw = "BalanceWithdraw",
   DepositReturn = "DepositReturn",
-  PenaltySet = "PenaltySet",
+  DepositPenalty = "DepositPenalty",
 }
 
 export interface IStakingRuleStruct {

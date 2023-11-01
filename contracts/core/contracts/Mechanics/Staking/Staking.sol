@@ -67,7 +67,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   event DepositFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
   event DepositReturn(uint256 stakingId, address owner);
   event BalanceWithdraw(address account, Asset item);
-  event PenaltySet(uint256 stakingId, Asset item);
+  event DepositPenalty(uint256 stakingId, Asset item);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -654,7 +654,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    */
   function setPenalty(uint256 stakeId, Asset memory item) internal {
     // Emit an event indicating that penalty set.
-    emit PenaltySet(stakeId, item);
+    emit DepositPenalty(stakeId, item);
     // append penalty
     _penalties[item.token][item.tokenId] += item.amount;
   }

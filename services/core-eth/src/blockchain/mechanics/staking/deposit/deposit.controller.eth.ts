@@ -41,8 +41,8 @@ export class StakingDepositControllerEth {
     return this.stakingDepositServiceEth.depositFinish(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.PenaltySet })
-  public penaltySet(@Payload() event: ILogEvent<IStakingPenaltyEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingDepositServiceEth.penalty(event, context);
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.DepositPenalty })
+  public depositPenalty(@Payload() event: ILogEvent<IStakingPenaltyEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingDepositServiceEth.depositPenalty(event, context);
   }
 }

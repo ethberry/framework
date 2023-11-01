@@ -4,23 +4,21 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
-  IAssetDto,
+  IStakingDepositWithdrawEvent,
   IStakingDepositFinishEvent,
   IStakingDepositReturnEvent,
   IStakingDepositStartEvent,
-  IStakingDepositWithdrawEvent,
   IStakingPenaltyEvent,
 } from "@framework/types";
+import { RmqProviderType, SignalEventType, StakingDepositStatus } from "@framework/types";
 
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { TemplateService } from "../../../hierarchy/template/template.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
+import { StakingPenaltyService } from "../penalty/penalty.service";
 import { StakingRulesService } from "../rules/rules.service";
 import { StakingDepositService } from "./deposit.service";
-import { RmqProviderType, SignalEventType, StakingDepositStatus } from "@framework/types";
-import { AssetService } from "../../../exchange/asset/asset.service";
-import { AssetEntity } from "../../../exchange/asset/asset.entity";
-import { StakingPenaltyService } from "../penalty/penalty.service";
-import { TemplateService } from "../../../hierarchy/template/template.service";
 
 @Injectable()
 export class StakingDepositServiceEth {
@@ -191,14 +189,15 @@ export class StakingDepositServiceEth {
       .toPromise();
   }
 
-  public async penalty(event: ILogEvent<IStakingPenaltyEvent>, context: Log): Promise<void> {
+  public async depositPenalty(event: ILogEvent<IStakingPenaltyEvent>, context: Log): Promise<void> {
     const {
       name,
       args: { stakingId, item },
     } = event;
-    const { /* tokenType  token, */ tokenId, amount } = item;
+    const { /* tokenType, token, */ tokenId, amount } = item;
     const { address, transactionHash } = context;
 
+    // CHECK DEPOSIT
     const stakingDepositEntity = await this.stakingDepositService.findOne(
       { externalId: stakingId, stakingRule: { contract: { address: address.toLowerCase() } } },
       { relations: { stakingRule: { contract: { merchant: true } } } },
@@ -211,83 +210,47 @@ export class StakingDepositServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, void 0, stakingDepositEntity.stakingRule.contractId);
 
-    // FIND EXISTING DEPOSIT'S PENALTY
+    // FIND EXISTING PENALTY
     const penaltyEntity = await this.penaltyService.findOne(
       { stakingId: stakingDepositEntity.stakingRule.contractId },
       { relations: { penalty: { components: { template: true, contract: true } }, staking: { merchant: true } } },
     );
 
-    // FIND PENALTY ITEM TEMPLATE
+    // FIND PENALTY TEMPLATE
     const penaltyTemplate = await this.templateService.findOne(
       { id: Number(tokenId) },
       { relations: { contract: true } },
     );
-    // const penaltyToken = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
     if (!penaltyTemplate) {
       throw new NotFoundException("penaltyTemplateNotFound");
     }
 
     // CREATE or UPDATE PENALTY ASSET
-    if (!penaltyEntity) {
-      // create
-      const penaltyAssetEntity = await this.createEmptyAsset();
-      const penaltyAsset: IAssetDto = {
-        components: [
-          {
-            tokenType: penaltyTemplate.contract.contractType!,
-            contractId: penaltyTemplate.contractId,
-            templateId: penaltyTemplate.id,
-            amount,
-          },
-        ],
-      };
-      await this.updateAsset(penaltyAssetEntity, penaltyAsset);
-      await this.penaltyService.create({
-        stakingId: stakingDepositEntity.stakingRule.contractId,
-        penaltyId: penaltyAssetEntity.id,
+    if (penaltyEntity) {
+      // update old penalty asset
+      const oldAssetEntity = penaltyEntity.penalty;
+      await this.assetService.updateAsset(oldAssetEntity, {
+        tokenType: penaltyTemplate.contract.contractType!,
+        contractId: penaltyTemplate.contractId,
+        templateId: penaltyTemplate.id,
+        amount,
       });
     } else {
-      // update
-      const penaltyAssetEntity = penaltyEntity.penalty;
-      const penaltyAsset: IAssetDto = {
-        components: penaltyAssetEntity.components.map(item => {
-          return {
-            id: item.id,
-            tokenType: item.contract.contractType!,
-            contractId: item.contractId,
-            templateId: item.templateId,
-            amount: item.amount,
-          };
-        }),
-      };
-      // TODO better update amounts if more same components exist?
-      // TODO TEST 721 penalty!!!
-      const componentsToUpdate = penaltyAsset.components.filter(item => item.templateId === penaltyTemplate.id);
-      if (componentsToUpdate.length > 0) {
-        const updatedAsset = penaltyAsset.components.map(comp => {
-          if (comp.templateId === penaltyTemplate.id) {
-            return Object.assign(comp, { amount: (BigInt(comp.amount) + BigInt(amount)).toString() });
-          } else return comp;
-        });
-        await this.updateAsset(penaltyAssetEntity, { components: updatedAsset });
-      } else {
-        penaltyAsset.components.push({
-          tokenType: penaltyTemplate.contract.contractType!,
-          contractId: penaltyTemplate.contractId,
-          templateId: penaltyTemplate.id,
-          amount,
-        });
-        await this.updateAsset(penaltyAssetEntity, penaltyAsset);
-      }
+      // create new penalty asset
+      const newAssetEntity = await this.assetService.create();
+      await this.assetService.createAsset(newAssetEntity, {
+        tokenType: penaltyTemplate.contract.contractType!,
+        contractId: penaltyTemplate.contractId,
+        templateId: penaltyTemplate.id,
+        amount,
+      });
+      // create penalty
+      await this.penaltyService.create({
+        stakingId: stakingDepositEntity.stakingRule.contractId,
+        penaltyId: newAssetEntity.id,
+      });
     }
-
-    // TODO NOTIFY MERCHANT ABOUT PENALTY
-    // await this.notificatorService.stakingDepositStart({
-    //   stakingDeposit: stakingDepositEntity,
-    //   address,
-    //   transactionHash,
-    // });
 
     // SIGNAL TO MERCHANT ABOUT PENALTY
     await this.signalClientProxy
@@ -297,13 +260,12 @@ export class StakingDepositServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
 
-  public async createEmptyAsset(): Promise<AssetEntity> {
-    return this.assetService.create();
-  }
-
-  public async updateAsset(asset: AssetEntity, dto: IAssetDto): Promise<void> {
-    await this.assetService.update(asset, dto);
+    // TODO NOTIFY MERCHANT ABOUT PENALTY
+    // await this.notificatorService.stakingDepositStart({
+    //   stakingDeposit: stakingDepositEntity,
+    //   address,
+    //   transactionHash,
+    // });
   }
 }

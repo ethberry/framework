@@ -350,6 +350,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -397,6 +398,7 @@ const config: PostgresConnectionOptions = {
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
+    StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
     /* ecommerce */

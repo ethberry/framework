@@ -39,12 +39,12 @@ import { getEventsTopics } from "../../../../common/utils";
         const eventNames = [
           StakingEventType.RuleCreated,
           StakingEventType.RuleUpdated,
+          StakingEventType.BalanceWithdraw,
           StakingEventType.DepositStart,
           StakingEventType.DepositWithdraw,
           StakingEventType.DepositFinish,
-          StakingEventType.BalanceWithdraw,
           StakingEventType.DepositReturn,
-          StakingEventType.PenaltySet,
+          StakingEventType.DepositPenalty,
           // MODULE:PAUSE
           ContractEventType.Paused,
           ContractEventType.Unpaused,
@@ -55,6 +55,7 @@ import { getEventsTopics } from "../../../../common/utils";
         ];
 
         const topics = getEventsTopics(eventNames);
+
         return {
           contract: {
             contractType: ContractType.STAKING,

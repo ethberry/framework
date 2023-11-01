@@ -114,7 +114,7 @@ export enum ContractEventType {
   StakingFinish = "StakingFinish",
   WithdrawBalance = "WithdrawBalance",
   ReturnDeposit = "ReturnDeposit",
-  PenaltySet = "PenaltySet",
+  DepositPenalty = "DepositPenalty",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -259,7 +259,7 @@ export enum ContractEventSignature {
   DepositStart = "DepositStart(uint256,uint256,address,uint256,uint256[])",
   DepositWithdraw = "DepositWithdraw(uint256,address,uint256)",
   DepositFinish = "DepositFinish(uint256,address,uint256,uint256)",
-  PenaltySet = "PenaltySet(uint256,(uint8,address,uint256,uint256))",
+  DepositPenalty = "DepositPenalty(uint256,(uint8,address,uint256,uint256))",
 
   // MODULE:EXCHANGE
   // MODULE:CORE

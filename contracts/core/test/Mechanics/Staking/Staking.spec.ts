@@ -5257,11 +5257,11 @@ describe("Staking", function () {
           tokenId,
           amount / 2n,
         )
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [0, ZeroAddress, 0, amount / 2n])
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [1, await erc20Instance.getAddress(), 0, amount / 2n])
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [4, await erc1155Instance.getAddress(), tokenId, amount / 2n]);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
@@ -5442,13 +5442,13 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [0, ZeroAddress, 0, amount])
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [1, await erc20Instance.getAddress(), 0, amount])
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [2, await erc721SimpleInstance.getAddress(), tokenId, 1])
-        .to.emit(stakingInstance, "PenaltySet")
+        .to.emit(stakingInstance, "DepositPenalty")
         .withArgs(1, [4, await erc1155Instance.getAddress(), tokenId, amount]);
 
       const balance4 = await erc20Instance.balanceOf(owner.address);
