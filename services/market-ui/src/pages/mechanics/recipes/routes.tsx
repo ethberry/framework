@@ -7,7 +7,7 @@ import { RecipesSection } from "../../dashboard/mechanics/recipes";
 import { CraftList } from "./craft/craft-list";
 import { CraftItem } from "./craft/craft-item";
 import { MergeList } from "./merge/merge-list";
-import { MergeItem } from "./merge/craft-item";
+import { MergeItem } from "./merge/merge-item";
 
 export const recipesRoutes: Array<RouteObject> = [
   {
