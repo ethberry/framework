@@ -15,9 +15,9 @@ export class SeedMergeErc721Erc721RecipesAt1697979517330 implements MigrationInt
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102350401
+        10219330101
       ), (
-        102350402
+        10219330102
       );
     `);
 
@@ -33,13 +33,13 @@ export class SeedMergeErc721Erc721RecipesAt1697979517330 implements MigrationInt
         10306,
         1030601, -- sword
         3,
-        102350401
+        10219330101
       ), (
         'ERC721',
         10306,
         1030602, -- mace
         1,
-        102350402
+        10219330102
       );
     `);
 
@@ -54,8 +54,8 @@ export class SeedMergeErc721Erc721RecipesAt1697979517330 implements MigrationInt
         updated_at
       ) VALUES (
         1030501,
-        102350402,
-        102350401,
+        10219330102,
+        10219330101,
         'ACTIVE',
         1,
         '${currentDateTime}',

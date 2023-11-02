@@ -14,11 +14,11 @@ export class CreateAssetPromoAt1658980521000 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "merchant_id",

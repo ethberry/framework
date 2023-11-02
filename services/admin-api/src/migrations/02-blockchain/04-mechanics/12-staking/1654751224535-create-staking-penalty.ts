@@ -18,7 +18,7 @@ export class CreateStakingPenalty1654751224535 implements MigrationInterface {
         },
         {
           name: "penalty_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "created_at",

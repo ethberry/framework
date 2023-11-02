@@ -31,7 +31,7 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
           isNullable: true,
         },
         {

@@ -26,7 +26,7 @@ export class CreateLotteryRoundAggregationAt1660436476130 implements MigrationIn
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "created_at",

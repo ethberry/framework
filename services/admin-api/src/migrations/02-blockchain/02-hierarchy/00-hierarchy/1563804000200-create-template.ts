@@ -35,7 +35,7 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
           isNullable: true,
         },
         {

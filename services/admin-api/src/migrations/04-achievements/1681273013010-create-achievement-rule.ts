@@ -52,7 +52,7 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
           isNullable: true,
         },
         {

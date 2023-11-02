@@ -22,49 +22,49 @@ export class SeedAssetComponentsErc1155At1563804001250 implements MigrationInter
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050101
+        10100050101
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050102
+        10100050102
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050103
+        10100050103
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050104
+        10100050104
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050105
+        10100050105
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050401
+        10100050401
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050402
+        10100050402
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101050403
+        10100050403
       ), (
         'ERC20',
         20217,

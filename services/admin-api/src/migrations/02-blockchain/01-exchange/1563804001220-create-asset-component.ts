@@ -37,7 +37,7 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
         },
         {
           name: "asset_id",
-          type: "int",
+          type: "bigint",
         },
       ],
       foreignKeys: [

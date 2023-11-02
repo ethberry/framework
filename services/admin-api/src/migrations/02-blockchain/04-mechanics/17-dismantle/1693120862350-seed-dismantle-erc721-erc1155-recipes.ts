@@ -15,9 +15,9 @@ export class SeedDismantleErc721Erc155RecipesAt1693120862350 implements Migratio
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102350301
+        10217350101
       ), (
-        102350302
+        10217350102
       );
     `);
 
@@ -33,19 +33,19 @@ export class SeedDismantleErc721Erc155RecipesAt1693120862350 implements Migratio
         10306,
         1030601, -- sword
         1,
-        102350301
+        10217350101
       ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102350302
+        10217350102
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        102350302
+        10217350102
       );
     `);
 
@@ -62,8 +62,8 @@ export class SeedDismantleErc721Erc155RecipesAt1693120862350 implements Migratio
         updated_at
       ) VALUES (
         1030503,
-        102350102,
-        102350101,
+        10217350102,
+        10217350101,
         200,
         'EXPONENTIAL',
         'ACTIVE',

@@ -42,7 +42,7 @@ export class CreateGrade1657846587000 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "contract_id",

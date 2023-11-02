@@ -61,11 +61,11 @@ export class CreatePonziRules1660436477200 implements MigrationInterface {
         },
         {
           name: "deposit_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "reward_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "external_id",

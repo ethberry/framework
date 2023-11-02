@@ -15,13 +15,13 @@ export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationI
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102550101
+        10204550101
       ), (
-        102550102
+        10204550102
       ), (
-        102550201
+        10204550201
       ), (
-        102550202
+        10204550202
       );
     `);
 
@@ -37,25 +37,25 @@ export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationI
         10501,
         1050104, -- wood log
         1,
-        102550101
+        10204550101
       ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102550102
+        10204550102
       ), (
         'ERC1155',
         10501,
         1050105, -- iron ingot
         1,
-        102550201
+        10204550201
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        102550202
+        10204550202
       );
     `);
 
@@ -70,16 +70,16 @@ export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationI
         updated_at
       ) VALUES (
         1050501,
-        102550101,
-        102550102,
+        10204550101,
+        10204550102,
         'ACTIVE',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1050502,
-        102550201,
-        102550202,
+        10204550201,
+        10204550202,
         'ACTIVE',
         1,
         '${currentDateTime}',

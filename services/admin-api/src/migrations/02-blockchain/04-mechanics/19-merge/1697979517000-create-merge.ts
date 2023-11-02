@@ -22,11 +22,11 @@ export class CreateMerge1697979517000 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "merchant_id",
