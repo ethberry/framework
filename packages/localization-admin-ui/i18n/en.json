@@ -800,9 +800,9 @@
       "userRoles": "Roles",
       "userStakes": "User Stakes",
       "userStatus": "Status",
-      "wallet": "Wallet",
-      "vrfSubscription": "Chain-Link Subscription ID",
       "vrfConsumer": "Chain-Link Consumer Status",
+      "vrfSubscription": "Chain-Link Subscription ID",
+      "wallet": "Wallet",
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
       "year": "Year",
@@ -1334,6 +1334,7 @@
     },
     "ratePlan": {
       "alwaysIncluded": {
+        "dispenser": "Mass. token transfer",
         "history": "Transaction history",
         "insights": "Marketing insights",
         "openSea": "OpenSea integration",
