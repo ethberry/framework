@@ -19,13 +19,43 @@ export const StyledPaper = styled(Paper)({
   borderRadius: 10,
 });
 
-export const StyledWrapper = styled(Box)(({ theme }) => ({
+export const StyledWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   flexWrap: "wrap",
-  padding: theme.spacing(2),
   width: "100%",
+});
+
+export const StyledTotalInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
+  borderRight: `1px solid ${theme.palette.divider}`,
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(4),
+  height: "100%",
+}));
+
+export const StyledWinning = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(4),
+  height: "100%",
+}));
+
+export const StyledTotalTitle = styled(Typography)(({ theme }) => ({
+  ...theme.typography.h6,
+  textAlign: "center",
+  marginTop: theme.spacing(1),
+}));
+
+export const StyledTime = styled(Box)(({ theme }) => ({
+  ...theme.typography.caption,
 }));
 
 export const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -71,7 +101,7 @@ export const StyledRound = styled(Box)(({ theme }) => ({
   ...theme.typography.h6,
 }));
 
-export const StyledTime = styled(Box)(({ theme }) => ({
+export const StyledDrawn = styled(Box)(({ theme }) => ({
   ...theme.typography.caption,
 }));
 

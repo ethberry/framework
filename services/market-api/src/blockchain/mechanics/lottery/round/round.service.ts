@@ -38,21 +38,21 @@ export class LotteryRoundService {
   public async current(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findCurrentRoundWithRelations(contractId);
+    const lotteryRoundEntity = await this.findCurrentRoundWithRelations(contractId);
 
-    if (!lotteryRound) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketCount = await this.lotteryTokenService.getTicketCount(lotteryRound.id);
+    const ticketCount = await this.lotteryTokenService.getTicketCount(lotteryRoundEntity.id);
 
-    return Object.assign(lotteryRound, { ticketCount });
+    return Object.assign(lotteryRoundEntity, { ticketCount });
   }
 
   public async latest(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findOne(
+    const lotteryRoundEntity = await this.findOne(
       { contractId },
       {
         order: {
@@ -61,11 +61,11 @@ export class LotteryRoundService {
       },
     );
 
-    if (!lotteryRound) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    return this.statistic(lotteryRound.id);
+    return this.statistic(lotteryRoundEntity.id);
   }
 
   public findCurrentRoundWithRelations(contractId: number): Promise<LotteryRoundEntity | null> {

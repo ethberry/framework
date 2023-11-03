@@ -44,4 +44,7 @@ export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound 
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
+
+  // this is not a column
+  public ticketCount: number;
 }

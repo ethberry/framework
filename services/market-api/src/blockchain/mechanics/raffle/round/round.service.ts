@@ -92,7 +92,32 @@ export class RaffleRoundService {
     return queryBuilder.getOne();
   }
 
+  public async findAllRoundIds(dto: IRaffleCurrentDto): Promise<[Array<number>, number]> {
+    const { contractId } = dto;
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.andWhere("round.contractId = :contractId", {
+      contractId,
+    });
+
+    queryBuilder.andWhere("round.endTimestamp IS NOT NULL");
+
+    queryBuilder.orderBy({
+      "round.endTimestamp": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount().then(result => [result[0].map(r => r.id), result[1]]);
+  }
+
   public async statistic(roundId: number): Promise<RaffleRoundEntity | null> {
-    return this.findOne({ id: roundId });
+    const raffleRoundEntity = await this.findOne({ id: roundId });
+
+    if (!raffleRoundEntity) {
+      throw new NotFoundException("roundNotFound");
+    }
+
+    const ticketCount = await this.raffleTokenService.getTicketCount(roundId);
+
+    return Object.assign(raffleRoundEntity, { ticketCount });
   }
 }

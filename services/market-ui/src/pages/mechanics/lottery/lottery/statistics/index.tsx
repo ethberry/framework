@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Box, Tooltip } from "@mui/material";
 import { ArrowForward, ArrowBack, LastPage } from "@mui/icons-material";
 import { format, parseISO } from "date-fns";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -9,12 +10,12 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IContract, ILotteryRound } from "@framework/types";
 
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
-
+import { Details } from "./details";
 import {
   Root,
   StyledControlIcon,
   StyledRoundPagination,
-  StyledDrawn,
+  StyledTime,
   StyledIconButton,
   StyledPaper,
   StyledRound,
@@ -24,7 +25,6 @@ import {
   StyledTitle,
   StyledWrapper,
 } from "./styled";
-import { Details } from "./details";
 
 interface ILotteryStatisticProps {
   contract: IContract;
@@ -32,6 +32,8 @@ interface ILotteryStatisticProps {
 
 export const LotteryStatistic: FC<ILotteryStatisticProps> = props => {
   const { contract } = props;
+
+  const { formatMessage } = useIntl();
 
   const [round, setRound] = useState<ILotteryRound | null>(emptyLotteryRound);
   const [roundIds, setRoundIds] = useState<number[]>([]);
@@ -128,34 +130,54 @@ export const LotteryStatistic: FC<ILotteryStatisticProps> = props => {
   return (
     <ProgressOverlay isLoading={isLatestRoundLoading || isAllRoundIdsLoading}>
       <Root>
-        <StyledTitle>Finished rounds</StyledTitle>
+        <StyledTitle>
+          <FormattedMessage id="pages.lottery.contract.statistics.title" />
+        </StyledTitle>
         <StyledPaper>
           {roundIds.length && round?.roundId ? (
             <>
               <StyledRoundWrapper>
                 <StyledRoundDescription>
-                  <StyledRound>Round: #{round.roundId}</StyledRound>
-                  <StyledDrawn>Drawn: {format(parseISO(round.endTimestamp), humanReadableDateTimeFormat)}</StyledDrawn>
+                  <StyledRound>
+                    <FormattedMessage
+                      id="pages.lottery.contract.statistics.controls.round"
+                      values={{ roundId: round.roundId }}
+                    />
+                  </StyledRound>
+                  <StyledTime>
+                    <FormattedMessage
+                      id="pages.lottery.contract.statistics.controls.start"
+                      values={{ datetime: format(parseISO(round.startTimestamp), humanReadableDateTimeFormat) }}
+                    />
+                  </StyledTime>
+                  <StyledTime>
+                    <FormattedMessage
+                      id="pages.lottery.contract.statistics.controls.drawn"
+                      values={{ datetime: format(parseISO(round.endTimestamp), humanReadableDateTimeFormat) }}
+                    />
+                  </StyledTime>
                 </StyledRoundDescription>
                 <StyledRoundPagination>
                   <StyledControlIcon disabled={selectedRoundId === firstRoundId} onClick={handlePrevRound}>
-                    <Tooltip title="Previous round">
+                    <Tooltip title={formatMessage({ id: "pages.lottery.contract.statistics.controls.previous" })}>
                       <ArrowBack />
                     </Tooltip>
                   </StyledControlIcon>
                   <StyledControlIcon disabled={selectedRoundId === lastRoundId} onClick={handleNextRound}>
-                    <Tooltip title="Next round">
+                    <Tooltip title={formatMessage({ id: "pages.lottery.contract.statistics.controls.next" })}>
                       <ArrowForward />
                     </Tooltip>
                   </StyledControlIcon>
                   <StyledControlIcon disabled={selectedRoundId === lastRoundId} onClick={handleLastRound}>
-                    <Tooltip title="Last round">
+                    <Tooltip title={formatMessage({ id: "pages.lottery.contract.statistics.controls.last" })}>
                       <LastPage />
                     </Tooltip>
                   </StyledControlIcon>
                 </StyledRoundPagination>
               </StyledRoundWrapper>
-              <StyledSubtitle>Winning numbers</StyledSubtitle>
+              <StyledSubtitle>
+                <FormattedMessage id="pages.lottery.contract.statistics.winNumbers" />
+              </StyledSubtitle>
               <StyledWrapper>
                 {new Array(36).fill(null).map((e, i) => {
                   const isSelected = round.numbers[i];
@@ -175,7 +197,9 @@ export const LotteryStatistic: FC<ILotteryStatisticProps> = props => {
             </>
           ) : (
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <StyledSubtitle color="textSecondary">No finished rounds yet...</StyledSubtitle>
+              <StyledSubtitle color="textSecondary">
+                <FormattedMessage id="pages.lottery.contract.statistics.empty" />
+              </StyledSubtitle>
             </Box>
           )}
         </StyledPaper>

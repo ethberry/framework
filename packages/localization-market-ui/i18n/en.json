@@ -915,17 +915,26 @@
             "close": "Hide",
             "open": "Details"
           },
+          "controls": {
+            "drawn": "Drawn: {datetime}",
+            "last": "Last round",
+            "next": "Next round",
+            "previous": "Previous round",
+            "round": "Round: #{roundId}",
+            "start": "Started: {datetime}"
+          },
+          "empty": "No finished rounds yet...",
           "matches": {
             "match": {
-              "burn": "Burn",
               "title": "Match {amount}",
               "win": "{amount} Winning tickets"
             },
-            "title": "Match the winning number in the same order to share prizes"
+            "title": "Match the unique winning number in the same order to share prizes"
           },
           "prizePot": "Prize pot",
           "title": "Finished rounds",
-          "totalPlayers": "Total players this round"
+          "totalTickets": "Total tickets this round",
+          "winNumbers": "Winning numbers"
         },
         "title": "Contract: {title}"
       },
@@ -1076,6 +1085,21 @@
     },
     "raffle": {
       "contract": {
+        "statistics": {
+          "controls": {
+            "drawn": "Drawn: {datetime}",
+            "last": "Last round",
+            "next": "Next round",
+            "previous": "Previous round",
+            "round": "Round: #{roundId}",
+            "start": "Started: {datetime}"
+          },
+          "empty": "No finished rounds yet...",
+          "noTickets": "No tickets this round",
+          "title": "Finished rounds",
+          "totalTickets": "Total tickets this round: {count}",
+          "winNumber": "Winning number"
+        },
         "title": "Contract: {title}"
       },
       "purchase": {

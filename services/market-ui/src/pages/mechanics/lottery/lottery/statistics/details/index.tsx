@@ -66,7 +66,7 @@ export const Details: FC<IDetailsProps> = props => {
                 {formatItem(getTotalPrice(price, totalTickets))}
               </StyledTotalTitle>
               <StyledTotalTitle>
-                <FormattedMessage id="pages.lottery.contract.statistics.totalPlayers" />: {totalTickets}
+                <FormattedMessage id="pages.lottery.contract.statistics.totalTickets" />: {totalTickets}
               </StyledTotalTitle>
             </StyledTotalInfo>
           </Grid>

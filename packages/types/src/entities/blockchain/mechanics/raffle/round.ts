@@ -18,6 +18,7 @@ export interface IRaffleRound extends IIdDateBase {
   endTimestamp: string;
   contract?: IContract;
   ticketContract?: IContract;
+  ticketCount?: number;
 }
 
 export interface IRaffleCurrentRound {
