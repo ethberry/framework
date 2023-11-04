@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 // import { RichTextDisplay } from "@gemunion/mui-rte";
-import { CronExpression, IContract, ILotteryRound } from "@framework/types";
+import { IContract, ILotteryRound } from "@framework/types";
 
 import { formatPrice } from "../../../../../utils/money";
 import { LotteryPurchaseButton } from "../../../../../components/buttons";
@@ -107,13 +107,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
           ) : null}
         </PageHeader>
       </ProgressOverlay>
-      <StyledTypography variant="body1">
-        {contract.parameters.schedule
-          ? Object.keys(CronExpression)[
-              Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
-            ]
-          : "not yet scheduled"}
-      </StyledTypography>
+
       <StyledPaper>
         <StyledTypography variant="h6">
           <FormattedMessage

@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, IContract, IRaffleRound } from "@framework/types";
+import { IContract, IRaffleRound } from "@framework/types";
 
 import { formatPrice } from "../../../../../utils/money";
 import { RafflePurchaseButton } from "../../../../../components/buttons";
@@ -81,24 +81,6 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
           ) : null}
         </PageHeader>
       </ProgressOverlay>
-      <StyledTypography variant="body1">
-        {contract.parameters.schedule
-          ? Object.keys(CronExpression)[
-              Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
-            ]
-          : "not yet scheduled"}
-      </StyledTypography>
-      <StyledTypography variant="h6">
-        <FormattedMessage id="pages.raffle.purchase.rules" />
-      </StyledTypography>
-      <StyledTypography variant="h5">
-        <FormattedMessage
-          id="pages.raffle.purchase.commission"
-          values={{
-            commission: Number(contract.parameters.commission) || 0,
-          }}
-        />
-      </StyledTypography>
     </Fragment>
   );
 };
