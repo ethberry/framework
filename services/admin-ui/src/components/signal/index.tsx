@@ -4,7 +4,7 @@ import { useIndexedDB } from "react-indexed-db-hook";
 import { useSnackbar } from "notistack";
 import { io } from "socket.io-client";
 
-import { useApi } from "@gemunion/provider-api-firebase";
+import { isAccessTokenExpired, useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
@@ -22,6 +22,10 @@ export const Signal: FC = () => {
   useEffect(() => {
     if (!isUserAuthenticated) {
       return;
+    }
+
+    if (isAccessTokenExpired()) {
+      void api.refreshToken();
     }
 
     const socket = io(`${process.env.SIGNAL_BE_URL}`, {
