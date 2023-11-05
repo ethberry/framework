@@ -117,4 +117,30 @@ export class RaffleTokenService extends TokenService {
 
     return queryBuilder.getCount();
   }
+
+  public getPrizeTicket(roundId: number, prizeNumber: string): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+
+    queryBuilder.leftJoin("ticket.template", "template");
+    queryBuilder.leftJoin("template.contract", "contract");
+
+    queryBuilder.andWhere(`ticket.metadata->>'${TokenMetadata.NUMBERS}' = :numbers`, {
+      numbers: prizeNumber,
+    });
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      RaffleRoundEntity,
+      "round",
+      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+    );
+
+    queryBuilder.leftJoin("round.contract", "raffle_contract");
+
+    queryBuilder.andWhere("round.id = :id", {
+      id: roundId,
+    });
+
+    return queryBuilder.getOne();
+  }
 }

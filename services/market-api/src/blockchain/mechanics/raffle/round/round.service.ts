@@ -112,12 +112,22 @@ export class RaffleRoundService {
   public async statistic(roundId: number): Promise<RaffleRoundEntity | null> {
     const raffleRoundEntity = await this.findOne({ id: roundId });
 
-    if (!raffleRoundEntity) {
-      throw new NotFoundException("roundNotFound");
+    if (raffleRoundEntity) {
+      // joint ticket count
+      const ticketCount = await this.raffleTokenService.getTicketCount(raffleRoundEntity.id);
+
+      Object.assign(raffleRoundEntity, { ticketCount });
+
+      // join prize token if round has win number
+      if (raffleRoundEntity.number) {
+        const prizeTicket = await this.raffleTokenService.getPrizeTicket(
+          raffleRoundEntity.id,
+          raffleRoundEntity.number,
+        );
+        Object.assign(raffleRoundEntity, { prizeTicket });
+      }
     }
 
-    const ticketCount = await this.raffleTokenService.getTicketCount(roundId);
-
-    return Object.assign(raffleRoundEntity, { ticketCount });
+    return raffleRoundEntity;
   }
 }

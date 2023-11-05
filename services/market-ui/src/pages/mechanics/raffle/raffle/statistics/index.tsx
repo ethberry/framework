@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import { Box, Grid, Tooltip } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+
+import { Box, Card, CardActionArea, Grid, Tooltip } from "@mui/material";
 import { ArrowBack, ArrowForward, LastPage } from "@mui/icons-material";
 import { format, parseISO } from "date-fns";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -7,9 +9,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IContract, IRaffleRound } from "@framework/types";
+import type { IContract } from "@framework/types";
 
-import { emptyRaffleRound } from "../../../../../components/common/interfaces";
+import { emptyRaffleRound, IRaffleRoundStatistic } from "../../../../../components/common/interfaces";
 import {
   Root,
   StyledControlIcon,
@@ -38,7 +40,7 @@ export const RaffleStatistic: FC<IRaffleStatisticProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const [round, setRound] = useState<IRaffleRound | null>(emptyRaffleRound);
+  const [round, setRound] = useState<IRaffleRoundStatistic | null>(emptyRaffleRound);
   const [roundIds, setRoundIds] = useState<number[]>([]);
   const [selectedRoundId, setSelectedRoundId] = useState<number | null>(null);
   const [firstRoundId, setFirstRoundId] = useState<number | null>(null);
@@ -58,7 +60,7 @@ export const RaffleStatistic: FC<IRaffleStatisticProps> = props => {
 
   const fetchRound = async (roundId: number): Promise<any> => {
     return getLatestRound(void 0, roundId)
-      .then((json: IRaffleRound) => {
+      .then((json: IRaffleRoundStatistic) => {
         setRound(json);
       })
       .catch(e => {
@@ -199,9 +201,22 @@ export const RaffleStatistic: FC<IRaffleStatisticProps> = props => {
                       <StyledSubtitle>
                         <FormattedMessage id="pages.raffle.contract.statistics.winNumber" />
                       </StyledSubtitle>
-                      <StyledIconButton size="medium" color="default">
-                        {round.number}
-                      </StyledIconButton>
+                      {round.prizeTicket ? (
+                        <Card>
+                          <CardActionArea
+                            component={RouterLink}
+                            to={`/erc721/tokens/${round.prizeTicket ? round.prizeTicket.id : 0}`}
+                          >
+                            <StyledIconButton size="medium" color="default">
+                              {round.number}
+                            </StyledIconButton>
+                          </CardActionArea>
+                        </Card>
+                      ) : (
+                        <StyledIconButton size="medium" color="default">
+                          {round.number}
+                        </StyledIconButton>
+                      )}
                     </StyledWinning>
                   </Grid>
                 </Grid>
