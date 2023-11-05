@@ -14,10 +14,10 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 300; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 1200; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 8n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 10n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size
@@ -554,8 +554,8 @@ async function main() {
   await debug(contracts);
   // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
-  const waitlistFactory = await ethers.getContractFactory("WaitList");
-  contracts.waitList = await waitlistFactory.deploy();
+  const waitListFactory = await ethers.getContractFactory("WaitList");
+  contracts.waitList = await waitListFactory.deploy();
   await debug(contracts);
 
   // function setReward(Params memory params, Asset[] memory items)
@@ -580,7 +580,7 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitList.setReward(params, items), "waitlist.setReward");
+  await debug(await contracts.waitList.setReward(params, items), "waitList.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
