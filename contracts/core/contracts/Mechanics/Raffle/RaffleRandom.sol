@@ -84,7 +84,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     currentRound.balance += currentRound.acceptedAsset.amount;
     currentRound.total += currentRound.acceptedAsset.amount;
 
-    tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId);
+    tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId, currentRound.tickets.length + 1);
 
     // TODO overflow check?
     currentRound.tickets.push(tokenId);

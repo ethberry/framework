@@ -9,15 +9,15 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { RaffleRoundModule } from "../round/round.module";
 import { RaffleTicketControllerEth } from "./ticket.controller.eth";
-import { RaffleTicketEntity } from "./ticket.entity";
 import { RaffleTicketLogModule } from "./log/log.module";
-import { RaffleTicketService } from "./ticket.service";
+import { RaffleTokenService } from "./token.service";
 import { RaffleTicketServiceEth } from "./ticket.service.eth";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { signalServiceProvider } from "../../../../common/providers";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Module({
   imports: [
@@ -30,10 +30,10 @@ import { signalServiceProvider } from "../../../../common/providers";
     BalanceModule,
     RaffleRoundModule,
     EventHistoryModule,
-    TypeOrmModule.forFeature([RaffleTicketEntity]),
+    TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, signalServiceProvider, ethersRpcProvider, RaffleTicketService, RaffleTicketServiceEth],
+  providers: [Logger, signalServiceProvider, ethersRpcProvider, RaffleTokenService, RaffleTicketServiceEth],
   controllers: [RaffleTicketControllerEth],
-  exports: [RaffleTicketService, RaffleTicketServiceEth],
+  exports: [RaffleTokenService, RaffleTicketServiceEth],
 })
 export class RaffleTicketModule {}

@@ -1,4 +1,5 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
+import { ContractType } from "../contract-manager";
 
 export enum TransactionStatus {
   NEW = "NEW",
@@ -14,5 +15,6 @@ export interface ITransaction extends IIdDateBase {
   transactionIndex: number;
   logIndex: number;
   transactionStatus: TransactionStatus;
+  contractType: ContractType;
   logData: Record<string, string | number>;
 }

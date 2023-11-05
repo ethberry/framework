@@ -11,13 +11,14 @@ import { LotteryRoundModule } from "../round/round.module";
 import { LotteryTicketControllerEth } from "./ticket.controller.eth";
 import { LotteryTicketEntity } from "./ticket.entity";
 import { LotteryTicketLogModule } from "./log/log.module";
-import { LotteryTicketService } from "./ticket.service";
+import { LotteryTokenService } from "./token.service";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { signalServiceProvider } from "../../../../common/providers";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Module({
   imports: [
@@ -30,10 +31,10 @@ import { signalServiceProvider } from "../../../../common/providers";
     BalanceModule,
     LotteryRoundModule,
     EventHistoryModule,
-    TypeOrmModule.forFeature([LotteryTicketEntity]),
+    TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, signalServiceProvider, ethersRpcProvider, LotteryTicketService, LotteryTicketServiceEth],
+  providers: [Logger, signalServiceProvider, ethersRpcProvider, LotteryTokenService, LotteryTicketServiceEth],
   controllers: [LotteryTicketControllerEth],
-  exports: [LotteryTicketService, LotteryTicketServiceEth],
+  exports: [LotteryTokenService, LotteryTicketServiceEth],
 })
 export class LotteryTicketModule {}

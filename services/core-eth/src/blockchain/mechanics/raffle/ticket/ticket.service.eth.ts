@@ -7,7 +7,6 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { RaffleTicketService } from "./ticket.service";
 import { RaffleRoundService } from "../round/round.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -28,7 +27,6 @@ export class RaffleTicketServiceEth {
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
-    private readonly raffleTicketService: RaffleTicketService,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,

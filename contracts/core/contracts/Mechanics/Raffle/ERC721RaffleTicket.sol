@@ -15,7 +15,7 @@ import {ERC721GeneralizedCollection} from "@gemunion/contracts-erc721/contracts/
 import {ERC721ABER} from "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import {PRIZE, ROUND} from "../../utils/constants.sol";
+import {NUMBERS, PRIZE, ROUND} from "../../utils/constants.sol";
 import {IERC721RaffleTicket, TicketRaffle} from "./interfaces/IERC721RaffleTicket.sol";
 
 contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
@@ -35,11 +35,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
   function mintTicket(
     address account,
     uint256 roundId,
-    uint256 externalId
+    uint256 externalId,
+    uint256 index
   ) external onlyRole(MINTER_ROLE) returns (uint256) {
     _data[_nextTokenId] = TicketRaffle(roundId, externalId, false);
 
     _upsertRecordField(_nextTokenId, ROUND, externalId);
+    _upsertRecordField(_nextTokenId, NUMBERS, index);
 
     _safeMint(account, _nextTokenId);
 
