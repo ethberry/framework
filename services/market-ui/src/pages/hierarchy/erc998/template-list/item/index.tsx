@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 
 interface IErc998TemplateListItemProps {
@@ -26,7 +26,7 @@ export const Erc998TemplateListItem: FC<IErc998TemplateListItemProps> = props =>
             <RichTextDisplay data={template.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(template.price)}
+            {formatItem(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

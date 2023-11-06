@@ -26,7 +26,6 @@ export const formatItem = (asset?: IAsset): string => {
             return formatEther(component.amount, component.contract.decimals, component.contract.symbol);
           case TokenType.ERC721:
           case TokenType.ERC998:
-            return component.template?.title;
           case TokenType.ERC1155:
             return BigInt(component.amount) > 1n
               ? `${component.amount} x ${component.template?.title}`
