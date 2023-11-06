@@ -9,7 +9,8 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { LotteryRoundEntity } from "../round/round.entity";
-//
+import { getBytesNumbersArr } from "../../../../common/utils";
+
 @Injectable()
 export class LotteryTokenService extends TokenService {
   constructor(
@@ -144,5 +145,42 @@ export class LotteryTokenService extends TokenService {
     });
 
     return queryBuilder.getCount();
+  }
+
+  public async findAllTicketIds(roundId: number): Promise<Array<number>> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
+    );
+
+    queryBuilder.andWhere("round.id = :id", {
+      id: roundId,
+    });
+
+    return queryBuilder.getMany().then(result => result.map(r => r.id));
+  }
+
+  public async findAllTicketNumbers(roundId: number): Promise<Array<Array<number>>> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+    queryBuilder.leftJoin("ticket.template", "template");
+    queryBuilder.leftJoin("template.contract", "contract");
+    // queryBuilder.select()
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
+    );
+
+    queryBuilder.andWhere("round.id = :id", {
+      id: roundId,
+    });
+
+    const allTickets = await queryBuilder.getMany();
+    return allTickets.map(ticket => getBytesNumbersArr(ticket.metadata.NUMBERS));
   }
 }

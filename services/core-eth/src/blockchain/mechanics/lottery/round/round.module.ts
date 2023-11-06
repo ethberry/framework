@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
@@ -20,10 +20,12 @@ import { LotteryRoundServiceRmq } from "./round.service.rmq";
 import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
 import { signalServiceProvider } from "../../../../common/providers";
+import { LotteryTicketModule } from "../ticket/ticket.module";
 
 @Module({
   imports: [
     NotificatorModule,
+    forwardRef(() => LotteryTicketModule),
     ConfigModule,
     AssetModule,
     TemplateModule,

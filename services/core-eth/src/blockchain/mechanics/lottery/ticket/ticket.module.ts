@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -9,7 +9,6 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { LotteryRoundModule } from "../round/round.module";
 import { LotteryTicketControllerEth } from "./ticket.controller.eth";
-import { LotteryTicketEntity } from "./ticket.entity";
 import { LotteryTicketLogModule } from "./log/log.module";
 import { LotteryTokenService } from "./token.service";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
@@ -29,7 +28,7 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
     AssetModule,
     TemplateModule,
     BalanceModule,
-    LotteryRoundModule,
+    forwardRef(() => LotteryRoundModule),
     EventHistoryModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
