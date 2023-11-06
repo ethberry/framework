@@ -6,6 +6,6 @@ import { IFeedbackCreateDto } from "../interfaces";
 export class FeedbackCreateDto implements IFeedbackCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MinLength(100, { message: "rangeOverflow" })
+  @MinLength(42, { message: "rangeOverflow" })
   public text: string;
 }
