@@ -39,7 +39,6 @@
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
-    "staking-duration": "First period ends {duration}",
     "deposit-allowance": "Set Deposit Allowance",
     "edit": "Edit",
     "fund": "Fund",
@@ -51,6 +50,7 @@
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
+    "staking-duration": "First period ends {duration}",
     "transfer": "Transfer",
     "transferOwnership": "Transfer ownership",
     "upgrade": "Upgrade",
@@ -875,6 +875,9 @@
     },
     "exchanges": {
       "title": "Exchanges"
+    },
+    "feedback": {
+      "title": "Feedback"
     },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
