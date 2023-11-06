@@ -65,7 +65,7 @@ export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props =>
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {templates.map(template => createElement(component, { key: template.id, template }))}
+      {templates.map(template => createElement(component, { key: `hr${template.id}`, template }))}
     </Carousel>
   );
 };

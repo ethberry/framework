@@ -65,7 +65,7 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {mysteryBoxes.map(mysterybox => createElement(component, { key: mysterybox.id, mysteryBox: mysterybox }))}
+      {mysteryBoxes.map(mysterybox => createElement(component, { key: `mb${mysterybox.id}`, mysteryBox: mysterybox }))}
     </Carousel>
   );
 };
