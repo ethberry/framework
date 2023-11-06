@@ -2,10 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsOptional, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-export interface ISubscriptionAutocompleteDto {
-  chainId: number;
-  merchantId: number;
-}
+import { ISubscriptionAutocompleteDto } from "../interfaces";
 
 export class SubscriptionAutocompleteDto implements ISubscriptionAutocompleteDto {
   @ApiProperty()

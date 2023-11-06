@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ChainLinkSubscriptionEntity } from "./subscription.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import type { ISubscriptionAutocompleteDto } from "./dto";
+import { ChainLinkSubscriptionEntity } from "./subscription.entity";
+import type { ISubscriptionAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class ChainLinkSubscriptionService {
