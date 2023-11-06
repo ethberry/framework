@@ -8,12 +8,11 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
-import { ContractStatus, CronExpression } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/contract/release";
 import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/lottery/contract/round-end";
 import { LotteryRoundViewDialog } from "./view";
-import { getNumbers } from "../utils";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -45,18 +44,8 @@ export const LotteryRounds: FC = () => {
         <List>
           {rows.map(round => (
             <ListItem key={round.id}>
-              <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
-              <ListItemText sx={{ width: 0.4 }}>
-                {round.roundId} - {round.numbers ? getNumbers(round.numbers) : "awaiting results"}
-              </ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
-                {round.contract?.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(
-                        round.contract?.parameters.schedule as unknown as CronExpression,
-                      )
-                    ]
-                  : ""}
+              <ListItemText sx={{ width: 0.2 }}>
+                {round.contract?.title} #{round.roundId}
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />

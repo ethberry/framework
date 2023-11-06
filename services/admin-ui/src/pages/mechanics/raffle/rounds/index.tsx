@@ -8,7 +8,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions } from "@framework/mui-lists";
 import { StyledPagination } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
-import { ContractStatus, CronExpression } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/contract/release";
 import { RaffleRoundEndButton } from "../../../../components/buttons/mechanics/raffle/contract/round-end";
@@ -44,18 +44,8 @@ export const RaffleRounds: FC = () => {
         <List>
           {rows.map(round => (
             <ListItem key={round.id}>
-              <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
-              <ListItemText sx={{ width: 0.6 }}>
-                {round.roundId} - {round.number || "awaiting results"}
-              </ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
-                {round.contract?.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(
-                        round.contract?.parameters.schedule as unknown as CronExpression,
-                      )
-                    ]
-                  : ""}
+              <ListItemText sx={{ width: 0.2 }}>
+                {round.contract?.title} #{round.roundId}
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(round)} message="form.tips.view" icon={Visibility} />
