@@ -27,7 +27,6 @@ export class ChainLinkSubscriptionService {
     return this.chainLinkSubscriptionEntityRepository.find({ where, ...options });
   }
 
-  //
   public async autocomplete(
     dto: Partial<ISubscriptionAutocompleteDto>,
     userEntity: UserEntity,
