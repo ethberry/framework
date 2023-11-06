@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import type { IStakingRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { AddressLink } from "@gemunion/mui-scanner";
 
 import { formatItem, formatPenalty } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
@@ -54,6 +55,14 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.address" />
+              </TableCell>
+              <TableCell align="right">
+                <AddressLink address={contract?.address} />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
               <TableCell align="right">{formatItem(deposit)}</TableCell>
@@ -86,12 +95,6 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.recurrent" />
               </TableCell>
               <TableCell align="right">{recurrent ? "yes" : "no"}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.contract" />
-              </TableCell>
-              <TableCell align="right">{contract ? contract.address : "STAKING"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
