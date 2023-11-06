@@ -1,6 +1,6 @@
 import { Box, Card, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { TablePagination, tablePaginationClasses as classes } from "@mui/base";
+import { DataGridPremium, gridClasses } from "@mui/x-data-grid-premium";
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(2),
@@ -40,72 +40,11 @@ export const grey = {
   900: "#1A2027",
 };
 
-export const CustomTablePagination = styled(TablePagination)(
-  ({ theme }) => `
-  & .${classes.spacer} {
-    display: none;
-  }
-
-  & .${classes.toolbar}  {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-
-  & .${classes.selectLabel} {
-    margin: 0;
-    padding: 5px;
-  }
-
-  & .${classes.select}{
-    padding: 2px;
-    border: 1px solid ${theme.palette.mode === "dark" ? grey[800] : grey[200]};
-    border-radius: 50px;
-    background-color: transparent;
-
-    &:hover {
-      background-color: ${theme.palette.mode === "dark" ? grey[800] : grey[50]};
-    }
-
-    &:focus {
-      outline: 1px solid ${theme.palette.mode === "dark" ? blue[400] : blue[200]};
-    }
-  }
-
-  & .${classes.displayedRows} {
-    margin: 0;
-
-    @media (min-width: 768px) {
-      margin-left: auto;
-    }
-  }
-
-  & .${classes.actions} {
-    padding: 2px;
-    border: 1px solid ${theme.palette.mode === "dark" ? grey[800] : grey[200]};
-    border-radius: 50px;
-    text-align: center;
-  }
-
-  & .${classes.actions} > button {
-    margin: 0 8px;
-    border: transparent;
-    border-radius: 2px;
-    background-color: transparent;
-
-    &:hover {
-      background-color: ${theme.palette.mode === "dark" ? grey[800] : grey[50]};
-    }
-
-    &:focus {
-      outline: 1px solid ${theme.palette.mode === "dark" ? blue[400] : blue[200]};
-    }
-  }
-  `,
-);
+export const StyledDataGridPremium = styled(DataGridPremium)(({ theme }) => ({
+  [`& .${gridClasses.cell}`]: {
+    padding: theme.spacing(1.5),
+  },
+  [`& .${gridClasses["row--detailPanelExpanded"]} .${gridClasses.cell}`]: {
+    borderBottom: "none",
+  },
+}));
