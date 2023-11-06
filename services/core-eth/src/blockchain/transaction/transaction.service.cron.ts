@@ -34,7 +34,6 @@ export class TransactionServiceCron {
   }
 
   // TODO set up checking schedule by mean block producing time
-  // @Cron("*/30 * * * * *")
   @Cron("*/15 * * * * *")
   public async checkTransaction(): Promise<void> {
     // CHECK CRON LOCK

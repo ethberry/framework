@@ -5,7 +5,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IContract, IRaffleRound } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import { RafflePurchaseButton } from "../../../../../components/buttons";
 import { emptyRaffleRound } from "../../../../../components/common/interfaces";
 import { StyledTypography } from "./styled";
@@ -52,7 +52,8 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.raffle.purchase.title">
-          <StyledTypography>{round ? formatPrice(round.price) : "Round not Active!"}</StyledTypography>
+          <StyledTypography>{round ? `Round ${round.roundId}` : ""}</StyledTypography>
+          <StyledTypography>{round ? `Price: ${formatItem(round.price)}` : "Round not Active!"}</StyledTypography>
 
           <StyledTypography>
             {round && round && round.maxTickets > 0 ? (

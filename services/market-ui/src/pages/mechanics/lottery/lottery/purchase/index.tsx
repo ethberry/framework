@@ -3,10 +3,9 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-// import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IContract, ILotteryRound } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import { LotteryPurchaseButton } from "../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
 import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
@@ -73,7 +72,8 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <StyledTypography>{round ? formatPrice(round.price) : "Round not Active!"}</StyledTypography>
+          <StyledTypography>{round ? `Round ${round.roundId}` : ""}</StyledTypography>
+          <StyledTypography>{round ? `Price: ${formatItem(round.price)}` : "Round not Active!"}</StyledTypography>
 
           <StyledTypography>
             {round.maxTickets > 0 ? (

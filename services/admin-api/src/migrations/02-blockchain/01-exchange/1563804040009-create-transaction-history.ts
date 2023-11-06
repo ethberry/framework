@@ -33,7 +33,9 @@ export class CreateTransactionHistory1563804040009 implements MigrationInterface
        'PONZI',
        'WAIT_LIST',
        'PAYMENT_SPLITTER',
-       'WRAPPER'
+       'WRAPPER',
+       'VRF',
+       'VRF_SUB'
       );
     `);
 

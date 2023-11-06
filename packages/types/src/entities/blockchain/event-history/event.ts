@@ -202,6 +202,10 @@ export enum ContractEventSignature {
   // MODULE:MERGE
   Merge = "Merge(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
 
+  // MODULE:RAFFLE
+  // event RoundFinalized(uint256 round, uint256 prizeIndex, uint256 prizeNumber);
+  RoundFinalizedRaffle = "RoundFinalized(uint256,uint256,uint256)",
+
   // MODULE:LOTTERY
   RoundFinalized = "RoundFinalized(uint256,uint8[6])",
   // event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);

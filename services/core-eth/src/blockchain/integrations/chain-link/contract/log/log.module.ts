@@ -31,15 +31,6 @@ import { ChainLinkSubscriptionModule } from "../../subscription/subscription.mod
         contractService: ContractService,
         chainLinkSubscriptionService: ChainLinkSubscriptionService,
       ): Promise<IModuleOptions> => {
-        // const randomTokens = await contractService.findAllTokensByType(void 0, [
-        //   ContractFeatures.RANDOM,
-        //   ContractFeatures.GENES,
-        // ]);
-        // const lotteryContracts = await contractService.findAllByType(
-        //   [ModuleType.LOTTERY, ModuleType.RAFFLE],
-        //   [ContractFeatures.RANDOM],
-        // );
-        // const allRandomAddresses = randomTokens.address?.concat(lotteryContracts ? lotteryContracts.address : []);
         const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const chainId = ~~configService.get<number>("CHAIN_ID", Number(testChainId));
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");

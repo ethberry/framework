@@ -1,6 +1,7 @@
 import type { IAssetItem } from "../exchange/common";
 
 export enum RaffleEventType {
+  RoundFinalizedRaffle = "RoundFinalizedRaffle",
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
