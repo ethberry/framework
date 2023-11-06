@@ -88,7 +88,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1028001,
-        'Warp token',
+        'Warp Credits',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
