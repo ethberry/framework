@@ -7,7 +7,7 @@ import type { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 
 interface IMysteryBoxListItemProps {
   mysteryBox: IMysteryBox;
@@ -26,7 +26,7 @@ export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
             <RichTextDisplay data={mysteryBox.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(mysteryBox.template?.price)}
+            {formatItem(mysteryBox.template?.price)}
           </Typography>
         </CardContent>
       </CardActionArea>
