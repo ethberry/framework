@@ -223,7 +223,16 @@ export class MysteryBoxService {
       await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
+    // SYNC UPDATE TEMPLATE
+    const { title, description, imageUrl } = rest;
+    await this.templateService.update(
+      { id: mysteryBoxEntity.templateId },
+      { title, description, imageUrl },
+      userEntity,
+    );
+
     Object.assign(mysteryBoxEntity, rest);
+
     return mysteryBoxEntity.save();
   }
 
