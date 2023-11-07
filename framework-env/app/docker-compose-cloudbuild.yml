@@ -421,3 +421,4 @@ services:
       - game-api
       - cron-api
       - signal-api
+      - emailer
