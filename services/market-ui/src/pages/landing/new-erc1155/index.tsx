@@ -40,6 +40,10 @@ export const NewErc1155: FC = () => {
     void fetchTokens();
   }, []);
 
+  if (!templates || templates.length === 0) {
+    return null;
+  }
+
   return (
     <ProgressOverlay isLoading={isLoading}>
       <StyledTitle variant="h4">
