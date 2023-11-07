@@ -238,7 +238,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     }
 
     // ticketFactory.burn(tokenId);
-    // set prize status
+    // set status PRIZE = true
     ticketFactory.setTicketData(tokenId);
 
     uint8[] memory coefficient = new uint8[](7);

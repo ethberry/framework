@@ -20,6 +20,7 @@ import {
   StyledTotalInfo,
   StyledTotalTitle,
 } from "./styled";
+import { getPrizeAmount, getPrizeAsset } from "../../../../../../utils/lottery";
 
 export interface IDetailsProps {
   round: ILotteryRound;
@@ -46,6 +47,7 @@ export const Details: FC<IDetailsProps> = props => {
       partialAggregation.push(match[0]);
     }
   }
+  const aggregationNumbers = partialAggregation.map(aggr => (aggr.tickets ? aggr.tickets : 0));
 
   const [expanded, setExpanded] = useState(false);
 
@@ -97,7 +99,19 @@ export const Details: FC<IDetailsProps> = props => {
                           values={{ amount: aggregation.match }}
                         />
                       </StyledMatchSubtitle>
-                      {aggregation.price ? <StyledMatchPrize>{formatItem(aggregation.price)}</StyledMatchPrize> : null}
+                      {/* {aggregation.price ? <StyledMatchPrize>{formatItem(aggregation.price)}</StyledMatchPrize> : null} */}
+                      {aggregation.price ? (
+                        <StyledMatchPrize>
+                          {formatItem(
+                            getPrizeAsset(
+                              getTotalPrice(price, totalTickets),
+                              aggregation.match ? aggregation.match : 0,
+                              aggregationNumbers,
+                            ),
+                            5,
+                          )}
+                        </StyledMatchPrize>
+                      ) : null}
                       <StyledMatchWinners>
                         {aggregation.match === 0 ? (
                           <FormattedMessage
