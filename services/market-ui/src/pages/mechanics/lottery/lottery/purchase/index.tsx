@@ -39,8 +39,10 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const fetchRound = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryRound) => {
-        setRound(json);
+      .then((json: ILotteryRound | null) => {
+        if (json) {
+          setRound(json);
+        }
       })
       .catch(e => {
         console.error(e);
@@ -72,8 +74,10 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <StyledTypography>{round ? `Round ${round.roundId}` : ""}</StyledTypography>
-          <StyledTypography>{round ? `Price: ${formatItem(round.price)}` : "Round not Active!"}</StyledTypography>
+          <StyledTypography>{round && round.roundId ? `Round ${round.roundId}` : ""}</StyledTypography>
+          <StyledTypography>
+            {round && round.roundId ? `Price: ${formatItem(round.price)}` : "Round not yet started"}
+          </StyledTypography>
 
           <StyledTypography>
             {round.maxTickets > 0 ? (
@@ -82,13 +86,13 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
                 // @ts-ignore
                 values={{ current: round.ticketCount, max: round?.maxTickets }}
               />
-            ) : (
+            ) : round.roundId ? (
               <FormattedMessage
                 id="pages.raffle.purchase.sold"
                 // @ts-ignore
                 values={{ count: round ? round.ticketCount : 0 }}
               />
-            )}
+            ) : null}
           </StyledTypography>
 
           <AllowanceButton contract={contract} />

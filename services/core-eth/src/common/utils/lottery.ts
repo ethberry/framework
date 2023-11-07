@@ -12,6 +12,14 @@ export const getLotteryNumbers = (selected: Array<number>) => {
   return `{${numbers.join(",")}}`;
 };
 
+export const getLotteryNumbersArr = (selected: Array<number>) => {
+  const numbers: Array<boolean> = new Array(36).fill(false);
+  selected.forEach(s => {
+    numbers[s] = true;
+  });
+  return numbers;
+};
+
 export const getBytesNumbersArr = (selected = ""): Array<number> => {
   const arrStr = toBeArray(selected);
   const arr = [];

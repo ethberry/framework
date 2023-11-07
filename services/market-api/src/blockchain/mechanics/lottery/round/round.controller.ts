@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, HttpCode, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor } from "@gemunion/nest-js-utils";
@@ -23,7 +23,8 @@ export class LotteryRoundController {
   }
 
   @Get("/current")
-  public current(@Query() dto: LotteryCurrentDto): Promise<LotteryRoundEntity> {
+  @HttpCode(204)
+  public current(@Query() dto: LotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     return this.lotteryRoundService.current(dto);
   }
 

@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Grid } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAsset, ILotteryRound } from "@framework/types";
+import { IAsset, ILotteryRound, ILotteryRoundAggregation } from "@framework/types";
 
 import { formatItem } from "../../../../../../utils/money";
 import { deepClone } from "../../../../../../utils/lodash";
@@ -33,7 +33,19 @@ export const Details: FC<IDetailsProps> = props => {
 
   const openText = formatMessage({ id: "pages.lottery.contract.statistics.collapse.open" });
   const closeText = formatMessage({ id: "pages.lottery.contract.statistics.collapse.close" });
-  const { aggregation, price } = round;
+  const { aggregation = [], price } = round;
+
+  // add Zero aggregations
+  const partialAggregation: Array<Partial<ILotteryRoundAggregation>> = [];
+  const count = 6;
+  for (let i = 0; i < count + 1; i++) {
+    const match = aggregation?.filter(aggr => aggr.match === i);
+    if (match.length === 0) {
+      partialAggregation.push({ match: i, tickets: 0 });
+    } else {
+      partialAggregation.push(match[0]);
+    }
+  }
 
   const [expanded, setExpanded] = useState(false);
 
@@ -62,11 +74,11 @@ export const Details: FC<IDetailsProps> = props => {
           <Grid item xs={12} sm={3}>
             <StyledTotalInfo>
               <StyledTotalTitle>
-                <FormattedMessage id="pages.lottery.contract.statistics.prizePot" />: <br />
-                {formatItem(getTotalPrice(price, totalTickets))}
+                <FormattedMessage id="pages.lottery.contract.statistics.totalTickets" />: {totalTickets}
               </StyledTotalTitle>
               <StyledTotalTitle>
-                <FormattedMessage id="pages.lottery.contract.statistics.totalTickets" />: {totalTickets}
+                <FormattedMessage id="pages.lottery.contract.statistics.prizePot" />: <br />
+                {formatItem(getTotalPrice(price, totalTickets))}
               </StyledTotalTitle>
             </StyledTotalInfo>
           </Grid>
@@ -76,27 +88,40 @@ export const Details: FC<IDetailsProps> = props => {
             </StyledMatchTitle>
             <StyledMatches>
               <Grid container spacing={2}>
-                {aggregation
-                  ?.filter(a => a.match !== 0)
-                  .map(aggregation => (
-                    <Grid item xs={12} sm={4} key={aggregation.priceId}>
-                      <StyledMatch>
-                        <StyledMatchSubtitle>
+                {partialAggregation.reverse().map(aggregation => (
+                  <Grid item xs={12} sm={4} key={aggregation.match}>
+                    <StyledMatch>
+                      <StyledMatchSubtitle>
+                        <FormattedMessage
+                          id="pages.lottery.contract.statistics.matches.match.title"
+                          values={{ amount: aggregation.match }}
+                        />
+                      </StyledMatchSubtitle>
+                      {aggregation.price ? <StyledMatchPrize>{formatItem(aggregation.price)}</StyledMatchPrize> : null}
+                      <StyledMatchWinners>
+                        {aggregation.match === 0 ? (
                           <FormattedMessage
-                            id="pages.lottery.contract.statistics.matches.match.title"
-                            values={{ amount: aggregation.match }}
+                            id="pages.lottery.contract.statistics.matches.match.loose"
+                            values={
+                              aggregation.tickets && aggregation.tickets > 1
+                                ? { amount: aggregation.tickets, many: "s" }
+                                : { amount: aggregation.tickets, many: "" }
+                            }
                           />
-                        </StyledMatchSubtitle>
-                        <StyledMatchPrize>{formatItem(aggregation.price)}</StyledMatchPrize>
-                        <StyledMatchWinners>
+                        ) : (
                           <FormattedMessage
                             id="pages.lottery.contract.statistics.matches.match.win"
-                            values={{ amount: aggregation.tickets }}
+                            values={
+                              aggregation.tickets && aggregation.tickets > 1
+                                ? { amount: aggregation.tickets, many: "s" }
+                                : { amount: aggregation.tickets, many: "" }
+                            }
                           />
-                        </StyledMatchWinners>
-                      </StyledMatch>
-                    </Grid>
-                  ))}
+                        )}
+                      </StyledMatchWinners>
+                    </StyledMatch>
+                  </Grid>
+                ))}
               </Grid>
             </StyledMatches>
           </Grid>

@@ -16,7 +16,7 @@ import {
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { getLotteryNumbers, getNumbers } from "../../../../common/utils";
+import { getLotteryNumbersArr, getNumbers } from "../../../../common/utils";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -147,7 +147,7 @@ export class LotteryRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    Object.assign(lotteryRoundEntity, { numbers: getLotteryNumbers(winValues) });
+    Object.assign(lotteryRoundEntity, { numbers: getLotteryNumbersArr(winValues) });
     await lotteryRoundEntity.save();
 
     await this.aggregate(lotteryRoundEntity);
@@ -275,13 +275,7 @@ export class LotteryRoundServiceEth {
   public async aggregate(roundEntity: LotteryRoundEntity) {
     const allRoundNumbers = await this.lotteryTokenService.findAllTicketNumbers(roundEntity.id);
     if (allRoundNumbers && allRoundNumbers.length > 0) {
-      const { numbers } = roundEntity;
-      // TODO must be bool[] bug
-      const boolNumbers = numbers
-        .toString()
-        .split(",")
-        .map(num => num.includes("true"));
-      const winNumbers = getNumbers(boolNumbers);
+      const winNumbers = getNumbers(roundEntity.numbers);
       // Aggregation: { key - match numbers, value - ticket count }
       // {0 match - 10 tickets, 1 match - 5 tickets, 5 match - 1 ticket}
       const aggregation: Record<string, number> = {}; // {"0":10, "1":5, "5": 1}

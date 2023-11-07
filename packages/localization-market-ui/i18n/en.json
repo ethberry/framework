@@ -932,13 +932,14 @@
           "matches": {
             "match": {
               "title": "Match {amount}",
-              "win": "{amount} Winning tickets"
+              "loose": "{amount} ticket{many}",
+              "win": "{amount} Winning ticket{many}"
             },
-            "title": "Match the unique winning number in the same order to share prizes"
+            "title": "Match the unique winning numbers to share prizes"
           },
           "prizePot": "Prize pot",
           "title": "Finished rounds",
-          "totalTickets": "Total tickets this round",
+          "totalTickets": "Sold tickets",
           "winNumbers": "Winning numbers"
         },
         "title": "Contract: {title}"

@@ -49,9 +49,6 @@ export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRoun
   @OneToMany(_type => LotteryRoundAggregationEntity, aggregation => aggregation.round)
   public aggregation?: Array<LotteryRoundAggregationEntity>;
 
-  // @OneToMany(_type => TokenEntity, token => token.template)
-  // public tokens: Array<TokenEntity>;
-
   // this is not a column
   public ticketCount: number;
 }
