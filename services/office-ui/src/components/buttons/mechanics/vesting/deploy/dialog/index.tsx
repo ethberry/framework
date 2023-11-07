@@ -18,10 +18,10 @@ export interface IVestingDeployDialogProps {
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = initialValues;
+  const { owner, startTimestamp, cliffInMonth, monthlyRelease } = initialValues;
 
   const fixedValues = {
-    beneficiary,
+    owner,
     startTimestamp,
     cliffInMonth,
     monthlyRelease,
@@ -35,7 +35,7 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
       testId="VestingDeployForm"
       {...rest}
     >
-      <TextInput name="beneficiary" />
+      <TextInput name="owner" />
       <DateInput name="startTimestamp" />
       <NumberInput name="cliffInMonth" />
       <CurrencyInput name="monthlyRelease" symbol="%" />

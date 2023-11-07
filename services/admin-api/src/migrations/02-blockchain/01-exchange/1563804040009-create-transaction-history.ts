@@ -13,6 +13,32 @@ export class CreateTransactionHistory1563804040009 implements MigrationInterface
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.contract_type_enum AS ENUM (
+       'CONTRACT_MANAGER',
+       'CLAIM',
+       'MYSTERY',
+       'EXCHANGE',
+       'STAKING',
+       'VESTING',
+       'ERC20_TOKEN',
+       'ERC721_TOKEN',
+       'ERC721_TOKEN_RANDOM',
+       'ERC998_TOKEN',
+       'ERC998_TOKEN_RANDOM',
+       'ERC1155_TOKEN',
+       'METADATA',
+       'LOTTERY',
+       'RAFFLE',
+       'PONZI',
+       'WAIT_LIST',
+       'PAYMENT_SPLITTER',
+       'WRAPPER',
+       'VRF',
+       'VRF_SUB'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.transactions`,
       columns: [
@@ -46,6 +72,10 @@ export class CreateTransactionHistory1563804040009 implements MigrationInterface
           name: "transaction_status",
           type: `${ns}.transaction_status_enum`,
           default: "'NEW'",
+        },
+        {
+          name: "contract_type",
+          type: `${ns}.contract_type_enum`,
         },
         {
           name: "log_data",

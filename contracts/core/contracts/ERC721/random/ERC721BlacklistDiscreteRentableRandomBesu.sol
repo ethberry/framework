@@ -6,10 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "../ERC721BlacklistDiscreteRentableRandom.sol";
-import "../../MOCKS/ChainLinkBesu.sol";
+import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 
-contract ERC721BlacklistDiscreteRentableRandomBesu is ERC721BlacklistDiscreteRentableRandom, ChainLinkBesu {
+import {ChainLinkBesuV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBesuV2.sol";
+import {ChainLinkBaseV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBaseV2.sol";
+
+import {InvalidSubscription} from "../../utils/errors.sol";
+import {ERC721BlacklistDiscreteRentableRandom} from "../ERC721BlacklistDiscreteRentableRandom.sol";
+
+contract ERC721BlacklistDiscreteRentableRandomBesu is ERC721BlacklistDiscreteRentableRandom, ChainLinkBesuV2 {
   constructor(
     string memory name,
     string memory symbol,
@@ -17,14 +22,16 @@ contract ERC721BlacklistDiscreteRentableRandomBesu is ERC721BlacklistDiscreteRen
     string memory baseTokenURI
   )
     ERC721BlacklistDiscreteRentableRandom(name, symbol, royalty, baseTokenURI)
-    ChainLinkBesu(uint64(0), uint16(6), uint32(600000), uint32(1))
+    ChainLinkBesuV2(uint64(0), uint16(6), uint32(600000), uint32(1))
   {}
 
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (subId == 0) revert InvalidSubscription();
-        _subId = subId;
+    if (subId == 0) {
+      revert InvalidSubscription();
+    }
+    _subId = subId;
     emit VrfSubscriptionSet(_subId);
   }
 
@@ -33,7 +40,9 @@ contract ERC721BlacklistDiscreteRentableRandomBesu is ERC721BlacklistDiscreteRen
     override(ChainLinkBaseV2, ERC721BlacklistDiscreteRentableRandom)
     returns (uint256 requestId)
   {
-    if (_subId == 0) revert InvalidSubscription();
+    if (_subId == 0) {
+      revert InvalidSubscription();
+    }
     return super.getRandomNumber();
   }
 

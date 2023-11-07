@@ -9,7 +9,7 @@ import { recursivelyDecodeResult } from "../../test/utils";
 // import { expiresAt } from "../../test/constants";
 
 async function main() {
-  const [owner, receiver] = await ethers.getSigners();
+  // const [owner, receiver] = await ethers.getSigners();
 
   const lotteryInstance = await ethers.getContractAt("LotteryRandomBesu", "0x3216c8ac30000d3ec32dd648f4dd0de4f4774579");
 

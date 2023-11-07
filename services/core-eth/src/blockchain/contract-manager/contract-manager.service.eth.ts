@@ -31,11 +31,13 @@ import {
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  IContractManagerPaymentSplitterDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   RmqProviderType,
   SignalEventType,
-  StakingContractTemplates,
+  StakingContractFeatures,
+  // StakingContractTemplates,
   TemplateStatus,
   TokenType,
 } from "@framework/types";
@@ -502,7 +504,7 @@ export class ContractManagerServiceEth {
 
     const { userId, claimId } = decodedExternalId;
 
-    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = args;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -514,7 +516,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       parameters: {
-        account: beneficiary.toLowerCase(),
+        account: owner.toLowerCase(),
         startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
         cliffInMonth,
         monthlyRelease,
@@ -538,7 +540,7 @@ export class ContractManagerServiceEth {
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
+        account: await this.getUserWalletById(userId),
         transactionHash,
         transactionType: name,
       })
@@ -614,7 +616,7 @@ export class ContractManagerServiceEth {
         commission,
       },
       imageUrl,
-      contractFeatures: [ContractFeatures.RANDOM],
+      contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.ALLOWANCE, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.LOTTERY,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
@@ -652,7 +654,7 @@ export class ContractManagerServiceEth {
       title: `${ModuleType.RAFFLE} (new)`,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.PAUSABLE],
+      contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.ALLOWANCE, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.RAFFLE,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
@@ -687,11 +689,56 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: account.toLowerCase(),
-      title: `${ModuleType.WAITLIST} (new)`,
+      title: `${ModuleType.WAIT_LIST} (new)`,
       description: emptyStateString,
       imageUrl,
       contractFeatures: [ContractFeatures.PAUSABLE],
-      contractModule: ModuleType.WAITLIST,
+      contractModule: ModuleType.WAIT_LIST,
+      chainId,
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.waitListLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+    });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.getUserWalletById(externalId),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
+  }
+
+  public async paymentSplitter(
+    event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>,
+    context: Log,
+  ): Promise<void> {
+    const {
+      name,
+      args: { account, externalId, args },
+    } = event;
+    const { transactionHash } = context;
+
+    const { payees, shares } = args;
+
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: `${ModuleType.PAYMENT_SPLITTER} (new)`,
+      description: emptyStateString,
+      parameters: {
+        payees: payees.toString(),
+        shares: shares.toString(),
+      },
+      imageUrl,
+      contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
@@ -729,10 +776,11 @@ export class ContractManagerServiceEth {
       title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
       imageUrl,
+      // TODO better set ContractFeatures
       contractFeatures:
         contractTemplate === "0"
-          ? []
-          : (Object.values(StakingContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+          ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
+          : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),

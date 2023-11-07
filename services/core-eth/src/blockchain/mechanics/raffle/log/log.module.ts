@@ -44,7 +44,7 @@ import { getEventsTopics } from "../../../../common/utils";
           RaffleEventType.RoundEnded,
           RaffleEventType.Released,
           RaffleEventType.RoundStarted,
-          RaffleEventType.RoundFinalized,
+          RaffleEventType.RoundFinalizedRaffle,
           ContractEventType.Paused,
           ContractEventType.Unpaused,
           AccessControlEventType.RoleAdminChanged,

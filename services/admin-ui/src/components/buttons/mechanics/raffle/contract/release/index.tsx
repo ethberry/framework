@@ -9,16 +9,16 @@ import type { IRaffleRound } from "@framework/types";
 
 import RaffleReleaseABI from "../../../../../../abis/mechanics/raffle/release/releaseFunds.abi.json";
 
-export interface ILotteryReleaseButtonProps {
+export interface IRaffleReleaseButtonProps {
   className?: string;
   disabled?: boolean;
   round: IRaffleRound;
-  refreshPage?: () => Promise<void>;
+  onRefreshPage: () => Promise<void>;
   variant?: ListActionVariant;
 }
 
-export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { className, disabled, round, refreshPage = () => {}, variant } = props;
+export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
+  const { className, disabled, round, onRefreshPage = () => {}, variant } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(round.contract!.address, RaffleReleaseABI, web3Context.provider?.getSigner());
@@ -27,7 +27,7 @@ export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
 
   const handleRelease = (): (() => Promise<void>) => {
     return (): Promise<void> => {
-      return metaFn().then(refreshPage);
+      return metaFn().then(onRefreshPage);
     };
   };
 

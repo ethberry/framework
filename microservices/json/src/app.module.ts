@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { APP_GUARD } from "@nestjs/core";
+import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
@@ -10,14 +10,13 @@ import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-// import { CACHE_STORE, GemunionCacheModule } from "@gemunion/nest-js-module-cache";
+import { CACHE_STORE, GemunionCacheModule, CacheInterceptor } from "@gemunion/nest-js-module-cache";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { CACHE_STORE, GemunionCacheModule } from "./cache-manager";
 
 @Module({
   providers: [
@@ -28,6 +27,10 @@ import { CACHE_STORE, GemunionCacheModule } from "./cache-manager";
     {
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
     },
   ],
   imports: [

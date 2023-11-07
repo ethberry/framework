@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IStakingDeposit } from "@framework/types";
 
-import { formatComplexPrice, formatPenalty } from "../../../../../utils/money";
+import { formatItem, formatPenalty } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
@@ -50,15 +50,21 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{stakingRule?.contract!.title}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatComplexPrice(stakingRule?.deposit)}</TableCell>
+              <TableCell align="right">{formatItem(stakingRule?.deposit)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.reward" />
               </TableCell>
-              <TableCell align="right">{formatComplexPrice(stakingRule?.reward)}</TableCell>
+              <TableCell align="right">{formatItem(stakingRule?.reward)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -93,12 +99,6 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell align="right">
                 {withdrawTimestamp ? format(new Date(withdrawTimestamp), humanReadableDateTimeFormat) : null}
               </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.penalty" />
-              </TableCell>
-              <TableCell align="right">{formatPenalty(stakingRule?.penalty)}%</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

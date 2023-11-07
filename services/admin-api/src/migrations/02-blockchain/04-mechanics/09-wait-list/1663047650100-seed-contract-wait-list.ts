@@ -14,7 +14,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const waitListAddr = process.env.WAITLIST_ADDR || wallet;
+    const waitListAddr = process.env.WAIT_LIST_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -46,7 +46,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         '',
         'ACTIVE',
         '{PAUSABLE}',
-        'WAITLIST',
+        'WAIT_LIST',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -63,7 +63,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         '',
         'INACTIVE',
         '{PAUSABLE}',
-        'WAITLIST',
+        'WAIT_LIST',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -80,7 +80,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         '',
         'ACTIVE',
         '{PAUSABLE}',
-        'WAITLIST',
+        'WAIT_LIST',
         '${fromBlock}',
         2,
         '${currentDateTime}',

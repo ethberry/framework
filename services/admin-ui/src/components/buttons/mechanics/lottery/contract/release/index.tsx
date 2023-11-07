@@ -14,10 +14,11 @@ export interface ILotteryReleaseButtonProps {
   disabled?: boolean;
   round: ILotteryRound;
   variant?: ListActionVariant;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { className, disabled, round, variant } = props;
+  const { className, disabled, round, variant, onRefreshPage } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(round.contract!.address, LotteryReleaseABI, web3Context.provider?.getSigner());
@@ -26,9 +27,7 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
 
   const handleRelease = (): (() => Promise<void>) => {
     return (): Promise<void> => {
-      return metaFn().then(() => {
-        // TODO reload page
-      });
+      return metaFn().then(onRefreshPage);
     };
   };
 

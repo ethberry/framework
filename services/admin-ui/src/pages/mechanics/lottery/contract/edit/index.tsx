@@ -21,7 +21,8 @@ export interface ILotteryEditDialogProps {
 export const LotteryEditDialog: FC<ILotteryEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, contractStatus, address, name, chainId, contractFeatures } = initialValues;
+  const { id, title, description, imageUrl, contractStatus, address, name, chainId, contractFeatures, parameters } =
+    initialValues;
 
   const fixedValues = {
     id,
@@ -30,6 +31,7 @@ export const LotteryEditDialog: FC<ILotteryEditDialogProps> = props => {
     address,
     contractStatus,
     imageUrl,
+    parameters,
   };
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -41,7 +43,14 @@ export const LotteryEditDialog: FC<ILotteryEditDialogProps> = props => {
       testId="LotteryContractEditForm"
       action={
         id ? (
-          <BlockchainInfoPopover name={name} address={address} chainId={chainId} contractFeatures={contractFeatures} />
+          <BlockchainInfoPopover
+            name={name}
+            address={address}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+            vrfSubscription={parameters ? parameters.vrfSubId : ""}
+            vrfConsumer={parameters ? parameters.isConsumer : "false"}
+          />
         ) : null
       }
       {...rest}

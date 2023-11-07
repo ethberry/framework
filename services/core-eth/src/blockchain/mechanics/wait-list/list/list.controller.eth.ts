@@ -12,12 +12,12 @@ import { WaitListListServiceEth } from "./list.service.eth";
 export class WaitListListControllerEth {
   constructor(private readonly waitListListServiceEth: WaitListListServiceEth) {}
 
-  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: WaitListEventType.WaitListRewardSet }])
+  @EventPattern([{ contractType: ContractType.WAIT_LIST, eventName: WaitListEventType.WaitListRewardSet }])
   public rewardSet(@Payload() event: ILogEvent<IWaitListRewardSetEvent>, @Ctx() context: Log): Promise<void> {
     return this.waitListListServiceEth.rewardSet(event, context);
   }
 
-  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: WaitListEventType.WaitListRewardClaimed }])
+  @EventPattern([{ contractType: ContractType.WAIT_LIST, eventName: WaitListEventType.WaitListRewardClaimed }])
   public rewardClaimed(@Payload() event: ILogEvent<IWaitListRewardClaimedEvent>, @Ctx() context: Log): Promise<void> {
     return this.waitListListServiceEth.rewardClaimed(event, context);
   }

@@ -1,4 +1,4 @@
-import { ForbiddenException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
@@ -17,8 +17,6 @@ import type { ICollectionUploadDto } from "./interfaces";
 @Injectable()
 export class CollectionContractService extends ContractService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     protected readonly collectionTokenService: CollectionTokenService,

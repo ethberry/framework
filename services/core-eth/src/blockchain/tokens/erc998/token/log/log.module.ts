@@ -4,7 +4,14 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, NodeEnv, TokenType } from "@framework/types";
+import {
+  AccessControlEventType,
+  AccessListEventType,
+  ContractEventType,
+  ContractType,
+  NodeEnv,
+  TokenType,
+} from "@framework/types";
 
 // custom contracts
 import { ABI } from "./interfaces";
@@ -53,6 +60,9 @@ import { getEventsTopics } from "../../../../../common/utils";
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,
+          // MODULE:ACCESS_LIST
+          AccessListEventType.Blacklisted,
+          AccessListEventType.UnBlacklisted,
         ];
         const topics = getEventsTopics(eventNames);
 

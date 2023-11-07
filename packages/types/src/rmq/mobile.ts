@@ -34,6 +34,8 @@ export enum MobileEventType {
 
   CRAFT = "CRAFT",
   DISMANTLE = "DISMANTLE",
+  MERGE = "MERGE",
+
   CLAIM = "CLAIM",
 
   RENT = "RENT",

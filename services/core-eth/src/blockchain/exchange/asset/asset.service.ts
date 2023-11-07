@@ -12,7 +12,7 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { testChainId } from "@framework/constants";
-import type { IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
+import type { IAssetComponentDto, IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
 import { ContractEventType, ContractFeatures, ExchangeType, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
@@ -61,6 +61,7 @@ export class AssetService {
     return this.assetComponentHistoryEntityRepository.find({ where, ...options });
   }
 
+  // ASSET COMPONENTS
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -118,6 +119,9 @@ export class AssetService {
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
+      } else {
+        // remove all components
+        await Promise.allSettled(asset.components.map(oldItem => queryRunner.manager.remove(oldItem)));
       }
       await queryRunner.manager.save(asset);
 
@@ -135,48 +139,65 @@ export class AssetService {
     }
   }
 
+  public async updateAsset(asset: AssetEntity, dto: IAssetComponentDto): Promise<void> {
+    // UPDATE
+    const oldAsset: IAssetDto = {
+      components: asset.components.map(item => {
+        return {
+          id: item.id,
+          tokenType: item.contract.contractType!,
+          contractId: item.contractId,
+          templateId: item.templateId,
+          tokenId: item.tokenId,
+          amount: item.amount,
+        };
+      }),
+    };
+
+    const componentsToUpdate = oldAsset.components.filter(
+      item => item.templateId === dto.templateId && item.tokenId === dto.tokenId,
+    );
+
+    if (componentsToUpdate.length > 0) {
+      const updatedAsset = oldAsset.components.map(comp => {
+        if (comp.templateId === dto.templateId && comp.tokenId === dto.tokenId) {
+          return Object.assign(comp, { amount: (BigInt(comp.amount) + BigInt(dto.amount)).toString() });
+        } else return comp;
+      });
+      // TODO negative result throw error? must not happen
+      const noZeroAsset = updatedAsset.filter(item => BigInt(item.amount) > BigInt(0));
+      await this.update(asset, { components: noZeroAsset });
+    } else {
+      oldAsset.components.push({
+        tokenType: dto.tokenType,
+        contractId: dto.contractId,
+        templateId: dto.templateId,
+        tokenId: dto.tokenId,
+        amount: dto.amount,
+      });
+      await this.update(asset, oldAsset);
+    }
+  }
+
+  public async createAsset(asset: AssetEntity, dto: IAssetComponentDto): Promise<void> {
+    // CREATE
+    const newAssetDto: IAssetDto = {
+      components: [
+        {
+          tokenType: dto.tokenType,
+          contractId: dto.contractId,
+          templateId: dto.templateId,
+          tokenId: dto.tokenId,
+          amount: dto.amount,
+        },
+      ],
+    };
+    await this.update(asset, newAssetDto);
+  }
+
+  // ASSET HISTORY
   public async createAssetHistory(dto: DeepPartial<AssetComponentHistoryEntity>): Promise<AssetComponentHistoryEntity> {
     return this.assetComponentHistoryEntityRepository.create(dto).save();
-  }
-
-  public async updateAssetHistory(transactionHash: string, token: TokenEntity): Promise<void> {
-    const { id, template } = token;
-    const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
-    queryBuilder.select();
-    queryBuilder.leftJoinAndSelect("assets.history", "history");
-    queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull(), contractId: template.contractId });
-    queryBuilder.andWhere("history.transactionHash = :transactionHash", {
-      transactionHash,
-    });
-
-    const assetHistoryEntity = await queryBuilder.getOne();
-
-    if (assetHistoryEntity) {
-      Object.assign(assetHistoryEntity, { tokenId: id });
-      await assetHistoryEntity.save();
-    }
-  }
-
-  public async updateAssetHistoryRandom(requestId: string, tokenId: number): Promise<void> {
-    const historyEntity = await this.eventHistoryService.findByRandomRequest(requestId);
-    if (historyEntity) {
-      const transactionHash = historyEntity.transactionHash;
-
-      const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
-      queryBuilder.select();
-      queryBuilder.leftJoinAndSelect("assets.history", "history");
-      queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull() });
-      queryBuilder.andWhere("history.transactionHash = :transactionHash", {
-        transactionHash,
-      });
-
-      const assetHistoryEntity = await queryBuilder.getOne();
-
-      if (assetHistoryEntity) {
-        Object.assign(assetHistoryEntity, { tokenId });
-        await assetHistoryEntity.save();
-      }
-    }
   }
 
   public async saveAssetHistory(
@@ -314,5 +335,45 @@ export class AssetService {
           .map(c => c.value),
       ),
     };
+  }
+
+  public async updateAssetHistory(transactionHash: string, token: TokenEntity): Promise<void> {
+    const { id, template } = token;
+    const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
+    queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("assets.history", "history");
+    queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull(), contractId: template.contractId });
+    queryBuilder.andWhere("history.transactionHash = :transactionHash", {
+      transactionHash,
+    });
+
+    const assetHistoryEntity = await queryBuilder.getOne();
+
+    if (assetHistoryEntity) {
+      Object.assign(assetHistoryEntity, { tokenId: id });
+      await assetHistoryEntity.save();
+    }
+  }
+
+  public async updateAssetHistoryRandom(requestId: string, tokenId: number): Promise<void> {
+    const historyEntity = await this.eventHistoryService.findByRandomRequest(requestId);
+    if (historyEntity) {
+      const transactionHash = historyEntity.transactionHash;
+
+      const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
+      queryBuilder.select();
+      queryBuilder.leftJoinAndSelect("assets.history", "history");
+      queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull() });
+      queryBuilder.andWhere("history.transactionHash = :transactionHash", {
+        transactionHash,
+      });
+
+      const assetHistoryEntity = await queryBuilder.getOne();
+
+      if (assetHistoryEntity) {
+        Object.assign(assetHistoryEntity, { tokenId });
+        await assetHistoryEntity.save();
+      }
+    }
   }
 }

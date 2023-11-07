@@ -124,6 +124,8 @@ export class EventHistoryService {
       contractId = parentContractEntity.id;
     }
 
+    await this.contractService.updateLastBlockById(contractId, parseInt(blockNumber.toString(), 16));
+
     const contractEventEntity = await this.create({
       address,
       transactionHash,
@@ -137,8 +139,6 @@ export class EventHistoryService {
     await this.findParentHistory(contractEventEntity);
 
     await this.achievementsRuleService.processEvent(contractEventEntity.id);
-
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
 
     return contractEventEntity;
   }

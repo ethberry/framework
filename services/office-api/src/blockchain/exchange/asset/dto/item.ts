@@ -6,6 +6,9 @@ import { IAssetDto } from "@framework/types";
 
 import { ItemComponentDto } from "./item-components";
 
+/**
+ * @deprecated use AllTypesDto
+ */
 export class ItemDto implements IAssetDto {
   @ApiProperty({
     type: ItemComponentDto,

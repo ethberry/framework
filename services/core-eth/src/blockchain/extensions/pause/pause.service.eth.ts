@@ -1,4 +1,5 @@
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { Log } from "ethers";
@@ -7,6 +8,7 @@ import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IPausedEvent, RmqProviderType, SignalEventType } from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class PauseServiceEth {
@@ -14,6 +16,7 @@ export class PauseServiceEth {
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
@@ -26,13 +29,15 @@ export class PauseServiceEth {
   }
 
   public async toggle(event: ILogEvent<IPausedEvent>, context: Log, isPaused: boolean): Promise<void> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
     const { name } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
     const { address, transactionHash } = context;
 
     const contractEntity = await this.contractService.findOne(
-      { address: address.toLowerCase() },
+      { address: address.toLowerCase(), chainId },
       { relations: { merchant: true } },
     );
 

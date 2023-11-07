@@ -6,9 +6,13 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunionV2.sol";
+import {VRFConsumerBaseV2} from "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 
-import "../ERC998BlacklistDiscreteRandom.sol";
+import {ChainLinkGemunionV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunionV2.sol";
+import {ChainLinkBaseV2} from "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBaseV2.sol";
+
+import {ERC998BlacklistDiscreteRandom} from "../ERC998BlacklistDiscreteRandom.sol";
+import {InvalidSubscription} from "../../utils/errors.sol";
 
 contract ERC998BlacklistDiscreteRandomGemunion is ERC998BlacklistDiscreteRandom, ChainLinkGemunionV2 {
   constructor(
@@ -24,8 +28,10 @@ contract ERC998BlacklistDiscreteRandomGemunion is ERC998BlacklistDiscreteRandom,
   // OWNER MUST SET A VRF SUBSCRIPTION ID AFTER DEPLOY
   event VrfSubscriptionSet(uint64 subId);
   function setSubscriptionId(uint64 subId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (subId == 0) revert InvalidSubscription();
-        _subId = subId;
+    if (subId == 0) {
+      revert InvalidSubscription();
+    }
+    _subId = subId;
     emit VrfSubscriptionSet(_subId);
   }
 
@@ -34,7 +40,9 @@ contract ERC998BlacklistDiscreteRandomGemunion is ERC998BlacklistDiscreteRandom,
     override(ChainLinkBaseV2, ERC998BlacklistDiscreteRandom)
     returns (uint256 requestId)
   {
-    if (_subId == 0) revert InvalidSubscription();
+    if (_subId == 0) {
+      revert InvalidSubscription();
+    }
     return super.getRandomNumber();
   }
 

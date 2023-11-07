@@ -336,7 +336,7 @@ export class ContractManagerSignService {
     userEntity: UserEntity,
     asset?: AssetEntity,
   ): Promise<IServerSignature> {
-    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByVestingContractTemplate(dto, userEntity.chainId);
 
@@ -367,7 +367,7 @@ export class ContractManagerSignService {
           { name: "externalId", type: "uint256" },
         ],
         VestingArgs: [
-          { name: "beneficiary", type: "address" },
+          { name: "owner", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "cliffInMonth", type: "uint16" },
           { name: "monthlyRelease", type: "uint16" },
@@ -387,7 +387,7 @@ export class ContractManagerSignService {
           externalId: externalId || userEntity.id,
         },
         args: {
-          beneficiary: beneficiary.toLowerCase(),
+          owner: owner.toLowerCase(),
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
           cliffInMonth, // in seconds
           monthlyRelease,
@@ -513,7 +513,7 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByWaitListContractTemplate(dto, userEntity.chainId);
 
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAIT_LIST, null);
 
     const signature = await this.signer.signTypedData(
       // Domain

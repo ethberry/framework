@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.20;
 
-struct Ticket {
+struct TicketLottery {
   uint256 round; // lottery contract roundId
   uint256 externalId; // db roundId
   bytes32 numbers;
@@ -18,7 +18,7 @@ interface IERC721LotteryTicket {
 
   function burn(uint256 tokenId) external;
 
-  function getTicketData(uint256 tokenId) external view returns (Ticket memory);
+  function getTicketData(uint256 tokenId) external view returns (TicketLottery memory);
 
   function setTicketData(uint256 tokenId) external;
 }

@@ -13,7 +13,7 @@ struct TicketRaffle {
 }
 
 interface IERC721RaffleTicket {
-  function mintTicket(address account, uint256 roundId, uint256 externalId) external returns (uint256);
+  function mintTicket(address account, uint256 roundId, uint256 externalId, uint256 index) external returns (uint256);
 
   function burn(uint256 tokenId) external;
 

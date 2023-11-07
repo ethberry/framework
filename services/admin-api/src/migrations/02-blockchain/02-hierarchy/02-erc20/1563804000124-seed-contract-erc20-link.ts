@@ -10,8 +10,8 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const linkAddr = process.env.LINK_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
-    // TODO add LINK for all supported networks (56 & 97 etc.)
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -35,7 +35,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 33 : 10218},
         '${linkAddr}',
-        '${testChainId}',
+        '${chainId}',
         'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
@@ -73,7 +73,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 35 : 30218},
         '0x514910771AF9Ca656af840dff83E8264EcF986CA',
-        56,
+        1,
         'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
@@ -93,6 +93,25 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 36 : 40218},
         '0xb0897686c545045aFc77CF20eC7A532E3120E0F1',
         137,
+        'LINK',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        'ChainLink LINK',
+        'LINK',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
+        '0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06',
+        97,
         'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',

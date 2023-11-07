@@ -25,7 +25,7 @@ export class WaitListLogService {
   }
 
   public async updateBlock(): Promise<void> {
-    const waitlistContracts = await this.contractService.findAllByType([ModuleType.WAITLIST]);
+    const waitlistContracts = await this.contractService.findAllByType([ModuleType.WAIT_LIST]);
 
     if (waitlistContracts.fromBlock) {
       await this.contractService.updateLastBlockByAddr(

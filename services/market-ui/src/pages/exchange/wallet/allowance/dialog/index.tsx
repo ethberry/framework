@@ -11,6 +11,7 @@ import { validationSchema } from "./validation";
 export interface IAllowanceDto {
   token: ITokenAsset;
   address: string;
+  contractId?: number;
 }
 
 export interface IAllowanceDialogProps {
@@ -22,12 +23,13 @@ export interface IAllowanceDialogProps {
 
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
+  const { contractId } = initialValues;
 
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
       form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
-      form.setValue("address", option?.address ?? "0x");
+      form.setValue("address", option?.address ?? "0x", { shouldDirty: false });
       form.setValue("decimals", option?.decimals ?? 0);
     };
 
@@ -50,8 +52,9 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
         }}
       />
       <CommonContractInput
+        autoselect={true}
         name="contractId"
-        data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}
+        data={{ contractId, contractFeatures: [ContractFeatures.ALLOWANCE] }}
         onChange={handleContractChange}
         withTokenType
       />

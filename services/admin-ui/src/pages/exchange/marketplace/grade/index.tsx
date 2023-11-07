@@ -99,7 +99,7 @@ export const MarketplaceLevel: FC = () => {
                     <TableCell align="left">
                       <Link
                         component={RouterLink}
-                        to={`/${search.tokenType.toLowerCase()}-tokens?${stringify({
+                        to={`/${search.tokenType.toLowerCase()}/tokens?${stringify({
                           metadata: { [TokenMetadata.LEVEL]: [i + 1] },
                           tokenStatus: [search.tokenStatus],
                           contractIds: search.contractIds,

@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { AddCircleOutline } from "@mui/icons-material";
+import { MonetizationOn } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract } from "ethers";
 
@@ -77,7 +77,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
     <Fragment>
       <ListAction
         onClick={handleTopUp}
-        icon={AddCircleOutline}
+        icon={MonetizationOn}
         message="form.buttons.topUp"
         className={className}
         dataTestId="TopUpButton"

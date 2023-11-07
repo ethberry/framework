@@ -27,7 +27,7 @@ export class StakingLogService {
     if (stakingContracts.fromBlock) {
       await this.contractService.updateLastBlockByAddr(
         stakingContracts.address[0],
-        this.ethersContractService.getLastBlockOption(),
+        Math.max(this.ethersContractService.getLastBlockOption(), stakingContracts.fromBlock),
       );
     }
   }

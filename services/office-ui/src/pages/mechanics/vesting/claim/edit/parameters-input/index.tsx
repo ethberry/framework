@@ -13,7 +13,7 @@ export const VestingParametersInput: FC<IVestingParametersInputProps> = props =>
 
   return (
     <Paper sx={{ p: 2, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>
-      <TextInput name={`${prefix}.beneficiary`} />
+      <TextInput name={`${prefix}.owner`} />
       <DateInput name={`${prefix}.startTimestamp`} />
       <NumberInput name={`${prefix}.cliffInMonth`} />
       <CurrencyInput name={`${prefix}.monthlyRelease`} symbol="%" />

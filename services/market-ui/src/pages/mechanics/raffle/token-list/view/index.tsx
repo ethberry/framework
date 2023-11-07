@@ -45,12 +45,14 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">{round.roundId}</TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.winNumbers" />
-              </TableCell>
-              <TableCell align="right">{round ? round.number || "round not yet finished" : ""}</TableCell>
-            </TableRow>
+            {round && round.number && round.number === tokenId ? (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.winner" />
+                </TableCell>
+                <TableCell align="right">{round ? round.number || "round not yet finished" : ""}</TableCell>
+              </TableRow>
+            ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenStatus" />

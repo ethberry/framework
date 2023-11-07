@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -10,7 +10,7 @@ import { CollectionTokenModule } from "../token/token.module";
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity]), CollectionTemplateModule, CollectionTokenModule],
-  providers: [Logger, CollectionContractService],
+  providers: [CollectionContractService],
   controllers: [CollectionContractController],
   exports: [CollectionContractService],
 })

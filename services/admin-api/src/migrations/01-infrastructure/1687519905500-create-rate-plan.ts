@@ -4,14 +4,6 @@ import { ns } from "@framework/constants";
 
 export class CreateRatePlan1687519905500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.rate_plan_enum AS ENUM (
-        'BRONZE',
-        'SILVER',
-        'GOLD'
-      );
-    `);
-
     const table = new Table({
       name: `${ns}.rate_plan`,
       columns: [

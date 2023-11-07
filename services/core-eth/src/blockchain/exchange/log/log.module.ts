@@ -58,6 +58,8 @@ import { getEventsTopics } from "../../../common/utils";
           ExchangeEventType.Claim,
           // MODULE:CRAFT
           ExchangeEventType.Craft,
+          // MODULE:MERGE
+          ExchangeEventType.Merge,
           ExchangeEventType.Dismantle,
           // MODULE:MYSTERYBOX
           ExchangeEventType.PurchaseMysteryBox,

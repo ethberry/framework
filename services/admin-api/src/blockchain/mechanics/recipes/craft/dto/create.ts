@@ -1,21 +1,22 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+
+import { NotNativeDto, SemiCoinDto } from "../../../../exchange/asset/dto/custom";
 import type { ICraftCreateDto } from "../interfaces";
-import { CraftItemDto, CraftPriceDto } from "./custom";
 
 export class CraftCreateDto implements ICraftCreateDto {
   @ApiProperty({
-    type: CraftItemDto,
+    type: NotNativeDto,
   })
   @ValidateNested()
-  @Type(() => CraftItemDto)
-  public item: InstanceType<typeof CraftItemDto>;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty({
-    type: CraftPriceDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => CraftPriceDto)
-  public price: InstanceType<typeof CraftPriceDto>;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 }

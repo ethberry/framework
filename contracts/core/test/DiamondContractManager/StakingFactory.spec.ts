@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { keccak256, getCreate2Address } from "ethers";
 
-import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, PAUSER_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { contractTemplate, externalId } from "../constants";
 import { deployDiamond } from "./shared/fixture";
@@ -79,6 +79,13 @@ describe("StakingFactoryDiamond", function () {
       const address = getCreate2Address(await contractInstance.getAddress(), nonce, initCodeHash);
 
       await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, externalId, [contractTemplate]);
+
+      // TEST ROLES
+      const staking = await ethers.getContractAt("Staking", address);
+      const hasRole1 = await staking.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
+      expect(hasRole1).to.equal(true);
+      const hasRole2 = await staking.hasRole(PAUSER_ROLE, owner.address);
+      expect(hasRole2).to.equal(true);
     });
 
     it("should fail: SignerMissingRole", async function () {

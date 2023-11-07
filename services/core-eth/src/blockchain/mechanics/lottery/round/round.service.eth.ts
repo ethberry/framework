@@ -16,7 +16,7 @@ import {
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { getLotteryNumbers } from "../../../../common/utils";
+import { getLotteryNumbersArr, getNumbers } from "../../../../common/utils";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -25,6 +25,8 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
+import { LotteryTokenService } from "../ticket/token.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -33,11 +35,13 @@ export class LotteryRoundServiceEth {
     protected readonly signalClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
+    private readonly lotteryTokenService: LotteryTokenService,
     private readonly lotteryRoundAggregationService: LotteryRoundAggregationService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly contractService: ContractService,
+    private readonly assetService: AssetService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -143,7 +147,7 @@ export class LotteryRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    Object.assign(lotteryRoundEntity, { numbers: getLotteryNumbers(winValues) });
+    Object.assign(lotteryRoundEntity, { numbers: getLotteryNumbersArr(winValues) });
     await lotteryRoundEntity.save();
 
     await this.aggregate(lotteryRoundEntity);
@@ -269,19 +273,46 @@ export class LotteryRoundServiceEth {
   }
 
   public async aggregate(roundEntity: LotteryRoundEntity) {
-    // TODO
-    // - find all tickets for this round
-    // - aggregate data for each match
-    // - save to aggregation table
-    await Promise.all(
-      new Array(roundEntity.maxTickets).fill(null).map(async (e, i) => {
+    const allRoundNumbers = await this.lotteryTokenService.findAllTicketNumbers(roundEntity.id);
+    if (allRoundNumbers && allRoundNumbers.length > 0) {
+      const winNumbers = getNumbers(roundEntity.numbers);
+      // Aggregation: { key - match numbers, value - ticket count }
+      // {0 match - 10 tickets, 1 match - 5 tickets, 5 match - 1 ticket}
+      const aggregation: Record<string, number> = {}; // {"0":10, "1":5, "5": 1}
+
+      allRoundNumbers.map(numbers => {
+        const ticketAggregation = winNumbers.filter(value => numbers.includes(value));
+        const match = ticketAggregation.length;
+        if (aggregation[match]) {
+          return aggregation[`${match}`]++;
+        } else {
+          return (aggregation[`${match}`] = 1);
+        }
+      });
+
+      Object.keys(aggregation).map(async aggr => {
+        // create new asset
+        const newAssetEntity = await this.assetService.create();
+        const roundPrice = roundEntity.price.components;
+        const multipliedPrice = roundPrice.map(price => {
+          return {
+            tokenType: price.tokenType,
+            contractId: price.contractId,
+            templateId: price.templateId,
+            tokenId: price.tokenId,
+            amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
+          };
+        });
+
+        await this.assetService.update(newAssetEntity, { components: multipliedPrice });
+
         await this.lotteryRoundAggregationService.create({
           round: roundEntity,
-          match: i,
-          tickets: 42,
-          // price
+          match: Number(aggr),
+          tickets: aggregation[aggr],
+          priceId: newAssetEntity.id,
         });
-      }),
-    );
+      });
+    }
   }
 }

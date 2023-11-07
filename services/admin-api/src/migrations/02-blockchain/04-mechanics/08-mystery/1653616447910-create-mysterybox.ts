@@ -33,7 +33,7 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "template_id",

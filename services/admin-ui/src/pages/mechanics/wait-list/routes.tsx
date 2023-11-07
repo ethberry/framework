@@ -2,11 +2,11 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { WaitListSection } from "../../dashboard/mechanics/wait-list";
 import { IndexWrapper } from "../../index-wrapper";
 import { WaitListList } from "./list";
 import { WaitListItem } from "./item";
 import { WaitListContracts } from "./contract";
+import { WaitListSection } from "../../dashboard/mechanics/wait-list";
 
 export const waitListRoutes: Array<RouteObject> = [
   {

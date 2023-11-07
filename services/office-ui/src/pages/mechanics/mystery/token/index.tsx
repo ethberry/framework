@@ -42,7 +42,6 @@ export const MysteryToken: FC = () => {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
-      tokenId: "",
       metadata: {},
       merchantId: profile.merchantId,
     },

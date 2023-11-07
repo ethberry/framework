@@ -9,7 +9,7 @@ export class VestingContractDeployDto implements IVestingContractDeployDto {
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public beneficiary: string;
+  public owner: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

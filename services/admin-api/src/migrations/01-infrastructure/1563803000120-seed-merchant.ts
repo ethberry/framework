@@ -20,6 +20,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         merchant_status,
         wallet,
         api_key,
+        rate_plan,
         created_at,
         updated_at
       ) VALUES (
@@ -31,6 +32,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         'ACTIVE',
         '${chainId === testChainId ? wallets[0] : process.env.ACCOUNT}',
         '11111111-2222-3333-4444-555555555555',
+        'GOLD',
         '${currentDateTime}',
         '${currentDateTime}'
       );

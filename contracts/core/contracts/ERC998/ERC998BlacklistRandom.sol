@@ -6,10 +6,16 @@
 
 pragma solidity ^0.8.20;
 
-import "../utils/constants.sol";
-import "./ERC998Blacklist.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
-import "../Mechanics/Rarity/Rarity.sol";
+import {MINTER_ROLE, METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {RARITY} from "@gemunion/contracts-utils/contracts/attributes.sol";
+
+import {IERC721_RANDOM_ID} from "../utils/interfaces.sol";
+import {ERC998Blacklist} from "./ERC998Blacklist.sol";
+import {IERC721Random} from "../ERC721/interfaces/IERC721Random.sol";
+import {ERC721Simple} from "../ERC721/ERC721Simple.sol";
+import {Rarity} from "../Mechanics/Rarity/Rarity.sol";
+import {TemplateZero} from "../utils/errors.sol";
+import {Rarity} from "../Mechanics/Rarity/Rarity.sol";
 
 abstract contract ERC998BlacklistRandom is IERC721Random, ERC998Blacklist, Rarity {
   struct Request {
@@ -34,7 +40,9 @@ abstract contract ERC998BlacklistRandom is IERC721Random, ERC998Blacklist, Rarit
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     // check if receiver is blacklisted
-    require(!_isBlacklisted(account), "Blacklist: receiver is blacklisted");
+    if(_isBlacklisted(account)) {
+      revert BlackListError(account);
+    }
 
     if (templateId == 0) {
       revert TemplateZero();
@@ -48,7 +56,6 @@ abstract contract ERC998BlacklistRandom is IERC721Random, ERC998Blacklist, Rarit
 
     emit MintRandom(requestId, request.account, randomWords, request.templateId, _nextTokenId);
 
-    _upsertRecordField(_nextTokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(_nextTokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];

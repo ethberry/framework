@@ -23,7 +23,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         updated_at
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? 33 : 1021801},
-        'USDT',
+        'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
@@ -35,7 +35,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 34 : 2021801},
-        'USDT',
+        'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
@@ -47,7 +47,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 35 : 3021801},
-        'USDT',
+        'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
@@ -59,7 +59,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 36 : 4021801},
-        'USDT',
+        'LINK',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
@@ -67,6 +67,18 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         '100000000000',
         'ACTIVE',
         ${process.env.NODE_ENV === NodeEnv.production ? 36 : 40218},
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 5021801},
+        'LINK',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
         '${currentDateTime}',
         '${currentDateTime}'
       );

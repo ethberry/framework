@@ -15,9 +15,9 @@ export class SeedDismantleErc1155Erc155RecipesAt1693120862550 implements Migrati
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102550301
+        10217550101
       ), (
-        102550302
+        10217550102
       );
     `);
 
@@ -33,13 +33,13 @@ export class SeedDismantleErc1155Erc155RecipesAt1693120862550 implements Migrati
         10306,
         1050104, -- plank
         1,
-        102550301
+        10217550101
       ), (
         'ERC1155',
         10501,
         1050102, -- wood
         10,
-        102550302
+        10217550102
       );
     `);
 
@@ -56,8 +56,8 @@ export class SeedDismantleErc1155Erc155RecipesAt1693120862550 implements Migrati
         updated_at
       ) VALUES (
         1050503,
-        102550302,
-        102550301,
+        10217550102,
+        10217550101,
         0,
         'EXPONENTIAL',
         'ACTIVE',

@@ -14,13 +14,16 @@ import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.a
 import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
+import { ListAction } from "@framework/mui-lists";
 
 export interface IAllowanceButtonProps {
   token?: any;
+  isSmall?: boolean;
+  contractId?: number;
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken() } = props;
+  const { token = getEmptyToken(), isSmall = false, contractId } = props;
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
   const handleAllowance = (): void => {
@@ -63,9 +66,19 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button variant="outlined" startIcon={<HowToVote />} onClick={handleAllowance} data-testid="AllowanceButton">
-        <FormattedMessage id="form.buttons.allowance" />
-      </Button>
+      {isSmall ? (
+        <ListAction
+          onClick={handleAllowance}
+          icon={HowToVote}
+          message="form.tips.allowance"
+          dataTestId="StakeDepositAllowanceButton"
+        />
+      ) : (
+        <Button variant="outlined" startIcon={<HowToVote />} onClick={handleAllowance} data-testid="AllowanceButton">
+          <FormattedMessage id="form.buttons.allowance" />
+        </Button>
+      )}
+
       <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
@@ -73,6 +86,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         initialValues={{
           token,
           address: "",
+          contractId,
         }}
       />
     </Fragment>

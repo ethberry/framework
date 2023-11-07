@@ -5,7 +5,7 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.20;
-import "../../../Exchange/lib/interfaces/IAsset.sol";
+import {Asset} from "../../../Exchange/lib/interfaces/IAsset.sol";
 
 interface IPonzi {
   struct Rule {

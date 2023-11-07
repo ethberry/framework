@@ -18,7 +18,7 @@ export class Erc721TokenRandomLogService {
   }
 
   public async updateBlock(): Promise<void> {
-    await this.contractService.updateLastBlockByTokenType(
+    await this.contractService.updateLastBlockByTokenTypeRandom(
       TokenType.ERC721,
       this.ethersContractService.getLastBlockOption(),
     );

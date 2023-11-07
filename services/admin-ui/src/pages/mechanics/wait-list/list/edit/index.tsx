@@ -54,7 +54,7 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
         autoselect
         data={{
           contractStatus: [ContractStatus.ACTIVE],
-          contractModule: [ModuleType.WAITLIST],
+          contractModule: [ModuleType.WAIT_LIST],
         }}
       />
     </FormDialog>

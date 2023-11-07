@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
+import { format, parseISO } from "date-fns";
 
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IRaffleRound } from "@framework/types";
 
@@ -44,6 +46,16 @@ export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
               <TableCell align="right">{number || formatMessage({ id: "pages.lottery.rounds.wait" })}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.endTimestamp" />
+              </TableCell>
+              <TableCell align="right">
+                {initialValues.endTimestamp
+                  ? format(parseISO(initialValues.endTimestamp), humanReadableDateTimeFormat)
+                  : formatMessage({ id: "pages.lottery.rounds.wait" })}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

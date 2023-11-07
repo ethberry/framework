@@ -27,6 +27,9 @@ export const LotteryContractDeployDialog: FC<ILotteryContractDeployDialogProps> 
       <Alert severity="warning" sx={{ mt: 2 }}>
         <FormattedMessage id="alert.minterRole" />
       </Alert>
+      <Alert severity="warning" sx={{ mt: 2 }}>
+        <FormattedMessage id="alert.randomChainlink" />
+      </Alert>
       <NumberInput name="timeLagBeforeRelease" />
       <NumberInput name="commission" />
     </FormDialog>

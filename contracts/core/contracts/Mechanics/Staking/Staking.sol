@@ -6,27 +6,30 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {EnumerableMap} from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-utils/contracts/roles.sol";
-import "@gemunion/contracts-utils/contracts/attributes.sol";
+import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
+import {IERC721GeneralizedCollection} from "@gemunion/contracts-erc721/contracts/interfaces/IERC721GeneralizedCollection.sol";
 
-import "../../ERC721/interfaces/IERC721Random.sol";
-import "../../ERC721/interfaces/IERC721Simple.sol";
-import "../../ERC1155/interfaces/IERC1155Simple.sol";
-import "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../../Referral/LinearReferral.sol";
-import "../../utils/constants.sol";
-import "../../utils/TopUp.sol";
-import "../../utils/errors.sol";
-import "../MysteryBox/interfaces/IERC721MysteryBox.sol";
-import "./interfaces/IStaking.sol";
+import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
+import {IERC721Simple} from "../../ERC721/interfaces/IERC721Simple.sol";
+import {IERC1155Simple} from "../../ERC1155/interfaces/IERC1155Simple.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {LinearReferral} from "../../Referral/LinearReferral.sol";
+import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
+import {TopUp} from "../../utils/TopUp.sol";
+import {ZeroBalance,NotExist,WrongRule,UnsupportedTokenType,NotComplete,Expired,NotAnOwner,WrongStake,WrongToken,LimitExceed,NotActive} from "../../utils/errors.sol";
+import {IERC721MysteryBox} from "../MysteryBox/interfaces/IERC721MysteryBox.sol";
+import {IStaking} from "./interfaces/IStaking.sol";
+import {Asset,Params,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -63,7 +66,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   event DepositWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event DepositFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
   event DepositReturn(uint256 stakingId, address owner);
-  event BalanceWithdraw(address account, Asset item);
+  event BalanceWithdraw(address owner, Asset item);
+  event DepositPenalty(uint256 stakingId, Asset item);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -298,7 +302,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       if (penaltyDeposit > 0) {
         depositItem.amount = stakeAmount - penaltyDeposit;
         // Store penalties
-        _penalties[depositItem.token][depositItem.tokenId] += penaltyDeposit;
+        setPenalty(stakeId, Asset(depositItem.tokenType, depositItem.token, depositItem.tokenId, penaltyDeposit));
+        // _penalties[depositItem.token][depositItem.tokenId] += penaltyDeposit;
         // Update deposit balance
         if (depositTokenType == TokenType.ERC20 || depositTokenType == TokenType.NATIVE) {
           // Deduct deposit balance
@@ -317,7 +322,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       // Empty current stake deposit item amount
       depositItem.amount = 0;
       // Set penalty amount
-      _penalties[depositItem.token][depositItem.tokenId] = 1;
+      setPenalty(stakeId, Asset(depositItem.tokenType, depositItem.token, depositItem.tokenId, 1));
+      // _penalties[depositItem.token][depositItem.tokenId] = 1;
     } else {
       if (depositItem.amount > 0) {
         Asset memory depositItemWithdraw = depositItem;
@@ -372,7 +378,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
       // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
       for (uint256 k = 0; k < multiplier; ) {
-        if (IERC721GeneralizedCollection(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+        if (IERC165(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
           // If the token supports the Mysterybox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
           IERC721MysteryBox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
         } else {
@@ -639,6 +645,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     _penalties[item.token][item.tokenId] = 0;
 
     ExchangeUtils.spend(ExchangeUtils._toArray(item), _msgSender(), _disabledTypes);
+  }
+
+  /**
+   * @dev Set the penalty for given asset
+   * @param stakeId id,
+   * @param item penalty.
+   */
+  function setPenalty(uint256 stakeId, Asset memory item) internal {
+    // Emit an event indicating that penalty set.
+    emit DepositPenalty(stakeId, item);
+    // append penalty
+    _penalties[item.token][item.tokenId] += item.amount;
   }
 
   /**

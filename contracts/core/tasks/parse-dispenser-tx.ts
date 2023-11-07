@@ -1,6 +1,5 @@
 import { task } from "hardhat/config";
-import { Interface } from "ethers";
-import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
+import { Interface, TransactionReceipt, TransactionResponse } from "ethers";
 
 const Dispenser = {
   abi: [
@@ -188,7 +187,7 @@ const ERC1155 = {
 
 export function getDispenserLogsFromInput(tx: TransactionResponse | null) {
   if (!tx) {
-    return;
+    return null;
   }
   // Get the provider and the transaction receipt
 
@@ -198,7 +197,13 @@ export function getDispenserLogsFromInput(tx: TransactionResponse | null) {
   // Parse the input data of the transaction to determine the disperse function used
   // parseTransaction(tx: { data: string, value?: BigNumberish }): null | TransactionDescription {
   // const inputData = tx.data;
-  const { name, args } = iface.parseTransaction({ data: tx.data, value: tx.value.toString() });
+  const txDescription = iface.parseTransaction({ data: tx.data, value: tx.value.toString() });
+
+  if (!txDescription) {
+    throw new Error("parseTransaction returns null");
+  }
+
+  const { name, args } = txDescription;
 
   // Create a list of logs based on the disperse function used
   const recipients = args.recipients;
@@ -237,12 +242,7 @@ export function getDispenserLogsFromInput(tx: TransactionResponse | null) {
 
 function compareTwoLogs(args: Array<any>, receiptArgs: Array<any>) {
   for (let i = 0; i < args.length; i++) {
-    // If log.arg is BigNumber
-    if (BigNumber.isBigNumber(receiptArgs[i])) {
-      if (!BigNumber.from(args[i]).eq(receiptArgs[i])) {
-        return false;
-      }
-    } else if (receiptArgs[i] !== args[i]) {
+    if (receiptArgs[i] !== args[i]) {
       // If values are not equal
       return false;
     }
@@ -286,8 +286,12 @@ export function compareLogs(
 
   // Go through all logs, that we want to check transfer Status.
   for (const log of logs) {
-    const find = receipt.logs.find(receiptLog => {
-      const { name, args } = iface.parseLog(receiptLog);
+    const find = receipt.logs.find(_log => {
+      const logDescription = iface.parseLog({ topics: _log.topics as string[], data: _log.data });
+      if (!logDescription) {
+        return false;
+      }
+      const { name, args } = logDescription;
       if (name === eventName && log.length === args.length && Array.isArray(args)) {
         if (compareTwoLogs(log, args)) {
           return true; // find Log.
@@ -314,12 +318,22 @@ task("parse-dispenser-tx", "Prints success transfers and failed transfers")
 
     // Parse tx Input
     const tx = await hre.ethers.provider.getTransaction(hash);
-    const { functionName, eventName, logs } = getDispenserLogsFromInput(tx);
+    const log = getDispenserLogsFromInput(tx);
+    if (!log) {
+      console.error("LOGS NOT PARSED");
+      return null;
+    }
+    const { functionName, eventName, logs } = log;
 
     // Check success transfers
     const receipt = await hre.ethers.provider.getTransactionReceipt(hash);
+    if (!receipt) {
+      console.error("CAN'T GET RECEIPT");
+      return null;
+    }
     const { findLogs, dontFindLogs } = compareLogs(receipt, functionName, eventName, logs);
 
     console.info("FIND LOGS ::: \n", findLogs);
     console.warn("DONT FIND LOGS ::: \n", dontFindLogs);
+    return null;
   });

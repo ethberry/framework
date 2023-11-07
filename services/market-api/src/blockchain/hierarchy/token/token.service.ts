@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
 import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
@@ -315,5 +315,12 @@ export class TokenService {
     });
 
     return queryBuilder.getOne();
+  }
+
+  public findAll(
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindManyOptions<TokenEntity>,
+  ): Promise<Array<TokenEntity>> {
+    return this.tokenEntityRepository.find({ where, ...options });
   }
 }

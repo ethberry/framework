@@ -6,13 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import "../../Diamond/override/AccessControlInternal.sol";
-import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "../override/SignatureValidator.sol";
-import "../interfaces/ILottery.sol";
+import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
+import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {SignatureValidator} from "../override/SignatureValidator.sol";
+import {ILottery} from "../interfaces/ILottery.sol";
+import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
+import {SignerMissingRole, NotExist, WrongToken} from "../../utils/errors.sol";
 
 contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);

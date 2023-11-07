@@ -14,7 +14,7 @@ export class VestingClaimContractDeployDto implements IVestingContractDeployDto 
   @decorate(IsString({ message: "typeMismatch" }))
   @decorate(IsEthereumAddress({ message: "patternMismatch" }))
   @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
-  public beneficiary: string;
+  public owner: string;
 
   @decorate(
     ApiProperty({

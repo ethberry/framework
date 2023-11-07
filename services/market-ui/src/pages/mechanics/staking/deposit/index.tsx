@@ -14,6 +14,7 @@ import { StakingRewardButton } from "../../../../components/buttons";
 
 import { StakingDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
+import { addSeconds, formatDistance } from "date-fns";
 
 export const StakingDeposit: FC = () => {
   const {
@@ -62,7 +63,16 @@ export const StakingDeposit: FC = () => {
         <List>
           {rows.map(deposit => (
             <ListItem key={deposit.id}>
-              <ListItemText>{deposit.stakingRule?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{deposit.stakingRule?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>
+                {deposit.startTimestamp
+                  ? formatDistance(
+                      addSeconds(new Date(deposit.startTimestamp), deposit.stakingRule?.durationAmount || 0),
+                      Date.now(),
+                      { addSuffix: true },
+                    )
+                  : ""}
+              </ListItemText>
               <ListActions>
                 <StakingRewardButton stake={deposit} />
                 <ListAction onClick={handleView(deposit)} message="form.tips.view" icon={Visibility} />

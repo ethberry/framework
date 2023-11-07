@@ -60,11 +60,11 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         },
         {
           name: "deposit_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "reward_id",
-          type: "int",
+          type: "bigint",
           isNullable: true,
         },
         {

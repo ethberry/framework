@@ -6,10 +6,11 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Pausable.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
-import "../../utils/constants.sol";
-import "./ERC721MysteryBoxSimple.sol";
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+
+import {ERC721MysteryBoxSimple} from "./ERC721MysteryBoxSimple.sol";
 
 contract ERC721MysteryBoxPausable is ERC721MysteryBoxSimple, Pausable {
   constructor(

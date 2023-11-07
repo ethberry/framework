@@ -1,12 +1,13 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract, encodeBytes32String, ZeroAddress } from "ethers";
+
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
-import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { isEqualEventArgArrObj } from "../utils";
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { Contract, encodeBytes32String, ZeroAddress } from "ethers";
-import { isEqualEventArgArrObj } from "../utils";
 
 describe("Diamond Exchange MysteryBox", function () {
   const factory = async (facetName = "ExchangeMysteryBoxFacet"): Promise<any> => {
@@ -447,160 +448,162 @@ describe("Diamond Exchange MysteryBox", function () {
     });
   });
 
-  it("should fail: SignerMissingRole", async function () {
-    const [owner, receiver] = await ethers.getSigners();
-    const exchangeInstance = await factory();
-    const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+  describe("ERROR", function () {
+    it("should fail: SignerMissingRole", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
 
-    const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
-    const mysteryboxInstance = await deployErc721Base("ERC721MysteryBoxSimple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const mysteryboxInstance = await deployErc721Base("ERC721MysteryBoxSimple", exchangeInstance);
 
-    const signature = await generateManyToManySignature({
-      account: receiver.address,
-      params: {
-        nonce: encodeBytes32String("nonce"),
-        externalId,
-        expiresAt,
-        receiver: owner.address,
-        referrer: ZeroAddress,
-        extra,
-      },
-      items: [
-        {
-          tokenType: 2,
-          token: await erc721Instance.getAddress(),
-          tokenId,
-          amount: 1,
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
+        params: {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
         },
+        items: [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 2,
+            token: await mysteryboxInstance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      const accessInstance = await ethers.getContractAt("AccessControlFacet", await exchangeInstance.getAddress());
+      await accessInstance.renounceRole(MINTER_ROLE, owner.address);
+
+      const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
         {
-          tokenType: 2,
-          token: await mysteryboxInstance.getAddress(),
-          tokenId,
-          amount: 1,
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
         },
-      ],
-      price: [
+        [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 2,
+            token: await mysteryboxInstance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+        ],
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
         {
-          tokenType: 0,
-          token: ZeroAddress,
-          tokenId,
-          amount,
+          value: amount,
         },
-      ],
+      );
+
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
-    const accessInstance = await ethers.getContractAt("AccessControlFacet", await exchangeInstance.getAddress());
-    await accessInstance.renounceRole(MINTER_ROLE, owner.address);
+    it("should fail: EnforcedPause", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
 
-    const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
-      {
-        nonce: encodeBytes32String("nonce"),
-        externalId,
-        expiresAt,
-        receiver: owner.address,
-        referrer: ZeroAddress,
-        extra,
-      },
-      [
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
+      await pausableInstance.pause();
+
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const mysteryboxInstance = await deployErc721Base("ERC721MysteryBoxSimple", exchangeInstance);
+
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
+        params,
+        items: [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 2,
+            token: await mysteryboxInstance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
+        params,
+        [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 2,
+            token: await mysteryboxInstance.getAddress(),
+            tokenId,
+            amount: 1,
+          },
+        ],
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
         {
-          tokenType: 2,
-          token: await erc721Instance.getAddress(),
-          tokenId,
-          amount: 1,
+          value: amount,
         },
-        {
-          tokenType: 2,
-          token: await mysteryboxInstance.getAddress(),
-          tokenId,
-          amount: 1,
-        },
-      ],
-      [
-        {
-          tokenType: 0,
-          token: ZeroAddress,
-          tokenId,
-          amount,
-        },
-      ],
-      signature,
-      {
-        value: amount,
-      },
-    );
+      );
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
-  });
-
-  it("should fail: paused", async function () {
-    const [_owner, receiver] = await ethers.getSigners();
-
-    const exchangeInstance = await factory();
-    const { generateManyToManySignature } = await getSignatures(exchangeInstance);
-
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
-    await pausableInstance.pause();
-
-    const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
-    const mysteryboxInstance = await deployErc721Base("ERC721MysteryBoxSimple", exchangeInstance);
-
-    const signature = await generateManyToManySignature({
-      account: receiver.address,
-      params,
-      items: [
-        {
-          tokenType: 2,
-          token: await erc721Instance.getAddress(),
-          tokenId,
-          amount: 1,
-        },
-        {
-          tokenType: 2,
-          token: await mysteryboxInstance.getAddress(),
-          tokenId,
-          amount: 1,
-        },
-      ],
-      price: [
-        {
-          tokenType: 0,
-          token: ZeroAddress,
-          tokenId,
-          amount,
-        },
-      ],
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
     });
-
-    const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
-      params,
-      [
-        {
-          tokenType: 2,
-          token: await erc721Instance.getAddress(),
-          tokenId,
-          amount: 1,
-        },
-        {
-          tokenType: 2,
-          token: await mysteryboxInstance.getAddress(),
-          tokenId,
-          amount: 1,
-        },
-      ],
-      [
-        {
-          tokenType: 0,
-          token: ZeroAddress,
-          tokenId,
-          amount,
-        },
-      ],
-      signature,
-      {
-        value: amount,
-      },
-    );
-
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
   });
 });

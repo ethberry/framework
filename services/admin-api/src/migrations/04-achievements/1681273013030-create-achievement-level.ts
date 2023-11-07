@@ -27,7 +27,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "achievement_rule_id",

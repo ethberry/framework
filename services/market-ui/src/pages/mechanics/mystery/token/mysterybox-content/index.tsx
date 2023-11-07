@@ -54,7 +54,7 @@ export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
                   component={RouterLink}
                   to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId as number}`}
                 >
-                  {component.template!.title}
+                  {`${component.amount} x ${component.template?.title}`}
                 </Link>
               ) : (
                 component.template!.title

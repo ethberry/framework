@@ -29,14 +29,14 @@ import { getEventsTopics } from "../../../../common/utils";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
-        const waitlistContracts = await contractService.findAllByType([ModuleType.WAITLIST]);
+        const waitListContracts = await contractService.findAllByType([ModuleType.WAIT_LIST]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = waitlistContracts.fromBlock || startingBlock;
+        const fromBlock = waitListContracts.fromBlock || startingBlock;
 
         const eventNames = [
           WaitListEventType.WaitListRewardSet,
@@ -51,8 +51,8 @@ import { getEventsTopics } from "../../../../common/utils";
         const topics = getEventsTopics(eventNames);
         return {
           contract: {
-            contractType: ContractType.WAITLIST,
-            contractAddress: waitlistContracts.address,
+            contractType: ContractType.WAIT_LIST,
+            contractAddress: waitListContracts.address,
             contractInterface: new Interface(WaitListSol.abi),
             topics,
           },

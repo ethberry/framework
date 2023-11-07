@@ -50,6 +50,7 @@
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
+    "staking-duration": "First period ends {duration}",
     "transfer": "Transfer",
     "transferOwnership": "Transfer ownership",
     "upgrade": "Upgrade",
@@ -222,6 +223,7 @@
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
       "LevelUp": "Level Up",
+      "Merge": "Merge",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
       "OwnershipTransferred": "OwnershipTransferred",
@@ -364,6 +366,7 @@
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
+      "merge": "Merge",
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
@@ -506,6 +509,8 @@
       "updatedAt": "Updated",
       "wallet": "Wallet",
       "winNumbers": "Win numbers",
+      "winNumber": "Win number",
+      "winner": "WINNER",
       "withdrawDeposit": "Withdraw deposit",
       "youtubeUrl": "Youtube",
       "zip": "ZIP code"
@@ -788,6 +793,10 @@
         "title": "Uniswap"
       }
     },
+    "dragons": {
+      "description": "Here be dragons",
+      "title": "Not implemented :)"
+    },
     "ecommerce": {
       "title": "Ecommerce"
     },
@@ -869,6 +878,9 @@
     "exchanges": {
       "title": "Exchanges"
     },
+    "feedback": {
+      "title": "Feedback"
+    },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login",
@@ -903,6 +915,33 @@
     },
     "lottery": {
       "contract": {
+        "statistics": {
+          "collapse": {
+            "close": "Hide",
+            "open": "Details"
+          },
+          "controls": {
+            "drawn": "Drawn: {datetime}",
+            "last": "Last round",
+            "next": "Next round",
+            "previous": "Previous round",
+            "round": "Round: #{roundId}",
+            "start": "Started: {datetime}"
+          },
+          "empty": "No finished rounds yet...",
+          "matches": {
+            "match": {
+              "title": "Match {amount}",
+              "loose": "{amount} ticket{many}",
+              "win": "{amount} Winning ticket{many}"
+            },
+            "title": "Match the unique winning numbers to share prizes"
+          },
+          "prizePot": "Prize pot",
+          "title": "Finished rounds",
+          "totalTickets": "Sold tickets",
+          "winNumbers": "Winning numbers"
+        },
         "title": "Contract: {title}"
       },
       "purchase": {
@@ -1052,6 +1091,21 @@
     },
     "raffle": {
       "contract": {
+        "statistics": {
+          "controls": {
+            "drawn": "Drawn: {datetime}",
+            "last": "Last round",
+            "next": "Next round",
+            "previous": "Previous round",
+            "round": "Round: #{roundId}",
+            "start": "Started: {datetime}"
+          },
+          "empty": "No finished rounds yet...",
+          "noTickets": "No tickets this round",
+          "title": "Finished rounds",
+          "totalTickets": "Total tickets this round: {count}",
+          "winNumber": "Winning number"
+        },
         "title": "Contract: {title}"
       },
       "purchase": {
@@ -1073,17 +1127,20 @@
       "craft": {
         "approve": "Please approve ingredients to Exchange before",
         "price": "Price",
-        "tabs": {
-          "erc1155": "ERC1155",
-          "erc721": "ERC721",
-          "erc998": "ERC998"
-        },
         "title": "Craft recipe: {title}"
       },
       "craft-list": {
         "title": "Craft recipes"
       },
       "ingredients": "Ingredients",
+      "merge": {
+        "approve": "Please approve ingredients to Exchange before",
+        "price": "Price",
+        "title": "Merge recipe: {title}"
+      },
+      "merge-list": {
+        "title": "Merge recipes"
+      },
       "title": "Recipes"
     },
     "referral": {
@@ -1202,8 +1259,8 @@
     "web3NotDetected": "Web3 not detected"
   },
   "socket": {
-    "connected": "WebSocket connection ON",
     "connect_failed": "WebSocket connection failed",
+    "connected": "WebSocket connection ON",
     "error": "WebSocket connection Error"
   }
 }

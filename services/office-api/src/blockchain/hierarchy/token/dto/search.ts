@@ -82,7 +82,7 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
     minimum: 1,
   })
   @IsOptional()
-  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
 
   @ApiProperty({

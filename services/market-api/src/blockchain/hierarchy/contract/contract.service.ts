@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
-import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
+import type { IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
+import { IContractAutocompleteExtDto } from "./interface";
 
 @Injectable()
 export class ContractService {
@@ -111,13 +112,26 @@ export class ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
-    const { merchantId, contractFeatures = [], contractType = [], contractModule = [], excludeFeatures = [] } = dto;
+  public async autocomplete(dto: IContractAutocompleteExtDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
+    const {
+      contractId,
+      merchantId,
+      contractFeatures = [],
+      contractType = [],
+      contractModule = [],
+      excludeFeatures = [],
+    } = dto;
 
     const where = {
       chainId: userEntity.chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
+
+    if (contractId) {
+      Object.assign(where, {
+        id: contractId,
+      });
+    }
 
     if (merchantId) {
       Object.assign(where, {

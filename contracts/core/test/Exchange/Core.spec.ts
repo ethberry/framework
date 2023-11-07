@@ -1,21 +1,21 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
+import { time } from "@openzeppelin/test-helpers";
+import { TokenMetadata } from "@framework/types";
 
 import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { amount, METADATA_ROLE, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
-import { isEqualEventArgArrObj, isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
 import { VRFCoordinatorV2Mock } from "../../typechain-types";
+import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
+import { isEqualEventArgArrObj, isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
 import { deployLinkVrfFixture } from "../shared/link";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { deployBusd, deployERC1363, deployUsdt, deployWeth } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
-import { time } from "@openzeppelin/test-helpers";
 import { decodeMetadata } from "../shared/metadata";
-import { TokenMetadata } from "@framework/types";
 
 describe("Diamond Exchange Core", function () {
   const factory = async (facetName = "ExchangePurchaseFacet"): Promise<any> => {
@@ -1357,184 +1357,186 @@ describe("Diamond Exchange Core", function () {
 
       await expect(tx1).to.be.revertedWithCustomError(vrfInstance, "InvalidSubscription");
     });
-  });
 
-  it("should purchase", async function () {
-    const [_owner, receiver] = await ethers.getSigners();
+    it("should purchase", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const { generateOneToManySignature } = await getSignatures(exchangeInstance);
-    const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-    await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
-    await erc721Instance.grantRole(METADATA_ROLE, await exchangeInstance.getAddress());
+      await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
+      await erc721Instance.grantRole(METADATA_ROLE, await exchangeInstance.getAddress());
 
-    const signature = await generateOneToManySignature({
-      account: receiver.address,
-      params: {
-        externalId,
-        expiresAt,
-        nonce,
-        extra,
-        receiver: await exchangeInstance.getAddress(),
-        referrer: ZeroAddress,
-      },
-      item: {
-        tokenType: 2,
-        token: await erc721Instance.getAddress(),
-        tokenId,
-        amount,
-      },
-      price: [
-        {
-          amount,
-          token: "0x0000000000000000000000000000000000000000",
-          tokenId: "0",
-          tokenType: 0,
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params: {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: await exchangeInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-      ],
-    });
-
-    const tx1 = exchangeInstance.connect(receiver).purchase(
-      {
-        externalId,
-        expiresAt,
-        nonce,
-        extra,
-        receiver: await exchangeInstance.getAddress(),
-        referrer: ZeroAddress,
-      },
-      {
-        tokenType: 2,
-        token: await erc721Instance.getAddress(),
-        tokenId,
-        amount,
-      },
-      [
-        {
-          amount,
-          token: "0x0000000000000000000000000000000000000000",
-          tokenId: "0",
-          tokenType: 0,
-        },
-      ],
-      signature,
-      { value: amount, gasLimit: 500000 },
-    );
-
-    await expect(tx1)
-      .to.emit(exchangeInstance, "Purchase")
-      .withArgs(
-        receiver.address,
-        externalId,
-        isEqualEventArgObj({
-          tokenType: "2",
+        item: {
+          tokenType: 2,
           token: await erc721Instance.getAddress(),
-          tokenId: toBigInt(tokenId),
-          amount: toBigInt(amount),
-        }),
-        isEqualEventArgArrObj({
-          tokenType: "0",
-          token: ZeroAddress,
-          tokenId: toBigInt("0"),
+          tokenId,
           amount,
-        }),
+        },
+        price: [
+          {
+            amount,
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: await exchangeInstance.getAddress(),
+          referrer: ZeroAddress,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount,
+        },
+        [
+          {
+            amount,
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+        signature,
+        { value: amount, gasLimit: 500000 },
       );
 
-    await expect(tx1).to.changeEtherBalances([receiver, exchangeInstance], [-amount, amount]);
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: "2",
+            token: await erc721Instance.getAddress(),
+            tokenId: toBigInt(tokenId),
+            amount: toBigInt(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: "0",
+            token: ZeroAddress,
+            tokenId: toBigInt("0"),
+            amount,
+          }),
+        );
+
+      await expect(tx1).to.changeEtherBalances([receiver, exchangeInstance], [-amount, amount]);
+    });
   });
 
-  it("should fail: receiver not exist", async function () {
-    const [_owner, receiver] = await ethers.getSigners();
+  describe("ERROR", function () {
+    it("should fail: receiver not exist", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const { generateOneToManySignature } = await getSignatures(exchangeInstance);
-    const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-    await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
-    await erc721Instance.grantRole(METADATA_ROLE, await exchangeInstance.getAddress());
+      await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
+      await erc721Instance.grantRole(METADATA_ROLE, await exchangeInstance.getAddress());
 
-    const signature = await generateOneToManySignature({
-      account: receiver.address,
-      params: {
-        externalId,
-        expiresAt,
-        nonce,
-        extra,
-        receiver: ZeroAddress,
-        referrer: ZeroAddress,
-      },
-      item: {
-        tokenType: 2,
-        token: await erc721Instance.getAddress(),
-        tokenId,
-        amount,
-      },
-      price: [
-        {
-          amount,
-          token: "0x0000000000000000000000000000000000000000",
-          tokenId: "0",
-          tokenType: 0,
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params: {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
         },
-      ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            amount,
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount,
+        },
+        [
+          {
+            amount,
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+        signature,
+        { value: amount, gasLimit: 500000 },
+      );
+
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotExist");
     });
 
-    const tx1 = exchangeInstance.connect(receiver).purchase(
-      {
-        externalId,
-        expiresAt,
-        nonce,
-        extra,
-        receiver: ZeroAddress,
-        referrer: ZeroAddress,
-      },
-      {
-        tokenType: 2,
-        token: await erc721Instance.getAddress(),
-        tokenId,
-        amount,
-      },
-      [
-        {
-          amount,
-          token: "0x0000000000000000000000000000000000000000",
-          tokenId: "0",
-          tokenType: 0,
-        },
-      ],
-      signature,
-      { value: amount, gasLimit: 500000 },
-    );
+    it("should fail: EnforcedPause", async function () {
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
 
-    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotExist");
-  });
+      await pausableInstance.pause();
 
-  it("should fail: paused", async function () {
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
-
-    await pausableInstance.pause();
-
-    const tx1 = exchangeInstance.purchase(
-      params,
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      [
+      const tx1 = exchangeInstance.purchase(
+        params,
         {
           tokenType: 0,
           token: ZeroAddress,
           tokenId,
           amount,
         },
-      ],
-      ZeroHash,
-    );
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

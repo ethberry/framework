@@ -32,7 +32,7 @@ export class CreateLotteryRoundAt1660436476100 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
           isNullable: true,
         },
         {

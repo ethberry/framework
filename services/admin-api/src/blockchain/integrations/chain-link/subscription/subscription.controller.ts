@@ -15,8 +15,7 @@ export class ChainLinkSubscriptionController {
 
   @Get("/autocomplete")
   public autocomplete(
-    // @Query() dto: SubscriptionAutocompleteDto,
-    @Query() dto: any,
+    @Query() dto: SubscriptionAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<ChainLinkSubscriptionEntity>> {
     return this.chainLinkSubscriptionService.autocomplete(dto, userEntity);

@@ -3,14 +3,14 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/Context.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 
 library PausableStorage {
     struct Layout {
         bool _paused;
     }
 
-    bytes32 internal constant STORAGE_SLOT = 
+    bytes32 internal constant STORAGE_SLOT =
         keccak256('pausable.contracts.storage');
 
     function layout() internal pure returns (Layout storage l) {
@@ -42,6 +42,17 @@ abstract contract PausableInternal is Context {
     event Unpaused(address account);
 
     /**
+     * @dev The operation failed because the contract is paused.
+     */
+    error EnforcedPause();
+
+    /**
+     * @dev The operation failed because the contract is not paused.
+     */
+    error ExpectedPause();
+
+
+    /**
      * @dev Modifier to make a function callable only when the contract is not paused.
      *
      * Requirements:
@@ -66,20 +77,6 @@ abstract contract PausableInternal is Context {
     }
 
     /**
-     * @dev Throws if the contract is paused.
-     */
-    function _requireNotPaused() internal view virtual {
-        require(!_paused(), "Pausable: paused");
-    }
-
-    /**
-     * @dev Throws if the contract is not paused.
-     */
-    function _requirePaused() internal view virtual {
-        require(_paused(), "Pausable: not paused");
-    }
-
-    /**
      * @dev Triggers stopped state.
      *
      * Requirements:
@@ -88,6 +85,24 @@ abstract contract PausableInternal is Context {
      */
     function _paused() internal view virtual returns (bool) {
         return PausableStorage.layout()._paused;
+    }
+
+    /**
+     * @dev Throws if the contract is paused.
+     */
+    function _requireNotPaused() internal view virtual {
+        if (_paused()) {
+            revert EnforcedPause();
+        }
+    }
+
+    /**
+     * @dev Throws if the contract is not paused.
+     */
+    function _requirePaused() internal view virtual {
+        if (!_paused()) {
+            revert ExpectedPause();
+        }
     }
 
     /**

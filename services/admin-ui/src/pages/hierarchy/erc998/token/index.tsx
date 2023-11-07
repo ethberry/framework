@@ -40,7 +40,6 @@ export const Erc998Token: FC = () => {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
-      tokenId: "",
       metadata: {},
     },
   });

@@ -140,6 +140,15 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
+    if (listenerType === ListenerType.PAYMENT_SPLITTER) {
+      const contracts = await this.contractService.findAllByType([ModuleType.PAYMENT_SPLITTER]);
+      contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
+      const unique = [...new Set(contracts.address)];
+      this.ponziLogService.addListener({
+        address: unique,
+        fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
+      });
+    }
     if (listenerType === ListenerType.LOTTERY) {
       const contracts = await this.contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
@@ -176,8 +185,8 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.WAITLIST) {
-      const contracts = await this.contractService.findAllByType([ModuleType.WAITLIST]);
+    if (listenerType === ListenerType.WAIT_LIST) {
+      const contracts = await this.contractService.findAllByType([ModuleType.WAIT_LIST]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.waitListLogService.addListener({
@@ -199,7 +208,7 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.ERC721) {
+    if (listenerType === ListenerType.ERC721 || listenerType === ListenerType.COLLECTION) {
       const contracts = await this.contractService.findAllTokensByType(TokenType.ERC721);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
@@ -323,8 +332,8 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.WAITLIST) {
-      const contracts = await this.contractService.findAllByType([ModuleType.WAITLIST]);
+    if (listenerType === ListenerType.WAIT_LIST) {
+      const contracts = await this.contractService.findAllByType([ModuleType.WAIT_LIST]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
       this.waitListLogService.addListener({

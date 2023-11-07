@@ -29,6 +29,8 @@ export enum ExchangeEventType {
   Breed = "Breed",
   // MODULE:RENTABLE
   Lend = "Lend",
+  // MODULE:MERGE
+  Merge = "Merge",
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",

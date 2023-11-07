@@ -24,6 +24,7 @@ import { TopUpButton } from "../../../../components/buttons/mechanics/common/top
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { StakingEditDialog } from "./edit";
+import { StakingWithdrawPenaltyButton } from "../../../../components/buttons/mechanics/staking/withdraw-penalty";
 
 export const StakingContracts: FC = () => {
   const {
@@ -107,6 +108,7 @@ export const StakingContracts: FC = () => {
                 <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <AllowanceButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
                 <TopUpButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <StakingWithdrawPenaltyButton contract={contract} />
                 <EthListenerAddButton
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}

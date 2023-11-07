@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
+import { CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
+import { StyledCardContentDescription, StyledCardMedia, StyledTemplateItemCard } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 
 interface IErc1155TemplateListItemProps {
   template: ITemplate;
@@ -17,7 +17,7 @@ export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props 
   const { template } = props;
 
   return (
-    <Card>
+    <StyledTemplateItemCard>
       <CardActionArea component={RouterLink} to={`/erc1155/templates/${template.id}`}>
         <CardHeader title={template.title} />
         <StyledCardMedia image={template.imageUrl} />
@@ -26,7 +26,7 @@ export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props 
             <RichTextDisplay data={template.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(template.price)}
+            {formatItem(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -35,6 +35,6 @@ export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props 
           <TemplatePurchaseButton template={template} />
         </Grid>
       </CardActions>
-    </Card>
+    </StyledTemplateItemCard>
   );
 };

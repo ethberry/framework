@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { CraftStatus, ICraftSearchDto } from "@framework/types";
+import { CraftStatus } from "@framework/types";
+import type { ICraftSearchDto } from "@framework/types";
 
 export class CraftSearchDto extends SearchDto implements ICraftSearchDto {
   @ApiPropertyOptional({

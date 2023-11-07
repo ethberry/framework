@@ -40,8 +40,8 @@ export class TransactionModule implements OnModuleInit {
   ) {}
 
   // run worker
-  public async onModuleInit(): Promise<void> {
+  public onModuleInit(): void {
     this.transactionServiceRedis.processQueue();
-    return this.transactionServiceCron.checkTransaction();
+    // return this.transactionServiceCron.checkTransaction();
   }
 }

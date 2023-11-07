@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { ITransaction } from "@framework/types";
-import { TransactionStatus } from "@framework/types";
+import { ContractType, TransactionStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "transactions" })
@@ -24,6 +24,12 @@ export class TransactionEntity extends IdDateBaseEntity implements ITransaction 
 
   @Column({ type: "json" })
   public logData: Record<string, any>;
+
+  @Column({
+    type: "enum",
+    enum: ContractType,
+  })
+  public contractType: ContractType;
 
   @Column({
     type: "enum",

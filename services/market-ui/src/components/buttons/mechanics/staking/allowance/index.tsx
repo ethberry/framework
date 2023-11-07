@@ -14,6 +14,7 @@ import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowanc
 
 import { StakingAllowanceDialog } from "./dialog";
 import type { IStakingAllowanceDto } from "./dialog";
+import { AllowanceButton } from "../../../../../pages/exchange/wallet/allowance";
 
 export interface IStakingAllowanceButtonProps {
   className?: string;
@@ -72,7 +73,27 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   const isDisabled = rule.deposit?.components.every(component => component.contract!.contractType === TokenType.NATIVE);
 
-  return (
+  const isNft = rule.deposit?.components.every(
+    component =>
+      component.contract!.contractType === TokenType.ERC721 || component.contract!.contractType === TokenType.ERC998,
+  );
+
+  const tokenTo = {
+    components: [
+      {
+        amount: "1",
+        contractId: rule.deposit!.components[0].contractId,
+        templateId: rule.deposit!.components[0].templateId,
+        tokenType: rule.deposit!.components[0].tokenType,
+        contract: {
+          address: rule.deposit!.components[0].contract!.address,
+          decimals: rule.deposit!.components[0].contract!.decimals,
+        },
+      },
+    ],
+  };
+
+  return !isNft ? (
     <Fragment>
       <ListAction
         onClick={handleAllowance}
@@ -99,5 +120,7 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
         }}
       />
     </Fragment>
+  ) : (
+    <AllowanceButton isSmall={true} token={tokenTo} contractId={rule.contractId} />
   );
 };

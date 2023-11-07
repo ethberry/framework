@@ -1,16 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import {
-  Brackets,
-  DeepPartial,
-  FindManyOptions,
-  FindOneOptions,
-  FindOptionsWhere,
-  Repository,
-  In,
-  Not,
-  Any,
-} from "typeorm";
+import { Brackets, DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TransactionEntity } from "./transaction.entity";
 import { TransactionStatus } from "@framework/types";
@@ -57,7 +47,7 @@ export class TransactionService {
 
   public async findAllTxHashes(where: FindOptionsWhere<TransactionEntity>): Promise<Array<string> | null> {
     const queryBuilder = this.transactionEntityRepository.createQueryBuilder("transactions");
-    queryBuilder.select(["transactions.transactionHash"]);
+    queryBuilder.select(["transactions.transactionHash", "transactions.blockNumber"]);
     queryBuilder.where(where);
 
     queryBuilder.andWhere(
@@ -70,12 +60,11 @@ export class TransactionService {
         });
       }),
     );
-
-    // queryBuilder.andWhere("transactions.transactionStatus = :transactionStatus", {
-    //   transactionStatus: Not(TransactionStatus.PROCESSED),
-    //   // transactionStatus: Not(`${TransactionStatus.PROCESSED}` as unknown as TransactionStatus),
-    //   // transactionStatus: Any([TransactionStatus.PENDING, TransactionStatus.PROCESS]),
-    // });
+    queryBuilder.orderBy({
+      "transactions.blockNumber": "ASC",
+      "transactions.transactionIndex": "ASC",
+      "transactions.logIndex": "ASC",
+    });
     queryBuilder.groupBy("transactions.id, transactions.transactionHash");
 
     const allTxs = await queryBuilder.getMany();
@@ -107,12 +96,6 @@ export class TransactionService {
         });
       }),
     );
-
-    // queryBuilder.andWhere("transactions.transactionStatus = :transactionStatus", {
-    //   transactionStatus: Not(TransactionStatus.PROCESSED),
-    //   // transactionStatus: Not(`${TransactionStatus.PROCESSED}` as unknown as TransactionStatus),
-    //   // transactionStatus: Any([TransactionStatus.PENDING, TransactionStatus.PROCESS]),
-    // });
 
     queryBuilder.orderBy({
       "transactions.blockNumber": "ASC",

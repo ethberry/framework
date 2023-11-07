@@ -20,7 +20,7 @@ import {
   VestingContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { WaitListContractDeployDto } from "./dto/wallet";
+import { PaymentSplitterContractDeployDto } from "./dto/payment-splitter";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -107,9 +107,12 @@ export class ContractManagerController {
     return this.contractManagerSignService.lottery(dto, userEntity);
   }
 
-  // MODULE:WALLET
-  @Post("/wallet")
-  public wallet(@Body() dto: WaitListContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.wallet(dto, userEntity);
+  // MODULE:PAYMENT-SPLITTER
+  @Post("/payment-splitter")
+  public wallet(
+    @Body() dto: PaymentSplitterContractDeployDto,
+    @User() userEntity: UserEntity,
+  ): Promise<IServerSignature> {
+    return this.contractManagerSignService.paymentSplitter(dto, userEntity);
   }
 }

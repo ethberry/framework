@@ -114,6 +114,7 @@ export enum ContractEventType {
   StakingFinish = "StakingFinish",
   WithdrawBalance = "WithdrawBalance",
   ReturnDeposit = "ReturnDeposit",
+  DepositPenalty = "DepositPenalty",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -197,6 +198,14 @@ export enum ContractEventSignature {
   RedeemClaim = "RedeemClaim()",
   UnpackClaim = "UnpackClaim()",
 
+  // event Merge(address account, uint256 externalId, Asset[] items, Asset[] price);
+  // MODULE:MERGE
+  Merge = "Merge(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
+
+  // MODULE:RAFFLE
+  // event RoundFinalized(uint256 round, uint256 prizeIndex, uint256 prizeNumber);
+  RoundFinalizedRaffle = "RoundFinalized(uint256,uint256,uint256)",
+
   // MODULE:LOTTERY
   RoundFinalized = "RoundFinalized(uint256,uint8[6])",
   // event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
@@ -254,6 +263,7 @@ export enum ContractEventSignature {
   DepositStart = "DepositStart(uint256,uint256,address,uint256,uint256[])",
   DepositWithdraw = "DepositWithdraw(uint256,address,uint256)",
   DepositFinish = "DepositFinish(uint256,address,uint256,uint256)",
+  DepositPenalty = "DepositPenalty(uint256,(uint8,address,uint256,uint256))",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -335,6 +345,8 @@ export enum ContractEventSignature {
   LotteryDeployed = "LotteryDeployed(address,uint256,((uint256,uint256)))",
   RaffleDeployed = "RaffleDeployed(address,uint256)",
   WaitListDeployed = "WaitListDeployed(address,uint256)",
+  // event PaymentSplitterDeployed(address account, uint256 externalId, PaymentSplitterArgs args);
+  PaymentSplitterDeployed = "PaymentSplitterDeployed(address,uint256,(address[],uint256[]))",
 
   // MODULE:ERC1363
   TransferReceived = "TransferReceived(address,address,uint256,bytes)",

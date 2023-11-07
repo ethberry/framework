@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { DismantleStatus, IDismantleSearchDto } from "@framework/types";
+import { DismantleStatus } from "@framework/types";
+import type { IDismantleSearchDto } from "@framework/types";
 
 export class DismantleSearchDto extends SearchDto implements IDismantleSearchDto {
   @ApiPropertyOptional({

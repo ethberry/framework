@@ -1,35 +1,24 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC, useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import {
-  Grid,
-  MenuItem,
-  Paper,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Grid, MenuItem, Select, Typography } from "@mui/material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
 
 import GetSubscriptionABI from "../../../abis/integrations/chain-link/fund/getSubscription.abi.json";
 import LinkBalanceOfABI from "../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
+
 import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 import { formatEther } from "../../../utils/money";
-import { CustomTablePagination } from "./styled";
+import { StyledDataGridPremium } from "./styled";
 
 export interface IVrfSubscriptionData {
   owner: string;
@@ -41,6 +30,7 @@ export interface IVrfSubscriptionData {
 export const ChainLink: FC = () => {
   const { account } = useWeb3React();
   const { profile } = useUser<IUser>();
+  const { formatMessage } = useIntl();
 
   if (!profile.userRoles.includes(UserRole.ADMIN)) {
     return (
@@ -61,6 +51,10 @@ export const ChainLink: FC = () => {
   });
   const [currentBalance, setCurrentBalance] = useState<string>("0");
   const [currentSubscription, setCurrentSubscription] = useState<number>(0);
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 10,
+    page: 0,
+  });
 
   const { fn, isLoading } = useApiCall(
     api => {
@@ -108,13 +102,19 @@ export const ChainLink: FC = () => {
     { success: false },
   );
 
-  const metaFnBalanceData = useMetamaskValue((values: any, web3Context: Web3ContextType) => {
-    return getAccountBalance(SystemModuleType.CHAIN_LINK, values, web3Context);
-  });
+  const metaFnBalanceData = useMetamaskValue(
+    (values: any, web3Context: Web3ContextType) => {
+      return getAccountBalance(SystemModuleType.CHAIN_LINK, values, web3Context);
+    },
+    { success: false },
+  );
 
-  const metaFnSubData = useMetamaskValue((values: any, web3Context: Web3ContextType) => {
-    return getSubscriptionData(SystemModuleType.CHAIN_LINK, values, web3Context);
-  });
+  const metaFnSubData = useMetamaskValue(
+    (values: any, web3Context: Web3ContextType) => {
+      return getSubscriptionData(SystemModuleType.CHAIN_LINK, values, web3Context);
+    },
+    { success: false },
+  );
 
   useEffect(() => {
     if (!merchantSubscriptions && !isLoading) {
@@ -131,123 +131,99 @@ export const ChainLink: FC = () => {
     void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
   }, [currentSubscription]);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - subData.consumers.length) : 0;
-  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const columns = [
+    {
+      field: "contract",
+      headerName: formatMessage({ id: "form.labels.contract" }),
+      flex: 1,
+      minWidth: 300,
+    },
+  ];
 
-  return merchantSubscriptions ? (
-    <Grid container spacing={2}>
-      <Breadcrumbs path={["dashboard", "chain-link"]} />
-      <PageHeader message="pages.chain-link.title">
-        <Select
-          sx={{ mx: 1 }}
-          value={currentSubscription}
-          onChange={(e: any) => {
-            setCurrentSubscription(e.target.value);
-          }}
-        >
-          {merchantSubscriptions.map((option, idx) => (
-            <MenuItem value={option.vrfSubId} key={idx}>
-              {option.vrfSubId}
-            </MenuItem>
-          ))}
-        </Select>
-        <ChainLinkSubscriptionCreateButton />
-      </PageHeader>
-      <Grid item xs={8}>
-        <Typography gutterBottom variant="h5" component="p">
-          <FormattedMessage
-            id="pages.chain-link.id"
-            values={{
-              value: currentSubscription || "No subscription",
-            }}
-          />
-        </Typography>
-        <Typography gutterBottom variant="body1" component="p">
-          <FormattedMessage
-            id="pages.chain-link.balance"
-            values={{
-              balance: formatEther(subData.balance.toString(), 18, "LINK"),
-            }}
-          />
-        </Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <ChainLinkFundButton subscriptionId={currentSubscription} />
-        <Typography variant="body1" sx={{ mx: 1 }}>
-          <FormattedMessage id="pages.chain-link.wallet" values={{ value: currentBalance }} />
-        </Typography>
-      </Grid>
-      <Grid item xs={8}>
-        <Typography gutterBottom variant="h5" component="p">
-          <FormattedMessage id="pages.chain-link.consumers" />
-        </Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <ChainLinkAddConsumerButton subscriptionId={currentSubscription} />
-      </Grid>
-      <Grid item xs={12}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Contract</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? subData.consumers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : subData.consumers
-              ).map((row, indx) => (
-                <TableRow key={indx} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell component="th" scope="row">
-                    {row}
-                  </TableCell>
-                </TableRow>
-              ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 34 * emptyRows }}>
-                  <TableCell colSpan={3} aria-hidden />
-                </TableRow>
-              )}
-            </TableBody>
-            <CustomTablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={subData.consumers.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              slotProps={{
-                select: {
-                  "aria-label": "rows per page",
-                },
-                actions: {
-                  showFirstButton: true,
-                  showLastButton: true,
-                },
+  if (merchantSubscriptions === null) {
+    return <ProgressOverlay isLoading={true} />;
+  }
+
+  return (
+    <ProgressOverlay isLoading={isLoading}>
+      {merchantSubscriptions.length ? (
+        <Grid container spacing={2}>
+          <Breadcrumbs path={["dashboard", "chain-link"]} />
+          <PageHeader message="pages.chain-link.title">
+            <Select
+              sx={{ mx: 1 }}
+              value={currentSubscription}
+              onChange={(e: any) => {
+                setCurrentSubscription(e.target.value);
               }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            >
+              {merchantSubscriptions.map((option, idx) => (
+                <MenuItem value={option.vrfSubId} key={idx}>
+                  {option.vrfSubId}
+                </MenuItem>
+              ))}
+            </Select>
+            <ChainLinkSubscriptionCreateButton />
+          </PageHeader>
+          <Grid item xs={8}>
+            <Typography gutterBottom variant="h5" component="p">
+              <FormattedMessage
+                id="pages.chain-link.id"
+                values={{
+                  value: currentSubscription || "No subscription",
+                }}
+              />
+            </Typography>
+            <Typography gutterBottom variant="body1" component="p">
+              <FormattedMessage
+                id="pages.chain-link.balance"
+                values={{
+                  balance: formatEther(subData.balance.toString(), 18, "LINK"),
+                }}
+              />
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <ChainLinkFundButton subscriptionId={currentSubscription} />
+            <Typography variant="body1" sx={{ mx: 1 }}>
+              <FormattedMessage id="pages.chain-link.wallet" values={{ value: currentBalance }} />
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography gutterBottom variant="h5" component="p">
+              <FormattedMessage id="pages.chain-link.consumers" />
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <ChainLinkAddConsumerButton subscriptionId={currentSubscription} />
+          </Grid>
+          <Grid item xs={12}>
+            <StyledDataGridPremium
+              pagination
+              rowCount={subData.consumers.length}
+              pageSizeOptions={[5, 10, 25]}
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
+              loading={isLoading}
+              columns={columns}
+              rowThreshold={0}
+              rowHeight={40}
+              rows={subData.consumers.map(contract => ({
+                contract,
+              }))}
+              getRowId={({ contract }: any) => contract as string}
             />
-          </Table>
-        </TableContainer>
-      </Grid>
-    </Grid>
-  ) : (
-    <Grid container spacing={2}>
-      <Breadcrumbs path={["dashboard", "chain-link"]} />
-      <PageHeader message="pages.chain-link.title" />
-      <Grid item xs={12}>
-        <ChainLinkSubscriptionCreateButton />
-      </Grid>
-    </Grid>
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid container spacing={2}>
+          <Breadcrumbs path={["dashboard", "chain-link"]} />
+          <PageHeader message="pages.chain-link.title" />
+          <Grid item xs={12}>
+            <ChainLinkSubscriptionCreateButton />
+          </Grid>
+        </Grid>
+      )}
+    </ProgressOverlay>
   );
 };

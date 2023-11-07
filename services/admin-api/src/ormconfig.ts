@@ -45,6 +45,7 @@ import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/dep
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
+import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 /* lottery */
@@ -111,6 +112,7 @@ import {
   CreateLotteryRoundAggregationAt1660436476130,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
+  CreateMerge1697979517000,
   CreateMysterybox1653616447910,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
@@ -131,6 +133,7 @@ import {
   CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
+  CreateStakingPenalty1654751224535,
   CreateStakingRules1654751224200,
   CreateStock1683724062500,
   CreateTemplate1563804000200,
@@ -217,6 +220,7 @@ import {
   SeedContractManagerAt1563804000101,
   SeedContractMysteryAt1563804000160,
   SeedContractNativeAt1563804000110,
+  SeedContractPaymentSplitterAt1697876719370,
   SeedContractPonziAt1660436477100,
   SeedContractRaffleAt1685961136100,
   SeedContractRaffleTicketAt1685961134180,
@@ -276,6 +280,7 @@ import {
   SeedLotteryRoundAggregationAt1660436476140,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
+  SeedMergeErc721Erc721RecipesAt1697979517330,
   SeedMysteryBoxErc1155At1653616447950,
   SeedMysteryBoxErc721At1653616447930,
   SeedMysteryBoxErc998At1653616447940,
@@ -345,6 +350,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -380,6 +386,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     CraftEntity,
     DismantleEntity,
+    MergeEntity,
     AssetPromoEntity,
     GradeEntity,
     LotteryRoundEntity,
@@ -391,6 +398,7 @@ const config: PostgresConnectionOptions = {
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
+    StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
     /* ecommerce */
@@ -573,6 +581,9 @@ const config: PostgresConnectionOptions = {
     SeedDismantleErc721Erc155RecipesAt1693120862350,
     SeedDismantleErc1155Erc155RecipesAt1693120862550,
 
+    CreateMerge1697979517000,
+    SeedMergeErc721Erc721RecipesAt1697979517330,
+
     SeedContractStakingAt1654751224100,
     CreateStakingRules1654751224200,
     SeedStakingRulesNativeAt1654751224210,
@@ -590,6 +601,7 @@ const config: PostgresConnectionOptions = {
     SeedStakingDepositErc721NoneAt1654751224339,
     SeedStakingDepositErc998Erc1155At1654751224345,
     SeedBalanceStakingAt1654751224530,
+    CreateStakingPenalty1654751224535,
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
@@ -691,6 +703,8 @@ const config: PostgresConnectionOptions = {
 
     SeedContractDispenserAt1692165706800,
 
+    SeedContractPaymentSplitterAt1697876719370,
+
     /* ecommerce */
     CreateCategory1683724061300,
     SeedCategory1683724061310,
@@ -739,6 +753,8 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
+
+    /* alter prod migrations */
   ],
 };
 

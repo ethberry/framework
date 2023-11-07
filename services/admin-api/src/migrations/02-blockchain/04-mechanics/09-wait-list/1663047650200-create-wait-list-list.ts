@@ -26,7 +26,7 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "root",

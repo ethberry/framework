@@ -4,7 +4,7 @@ import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import type { ICreateListenerPayload } from "../../../../common/interfaces";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 @Injectable()
 export class RaffleLogService {
@@ -27,13 +27,9 @@ export class RaffleLogService {
   }
 
   public async updateBlock(): Promise<void> {
-    const raffleContracts = await this.contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
-
-    if (raffleContracts.fromBlock) {
-      await this.contractService.updateLastBlockByAddr(
-        raffleContracts.address[0],
-        this.ethersContractService.getLastBlockOption(),
-      );
-    }
+    await this.contractService.updateLastBlockByModuleTypeRandom(
+      ModuleType.RAFFLE,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

@@ -34,7 +34,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
         },
         {
           name: "item_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "parameters",

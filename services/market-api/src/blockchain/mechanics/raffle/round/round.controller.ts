@@ -12,6 +12,11 @@ import { RaffleCurrentDto } from "./dto";
 export class RaffleRoundController {
   constructor(private readonly raffleRoundService: RaffleRoundService) {}
 
+  @Get("/all")
+  public all(@Query() dto: RaffleCurrentDto): Promise<[Array<number>, number]> {
+    return this.raffleRoundService.findAllRoundIds(dto);
+  }
+
   @Get("/autocomplete")
   public autocomplete(): Promise<Array<RaffleRoundEntity>> {
     return this.raffleRoundService.autocomplete();

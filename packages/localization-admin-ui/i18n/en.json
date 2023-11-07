@@ -8,9 +8,11 @@
     "dismantlePrice": "Token to be dismantled and burned",
     "editNotAllowed": "Editing of this rule is not allowed",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "mergeItem": "Items to get after merge",
+    "mergePrice": "Token to be merged and burned",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
-    "randomChainlink": "Random ChainLink VRF: Must Set Subscription and Add to Consumers list!",
+    "randomChainlink": "Random Chain-Link VRF: Must Set Subscription and Add to Consumers list!",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
@@ -100,7 +102,8 @@
     "vrfConsumer": "Add Chain-Link VRF Consumer",
     "vrfSetSub": "Set Chain-Link VRF Subscription",
     "whitelist": "Add to whitelist",
-    "withdraw": "Withdraw balance"
+    "withdraw": "Withdraw balance",
+    "withdrawPenalty": "Withdraw penalty"
   },
   "enums": {
     "LEVEL": {
@@ -225,6 +228,7 @@
       "REFERRAL": "Referral",
       "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
@@ -437,6 +441,10 @@
       "INACTIVE": "Inactive",
       "PENDING": "Pending"
     },
+    "mergeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "mysteryBoxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
@@ -600,7 +608,8 @@
       "unwhitelist": "Un whitelist",
       "upload": "Upload",
       "whitelist": "Whitelist",
-      "withdraw": "Withdraw"
+      "withdraw": "Withdraw",
+      "withdrawPenalty": "Withdraw Penalties"
     },
     "hints": {
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
@@ -704,6 +713,7 @@
       "maxTime": "Max Cooldown",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
+      "mergeStatus": "Status",
       "metadata": "Attributes",
       "monthlyRelease": "Monthly release",
       "mysteryBoxStatus": "Status",
@@ -790,6 +800,8 @@
       "userRoles": "Roles",
       "userStakes": "User Stakes",
       "userStatus": "Status",
+      "vrfConsumer": "Chain-Link Consumer Status",
+      "vrfSubscription": "Chain-Link Subscription ID",
       "wallet": "Wallet",
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
@@ -815,6 +827,7 @@
       "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Root",
+      "chainId": "ChainId",
       "childId": "Contract",
       "childIds": "Contract",
       "city": "Hamburg",
@@ -982,7 +995,7 @@
       "select": "Select subscription ID",
       "set": "Set Vrf subscription ID",
       "subscription": "Subscription",
-      "title": "ChainLink Subscriptions",
+      "title": "Chain-Link Subscriptions",
       "wallet": "Wallet balance: {value}"
     },
     "claims": {
@@ -1056,7 +1069,7 @@
         }
       },
       "integrations": {
-        "chain-link": "ChainLink",
+        "chain-link": "Chain-Link",
         "coin-gecko": "CoinGecko",
         "coin-market-cap": "CoinMarketCap"
       },
@@ -1068,6 +1081,7 @@
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
+        "payment-splitter": "Payment Splitter",
         "ponzi": "Ponzi",
         "promo": "Promo",
         "raffle": "Raffle",
@@ -1240,6 +1254,12 @@
       "title": "System Payees",
       "withdraw": "Withdraw"
     },
+    "payment-splitter": {
+      "contracts": {
+        "title": "Contracts"
+      },
+      "title": "Payment Splitter"
+    },
     "photos": {
       "title": "Photos"
     },
@@ -1314,6 +1334,7 @@
     },
     "ratePlan": {
       "alwaysIncluded": {
+        "dispenser": "Mass. token transfer",
         "history": "Transaction history",
         "insights": "Marketing insights",
         "openSea": "OpenSea integration",
@@ -1494,8 +1515,8 @@
     "web3NotDetected": "Web3 not detected"
   },
   "socket": {
-    "connected": "WebSocket connection ON",
     "connect_failed": "WebSocket connection failed",
+    "connected": "WebSocket connection ON",
     "error": "WebSocket connection Error"
   }
 }

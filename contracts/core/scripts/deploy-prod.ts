@@ -51,6 +51,7 @@ async function main() {
   const cmInstance = await deployDiamond(
     "DiamondCM",
     [
+      "CollectionFactoryFacet",
       "ERC20FactoryFacet",
       "ERC721FactoryFacet",
       "ERC998FactoryFacet",

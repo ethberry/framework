@@ -6,26 +6,37 @@
 
 pragma solidity ^0.8.20;
 
+// general
 error MethodNotSupported();
 error TemplateZero();
 error UnsupportedTokenType();
 
+// Contract Manager, Exchange
 error SignerMissingRole();
 error ExpiredSignature();
+error WrongRole();
+
+// Lottery, Ponzi, Staking
 error NotExist();
-error AlreadyExist();
 error NotAnOwner();
+
+error AlreadyExist();
+
+// Breed
 error CountExceed();
 error LimitExceed();
+
+
+
 error BalanceExceed();
 error WrongAmount();
 error RefProgramSet();
 error WrongArrayLength();
 
-// CM
-error WrongRole();
+// Mystery/Wrapper
+error NoContent();
 
-// random
+// Blacklist, Discrete, Genes
 error ProtectedAttribute(bytes32 attribute);
 
 // staking
@@ -41,7 +52,7 @@ error NotActive();
 error WrongRound();
 error WrongPrice();
 
-// waitlist
+// WaitList
 error NotInList();
 
 // Chain-Link

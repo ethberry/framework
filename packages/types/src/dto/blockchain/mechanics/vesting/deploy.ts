@@ -1,5 +1,5 @@
 export interface IVestingContractDeployDto {
-  beneficiary: string;
+  owner: string;
   startTimestamp: string;
   cliffInMonth: number;
   monthlyRelease: number;

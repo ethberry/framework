@@ -31,6 +31,11 @@ export class LotteryRoundService {
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("round.ticketContract", "ticket_contract");
 
+    queryBuilder.leftJoinAndSelect("round.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+
     queryBuilder.andWhere("round.roundId = :roundId", {
       roundId: Number(roundId).toString(),
     });

@@ -6,8 +6,13 @@
 
 pragma solidity ^0.8.20;
 
-import "../../Exchange/lib/ExchangeUtils.sol";
-import "./AbstractFactoryFacet.sol";
+import {MINTER_ROLE, DEFAULT_ADMIN_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+
+import {SignerMissingRole} from "../../utils/errors.sol";
+import {SignatureValidatorCM} from "../override/SignatureValidator.sol";
+import {AbstractFactoryFacet} from "./AbstractFactoryFacet.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {Asset, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 
 /**
  * @title VestingFactory
@@ -17,7 +22,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
   constructor() SignatureValidatorCM() {}
 
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =
-    "VestingArgs(address beneficiary,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
+    "VestingArgs(address owner,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
   bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(VESTING_ARGUMENTS_SIGNATURE);
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -35,7 +40,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
 
   // Structure representing Vesting template and arguments
   struct VestingArgs {
-    address beneficiary;
+    address owner;
     uint64 startTimestamp; // in sec
     uint16 cliffInMonth; // in sec
     uint16 monthlyRelease;
@@ -70,7 +75,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
     // Deploy the contract
     account = deploy2(
       params.bytecode,
-      abi.encode(args.beneficiary, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
+      abi.encode(args.owner, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
       params.nonce
     );
 
@@ -117,7 +122,7 @@ contract VestingFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
       keccak256(
         abi.encode(
           VESTING_ARGUMENTS_TYPEHASH,
-          args.beneficiary,
+          args.owner,
           args.startTimestamp,
           args.cliffInMonth,
           args.monthlyRelease

@@ -12,7 +12,7 @@ export const TokenDepositInput: () => any = () => {
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("tokenIds", [option?.id] ?? [0]);
+    form.setValue("tokenIds", [option?.tokenId] ?? [0]);
     form.setValue("tokenId", option?.id ?? 0, { shouldDirty: true });
     form.setValue("token.tokenId", option?.tokenId ?? 0);
   };

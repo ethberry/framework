@@ -4,8 +4,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+
 import type { IClaim } from "@framework/types";
-import { ModuleType } from "@framework/types";
+import { BusinessType, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -43,6 +44,8 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        forceAmount
       />
       <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />
     </FormDialog>

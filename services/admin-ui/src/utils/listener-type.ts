@@ -1,5 +1,5 @@
 import type { IContract } from "@framework/types";
-import { ListenerType, ModuleType, TokenType, ContractFeatures } from "@framework/types";
+import { ContractFeatures, ListenerType, ModuleType, TokenType } from "@framework/types";
 
 export const ifRandom = (contractFeatures: ContractFeatures[]) => {
   if (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) {
@@ -12,6 +12,8 @@ export const ifRandom = (contractFeatures: ContractFeatures[]) => {
 export const getListenerType = (contract: IContract) => {
   const { contractType, contractModule, contractFeatures } = contract;
   switch (contractModule) {
+    case ModuleType.COLLECTION:
+      return ListenerType.COLLECTION;
     case ModuleType.MYSTERY:
       return ListenerType.MYSTERYBOX;
     case ModuleType.VESTING:
@@ -20,8 +22,8 @@ export const getListenerType = (contract: IContract) => {
       return ListenerType.STAKING;
     case ModuleType.PONZI:
       return ListenerType.PONZI;
-    case ModuleType.WAITLIST:
-      return ListenerType.WAITLIST;
+    case ModuleType.WAIT_LIST:
+      return ListenerType.WAIT_LIST;
     case ModuleType.LOTTERY:
       switch (contractType) {
         case TokenType.ERC721:

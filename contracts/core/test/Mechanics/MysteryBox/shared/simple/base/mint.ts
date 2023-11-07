@@ -7,14 +7,13 @@ import { templateId } from "../../../../../constants";
 
 export function shouldMintBox(factory: () => Promise<any>) {
   describe("mint", function () {
-    it("should fail: No content", async function () {
+    it("should fail: NoContent", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const mysteryboxInstance = await factory();
+      const contractInstance = await factory();
 
-      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, []);
-
-      await expect(tx1).to.be.revertedWith("Mysterybox: no content");
+      const tx = contractInstance.mintBox(receiver.address, templateId, []);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "NoContent");
     });
 
     it("should fail: wrong role", async function () {

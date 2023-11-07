@@ -20,7 +20,7 @@ export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<any
       }));
     });
 
-    it("should fail: mintRandom", async function () {
+    it("should fail: BlackListError", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
@@ -33,7 +33,7 @@ export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<any
         await randomRequest(contractInstance, vrfInstance);
       }
 
-      await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "BlackListError").withArgs(receiver.address);
     });
   });
 }

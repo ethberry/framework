@@ -1,6 +1,7 @@
 export * from "./breed";
 export * from "./claim";
 export * from "./craft";
+export * from "./merge";
 export * from "./grade";
 export * from "./purchase";
 export * from "./staking";

@@ -4,7 +4,7 @@ import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import type { ICreateListenerPayload } from "../../../../../common/interfaces";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { TokenType, ModuleType } from "@framework/types";
 
 @Injectable()
 export class LotteryTicketLogService {
@@ -23,14 +23,11 @@ export class LotteryTicketLogService {
   }
 
   public async updateBlock(): Promise<void> {
-    const lotteryContracts = await this.contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
-
-    if (lotteryContracts.fromBlock) {
-      await this.contractService.updateLastBlockByAddr(
-        lotteryContracts.address[0],
-        this.ethersContractService.getLastBlockOption(),
-      );
-    }
+    await this.contractService.updateLastBlockByTokenTypeModuleType(
+      ModuleType.LOTTERY,
+      TokenType.ERC721,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 
   public addListener(dto: ICreateListenerPayload): void {

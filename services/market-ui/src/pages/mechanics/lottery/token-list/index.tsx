@@ -63,10 +63,10 @@ export const LotteryTokenList: FC = () => {
             <ListItem key={token.id}>
               <ListItemText sx={{ flex: 1 }}>{token.round?.contract?.title}</ListItemText>
               <Hidden mdDown>
-                <ListItemText sx={{ flex: 1 }}>{token.id}</ListItemText>
+                <ListItemText sx={{ flex: 0.6 }}>{token.id}</ListItemText>
                 <ListItemText sx={{ flex: 1 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
               </Hidden>
-              <ListItemText sx={{ flex: 1 }}>
+              <ListItemText sx={{ flex: 0.6 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>

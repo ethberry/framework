@@ -24,7 +24,6 @@ export const ChainLinkSubscriptionCreateButton: FC<IChainLinkSubscriptionCreateB
   const metaFnCreateSub = useSystemContract<IContract, SystemModuleType>(
     (values: any, web3Context: Web3ContextType, systemContract: IContract) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      // TODO get VRF contract address from backend
       const contract = new Contract(systemContract.address, VrfCreateSub, web3Context.provider?.getSigner());
       return contract.createSubscription() as Promise<void>;
     },

@@ -12,14 +12,14 @@ import { validationSchema } from "./validation";
 import { RarityMultiplierInput } from "./rarity-multiplier-input";
 import { StrategyInput } from "./strategy-input";
 
-export interface IExchangeEditDialogProps {
+export interface IDismantleEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IDismantle>, form: any) => Promise<void>;
   initialValues: IDismantle;
 }
 
-export const DismantleEditDialog: FC<IExchangeEditDialogProps> = props => {
+export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy } = initialValues;

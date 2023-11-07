@@ -61,7 +61,7 @@ describe("VestingFactoryDiamond", function () {
             { name: "externalId", type: "uint256" },
           ],
           VestingArgs: [
-            { name: "beneficiary", type: "address" },
+            { name: "owner", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
@@ -81,7 +81,7 @@ describe("VestingFactoryDiamond", function () {
             externalId: encodedExternalId,
           },
           args: {
-            beneficiary: owner.address,
+            owner: owner.address,
             startTimestamp: current.toNumber(),
             cliffInMonth: 12,
             monthlyRelease: 417,
@@ -104,7 +104,7 @@ describe("VestingFactoryDiamond", function () {
           externalId: encodedExternalId,
         },
         {
-          beneficiary: owner.address,
+          owner: owner.address,
           startTimestamp: current.toNumber(),
           cliffInMonth: 12,
           monthlyRelease: 417,
@@ -133,7 +133,7 @@ describe("VestingFactoryDiamond", function () {
           address,
           encodedExternalId,
           isEqualEventArgObj({
-            beneficiary: owner.address,
+            owner: owner.address,
             startTimestamp: current.toString(),
             cliffInMonth: "12",
             monthlyRelease: "417",
@@ -186,7 +186,7 @@ describe("VestingFactoryDiamond", function () {
             { name: "externalId", type: "uint256" },
           ],
           VestingArgs: [
-            { name: "beneficiary", type: "address" },
+            { name: "owner", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
@@ -206,7 +206,7 @@ describe("VestingFactoryDiamond", function () {
             externalId,
           },
           args: {
-            beneficiary: owner.address,
+            owner: owner.address,
             startTimestamp: current.toNumber(),
             cliffInMonth: 12,
             monthlyRelease: 417,
@@ -232,7 +232,7 @@ describe("VestingFactoryDiamond", function () {
           externalId,
         },
         {
-          beneficiary: owner.address,
+          owner: owner.address,
           startTimestamp: current.toNumber(),
           cliffInMonth: 12,
           monthlyRelease: 417,
@@ -282,7 +282,7 @@ describe("VestingFactoryDiamond", function () {
             { name: "externalId", type: "uint256" },
           ],
           VestingArgs: [
-            { name: "beneficiary", type: "address" },
+            { name: "owner", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
@@ -302,7 +302,7 @@ describe("VestingFactoryDiamond", function () {
             externalId,
           },
           args: {
-            beneficiary: owner.address,
+            owner: owner.address,
             startTimestamp: current.toNumber(),
             cliffInMonth: 12,
             monthlyRelease: 417,
@@ -325,7 +325,7 @@ describe("VestingFactoryDiamond", function () {
           externalId,
         },
         {
-          beneficiary: owner.address,
+          owner: owner.address,
           startTimestamp: current.toNumber(),
           cliffInMonth: 12,
           monthlyRelease: 417,

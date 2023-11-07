@@ -14,6 +14,7 @@ export * from "./mechanics/breed/breed";
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/recipes/craft";
 export * from "./mechanics/recipes/dismantle";
+export * from "./mechanics/recipes/merge";
 export * from "./mechanics/promo/promo";
 export * from "./mechanics/grade/grade";
 
@@ -33,6 +34,7 @@ export * from "./mechanics/raffle/ticket";
 
 export * from "./mechanics/rent/rent";
 export * from "./mechanics/staking/leaderboard";
+export * from "./mechanics/staking/penalty";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/vesting";

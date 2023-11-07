@@ -335,7 +335,7 @@ export class ContractManagerSignService {
     userEntity: UserEntity,
     asset?: AssetEntity,
   ): Promise<IServerSignature> {
-    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByVestingContractTemplate(dto, userEntity.chainId);
 
@@ -366,7 +366,7 @@ export class ContractManagerSignService {
           { name: "externalId", type: "uint256" },
         ],
         VestingArgs: [
-          { name: "beneficiary", type: "address" },
+          { name: "owner", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "cliffInMonth", type: "uint16" },
           { name: "monthlyRelease", type: "uint16" },
@@ -386,7 +386,7 @@ export class ContractManagerSignService {
           externalId: externalId || userEntity.id,
         },
         args: {
-          beneficiary: beneficiary.toLowerCase(),
+          owner: owner.toLowerCase(),
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
           cliffInMonth, // in seconds
           monthlyRelease,
@@ -512,7 +512,7 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByWaitListContractTemplate({}, userEntity.chainId);
 
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAIT_LIST, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -642,9 +642,9 @@ export class ContractManagerSignService {
   }
 
   // MODULE:WALLET
-  public async wallet(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async paymentSplitter(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByWalletContractTemplate(dto, userEntity.chainId);
+    const { bytecode } = await this.getBytecodeByPaymentSplitterContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
 
@@ -1090,9 +1090,9 @@ export class ContractManagerSignService {
   }
 
   // MODULE:WALLET
-  public getBytecodeByWalletContractTemplate(_dto: IWalletContractDeployDto, chainId: number) {
+  public getBytecodeByPaymentSplitterContractTemplate(_dto: IWalletContractDeployDto, chainId: number) {
     return getContractABI(
-      "@framework/core-contracts/artifacts/contracts/Mechanics/Wallet/SplitterWallet.sol/SplitterWallet.json",
+      "@framework/core-contracts/artifacts/@gemunion/contracts-utils/contracts/contracts/PaymentSplitter.sol/PaymentSplitter.json",
       chainId,
     );
   }

@@ -42,7 +42,6 @@ export const Erc721Token: FC = () => {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
-      tokenId: "",
       metadata: {},
       merchantId: profile.merchantId,
     },

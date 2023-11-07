@@ -18,6 +18,7 @@ import type {
   ILotteryPurchaseData,
   ILotteryRoundEndData,
   ILotteryRoundStartData,
+  IMergeData,
   IMysteryPurchaseData,
   IMysteryUnpackData,
   IPurchaseData,
@@ -140,6 +141,13 @@ export class NotificatorService {
     });
   }
 
+  // MODULE:MERGE
+  public async merge(data: IMergeData): Promise<any> {
+    return this.sendMessage(data.merge.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.MERGE, data).toPromise();
+    });
+  }
+
   // MODULE:DISMANTLE
   public async dismantle(data: IDismantleData): Promise<any> {
     return this.sendMessage(data.dismantle.merchantId, clientProxy => {
@@ -191,6 +199,8 @@ export class NotificatorService {
       return clientProxy.emit(MobileEventType.STAKING_RULE_UPDATED, data).toPromise();
     });
   }
+
+  // TODO add deposit return event notification?
 
   // MODULE:RAFFLE
   public rafflePurchase(data: IRafflePurchaseData): Promise<any> {

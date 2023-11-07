@@ -26,7 +26,7 @@ export class CreateRent1678931845500 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "contract_id",

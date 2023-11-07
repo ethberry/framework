@@ -6,12 +6,13 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/finance/VestingWallet.sol";
-import "@openzeppelin/contracts/governance/utils/IVotes.sol";
-import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import {VestingWallet} from "@openzeppelin/contracts/finance/VestingWallet.sol";
+import {IVotes} from "@openzeppelin/contracts/governance/utils/IVotes.sol";
+import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
-import "../../utils/TopUp.sol";
-import "../../Exchange/lib/ExchangeUtils.sol";
+import {TopUp} from "../../utils/TopUp.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {Asset,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 
 /**
  * @title Vesting
@@ -29,14 +30,13 @@ contract Vesting is VestingWallet, TopUp {
   uint16 private immutable _monthlyRelease; // The amount of tokens that can be released daily
 
   constructor(
-    address beneficiaryAddress,
+    address beneficiary,
     uint64 startTimestamp,
     uint16 cliffInMonth,
     uint16 monthlyRelease
-  ) VestingWallet(address(1), startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
+  ) VestingWallet(beneficiary, startTimestamp, (10000 * _monthInSeconds) / monthlyRelease) {
     _cliffInMonth = cliffInMonth;
     _monthlyRelease = monthlyRelease;
-    _transferOwnership(beneficiaryAddress);
   }
 
   /**

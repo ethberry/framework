@@ -137,7 +137,9 @@ export enum PonziContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
-export enum StakingContractFeatures {}
+export enum StakingContractFeatures {
+  "SIMPLE" = "SIMPLE",
+}
 
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
@@ -192,7 +194,7 @@ export interface IContract extends IDeployable, ISearchable {
   decimals: number;
   royalty: number;
   baseTokenURI: string;
-  parameters: Record<string, string | number>;
+  parameters: Record<string, any>;
   isPaused: boolean;
   fromBlock: number;
   contractStatus: ContractStatus;

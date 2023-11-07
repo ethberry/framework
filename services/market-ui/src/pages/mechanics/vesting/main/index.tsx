@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { Hidden, List, ListItem } from "@mui/material";
+import { Hidden, List, ListItem, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -13,6 +13,7 @@ import { VestingTransferOwnershipButton } from "../../../../components/buttons/m
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
+import { addMonths, formatDistance } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -59,9 +60,21 @@ export const Vesting: FC = () => {
         <List>
           {rows.map(vesting => (
             <ListItem key={vesting.id}>
-              <StyledListItemText>
-                <AddressLink length={24} address={vesting.parameters.account as string} />
-              </StyledListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                <AddressLink length={42} address={vesting.parameters.account as string} />
+              </ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>
+                {vesting.parameters.startTimestamp && vesting.parameters.monthlyRelease
+                  ? formatDistance(
+                      addMonths(
+                        new Date(vesting.parameters.startTimestamp),
+                        Math.ceil(10000 / vesting.parameters.monthlyRelease),
+                      ),
+                      Date.now(),
+                      { addSuffix: true },
+                    )
+                  : ""}
+              </ListItemText>
               <Hidden mdDown>
                 <StyledListItemText>{vesting.contractFeatures.join(", ")}</StyledListItemText>
               </Hidden>

@@ -7,6 +7,7 @@ import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
 import {
   AccessControlEventType,
+  AccessListEventType,
   ContractEventType,
   ContractFeatures,
   ContractType,
@@ -56,11 +57,14 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.Unpaused,
           ContractEventType.ConsecutiveTransfer,
           ContractEventType.LevelUp,
+          ContractEventType.VrfSubscriptionSet,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,
           Erc4907EventType.UpdateUser,
-          ContractEventType.VrfSubscriptionSet,
+          // MODULE:ACCESS_LIST
+          AccessListEventType.Blacklisted,
+          AccessListEventType.UnBlacklisted,
         ];
         const topics = getEventsTopics(eventNames);
 

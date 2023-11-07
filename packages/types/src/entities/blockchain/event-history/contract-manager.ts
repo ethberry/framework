@@ -8,6 +8,7 @@ export enum ContractManagerEventType {
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
   MysteryBoxDeployed = "MysteryBoxDeployed",
   CollectionDeployed = "CollectionDeployed",
+  PaymentSplitterDeployed = "PaymentSplitterDeployed",
   PonziDeployed = "PonziDeployed",
   StakingDeployed = "StakingDeployed",
   LotteryDeployed = "LotteryDeployed",
@@ -46,7 +47,7 @@ export interface IContractManagerCollectionDeployedEvent {
 // }
 
 export interface IVestingDeployedEventArgs {
-  beneficiary: string;
+  owner: string;
   startTimestamp: string;
   cliffInMonth: number;
   monthlyRelease: number;
@@ -215,6 +216,17 @@ export interface IContractManagerWaitListDeployedEvent {
   externalId: number;
 }
 
+export interface IPaymentSplitterDeployedEventArgs {
+  payees: Array<string>;
+  shares: Array<string>;
+}
+
+export interface IContractManagerPaymentSplitterDeployedEvent {
+  account: string;
+  externalId: number;
+  args: IPaymentSplitterDeployedEventArgs;
+}
+
 export type TContractManagerEventData =
   | IContractManagerVestingDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
@@ -224,6 +236,7 @@ export type TContractManagerEventData =
   | IContractManagerMysteryTokenDeployedEvent
   | IContractManagerCollectionDeployedEvent
   | IContractManagerStakingDeployedEvent
+  | IContractManagerPaymentSplitterDeployedEvent
   | IContractManagerPonziDeployedEvent
   | IContractManagerLotteryDeployedEvent
   | IContractManagerRaffleDeployedEvent

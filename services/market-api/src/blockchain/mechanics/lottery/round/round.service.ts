@@ -35,24 +35,23 @@ export class LotteryRoundService {
     return this.roundEntityRepository.findOne({ where, ...options });
   }
 
-  public async current(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity> {
+  public async current(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findCurrentRoundWithRelations(contractId);
+    const lotteryRoundEntity = await this.findCurrentRoundWithRelations(contractId);
 
-    if (!lotteryRound) {
-      throw new NotFoundException("roundNotFound");
+    if (lotteryRoundEntity) {
+      const ticketCount = await this.lotteryTokenService.getTicketCount(lotteryRoundEntity.id);
+      Object.assign(lotteryRoundEntity, { ticketCount });
     }
 
-    const ticketCount = await this.lotteryTokenService.getTicketCount(lotteryRound.id);
-
-    return Object.assign(lotteryRound, { ticketCount });
+    return lotteryRoundEntity;
   }
 
   public async latest(dto: ILotteryCurrentDto): Promise<LotteryRoundEntity | null> {
     const { contractId } = dto;
 
-    const lotteryRound = await this.findOne(
+    const lotteryRoundEntity = await this.findOne(
       { contractId },
       {
         order: {
@@ -61,11 +60,11 @@ export class LotteryRoundService {
       },
     );
 
-    if (!lotteryRound) {
+    if (!lotteryRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    return this.statistic(lotteryRound.id);
+    return this.statistic(lotteryRoundEntity.id);
   }
 
   public findCurrentRoundWithRelations(contractId: number): Promise<LotteryRoundEntity | null> {
@@ -93,7 +92,44 @@ export class LotteryRoundService {
     return queryBuilder.getOne();
   }
 
+  public async findAllRoundIds(dto: ILotteryCurrentDto): Promise<[Array<number>, number]> {
+    const { contractId } = dto;
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.andWhere("round.contractId = :contractId", {
+      contractId,
+    });
+
+    queryBuilder.andWhere("round.endTimestamp IS NOT NULL");
+
+    queryBuilder.orderBy({
+      "round.endTimestamp": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount().then(result => [result[0].map(r => r.id), result[1]]);
+  }
+
   public async statistic(roundId: number): Promise<LotteryRoundEntity | null> {
-    return this.findOne({ id: roundId }, { relations: { aggregation: true } });
+    return await this.findOne(
+      { id: roundId },
+      {
+        relations: {
+          aggregation: {
+            price: {
+              components: {
+                contract: true,
+                template: true,
+              },
+            },
+          },
+          price: {
+            components: {
+              contract: true,
+              template: true,
+            },
+          },
+        },
+      },
+    );
   }
 }

@@ -3,10 +3,9 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-// import { RichTextDisplay } from "@gemunion/mui-rte";
-import { CronExpression, IContract, ILotteryRound } from "@framework/types";
+import { IContract, ILotteryRound } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import { LotteryPurchaseButton } from "../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
 import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
@@ -40,8 +39,10 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const fetchRound = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryRound) => {
-        setRound(json);
+      .then((json: ILotteryRound | null) => {
+        if (json) {
+          setRound(json);
+        }
       })
       .catch(e => {
         console.error(e);
@@ -73,7 +74,10 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <StyledTypography>{round ? formatPrice(round.price) : "Round not Active!"}</StyledTypography>
+          <StyledTypography>{round && round.roundId ? `Round ${round.roundId}` : ""}</StyledTypography>
+          <StyledTypography>
+            {round && round.roundId ? `Price: ${formatItem(round.price)}` : "Round not yet started"}
+          </StyledTypography>
 
           <StyledTypography>
             {round.maxTickets > 0 ? (
@@ -82,13 +86,13 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
                 // @ts-ignore
                 values={{ current: round.ticketCount, max: round?.maxTickets }}
               />
-            ) : (
+            ) : round.roundId ? (
               <FormattedMessage
                 id="pages.raffle.purchase.sold"
                 // @ts-ignore
                 values={{ count: round ? round.ticketCount : 0 }}
               />
-            )}
+            ) : null}
           </StyledTypography>
 
           <AllowanceButton contract={contract} />
@@ -107,13 +111,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
           ) : null}
         </PageHeader>
       </ProgressOverlay>
-      <StyledTypography variant="body1">
-        {contract.parameters.schedule
-          ? Object.keys(CronExpression)[
-              Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
-            ]
-          : "not yet scheduled"}
-      </StyledTypography>
+
       <StyledPaper>
         <StyledTypography variant="h6">
           <FormattedMessage
@@ -155,22 +153,24 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
       </StyledTypography>
 
       <StyledPaper>
-        {new Array(36).fill(null).map((e, i) => {
-          const isSelected = ticketNumbers[i];
+        <StyledWrapper>
+          {new Array(36).fill(null).map((e, i) => {
+            const isSelected = ticketNumbers[i];
 
-          return (
-            <StyledIconButton
-              size="medium"
-              key={i}
-              color="default"
-              isSelected={isSelected}
-              onClick={handleClick(i)}
-              disabled={!isSelected && selectedNumbers.length === maxNumbers}
-            >
-              {i + 1}
-            </StyledIconButton>
-          );
-        })}
+            return (
+              <StyledIconButton
+                size="medium"
+                key={i}
+                color="default"
+                isSelected={isSelected}
+                onClick={handleClick(i)}
+                disabled={!isSelected && selectedNumbers.length === maxNumbers}
+              >
+                {i + 1}
+              </StyledIconButton>
+            );
+          })}
+        </StyledWrapper>
       </StyledPaper>
     </Fragment>
   );

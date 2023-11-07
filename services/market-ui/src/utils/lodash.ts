@@ -12,3 +12,29 @@ export const omit = (obj: Record<string, any>, items: Array<string>) =>
 
 export const pick = (obj: Record<string, any>, items: Array<string>) =>
   transform(obj, (value, key) => items.includes(key));
+
+export const deepClone = <T = any>(target: T): T => {
+  if (target === null) {
+    return target;
+  }
+  if (typeof target !== "object") {
+    return target;
+  }
+
+  if (Array.isArray(target)) {
+    const cloneArray: any[] = [];
+    for (let i = 0; i < (target as any[]).length; i++) {
+      cloneArray[i] = deepClone(target[i]);
+    }
+    return cloneArray as T;
+  }
+
+  const cloneObject: { [key: string]: any } = {};
+  for (const key in target) {
+    if (Object.prototype.hasOwnProperty.call(target, key)) {
+      cloneObject[key] = deepClone((target as { [key: string]: any })[key]);
+    }
+  }
+
+  return cloneObject as T;
+};

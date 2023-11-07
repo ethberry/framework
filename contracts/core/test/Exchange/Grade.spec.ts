@@ -1,12 +1,13 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
-import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
-import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
-import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
+
+import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
+import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
 
 describe("Diamond Exchange Grade", function () {
   const factory = async (facetName = "ExchangeGradeFacet"): Promise<any> => {
@@ -389,32 +390,34 @@ describe("Diamond Exchange Grade", function () {
     });
   });
 
-  it("should fail: paused", async function () {
-    const [_owner] = await ethers.getSigners();
+  describe("ERROR", function () {
+    it("should fail: EnforcedPause", async function () {
+      const [_owner] = await ethers.getSigners();
 
-    const exchangeInstance = await factory();
-    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
-    await pausableInstance.pause();
+      const exchangeInstance = await factory();
+      const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
+      await pausableInstance.pause();
 
-    const tx1 = exchangeInstance.upgrade(
-      params,
-      {
-        tokenType: 0,
-        token: ZeroAddress,
-        tokenId,
-        amount,
-      },
-      [
+      const tx1 = exchangeInstance.upgrade(
+        params,
         {
           tokenType: 0,
           token: ZeroAddress,
           tokenId,
           amount,
         },
-      ],
-      ZeroHash,
-    );
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        ZeroHash,
+      );
 
-    await expect(tx1).to.be.revertedWith("Pausable: paused");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "EnforcedPause");
+    });
   });
 });

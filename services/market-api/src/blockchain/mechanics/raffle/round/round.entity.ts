@@ -6,6 +6,7 @@ import type { IRaffleRound } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "raffle_round" })
 export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound {
@@ -44,4 +45,10 @@ export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound 
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
+
+  // this is not a column
+  public ticketCount: number;
+
+  // this is not a column
+  public prizeTicket: TokenEntity | null;
 }

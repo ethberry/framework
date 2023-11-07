@@ -6,22 +6,23 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";
-import "@gemunion/contracts-utils/contracts/roles.sol";
+import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
+import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import {PaymentSplitter} from "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";
 
-import "./LinearReferralPonzi.sol";
-import "./interfaces/IPonzi.sol";
-import "../../utils/TopUp.sol";
-import "../../utils/constants.sol";
-import "../../utils/errors.sol";
+import {LinearReferralPonzi} from "./LinearReferralPonzi.sol";
+import {IPonzi} from "./interfaces/IPonzi.sol";
+import {TopUp} from "../../utils/TopUp.sol";
+import {Asset, TokenType, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {ZeroBalance, NotExist, NotActive, BalanceExceed, NotComplete, Expired, NotAnOwner, WrongStake} from "../../utils/errors.sol";
 
 contract Ponzi is
   IPonzi,

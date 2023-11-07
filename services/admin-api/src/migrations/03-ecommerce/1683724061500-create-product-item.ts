@@ -19,7 +19,7 @@ export class CreateProductItem1683724061500 implements MigrationInterface {
         },
         {
           name: "price_id",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "min_quantity",

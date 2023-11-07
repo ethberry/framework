@@ -37,13 +37,11 @@ export const NewMysterybox: FC = () => {
   }, []);
 
   return (
-    <ProgressOverlay isLoading={isLoading}>
+    <ProgressOverlay isLoading={isLoading} wrapperSx={{ minHeight: 400 }}>
       <StyledTitle variant="h4">
         <FormattedMessage id="pages.landing.mysterybox-new" />
       </StyledTitle>
-      {mysteryboxes.length ? (
-        <MultiCarouselMysterybox mysteryBoxes={mysteryboxes} component={MysteryBoxListItem} />
-      ) : null}
+      <MultiCarouselMysterybox mysteryBoxes={mysteryboxes} component={MysteryBoxListItem} />
     </ProgressOverlay>
   );
 };

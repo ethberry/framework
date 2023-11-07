@@ -11,6 +11,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPaymentSplitterDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -137,5 +138,16 @@ export class ContractManagerControllerEth {
   })
   public waitList(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.waitList(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.PaymentSplitterDeployed,
+  })
+  public paymentSplitter(
+    @Payload() event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.paymentSplitter(event, ctx);
   }
 }

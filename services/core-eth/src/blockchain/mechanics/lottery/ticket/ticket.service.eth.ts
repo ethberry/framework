@@ -8,8 +8,6 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
 
-import { LotteryTicketService } from "./ticket.service";
-import { LotteryRoundService } from "../round/round.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -29,8 +27,6 @@ export class LotteryTicketServiceEth {
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
-    private readonly lotteryTicketService: LotteryTicketService,
-    private readonly lotteryRoundService: LotteryRoundService,
     private readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,
     private readonly contractService: ContractService,

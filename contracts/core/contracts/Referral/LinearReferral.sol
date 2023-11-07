@@ -6,12 +6,15 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
-import "../utils/SignatureValidator.sol";
+import {SignatureValidator} from "../utils/SignatureValidator.sol";
+import {BalanceExceed,LimitExceed,RefProgramSet} from "../utils/errors.sol";
+import {Asset,TokenType} from "../Exchange/lib/interfaces/IAsset.sol";
 
 abstract contract LinearReferral is Context, AccessControl {
   using SafeERC20 for IERC20;

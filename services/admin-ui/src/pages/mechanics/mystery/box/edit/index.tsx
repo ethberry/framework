@@ -63,6 +63,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },
         }}
+        forceAmount
       />
       <TemplateAssetInput
         autoSelect

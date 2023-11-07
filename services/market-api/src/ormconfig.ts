@@ -31,6 +31,7 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
+import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
@@ -99,6 +100,7 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
+    MergeEntity,
     RaffleRoundEntity,
     MysteryBoxEntity,
     WaitListListEntity,

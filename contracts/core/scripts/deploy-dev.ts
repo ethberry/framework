@@ -14,13 +14,13 @@ import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 1200; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 3n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 10n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
-// const batchSize = 3; // Generative collection size
+const batchSize = 3; // Generative collection size
 
 const amount = WeiPerEther * 1000000000000n; // ?
 const timestamp = Math.ceil(Date.now() / 1000);
@@ -67,7 +67,7 @@ async function main() {
   const cmInstance = await deployDiamond(
     "DiamondCM",
     [
-      // "CollectionFactoryFacet",
+      "CollectionFactoryFacet",
       "ERC20FactoryFacet",
       "ERC721FactoryFacet",
       "ERC998FactoryFacet",
@@ -109,6 +109,7 @@ async function main() {
       "ExchangeRaffleFacet",
       "ExchangeMysteryBoxFacet",
       "ExchangeRentableFacet",
+      "ExchangeMergeFacet",
       "PausableFacet",
       "AccessControlFacet",
       "WalletFacet",
@@ -162,7 +163,7 @@ async function main() {
 
   await debug(await erc20BlacklistInstance.blacklist(wallets[2]), "erc20BlacklistInstance.blacklist");
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Simple = await erc721SimpleFactory.deploy("RUNE", "GEM721", royalty, baseTokenURI);
+  contracts.erc721Simple = await erc721SimpleFactory.deploy("GEMSTONES", "GEM721", royalty, baseTokenURI);
   await debug(contracts);
 
   const erc721InactiveFactory = await ethers.getContractFactory("ERC721Simple");
@@ -379,7 +380,7 @@ async function main() {
           {
             tokenType: 0,
             token: ZeroAddress,
-            tokenId: 0,
+            tokenId: 1010101, // -- ETH
             amount: WeiPerEther,
           },
         ],
@@ -387,7 +388,7 @@ async function main() {
           {
             tokenType: 0,
             token: ZeroAddress,
-            tokenId: 0,
+            tokenId: 1010101, // -- ETH
             amount: (WeiPerEther / 100n) * 5n, // 5%
           },
         ],
@@ -410,7 +411,7 @@ async function main() {
           {
             tokenType: 1,
             token: await contracts.erc20Simple.getAddress(),
-            tokenId: 0,
+            tokenId: 1020101, // -- Space Credits
             amount: WeiPerEther,
           },
         ],
@@ -418,7 +419,7 @@ async function main() {
           {
             tokenType: 2,
             token: await contracts.erc721Random.getAddress(),
-            tokenId: 306001,
+            tokenId: 1030601, // -- sword
             amount: 1,
           },
         ],
@@ -436,12 +437,12 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        // ERC998 > ERC1155
+        // ERC998 > MYSTERY
         deposit: [
           {
             tokenType: 3,
             token: await contracts.erc998Random.getAddress(),
-            tokenId: 0,
+            tokenId: 1040601, // -- warrior
             amount: 1,
           },
         ],
@@ -449,7 +450,7 @@ async function main() {
           {
             tokenType: 2,
             token: await contracts.erc721MysteryboxSimple.getAddress(),
-            tokenId: 601001,
+            tokenId: 1110101, // -- sword mysterybox
             amount: 1,
           },
         ],
@@ -458,7 +459,7 @@ async function main() {
             {
               tokenType: 2,
               token: await contracts.erc721Random.getAddress(),
-              tokenId: 306001,
+              tokenId: 1030601, // -- sword
               amount: 1,
             },
           ],
@@ -526,16 +527,16 @@ async function main() {
   );
 
   // GENERATIVE
-  // const erc721CollectionFactory = await ethers.getContractFactory("ERC721CSimple");
-  // contracts.erc721Generative = await erc721CollectionFactory.deploy(
-  //   "COLLECTION SIMPLE",
-  //   "COLL721",
-  //   royalty,
-  //   baseTokenURI,
-  //   batchSize,
-  //   owner.address,
-  // );
-  // await debug(contracts);
+  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CSimple");
+  contracts.erc721Generative = await erc721CollectionFactory.deploy(
+    "COLLECTION SIMPLE",
+    "COLL721",
+    royalty,
+    baseTokenURI,
+    batchSize,
+    owner.address,
+  );
+  await debug(contracts);
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
@@ -553,8 +554,8 @@ async function main() {
   await debug(contracts);
   // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
-  const waitlistFactory = await ethers.getContractFactory("WaitList");
-  contracts.waitlist = await waitlistFactory.deploy();
+  const waitListFactory = await ethers.getContractFactory("WaitList");
+  contracts.waitList = await waitListFactory.deploy();
   await debug(contracts);
 
   // function setReward(Params memory params, Asset[] memory items)
@@ -579,7 +580,7 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitlist.setReward(params, items), "waitlist.setReward");
+  await debug(await contracts.waitList.setReward(params, items), "waitList.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
@@ -614,7 +615,7 @@ async function main() {
       await contracts.erc721Rentable.getAddress(),
       await contracts.erc721Soulbound.getAddress(),
       await contracts.erc721Genes.getAddress(),
-      // await contracts.erc721Generative.getAddress(),
+      await contracts.erc721Generative.getAddress(),
       await contracts.erc998Blacklist.getAddress(),
       await contracts.erc998New.getAddress(),
       await contracts.erc998Random.getAddress(),
@@ -638,7 +639,8 @@ async function main() {
       await contracts.erc721Wrapper.getAddress(),
       await contracts.exchange.getAddress(),
       await contracts.staking.getAddress(),
-      await contracts.waitlist.getAddress(),
+      await contracts.waitList.getAddress(),
+      await contracts.erc721MysteryboxBlacklistPausable.getAddress(),
       await contracts.erc721MysteryboxBlacklist.getAddress(),
       await contracts.erc721MysteryboxPausable.getAddress(),
       await contracts.erc721MysteryboxSimple.getAddress(),

@@ -10,7 +10,7 @@ import { testChainId } from "@framework/constants";
 export class TokenService {
   constructor(
     @InjectRepository(TokenEntity)
-    private readonly tokenEntityRepository: Repository<TokenEntity>,
+    protected readonly tokenEntityRepository: Repository<TokenEntity>,
     protected readonly configService: ConfigService,
   ) {}
 

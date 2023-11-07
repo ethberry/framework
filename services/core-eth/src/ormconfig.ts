@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { NodeEnv } from "@framework/types";
+// import { NodeEnv } from "@framework/types";
 
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
@@ -41,6 +41,8 @@ import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-lin
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
+import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -71,6 +73,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     BreedEntity,
     CraftEntity,
+    MergeEntity,
     DismantleEntity,
     GradeEntity,
     MysteryBoxEntity,
@@ -81,6 +84,7 @@ const config: PostgresConnectionOptions = {
     RaffleTicketEntity,
     StakingRulesEntity,
     StakingDepositEntity,
+    StakingPenaltyEntity,
     PonziDepositEntity,
     PonziRulesEntity,
     WaitListListEntity,
