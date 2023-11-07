@@ -1,4 +1,4 @@
-import { createElement, FC } from "react";
+import { ComponentType, FC } from "react";
 import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -10,7 +10,7 @@ import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselHierarchyProps {
   templates: Array<ITemplate>;
-  component: FC<{ template: ITemplate }>;
+  component: ComponentType<{ template: ITemplate }>;
 }
 
 export enum IResolutions {
@@ -20,7 +20,7 @@ export enum IResolutions {
 }
 
 export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props => {
-  const { templates, component } = props;
+  const { templates, component: Component } = props;
 
   const classes = useStyles();
   const there = useTheme();
@@ -65,7 +65,9 @@ export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props =>
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {templates.map(template => createElement(component, { key: `hr${template.id}`, template }))}
+      {templates.map(template => (
+        <Component key={template.id} template={template} />
+      ))}
     </Carousel>
   );
 };

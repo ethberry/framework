@@ -68,7 +68,7 @@ export const MultiCarouselAssetPromo: FC<IMultiCarouselAssetPromoProps> = ({ pro
       infinite
     >
       {promo.map(promo => (
-        <AssetPromoBanner key={`pr${promo.id}`} promo={promo} />
+        <AssetPromoBanner key={promo.id} promo={promo} />
       ))}
     </Carousel>
   );

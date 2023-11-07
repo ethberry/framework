@@ -1,4 +1,4 @@
-import { createElement, FC } from "react";
+import { ComponentType, FC } from "react";
 import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -10,7 +10,7 @@ import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselMysteryboxProps {
   mysteryBoxes: Array<IMysteryBox>;
-  component: FC<{ mysteryBox: IMysteryBox }>;
+  component: ComponentType<{ mysteryBox: IMysteryBox }>;
 }
 
 export enum IResolutions {
@@ -20,7 +20,7 @@ export enum IResolutions {
 }
 
 export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props => {
-  const { mysteryBoxes, component } = props;
+  const { mysteryBoxes, component: Component } = props;
 
   const classes = useStyles();
   const there = useTheme();
@@ -65,7 +65,9 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {mysteryBoxes.map(mysterybox => createElement(component, { key: `mb${mysterybox.id}`, mysteryBox: mysterybox }))}
+      {mysteryBoxes.map(mysterybox => (
+        <Component key={mysterybox.id} mysteryBox={mysterybox} />
+      ))}
     </Carousel>
   );
 };
