@@ -36,6 +36,10 @@ export const NewMysterybox: FC = () => {
     void fetchTokens();
   }, []);
 
+  if (!mysteryboxes || mysteryboxes.length === 0) {
+    return null;
+  }
+
   return (
     <ProgressOverlay isLoading={isLoading} wrapperSx={{ minHeight: 400 }}>
       <StyledTitle variant="h4">
