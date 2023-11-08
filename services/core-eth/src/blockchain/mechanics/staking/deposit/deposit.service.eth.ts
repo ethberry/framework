@@ -164,7 +164,7 @@ export class StakingDepositServiceEth {
   public async depositFinish(event: ILogEvent<IStakingDepositFinishEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { stakingId, owner },
+      args: { stakingId, owner, multiplier, finishTimestamp },
     } = event;
     const { address, transactionHash } = context;
 
@@ -177,6 +177,14 @@ export class StakingDepositServiceEth {
     if (!stakingDepositEntity) {
       throw new NotFoundException("stakingDepositNotFound");
     }
+
+    // Complete current deposit
+    Object.assign(stakingDepositEntity, {
+      stakingDepositStatus: StakingDepositStatus.COMPLETE,
+      withdrawTimestamp: new Date(Number(finishTimestamp) * 1000).toISOString(),
+      multiplier: Number(multiplier),
+    });
+    await stakingDepositEntity.save();
 
     await this.notificatorService.stakingDepositFinish({
       stakingDeposit: stakingDepositEntity,
@@ -286,4 +294,14 @@ export class StakingDepositServiceEth {
     //   transactionHash,
     // });
   }
+
+  // public async checkBalances(contractId: number): Promise<void> {
+  //   // GET ALL DEPOSITS
+  //   const stakingDeposits = await this.stakingDepositService.findAll(
+  //     { stakingRule: { contractId } },
+  //     { relations: { stakingRule: { contract: { merchant: true } } } },
+  //   );
+  //
+  //   stakingDeposits.map(deposit =>)
+  // }
 }

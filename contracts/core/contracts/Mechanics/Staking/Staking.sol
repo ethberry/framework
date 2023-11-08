@@ -230,27 +230,31 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       stake.cycles += multiplier;
     }
 
-    // Iterate by Array<deposit>
-    uint256 lengthDeposit = stake.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; ) {
-      // If withdrawDeposit flag is true OR
-      // If Reward multiplier > 0 AND Rule is not recurrent OR
-      // If Stake cycles > 0 AND breakLastPeriod flag is true
-      // Withdraw initial Deposit
-      if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
-        emit DepositWithdraw(stakeId, receiver, block.timestamp);
-        // Deactivate current deposit
+    // If withdrawDeposit flag is true OR
+    // If Reward multiplier > 0 AND Rule is not recurrent OR
+    // If Stake cycles > 0 AND breakLastPeriod flag is true
+    // Withdraw initial Deposit
+    if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
+      // Deactivate current deposit
+      if (stake.activeDeposit) {
         stake.activeDeposit = false;
-
-        withdrawDepositItem(stakeId, i, multiplier, receiver);
-      } else {
-        // Update the start timestamp of the stake.
-        stake.startTimestamp = block.timestamp;
       }
+
+      emit DepositWithdraw(stakeId, receiver, block.timestamp);
+
+      // Iterate by Array<deposit>
+      uint256 lengthDeposit = stake.deposit.length;
+      for (uint256 i = 0; i < lengthDeposit; ) {
+        withdrawDepositItem(stakeId, i, multiplier, receiver);
 
       unchecked {
         i++;
       }
+      }
+
+    } else {
+      // Update the start timestamp of the stake.
+      stake.startTimestamp = block.timestamp;
     }
 
     // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
