@@ -9,7 +9,7 @@ export const validationSchema = object().shape({
   description: draftValidationSchema,
   deposit: templateAssetValidationSchema,
   reward: templateAssetValidationSchema,
-  duration: number()
+  durationAmount: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),

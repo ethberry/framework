@@ -4,9 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput } from "@gemunion/mui-inputs-core";
 import type { IStakingRule } from "@framework/types";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ModuleType } from "@framework/types";
@@ -26,7 +25,7 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, contract, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
+  const { contract, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
   const fixedValues = {
     deposit,
     reward,
@@ -38,7 +37,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
     maxStake,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.create";
+  const message = "dialogs.create";
 
   return (
     <FormDialog
@@ -49,8 +48,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       disabled={false}
       {...rest}
     >
-      {id ? <TextInput name="title" /> : null}
-      {id ? <RichTextEditor name="description" /> : null}
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>
