@@ -40,7 +40,7 @@ export const NewErc998: FC = () => {
     void fetchTokens();
   }, []);
 
-  if (!templates?.length) {
+  if (!templates || templates.length === 0) {
     return null;
   }
 

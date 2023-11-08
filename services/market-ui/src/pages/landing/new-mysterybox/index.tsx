@@ -36,7 +36,7 @@ export const NewMysterybox: FC = () => {
     void fetchTokens();
   }, []);
 
-  if (!mysteryboxes?.length) {
+  if (!mysteryboxes || mysteryboxes.length === 0) {
     return null;
   }
 

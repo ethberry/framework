@@ -28,7 +28,7 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
   const responsive = {
     [IResolutions.DESKTOP]: {
       breakpoint: {
-        max: window.innerWidth,
+        max: document.documentElement.clientWidth, // there.breakpoints.values.lg
         min: there.breakpoints.values.md,
       },
       items: 3,
