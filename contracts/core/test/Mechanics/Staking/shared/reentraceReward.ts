@@ -526,7 +526,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
               tokenType: 2, // ERC721
               token: await erc721Instance.getAddress(),
               tokenId,
-              amount,
+              amount: 1n,
             },
           ],
           reward: [
@@ -539,7 +539,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
           ],
           content: [],
           period,
-          penalty: 10000, // 50%
+          penalty: 10000, // 100%
           maxStake,
           recurrent: true,
           active: true,

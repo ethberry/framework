@@ -1,17 +1,27 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Any, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IStakingDepositSearchDto } from "@framework/types";
+import type { IStakingDepositSearchDto, IToken } from "@framework/types";
+import { StakingDepositStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingDepositEntity } from "./deposit.entity";
+import { BalanceService } from "../../../hierarchy/balance/balance.service";
+
+export interface IStakingDepositBalanceCheck {
+  token: IToken;
+  depositAmount: bigint;
+  stakingBalance: bigint;
+  topUp: boolean;
+}
 
 @Injectable()
 export class StakingDepositService {
   constructor(
     @InjectRepository(StakingDepositEntity)
     private readonly stakingDepositEntityRepository: Repository<StakingDepositEntity>,
+    protected readonly balanceService: BalanceService,
   ) {}
 
   public findOne(
@@ -175,5 +185,85 @@ export class StakingDepositService {
         },
       },
     });
+  }
+
+  public async checkStakingDepositBalance(
+    contractId: number,
+    address: string,
+  ): Promise<Array<IStakingDepositBalanceCheck | null>> {
+    // GET ALL ACTIVE DEPOSITS FOR STAKING CONTRACT WITH DEPOSIT ASSET TOKEN_TYPES: NATIVE,ERC20,ERC1155
+    const stakingDeposits = await this.findAll(
+      {
+        stakingDepositStatus: StakingDepositStatus.ACTIVE,
+        stakingRule: {
+          contractId,
+          deposit: { components: { tokenType: Any([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]) } },
+        },
+      },
+      { relations: { stakingRule: { contract: { merchant: true }, deposit: { components: { contract: true } } } } },
+    );
+
+    if (stakingDeposits.length > 0) {
+      // ALL DEPOSIT TOKEN'S ADDRESSES
+      const depositAssetContracts = [
+        ...new Set(
+          stakingDeposits
+            .map(dep => dep.stakingRule.deposit.components.map(comp => comp.contract.address))
+            .reduce((prev, next) => {
+              return prev.concat(next);
+            }),
+        ),
+      ];
+      // ALL CURRENT STAKING BALANCES
+      const stakingBalances = await this.balanceService.searchByAddress(address);
+
+      // EACH DEPOSIT TOKEN BALANCES
+      return depositAssetContracts.map(addr => {
+        const currentAssetBalance = stakingBalances.filter(bal => bal.token.template.contract.address === addr);
+        if (currentAssetBalance.length > 0) {
+          const { amount, token } = currentAssetBalance[0];
+          const { templateId } = token;
+          const depSum = this.getDepositAssetTemplateSum(stakingDeposits, templateId);
+
+          // notify about topUp
+          // todo threshold?
+          if (BigInt(amount) < depSum) {
+            console.info("STAKING", contractId, address);
+            console.info("TOKEN", token.template.title, token.template.contract.address);
+            console.info("NEED TOP UP AMOUNT", depSum - BigInt(amount));
+          }
+
+          return {
+            token,
+            depositAmount: depSum,
+            stakingBalance: BigInt(amount),
+            topUp: BigInt(amount) < depSum,
+          };
+        } else {
+          return null;
+        }
+      });
+    } else {
+      return [];
+    }
+  }
+
+  public getDepositAssetTemplateSum(depositArr: StakingDepositEntity[], templateId: number): bigint {
+    // filter deposits by given Asset templateId
+    const filteredDeps = depositArr.filter(
+      dep => dep.stakingRule.deposit.components.filter(comp => comp.templateId === templateId).length > 0,
+    );
+
+    let total = BigInt(0);
+    if (filteredDeps.length > 0) {
+      for (const dep of filteredDeps) {
+        for (const comp of dep.stakingRule.deposit.components) {
+          if (comp.templateId === templateId) {
+            total = total + BigInt(comp.amount);
+          }
+        }
+      }
+    }
+    return total;
   }
 }

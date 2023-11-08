@@ -8,6 +8,7 @@ import { ModuleType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingContractService } from "../contract/contract.service";
+import { StakingDepositService } from "../deposit/deposit.service";
 
 @Injectable()
 export class StakingChartService {
@@ -15,6 +16,7 @@ export class StakingChartService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     protected readonly stakingContractService: StakingContractService,
+    protected readonly stakingDepositService: StakingDepositService,
   ) {}
 
   public async chart(dto: IStakingChartSearchDto, userEntity: UserEntity): Promise<any> {
@@ -27,6 +29,8 @@ export class StakingChartService {
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
+
+    await this.stakingDepositService.checkStakingDepositBalance(contractEntity.id, contractEntity.address);
 
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");

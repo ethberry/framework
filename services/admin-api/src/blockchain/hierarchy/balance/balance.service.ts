@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { FindOneOptions, FindManyOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { IBalanceAutocompleteDto, IBalanceSearchDto, ModuleType } from "@framework/types";
 
@@ -20,6 +20,13 @@ export class BalanceService {
     options?: FindOneOptions<BalanceEntity>,
   ): Promise<BalanceEntity | null> {
     return this.balanceEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<BalanceEntity>,
+    options?: FindManyOptions<BalanceEntity>,
+  ): Promise<Array<BalanceEntity>> {
+    return this.balanceEntityRepository.find({ where, ...options });
   }
 
   public searchByAddress(address: string): Promise<Array<BalanceEntity>> {
