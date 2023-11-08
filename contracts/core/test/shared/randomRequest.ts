@@ -23,7 +23,7 @@ export async function randomFixRequest(rndInstance: any, vrfInstance: VRFCoordin
   }
 }
 
-export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinatorV2Mock) {
+export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinatorV2Mock, random?: string) {
   const eventFilter = vrfInstance.filters.RandomWordsRequested();
   const events = await vrfInstance.queryFilter(eventFilter);
   for (const e of events) {
@@ -32,7 +32,8 @@ export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinato
     } = e;
 
     const blockNum = await ethers.provider.getBlockNumber();
-    const randomness = hexlify(randomBytes(32));
+
+    const randomness = random || hexlify(randomBytes(32));
 
     await vrfInstance.fulfillRandomWords(requestId, keyHash, randomness, {
       blockNum,
