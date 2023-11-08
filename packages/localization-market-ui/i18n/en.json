@@ -436,6 +436,7 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
+      "emptyReward": "Empty reward",
       "endDate": "End date",
       "endTimestamp": "End date",
       "event": "Event",

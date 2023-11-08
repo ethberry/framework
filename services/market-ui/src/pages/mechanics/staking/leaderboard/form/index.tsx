@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
-import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SwitchInput } from "@gemunion/mui-inputs-core";
 import type { IStakingLeaderboardSearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
+import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
 
 interface IStakingLeaderboardSearchFormProps {
   onSubmit: (values: IStakingLeaderboardSearchDto) => Promise<void>;
@@ -18,10 +17,8 @@ interface IStakingLeaderboardSearchFormProps {
 export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { formatMessage } = useIntl();
-
-  const { deposit, reward } = initialValues;
-  const fixedValues = { deposit, reward };
+  const { deposit, reward, emptyReward } = initialValues;
+  const fixedValues = { deposit, reward, emptyReward };
 
   return (
     <FormWrapper
@@ -33,19 +30,15 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}></Grid>
           <Grid item xs={6}>
-            <SelectInput
-              name="deposit.tokenType"
-              options={TokenType}
-              label={formatMessage({ id: "form.labels.deposit" })}
-            />
+            <SwitchInput name="emptyReward" />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput
-              name="reward.tokenType"
-              options={TokenType}
-              label={formatMessage({ id: "form.labels.reward" })}
-            />
+            <SearchTokenSelectInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="reward" />
           </Grid>
           <Grid item xs={6}>
             <SearchContractInput prefix="deposit" />

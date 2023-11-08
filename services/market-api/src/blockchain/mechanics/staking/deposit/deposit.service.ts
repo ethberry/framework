@@ -110,7 +110,7 @@ export class StakingDepositService {
   }
 
   public async leaderboard(dto: IStakingLeaderboardSearchDto): Promise<[Array<IStakingLeaderboard>, number]> {
-    const { deposit, reward, skip, take } = dto;
+    const { deposit, reward, emptyReward, skip, take } = dto;
 
     const queryString = `
         SELECT row_number() OVER (ORDER BY account)::INTEGER id,
@@ -123,37 +123,49 @@ export class StakingDepositService {
                  LEFT JOIN
              ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
                  LEFT JOIN
-             ${ns}.asset as asset_reward ON staking_rules.reward_id = asset_reward.id
-                 LEFT JOIN
              ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
                  LEFT JOIN
              ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
+             ${
+               emptyReward
+                 ? ""
+                 : `
                  LEFT JOIN
-             ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
+              ${ns}.asset as asset_reward ON staking_rules.reward_id = asset_reward.id
                  LEFT JOIN
-             ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
+              ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
+                 LEFT JOIN
+              ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
+             `
+             }
         WHERE (staking_deposit.staking_deposit_status = '${StakingDepositStatus.ACTIVE}' OR
                staking_deposit.staking_deposit_status = '${StakingDepositStatus.COMPLETE}')
           AND deposit_contract.contract_type = $1
           AND deposit_contract.id = $2
-          AND reward_contract.contract_type = $3
-          AND reward_contract.id = $4
+          ${
+            emptyReward
+              ? ""
+              : `
+            AND reward_contract.contract_type = $3
+            AND reward_contract.id = $4
+          `
+          }
         GROUP BY deposit_contract.name, account
     `;
 
     return Promise.all([
-      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $5 LIMIT $6`, [
-        deposit.tokenType,
-        deposit.contractId,
-        reward.tokenType,
-        reward.contractId,
-        skip,
-        take,
-      ]),
+      this.entityManager.query(
+        `${queryString} ORDER BY amount DESC OFFSET ${emptyReward ? "$3 LIMIT $4" : "$5 LIMIT $6"}`,
+        emptyReward
+          ? [deposit.tokenType, deposit.contractId, skip, take]
+          : [deposit.tokenType, deposit.contractId, reward!.tokenType, reward!.contractId, skip, take],
+      ),
       this.entityManager.query(
         `SELECT COUNT(DISTINCT (id))::INTEGER as count
          FROM (${queryString}) as l`,
-        [deposit.tokenType, deposit.contractId, reward.tokenType, reward.contractId],
+        emptyReward
+          ? [deposit.tokenType, deposit.contractId]
+          : [deposit.tokenType, deposit.contractId, reward!.tokenType, reward!.contractId],
       ),
     ]).then(([list, [{ count }]]) => [list, count]);
   }
