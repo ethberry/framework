@@ -29,6 +29,7 @@ import type {
   IRaffleRoundEndData,
   IRaffleRoundStartData,
   IRentUserUpdateData,
+  IStakingBalanceCheck,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
@@ -197,6 +198,12 @@ export class NotificatorService {
   public stakingRuleUpdated(data: IStakingRuleUpdatedData): Promise<any> {
     return this.sendMessage(data.stakingRule.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.STAKING_RULE_UPDATED, data).toPromise();
+    });
+  }
+
+  public stakingBalanceCheck(data: IStakingBalanceCheck): Promise<any> {
+    return this.sendMessage(data.stakingContract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_BALANCE_CHECK, data).toPromise();
     });
   }
 

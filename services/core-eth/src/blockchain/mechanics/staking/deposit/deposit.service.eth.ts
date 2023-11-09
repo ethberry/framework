@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { Any } from "typeorm";
 
 import { Log } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
@@ -9,6 +10,7 @@ import type {
   IStakingDepositReturnEvent,
   IStakingDepositStartEvent,
   IStakingPenaltyEvent,
+  IToken,
 } from "@framework/types";
 import { RmqProviderType, SignalEventType, StakingDepositStatus, TokenType } from "@framework/types";
 
@@ -22,6 +24,16 @@ import { StakingDepositService } from "./deposit.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { BalanceService } from "../../../hierarchy/balance/balance.service";
+import { StakingDepositEntity } from "./deposit.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+
+export interface IStakingDepositBalanceCheck {
+  token: IToken;
+  depositAmount: bigint;
+  stakingBalance: bigint;
+  topUp: boolean;
+}
 
 @Injectable()
 export class StakingDepositServiceEth {
@@ -37,6 +49,7 @@ export class StakingDepositServiceEth {
     protected readonly assetService: AssetService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
+    private readonly balanceService: BalanceService,
     private readonly penaltyService: StakingPenaltyService,
   ) {}
 
@@ -80,6 +93,9 @@ export class StakingDepositServiceEth {
         transactionType: name,
       })
       .toPromise();
+
+    // check balances
+    await this.checkStakingDepositBalance(stakingRuleEntity.contract);
   }
 
   public async depositWithdraw(event: ILogEvent<IStakingDepositWithdrawEvent>, context: Log): Promise<void> {
@@ -124,6 +140,8 @@ export class StakingDepositServiceEth {
       })
       .toPromise();
 
+    // check balances
+    await this.checkStakingDepositBalance(stakingDepositEntity.stakingRule.contract);
     // TODO save penalty to asset
   }
 
@@ -158,6 +176,8 @@ export class StakingDepositServiceEth {
       })
       .toPromise();
 
+    // check balances
+    await this.checkStakingDepositBalance(stakingDepositEntity.stakingRule.contract);
     // TODO penalty = most likely 0 but not always
   }
 
@@ -199,6 +219,9 @@ export class StakingDepositServiceEth {
         transactionType: name,
       })
       .toPromise();
+
+    // check balances
+    await this.checkStakingDepositBalance(stakingDepositEntity.stakingRule.contract);
   }
 
   public async depositPenalty(event: ILogEvent<IStakingPenaltyEvent>, context: Log): Promise<void> {
@@ -293,15 +316,94 @@ export class StakingDepositServiceEth {
     //   address,
     //   transactionHash,
     // });
+
+    // check balances
+    await this.checkStakingDepositBalance(stakingDepositEntity.stakingRule.contract);
   }
 
-  // public async checkBalances(contractId: number): Promise<void> {
-  //   // GET ALL DEPOSITS
-  //   const stakingDeposits = await this.stakingDepositService.findAll(
-  //     { stakingRule: { contractId } },
-  //     { relations: { stakingRule: { contract: { merchant: true } } } },
-  //   );
-  //
-  //   stakingDeposits.map(deposit =>)
-  // }
+  public async checkStakingDepositBalance(staking: ContractEntity): Promise<void> {
+    const { id, address } = staking;
+    const contractId = id;
+    // GET ALL ACTIVE DEPOSITS FOR STAKING CONTRACT WITH DEPOSIT ASSET TOKEN_TYPES: NATIVE,ERC20
+    const stakingDeposits = await this.stakingDepositService.findAll(
+      {
+        stakingDepositStatus: StakingDepositStatus.ACTIVE,
+        stakingRule: {
+          contractId,
+          deposit: { components: { tokenType: Any([TokenType.NATIVE, TokenType.ERC20]) } },
+        },
+      },
+      { relations: { stakingRule: { contract: { merchant: true }, deposit: { components: { contract: true } } } } },
+    );
+
+    if (stakingDeposits.length > 0) {
+      // ALL DEPOSIT TOKEN'S ADDRESSES
+      const depositAssetContracts = [
+        ...new Set(
+          stakingDeposits
+            .map(dep => dep.stakingRule.deposit.components.map(comp => comp.contract.address))
+            .reduce((prev, next) => {
+              return prev.concat(next);
+            }),
+        ),
+      ];
+      // ALL CURRENT STAKING BALANCES
+      const stakingBalances = await this.balanceService.searchByAddress(address);
+
+      // EACH DEPOSIT TOKEN BALANCES
+      depositAssetContracts.map(async addr => {
+        const currentAssetBalance = stakingBalances.filter(bal => bal.token.template.contract.address === addr);
+        if (currentAssetBalance.length > 0) {
+          const { amount, token } = currentAssetBalance[0];
+          const { templateId } = token;
+          const depSum = this.getDepositAssetTemplateSum(stakingDeposits, templateId);
+
+          // NOTIFY ABOUT TOP UP
+          // TODO threshold?
+          if (BigInt(amount) < depSum) {
+            const notifyData = {
+              stakingContract: staking,
+              token,
+              depositAmount: depSum.toString(),
+              stakingBalance: amount,
+            };
+            await this.notificatorService.stakingBalanceCheck(notifyData);
+            this.loggerService.warn("STAKING_BALANCE_CHECK", notifyData, StakingDepositServiceEth.name);
+
+            console.info("STAKING", contractId, address);
+            console.info("TOKEN", token.template.title, token.template.contract.address);
+            console.info("NEED TOP UP AMOUNT", depSum - BigInt(amount));
+          }
+
+          return {
+            token,
+            depositAmount: depSum,
+            stakingBalance: BigInt(amount),
+            topUp: BigInt(amount) < depSum,
+          };
+        } else {
+          return null;
+        }
+      });
+    }
+  }
+
+  public getDepositAssetTemplateSum(depositArr: StakingDepositEntity[], templateId: number): bigint {
+    // filter deposits by given Asset templateId
+    const filteredDeps = depositArr.filter(
+      dep => dep.stakingRule.deposit.components.filter(comp => comp.templateId === templateId).length > 0,
+    );
+
+    let total = BigInt(0);
+    if (filteredDeps.length > 0) {
+      for (const dep of filteredDeps) {
+        for (const comp of dep.stakingRule.deposit.components) {
+          if (comp.templateId === templateId) {
+            total = total + BigInt(comp.amount);
+          }
+        }
+      }
+    }
+    return total;
+  }
 }

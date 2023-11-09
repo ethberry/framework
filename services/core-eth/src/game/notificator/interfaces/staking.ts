@@ -1,4 +1,4 @@
-import type { IStakingDeposit, IStakingRule } from "@framework/types";
+import type { IContract, IStakingDeposit, IStakingRule, IToken } from "@framework/types";
 
 export interface IStakingDepositStartData {
   stakingDeposit: IStakingDeposit;
@@ -22,4 +22,11 @@ export interface IStakingRuleUpdatedData {
   stakingRule: IStakingRule;
   address: string;
   transactionHash: string;
+}
+
+export interface IStakingBalanceCheck {
+  stakingContract: IContract;
+  token: IToken;
+  depositAmount: string;
+  stakingBalance: string;
 }

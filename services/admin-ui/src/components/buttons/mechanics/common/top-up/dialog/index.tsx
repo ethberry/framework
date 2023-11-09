@@ -1,11 +1,13 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+
 import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { FormAlert } from "../../../../../forms/form-alert";
 
 export interface ITopUpDto {
   token: ITokenAsset;
@@ -31,6 +33,10 @@ export const TopUpDialog: FC<ITopUpDialogProps> = props => {
       disabled={false}
       {...rest}
     >
+      <FormAlert
+        message="alert.allowanceErc20"
+        condition={({ token }) => token.components[0].tokenType === TokenType.ERC20}
+      />
       <TokenAssetInput
         prefix="token"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}

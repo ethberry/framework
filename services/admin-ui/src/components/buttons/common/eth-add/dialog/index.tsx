@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";

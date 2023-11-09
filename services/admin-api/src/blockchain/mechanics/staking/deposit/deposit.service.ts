@@ -191,13 +191,13 @@ export class StakingDepositService {
     contractId: number,
     address: string,
   ): Promise<Array<IStakingDepositBalanceCheck | null>> {
-    // GET ALL ACTIVE DEPOSITS FOR STAKING CONTRACT WITH DEPOSIT ASSET TOKEN_TYPES: NATIVE,ERC20,ERC1155
+    // GET ALL ACTIVE DEPOSITS FOR STAKING CONTRACT WITH DEPOSIT ASSET TOKEN_TYPES: NATIVE,ERC20
     const stakingDeposits = await this.findAll(
       {
         stakingDepositStatus: StakingDepositStatus.ACTIVE,
         stakingRule: {
           contractId,
-          deposit: { components: { tokenType: Any([TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]) } },
+          deposit: { components: { tokenType: Any([TokenType.NATIVE, TokenType.ERC20]) } },
         },
       },
       { relations: { stakingRule: { contract: { merchant: true }, deposit: { components: { contract: true } } } } },
