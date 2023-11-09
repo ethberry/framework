@@ -12,7 +12,7 @@ import type {
   IStakingPenaltyEvent,
   IToken,
 } from "@framework/types";
-import { RmqProviderType, SignalEventType, StakingDepositStatus, TokenType } from "@framework/types";
+import { EmailType, RmqProviderType, SignalEventType, StakingDepositStatus, TokenType } from "@framework/types";
 
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
@@ -42,6 +42,8 @@ export class StakingDepositServiceEth {
     private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    private readonly emailClientProxy: ClientProxy,
     private readonly stakingRulesService: StakingRulesService,
     private readonly stakingDepositService: StakingDepositService,
     private readonly eventHistoryService: EventHistoryService,
@@ -333,7 +335,11 @@ export class StakingDepositServiceEth {
           deposit: { components: { tokenType: Any([TokenType.NATIVE, TokenType.ERC20]) } },
         },
       },
-      { relations: { stakingRule: { contract: { merchant: true }, deposit: { components: { contract: true } } } } },
+      {
+        relations: {
+          stakingRule: { contract: { merchant: true }, deposit: { components: { contract: { merchant: true } } } },
+        },
+      },
     );
 
     if (stakingDeposits.length > 0) {
@@ -359,8 +365,10 @@ export class StakingDepositServiceEth {
           const depSum = this.getDepositAssetTemplateSum(stakingDeposits, templateId);
 
           // NOTIFY ABOUT TOP UP
-          // TODO threshold?
-          if (BigInt(amount) < depSum) {
+          // TODO get threshold from merchant
+          const diff = BigInt(amount) - depSum;
+          const threshold = BigInt(10); // 10%
+          if (diff / (BigInt(amount) / BigInt(100)) >= threshold) {
             const notifyData = {
               stakingContract: staking,
               token,
@@ -373,6 +381,16 @@ export class StakingDepositServiceEth {
             console.info("STAKING", contractId, address);
             console.info("TOKEN", token.template.title, token.template.contract.address);
             console.info("NEED TOP UP AMOUNT", depSum - BigInt(amount));
+
+            // NOTIFY EMAIL
+            await this.emailClientProxy
+              .emit(EmailType.STAKING_BALANCE, {
+                staking,
+                token,
+                balance: amount,
+                deposit: depSum.toString(),
+              })
+              .toPromise();
           }
 
           return {
