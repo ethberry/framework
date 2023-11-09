@@ -56,6 +56,7 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
 
   return (
     <Carousel
+      ssr
       deviceType={deviceType}
       className={classes.container}
       itemClass={classes.item}
