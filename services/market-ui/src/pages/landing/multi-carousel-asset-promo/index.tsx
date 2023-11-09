@@ -6,7 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import { IAssetPromo } from "@framework/types";
 
 import { AssetPromoBanner } from "./banner";
-import { useStyles } from "./styles";
+import { Root } from "./styled";
 
 declare interface IMultiCarouselAssetPromoProps {
   promo: Array<IAssetPromo>;
@@ -19,7 +19,6 @@ export enum IResolutions {
 }
 
 export const MultiCarouselAssetPromo: FC<IMultiCarouselAssetPromoProps> = ({ promo }) => {
-  const classes = useStyles();
   const there = useTheme();
 
   const responsive = {
@@ -52,24 +51,26 @@ export const MultiCarouselAssetPromo: FC<IMultiCarouselAssetPromoProps> = ({ pro
   const deviceType = isSmallScreen ? IResolutions.MOBILE : isMediumScreen ? IResolutions.TABLET : IResolutions.DESKTOP;
 
   return (
-    <Carousel
-      ssr
-      autoPlay
-      autoPlaySpeed={5000}
-      arrows={false}
-      draggable={false}
-      showDots
-      renderDotsOutside
-      dotListClass={classes.dotList}
-      deviceType={deviceType}
-      className={classes.container}
-      itemClass={classes.item}
-      responsive={responsive}
-      infinite
-    >
-      {promo.map(promo => (
-        <AssetPromoBanner key={promo.id} promo={promo} />
-      ))}
-    </Carousel>
+    <Root>
+      <Carousel
+        ssr
+        autoPlay
+        autoPlaySpeed={5000}
+        arrows={false}
+        draggable={false}
+        showDots
+        renderDotsOutside
+        dotListClass={"MultiCarouselPromo-DotList"}
+        className={"MultiCarouselPromo-Container"}
+        itemClass={"MultiCarouselPromo-Item"}
+        deviceType={deviceType}
+        responsive={responsive}
+        infinite
+      >
+        {promo.map(promo => (
+          <AssetPromoBanner key={promo.id} promo={promo} />
+        ))}
+      </Carousel>
+    </Root>
   );
 };

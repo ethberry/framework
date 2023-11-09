@@ -10,7 +10,7 @@ import {
 import type { IOrder } from "@framework/types";
 
 import { OrderListItem } from "../order-item";
-import { useStyles } from "./styles";
+import { StyledDropZone, Wrapper } from "./styled";
 
 export interface IQuoteListProps {
   listId?: string;
@@ -44,19 +44,17 @@ const InnerListItem = memo<IInnerListItem>(props => {
 export const OrderList: FC<IQuoteListProps> = props => {
   const { listId = "LIST", items = [], onEdit } = props;
 
-  const classes = useStyles();
-
   return (
     <Droppable droppableId={listId}>
       {(dropProvided: DroppableProvided): ReactElement => (
-        <div className={classes.wrapper} {...dropProvided.droppableProps}>
-          <div className={classes.dropZone} ref={dropProvided.innerRef.bind(dropProvided)}>
+        <Wrapper {...dropProvided.droppableProps}>
+          <StyledDropZone ref={dropProvided.innerRef.bind(dropProvided)}>
             {items.map((order: IOrder, i: number) => (
               <InnerListItem order={order} key={order.id} index={i} onEdit={onEdit} />
             ))}
             {dropProvided.placeholder}
-          </div>
-        </div>
+          </StyledDropZone>
+        </Wrapper>
       )}
     </Droppable>
   );

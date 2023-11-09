@@ -8,7 +8,7 @@ import { NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IOrder, IOrderItem } from "@framework/types";
 
-import { useStyles } from "./styles";
+import { StyledGrid } from "./styled";
 
 export interface IUserInputProps {
   name: keyof IOrder;
@@ -16,8 +16,6 @@ export interface IUserInputProps {
 
 export const ItemsInput: FC<IUserInputProps> = props => {
   const { name = "orderItems" } = props;
-
-  const classes = useStyles();
 
   const form = useFormContext();
   const value = useWatch({ name });
@@ -55,9 +53,9 @@ export const ItemsInput: FC<IUserInputProps> = props => {
         {value.map((row: IOrderItem, i: number) => (
           <ListItem key={row.id}>
             <Grid container spacing={2}>
-              <Grid item className={classes.root}>
+              <StyledGrid item>
                 <EntityInput name={`${name}[${i}].productItemId`} controller="product-items" />
-              </Grid>
+              </StyledGrid>
               <Grid item>
                 <NumberInput name={`${name}[${i}].amount`} InputProps={{ inputProps: { min: 1 } }} />
               </Grid>
