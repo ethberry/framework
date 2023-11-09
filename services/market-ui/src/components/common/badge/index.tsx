@@ -3,27 +3,25 @@ import { FormattedMessage } from "react-intl";
 
 import { IToken, TokenMetadata, TokenRarity } from "@framework/types";
 
-import { useStyles } from "./styles";
+import { Root } from "./styled";
 
 interface IRarityBadgeProps {
+  isItem?: boolean;
   token: IToken;
-  itemClass?: boolean;
 }
 
 export const RarityBadge: FC<IRarityBadgeProps> = props => {
-  const { token, itemClass } = props;
+  const { isItem, token } = props;
 
   const rarity = Object.values(TokenRarity)[token.metadata[TokenMetadata.RARITY]];
-
-  const classes = useStyles({ rarity });
 
   if (!rarity) {
     return null;
   }
 
   return (
-    <div className={itemClass ? classes.item : classes.root} data-testid="RarityBadge">
+    <Root rarity={rarity} isItem={isItem} data-testid="RarityBadge">
       <FormattedMessage id={`enums.RARITY.${rarity as string}`} />
-    </div>
+    </Root>
   );
 };

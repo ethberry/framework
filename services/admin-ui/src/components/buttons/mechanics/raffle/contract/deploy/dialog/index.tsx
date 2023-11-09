@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+
 import { StyledAlert } from "./styled";
 
 export interface IRaffleContractDeployDialogProps {
