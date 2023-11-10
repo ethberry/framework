@@ -9,7 +9,7 @@ export const StyledWrapper = styled(Box)(({ theme }) => ({
   width: "calc(100% - 16px)",
   marginLeft: theme.spacing(1),
   marginRight: theme.spacing(1),
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up("md")]: {
     width: "calc(100% + 100px)",
     marginLeft: theme.spacing(-7),
     marginRight: theme.spacing(-7),

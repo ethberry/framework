@@ -8,5 +8,7 @@ export const Root = styled(Box)(({ theme }) => ({
   },
   "& .MultiCarouselMysteryBox-Item": {
     padding: theme.spacing(2, 1, 2, 1),
+    perspective: 2000,
+    backfaceVisibility: "hidden",
   },
 }));

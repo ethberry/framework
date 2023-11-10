@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { formatDuration, intervalToDuration } from "date-fns";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -13,6 +13,7 @@ import {
   StyledDescription,
   StyledImage,
   StyledTime,
+  StyledTitle,
 } from "./styled";
 
 interface IBannerProps {
@@ -51,7 +52,7 @@ export const AssetPromoBanner: FC<IBannerProps> = props => {
       </Grid>
       <Grid item xs={12} sm={6}>
         <StyledContent>
-          <Typography variant="h3">{promo.item?.components[0].template?.title}</Typography>
+          <StyledTitle>{promo.item?.components[0].template?.title}</StyledTitle>
           <StyledDescription>
             <RichTextDisplay data={promo.item?.components[0].template?.description} />
           </StyledDescription>

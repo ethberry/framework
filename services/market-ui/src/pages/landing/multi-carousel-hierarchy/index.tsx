@@ -27,7 +27,7 @@ export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props =>
   const responsive = {
     [IResolutions.DESKTOP]: {
       breakpoint: {
-        max: document.documentElement.clientWidth, // there.breakpoints.values.lg
+        max: 3000,
         min: there.breakpoints.values.md,
       },
       items: 3,
@@ -58,7 +58,6 @@ export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props =>
       <Carousel
         ssr
         deviceType={deviceType}
-        draggable={false}
         className={"MultiCarouselHierarchy-Container"}
         itemClass={"MultiCarouselHierarchy-Item"}
         responsive={responsive}

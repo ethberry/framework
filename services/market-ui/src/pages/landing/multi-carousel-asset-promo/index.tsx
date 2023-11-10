@@ -24,7 +24,7 @@ export const MultiCarouselAssetPromo: FC<IMultiCarouselAssetPromoProps> = ({ pro
   const responsive = {
     [IResolutions.DESKTOP]: {
       breakpoint: {
-        max: document.documentElement.clientWidth + 50,
+        max: 3000,
         min: there.breakpoints.values.md,
       },
       items: 1,
