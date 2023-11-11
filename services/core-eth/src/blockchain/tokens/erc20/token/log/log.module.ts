@@ -38,7 +38,6 @@ import { getEventsTopics } from "../../../../../common/utils";
 
         const eventNames = [
           ContractEventType.Approval,
-          ContractEventType.Snapshot,
           ContractEventType.Transfer,
           AccessListEventType.Blacklisted,
           AccessListEventType.UnBlacklisted,

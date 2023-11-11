@@ -25,7 +25,6 @@ import { WhitelistButton } from "../../../../components/buttons/extensions/white
 import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
 import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
 import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc1155ContractEditDialog } from "./edit";
@@ -142,7 +141,6 @@ export const Erc1155Contract: FC = () => {
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
                   />
-                  <SnapshotButton contract={contract} disabled={itemDisabled} />
                   <RoyaltyButton
                     contract={contract}
                     disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}

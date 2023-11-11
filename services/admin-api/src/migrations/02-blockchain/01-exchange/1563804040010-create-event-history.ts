@@ -7,7 +7,6 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.event_history_event_enum AS ENUM (
       --MODULE:ERC20
-       'Snapshot',
        'Approval',
        'Transfer',
       --MODULE:ERC721

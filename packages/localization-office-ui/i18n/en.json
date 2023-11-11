@@ -296,7 +296,6 @@
       "search": "Search",
       "showFilters": "Show filters",
       "signup": "Sign up",
-      "snapshot": "Snapshot",
       "startRound": "Start round",
       "submit": "Submit",
       "topUp": "Top up",
@@ -634,7 +633,6 @@
     },
     "erc20": {
       "contracts": {
-        "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
       },
       "title": "ERC20"

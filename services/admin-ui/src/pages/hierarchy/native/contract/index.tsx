@@ -23,7 +23,6 @@ import { UnWhitelistButton } from "../../../../components/buttons/extensions/whi
 import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
 import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
 import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
 import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
@@ -109,7 +108,6 @@ export const NativeContract: FC = () => {
                 <MintButton contract={contract} disabled={true} />
                 <AllowanceButton contract={contract} disabled={true} />
                 <TransferButton contract={contract} disabled={true} />
-                <SnapshotButton contract={contract} disabled={true} />
                 <RoyaltyButton contract={contract} disabled={true} />
                 <EthListenerAddButton contract={contract} disabled={true} />
                 <EthListenerRemoveButton contract={contract} disabled={true} />

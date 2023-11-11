@@ -9,7 +9,6 @@ enum ContractEventSignature {
   // MODULE:ERC20
   Transfer = "Transfer(address,address,uint256)",
   Approval = "Approval(address,address,uint256)",
-  Snapshot = "Snapshot(uint256)",
 
   // MODULE:ERC721
   ApprovalForAll = "ApprovalForAll(address,address,bool)",

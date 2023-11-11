@@ -380,7 +380,6 @@
       "RuleCreated": "RuleCreated",
       "RuleUpdated": "RuleUpdated",
       "SetMaxChild": "SetMaxChild",
-      "Snapshot": "Snapshot",
       "StakingFinish": "StakingFinish",
       "StakingStart": "StakingStart",
       "StakingWithdraw": "StakingWithdraw",
@@ -604,7 +603,6 @@
       "setAmount": "Set amount",
       "showFilters": "Show filters",
       "signup": "Sign up",
-      "snapshot": "Snapshot",
       "stakingInfo": "Staking info",
       "startRound": "Start round",
       "submit": "Submit",
@@ -1128,7 +1126,6 @@
     },
     "erc20": {
       "contracts": {
-        "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
       },
       "title": "ERC20"

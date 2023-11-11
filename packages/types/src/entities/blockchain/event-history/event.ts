@@ -34,7 +34,6 @@ import type { TWaitListEvents } from "./mechanics/waitlist";
 
 export enum ContractEventType {
   // MODULE:ERC20
-  Snapshot = "Snapshot",
   Approval = "Approval",
   Transfer = "Transfer",
 
@@ -165,7 +164,6 @@ export enum ContractEventType {
 
 export enum ContractEventSignature {
   // MODULE:ERC20
-  Snapshot = "Snapshot(uint256)",
   Approval = "Approval(address,address,uint256)",
   Transfer = "Transfer(address,address,uint256)",
 
