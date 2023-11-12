@@ -5,7 +5,7 @@ import { Transform } from "class-transformer";
 import { AccountDto } from "@gemunion/collection";
 
 import type { ISignalMessageDto } from "../interfaces";
-import { ContractEventType } from "@framework/types";
+import { ContractEventSignature } from "@framework/types";
 
 export class MessageDto extends AccountDto implements ISignalMessageDto {
   @ApiProperty()
@@ -15,7 +15,7 @@ export class MessageDto extends AccountDto implements ISignalMessageDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => value as ContractEventType)
-  @IsEnum(ContractEventType, { message: "badInput" })
-  public transactionType: ContractEventType;
+  @Transform(({ value }) => value as ContractEventSignature)
+  @IsEnum(ContractEventSignature, { message: "badInput" })
+  public transactionType: ContractEventSignature;
 }

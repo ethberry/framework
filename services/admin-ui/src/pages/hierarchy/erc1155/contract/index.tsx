@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -27,6 +27,7 @@ import { MintButton } from "../../../../components/buttons/hierarchy/contract/mi
 import { TransferButton } from "../../../../components/buttons/common/transfer";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
+import { useSignal } from "../../../../providers/signal";
 import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
@@ -78,6 +79,15 @@ export const Erc1155Contract: FC = () => {
             imageUrl,
           },
   });
+
+  const { setPageRefresher } = useSignal();
+
+  useEffect(() => {
+    setPageRefresher(handleRefreshPage);
+    return () => {
+      setPageRefresher(null);
+    };
+  }, [handleRefreshPage]);
 
   return (
     <Grid>
