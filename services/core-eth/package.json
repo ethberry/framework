@@ -33,7 +33,7 @@
     "@nestjs/microservices": "10.2.8",
     "@nestjs/platform-express": "10.2.8",
     "@nestjs/schedule": "4.0.0",
-    "@nestjs/swagger": "7.1.14",
+    "@nestjs/swagger": "7.1.15",
     "@nestjs/terminus": "10.1.1",
     "@nestjs/typeorm": "10.0.0",
     "async": "3.2.5",
