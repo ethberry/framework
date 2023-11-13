@@ -47,6 +47,11 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "deposit_asset_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "multiplier",
           type: "int",
           isNullable: true,
@@ -65,6 +70,12 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
           columnNames: ["staking_rule_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.staking_rules`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["deposit_asset_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

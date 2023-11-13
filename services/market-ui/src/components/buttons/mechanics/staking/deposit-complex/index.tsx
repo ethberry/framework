@@ -5,7 +5,8 @@ import { constants, Contract, utils } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
-import { StakingRuleStatus } from "@framework/types";
+import { StakingRuleStatus, TokenType } from "@framework/types";
+
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
@@ -25,8 +26,12 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const { className, disabled, rule, variant } = props;
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
-
+  // TODO tokenIds[] must include all deposit tokens.
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
+    // console.log("useMetamaskvalues", values);
+    // const tokenIds = rule.deposit!.components.map(comp =>
+    //   comp.tokenType === TokenType.ERC721 || comp.tokenType === TokenType.ERC998 ? "" : "",
+    // );
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
       externalId: rule.externalId,

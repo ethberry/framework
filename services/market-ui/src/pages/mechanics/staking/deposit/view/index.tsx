@@ -20,7 +20,7 @@ export interface IStakesViewDialogProps {
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { stakingRule, startTimestamp, withdrawTimestamp } = initialValues;
+  const { stakingRule, depositAsset, startTimestamp, withdrawTimestamp } = initialValues;
   const { penalty } = stakingRule || { penalty: 0 };
 
   const { formatMessage } = useIntl();
@@ -58,7 +58,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatItem(stakingRule?.deposit)}</TableCell>
+              <TableCell align="right">{formatItem(depositAsset)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

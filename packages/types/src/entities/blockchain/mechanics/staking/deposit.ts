@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { IStakingRule } from "./rule";
+import { IAsset } from "../../exchange/asset";
 
 export enum StakingDepositStatus {
   ACTIVE = "ACTIVE",
@@ -17,4 +18,6 @@ export interface IStakingDeposit extends IIdDateBase {
   multiplier: number;
   stakingRuleId: number;
   stakingRule?: IStakingRule;
+  depositAssetId: number;
+  depositAsset: IAsset;
 }

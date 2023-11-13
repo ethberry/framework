@@ -26,8 +26,14 @@ export interface IStakingAllowanceButtonProps {
 // TODO allowance for exact 721 or 998 token
 export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
+  const { address } = rule.contract!;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
+
+  const isNft = rule.deposit?.components.every(
+    component =>
+      component.contract!.contractType === TokenType.ERC721 || component.contract!.contractType === TokenType.ERC998,
+  );
 
   const handleAllowance = (): void => {
     setIsAllowanceDialogOpen(true);
@@ -39,7 +45,6 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
-    const address = rule.contract!.address;
 
     if (contract.contractType === TokenType.ERC20) {
       const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
@@ -73,11 +78,6 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
 
   const isDisabled = rule.deposit?.components.every(component => component.contract!.contractType === TokenType.NATIVE);
 
-  const isNft = rule.deposit?.components.every(
-    component =>
-      component.contract!.contractType === TokenType.ERC721 || component.contract!.contractType === TokenType.ERC998,
-  );
-
   const tokenTo = {
     components: [
       {
@@ -93,7 +93,9 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     ],
   };
 
-  return !isNft ? (
+  return isNft ? (
+    <AllowanceButton isSmall={true} token={tokenTo} contract={rule.contract} />
+  ) : (
     <Fragment>
       <ListAction
         onClick={handleAllowance}
@@ -120,7 +122,5 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
         }}
       />
     </Fragment>
-  ) : (
-    <AllowanceButton isSmall={true} token={tokenTo} contractId={rule.contractId} />
   );
 };

@@ -63,17 +63,20 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
             autoSelect
             multiple
             prefix="deposit"
+            allowEmpty={true}
+            disableClear={false}
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
-            allowEmpty
-            autoSelect
+            autoSelect={false}
             multiple
             prefix="reward"
             readOnly={readOnly}
+            allowEmpty={true}
+            disableClear={false}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>

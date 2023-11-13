@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import type { IStakingDeposit } from "@framework/types";
@@ -6,6 +6,7 @@ import { StakingDepositStatus } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { StakingRulesEntity } from "../rules/rules.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "staking_deposit" })
 export class StakingDepositEntity extends IdDateBaseEntity implements IStakingDeposit {
@@ -36,4 +37,11 @@ export class StakingDepositEntity extends IdDateBaseEntity implements IStakingDe
   @JoinColumn()
   @ManyToOne(_type => StakingRulesEntity, rule => rule.stakes)
   public stakingRule: StakingRulesEntity;
+
+  @Column({ type: "int" })
+  public depositAssetId: number;
+
+  @JoinColumn()
+  @OneToOne(_type => AssetEntity)
+  public depositAsset: AssetEntity;
 }

@@ -1959,7 +1959,7 @@ describe("Lottery", function () {
     });
   });
 
-  describe("get prize", function () {
+  describe("Get prize", function () {
     it("should get prize: Jackpot 1 ticket", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 

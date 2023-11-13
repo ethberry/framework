@@ -1,4 +1,5 @@
 import { ChangeEvent, FC } from "react";
+// import { FormWatcher } from "@gemunion/mui-form";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ContractFeatures, TokenStatus, TokenType } from "@framework/types";
@@ -29,7 +30,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
       form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
-      form.setValue("address", option?.address ?? "0x", { shouldDirty: false });
+      form.setValue("address", option?.address ?? "0x", { shouldDirty: true });
       form.setValue("decimals", option?.decimals ?? 0);
     };
 

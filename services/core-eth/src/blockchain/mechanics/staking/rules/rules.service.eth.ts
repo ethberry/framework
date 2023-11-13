@@ -32,6 +32,8 @@ export class StakingRulesServiceEth {
   ) {}
 
   public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
     await this.eventHistoryService.updateHistory(event, context);
     const {
       name,
@@ -45,48 +47,76 @@ export class StakingRulesServiceEth {
     const depositItem: IAssetDto = { components: [] };
 
     for (const dep of deposit) {
-      const { tokenId, amount } = dep;
-      const depositTemplate = await this.templateService.findOne(
-        { id: Number(tokenId) },
-        { relations: { contract: true } },
-      );
+      const { tokenId, token, amount } = dep;
+      if (tokenId !== "0") {
+        const depositTemplate = await this.templateService.findOne(
+          { id: Number(tokenId) },
+          { relations: { contract: true } },
+        );
 
-      if (!depositTemplate) {
-        throw new NotFoundException("depositTemplateNotFound");
+        if (!depositTemplate) {
+          throw new NotFoundException("depositTemplateNotFound");
+        }
+
+        depositItem.components.push({
+          tokenType: depositTemplate.contract.contractType!,
+          contractId: depositTemplate.contract.id,
+          templateId: depositTemplate.id,
+          amount,
+        });
+      } else {
+        const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+        if (!contractEntity) {
+          throw new NotFoundException("depositContractNotFound");
+        }
+
+        depositItem.components.push({
+          tokenType: contractEntity.contractType!,
+          contractId: contractEntity.id,
+          templateId: null,
+          amount,
+        });
       }
-
-      depositItem.components.push({
-        tokenType: depositTemplate.contract.contractType!,
-        contractId: depositTemplate.contract.id,
-        templateId: depositTemplate.id,
-        amount,
-      });
     }
 
     // REWARD ARRAY
     const rewardItem: IAssetDto = { components: [] };
 
     for (const rew of reward) {
-      const { tokenId, amount } = rew;
+      const { tokenId, token, amount } = rew;
 
-      const rewardTemplate = await this.templateService.findOne(
-        { id: Number(tokenId) },
-        { relations: { contract: true } },
-      );
+      if (tokenId !== "0") {
+        const rewardTemplate = await this.templateService.findOne(
+          { id: Number(tokenId) },
+          { relations: { contract: true } },
+        );
 
-      if (!rewardTemplate) {
-        throw new NotFoundException("rewardTemplateNotFound");
+        if (!rewardTemplate) {
+          throw new NotFoundException("rewardTemplateNotFound");
+        }
+
+        rewardItem.components.push({
+          tokenType: rewardTemplate.contract.contractType!,
+          contractId: rewardTemplate.contract.id,
+          templateId: rewardTemplate.id,
+          amount,
+        });
+      } else {
+        const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+        if (!contractEntity) {
+          throw new NotFoundException("depositContractNotFound");
+        }
+
+        rewardItem.components.push({
+          tokenType: contractEntity.contractType!,
+          contractId: contractEntity.id,
+          templateId: null,
+          amount,
+        });
       }
-
-      rewardItem.components.push({
-        tokenType: rewardTemplate.contract.contractType!,
-        contractId: rewardTemplate.contract.id,
-        templateId: rewardTemplate.id,
-        amount,
-      });
     }
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.findOne(
       { address: address.toLowerCase(), chainId },

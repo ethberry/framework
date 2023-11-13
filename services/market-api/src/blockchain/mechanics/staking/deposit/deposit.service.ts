@@ -181,6 +181,13 @@ export class StakingDepositService {
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",
           deposit_template: "deposit_components.template",
+
+          deposit_asset: "stake.depositAsset",
+          deposit_asset_components: "deposit_asset.components",
+          deposit_asset_contract: "deposit_asset_components.contract",
+          deposit_asset_template: "deposit_asset_components.template",
+          deposit_asset_token: "deposit_asset_components.token",
+
           reward: "rule.reward",
           reward_components: "reward.components",
           reward_contract: "reward_components.contract",

@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { ListAction } from "@framework/styled";
-import { TokenType } from "@framework/types";
+import { IContract, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.approve.abi.json";
@@ -19,11 +19,11 @@ import { AllowanceDialog, IAllowanceDto } from "./dialog";
 export interface IAllowanceButtonProps {
   token?: any;
   isSmall?: boolean;
-  contractId?: number;
+  contract?: IContract;
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken(), isSmall = false, contractId } = props;
+  const { token = getEmptyToken(), isSmall = false, contract } = props;
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
   const handleAllowance = (): void => {
@@ -85,8 +85,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         open={isAllowanceDialogOpen}
         initialValues={{
           token,
-          address: "",
-          contractId,
+          address: contract ? contract.address : "",
+          contractId: contract ? contract.id : 0,
         }}
       />
     </Fragment>

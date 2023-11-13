@@ -9,6 +9,7 @@ import { formatTokenTitle } from "../../../utils/token";
 
 export const TokenDepositInput: () => any = () => {
   const deposit: IAssetComponent[] = useWatch({ name: "deposit" });
+
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {

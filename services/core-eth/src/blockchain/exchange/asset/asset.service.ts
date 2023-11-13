@@ -179,20 +179,12 @@ export class AssetService {
     }
   }
 
-  public async createAsset(asset: AssetEntity, dto: IAssetComponentDto): Promise<void> {
+  public async createAsset(asset: AssetEntity, dto: Array<IAssetComponentDto>): Promise<void> {
     // CREATE
-    const newAssetDto: IAssetDto = {
-      components: [
-        {
-          tokenType: dto.tokenType,
-          contractId: dto.contractId,
-          templateId: dto.templateId,
-          tokenId: dto.tokenId,
-          amount: dto.amount,
-        },
-      ],
+    const updAssetDto: IAssetDto = {
+      components: dto,
     };
-    await this.update(asset, newAssetDto);
+    await this.update(asset, updAssetDto);
   }
 
   // ASSET HISTORY

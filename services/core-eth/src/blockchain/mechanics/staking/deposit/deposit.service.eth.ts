@@ -56,22 +56,55 @@ export class StakingDepositServiceEth {
   ) {}
 
   public async depositStart(event: ILogEvent<IStakingDepositStartEvent>, context: Log): Promise<void> {
-    // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    // event DepositStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
+
     await this.eventHistoryService.updateHistory(event, context);
     const {
       name,
-      args: { stakingId, ruleId, owner, startTimestamp },
+      args: { stakingId, ruleId, owner, startTimestamp, tokenIds },
     } = event;
     const { address, transactionHash } = context;
 
     const stakingRuleEntity = await this.stakingRulesService.findOne(
       { externalId: ruleId, contract: { address: address.toLowerCase() } },
-      { relations: { contract: true } },
+      { relations: { contract: true, deposit: { components: { contract: true } } } },
     );
 
     if (!stakingRuleEntity) {
       this.loggerService.error("stakingRuleNotFound", ruleId, StakingDepositServiceEth.name);
       throw new NotFoundException("stakingRuleNotFound");
+    }
+
+    let depositAssetId;
+
+    if (tokenIds.length > 0) {
+      const newAssetEntity = await this.assetService.create();
+      depositAssetId = newAssetEntity.id;
+      const depositComponets = [];
+
+      for (let i = 0; i < tokenIds.length; i++) {
+        const tokenId = tokenIds[i];
+        // TODO we must be sure to sort components same order in rule and contract
+        const tokenEntity = await this.tokenService.getToken(
+          tokenId,
+          stakingRuleEntity.deposit.components.filter(comp => comp.tokenType === TokenType.ERC721)[i].contract.address,
+        );
+
+        if (!tokenEntity) {
+          this.loggerService.error("depositTokenNotFound", tokenId, StakingDepositServiceEth.name);
+          throw new NotFoundException("depositTokenNotFound");
+        }
+
+        depositComponets.push({
+          tokenType: tokenEntity.template.contract.contractType!,
+          contractId: tokenEntity.template.contractId,
+          templateId: tokenEntity.templateId,
+          tokenId: tokenEntity.id,
+          amount: "1",
+        });
+      }
+
+      await this.assetService.createAsset(newAssetEntity, depositComponets);
     }
 
     const stakingDepositEntity = await this.stakingDepositService.create({
@@ -80,6 +113,7 @@ export class StakingDepositServiceEth {
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       stakingRuleId: stakingRuleEntity.id,
       stakingRule: stakingRuleEntity,
+      depositAssetId,
     });
 
     await this.notificatorService.stakingDepositStart({
@@ -289,13 +323,15 @@ export class StakingDepositServiceEth {
     } else {
       // create new penalty asset
       const newAssetEntity = await this.assetService.create();
-      await this.assetService.createAsset(newAssetEntity, {
-        tokenType: penaltyTemplate.contract.contractType!,
-        contractId: penaltyTemplate.contractId,
-        templateId: penaltyTemplate.id,
-        tokenId: isNft ? penaltyToken!.id : null,
-        amount,
-      });
+      await this.assetService.createAsset(newAssetEntity, [
+        {
+          tokenType: penaltyTemplate.contract.contractType!,
+          contractId: penaltyTemplate.contractId,
+          templateId: penaltyTemplate.id,
+          tokenId: isNft ? penaltyToken!.id : null,
+          amount,
+        },
+      ]);
       // create penalty
       await this.penaltyService.create({
         stakingId: stakingDepositEntity.stakingRule.contractId,
