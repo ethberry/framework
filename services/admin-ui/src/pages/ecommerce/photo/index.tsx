@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { Avatar, Grid, List, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IPhoto } from "@framework/types";
 import { PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -49,7 +49,7 @@ export const Photo: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(photo => (
-            <ListItem key={photo.id}>
+            <StyledListItem key={photo.id}>
               <ListItemAvatar>
                 <Avatar alt={photo.title} src={photo.imageUrl} />
               </ListItemAvatar>
@@ -66,7 +66,7 @@ export const Photo: FC = () => {
                   icon={Clear}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

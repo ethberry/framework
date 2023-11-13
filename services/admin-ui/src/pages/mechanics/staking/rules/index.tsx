@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,7 +9,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -99,14 +99,14 @@ export const StakingRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id} disableGutters>
+            <StyledListItem key={rule.id}>
               <ListItemText sx={{ width: 0.4 }}>{`${rule.title} #${rule.externalId}`}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.contract!.title}</ListItemText>
               <ListActions>
                 <StakingToggleRuleButton rule={rule} />
                 <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

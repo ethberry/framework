@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,7 +10,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessControl, IContract, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
@@ -74,7 +74,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
         {rows.length ? (
           <List>
             {rows.map(access => (
-              <ListItem key={access.id}>
+              <StyledListItem key={access.id}>
                 <ListItemText>
                   {access.account_contract?.title || access.account}
                   {/* <br /> */}
@@ -85,7 +85,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
                 <ListActions>
                   <ListAction onClick={handleRevoke(access)} message="dialogs.revokeRole" icon={Delete} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

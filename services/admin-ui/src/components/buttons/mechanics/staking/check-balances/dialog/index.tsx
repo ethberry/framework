@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { List, ListItemText, ListSubheader, Typography } from "@mui/material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListActions } from "@framework/styled";
+import { ListActions, StyledListItem } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 
 import { formatEther } from "../../../../../../utils/money";
@@ -60,23 +60,23 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
         {rows.length ? (
           <List
             subheader={
-              <ListSubheader>
-                <ListItem>
-                  <ListItemText sx={{ width: 0.25 }}>
+              <ListSubheader disableGutters>
+                <StyledListItem>
+                  <ListItemText sx={{ width: 0.27 }}>
                     <FormattedMessage id="dialogs.checkBalance.token" />
                   </ListItemText>
-                  <ListItemText sx={{ width: 0.25 }}>
+                  <ListItemText sx={{ width: 0.27 }}>
                     <FormattedMessage id="dialogs.checkBalance.stakeBalance" />
                   </ListItemText>
-                  <ListItemText sx={{ width: 0.25 }}>
+                  <ListItemText sx={{ width: 0.24 }}>
                     <FormattedMessage id="dialogs.checkBalance.depAmount" />
                   </ListItemText>
-                </ListItem>
+                </StyledListItem>
               </ListSubheader>
             }
           >
             {rows.map((bal, idx) => (
-              <ListItem key={idx}>
+              <StyledListItem key={idx}>
                 <ListItemText sx={{ width: 0.3 }}>{bal && bal.token ? bal.token.template?.title : ""}</ListItemText>
                 <ListItemText sx={{ width: 0.2 }}>
                   {bal && bal.token
@@ -102,7 +102,7 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
                 <ListActions>
                   <TopUpButton contract={data.contract} disabled={bal ? !bal.topUp : true} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

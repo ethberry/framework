@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, List, ListItem, ListItemText } from "@mui/material";
+import { Button, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -10,7 +10,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -81,7 +81,7 @@ export const WaitListList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(waitListList => (
-            <ListItem key={waitListList.id}>
+            <StyledListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
@@ -102,7 +102,7 @@ export const WaitListList: FC = () => {
                   onRefreshPage={handleRefreshPage}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

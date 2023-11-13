@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Grid, List, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
@@ -50,7 +50,7 @@ export const VestingContracts: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(vesting => (
-            <ListItem key={vesting.id} sx={{ flexWrap: "wrap", pr: 0 }}>
+            <StyledListItem key={vesting.id} wrap>
               <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
@@ -60,7 +60,7 @@ export const VestingContracts: FC = () => {
                 <TopUpButton contract={vesting} />
                 <TransferOwnershipButton contract={vesting} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

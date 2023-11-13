@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -88,7 +88,7 @@ export const RaffleContracts: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(contract => (
-            <ListItem key={contract.id}>
+            <StyledListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListActions dataTestId="RaffleActionsMenuButton">
                 <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
@@ -137,7 +137,7 @@ export const RaffleContracts: FC = () => {
                 />
                 <ChainLinkSetSubscriptionButton contract={contract} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -8,7 +8,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -76,7 +76,7 @@ export const WaitListItem: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "auto" }}>
           {rows.map(waitListItem => (
-            <ListItem key={waitListItem.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={waitListItem.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{waitListItem.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitListItem.list?.title}</ListItemText>
               <ListActions>
@@ -89,7 +89,7 @@ export const WaitListItem: FC = () => {
                   }
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

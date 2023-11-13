@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
@@ -9,7 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
@@ -72,14 +72,14 @@ export const AchievementRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id}>
+            <StyledListItem key={rule.id}>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

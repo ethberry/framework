@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -7,7 +7,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IUser } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";
@@ -37,7 +37,7 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((user: IUser) => (
-              <ListItem key={user.id} disableGutters>
+              <StyledListItem key={user.id}>
                 <ListItemText>{user.displayName}</ListItemText>
                 <ListActions>
                   <ListAction
@@ -47,12 +47,12 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
                     disabled={user.id === profile.id}
                   />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))
           ) : (
-            <ListItem disableGutters>
+            <StyledListItem>
               <FormattedMessage id="pages.merchant.managers.empty" />
-            </ListItem>
+            </StyledListItem>
           )}
         </List>
       </ProgressOverlay>

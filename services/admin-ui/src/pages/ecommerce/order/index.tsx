@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -96,13 +96,13 @@ export const Order: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {rows.map(order => (
-            <ListItem key={order.id} disableGutters>
+            <StyledListItem key={order.id}>
               <ListItemText>Order #{order.id}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(order)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

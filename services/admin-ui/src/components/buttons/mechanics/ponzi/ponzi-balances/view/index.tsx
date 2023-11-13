@@ -2,14 +2,14 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItemText, Typography } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
 import PonziWithdrawTokenABI from "../../../../../../abis/mechanics/ponzi/ponzi-balances/withdrawToken.abi.json";
@@ -84,7 +84,7 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
         {rows.length ? (
           <List>
             {rows.map(balance => (
-              <ListItem key={balance.id}>
+              <StyledListItem key={balance.id}>
                 <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
                 <ListItemText>
                   {formatEther(
@@ -100,7 +100,7 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
                     message="form.buttons.setAmount"
                   />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

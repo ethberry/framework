@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,7 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IDismantle, IDismantleSearchDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, TokenType } from "@framework/types";
 
@@ -90,14 +90,14 @@ export const Dismantle: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(dismantle => (
-            <ListItem key={dismantle.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={dismantle.id} wrap>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(dismantle.item)}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(dismantle)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(dismantle)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import { IProductPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -52,13 +52,13 @@ export const ProductPromo: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {rows.map(promo => (
-            <ListItem key={promo.id}>
+            <StyledListItem key={promo.id}>
               <ListItemText>{promo.product!.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(promo)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(promo)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>
