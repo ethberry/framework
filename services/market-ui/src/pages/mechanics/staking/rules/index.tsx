@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -10,7 +10,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -125,14 +125,14 @@ export const StakingRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id}>
+            <StyledListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
               <ListActions>
                 <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
                 <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

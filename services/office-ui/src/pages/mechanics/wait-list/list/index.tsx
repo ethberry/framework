@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -11,7 +11,7 @@ import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -101,7 +101,7 @@ export const WaitListList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(waitListList => (
-            <ListItem key={waitListList.id}>
+            <StyledListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
@@ -121,7 +121,7 @@ export const WaitListList: FC = () => {
                   disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

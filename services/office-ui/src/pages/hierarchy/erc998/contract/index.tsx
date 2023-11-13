@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListActions, ListAction, StyledPagination } from "@framework/styled";
+import { ListActions, ListAction, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc998ContractFeatures, TokenType } from "@framework/types";
 
@@ -89,7 +89,7 @@ export const Erc998Contract: FC = () => {
           {rows.map(contract => {
             const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
-              <ListItem key={contract.id} disableGutters>
+              <StyledListItem key={contract.id}>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
@@ -129,7 +129,7 @@ export const Erc998Contract: FC = () => {
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             );
           })}
         </List>

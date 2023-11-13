@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -11,7 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
@@ -102,7 +102,7 @@ export const VestingClaim: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "auto" }}>
           {rows.map(vesting => (
-            <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={vesting.id} wrap>
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
@@ -120,7 +120,7 @@ export const VestingClaim: FC = () => {
                   disabled={vesting.claimStatus !== ClaimStatus.NEW}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

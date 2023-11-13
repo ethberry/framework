@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -68,12 +68,12 @@ export const MysteryToken: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(token => (
-            <ListItem key={token.id}>
+            <StyledListItem key={token.id}>
               <ListItemText>{token.template?.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

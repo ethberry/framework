@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { ListAction, ListActions } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import { IParameter } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -57,7 +57,7 @@ export const Parameter: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {uniqueBy<IParameter>(rows, ["parameterName", "parameterType"]).map(parameter => (
-            <ListItem key={parameter.id}>
+            <StyledListItem key={parameter.id}>
               <ListItemText>
                 {parameter.parameterName} ({parameter.parameterType})
               </ListItemText>
@@ -65,7 +65,7 @@ export const Parameter: FC = () => {
                 <ListAction onClick={handleEdit(parameter)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(parameter)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

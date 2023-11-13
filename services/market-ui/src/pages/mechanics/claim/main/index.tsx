@@ -1,12 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemText } from "@mui/material";
+import { Button, List, ListItemText } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListActions, StyledPagination } from "@framework/styled";
+import { ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
@@ -58,7 +58,7 @@ export const Claim: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(claim => (
-            <ListItem key={claim.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={claim.id} wrap>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{formatItem(claim.item)}</ListItemText>
               <ListActions>
@@ -71,7 +71,7 @@ export const Claim: FC = () => {
                   <VestingDeployButton claim={claim} />
                 )}
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

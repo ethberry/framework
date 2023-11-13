@@ -1,12 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemText } from "@mui/material";
+import { Button, List, ListItemText } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListActions, StyledPagination } from "@framework/styled";
+import { ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
@@ -48,13 +48,13 @@ export const WaitListItem: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "auto" }}>
           {rows.map(waitlist => (
-            <ListItem key={waitlist.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={waitlist.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{waitlist.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlist.list?.title}</ListItemText>
               <ListActions>
                 <WaitListClaimButton listItem={waitlist} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

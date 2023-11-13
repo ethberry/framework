@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IPage, IPageSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -55,13 +55,13 @@ export const Page: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(page => (
-            <ListItem key={page.id}>
+            <StyledListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(page)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(page)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

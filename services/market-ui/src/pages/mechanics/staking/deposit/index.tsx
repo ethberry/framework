@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addSeconds, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
@@ -61,7 +61,7 @@ export const StakingDeposit: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(deposit => (
-            <ListItem key={deposit.id}>
+            <StyledListItem key={deposit.id}>
               <ListItemText sx={{ width: 0.6 }}>{deposit.stakingRule?.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {deposit.startTimestamp
@@ -76,7 +76,7 @@ export const StakingDeposit: FC = () => {
                 <StakingRewardButton stake={deposit} />
                 <ListAction onClick={handleView(deposit)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -11,7 +11,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IGrade, IGradeSearchDto, IUser } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
@@ -99,7 +99,7 @@ export const Grade: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(grade => (
-            <ListItem key={grade.id}>
+            <StyledListItem key={grade.id}>
               <ListItemText>
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
@@ -112,7 +112,7 @@ export const Grade: FC = () => {
                   disabled={grade.gradeStatus === GradeStatus.INACTIVE}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -1,7 +1,9 @@
 import { FC, Fragment, useContext } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
+import { Grid, IconButton, List, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
+
+import { StyledListItem } from "@framework/styled";
 
 import { CartContext } from "../../../../components/providers/cart";
 import { formatPrice } from "../../../../utils/money";
@@ -18,7 +20,7 @@ export const Cart: FC = () => {
       <List disablePadding={true}>
         {cart && cart.items && cart.items.length ? (
           cart.items.map(item => (
-            <ListItem key={item.product.id} disableGutters>
+            <StyledListItem key={item.product.id}>
               <ListItemText
                 primary={item.product.title}
                 secondary={<Fragment>{formatPrice(item.product.productItems[0].price)}</Fragment>}
@@ -34,12 +36,12 @@ export const Cart: FC = () => {
                   </IconButton>
                 </Grid>
               </ListItemSecondaryAction>
-            </ListItem>
+            </StyledListItem>
           ))
         ) : (
-          <ListItem disableGutters>
+          <StyledListItem>
             <FormattedMessage id="pages.checkout.empty" />
-          </ListItem>
+          </StyledListItem>
         )}
         <StyledListSubheader>
           <FormattedMessage

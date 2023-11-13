@@ -1,11 +1,12 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Grid, IconButton, List, ListItem, Tooltip, Typography } from "@mui/material";
+import { Grid, IconButton, List, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { StyledListItem } from "@framework/styled";
 import type { IOrder, IOrderItem } from "@framework/types";
 
 import { StyledGrid } from "./styled";
@@ -51,7 +52,7 @@ export const ItemsInput: FC<IUserInputProps> = props => {
 
       <List>
         {value.map((row: IOrderItem, i: number) => (
-          <ListItem key={row.id}>
+          <StyledListItem key={row.id}>
             <Grid container spacing={2}>
               <StyledGrid item>
                 <EntityInput name={`${name}[${i}].productItemId`} controller="product-items" />
@@ -67,7 +68,7 @@ export const ItemsInput: FC<IUserInputProps> = props => {
                 </Tooltip>
               </Grid>
             </Grid>
-          </ListItem>
+          </StyledListItem>
         ))}
       </List>
     </Fragment>

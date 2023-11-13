@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -8,7 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
@@ -96,7 +96,7 @@ export const NativeContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(contract => (
-            <ListItem key={contract.id} disableGutters>
+            <StyledListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
               <ListActions dataTestId="ContractActionsMenuButton">
                 <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
@@ -120,7 +120,7 @@ export const NativeContract: FC = () => {
                 <EthListenerAddButton contract={contract} disabled={true} />
                 <EthListenerRemoveButton contract={contract} disabled={true} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

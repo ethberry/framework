@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,7 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { EnabledLanguages } from "@framework/constants";
-import { ListAction, ListActions, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IUser, IUserSearchDto } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
 
@@ -77,13 +77,13 @@ export const User: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(user => (
-            <ListItem key={user.id}>
+            <StyledListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(user)} message="form.actions.edit" icon={Create} />
                 <ListAction onClick={handleDelete(user)} message="form.actions.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

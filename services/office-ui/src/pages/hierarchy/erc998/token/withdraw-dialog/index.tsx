@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItemText } from "@mui/material";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { StyledListItem } from "@framework/styled";
 import type { IBalance, IToken } from "@framework/types";
 
 import { formatEther } from "../../../../../utils/money";
@@ -50,7 +51,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(row => (
-            <ListItem key={row.id}>
+            <StyledListItem key={row.id}>
               <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {formatEther(
@@ -59,7 +60,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
                   row.token?.template?.contract?.symbol,
                 )}
               </ListItemText>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>
