@@ -6,7 +6,7 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 

@@ -4,7 +4,7 @@ import { constants, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc20TokenDeployDto, IUser } from "@framework/types";
 import { Erc20ContractTemplates } from "@framework/types";
 

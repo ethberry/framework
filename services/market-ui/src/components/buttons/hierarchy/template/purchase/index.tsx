@@ -5,7 +5,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ITemplate } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 

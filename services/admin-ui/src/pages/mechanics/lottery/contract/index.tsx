@@ -7,8 +7,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -24,8 +23,8 @@ import { LotteryRoundEndButton } from "../../../../components/buttons/mechanics/
 import { LotteryScheduleButton } from "../../../../components/buttons/mechanics/lottery/contract/schedule";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
-import { LotteryEditDialog } from "./edit";
 import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
+import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
   const {

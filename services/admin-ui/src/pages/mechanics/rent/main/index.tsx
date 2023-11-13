@@ -10,8 +10,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IRent, IRentSearchDto } from "@framework/types";
 import { ContractFeatures, RentRuleStatus, TokenType } from "@framework/types";
 

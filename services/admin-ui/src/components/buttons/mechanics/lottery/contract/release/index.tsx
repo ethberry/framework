@@ -4,7 +4,7 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 
 import LotteryReleaseABI from "../../../../../../abis/mechanics/lottery/round/release/releaseFunds.abi.json";

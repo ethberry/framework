@@ -5,7 +5,7 @@ import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ListActions } from "@framework/mui-lists";
+import { ListActions } from "@framework/styled";
 import type { IBalance, IContract } from "@framework/types";
 
 import { VestingReleasableButton, VestingReleaseButton } from "../../../../../components/buttons";

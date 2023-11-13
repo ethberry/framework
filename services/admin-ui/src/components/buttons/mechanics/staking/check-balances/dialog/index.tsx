@@ -5,8 +5,9 @@ import { List, ListItem, ListItemText, ListSubheader, Typography } from "@mui/ma
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListActions } from "@framework/mui-lists";
+import { ListActions } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
+
 import { formatEther } from "../../../../../../utils/money";
 import { TopUpButton } from "../../../common/top-up";
 

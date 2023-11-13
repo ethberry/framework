@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
 import StakingCountersABI from "../../../../../abis/mechanics/staking/stakingCounters.abi.json";

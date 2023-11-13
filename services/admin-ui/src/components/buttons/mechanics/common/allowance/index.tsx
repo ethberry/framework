@@ -3,7 +3,7 @@ import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";

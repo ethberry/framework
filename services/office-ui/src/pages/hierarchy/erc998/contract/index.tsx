@@ -7,8 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListActions, ListAction } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListActions, ListAction, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc998ContractFeatures, TokenType } from "@framework/types";
 

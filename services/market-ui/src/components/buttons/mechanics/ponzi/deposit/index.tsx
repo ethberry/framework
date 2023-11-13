@@ -5,8 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
-
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
 import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit.abi.json";

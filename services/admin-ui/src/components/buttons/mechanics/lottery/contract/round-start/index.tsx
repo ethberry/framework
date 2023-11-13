@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 

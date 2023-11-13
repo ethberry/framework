@@ -1,19 +1,18 @@
 import { FC, Fragment, useState } from "react";
 import { Hidden, List, ListItem, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
+import { addMonths, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledListItemText, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItemText, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
-import { addMonths, formatDistance } from "date-fns";
 
 export const Vesting: FC = () => {
   const {

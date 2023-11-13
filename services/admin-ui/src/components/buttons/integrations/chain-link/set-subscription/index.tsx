@@ -3,12 +3,12 @@ import { Subscriptions } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
+import type { IContract } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import VrfSetSub from "../../../../../abis/integrations/chain-link/subscription/setSub.abi.json";
 import { ChainLinkSetSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import type { IContract } from "@framework/types";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;

@@ -10,8 +10,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 

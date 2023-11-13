@@ -9,14 +9,13 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziAllowanceButton, PonziDepositButton } from "../../../../components/buttons";
-import { PonziViewDialog } from "./view";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { PonziViewDialog } from "./view";
 
 export const PonziRules: FC = () => {
   const {

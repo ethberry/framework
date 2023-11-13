@@ -7,6 +7,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
+import { ListAction } from "@framework/styled";
 import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
@@ -14,7 +15,6 @@ import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.a
 import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
-import { ListAction } from "@framework/mui-lists";
 
 export interface IAllowanceButtonProps {
   token?: any;

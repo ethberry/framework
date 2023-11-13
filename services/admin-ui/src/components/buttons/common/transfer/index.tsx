@@ -5,7 +5,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 

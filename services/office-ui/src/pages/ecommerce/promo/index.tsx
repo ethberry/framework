@@ -3,8 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import { IProductPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";

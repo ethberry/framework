@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { TokenType } from "@framework/types";
 

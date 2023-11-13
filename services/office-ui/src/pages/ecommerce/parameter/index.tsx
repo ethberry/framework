@@ -4,7 +4,7 @@ import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions } from "@framework/styled";
 import { IParameter } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";

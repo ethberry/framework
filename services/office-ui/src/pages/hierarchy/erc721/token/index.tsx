@@ -6,8 +6,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 

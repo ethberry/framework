@@ -3,8 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";

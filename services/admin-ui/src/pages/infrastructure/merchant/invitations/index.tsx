@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions } from "@framework/styled";
 import type { IOtp } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";

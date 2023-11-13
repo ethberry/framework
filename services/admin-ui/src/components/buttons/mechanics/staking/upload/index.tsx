@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";

@@ -11,8 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 

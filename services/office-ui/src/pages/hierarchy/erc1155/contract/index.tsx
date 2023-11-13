@@ -8,8 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc1155ContractFeatures, TokenType } from "@framework/types";
 

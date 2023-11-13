@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { constants, Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
 import { useMetamask, useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
 

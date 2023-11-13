@@ -9,8 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";

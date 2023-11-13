@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IRaffleToken } from "@framework/types";
 
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";

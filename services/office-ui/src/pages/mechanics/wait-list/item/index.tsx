@@ -9,8 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus, IUser } from "@framework/types";
 

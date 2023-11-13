@@ -6,10 +6,11 @@ import { Contract } from "ethers";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
 import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
+
 import { PonziRuleUploadDialog } from "./upload-dialog";
 
 export interface IPonziRuleCreateButtonProps {

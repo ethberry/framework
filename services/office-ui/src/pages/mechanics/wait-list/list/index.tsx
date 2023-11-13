@@ -11,8 +11,7 @@ import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 

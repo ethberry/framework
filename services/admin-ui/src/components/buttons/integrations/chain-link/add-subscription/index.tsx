@@ -1,17 +1,16 @@
 import { FC, Fragment, useState } from "react";
-
 import { RecentActors } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import type { IContract } from "@framework/types";
-import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;

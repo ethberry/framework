@@ -5,8 +5,7 @@ import { Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 

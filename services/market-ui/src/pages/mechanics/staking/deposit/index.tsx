@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
+import { addSeconds, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
@@ -14,7 +14,6 @@ import { StakingRewardButton } from "../../../../components/buttons";
 
 import { StakingDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
-import { addSeconds, formatDistance } from "date-fns";
 
 export const StakingDeposit: FC = () => {
   const {

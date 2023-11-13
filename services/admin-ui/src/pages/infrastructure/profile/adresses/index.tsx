@@ -3,7 +3,7 @@ import { Button, Chip, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions } from "@framework/styled";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -12,8 +12,8 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { useFormatAddress } from "../../../../utils/address";
 import { emptyAddress } from "../../../../components/common/interfaces";
-import { AddressEditDialog } from "./edit";
 import type { ITabPanelProps } from "../tabs";
+import { AddressEditDialog } from "./edit";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;

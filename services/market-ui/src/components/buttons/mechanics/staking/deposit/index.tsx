@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { ListActionVariant } from "@framework/mui-lists";
+import { ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { TokenType } from "@framework/types";
 

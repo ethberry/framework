@@ -3,14 +3,14 @@ import { Savings } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
+import { SystemModuleType } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import LinkTransferAndCallABI from "../../../../../abis/integrations/chain-link/fund/transferAndCall.abi.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
-import { SystemModuleType } from "@framework/types";
-import type { IContract } from "@framework/types";
 
 export interface IChainLinkFundButtonProps {
   subscriptionId: number;

@@ -4,7 +4,7 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IWaitListContractDeployDto } from "@framework/types";
 
 import DeployWaitListABI from "../../../../../../abis/mechanics/wait-list/deploy/deployWaitList.abi.json";

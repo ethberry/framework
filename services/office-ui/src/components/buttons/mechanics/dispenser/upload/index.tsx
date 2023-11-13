@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 

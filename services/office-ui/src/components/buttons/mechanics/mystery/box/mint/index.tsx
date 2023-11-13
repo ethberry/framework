@@ -3,7 +3,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IMysteryBox } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";

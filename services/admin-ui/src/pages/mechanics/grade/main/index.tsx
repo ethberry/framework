@@ -9,8 +9,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IGrade, IGradeSearchDto } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 

@@ -3,7 +3,7 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";

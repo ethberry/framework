@@ -10,8 +10,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 

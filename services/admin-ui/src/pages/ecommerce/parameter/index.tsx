@@ -8,7 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions } from "@framework/styled";
 import type { IParameter } from "@framework/types";
 
 import { emptyParameter } from "../../../components/common/interfaces";

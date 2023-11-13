@@ -12,8 +12,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 

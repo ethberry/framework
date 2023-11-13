@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 

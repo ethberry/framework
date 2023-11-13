@@ -3,7 +3,7 @@ import { RecentActors } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import VrfCreateSub from "../../../../../abis/integrations/chain-link/subscription/createSub.abi.json";

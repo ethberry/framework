@@ -8,8 +8,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 

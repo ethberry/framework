@@ -3,8 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 import { ProductStatus } from "@framework/types";
 import { EntityInput } from "@gemunion/mui-inputs-entity";

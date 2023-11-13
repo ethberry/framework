@@ -6,8 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListActions, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
