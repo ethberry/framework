@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
-import { StakingRuleStatus, TokenType } from "@framework/types";
+import { StakingRuleStatus } from "@framework/types";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
