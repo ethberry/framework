@@ -46,6 +46,7 @@ export const ChainLinkSubscriptionCreateButton: FC<IChainLinkSubscriptionCreateB
         className={className}
         dataTestId="ChainLinkCreateSubscriptionButton"
         disabled={disabled || !account}
+        buttonSize="small"
         variant={variant}
       />
     </Fragment>

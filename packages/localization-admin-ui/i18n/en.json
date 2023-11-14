@@ -999,6 +999,7 @@
       "fund": "Fund",
       "id": "Subscription # {value}",
       "manage": "Subscriptions",
+      "noSubscription": "No subscription",
       "select": "Select subscription ID",
       "set": "Set Vrf subscription ID",
       "subscription": "Subscription",

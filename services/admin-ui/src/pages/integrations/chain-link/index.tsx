@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Grid, MenuItem, Select, Typography } from "@mui/material";
+import { Grid, MenuItem, Typography } from "@mui/material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
@@ -18,7 +18,7 @@ import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/i
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 import { formatEther } from "../../../utils/money";
-import { StyledDataGridPremium } from "./styled";
+import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperSxMixin } from "./styled";
 
 export interface IVrfSubscriptionData {
   owner: string;
@@ -144,15 +144,18 @@ export const ChainLink: FC = () => {
     return <ProgressOverlay isLoading={true} />;
   }
 
+  const subscriptionTitle = currentSubscription ? "pages.chain-link.id" : "pages.chain-link.noSubscription";
+
   return (
-    <ProgressOverlay isLoading={isLoading}>
+    <ProgressOverlay isLoading={isLoading} wrapperSx={wrapperSxMixin}>
+      <Breadcrumbs path={["dashboard", "chain-link"]} />
       {merchantSubscriptions.length ? (
-        <Grid container spacing={2}>
-          <Breadcrumbs path={["dashboard", "chain-link"]} />
+        <Fragment>
           <PageHeader message="pages.chain-link.title">
-            <Select
+            <StyledSelect
               sx={{ mx: 1 }}
               value={currentSubscription}
+              size="small"
               onChange={(e: any) => {
                 setCurrentSubscription(e.target.value);
               }}
@@ -162,67 +165,70 @@ export const ChainLink: FC = () => {
                   {option.vrfSubId}
                 </MenuItem>
               ))}
-            </Select>
+            </StyledSelect>
             <ChainLinkSubscriptionCreateButton />
           </PageHeader>
-          <Grid item xs={8}>
-            <Typography gutterBottom variant="h5" component="p">
-              <FormattedMessage
-                id="pages.chain-link.id"
-                values={{
-                  value: currentSubscription || "No subscription",
-                }}
+          <StyledGrid container spacing={2}>
+            <Grid item xs={8}>
+              <Typography gutterBottom variant="h5" component="p">
+                <FormattedMessage
+                  id={subscriptionTitle}
+                  values={{
+                    value: currentSubscription,
+                  }}
+                />
+              </Typography>
+              <Typography gutterBottom variant="body1" component="p">
+                <FormattedMessage
+                  id="pages.chain-link.balance"
+                  values={{
+                    balance: formatEther(subData.balance.toString(), 18, "LINK"),
+                  }}
+                />
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <ChainLinkFundButton subscriptionId={currentSubscription} />
+              <Typography variant="body1" sx={{ mx: 1 }}>
+                <FormattedMessage id="pages.chain-link.wallet" values={{ value: currentBalance }} />
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography gutterBottom variant="h5" component="p">
+                <FormattedMessage id="pages.chain-link.consumers" />
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <ChainLinkAddConsumerButton subscriptionId={currentSubscription} />
+            </Grid>
+            <Grid item xs={12}>
+              <StyledDataGridPremium
+                pagination
+                rowCount={subData.consumers.length}
+                pageSizeOptions={[5, 10, 25]}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
+                loading={isLoading}
+                columns={columns}
+                rowThreshold={0}
+                rowHeight={40}
+                rows={subData.consumers.map(contract => ({
+                  contract,
+                }))}
+                getRowId={({ contract }: any) => contract as string}
               />
-            </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              <FormattedMessage
-                id="pages.chain-link.balance"
-                values={{
-                  balance: formatEther(subData.balance.toString(), 18, "LINK"),
-                }}
-              />
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <ChainLinkFundButton subscriptionId={currentSubscription} />
-            <Typography variant="body1" sx={{ mx: 1 }}>
-              <FormattedMessage id="pages.chain-link.wallet" values={{ value: currentBalance }} />
-            </Typography>
-          </Grid>
-          <Grid item xs={8}>
-            <Typography gutterBottom variant="h5" component="p">
-              <FormattedMessage id="pages.chain-link.consumers" />
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <ChainLinkAddConsumerButton subscriptionId={currentSubscription} />
-          </Grid>
-          <Grid item xs={12}>
-            <StyledDataGridPremium
-              pagination
-              rowCount={subData.consumers.length}
-              pageSizeOptions={[5, 10, 25]}
-              paginationModel={paginationModel}
-              onPaginationModelChange={setPaginationModel}
-              loading={isLoading}
-              columns={columns}
-              rowThreshold={0}
-              rowHeight={40}
-              rows={subData.consumers.map(contract => ({
-                contract,
-              }))}
-              getRowId={({ contract }: any) => contract as string}
-            />
-          </Grid>
-        </Grid>
+            </Grid>
+          </StyledGrid>
+        </Fragment>
       ) : (
-        <Grid container spacing={2}>
-          <Breadcrumbs path={["dashboard", "chain-link"]} />
+        <Fragment>
           <PageHeader message="pages.chain-link.title" />
-          <Grid item xs={12}>
-            <ChainLinkSubscriptionCreateButton />
-          </Grid>
-        </Grid>
+          <StyledGrid container spacing={2}>
+            <Grid item xs={12}>
+              <ChainLinkSubscriptionCreateButton />
+            </Grid>
+          </StyledGrid>
+        </Fragment>
       )}
     </ProgressOverlay>
   );

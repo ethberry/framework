@@ -2,6 +2,7 @@ import { ElementType, FC } from "react";
 import {
   Button,
   ButtonPropsVariantOverrides,
+  ButtonPropsSizeOverrides,
   IconButton,
   ListItemIcon,
   MenuItem,
@@ -15,28 +16,30 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ListActionVariant } from "../interface";
 
 export interface IListActionProps {
+  buttonSize?: OverridableStringUnion<"small" | "medium" | "large", ButtonPropsSizeOverrides>;
+  buttonVariant?: OverridableStringUnion<"text" | "outlined" | "contained", ButtonPropsVariantOverrides>;
+  className?: string; // for button toolbar
+  dataTestId?: string;
+  disabled?: boolean;
   icon?: ElementType;
   message: string;
   messageValues?: Record<string, any>;
   onClick: () => void;
-  disabled?: boolean;
   variant?: ListActionVariant;
-  dataTestId?: string;
-  buttonVariant?: OverridableStringUnion<"text" | "outlined" | "contained", ButtonPropsVariantOverrides>;
-  className?: string; // for button toolbar
 }
 
 export const ListAction: FC<IListActionProps> = props => {
   const {
-    icon: Icon,
-    variant = ListActionVariant.iconButton,
     buttonVariant = "outlined",
+    buttonSize = "medium",
     className,
     dataTestId,
+    disabled,
+    icon: Icon,
     message,
     messageValues = {},
-    disabled,
     onClick,
+    variant = ListActionVariant.iconButton,
   } = props;
 
   const { formatMessage } = useIntl();
@@ -46,6 +49,7 @@ export const ListAction: FC<IListActionProps> = props => {
       return (
         <Button
           className={className}
+          size={buttonSize}
           variant={buttonVariant}
           onClick={onClick}
           disabled={disabled}
