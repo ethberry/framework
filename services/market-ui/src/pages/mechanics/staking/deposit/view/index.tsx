@@ -20,6 +20,8 @@ export interface IStakesViewDialogProps {
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
+  // TODO Property depositAsset does not exist on type IStakingDeposit
+  // @ts-ignore
   const { stakingRule, depositAsset, startTimestamp, withdrawTimestamp } = initialValues;
   const { penalty } = stakingRule || { penalty: 0 };
 

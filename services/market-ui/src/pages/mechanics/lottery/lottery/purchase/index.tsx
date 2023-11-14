@@ -8,9 +8,10 @@ import { IContract, ILotteryRound } from "@framework/types";
 import { formatItem } from "../../../../../utils/money";
 import { LotteryPurchaseButton } from "../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../components/common/interfaces";
+import { InfoPopover } from "../../../../../components/popover";
 import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
-import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 import { AllowanceButton } from "./allowance";
+import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 
 const maxNumbers = 6;
 
@@ -70,45 +71,50 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
     setTicketNumbers(getDefaultNumbers());
   };
 
+  const title = round.roundId ? "pages.lottery.purchase.titleRound" : "pages.lottery.purchase.title";
+
   return (
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
-        <PageHeader message="pages.lottery.purchase.title">
-          <StyledTypography>{round && round.roundId ? `Round ${round.roundId}` : ""}</StyledTypography>
-          <StyledTypography>
-            {round && round.roundId ? `Price: ${formatItem(round.price)}` : "Round not yet started"}
-          </StyledTypography>
+        <PageHeader message={title} data={{ roundId: round.roundId }}>
+          <InfoPopover>
+            <StyledTypography>
+              <FormattedMessage
+                id={round.roundId ? "pages.lottery.purchase.price" : "pages.lottery.purchase.notStarted"}
+                values={{ price: formatItem(round.price) }}
+              />
+            </StyledTypography>
 
-          <StyledTypography>
-            {round.maxTickets > 0 ? (
-              <FormattedMessage
-                id="pages.lottery.purchase.count"
-                // @ts-ignore
-                values={{ current: round.ticketCount, max: round?.maxTickets }}
-              />
-            ) : round.roundId ? (
-              <FormattedMessage
-                id="pages.raffle.purchase.sold"
-                // @ts-ignore
-                values={{ count: round ? round.ticketCount : 0 }}
-              />
-            ) : null}
-          </StyledTypography>
+            <StyledTypography>
+              {round.maxTickets > 0 ? (
+                <FormattedMessage
+                  id="pages.lottery.purchase.count"
+                  // @ts-ignore
+                  values={{ current: round.ticketCount, max: round?.maxTickets }}
+                />
+              ) : round.roundId ? (
+                <FormattedMessage
+                  id="pages.raffle.purchase.sold"
+                  // @ts-ignore
+                  values={{ count: round ? round.ticketCount : 0 }}
+                />
+              ) : null}
+            </StyledTypography>
+          </InfoPopover>
 
           <AllowanceButton contract={contract} />
 
-          {round ? (
-            <LotteryPurchaseButton
-              round={round}
-              clearForm={clearForm}
-              ticketNumbers={ticketNumbers}
-              disabled={
-                ticketNumbers.filter(Boolean).length < maxNumbers ||
-                // @ts-ignore
-                (round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
-              }
-            />
-          ) : null}
+          <LotteryPurchaseButton
+            round={round}
+            clearForm={clearForm}
+            ticketNumbers={ticketNumbers}
+            disabled={
+              !round?.roundId ||
+              ticketNumbers.filter(Boolean).length < maxNumbers ||
+              // @ts-ignore
+              (round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
+            }
+          />
         </PageHeader>
       </ProgressOverlay>
 

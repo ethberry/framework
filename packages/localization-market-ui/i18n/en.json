@@ -946,10 +946,12 @@
       },
       "purchase": {
         "count": "{current} of {max} sold",
-        "price": "Ticket Price",
+        "notStarted": "Round not started yet",
+        "price": "Ticket Price: {price}",
         "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "title": "Buy a ticket"
+        "title": "Buy a ticket",
+        "titleRound": "Buy a ticket for round #{roundId}"
       },
       "title": "Lottery",
       "tokens": {
@@ -1111,9 +1113,12 @@
       "purchase": {
         "commission": "{commission}% commission",
         "count": "{current} of {max} sold",
+        "notStarted": "Round not started yet",
+        "price": "Ticket Price: {price}",
         "rules": "Just buy a ticket. Random will choose a winner",
         "sold": "{count} sold",
-        "title": "Buy a ticket"
+        "title": "Buy a ticket",
+        "titleRound": "Buy a ticket for round #{roundId}"
       },
       "title": "Raffle",
       "tokens": {
