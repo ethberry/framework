@@ -11,6 +11,7 @@ import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/t
 
 import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
+import { sorter } from "../../../../../utils/sorter";
 
 export interface IStakingRuleCreateButtonProps {
   className?: string;
@@ -45,7 +46,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
-      deposit: rule.deposit?.components.map(component => ({
+      deposit: rule.deposit?.components.sort(sorter("templateId")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,

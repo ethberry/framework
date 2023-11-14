@@ -5,6 +5,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import type { IAssetComponent } from "@framework/types";
 
 import { TokenInput } from "./token-input";
+import { sorter } from "../../../utils/sorter";
 
 export const TokenDepositInput: FC = () => {
   const form = useFormContext<any>();
@@ -21,7 +22,7 @@ export const TokenDepositInput: FC = () => {
 
   return (
     <Box>
-      {assets.map((asset, index) => (
+      {assets.sort(sorter("templateId")).map((asset, index) => (
         <TokenInput
           key={asset.id}
           prefix={`tokens[${index}]`}

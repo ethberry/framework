@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
-import { HowToVote } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
+import { HowToVote } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -20,12 +20,13 @@ export interface IAllowanceButtonProps {
   token?: any;
   isSmall?: boolean;
   contract?: IContract;
+  isDisabled?: boolean;
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken(), isSmall = false, contract } = props;
-  const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
+  const { token = getEmptyToken(), isSmall = false, contract = undefined, isDisabled = false } = props;
 
+  const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
   const handleAllowance = (): void => {
     setIsAllowanceDialogOpen(true);
   };
@@ -86,7 +87,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         initialValues={{
           token,
           address: contract ? contract.address : "",
-          contractId: contract ? contract.id : 0,
+          contractId: contract ? contract.id : undefined,
         }}
       />
     </Fragment>

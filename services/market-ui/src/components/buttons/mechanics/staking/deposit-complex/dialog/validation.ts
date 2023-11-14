@@ -1,8 +1,5 @@
-import { object } from "yup";
+import { object, array, number } from "yup";
 
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
-
-// TODO validate array tokenIds
 export const validationSchema = object().shape({
-  tokenId: dbIdValidationSchema,
+  tokenIds: array().of(number().typeError("form.validations.badInput").required("form.validations.valueMissing")),
 });

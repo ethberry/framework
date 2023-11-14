@@ -38,11 +38,11 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
   };
 
   const message = "dialogs.create";
-
+  // TODO validation to allow empty templateID
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message={message}
       testId="StakingEditForm"
       disabled={false}

@@ -26,12 +26,8 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const { className, disabled, rule, variant } = props;
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
-  // TODO tokenIds[] must include all deposit tokens.
+  // tokenIds[] must include all deposit tokens.
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
-    // console.log("useMetamaskvalues", values);
-    // const tokenIds = rule.deposit!.components.map(comp =>
-    //   comp.tokenType === TokenType.ERC721 || comp.tokenType === TokenType.ERC998 ? "" : "",
-    // );
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
       externalId: rule.externalId,

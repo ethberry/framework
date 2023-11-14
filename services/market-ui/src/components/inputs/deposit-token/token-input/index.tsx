@@ -29,7 +29,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue(`${prefix}.tokenId`, option?.id ?? 0, { shouldDirty: true }); // actually id
-    form.setValue(`tokenIds[${index}]`, option?.tokenId ? ~~option.tokenId : 0);
+    form.setValue(`tokenIds[${index}]`, option?.tokenId ? ~~option.tokenId : 0, { shouldDirty: true });
   };
 
   switch (tokenType) {
@@ -48,7 +48,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
           label={formatMessage({ id: "form.labels.tokenIds" })}
           placeholder={formatMessage({ id: "form.placeholders.tokenIds" })}
           getTitle={(token: IToken) => formatTokenTitle(token)}
-          readOnly={readOnly}
+          // readOnly={readOnly}
           onChange={handleChange}
           autoselect
           disableClear={readOnly || disableClear}

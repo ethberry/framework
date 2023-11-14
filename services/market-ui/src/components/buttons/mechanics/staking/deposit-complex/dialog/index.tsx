@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { FormWatcher } from "@gemunion/mui-form";
 import { validationSchema } from "./validation";
 import { IAssetComponent } from "@framework/types";
 import { TokenDepositInput } from "../../../../../inputs/deposit-token";
@@ -28,7 +27,6 @@ export const StakingDepositDialog: FC<IStakingDepositDialogProps> = props => {
       testId="StakingDepositDialogForm"
       {...rest}
     >
-      <FormWatcher />
       <TokenDepositInput />
     </FormDialog>
   );

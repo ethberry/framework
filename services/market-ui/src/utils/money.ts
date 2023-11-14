@@ -8,7 +8,6 @@ export const formatUnitsR = (value: BigNumberish, decimals: string | BigNumberis
 };
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDecimalDigits?: number): string => {
-  // return `${currency} ${utils.formatUnits(amount, decimals)}`;
   return `${currency} ${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
 };
 
@@ -47,7 +46,7 @@ export const formatItem = (asset?: IAsset, maxDecimalDigits?: number): string =>
                 : component.tokenId
                 ? `${component.template?.title} #${component.token!.tokenId}`
                 : component.template?.title
-              : component.contract.title;
+              : `${component.amount === "1" ? "" : `${component.amount} x`} ${component.contract.title}`;
           default:
             return "unsupported token type";
         }
