@@ -30,7 +30,6 @@ export const PonziChart: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: InputType.awaited,
       },
-      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },

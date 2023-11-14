@@ -18,7 +18,7 @@ export class PonziChartService {
   ) {}
 
   public async chart(dto: IPonziChartSearchDto, userEntity: UserEntity): Promise<any> {
-    const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
+    const { contractId, deposit, reward, startTimestamp, endTimestamp } = dto;
 
     const contractEntity = await this.ponziContractService.findOne({
       id: contractId as number,
@@ -32,7 +32,7 @@ export class PonziChartService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    if (contractEntity.contractModule !== ModuleType.STAKING) {
+    if (contractEntity.contractModule !== ModuleType.PONZI) {
       throw new BadRequestException("contractWrongModule");
     }
 
@@ -60,7 +60,6 @@ export class PonziChartService {
                                                               AND deposit_contract.chain_id = $2
                                                               AND deposit_contract.contract_type = $5
                                                               AND deposit_contract.id = $6
-                        ${emptyReward ? "" : `
                             INNER JOIN
                         ${ns}.asset_component as reward_component ON reward_component.asset_id = ponzi_rules.reward_id
                             INNER JOIN
@@ -68,9 +67,9 @@ export class PonziChartService {
                                                               AND reward_contract.chain_id = $2
                                                               AND reward_contract.contract_type = $7
                                                               AND reward_contract.id = $8
-                        `}
                             CROSS JOIN generate_series(ponzi_deposit.start_timestamp, (ponzi_deposit.start_timestamp +  (ponzi_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
-                   WHERE ponzi_deposit.start_timestamp <= $4
+                   WHERE ponzi_rules.contract_id = $1
+                     AND ponzi_deposit.start_timestamp <= $4
                      AND (ponzi_deposit.start_timestamp + (ponzi_rules.duration_amount || 'second')::INTERVAL) >= $3
                    )
       SELECT start_date::timestamptz,
@@ -85,21 +84,16 @@ export class PonziChartService {
     `;
 
     return Promise.all([
-      this.entityManager.query(
-        queryString,
-        emptyReward
-          ? [contractEntity.id, userEntity.chainId, startTimestamp, endTimestamp, deposit.tokenType, deposit.contractId]
-          : [
-              contractEntity.id,
-              userEntity.chainId,
-              startTimestamp,
-              endTimestamp,
-              deposit.tokenType,
-              deposit.contractId,
-              reward!.tokenType,
-              reward!.contractId,
-            ],
-      ),
+      this.entityManager.query(queryString, [
+        contractEntity.id,
+        userEntity.chainId,
+        startTimestamp,
+        endTimestamp,
+        deposit.tokenType,
+        deposit.contractId,
+        reward.tokenType,
+        reward.contractId,
+      ]),
       0,
     ]);
   }

@@ -56,11 +56,6 @@ export class PonziReportSearchDto extends Mixin(AccountOptionalDto, PaginationDt
   @IsEnum(PonziDepositStatus, { each: true, message: "badInput" })
   public ponziDepositStatus: Array<PonziDepositStatus>;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => [true, "true"].includes(value))
-  public emptyReward: boolean;
-
   @ApiProperty({
     type: PonziReportItemSearchDto,
   })
@@ -68,10 +63,9 @@ export class PonziReportSearchDto extends Mixin(AccountOptionalDto, PaginationDt
   @Type(() => PonziReportItemSearchDto)
   public deposit: PonziReportItemSearchDto;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: PonziReportItemSearchDto,
   })
-  @IsOptional()
   @ValidateNested()
   @Type(() => PonziReportItemSearchDto)
   public reward: PonziReportItemSearchDto;

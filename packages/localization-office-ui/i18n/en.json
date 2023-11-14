@@ -394,6 +394,7 @@
       "payees": "Payees",
       "penalty": "Penalty",
       "ponziDepositStatus": "Status",
+      "ponziRule": "Ponzi rule",
       "ponziRuleStatus": "Status",
       "price": "Price",
       "random": "Random",

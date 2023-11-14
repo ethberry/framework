@@ -10,7 +10,6 @@ export interface IPonziDepositItemSearchDto {
 
 export interface IPonziDepositSearchDto extends IPaginationDto {
   account: string;
-  emptyReward?: boolean;
   ponziDepositStatus: Array<PonziDepositStatus>;
   deposit: IPonziDepositItemSearchDto;
   reward: IPonziDepositItemSearchDto;

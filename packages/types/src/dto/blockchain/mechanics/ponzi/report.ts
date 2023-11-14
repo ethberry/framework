@@ -11,7 +11,6 @@ export interface IPonziReportItemSearchDto {
 export interface IPonziReportSearchDto extends IPaginationDto {
   account: string;
   contractId?: number | InputType;
-  emptyReward?: boolean;
   ponziDepositStatus: Array<PonziDepositStatus>;
   deposit: IPonziReportItemSearchDto;
   reward: IPonziReportItemSearchDto;

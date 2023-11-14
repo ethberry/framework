@@ -32,18 +32,7 @@ export class PonziDepositService {
     dto: Partial<IPonziDepositSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<PonziDepositEntity>, number]> {
-    const {
-      contractIds,
-      account,
-      emptyReward,
-      ponziDepositStatus,
-      deposit,
-      reward,
-      startTimestamp,
-      endTimestamp,
-      skip,
-      take,
-    } = dto;
+    const { contractIds, account, ponziDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.ponziDepositEntityEntity.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.ponziRule", "rule");
@@ -115,8 +104,7 @@ export class PonziDepositService {
       }
     }
 
-    // reward is optional
-    if (!emptyReward && reward) {
+    if (reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {

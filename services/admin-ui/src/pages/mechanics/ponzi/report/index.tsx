@@ -5,7 +5,7 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
-import { SelectInput, SwitchInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -48,7 +48,6 @@ export const PonziReport: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: InputType.awaited,
       },
-      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
@@ -136,7 +135,7 @@ export const PonziReport: FC = () => {
             <EntityInput
               name="contractId"
               controller="contracts"
-              data={{ contractModule: [ModuleType.STAKING] }}
+              data={{ contractModule: [ModuleType.PONZI] }}
               autoselect
               disableClear
             />
@@ -144,9 +143,7 @@ export const PonziReport: FC = () => {
           <Grid item xs={6}>
             <SelectInput name="ponziDepositStatus" options={PonziDepositStatus} multiple />
           </Grid>
-          <Grid item xs={12}>
-            <SwitchInput name="emptyReward" />
-          </Grid>
+          <Grid item xs={12}></Grid>
           <Grid item xs={6}>
             <SearchTokenSelectInput prefix="deposit" />
           </Grid>

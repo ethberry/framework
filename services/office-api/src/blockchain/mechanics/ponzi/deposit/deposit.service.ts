@@ -4,8 +4,8 @@ import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "t
 
 import type { IPonziDepositSearchDto } from "@framework/types";
 
-import { PonziDepositEntity } from "./deposit.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { PonziDepositEntity } from "./deposit.entity";
 
 @Injectable()
 export class PonziDepositService {
@@ -32,18 +32,7 @@ export class PonziDepositService {
     dto: Partial<IPonziDepositSearchDto>,
     _userEntity: UserEntity,
   ): Promise<[Array<PonziDepositEntity>, number]> {
-    const {
-      contractIds,
-      account,
-      emptyReward,
-      ponziDepositStatus,
-      deposit,
-      reward,
-      startTimestamp,
-      endTimestamp,
-      skip,
-      take,
-    } = dto;
+    const { contractIds, account, ponziDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.ponziDepositEntityEntity.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.ponziRule", "rule");
@@ -110,8 +99,7 @@ export class PonziDepositService {
       }
     }
 
-    // reward is optional
-    if (!emptyReward && reward) {
+    if (reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
