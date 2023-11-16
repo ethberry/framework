@@ -79,6 +79,7 @@ async function main() {
       "StakingFactoryFacet",
       "VestingFactoryFacet",
       "WaitListFactoryFacet",
+      "PaymentSplitterFactoryFacet",
       "UseFactoryFacet",
       "AccessControlFacet",
       "PausableFacet",

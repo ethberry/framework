@@ -21,12 +21,17 @@ export class PaymentSplitterControllerEth {
   @EventPattern([
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.PayeeAdded },
     { contractType: ContractType.PONZI, eventName: ExchangeEventType.PayeeAdded },
+    { contractType: ContractType.PAYMENT_SPLITTER, eventName: ExchangeEventType.PayeeAdded },
   ])
   public addPayee(@Payload() event: ILogEvent<IExchangePayeeAddedEvent>, @Ctx() context: Log): Promise<void> {
     return this.paymentSplitterServiceEth.addPayee(event, context);
   }
 
   @EventPattern([
+    {
+      contractType: ContractType.PAYMENT_SPLITTER,
+      eventName: ExchangeEventType.PaymentReceived,
+    },
     {
       contractType: ContractType.EXCHANGE,
       eventName: ExchangeEventType.PaymentReceived,
@@ -54,6 +59,10 @@ export class PaymentSplitterControllerEth {
 
   @EventPattern([
     {
+      contractType: ContractType.PAYMENT_SPLITTER,
+      eventName: ExchangeEventType.PaymentReleased,
+    },
+    {
       contractType: ContractType.EXCHANGE,
       eventName: ExchangeEventType.PaymentReleased,
     },
@@ -67,6 +76,10 @@ export class PaymentSplitterControllerEth {
   }
 
   @EventPattern([
+    {
+      contractType: ContractType.PAYMENT_SPLITTER,
+      eventName: ExchangeEventType.ERC20PaymentReleased,
+    },
     {
       contractType: ContractType.EXCHANGE,
       eventName: ExchangeEventType.ERC20PaymentReleased,

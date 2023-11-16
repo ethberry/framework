@@ -70,7 +70,7 @@ export function shouldTransferFrom(factory: () => Promise<any>, options: IERC20O
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await mint(contractInstance, owner, owner.address, 0);
+      await mint(contractInstance, owner, owner.address, 0n);
       await contractInstance.approve(receiver.address, amount);
 
       const tx1 = contractInstance.whitelist(receiver.address);

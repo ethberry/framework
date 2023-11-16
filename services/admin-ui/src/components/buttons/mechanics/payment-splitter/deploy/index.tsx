@@ -50,7 +50,7 @@ export const PaymentSplitterContractDeployButton: FC<IPaymentSplitterContractDep
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/paymentSplitter",
+        url: "/contract-manager/payment-splitter",
         method: "POST",
         data: {
           payees: values.shares.map(({ payee }: { payee: string }) => payee),

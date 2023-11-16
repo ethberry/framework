@@ -14,6 +14,7 @@ import { ContractStatus } from "@framework/types";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { PaymentSplitterContractDeployButton } from "../../../../components/buttons";
 import { PaymentSplitterViewDialog } from "./view";
+import { PaymentSplitterBalanceButton } from "../../../../components/buttons/mechanics/payment-splitter/balances";
 
 export const PaymentSplitterContracts: FC = () => {
   const {
@@ -88,6 +89,10 @@ export const PaymentSplitterContracts: FC = () => {
                   {/*  message="form.buttons.delete" */}
                   {/*  disabled={contract.contractStatus === ContractStatus.INACTIVE} */}
                   {/* /> */}
+                  <PaymentSplitterBalanceButton
+                    contract={contract}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  />
                 </ListActions>
               </ListActions>
             </StyledListItem>
