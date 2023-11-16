@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
 import type { IContract } from "@framework/types";
+import { StyledTableCell, StyledTableCellDensed, StyledTableRow } from "./styled";
 
 export interface IPaymentSplitterViewDialogProps {
   open: boolean;
@@ -28,24 +29,24 @@ export const PaymentSplitterViewDialog: FC<IPaymentSplitterViewDialogProps> = pr
         <Table aria-label="table">
           <TableBody>
             <TableRow>
-              <TableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.address" />
-              </TableCell>
+              </StyledTableCell>
               <TableCell>
                 <AddressLink address={address} />
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.parameters" />
-              </TableCell>
-              <TableCell align="right">
+              </StyledTableCell>
+              <StyledTableCellDensed align="right">
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>
+                      <StyledTableCell>
                         <FormattedMessage id="form.labels.payee" />
-                      </TableCell>
+                      </StyledTableCell>
                       <TableCell>
                         <FormattedMessage id="form.labels.shares" />
                       </TableCell>
@@ -53,16 +54,16 @@ export const PaymentSplitterViewDialog: FC<IPaymentSplitterViewDialogProps> = pr
                   </TableHead>
                   <TableBody>
                     {(parameters.payees as unknown as Array<string>).map((payee, i) => (
-                      <TableRow key={i}>
-                        <TableCell>
+                      <StyledTableRow key={i}>
+                        <StyledTableCell>
                           <AddressLink address={parameters.payees[i]} />
-                        </TableCell>
+                        </StyledTableCell>
                         <TableCell>{parameters.shares[i]}</TableCell>
-                      </TableRow>
+                      </StyledTableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </TableCell>
+              </StyledTableCellDensed>
             </TableRow>
           </TableBody>
         </Table>
