@@ -3,16 +3,9 @@ import { PaidOutlined } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract } from "@framework/types";
+import type { IContract, ICollectionUploadDto } from "@framework/types";
 
-import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
-
-export interface ICollectionRow {
-  id?: string;
-  tokenId: number;
-  imageUrl: string;
-  metadata: string;
-}
+import { CollectionUploadDialog } from "./dialog";
 
 export interface ICollectionUploadButtonProps {
   className?: string;

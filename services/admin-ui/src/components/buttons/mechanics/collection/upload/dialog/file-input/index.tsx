@@ -5,11 +5,9 @@ import { v4 } from "uuid";
 import csv2json from "csvtojson";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
-// TODO this is wrong type
-import type { IClaimRowDto } from "@framework/types";
+import type { ICollectionRowDto, ICollectionUploadDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
-import type { ICollectionUploadDto } from "../index";
 import { tokensValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
@@ -35,7 +33,7 @@ export const FileInput: FC<IFileInputProps> = props => {
     form.reset(initialValues);
   };
 
-  const parseCsv = async (csv: File): Promise<IClaimRowDto[]> => {
+  const parseCsv = async (csv: File): Promise<ICollectionRowDto[]> => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
@@ -48,7 +46,7 @@ export const FileInput: FC<IFileInputProps> = props => {
           checkType: true,
         })
           .fromString(reader.result as string)
-          .then((data: IClaimRowDto[]) => {
+          .then((data: ICollectionRowDto[]) => {
             resolve(data.map(token => ({ ...token, id: v4() })));
           });
       };

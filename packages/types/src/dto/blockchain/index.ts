@@ -74,7 +74,9 @@ export * from "./mechanics/ponzi/leaderboard";
 export * from "./mechanics/ponzi/report";
 export * from "./mechanics/ponzi/rule";
 export * from "./mechanics/ponzi/deposit";
+
 export * from "./mechanics/collection/deploy";
+export * from "./mechanics/collection/upload";
 
 export * from "./mechanics/wallet/deploy";
 export * from "./mechanics/wallet/payee";
