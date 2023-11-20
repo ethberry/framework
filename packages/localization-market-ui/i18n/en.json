@@ -1234,6 +1234,7 @@
   "snackbar": {
     "addedToCart": "Added to cart",
     "blockchainError": "Blockchain error",
+    "blockchainErrorReason": "Blockchain error {reason}",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "duplicateAccount": "Duplicate account",

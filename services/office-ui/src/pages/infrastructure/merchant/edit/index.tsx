@@ -19,7 +19,7 @@ export interface IEditMerchantDialogProps {
 export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, email, imageUrl, merchantStatus } = initialValues;
+  const { id, title, description, email, imageUrl, merchantStatus, wallet } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -27,6 +27,7 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
     email,
     merchantStatus,
     imageUrl,
+    wallet,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -37,6 +38,7 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
       <RichTextEditor name="description" />
       <TextInput name="email" autoComplete="username" />
       {id ? <SelectInput name="merchantStatus" options={MerchantStatus} /> : null}
+      <TextInput name="wallet" />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

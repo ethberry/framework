@@ -101,6 +101,8 @@ export class MerchantService {
       if (count) {
         throw new ConflictException("duplicateAccount");
       }
+
+      Object.assign(merchantEntity, { wallet });
     }
 
     if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {

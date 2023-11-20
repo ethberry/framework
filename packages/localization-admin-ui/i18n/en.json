@@ -1477,6 +1477,7 @@
     "addressNotFound": "Address not found",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
+    "blockchainErrorReason": "Blockchain error {reason}",
     "cantDeleteNotEmptyCategory": "You have to remove all children categories first",
     "cantDeleteRootCategory": "Can't delete root category",
     "cartNotFound": "Cart not found",
