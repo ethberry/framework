@@ -44,7 +44,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     >
       <TokenAssetInput
         prefix="token"
-        allowance={true}
         tokenType={{ disabledOptions: [TokenType.NATIVE] }}
         token={{
           data: {
