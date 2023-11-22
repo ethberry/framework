@@ -99,6 +99,10 @@ export class MergeService {
   public async create(dto: IMergeCreateDto, userEntity: UserEntity): Promise<MergeEntity> {
     const { price, item, ...rest } = dto;
 
+    // TODO should we do it in front-end?
+    const nullPrice = price.components.map(comp => (comp.templateId === 0 ? { ...comp, templateId: null } : comp));
+    Object.assign(price, { components: nullPrice });
+
     // add new price
     const priceEntity = await this.assetService.create();
     await this.assetService.update(priceEntity, price, userEntity);

@@ -37,9 +37,18 @@ contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, Pausab
     uint256 length = price.length;
     for (uint256 i = 0; i < length; ) {
       Asset memory item = price[i];
+
+      // check for same contract
+      if (i > 0 && item.token != price[0].token) {
+        revert WrongToken();
+      }
+
+      // todo should we try..catch call?
+      // check for token existence with correct metadata
       uint256 templateId = IERC721GeneralizedCollection(item.token).getRecordFieldValue(item.tokenId, TEMPLATE_ID);
 
-      if (templateId != expectedId) {
+      // check for same template
+      if (expectedId != 0 && templateId != expectedId) {
         revert WrongToken();
       }
 

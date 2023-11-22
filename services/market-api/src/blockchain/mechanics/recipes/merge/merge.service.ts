@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
@@ -124,6 +124,29 @@ export class MergeService {
       throw new NotFoundException("tokenNotFound");
     }
 
+    // test tokens and merge recipe
+    const recipeTmplIds = mergeEntity.price.components.filter(comp => comp.templateId).map(comp => comp.templateId);
+    const priceTmplIds = tokenEntities.map(token => token.templateId);
+
+    if (recipeTmplIds.length > 0) {
+      if (recipeTmplIds.length > 1) {
+        throw new NotFoundException("wrongRecipe");
+      }
+
+      if (priceTmplIds.filter(t => t !== recipeTmplIds[0]).length > 0) {
+        throw new NotFoundException("wrongToken");
+      }
+    } else {
+      const recipeCntrId = mergeEntity.price.components[0].contractId;
+
+      if (tokenEntities.filter(t => t.template.contractId !== recipeCntrId).length > 0) {
+        throw new NotFoundException("wrongToken");
+      }
+    }
+
+    const priceTemplateId = recipeTmplIds.length > 0 ? BigInt(recipeTmplIds[0] || 0) : 0n;
+
+    // todo next mechanic Fuze? =)
     // const rarity = Number(tokenEntities.metadata.RARITY) || 1;
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
@@ -137,7 +160,7 @@ export class MergeService {
         externalId: mergeEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: zeroPadValue(toBeHex(priceTemplateId), 32),
         receiver: mergeEntity.merchant.wallet,
         referrer,
       },
