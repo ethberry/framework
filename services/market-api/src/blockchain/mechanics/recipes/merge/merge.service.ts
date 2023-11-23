@@ -96,6 +96,7 @@ export class MergeService {
           price_components: "price.components",
           price_template: "price_components.template",
           price_contract: "price_components.contract",
+          merchant: "merge.merchant",
         },
       },
     });

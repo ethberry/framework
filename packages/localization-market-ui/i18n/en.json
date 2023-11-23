@@ -46,6 +46,7 @@
     "grade": "Upgrade attribute",
     "join": "Join",
     "lend": "Lend token",
+    "merge": "Merge",
     "penalty": "Penalty: {item}% of deposit {description}",
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
@@ -1140,6 +1141,7 @@
       "ingredients": "Ingredients",
       "merge": {
         "approve": "Please approve ingredients to Exchange before",
+        "popover": "Merge {price} to {item}",
         "price": "Price",
         "title": "Merge recipe: {title}"
       },

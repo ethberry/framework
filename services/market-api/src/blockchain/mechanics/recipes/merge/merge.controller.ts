@@ -6,7 +6,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { MergeService } from "./merge.service";
 import { MergeEntity } from "./merge.entity";
-import { DismantleSignDto, MergeSearchDto } from "./dto";
+import { MergeSignDto, MergeSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/recipes/merge")
@@ -20,7 +20,7 @@ export class MergeController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: DismantleSignDto): Promise<IServerSignature> {
+  public sign(@Body() dto: MergeSignDto): Promise<IServerSignature> {
     return this.mergeService.sign(dto);
   }
 

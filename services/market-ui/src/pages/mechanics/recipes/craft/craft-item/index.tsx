@@ -35,7 +35,7 @@ export const CraftItem: FC = () => {
     <Fragment>
       <Breadcrumbs
         path={["dashboard", "recipes", "recipes.craft"]}
-        data={[{}, {}, selected.item?.components[0].template]}
+        data={[{}, {}, { title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }]}
       />
 
       <PageHeader
