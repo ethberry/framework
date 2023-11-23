@@ -49,7 +49,7 @@ export const CraftItem: FC = () => {
             {selected.item?.components.map(component => {
               return (
                 <StyledImageListItem key={component.template!.id}>
-                  <Box component="img" src={component.template!.imageUrl} alt="Gemunion template image" />
+                  <Box component="img" src={component.template!.imageUrl} alt={component.template!.title} />
                 </StyledImageListItem>
               );
             })}
