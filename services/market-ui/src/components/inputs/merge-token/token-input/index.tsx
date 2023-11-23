@@ -47,7 +47,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
         <Card>
           {asset?.template?.imageUrl ? (
             <StyledCardContent>
-              <StyledImage component="img" src={asset.template?.imageUrl} alt="Gemunion template image" />
+              <StyledImage component="img" src={asset.template.imageUrl} alt={asset.template.title} />
             </StyledCardContent>
           ) : null}
           <StyledCardActions>

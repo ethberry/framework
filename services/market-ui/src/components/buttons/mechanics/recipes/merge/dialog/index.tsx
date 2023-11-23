@@ -40,7 +40,7 @@ export const MergeDialog: FC<IMergeDialogProps> = props => {
             {merge.item?.components.map(component => {
               return (
                 <StyledCardContent key={component.template!.id}>
-                  <Box component="img" src={component.template!.imageUrl} alt="Gemunion template image" />
+                  <Box component="img" src={component.template!.imageUrl} alt={component.template!.title} />
                 </StyledCardContent>
               );
             })}
