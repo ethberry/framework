@@ -7,6 +7,7 @@ import { IMerge, IMergeSignDto, IToken } from "@framework/types";
 import { TokenMergeInput } from "../../../../../inputs/merge-token";
 import { MergeInfoPopover } from "./popover";
 import { Root, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";
+import { validationSchema } from "./validation";
 
 export interface IMergeDto extends Pick<IMergeSignDto, "tokenIds"> {
   tokens: IToken[];
@@ -29,6 +30,7 @@ export const MergeDialog: FC<IMergeDialogProps> = props => {
   return (
     <FormDialog
       initialValues={initialValues}
+      validationSchema={validationSchema}
       message={message}
       testId={testId}
       action={<MergeInfoPopover merge={merge} />}

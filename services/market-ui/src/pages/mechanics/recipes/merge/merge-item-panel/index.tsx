@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
@@ -6,9 +6,10 @@ import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@m
 import type { IMerge } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { formatEther } from "../../../../../utils/money";
+import { formatItem } from "../../../../../utils/money";
 import { MergeButton } from "../../../../../components/buttons";
 import { StyledTitle, StyledToolbar } from "./styled";
+import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 
 export interface IMergeItemPanelProps {
   merge: IMerge;
@@ -32,18 +33,16 @@ export const MergeItemPanel: FC<IMergeItemPanelProps> = props => {
               key={component.id || i}
               button
               component={RouterLink}
-              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
+              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId}`}
             >
-              <ListItemText>
-                {component.template!.title}{" "}
-                {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
-              </ListItemText>
+              <ListItemText>{formatItem({ id: i, components: [component] })}</ListItemText>
             </ListItem>
           ))}
         </List>
       </CardContent>
       <CardActions>
         <MergeButton merge={merge} />
+        <AllowanceButton isSmall={true} />
       </CardActions>
     </Card>
   );

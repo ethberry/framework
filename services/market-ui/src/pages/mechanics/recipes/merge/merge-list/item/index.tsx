@@ -8,6 +8,7 @@ import type { IMerge } from "@framework/types";
 
 import { MergeButton } from "../../../../../../components/buttons";
 import { MergeIngredients } from "./menu";
+import { formatItem } from "../../../../../../utils/money";
 
 interface IMergeItemProps {
   merge: IMerge;
@@ -20,8 +21,8 @@ export const MergeItem: FC<IMergeItemProps> = props => {
       <CardActionArea component={RouterLink} to={`/recipes/merge/${merge.id}`}>
         <CardHeader
           action={<MergeIngredients merge={merge} />}
-          title={merge.item?.components[0].template!.title}
-          subheader={merge.item?.components.map(comp => comp.template?.title).join(" + ")}
+          title={formatItem(merge.item)}
+          subheader={formatItem(merge.price)}
         />
         <StyledCardMedia image={merge.item?.components[0].template!.imageUrl} />
         <CardContent>

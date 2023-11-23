@@ -58,7 +58,6 @@ export const TokenInput: FC<ITokenInputProps> = props => {
               label={formatMessage({ id: "form.labels.tokenIds" })}
               placeholder={formatMessage({ id: "form.placeholders.tokenIds" })}
               getTitle={(token: IToken) => formatTokenTitle(token)}
-              // readOnly={readOnly}
               onChange={handleChange}
               disableClear={readOnly || disableClear}
             />

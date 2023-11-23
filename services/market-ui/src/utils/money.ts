@@ -44,8 +44,8 @@ export const formatItem = (asset?: IAsset, maxDecimalDigits?: number): string =>
               ? BigInt(component.amount) > 1n
                 ? `${component.amount} x ${component.template?.title}`
                 : component.tokenId
-                ? `${component.template?.title} #${component.token!.tokenId}`
-                : component.template?.title
+                  ? `${component.template?.title} #${component.token!.tokenId}`
+                  : component.template?.title
               : `${component.amount === "1" ? "" : `${component.amount} x`} ${component.contract.title}`;
           default:
             return "unsupported token type";

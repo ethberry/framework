@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { JoinFull } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract, utils } from "ethers";
+import { BigNumber, constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
@@ -35,12 +35,16 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
     (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MergeABI, web3Context.provider?.getSigner());
 
+      const encodedTemplateId = utils.hexZeroPad(
+        BigNumber.from(merge.price?.components[0].templateId || 0).toHexString(),
+        32,
+      );
       return contract.merge(
         {
           externalId: merge.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.hexZeroPad(utils.toUtf8Bytes(`${merge.price?.components[0].templateId || 0}`), 32),
+          extra: encodedTemplateId,
           receiver: merge.merchant!.wallet,
           referrer: constants.AddressZero,
         },
@@ -53,7 +57,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
-        values.tokenEntities?.sort(sorter("id")).map(token => ({
+        values.tokenEntities?.sort(sorter("tokenId")).map(token => ({
           tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),
           token: token.template!.contract!.address,
           tokenId: token.tokenId,

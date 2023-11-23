@@ -24,7 +24,7 @@ export interface IAllowanceButtonProps {
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken(), isSmall = false, contract = undefined, isDisabled = false } = props;
+  const { token = getEmptyToken(), isSmall = false, contract = undefined /*, isDisabled = false */ } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
   const handleAllowance = (): void => {
@@ -60,9 +60,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   });
 
   const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
-    await metaFn(values).finally(() => {
-      setIsAllowanceDialogOpen(false);
-    });
+    await metaFn(values);
   };
 
   return (

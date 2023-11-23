@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, NotAcceptableException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
@@ -35,6 +35,7 @@ export class MergeService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("merge.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("merge.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
@@ -88,6 +89,7 @@ export class MergeService {
       join: {
         alias: "merge",
         leftJoinAndSelect: {
+          merchant: "merge.merchant",
           item: "merge.item",
           item_components: "item.components",
           item_template: "item_components.template",
@@ -96,7 +98,6 @@ export class MergeService {
           price_components: "price.components",
           price_template: "price_components.template",
           price_contract: "price_components.contract",
-          merchant: "merge.merchant",
         },
       },
     });
@@ -126,22 +127,31 @@ export class MergeService {
     }
 
     // test tokens and merge recipe
+    // TODO test unique in DTO or in at front?
+    const unique = [...new Set(tokenIds)];
+    if (unique.length !== tokenIds.length) {
+      throw new NotAcceptableException("wrongTokenDuplicate");
+    }
+
+    if (mergeEntity.price.components[0].amount !== tokenIds.length.toString()) {
+      throw new NotAcceptableException("wrongTokenAmount");
+    }
+
     const recipeTmplIds = mergeEntity.price.components.filter(comp => comp.templateId).map(comp => comp.templateId);
     const priceTmplIds = tokenEntities.map(token => token.templateId);
 
     if (recipeTmplIds.length > 0) {
       if (recipeTmplIds.length > 1) {
-        throw new NotFoundException("wrongRecipe");
+        throw new NotAcceptableException("wrongRecipe");
       }
 
       if (priceTmplIds.filter(t => t !== recipeTmplIds[0]).length > 0) {
-        throw new NotFoundException("wrongToken");
+        throw new NotAcceptableException("wrongTokenTemplate");
       }
     } else {
       const recipeCntrId = mergeEntity.price.components[0].contractId;
-
       if (tokenEntities.filter(t => t.template.contractId !== recipeCntrId).length > 0) {
-        throw new NotFoundException("wrongToken");
+        throw new NotAcceptableException("wrongTokenContract");
       }
     }
 
@@ -194,7 +204,7 @@ export class MergeService {
         amount: "1",
       })),
       // PRICE token to merge
-      tokenEntities.map(tokenEntity => ({
+      tokenEntities.sort(sorter("tokenId")).map(tokenEntity => ({
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,
