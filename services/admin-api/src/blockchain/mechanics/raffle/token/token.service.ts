@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, Repository } from "typeorm";
 
 import { IRaffleTokenSearchDto, ModuleType, TokenMetadata } from "@framework/types";
 
@@ -43,11 +43,23 @@ export class RaffleTokentService extends TokenService {
 
     if (roundIds) {
       if (roundIds.length === 1) {
-        queryBuilder.andWhere("round.roundId = :roundId", {
-          roundId: roundIds[0],
-        });
+        queryBuilder.andWhere(
+          new Brackets(qb => {
+            qb.where("round.roundId = :roundId", {
+              roundId: roundIds[0],
+            });
+            qb.orWhere("round.id = :roundId", {
+              roundId: roundIds[0],
+            });
+          }),
+        );
       } else {
-        queryBuilder.andWhere("round.roundId IN(:...roundIds)", { roundIds });
+        queryBuilder.andWhere(
+          new Brackets(qb => {
+            qb.where("round.roundId IN(:...roundIds)", { roundIds });
+            qb.orWhere("round.id IN(:...roundIds)", { roundIds });
+          }),
+        );
       }
     }
 
