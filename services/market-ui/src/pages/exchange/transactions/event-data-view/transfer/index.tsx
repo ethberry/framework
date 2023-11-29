@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { AddressLink } from "@gemunion/mui-scanner";
+import { formatEther } from "@framework/exchange";
 import type {
   IContract,
   IErc20TokenTransferEvent,
@@ -16,7 +17,6 @@ import {
   StyledDataViewItemWrapper,
   StyledDataViewWrapper,
 } from "../styled";
-import { formatEther } from "../../../../../utils/money";
 
 export interface ITransferDataViewProps {
   contract?: IContract;

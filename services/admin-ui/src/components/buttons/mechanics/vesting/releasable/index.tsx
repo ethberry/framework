@@ -3,14 +3,13 @@ import { Visibility } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { formatEther } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
+import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import VestingReleasableABI from "../../../../../abis/mechanics/vesting/releasable/releasable.abi.json";
-
-import { formatEther } from "../../../../../utils/money";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;

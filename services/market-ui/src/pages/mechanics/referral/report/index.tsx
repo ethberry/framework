@@ -11,9 +11,8 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { formatEther } from "@framework/exchange";
 import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
-
-import { formatEther } from "../../../../utils/money";
 
 export const ReferralReport: FC = () => {
   const {

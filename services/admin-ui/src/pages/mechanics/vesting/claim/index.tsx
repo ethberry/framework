@@ -10,11 +10,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { VestingClaimUploadButton } from "../../../../components/buttons";
 import { VestingClaimEditDialog } from "./edit";
 

@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface {
@@ -121,6 +121,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       INSERT INTO ${ns}.staking_rules (
         id,
         title,
+        image_url,
         description,
         duration_amount,
         penalty,
@@ -128,12 +129,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         deposit_id,
         reward_id,
         staking_rule_status,
+        external_id,
         contract_id,                               
         created_at,
         updated_at
       ) VALUES (
         141,
         'ERC998 > NATIVE',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -141,12 +144,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81411,
         81412,
         'ACTIVE',
+        141,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         142,
         'ERC998 > ERC20',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -154,12 +159,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81421,
         81422,
         'ACTIVE',
+        142,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         143,
         'ERC998 > ERC721',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -167,12 +174,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81431,
         81432,
         'ACTIVE',
+        143,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         144,
         'ERC998 > ERC998',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -180,12 +189,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81441,
         81442,
         'ACTIVE',
+        144,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         145,
         'ERC998 > ERC1155',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -193,12 +204,14 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81451,
         81452,
         'ACTIVE',
+        145,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         149,
         'ERC998 > NONE',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -206,6 +219,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         81499,
         null,
         'ACTIVE',
+        149,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'

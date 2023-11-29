@@ -10,11 +10,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
+import { formatItem } from "@framework/exchange";
 import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
-import { formatItem } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { getDismantleMultiplier } from "./utils";

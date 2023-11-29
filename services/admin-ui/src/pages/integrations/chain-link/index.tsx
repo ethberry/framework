@@ -8,6 +8,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
 
@@ -17,7 +18,6 @@ import LinkBalanceOfABI from "../../../abis/integrations/chain-link/fund/balance
 import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
-import { formatEther } from "../../../utils/money";
 import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperSxMixin } from "./styled";
 
 export interface IVrfSubscriptionData {

@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
 
+import { formatItem } from "@framework/exchange";
 import type { IMerge } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { formatItem } from "../../../../../utils/money";
 import { MergeButton } from "../../../../../components/buttons";
 import { StyledTitle, StyledToolbar } from "./styled";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";

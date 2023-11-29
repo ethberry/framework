@@ -13,6 +13,9 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
   @Column({ type: "varchar" })
   public title: string;
 
+  @Column({ type: "varchar" })
+  public imageUrl: string;
+
   @Column({ type: "int" })
   public depositId: number;
 

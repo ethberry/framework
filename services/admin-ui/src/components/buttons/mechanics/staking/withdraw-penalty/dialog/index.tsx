@@ -9,12 +9,12 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
+import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import StakingWithdrawABI from "../../../../../../abis/mechanics/staking/stakingWithdraw.abi.json";
-import { formatEther } from "../../../../../../utils/money";
 
 export interface IStakingWithdrawPenaltyDialogProps {
   open: boolean;

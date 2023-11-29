@@ -3,15 +3,14 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
-
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import type { IStakingDepositDto } from "./dialog";
 import { StakingDepositDialog } from "./dialog";
 

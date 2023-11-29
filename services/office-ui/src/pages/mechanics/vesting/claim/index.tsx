@@ -11,11 +11,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { VestingClaimUploadButton } from "../../../../components/buttons";
 import { VestingClaimEditDialog } from "./edit";
 

@@ -9,12 +9,12 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
+import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
 import PonziWithdrawTokenABI from "../../../../../../abis/mechanics/ponzi/ponzi-balances/withdrawToken.abi.json";
 
-import { formatEther } from "../../../../../../utils/money";
 import { emptyBalance } from "../../../../../common/interfaces";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
 

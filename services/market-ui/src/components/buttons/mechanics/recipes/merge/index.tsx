@@ -3,17 +3,17 @@ import { JoinFull } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract, utils } from "ethers";
 
+import { emptyToken } from "@gemunion/mui-inputs-asset";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMerge } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { emptyToken } from "@gemunion/mui-inputs-asset";
 
 import MergeABI from "../../../../../abis/mechanics/merge/merge.abi.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { MergeDialog, IMergeDto } from "./dialog";
 

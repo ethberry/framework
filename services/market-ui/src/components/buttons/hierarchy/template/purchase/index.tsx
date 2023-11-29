@@ -5,13 +5,13 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ITemplate } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
 

@@ -9,11 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset, formatItem } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IMerge, IMergeSearchDto } from "@framework/types";
 import { MergeStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset, formatItem } from "../../../../utils/money";
 import { MergeEditDialog } from "./edit";
 
 export const Merge: FC = () => {

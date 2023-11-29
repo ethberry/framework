@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { Grid, IconButton, List, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
+import { formatItem } from "@framework/exchange";
 import { StyledListItem } from "@framework/styled";
 
 import { CartContext } from "../../../../components/providers/cart";
-import { formatPrice } from "../../../../utils/money";
 import { StyledListSubheader, StyledPaper } from "./styled";
 
 export const Cart: FC = () => {
@@ -23,7 +23,7 @@ export const Cart: FC = () => {
             <StyledListItem key={item.product.id}>
               <ListItemText
                 primary={item.product.title}
-                secondary={<Fragment>{formatPrice(item.product.productItems[0].price)}</Fragment>}
+                secondary={<Fragment>{formatItem(item.product.productItems[0].price)}</Fragment>}
               />
               <ListItemSecondaryAction>
                 <Grid item container alignItems="center" justifyContent="center">

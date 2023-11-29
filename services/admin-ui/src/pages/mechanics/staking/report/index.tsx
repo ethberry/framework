@@ -14,10 +14,10 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { InputType } from "@gemunion/types-collection";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { formatItem } from "@framework/exchange";
 import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { ModuleType, StakingDepositStatus, TokenType } from "@framework/types";
 
-import { formatItem } from "../../../../utils/money";
 import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
 import { SearchContractInput } from "../../../../components/inputs/search-contract";
 

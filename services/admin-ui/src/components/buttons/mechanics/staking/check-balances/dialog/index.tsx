@@ -5,10 +5,10 @@ import { List, ListItemText, ListSubheader, Typography } from "@mui/material";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
+import { formatEther } from "@framework/exchange";
 import { ListActions, StyledListItem } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 
-import { formatEther } from "../../../../../../utils/money";
 import { TopUpButton } from "../../../common/top-up";
 
 export interface IStakingDepositBalanceCheck {

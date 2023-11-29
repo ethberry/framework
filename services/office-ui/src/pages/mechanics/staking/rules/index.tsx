@@ -55,6 +55,7 @@ export const StakingRules: FC = () => {
     baseUrl: "/staking/rules",
     empty: {
       title: "new STAKING rule",
+      imageUrl: "",
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
@@ -63,9 +64,10 @@ export const StakingRules: FC = () => {
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ title, description }) => ({
+    filter: ({ title, description, imageUrl }) => ({
       title,
       description,
+      imageUrl,
     }),
     search: {
       query: "",

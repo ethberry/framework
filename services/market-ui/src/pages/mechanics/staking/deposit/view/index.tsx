@@ -6,9 +6,9 @@ import { format } from "date-fns";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { formatItem, formatPenalty } from "@framework/exchange";
 import type { IStakingDeposit } from "@framework/types";
 
-import { formatItem, formatPenalty } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {

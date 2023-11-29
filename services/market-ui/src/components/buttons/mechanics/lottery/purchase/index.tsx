@@ -6,14 +6,13 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { bool36ArrayToByte32 } from "@framework/traits-ui";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
-
-import { getEthPrice } from "../../../../../utils/money";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;

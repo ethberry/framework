@@ -8,11 +8,11 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { InputType } from "@gemunion/types-collection";
+import { formatEther } from "@framework/exchange";
 import type { IPonziLeaderboard, IPonziLeaderboardSearchDto } from "@framework/types";
 import { PonziLeaderboardRank, TokenType } from "@framework/types";
 
 import { PonziLeaderboardSearchForm } from "./form";
-import { formatEther } from "../../../../utils/money";
 
 export const PonziLeaderboard: FC = () => {
   const {

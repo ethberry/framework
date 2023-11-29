@@ -2,11 +2,11 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent } from "@mui/material";
 
+import { formatItem } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { MysteryWrapperUnpackButton } from "../../../../../components/buttons";
-import { formatItem } from "../../../../../utils/money";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IMysteryTokenPanelProps {

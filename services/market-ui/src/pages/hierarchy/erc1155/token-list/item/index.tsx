@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
+import { formatEther } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { TokenSellButton } from "../../../../../components/buttons";
-import { formatEther } from "../../../../../utils/money";
 
 interface IErc1155TokenListItemProps {
   token: IToken;

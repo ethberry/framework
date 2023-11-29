@@ -2,13 +2,13 @@ import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IMerge } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MergeButton } from "../../../../../../components/buttons";
 import { MergeIngredients } from "./menu";
-import { formatItem } from "../../../../../../utils/money";
 
 interface IMergeItemProps {
   merge: IMerge;

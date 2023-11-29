@@ -5,14 +5,14 @@ import { Contract } from "ethers";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { TextInput } from "@gemunion/mui-inputs-core";
+import { formatEther } from "@framework/exchange";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import LinkBalanceOfABI from "../../../../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
-import { formatEther } from "../../../../../../utils/money";
-import type { IContract } from "@framework/types";
-import { SystemModuleType } from "@framework/types";
 
 export interface IChainLinkFundDto {
   subscriptionId: number;

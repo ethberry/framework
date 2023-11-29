@@ -10,12 +10,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton } from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
 import { PonziEditDialog } from "./edit";
 
 export const PonziRules: FC = () => {

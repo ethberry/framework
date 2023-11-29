@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -10,7 +10,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { formatItem, formatPenalty } from "@framework/exchange";
+import { ListAction, StyledPagination } from "@framework/styled";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -23,7 +24,18 @@ import {
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { emptyContract } from "../../../../components/common/interfaces";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { normalizeDuration } from "../../../../utils/time";
 import { StakingViewDialog } from "./view";
+import {
+  StyledCard,
+  StyledCardActions,
+  StyledCardContent,
+  StyledExchangeTitle,
+  StyledGrid,
+  StyledImage,
+  StyledTableContainer,
+  StyledTitle,
+} from "./styled";
 
 export const StakingRules: FC = () => {
   const {
@@ -45,6 +57,7 @@ export const StakingRules: FC = () => {
     baseUrl: "/staking/rules",
     empty: {
       title: "",
+      imageUrl: "",
       contract: emptyContract,
       description: emptyStateString,
       deposit: emptyPrice,
@@ -64,11 +77,12 @@ export const StakingRules: FC = () => {
         tokenType: [] as Array<StakingRewardTokenType>,
       } as IStakingRuleRewardSearchDto,
     },
-    filter: ({ id, title, contract, description, ...rest }) =>
+    filter: ({ id, title, imageUrl, contract, description, ...rest }) =>
       id
-        ? { title, description, contract }
+        ? { title, imageUrl, description, contract }
         : {
             title,
+            imageUrl,
             description,
             contract,
             ...rest,
@@ -123,18 +137,74 @@ export const StakingRules: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
-          {rows.map(rule => (
-            <StyledListItem key={rule.id}>
-              <ListItemText>{rule.title}</ListItemText>
-              <ListActions>
-                <StakingAllowanceButton rule={rule} />
-                <StakingDepositButton rule={rule} />
-                <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </List>
+        <Grid container spacing={2}>
+          {rows.map(rule => {
+            const deposit = formatItem(rule.deposit);
+            const reward = formatItem(rule.reward);
+
+            return (
+              <Grid item xs={12} sm={6} md={4} key={rule.id}>
+                <StyledCard>
+                  <StyledCardContent>
+                    <StyledImage component="img" src={rule.imageUrl} />
+                    <StyledTitle variant="h6">{rule.title}</StyledTitle>
+                    <Grid container spacing={2}>
+                      <StyledGrid item xs={12} sm={reward ? 6 : 12}>
+                        <StyledExchangeTitle fontWeight={500}>
+                          <FormattedMessage id="form.labels.deposit" />
+                        </StyledExchangeTitle>
+                        <StyledExchangeTitle>{deposit}</StyledExchangeTitle>
+                      </StyledGrid>
+                      {reward ? (
+                        <StyledGrid item xs={12} sm={6}>
+                          <StyledExchangeTitle fontWeight={500}>
+                            <FormattedMessage id="form.labels.reward" />
+                          </StyledExchangeTitle>
+                          <StyledExchangeTitle>{reward}</StyledExchangeTitle>
+                        </StyledGrid>
+                      ) : null}
+                    </Grid>
+                    <StyledTableContainer>
+                      <Table aria-label="staking rules table">
+                        <TableBody>
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              <FormattedMessage id="form.labels.durationAmount" />
+                            </TableCell>
+                            <TableCell align="right">
+                              {formatMessage(
+                                { id: `enums.durationUnit.${rule.durationUnit}` },
+                                {
+                                  count: normalizeDuration({
+                                    durationAmount: rule.durationAmount,
+                                    durationUnit: rule.durationUnit,
+                                  }),
+                                },
+                              )}
+                            </TableCell>
+                          </TableRow>
+                          {rule.penalty ? (
+                            <TableRow>
+                              <TableCell component="th" scope="row">
+                                <FormattedMessage id="form.labels.penalty" />
+                              </TableCell>
+                              <TableCell align="right">{formatPenalty(rule.penalty)}%</TableCell>
+                            </TableRow>
+                          ) : null}
+                        </TableBody>
+                      </Table>
+                    </StyledTableContainer>
+                  </StyledCardContent>
+                  <StyledCardActions>
+                    <StakingAllowanceButton rule={rule} />
+                    <StakingDepositButton rule={rule} />
+                    <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
+                  </StyledCardActions>
+                </StyledCard>
+              </Grid>
+            );
+          })}
+        </Grid>
       </ProgressOverlay>
 
       <StyledPagination

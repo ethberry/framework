@@ -9,13 +9,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
-import { cleanUpAsset } from "../../../../utils/money";
 import { Erc998TemplateEditDialog } from "./edit";
 
 export const Erc998Template: FC = () => {

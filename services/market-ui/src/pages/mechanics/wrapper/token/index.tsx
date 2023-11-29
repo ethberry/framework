@@ -6,11 +6,11 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { formatItem } from "@framework/exchange";
 import type { ITemplate, IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { TokenSellButton } from "../../../../components/buttons";
-import { formatPrice } from "../../../../utils/money";
 import { WrapperContent } from "./wrapper-content";
 import { StyledImage, StyledPaper } from "./styled";
 
@@ -56,7 +56,7 @@ export const WrapperToken: FC = () => {
               <Typography>
                 <FormattedMessage
                   id="pages.wrapper.token.price"
-                  values={{ amount: formatPrice(selected.template?.price) }}
+                  values={{ amount: formatItem(selected.template?.price) }}
                 />
               </Typography>
               <TokenSellButton token={selected} />

@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia, StyledTemplateItemCard } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatItem } from "../../../../../utils/money";
 
 interface IErc1155TemplateListItemProps {
   template: ITemplate;

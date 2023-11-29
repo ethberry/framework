@@ -5,11 +5,11 @@ import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { formatEther } from "@framework/exchange";
 import { ListActions, StyledListItem } from "@framework/styled";
 import type { IBalance, IContract } from "@framework/types";
 
 import { VestingReleasableButton, VestingReleaseButton } from "../../../../../components/buttons";
-import { formatEther } from "../../../../../utils/money";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;

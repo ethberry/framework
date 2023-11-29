@@ -12,11 +12,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { MysteryBoxMintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { ContractInput } from "../../../../components/forms/template-search/contract-input";
 import { MysteryboxEditDialog } from "./edit";

@@ -5,13 +5,13 @@ import { Contract, utils } from "ethers";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IPromoWithMystery extends IAssetPromo {

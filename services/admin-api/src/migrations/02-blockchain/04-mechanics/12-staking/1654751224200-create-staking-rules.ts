@@ -33,6 +33,10 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "image_url",
+          type: "varchar",
+        },
+        {
           name: "description",
           type: "json",
         },

@@ -10,10 +10,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAssetPromo } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { AssetPromoEditDialog } from "./edit";
 
 export const AssetPromo: FC = () => {

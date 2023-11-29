@@ -11,11 +11,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { MintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { MysteryboxEditDialog } from "./edit";
 

@@ -10,13 +10,12 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
+import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IContract, IBalance, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import PaymentSplitterReleaseABI from "../../../../../../abis/mechanics/payment-splitter/release/releasePaymentSplitter.abi.json";
-
-import { formatEther } from "../../../../../../utils/money";
 
 export interface IPaymentSplitterBalanceDialogProps {
   open: boolean;

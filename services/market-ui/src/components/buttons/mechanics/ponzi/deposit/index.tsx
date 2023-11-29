@@ -5,12 +5,11 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
 import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit.abi.json";
-
-import { getEthPrice } from "../../../../../utils/money";
 
 export interface IPonziDepositButtonProps {
   className?: string;

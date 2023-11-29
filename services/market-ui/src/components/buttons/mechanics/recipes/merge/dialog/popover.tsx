@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { formatItem } from "@framework/exchange";
 import { IMerge } from "@framework/types";
 
-import { formatItem } from "../../../../../../utils/money";
 import { InfoPopover } from "../../../../../popover";
 
 export interface IMergeInfoPopoverProps {

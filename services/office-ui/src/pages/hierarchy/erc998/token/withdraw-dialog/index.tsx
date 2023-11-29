@@ -5,10 +5,9 @@ import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { formatEther } from "@framework/exchange";
 import { StyledListItem } from "@framework/styled";
 import type { IBalance, IToken } from "@framework/types";
-
-import { formatEther } from "../../../../../utils/money";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;

@@ -2,10 +2,10 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent } from "@mui/material";
 
+import { formatItem } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
@@ -26,7 +26,7 @@ export const Erc1155TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
           <AllowanceInfoPopover />
         </StyledToolbar>
         <StyledList component="ul">
-          {formatPrice(template.price)
+          {formatItem(template.price)
             .split(", ")
             .map((item: string, index: number) => (
               <li key={index}>{item}</li>

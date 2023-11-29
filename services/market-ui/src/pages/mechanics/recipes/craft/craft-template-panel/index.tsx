@@ -9,13 +9,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
+import { formatItem, getEthPrice } from "@framework/exchange";
 import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { formatItem, getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { StyledTitle, StyledToolbar } from "./styled";
 

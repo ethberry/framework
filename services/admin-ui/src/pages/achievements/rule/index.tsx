@@ -9,11 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../utils/money";
 import { AchievementRuleEditDialog } from "./edit";
 
 export const AchievementRules: FC = () => {

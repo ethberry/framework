@@ -11,10 +11,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAssetPromo, IAssetPromoSearchDto, IUser } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { AssetPromoEditDialog } from "./edit";
 
 export const AssetPromo: FC = () => {

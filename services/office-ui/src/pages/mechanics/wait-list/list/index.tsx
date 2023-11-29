@@ -11,11 +11,11 @@ import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
 import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
 import { WaitListListGenerateButton } from "../../../../components/buttons/mechanics/wait-list/list/generate";

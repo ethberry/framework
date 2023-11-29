@@ -14,10 +14,10 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { InputType } from "@gemunion/types-collection";
+import { formatItem } from "@framework/exchange";
 import type { IPonziDeposit, IPonziReportSearchDto } from "@framework/types";
 import { ModuleType, PonziDepositStatus, TokenType } from "@framework/types";
 
-import { formatPrice } from "../../../../utils/money";
 import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
 import { SearchContractInput } from "../../../../components/inputs/search-contract";
 
@@ -177,7 +177,7 @@ export const PonziReport: FC = () => {
         rows={rows.map((stake: IPonziDeposit) => ({
           id: stake.id,
           account: stake.account,
-          deposit: formatPrice(stake.ponziRule?.deposit),
+          deposit: formatItem(stake.ponziRule?.deposit),
           ponziRule: stake.ponziRule!.title,
           createdAt: stake.createdAt,
         }))}

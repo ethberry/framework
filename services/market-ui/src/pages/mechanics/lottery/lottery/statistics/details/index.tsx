@@ -2,10 +2,11 @@ import { FC, useState } from "react";
 import { Grid } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { formatItem } from "@framework/exchange";
 import { IAsset, ILotteryRound, ILotteryRoundAggregation } from "@framework/types";
 
-import { formatItem } from "../../../../../../utils/money";
 import { deepClone } from "../../../../../../utils/lodash";
+import { getPrizeAsset } from "../../../../../../utils/lottery";
 import {
   ExpandMore,
   Root,
@@ -20,7 +21,6 @@ import {
   StyledTotalInfo,
   StyledTotalTitle,
 } from "./styled";
-import { getPrizeAmount, getPrizeAsset } from "../../../../../../utils/lottery";
 
 export interface IDetailsProps {
   round: ILotteryRound;

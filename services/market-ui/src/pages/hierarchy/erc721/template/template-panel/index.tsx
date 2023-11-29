@@ -2,10 +2,10 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent } from "@mui/material";
 
+import { formatItem } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatItem } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 

@@ -5,13 +5,13 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICraft } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface ICraftButtonProps {

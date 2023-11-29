@@ -41,9 +41,10 @@ export const StakingRules: FC = () => {
     handleDeleteConfirm,
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
-    filter: ({ title, description }) => ({
+    filter: ({ title, description, imageUrl }) => ({
       title,
       description,
+      imageUrl,
     }),
     search: {
       query: "",

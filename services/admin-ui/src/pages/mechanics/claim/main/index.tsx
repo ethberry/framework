@@ -9,11 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { ClaimEditDialog } from "./edit";

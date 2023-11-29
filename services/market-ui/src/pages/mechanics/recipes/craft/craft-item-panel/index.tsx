@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
 
+import { formatEther } from "@framework/exchange";
 import type { ICraft } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { formatEther } from "../../../../../utils/money";
 import { CraftButton } from "../../../../../components/buttons";
 import { StyledTitle, StyledToolbar } from "./styled";
 

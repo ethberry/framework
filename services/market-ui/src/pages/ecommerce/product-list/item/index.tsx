@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { RichTextDisplay } from "@gemunion/mui-rte";
 
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IProduct } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { formatPrice } from "../../../../utils/money";
 import { AmountInput } from "../../../../components/inputs/amount-input";
 
 interface IProductItemProps {
@@ -28,7 +28,7 @@ export const ProductItem: FC<IProductItemProps> = props => {
             <RichTextDisplay data={product.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(product.productItems[0].price)}
+            {formatItem(product.productItems[0].price)}
           </Typography>
         </CardContent>
       </CardActionArea>

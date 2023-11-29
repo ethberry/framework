@@ -10,11 +10,11 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IRent, IRentSearchDto } from "@framework/types";
 import { ContractFeatures, RentRuleStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { RentEditDialog } from "./edit";
 
 export const Rent: FC = () => {

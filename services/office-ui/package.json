@@ -12,6 +12,7 @@
     "@emotion/styled": "11.11.0",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
+    "@framework/exchange": "0.0.1",
     "@framework/localization-office-ui": "0.0.1",
     "@framework/styled": "0.0.1",
     "@framework/traits-ui": "0.0.1",

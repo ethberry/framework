@@ -2,10 +2,10 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Box, CardActions, CardContent } from "@mui/material";
 
+import { formatItem } from "@framework/exchange";
 import type { IMysteryBox } from "@framework/types";
 
 import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
@@ -25,7 +25,7 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
           </StyledTypography>
           <AllowanceInfoPopover />
         </StyledToolbar>
-        <Box>{formatPrice(box.template?.price)}</Box>
+        <Box>{formatItem(box.template?.price)}</Box>
       </CardContent>
       <CardActions>
         <MysteryBoxPurchaseButton mysteryBox={box} />
