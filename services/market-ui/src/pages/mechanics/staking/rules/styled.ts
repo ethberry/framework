@@ -14,6 +14,17 @@ export const StyledCardContent = styled(CardContent)({
   flex: 1,
 });
 
+export const StyledList = styled(Box)(({ theme }) => ({
+  textAlign: "center",
+  listStylePosition: "inside",
+  listStyleType: "none",
+  margin: 0,
+  padding: 0,
+  "& li": {
+    marginBottom: theme.spacing(1),
+  },
+})) as typeof Box;
+
 export const StyledCardActions = styled(CardActions)({
   marginTop: "auto",
 });

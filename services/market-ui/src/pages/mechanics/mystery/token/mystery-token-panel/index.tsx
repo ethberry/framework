@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent } from "@mui/material";
 
-import { formatItem } from "@framework/exchange";
+import { formatItemHtmlList } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
@@ -29,14 +29,8 @@ export const MysteryTokenPanel: FC<IMysteryTokenPanelProps> = props => {
             <FormattedMessage id="pages.token.mystery" />
           </StyledTypography>
         </StyledToolbar>
-        <StyledList component="ul">
-          {/* @ts-ignore */}
-          {formatItem(token.template?.box?.item)
-            .split(", ")
-            .map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-        </StyledList>
+        {/* @ts-ignore */}
+        <StyledList component="ul">{formatItemHtmlList(token.template?.box?.item)}</StyledList>
       </CardContent>
       <CardActions>
         <MysteryWrapperUnpackButton token={token} onRefreshPage={onRefreshPage} />

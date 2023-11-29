@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent } from "@mui/material";
 
-import { formatItem } from "@framework/exchange";
+import { formatItemHtmlList } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
@@ -25,13 +25,7 @@ export const Erc1155TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
           </StyledTypography>
           <AllowanceInfoPopover />
         </StyledToolbar>
-        <StyledList component="ul">
-          {formatItem(template.price)
-            .split(", ")
-            .map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-        </StyledList>
+        <StyledList component="ul">{formatItemHtmlList(template.price)}</StyledList>
       </CardContent>
       <CardActions>
         <TemplatePurchaseButton template={template} />

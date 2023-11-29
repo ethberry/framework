@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
-import { formatItem } from "@framework/exchange";
+import { formatItemHtmlList } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
@@ -33,13 +33,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
             <FormattedMessage id="pages.token.priceTitle" />
           </StyledTypography>
         </StyledToolbar>
-        <StyledList component="ul">
-          {formatItem(price)
-            .split(", ")
-            .map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-        </StyledList>
+        <StyledList component="ul">{formatItemHtmlList(price)}</StyledList>
       </CardContent>
       <CardActions>
         <Grid container alignItems="center" spacing={1}>

@@ -10,7 +10,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { formatItem, formatPenalty } from "@framework/exchange";
+import { formatItemHtmlList, formatPenalty } from "@framework/exchange";
 import { ListAction, StyledPagination } from "@framework/styled";
 import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
@@ -33,6 +33,7 @@ import {
   StyledExchangeTitle,
   StyledGrid,
   StyledImage,
+  StyledList,
   StyledTableContainer,
   StyledTitle,
 } from "./styled";
@@ -139,8 +140,8 @@ export const StakingRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(rule => {
-            const deposit = formatItem(rule.deposit);
-            const reward = formatItem(rule.reward);
+            const deposit = formatItemHtmlList(rule.deposit);
+            const reward = formatItemHtmlList(rule.reward);
 
             return (
               <Grid item xs={12} sm={6} md={4} key={rule.id}>
@@ -149,18 +150,18 @@ export const StakingRules: FC = () => {
                     <StyledImage component="img" src={rule.imageUrl} />
                     <StyledTitle variant="h6">{rule.title}</StyledTitle>
                     <Grid container spacing={2}>
-                      <StyledGrid item xs={12} sm={reward ? 6 : 12}>
+                      <StyledGrid item xs={12} sm={rule.reward ? 6 : 12}>
                         <StyledExchangeTitle fontWeight={500}>
                           <FormattedMessage id="form.labels.deposit" />
                         </StyledExchangeTitle>
-                        <StyledExchangeTitle>{deposit}</StyledExchangeTitle>
+                        <StyledList component="ul">{deposit}</StyledList>
                       </StyledGrid>
-                      {reward ? (
+                      {rule.reward ? (
                         <StyledGrid item xs={12} sm={6}>
                           <StyledExchangeTitle fontWeight={500}>
                             <FormattedMessage id="form.labels.reward" />
                           </StyledExchangeTitle>
-                          <StyledExchangeTitle>{reward}</StyledExchangeTitle>
+                          <StyledList component="ul">{reward}</StyledList>
                         </StyledGrid>
                       ) : null}
                     </Grid>

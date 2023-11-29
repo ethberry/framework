@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
-import { formatItem } from "@framework/exchange";
+import { formatItemHtmlList } from "@framework/exchange";
 import type { IBalance, IToken } from "@framework/types";
 
 import { Erc1155TransferButton, TokenSellButton } from "../../../../../components/buttons";
@@ -25,13 +25,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
             <FormattedMessage id="pages.token.priceTitle" />
           </StyledTitle>
         </StyledToolbar>
-        <StyledList component="ul">
-          {formatItem(token.template?.price)
-            .split(", ")
-            .map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-        </StyledList>
+        <StyledList component="ul">{formatItemHtmlList(token.template?.price)}</StyledList>
         <StyledToolbar disableGutters>
           <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.balanceTitle" />
