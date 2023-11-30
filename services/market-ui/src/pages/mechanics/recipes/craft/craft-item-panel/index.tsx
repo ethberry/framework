@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
@@ -8,6 +8,7 @@ import type { ICraft } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { CraftButton } from "../../../../../components/buttons";
+import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftItemPanelProps {
@@ -44,6 +45,7 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
       </CardContent>
       <CardActions>
         <CraftButton craft={craft} />
+        <AllowanceButton isSmall={true} />
       </CardActions>
     </Card>
   );
