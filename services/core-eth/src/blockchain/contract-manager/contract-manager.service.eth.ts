@@ -783,10 +783,11 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       // TODO better set ContractFeatures
-      contractFeatures:
-        contractTemplate === "0"
-          ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
-          : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures: [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL],
+      // contractFeatures:
+      //   contractTemplate === "0"
+      //     ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
+      //     : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),

@@ -3,6 +3,8 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
+import { useSettings } from "@gemunion/provider-settings";
+
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
@@ -24,8 +26,10 @@ export interface IStakingDepositComplexButtonProps {
 export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
 
+  const settings = useSettings();
+
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
-  // tokenIds[] must include all deposit tokens.
+  // !!! tokenIds[] must include all deposit tokens !!!
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
@@ -34,7 +38,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
       nonce: utils.formatBytes32String("nonce"),
       extra: utils.formatBytes32String("0x"),
       receiver: constants.AddressZero,
-      referrer: constants.AddressZero,
+      referrer: settings.getReferrer(),
     };
     return contract.deposit(params, values.tokenIds, {
       value: getEthPrice(rule.deposit),

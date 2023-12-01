@@ -17,18 +17,18 @@ import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import {PaymentSplitter} from "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";
 
+import {LinearReferralPonzi} from "./LinearReferralPonzi.sol";
 import {IPonzi} from "./interfaces/IPonzi.sol";
 import {TopUp} from "../../utils/TopUp.sol";
 import {Asset, TokenType, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {ZeroBalance, NotExist, NotActive, BalanceExceed, NotComplete, Expired, NotAnOwner, WrongStake} from "../../utils/errors.sol";
-import "../../Referral/Referral.sol";
 
-contract Ponzi is
+contract PonziBasicRef is
   IPonzi,
   AccessControl,
   Pausable,
-  Referral,
+  LinearReferralPonzi,
   TopUp,
   Wallet,
   PaymentSplitter,
@@ -105,7 +105,7 @@ contract Ponzi is
     _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
   }
 
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(Referral) {
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferralPonzi) {
     return super._afterPurchase(referrer, price);
   }
 

@@ -61,7 +61,7 @@ describe("Diamond Exchange Core", function () {
   });
 
   describe("exchange purchase", function () {
-    it("should purchase ERC721 Simple for ERC20", async function () {
+    it("should purchase ERC721 Simple for ERC20 (no ref)", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const exchangeInstance = await factory();
       const { generateOneToManySignature } = await getSignatures(exchangeInstance);
@@ -127,7 +127,94 @@ describe("Diamond Exchange Core", function () {
         signature,
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
+      await expect(tx1).not.to.emit(exchangeInstance, "ReferralEvent");
 
+      // TEST METADATA
+      const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
+      const decodedMeta = decodeMetadata(metadata as any[]);
+      expect(decodedMeta.TEMPLATE_ID).to.equal(tokenId);
+
+      const balance = await erc721Instance.balanceOf(receiver.address);
+      expect(balance).to.equal(1);
+    });
+
+    it("should purchase ERC721 Simple for ERC20 (ref)", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
+
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+      const erc20Instance = await deployERC1363("ERC20Blacklist");
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+      const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
+      expect(erc20Allowance).to.equal(amount);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params: {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: await exchangeInstance.getAddress(),
+          referrer: _owner.address,
+        },
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 1,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0,
+            amount,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        {
+          externalId,
+          expiresAt,
+          nonce,
+          extra,
+          receiver: await exchangeInstance.getAddress(),
+          referrer: _owner.address,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 1,
+        },
+        [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0,
+            amount,
+          },
+        ],
+        signature,
+      );
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .to.emit(exchangeInstance, "ReferralEvent")
+        .withArgs(
+          _owner.address,
+          isEqualEventArgArrObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
       // TEST METADATA
       const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
       const decodedMeta = decodeMetadata(metadata as any[]);

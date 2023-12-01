@@ -9,6 +9,7 @@ import {
   ContractEventType,
   ExchangeEventType,
   IERC721TokenMintRandomEvent,
+  StakingEventType,
   TContractEventData,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -147,6 +148,7 @@ export class EventHistoryService {
   public async findParentHistory(contractEventEntity: EventHistoryEntity) {
     const { id, eventType, transactionHash, eventData } = contractEventEntity;
 
+    // RANDOM
     if (eventType === ContractEventType.RandomWordsRequested) {
       const parentEvent = await this.findOne({
         transactionHash,
@@ -178,10 +180,12 @@ export class EventHistoryService {
       }
     }
 
+    // TRANSFER
     if (
       eventType === ContractEventType.Transfer ||
       eventType === ContractEventType.TransferSingle ||
-      eventType === ContractEventType.TransferBatch
+      eventType === ContractEventType.TransferBatch ||
+      eventType === ContractEventType.ReferralEvent
     ) {
       const parentEvent = await this.findOne({
         transactionHash,
@@ -197,6 +201,8 @@ export class EventHistoryService {
           ExchangeEventType.PurchaseLottery,
           ExchangeEventType.PurchaseRaffle,
           ContractEventType.MintRandom,
+          StakingEventType.DepositStart,
+          StakingEventType.DepositFinish,
         ]),
       });
       if (parentEvent) {

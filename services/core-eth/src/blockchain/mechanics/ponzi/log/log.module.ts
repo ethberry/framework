@@ -46,6 +46,7 @@ import { getEventsTopics } from "../../../../common/utils";
           PonziEventType.StakingFinish,
           PonziEventType.FinalizedToken,
           PonziEventType.WithdrawToken,
+          ReferralProgramEventType.ReferralEvent,
           ReferralProgramEventType.ReferralBonus,
           ReferralProgramEventType.ReferralProgram,
           ReferralProgramEventType.ReferralReward,

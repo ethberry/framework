@@ -1,7 +1,12 @@
 import { ListItem, ListItemText } from "@mui/material";
 import { BigNumber, BigNumberish, utils, FixedNumber } from "ethers";
 
-import { IAsset, IAssetComponentHistory, TokenType } from "@framework/types";
+import { IAsset, IAssetComponent, IAssetComponentHistory, TokenType } from "@framework/types";
+
+export interface IPartialAsset {
+  id?: number;
+  components: Array<Partial<IAssetComponent>>;
+}
 
 export const formatUnitsR = (value: BigNumberish, decimals: string | BigNumberish = 0, maxDecimalDigits?: number) => {
   return FixedNumber.from(utils.formatUnits(value, decimals))
@@ -13,8 +18,8 @@ export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDec
   return `${currency} ${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
 };
 
-export const formatItemCore = (asset?: IAsset, maxDecimalDigits?: number): string[] => {
-  if (!asset) {
+export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number): string[] => {
+  if (!asset || !asset.components) {
     return [];
   }
 
@@ -33,7 +38,7 @@ export const formatItemCore = (asset?: IAsset, maxDecimalDigits?: number): strin
         case TokenType.ERC998:
         case TokenType.ERC1155:
           return component.templateId
-            ? BigInt(component.amount) > 1n
+            ? BigInt(component.amount!) > 1n
               ? `${component.amount} x ${component.template?.title}`
               : component.tokenId
                 ? `${component.template?.title} #${component.token!.tokenId}`
@@ -46,7 +51,7 @@ export const formatItemCore = (asset?: IAsset, maxDecimalDigits?: number): strin
     .filter(Boolean);
 };
 
-export const formatItem = (asset?: IAsset, maxDecimalDigits?: number): string => {
+export const formatItem = (asset?: IPartialAsset, maxDecimalDigits?: number): string => {
   return formatItemCore(asset, maxDecimalDigits).join(", ");
 };
 

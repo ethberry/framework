@@ -29,7 +29,7 @@ export enum StakingRewardTokenType {
 }
 
 export interface IStakingRule extends ISearchable {
-  imageUrl: string;
+  imageUrl: string | null;
   depositId: number;
   deposit?: IAsset;
   rewardId: number;

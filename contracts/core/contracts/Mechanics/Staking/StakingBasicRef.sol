@@ -23,13 +23,13 @@ import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
 import {IERC721Simple} from "../../ERC721/interfaces/IERC721Simple.sol";
 import {IERC1155Simple} from "../../ERC1155/interfaces/IERC1155Simple.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
+import {LinearReferral} from "../../Referral/LinearReferral.sol";
 import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
 import {TopUp} from "../../utils/TopUp.sol";
 import {ZeroBalance,NotExist,WrongRule,UnsupportedTokenType,NotComplete,Expired,NotAnOwner,WrongStake,WrongToken,LimitExceed,NotActive} from "../../utils/errors.sol";
 import {IERC721MysteryBox} from "../MysteryBox/interfaces/IERC721MysteryBox.sol";
 import {IStaking} from "./interfaces/IStaking.sol";
 import {Asset,Params,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
-import "../../Referral/Referral.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -38,7 +38,7 @@ import "../../Referral/Referral.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, ReentrancyGuard {
+contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearReferral, ReentrancyGuard {
   using Address for address;
   using EnumerableMap for EnumerableMap.AddressToUintMap;
   using EnumerableMap for EnumerableMap.UintToUintMap;
@@ -160,7 +160,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
         _depositBalancesMap.set(depositItem.token, balance + depositItem.amount);
 
         // Do something with referrer
-        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+        if (referrer != address(0)) {
+          _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+        }
 
         unchecked {
           i++;
@@ -697,7 +699,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
    * @param referrer The Referrer address.
    * @param price The deposited Asset[].
    */
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(Referral) {
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
     return super._afterPurchase(referrer, price);
   }
 

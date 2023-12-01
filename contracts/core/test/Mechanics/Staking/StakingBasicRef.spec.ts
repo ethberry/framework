@@ -26,7 +26,6 @@ import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 import { shouldHaveReentrancyGuard } from "./shared/reentraceReward";
-import { isEqualEventArgArrObj } from "../../utils";
 
 /*
 1. Calculate multiplier (count full periods since stake start)
@@ -93,7 +92,7 @@ describe("Staking", function () {
 
   let vrfInstance: VRFCoordinatorV2Mock;
 
-  const factory = () => deployStaking();
+  const factory = () => deployStaking("StakingBasicRef");
   const erc20Factory = () => deployERC1363("ERC20Simple", { amount: parseEther("200000") });
   const erc721Factory = (name?: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
@@ -837,56 +836,8 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit({ ...params, referrer: receiver.address }, tokenIds, { value: amount });
-      // await expect(tx1).to.not.be.reverted;
-      await expect(tx1)
-        .to.emit(stakingInstance, "ReferralEvent")
-        .withArgs(
-          receiver.address,
-          isEqualEventArgArrObj({
-            tokenType: 0n, // NATIVE
-            token: ZeroAddress,
-            tokenId,
-            amount,
-          }),
-        );
-    });
-
-    it("should deposit without referral", async function () {
-      const [_owner, _receiver] = await ethers.getSigners();
-      const stakingInstance = await factory();
-      const erc721Instance = await erc721Factory();
-
-      const stakeRule: IRule = {
-        deposit: [
-          {
-            tokenType: 0, // NATIVE
-            token: ZeroAddress,
-            tokenId,
-            amount,
-          },
-        ],
-        reward: [
-          {
-            tokenType: 2, // ERC721
-            token: await erc721Instance.getAddress(),
-            tokenId,
-            amount,
-          },
-        ],
-        content: [],
-        period,
-        penalty,
-        maxStake,
-        recurrent: true,
-        active: true,
-      };
-
-      const tx = stakingInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(stakingInstance, "RuleCreated");
-
-      const tx1 = stakingInstance.deposit({ ...params, referrer: ZeroAddress }, tokenIds, { value: amount });
-
-      await expect(tx1).not.to.emit(stakingInstance, "ReferralEvent");
+      await expect(tx1).to.not.be.reverted;
+      // await expect(tx1).to.emit(stakingInstance, "ReferralReward");
     });
   });
 

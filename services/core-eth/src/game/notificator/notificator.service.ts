@@ -39,6 +39,7 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
+import { IReferralEventData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -282,6 +283,13 @@ export class NotificatorService {
   public breed(data: IBreedData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.BREED, data).toPromise();
+    });
+  }
+
+  // MODULE:REFERRAL
+  public referralEvent(data: IReferralEventData): Promise<any> {
+    return this.sendMessage(data.contract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.REFERRAL, data).toPromise();
     });
   }
 }

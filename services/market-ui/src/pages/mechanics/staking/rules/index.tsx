@@ -147,7 +147,7 @@ export const StakingRules: FC = () => {
               <Grid item xs={12} sm={6} md={4} key={rule.id}>
                 <StyledCard>
                   <StyledCardContent>
-                    <StyledImage component="img" src={rule.imageUrl} />
+                    <StyledImage component="img" src={rule.imageUrl || ""} />
                     <StyledTitle variant="h6">{rule.title}</StyledTitle>
                     <Grid container spacing={2}>
                       <StyledGrid item xs={12} sm={rule.reward ? 6 : 12}>

@@ -174,8 +174,10 @@
     },
     "chainId": {
       "1": "ETHEREUM",
+      "10000": "GEMUNION",
       "13377": "GEMUNION",
       "13378": "BESU",
+      "10001": "BESU",
       "137": "POLYGON",
       "42161": "ARBITRUM",
       "5": "GOERLI",
@@ -236,6 +238,7 @@
       "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
+      "LINEAR_REFERRAL": "Linear Referral",
       "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
       "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking",

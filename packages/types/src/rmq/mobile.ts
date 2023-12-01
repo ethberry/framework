@@ -47,6 +47,8 @@ export enum MobileEventType {
   VESTING_RELEASED = "VESTING_RELEASED",
 
   BREED = "BREED",
+
+  REFERRAL = "REFERRAL",
 }
 
 export interface IMessage {

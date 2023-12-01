@@ -108,6 +108,12 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'VrfSubscriptionSet',
       --MODULE:ECOMMERCE
        'EcommercePurchase',
+      --MODULE:REFERRAL
+       'ReferralEvent',       
+       'ReferralProgram',       
+       'ReferralReward',       
+       'ReferralWithdraw',       
+       'ReferralBonus',       
       --MODULE:CM
        'VestingDeployed',
        'ERC20TokenDeployed',

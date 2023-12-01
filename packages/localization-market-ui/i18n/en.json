@@ -2,6 +2,7 @@
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
     "approve": "Please approve ingredients to Exchange before using this mechanic",
+    "deposit": "You're about to deposit tokens according to the chosen rule",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "redirect": "You will be redirected in a moment",
     "uncaughtError": "Uncaught error happened"
@@ -101,8 +102,10 @@
     },
     "chainId": {
       "1": "ETHEREUM",
+      "10000": "GEMUNION",
       "13377": "GEMUNION",
       "13378": "BESU",
+      "10001": "BESU",
       "137": "POLYGON",
       "42161": "ARBITRUM",
       "5": "GOERLI",

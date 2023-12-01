@@ -9,7 +9,15 @@ import {
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import {
+  DataSource,
+  DeepPartial,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  IsNull,
+  Repository,
+} from "typeorm";
 
 import { testChainId } from "@framework/constants";
 import type { IAssetComponentDto, IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
@@ -52,6 +60,27 @@ export class AssetService {
         components: [],
       })
       .save();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<AssetEntity>,
+    options?: FindOneOptions<AssetEntity>,
+  ): Promise<AssetEntity | null> {
+    return this.assetEntityRepository.findOne({ where, ...options });
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<AssetEntity>): Promise<AssetEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "asset",
+        leftJoinAndSelect: {
+          asset_components: "asset.components",
+          asset_contract: "asset_components.contract",
+          asset_template: "asset_components.template",
+          asset_token: "asset_components.token",
+        },
+      },
+    });
   }
 
   public findAll(

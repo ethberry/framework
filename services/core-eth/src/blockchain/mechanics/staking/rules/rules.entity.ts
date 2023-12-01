@@ -10,6 +10,9 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Entity({ schema: ns, name: "staking_rules" })
 export class StakingRulesEntity extends SearchableEntity implements IStakingRule {
+  @Column({ type: "varchar", nullable: true })
+  public imageUrl: string | null;
+
   @Column({ type: "varchar" })
   public title: string;
 

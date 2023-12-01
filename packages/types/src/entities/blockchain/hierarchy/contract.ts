@@ -134,6 +134,7 @@ export enum PonziContractFeatures {
 export enum PonziContractTemplates {
   "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
+  "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
   "SPLITTER" = "SPLITTER",
 }
 
@@ -143,6 +144,7 @@ export enum StakingContractFeatures {
 
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
+  "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
 }
 
 export enum ContractFeatures {

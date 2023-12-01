@@ -59,8 +59,8 @@ async function main() {
     network.name === "besu"
       ? "0xa50a51c09a5c451c52bb714527e1974b686d8e77" // vrf besu localhost
       : network.name === "gemunion"
-      ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
-      : "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
+        ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
+        : "0xa50a51c09a5c451c52bb714527e1974b686d8e77";
   const vrfInstance = await ethers.getContractAt("VRFCoordinatorV2Mock", vrfAddr);
 
   // DIAMOND CM

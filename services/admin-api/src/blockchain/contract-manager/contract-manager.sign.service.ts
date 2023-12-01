@@ -1035,6 +1035,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json",
           chainId,
         );
+      case StakingContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingBasicRef.sol/StakingBasicRef.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -1058,6 +1063,11 @@ export class ContractManagerSignService {
       case PonziContractTemplates.REFERRAL:
         return getContractABI(
           "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
+          chainId,
+        );
+      case PonziContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/PonziBasicRef.sol/PonziBasicRef.json",
           chainId,
         );
       default:

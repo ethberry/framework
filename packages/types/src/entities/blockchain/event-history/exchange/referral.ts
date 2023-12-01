@@ -1,4 +1,7 @@
+import { IAssetItem } from "./common";
+
 export enum ReferralProgramEventType {
+  ReferralEvent = "ReferralEvent",
   ReferralProgram = "ReferralProgram",
   ReferralReward = "ReferralReward",
   ReferralWithdraw = "ReferralWithdraw",
@@ -37,5 +40,10 @@ export interface IBonus {
   amount: string;
 }
 
+export interface IReferralEvent {
+  account: string;
+  price: Array<IAssetItem>;
+}
+
 // TODO rename events
-export type TReferralEventData = IRProgram | IReferralRewardEvent | IReferralWithdrawEvent | IBonus;
+export type TReferralEventData = IRProgram | IReferralRewardEvent | IReferralWithdrawEvent | IBonus | IReferralEvent;

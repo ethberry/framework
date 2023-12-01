@@ -19,7 +19,7 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
   const tokenTo = {
     components: [
       {
-        amount: "1",
+        amount: rule.deposit!.components[0].amount,
         contractId: rule.deposit!.components[0].contractId,
         templateId: rule.deposit!.components[0].templateId,
         tokenType: rule.deposit!.components[0].tokenType,
