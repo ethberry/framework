@@ -14,7 +14,6 @@ import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
 
 import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
 import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
@@ -106,20 +105,9 @@ export const WaitListList: FC = () => {
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(waitListList)} message="form.buttons.delete" icon={Delete} />
-                <WaitListListCreateButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                  onRefreshPage={handleRefreshPage}
-                />
-                <WaitListListUploadButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                  onRefreshPage={handleRefreshPage}
-                />
-                <WaitListListGenerateButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                />
+                <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListGenerateButton waitListList={waitListList} />
               </ListActions>
             </StyledListItem>
           ))}

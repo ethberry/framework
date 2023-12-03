@@ -46,7 +46,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
       message="form.tips.release"
       className={className}
       dataTestId="VestingReleaseButton"
-      disabled={disabled}
+      disabled={disabled || balance.amount === "0"}
       variant={variant}
     />
   );

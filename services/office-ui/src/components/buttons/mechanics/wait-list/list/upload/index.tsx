@@ -2,6 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { CloudUploadOutlined } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { ContractStatus } from "@framework/types";
 import type { IWaitListList } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
@@ -19,7 +20,7 @@ export interface IWaitListListUploadButtonProps {
 export const WaitListListUploadButton: FC<IWaitListListUploadButtonProps> = props => {
   const {
     className,
-    waitListList: { id },
+    waitListList: { id, contract, root },
     disabled,
     variant,
     onRefreshPage,
@@ -62,7 +63,7 @@ export const WaitListListUploadButton: FC<IWaitListListUploadButtonProps> = prop
         message="form.buttons.upload"
         className={className}
         dataTestId="WaitListListUploadButton"
-        disabled={disabled}
+        disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
         variant={variant}
       />
       <WaitListUploadDialog

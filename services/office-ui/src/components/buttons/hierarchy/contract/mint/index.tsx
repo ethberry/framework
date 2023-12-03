@@ -8,7 +8,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
 import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
@@ -28,7 +28,7 @@ export interface IMintButtonProps {
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
-    contract: { address, id: contractId, contractType, decimals },
+    contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
   } = props;
@@ -109,7 +109,12 @@ export const MintButton: FC<IMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="ContractMintButton"
-        disabled={disabled || !hasAccess}
+        disabled={
+          disabled ||
+          contractType === TokenType.NATIVE ||
+          contractFeatures.includes(ContractFeatures.GENES) ||
+          !hasAccess
+        }
         variant={variant}
       />
       <MintTokenDialog
