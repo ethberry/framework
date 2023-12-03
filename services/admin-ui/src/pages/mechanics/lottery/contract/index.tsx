@@ -87,58 +87,34 @@ export const LotteryContracts: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => (
-            <StyledListItem key={contract.id}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListActions dataTestId="LotteryActionsMenuButton">
-                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  icon={Delete}
-                  message="form.buttons.delete"
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RenounceRoleButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <LotteryRoundStartButton
-                  contract={contract}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    !contract.parameters.vrfSubId ||
-                    !contract.parameters.isConsumer
-                  }
-                />
-                <LotteryRoundEndButton
-                  contract={contract}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    !contract.parameters.vrfSubId ||
-                    !contract.parameters.isConsumer
-                  }
-                />
-                <LotteryScheduleButton
-                  contract={contract}
-                  refreshPage={handleRefreshPage}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <EthListenerAddButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <EthListenerRemoveButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <ChainLinkSetSubscriptionButton contract={contract} />
-              </ListActions>
-            </StyledListItem>
-          ))}
+          {rows.map(contract => {
+            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
+            return (
+              <StyledListItem key={contract.id}>
+                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                <ListActions dataTestId="LotteryActionsMenuButton">
+                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    icon={Delete}
+                    message="form.buttons.delete"
+                    disabled={itemDisabled}
+                  />
+                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
+                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
+                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
+                  <PauseButton contract={contract} disabled={itemDisabled} />
+                  <UnPauseButton contract={contract} disabled={itemDisabled} />
+                  <LotteryRoundStartButton contract={contract} disabled={itemDisabled} />
+                  <LotteryRoundEndButton contract={contract} disabled={itemDisabled} />
+                  <LotteryScheduleButton contract={contract} refreshPage={handleRefreshPage} disabled={itemDisabled} />
+                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <ChainLinkSetSubscriptionButton contract={contract} />
+                </ListActions>
+              </StyledListItem>
+            );
+          })}
         </List>
       </ProgressOverlay>
 

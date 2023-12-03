@@ -75,7 +75,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         message="pages.lottery.rounds.start"
         className={className}
         dataTestId="LotteryRoundStartButton"
-        disabled={disabled}
+        disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
         variant={variant}
       />
       <LotteryStartRoundDialog

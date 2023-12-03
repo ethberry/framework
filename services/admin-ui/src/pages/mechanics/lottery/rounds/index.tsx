@@ -52,10 +52,8 @@ export const LotteryRounds: FC = () => {
                 <LotteryRoundEndButton
                   contract={round.contract!}
                   disabled={
-                    round.contract!.parameters.roundId !== round.id ||
                     round.contract!.contractStatus === ContractStatus.INACTIVE ||
-                    !round.contract!.parameters.vrfSubId ||
-                    !round.contract!.parameters.isConsumer
+                    round.contract!.parameters.roundId !== round.id
                   }
                 />
               </ListActions>

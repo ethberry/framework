@@ -6,7 +6,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
@@ -22,7 +22,7 @@ export interface IRoyaltyButtonProps {
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   const {
     className,
-    contract: { address, royalty, contractType },
+    contract: { address, contractFeatures, royalty, contractType },
     disabled,
     variant,
   } = props;
@@ -60,7 +60,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         message="form.buttons.royalty"
         className={className}
         dataTestId="RoyaltyButton"
-        disabled={disabled}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />
       <RoyaltyEditDialog

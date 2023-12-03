@@ -76,7 +76,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled}
+        disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
         variant={variant}
       />
       <RaffleStartRoundDialog

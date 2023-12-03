@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, Erc1155ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc1155ContractFeatures } from "@framework/types";
 
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -134,26 +134,10 @@ export const Erc1155Contract: FC = () => {
                   <UnBlacklistButton contract={contract} disabled={itemDisabled} />
                   <WhitelistButton contract={contract} disabled={itemDisabled} />
                   <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <MintButton
-                    contract={contract}
-                    disabled={
-                      itemDisabled ||
-                      contract.contractType === TokenType.NATIVE ||
-                      contract.contractFeatures.includes(ContractFeatures.GENES)
-                    }
-                  />
-                  <AllowanceButton
-                    contract={contract}
-                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-                  />
-                  <TransferButton
-                    contract={contract}
-                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-                  />
-                  <RoyaltyButton
-                    contract={contract}
-                    disabled={itemDisabled || contract.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-                  />
+                  <MintButton contract={contract} disabled={itemDisabled} />
+                  <AllowanceButton contract={contract} disabled={itemDisabled} />
+                  <TransferButton contract={contract} disabled={itemDisabled} />
+                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
                 </ListActions>

@@ -11,7 +11,7 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
-import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
@@ -108,14 +108,7 @@ export const Erc721Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintButton
-                  template={template}
-                  disabled={
-                    template.templateStatus === TemplateStatus.INACTIVE ||
-                    template.contract?.contractType === TokenType.NATIVE ||
-                    template.contract?.contractFeatures.includes(ContractFeatures.GENES)
-                  }
-                />
+                <MintButton template={template} />
               </ListActions>
             </StyledListItem>
           ))}

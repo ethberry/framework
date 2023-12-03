@@ -3,6 +3,7 @@ import { Add } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { ContractStatus } from "@framework/types";
 import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@framework/types";
 
 import { WaitListItemEditDialog } from "../../../../../../pages/mechanics/wait-list/item/edit";
@@ -18,7 +19,7 @@ export interface IWaitListListCreateButtonProps {
 export const WaitListListCreateButton: FC<IWaitListListCreateButtonProps> = props => {
   const {
     className,
-    waitListList: { id },
+    waitListList: { id, contract, root },
     disabled,
     variant,
     onRefreshPage,
@@ -58,7 +59,7 @@ export const WaitListListCreateButton: FC<IWaitListListCreateButtonProps> = prop
         message="form.buttons.add"
         className={className}
         dataTestId="WaitListListCreateButton"
-        disabled={disabled}
+        disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
         variant={variant}
       />
       <WaitListItemEditDialog
