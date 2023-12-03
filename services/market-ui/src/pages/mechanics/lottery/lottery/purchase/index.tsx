@@ -108,12 +108,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
             round={round}
             clearForm={clearForm}
             ticketNumbers={ticketNumbers}
-            disabled={
-              !round?.roundId ||
-              ticketNumbers.filter(Boolean).length < maxNumbers ||
-              // @ts-ignore
-              (round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
-            }
+            disabled={ticketNumbers.filter(Boolean).length < maxNumbers}
           />
         </PageHeader>
       </ProgressOverlay>

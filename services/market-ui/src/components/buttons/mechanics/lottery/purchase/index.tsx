@@ -17,7 +17,7 @@ import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/p
 export interface ILotteryPurchaseButtonProps {
   className?: string;
   clearForm: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   round: Partial<ILotteryRound>;
   ticketNumbers: Array<boolean>;
   variant?: ListActionVariant;
@@ -95,7 +95,12 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       buttonVariant="contained"
       className={className}
       dataTestId="LotteryPurchaseButton"
-      disabled={disabled}
+      disabled={
+        disabled ||
+        !round?.roundId ||
+        // @ts-ignore
+        (!!round.maxTickets && round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
+      }
       variant={variant}
     />
   );

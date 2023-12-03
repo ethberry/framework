@@ -61,7 +61,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
               </ListItemText>
               <ListActions>
                 <VestingReleasableButton balance={row} />
-                <VestingReleaseButton balance={row} disabled={row.amount === "0"} />
+                <VestingReleaseButton balance={row} />
               </ListActions>
             </StyledListItem>
           ))}

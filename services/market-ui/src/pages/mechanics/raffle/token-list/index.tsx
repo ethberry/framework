@@ -4,7 +4,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
-import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto, TokenStatus } from "@framework/types";
+import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -66,10 +66,7 @@ export const RaffleTokenList: FC = () => {
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
               <ListActions>
-                <RaffleRewardButton
-                  token={token}
-                  disabled={token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
-                />
+                <RaffleRewardButton token={token} />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </StyledListItem>

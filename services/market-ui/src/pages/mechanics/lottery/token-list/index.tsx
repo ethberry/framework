@@ -4,7 +4,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
-import { ILotteryToken, ILotteryTokenSearchDto, TokenStatus } from "@framework/types";
+import { ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -75,7 +75,7 @@ export const LotteryTokenList: FC = () => {
                 </ListItemText>
               </Hidden>
               <ListActions>
-                <LotteryRewardButton token={token} disabled={token.tokenStatus !== TokenStatus.MINTED} />
+                <LotteryRewardButton token={token} />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
             </StyledListItem>

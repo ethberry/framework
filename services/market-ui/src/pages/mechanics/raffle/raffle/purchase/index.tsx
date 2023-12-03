@@ -77,10 +77,7 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
 
           <AllowanceButton contract={contract} />
 
-          <RafflePurchaseButton
-            round={round}
-            disabled={!round?.roundId || (round.maxTickets > 0 && round.maxTickets <= round.ticketCount!)}
-          />
+          <RafflePurchaseButton round={round} />
         </PageHeader>
       </ProgressOverlay>
     </Fragment>

@@ -5,6 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { TokenStatus } from "@framework/types";
 import type { ILotteryToken } from "@framework/types";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
@@ -46,7 +47,7 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
       message="form.tips.redeem"
       className={className}
       dataTestId="LotteryRewardButton"
-      disabled={disabled || count === ""}
+      disabled={disabled || count === "" || token.tokenStatus !== TokenStatus.MINTED}
       variant={variant}
     />
   );

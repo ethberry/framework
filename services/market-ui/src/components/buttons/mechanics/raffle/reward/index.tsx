@@ -5,6 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { TokenStatus } from "@framework/types";
 import type { IRaffleToken } from "@framework/types";
 
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
@@ -42,7 +43,7 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
       icon={Redeem}
       message="form.tips.redeem"
       className={className}
-      disabled={disabled}
+      disabled={disabled || token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
       data-testid="RaffleRewardButton"
       variant={variant}
     />

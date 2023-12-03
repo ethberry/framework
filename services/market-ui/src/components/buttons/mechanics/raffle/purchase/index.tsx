@@ -15,7 +15,7 @@ import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/pur
 
 export interface IRafflePurchaseButtonProps {
   className?: string;
-  disabled: boolean;
+  disabled?: boolean;
   round: Partial<IRaffleRound>;
   variant?: ListActionVariant;
 }
@@ -90,7 +90,11 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       buttonVariant="contained"
       className={className}
       dataTestId="RafflePurchaseButton"
-      disabled={disabled}
+      disabled={
+        disabled ||
+        !round?.roundId ||
+        (!!round.maxTickets && round.maxTickets > 0 && round.maxTickets <= round.ticketCount!)
+      }
       variant={variant}
     />
   );
