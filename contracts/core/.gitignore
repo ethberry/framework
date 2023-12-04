@@ -2,6 +2,7 @@
 /artifacts
 /cache
 /dist
+/abis
 
 /coverage
 coverage.json
