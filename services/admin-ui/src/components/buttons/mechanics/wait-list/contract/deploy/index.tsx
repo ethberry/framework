@@ -6,8 +6,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IWaitListContractDeployDto } from "@framework/types";
-
-import DeployWaitListABI from "../../../../../../abis/mechanics/wait-list/deploy/deployWaitList.abi.json";
+import { deployWaitListWaitListFactoryFacetABI } from "@framework/abis";
 
 export interface IWaitListDeployButtonProps {
   className?: string;
@@ -23,7 +22,11 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
   const { handleDeployConfirm } = useDeploy(
     (_values: IWaitListContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployWaitListABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployWaitListWaitListFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployWaitList(
         {

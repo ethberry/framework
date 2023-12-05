@@ -8,9 +8,7 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
+import { approveERC20BlacklistABI, setApprovalForAllERC1155BlacklistABI } from "@framework/abis";
 
 import { StakingAllowanceDialog } from "./dialog";
 import type { IStakingAllowanceDto } from "./dialog";
@@ -44,19 +42,19 @@ export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(contract.address, approveERC20BlacklistABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
     } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         contract.address,
-        ERC721SetApprovalForAllABI,
+        setApprovalForAllERC1155BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.setApprovalForAll(address, true) as Promise<any>;
     } else if (contract.contractType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         contract.address,
-        ERC1155SetApprovalForAllABI,
+        setApprovalForAllERC1155BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.setApprovalForAll(address, true) as Promise<any>;

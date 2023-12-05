@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
-
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
+import { setDefaultRoyaltyERC1155BlacklistABI } from "@framework/abis";
 
 export interface IRoyaltyButtonProps {
   className?: string;
@@ -38,7 +37,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, RoyaltySetDefaultRoyaltyABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, setDefaultRoyaltyERC1155BlacklistABI, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 

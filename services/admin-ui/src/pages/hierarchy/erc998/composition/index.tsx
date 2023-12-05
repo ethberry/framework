@@ -14,11 +14,10 @@ import { ListAction, ListActions, StyledListItem, StyledPagination } from "@fram
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
-
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
+import { unWhitelistChildERC998BlacklistABI, whiteListChildERC998BlacklistABI } from "@framework/abis";
 
 export const Erc998Composition: FC = () => {
   const {
@@ -54,7 +53,7 @@ export const Erc998Composition: FC = () => {
   const metaFn1 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
     const contract = new Contract(
       composition.parent!.address,
-      ERC998WhitelistChildABI,
+      unWhitelistChildERC998BlacklistABI,
       web3Context.provider?.getSigner(),
     );
     return contract.unWhitelistChild(composition.child!.address) as Promise<void>;
@@ -73,7 +72,7 @@ export const Erc998Composition: FC = () => {
   const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
       composition.contract.parent.contract,
-      ERC998WhitelistChildABI,
+      whiteListChildERC998BlacklistABI,
       web3Context.provider?.getSigner(),
     );
     return contract.whiteListChild(composition.contract.child.contract, composition.amount) as Promise<void>;

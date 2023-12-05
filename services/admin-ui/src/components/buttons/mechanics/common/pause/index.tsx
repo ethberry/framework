@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
+import { pausePausableABI } from "@framework/abis";
 
 export interface IPausableButtonProps {
   className?: string;
@@ -26,7 +26,7 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
   } = props;
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, pausePausableABI, web3Context.provider?.getSigner());
     return contract.pause() as Promise<void>;
   });
 

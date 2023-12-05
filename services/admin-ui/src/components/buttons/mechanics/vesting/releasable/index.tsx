@@ -8,8 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-
-import VestingReleasableABI from "../../../../../abis/mechanics/vesting/releasable/releasable.abi.json";
+import { releasableVestingABI } from "@framework/abis";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;
@@ -23,7 +22,7 @@ export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props 
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(balance.account, VestingReleasableABI, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, releasableVestingABI, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address)"](balance.token.template.contract.address) as Promise<any>;
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {

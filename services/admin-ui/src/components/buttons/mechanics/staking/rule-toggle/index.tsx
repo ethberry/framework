@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
 
-import StakingUpdateRuleABI from "../../../../../abis/mechanics/staking/rule-toggle/updateRule.abi.json";
+import { updateRulePonziABI } from "@framework/abis";
 
 export interface IStakingToggleRuleButtonProps {
   className?: string;
@@ -22,7 +22,7 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
 
   const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
-    const contract = new Contract(rule.contract!.address, StakingUpdateRuleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, updateRulePonziABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId || 0, ruleStatus) as Promise<void>;
   });
 

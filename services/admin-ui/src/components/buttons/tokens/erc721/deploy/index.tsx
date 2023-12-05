@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc721ContractDeployDto, IUser } from "@framework/types";
 import { Erc721ContractTemplates } from "@framework/types";
 
-import DeployERC721TokenABI from "../../../../../abis/hierarchy/erc721/contract-deploy/deployERC721Token.abi.json";
+import { deployERC721TokenERC721FactoryFacetABI } from "@framework/abis";
 
 import { Erc721ContractDeployDialog } from "./dialog";
 
@@ -32,7 +32,11 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC721TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployERC721TokenERC721FactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC721Token(
         {

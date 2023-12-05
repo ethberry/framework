@@ -91,12 +91,15 @@ task("abis", "Save all functions abi separately")
   .addOptionalVariadicPositionalParam("files", "The files to include", undefined, types.inputFile)
   .setAction(async ({ files = "artifacts/contracts/" }, hre) => {
     const artfcts = await hre.artifacts.getArtifactPaths();
-    const conart = artfcts.filter(
-      art => art.includes(`${process.cwd()}/${files}`) || art.includes("@gemunion/contracts-chain-link-v2"),
-    );
+    const conart = artfcts
+      .filter(art => art.includes(`${process.cwd()}/${files}`) || art.includes("@gemunion/contracts-chain-link-v2"))
+      .filter(art => !art.includes(`/interfaces`));
 
     const globFuncArr: Array<string> = [];
     const fwFuncArr: Array<string> = [];
+
+    const importArr: Array<string> = [];
+    const exportArr: Array<string> = [];
 
     if (!fs.existsSync("./abis")) {
       fs.mkdirSync("./abis");
@@ -137,14 +140,21 @@ task("abis", "Save all functions abi separately")
           } else {
             fs.writeFileSync(`./abis/${funcabifile}.json`, JSON.stringify([func]), { encoding: "utf-8", flag: "w+" });
           }
+
           // FRAMEWORK ABIS
           if (fwFunctionNames.includes(func.name)) {
             const unique = fwFuncArr.indexOf(JSON.stringify(func)) === -1;
             if (unique) {
               fwFuncArr.push(JSON.stringify(func));
 
+              // create folder
+              if (!fs.existsSync(`../../packages/abis/src/abis/${func.name}`)) {
+                fs.mkdirSync(`../../packages/abis/src/abis/${func.name}`);
+              }
+
               // const filepath = `./abis/!fw/${func.name}.json`;
-              const filepath = `../../packages/abis/src/abis/${func.name}.json`;
+              // const filepath = `../../packages/abis/src/abis/${func.name}.json`;
+              const filepath = `../../packages/abis/src/abis/${func.name}/${name}.json`;
 
               if (fs.existsSync(filepath)) {
                 const oldfile: Array<IAbiObj> = JSON.parse(fs.readFileSync(filepath, "utf8"));
@@ -158,6 +168,9 @@ task("abis", "Save all functions abi separately")
                   });
                 }
               } else {
+                exportArr.push(`export const ${func.name}${name}ABI = ${func.name}${name};`);
+                importArr.push(`import ${func.name}${name} from "./abis/${func.name}/${name}.json";`);
+
                 fs.writeFileSync(filepath, JSON.stringify([func]), {
                   encoding: "utf-8",
                   flag: "w+",
@@ -166,6 +179,17 @@ task("abis", "Save all functions abi separately")
             }
           }
         }
+      }
+
+      // clean index
+      const indexPath = `../../packages/abis/src/index.ts`;
+      fs.writeFileSync(indexPath, "", { encoding: "utf-8", flag: "w" });
+      for (const str of importArr.sort()) {
+        fs.appendFileSync(indexPath, `${str}\n`);
+      }
+      fs.appendFileSync(indexPath, `\n`);
+      for (const str of exportArr.sort()) {
+        fs.appendFileSync(indexPath, `${str}\n`);
       }
     }
   });

@@ -10,9 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
-import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
-import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
-import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
+import { mintERC20BlacklistABI, mintCommonERC721BlacklistABI, mintERC1155BlacklistABI } from "@framework/abis";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import type { IMintTokenDto } from "./dialog";
@@ -55,21 +53,21 @@ export const MintButton: FC<IMintButtonProps> = props => {
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         templateComponent.contract.address,
-        ERC20MintABI,
+        mintERC20BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.contract.address,
-        ERC721MintCommonABI,
+        mintCommonERC721BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         templateComponent.contract.address,
-        ERC1155MintABI,
+        mintERC1155BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(

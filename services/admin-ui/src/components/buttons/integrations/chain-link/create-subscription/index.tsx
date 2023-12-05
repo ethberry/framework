@@ -6,9 +6,9 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
-import VrfCreateSub from "../../../../../abis/integrations/chain-link/subscription/createSub.abi.json";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
+import { createSubscriptionVRFCoordinatorV2MockABI } from "@framework/abis";
 
 export interface IChainLinkSubscriptionCreateButtonProps {
   className?: string;
@@ -24,7 +24,11 @@ export const ChainLinkSubscriptionCreateButton: FC<IChainLinkSubscriptionCreateB
   const metaFnCreateSub = useSystemContract<IContract, SystemModuleType>(
     (values: any, web3Context: Web3ContextType, systemContract: IContract) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(systemContract.address, VrfCreateSub, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        createSubscriptionVRFCoordinatorV2MockABI,
+        web3Context.provider?.getSigner(),
+      );
       return contract.createSubscription() as Promise<void>;
     },
   );

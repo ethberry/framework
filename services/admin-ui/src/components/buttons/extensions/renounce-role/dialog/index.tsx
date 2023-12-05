@@ -13,8 +13,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
-
-import RenounceRoleABI from "../../../../../abis/extensions/renounce-role/renounceRole.abi.json";
+import { renounceRoleAccessControlFacetABI } from "@framework/abis";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -40,7 +39,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   );
 
   const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, RenounceRoleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, renounceRoleAccessControlFacetABI, web3Context.provider?.getSigner());
     return contract.renounceRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)

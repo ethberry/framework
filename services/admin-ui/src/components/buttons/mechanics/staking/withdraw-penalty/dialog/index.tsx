@@ -14,7 +14,7 @@ import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import StakingWithdrawABI from "../../../../../../abis/mechanics/staking/stakingWithdraw.abi.json";
+import { withdrawBalanceReentrancyStakingRewardABI } from "@framework/abis";
 
 export interface IStakingWithdrawPenaltyDialogProps {
   open: boolean;
@@ -40,7 +40,11 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   );
 
   const metaWithdrawPenalty = useMetamask((values: IAssetComponent, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, StakingWithdrawABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      data.address,
+      withdrawBalanceReentrancyStakingRewardABI,
+      web3Context.provider?.getSigner(),
+    );
 
     return contract.withdrawBalance({
       tokenType: Object.keys(TokenType).indexOf(values.tokenType),

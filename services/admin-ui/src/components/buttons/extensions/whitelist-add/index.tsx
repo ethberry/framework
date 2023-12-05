@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.abi.json";
-
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { whitelistERC20WhitelistABI } from "@framework/abis";
 
 export interface IWhitelistButtonProps {
   className?: string;
@@ -38,7 +37,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, WhitelistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, whitelistERC20WhitelistABI, web3Context.provider?.getSigner());
     return contract.whitelist(values.account) as Promise<void>;
   });
 

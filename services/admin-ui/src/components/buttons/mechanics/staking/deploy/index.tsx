@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IStakingContractDeployDto, IUser } from "@framework/types";
 import { StakingContractTemplates } from "@framework/types";
 
-import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
-
 import { StakingDeployDialog } from "./dialog";
+import { deployStakingStakingFactoryFacetABI } from "@framework/abis";
 
 export interface IStakingDeployButtonProps {
   className?: string;
@@ -26,7 +25,11 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IStakingContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployStakingABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployStakingStakingFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployStaking(
         {

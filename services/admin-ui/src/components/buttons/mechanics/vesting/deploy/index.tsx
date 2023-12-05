@@ -7,9 +7,8 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 
-import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
-
 import { VestingDeployDialog } from "./dialog";
+import { deployVestingVestingFactoryFacetABI } from "@framework/abis";
 
 export interface IVestingDeployButtonProps {
   className?: string;
@@ -34,7 +33,11 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
 
       const nonce = utils.arrayify(sign.nonce);
 
-      const contract = new Contract(systemContract.address, DeployVestingABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployVestingVestingFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployVesting(
         {

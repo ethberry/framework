@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import BlacklistABI from "../../../../abis/extensions/blacklist-add/blacklist.abi.json";
-
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { blacklistERC1155BlacklistABI } from "@framework/abis";
 
 export interface IBlacklistButtonProps {
   className?: string;
@@ -38,7 +37,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, BlacklistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, blacklistERC1155BlacklistABI, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 

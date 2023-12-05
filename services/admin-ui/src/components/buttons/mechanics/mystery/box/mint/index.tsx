@@ -9,7 +9,7 @@ import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
+import { mintBoxERC721MysteryBoxBlacklistABI } from "@framework/abis";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
@@ -44,7 +44,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
   const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
     const contractMysterybox = new Contract(
       template!.contract!.address,
-      MysteryMintBoxABI,
+      mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
     const items = values.mysteryBox!.item!.components.map(item => ({

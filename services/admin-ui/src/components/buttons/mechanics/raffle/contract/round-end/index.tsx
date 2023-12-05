@@ -6,8 +6,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-
-import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
+import { endRoundLotteryRandomABI } from "@framework/abis";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;
@@ -25,7 +24,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, RaffleEndRoundABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, endRoundLotteryRandomABI, web3Context.provider?.getSigner());
     return contract.endRound() as Promise<void>;
   });
 

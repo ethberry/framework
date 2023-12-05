@@ -11,8 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-
-import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
+import { unWhitelistERC20WhitelistABI } from "@framework/abis";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
@@ -36,7 +35,7 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
   );
 
   const metaUnWhitelist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, UnWhitelistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, unWhitelistERC20WhitelistABI, web3Context.provider?.getSigner());
     return contract.unWhitelist(values.account) as Promise<void>;
   });
 

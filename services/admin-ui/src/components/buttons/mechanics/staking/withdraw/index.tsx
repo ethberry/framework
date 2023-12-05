@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import StakingWithdrawABI from "../../../../../abis/mechanics/staking/stakingWithdraw.abi.json";
+import { withdrawBalanceReentrancyStakingRewardABI } from "@framework/abis";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
@@ -21,7 +21,11 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      balance.account,
+      withdrawBalanceReentrancyStakingRewardABI,
+      web3Context.provider?.getSigner(),
+    );
 
     return contract.withdrawBalance({
       tokenType: Object.keys(TokenType).indexOf(balance.token!.template!.contract!.contractType!),

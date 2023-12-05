@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
-import TransferOwnershipABI from "../../../../abis/extensions/transfer-ownership/transferOwnership.abi.json";
-
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { transferOwnershipOwnershipFacetABI } from "@framework/abis";
 
 export interface ITransferOwnershipButtonProps {
   className?: string;
@@ -30,7 +29,7 @@ export const TransferOwnershipButton: FC<ITransferOwnershipButtonProps> = props 
   const [isOwnershipDialogOpen, setIsOwnershipDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, TransferOwnershipABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, transferOwnershipOwnershipFacetABI, web3Context.provider?.getSigner());
     return contract.transferOwnership(values.account) as Promise<any>;
   });
 

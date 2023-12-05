@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
+import { disperseDispenserABI } from "@framework/abis";
 
 import { DispenserUploadDialog } from "./dialog";
 import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
@@ -48,7 +48,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
         };
       });
 
-      const contract = new Contract(systemContract.address, DispenserABI, web3Context.provider?.getSigner());
+      const contract = new Contract(systemContract.address, disperseDispenserABI, web3Context.provider?.getSigner());
       return contract.disperse(assets, receivers, {
         value: getEthPrice(assets),
       }) as Promise<void>;

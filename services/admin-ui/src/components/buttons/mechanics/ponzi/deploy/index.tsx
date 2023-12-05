@@ -8,9 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 
-import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPonzi.abi.json";
-
 import { PonziContractDeployDialog } from "./dialog";
+import { deployPonziPonziFactoryFacetABI } from "@framework/abis";
 
 export interface IPonziContractDeployButtonProps {
   className?: string;
@@ -26,7 +25,11 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPonziContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployPonziABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployPonziPonziFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployPonzi(
         {

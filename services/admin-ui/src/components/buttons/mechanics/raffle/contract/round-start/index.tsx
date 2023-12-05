@@ -10,9 +10,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import RaffleStartRoundABI from "../../../../../../abis/mechanics/raffle/round/start/startRound.abi.json";
-
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
+import { startRoundLotteryRandomABI } from "@framework/abis";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;
@@ -32,7 +31,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, RaffleStartRoundABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),

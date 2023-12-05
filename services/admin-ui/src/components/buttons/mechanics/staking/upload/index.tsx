@@ -9,9 +9,9 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
-import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 import { sorter } from "../../../../../utils/sorter";
+import { setRulesStakingABI } from "@framework/abis";
 
 export interface IStakingRuleCreateButtonProps {
   className?: string;
@@ -67,7 +67,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
       maxStake: rule.maxStake,
       active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, setRulesStakingABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 

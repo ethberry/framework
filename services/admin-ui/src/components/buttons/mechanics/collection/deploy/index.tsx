@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ICollectionContractDeployDto, IContract, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
-import DeployCollectionABI from "../../../../../abis/mechanics/collection/contract-deploy/deployCollection.abi.json";
+import { deployCollectionCollectionFactoryFacetABI } from "@framework/abis";
 
 import { CollectionContractDeployDialog } from "./dialog";
 
@@ -26,7 +26,11 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ICollectionContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployCollectionABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployCollectionCollectionFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployCollection(
         {

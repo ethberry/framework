@@ -12,13 +12,11 @@ import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
 
-import GetSubscriptionABI from "../../../abis/integrations/chain-link/fund/getSubscription.abi.json";
-import LinkBalanceOfABI from "../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
-
 import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperSxMixin } from "./styled";
+import { getSubscriptionVRFCoordinatorV2MockABI, balanceOfBasicTokenABI } from "@framework/abis";
 
 export interface IVrfSubscriptionData {
   owner: string;
@@ -71,7 +69,7 @@ export const ChainLink: FC = () => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        LinkBalanceOfABI,
+        balanceOfBasicTokenABI,
         web3Context.provider?.getSigner(),
       );
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
@@ -85,7 +83,11 @@ export const ChainLink: FC = () => {
 
   const getSubscriptionData = useSystemContract<IContract, SystemModuleType>(
     async (subscriptionId: number, web3Context: Web3ContextType, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, GetSubscriptionABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        getSubscriptionVRFCoordinatorV2MockABI,
+        web3Context.provider?.getSigner(),
+      );
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         const data: IVrfSubscriptionData = await contract.getSubscription(subscriptionId);
         // const { owner, balance, reqCount, consumers } = data;
