@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
-import { transferAndCallERC677ABI } from "@framework/abis";
+import transferAndCallERC677ABI from "@framework/abis/transferAndCall/ERC677.json";
 
 export interface IChainLinkFundButtonProps {
   subscriptionId: number;

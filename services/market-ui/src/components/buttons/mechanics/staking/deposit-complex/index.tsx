@@ -11,7 +11,7 @@ import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
+import StakingDepositABI from "@framework/abis/deposit/Staking.json";
 
 import type { IStakingDepositDto } from "./dialog";
 import { StakingDepositDialog } from "./dialog";

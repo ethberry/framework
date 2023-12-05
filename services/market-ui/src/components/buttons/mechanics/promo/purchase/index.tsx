@@ -10,7 +10,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
-import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
+import PurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
+import PurchaseMysteryABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 
@@ -36,7 +37,11 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, PromoPurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        PurchaseABI.concat(PurchaseMysteryABI),
+        web3Context.provider?.getSigner(),
+      );
 
       return mysteryComponents && mysteryComponents.length > 0
         ? (contract.purchaseMystery(

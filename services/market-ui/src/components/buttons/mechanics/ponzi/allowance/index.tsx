@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziRule, TokenType } from "@framework/types";
 
-import AllowanceABI from "../../../../../abis/mechanics/ponzi/allowance/allowance.abi.json";
+import AllowanceABI from "@framework/abis/approve/ERC20Blacklist.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

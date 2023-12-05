@@ -13,7 +13,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
-import { renounceRoleAccessControlFacetABI } from "@framework/abis";
+import renounceRoleAccessControlFacetABI from "@framework/abis/renounceRole/AccessControlFacet.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;

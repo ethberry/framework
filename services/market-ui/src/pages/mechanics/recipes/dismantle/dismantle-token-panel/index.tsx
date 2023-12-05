@@ -14,7 +14,7 @@ import { formatItem } from "@framework/exchange";
 import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import DismantleABI from "../../../../../abis/mechanics/dismantle/dismantle.abi.json";
+import DismantleABI from "@framework/abis/dismantle/ExchangeDismantleFacet.json";
 import { sorter } from "../../../../../utils/sorter";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { getDismantleMultiplier } from "./utils";

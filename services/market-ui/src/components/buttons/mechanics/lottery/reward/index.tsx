@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { TokenStatus } from "@framework/types";
 import type { ILotteryToken } from "@framework/types";
 
-import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
+import LotteryGetPrizeABI from "@framework/abis/getPrize/LotteryRandom.json";
 
 import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/token-list/utils";
 

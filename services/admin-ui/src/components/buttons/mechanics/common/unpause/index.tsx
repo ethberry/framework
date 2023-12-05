@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import { unpausePausableABI } from "@framework/abis";
+import unpausePausableABI from "@framework/abis/unpause/Pausable.json";
 
 export interface IUnPauseButtonProps {
   className?: string;

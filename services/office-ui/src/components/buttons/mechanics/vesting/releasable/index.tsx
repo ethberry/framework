@@ -9,7 +9,7 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import VestingReleasableABI from "../../../../../abis/mechanics/vesting/releasable/releasable.abi.json";
+import VestingReleasableABI from "@framework/abis/releasable/Vesting.json";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;

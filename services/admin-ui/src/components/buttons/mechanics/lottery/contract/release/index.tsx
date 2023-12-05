@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 
-import { releaseFundsLotteryRandomABI } from "@framework/abis";
+import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
 
 export interface ILotteryReleaseButtonProps {
   className?: string;

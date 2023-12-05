@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
-import { setDefaultRoyaltyERC1155BlacklistABI } from "@framework/abis";
+import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
 
 export interface IRoyaltyButtonProps {
   className?: string;

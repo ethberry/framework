@@ -9,7 +9,7 @@ import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import { mintBoxERC721MysteryBoxBlacklistABI } from "@framework/abis";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";

@@ -16,7 +16,8 @@ import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/i
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperSxMixin } from "./styled";
-import { getSubscriptionVRFCoordinatorV2MockABI, balanceOfBasicTokenABI } from "@framework/abis";
+import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
+import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
 
 export interface IVrfSubscriptionData {
   owner: string;

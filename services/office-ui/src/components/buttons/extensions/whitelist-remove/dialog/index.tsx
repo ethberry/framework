@@ -12,7 +12,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
 
-import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
+import UnWhitelistABI from "@framework/abis/unWhitelist/ERC20Whitelist.json";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;

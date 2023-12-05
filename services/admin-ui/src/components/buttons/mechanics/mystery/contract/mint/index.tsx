@@ -11,7 +11,7 @@ import { TokenType } from "@framework/types";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
-import { mintBoxERC721MysteryBoxBlacklistABI } from "@framework/abis";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;

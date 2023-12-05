@@ -10,9 +10,9 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { ListAction } from "@framework/styled";
 import { IContract, TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.approve.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
+import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
+import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
+import ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

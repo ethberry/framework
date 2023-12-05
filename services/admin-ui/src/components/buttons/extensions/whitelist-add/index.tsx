@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
-import { whitelistERC20WhitelistABI } from "@framework/abis";
+import whitelistERC20WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
 
 export interface IWhitelistButtonProps {
   className?: string;

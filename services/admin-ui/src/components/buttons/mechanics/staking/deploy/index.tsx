@@ -9,7 +9,7 @@ import type { IContract, IStakingContractDeployDto, IUser } from "@framework/typ
 import { StakingContractTemplates } from "@framework/types";
 
 import { StakingDeployDialog } from "./dialog";
-import { deployStakingStakingFactoryFacetABI } from "@framework/abis";
+import deployStakingStakingFactoryFacetABI from "@framework/abis/deployStaking/StakingFactoryFacet.json";
 
 export interface IStakingDeployButtonProps {
   className?: string;

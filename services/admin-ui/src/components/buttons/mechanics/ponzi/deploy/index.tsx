@@ -9,7 +9,7 @@ import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types
 import { PonziContractTemplates } from "@framework/types";
 
 import { PonziContractDeployDialog } from "./dialog";
-import { deployPonziPonziFactoryFacetABI } from "@framework/abis";
+import deployPonziPonziFactoryFacetABI from "@framework/abis/deployPonzi/PonziFactoryFacet.json";
 
 export interface IPonziContractDeployButtonProps {
   className?: string;

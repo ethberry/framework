@@ -11,7 +11,12 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IBalance, IToken, TokenType } from "@framework/types";
 
-import ERC998TransferABI from "../../../../../abis/hierarchy/erc998/token/composition/transfer.abi.json";
+import safeTransferChildABI from "@framework/abis/safeTransferChild/ERC998Blacklist.json";
+import safeTransferFrom1155ABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
+import safeTransferFrom721ABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
+import safeTransferFromERC1155ABI from "@framework/abis/safeTransferFromERC1155/ERC998ERC1155ERC20Enum.json";
+import transferERC20ABI from "@framework/abis/transferERC20/ERC998ERC1155ERC20Enum.json";
+import getERC20ABI from "@framework/abis/getERC20/ERC998ERC1155ERC20Enum.json";
 
 import { formatTokenTitle } from "../../../../../utils/token";
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
@@ -34,14 +39,18 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
 
   const { formatMessage } = useIntl();
 
+  // combine all function's abi
+  const ERC998ABI = safeTransferFromERC1155ABI
+    .concat(transferERC20ABI)
+    .concat(getERC20ABI)
+    .concat(safeTransferChildABI)
+    .concat(safeTransferFrom1155ABI)
+    .concat(safeTransferFrom721ABI);
+
   const metaComposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
 
-    const contract = new Contract(
-      token.template!.contract!.address,
-      ERC998TransferABI,
-      web3Context.provider?.getSigner(),
-    );
+    const contract = new Contract(token.template!.contract!.address, ERC998ABI, web3Context.provider?.getSigner());
 
     switch (contractType) {
       case TokenType.ERC20: // ERC20
@@ -77,11 +86,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
   const metaDecomposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
 
-    const contract = new Contract(
-      token.template!.contract!.address,
-      ERC998TransferABI,
-      web3Context.provider?.getSigner(),
-    );
+    const contract = new Contract(token.template!.contract!.address, ERC998ABI, web3Context.provider?.getSigner());
 
     switch (contractType) {
       case TokenType.ERC20: // ERC20

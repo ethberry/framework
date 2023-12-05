@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
-import { deployERC1155TokenERC1155FactoryFacetABI } from "@framework/abis";
+import deployERC1155TokenERC1155FactoryFacetABI from "@framework/abis/deployERC1155Token/ERC1155FactoryFacet.json";
 
 import { Erc1155ContractDeployDialog } from "./dialog";
 

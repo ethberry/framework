@@ -14,7 +14,7 @@ import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { withdrawBalanceReentrancyStakingRewardABI } from "@framework/abis";
+import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
 
 export interface IStakingWithdrawPenaltyDialogProps {
   open: boolean;

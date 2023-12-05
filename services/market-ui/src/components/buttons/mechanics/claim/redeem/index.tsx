@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
 import { ClaimStatus, SystemModuleType, TokenType } from "@framework/types";
 
-import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
+import ClaimABI from "@framework/abis/claim/ExchangeClaimFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

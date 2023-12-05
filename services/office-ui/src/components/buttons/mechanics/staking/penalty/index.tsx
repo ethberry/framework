@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import StakingCountersABI from "../../../../../abis/mechanics/staking/stakingCounters.abi.json";
+import StakingCountersABI from "@framework/abis/getPenalty/Staking.json";
 
 export interface IStakingPenaltyBalanceButtonProps {
   balance: IBalance;

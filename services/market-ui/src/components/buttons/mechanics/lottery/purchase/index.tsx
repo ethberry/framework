@@ -12,7 +12,7 @@ import { bool36ArrayToByte32 } from "@framework/traits-ui";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
+import LotteryPurchaseABI from "@framework/abis/purchaseLottery/ExchangeLotteryFacet.json";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;

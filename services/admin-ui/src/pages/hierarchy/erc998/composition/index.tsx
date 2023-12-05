@@ -17,7 +17,9 @@ import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
-import { unWhitelistChildERC998BlacklistABI, whiteListChildERC998BlacklistABI } from "@framework/abis";
+
+import unWhitelistChildERC998BlacklistABI from "@framework/abis/unWhitelistChild/ERC998Blacklist.json";
+import whiteListChildERC998BlacklistABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
 export const Erc998Composition: FC = () => {
   const {

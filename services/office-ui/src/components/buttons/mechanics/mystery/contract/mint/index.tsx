@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
+import MysteryMintBoxABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";

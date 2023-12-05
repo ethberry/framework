@@ -9,11 +9,9 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import {
-  safeTransferFromERC1155BlacklistABI,
-  safeTransferFromERC721BlacklistABI,
-  transferERC20BlacklistABI,
-} from "@framework/abis";
+import safeTransferFromERC1155BlacklistABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
+import safeTransferFromERC721BlacklistABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
+import transferERC20BlacklistABI from "@framework/abis/transfer/ERC20Blacklist.json";
 
 import { ITransferDto, TransferDialog } from "./dialog";
 

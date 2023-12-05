@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
 
-import { updateRulePonziABI } from "@framework/abis";
+import updateRulePonziABI from "@framework/abis/updateRule/Ponzi.json";
 
 export interface IStakingToggleRuleButtonProps {
   className?: string;

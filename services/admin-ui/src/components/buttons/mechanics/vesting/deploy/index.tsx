@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 
 import { VestingDeployDialog } from "./dialog";
-import { deployVestingVestingFactoryFacetABI } from "@framework/abis";
+import deployVestingVestingFactoryFacetABI from "@framework/abis/deployVesting/VestingFactoryFacet.json";
 
 export interface IVestingDeployButtonProps {
   className?: string;

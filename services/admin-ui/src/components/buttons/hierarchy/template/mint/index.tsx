@@ -10,7 +10,9 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
-import { mintERC20BlacklistABI, mintCommonERC721BlacklistABI, mintERC1155BlacklistABI } from "@framework/abis";
+import mintERC20BlacklistABI from "@framework/abis/mint/ERC20Blacklist.json";
+import mintCommonERC721BlacklistABI from "@framework/abis/mintCommon/ERC721Blacklist.json";
+import mintERC1155BlacklistABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import type { IMintTokenDto } from "./dialog";

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import { disperseDispenserABI } from "@framework/abis";
+import disperseDispenserABI from "@framework/abis/disperse/Dispenser.json";
 
 import { DispenserUploadDialog } from "./dialog";
 import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";

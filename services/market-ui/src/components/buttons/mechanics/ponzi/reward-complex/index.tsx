@@ -7,7 +7,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
+import ReceiveRewardABI from "@framework/abis/receiveReward/ReentrancyStakingReward.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc998ContractDeployDto, IUser } from "@framework/types";
 import { Erc998ContractTemplates } from "@framework/types";
 
-import { deployERC998TokenERC998FactoryFacetABI } from "@framework/abis";
+import deployERC998TokenERC998FactoryFacetABI from "@framework/abis/deployERC998Token/ERC998FactoryFacet.json";
 
 import { Erc998ContractDeployDialog } from "./dialog";
 

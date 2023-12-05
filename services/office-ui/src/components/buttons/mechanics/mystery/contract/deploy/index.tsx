@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryContractDeployDto, IUser } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import DeployMysteryBoxABI from "../../../../../../abis/mechanics/mystery-box/deploy/deployMysteryBox.abi.json";
+import DeployMysteryBoxABI from "@framework/abis/deployMysterybox/MysteryBoxFactoryFacet.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 

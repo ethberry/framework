@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
-import { grantRoleAccessControlFacetABI } from "@framework/abis";
+import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessControlFacet.json";
 
 export interface IGrantRoleButtonProps {
   className?: string;

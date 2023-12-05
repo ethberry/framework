@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
-import { blacklistERC1155BlacklistABI } from "@framework/abis";
+import blacklistERC1155BlacklistABI from "@framework/abis/blacklist/ERC1155Blacklist.json";
 
 export interface IBlacklistButtonProps {
   className?: string;

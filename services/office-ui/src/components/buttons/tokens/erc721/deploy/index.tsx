@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc721ContractDeployDto, IUser } from "@framework/types";
 import { Erc721ContractTemplates } from "@framework/types";
 
-import DeployERC721TokenABI from "../../../../../abis/hierarchy/erc721/contract-deploy/deployERC721Token.abi.json";
+import DeployERC721TokenABI from "@framework/abis/deployERC721Token/ERC721FactoryFacet.json";
 
 import { Erc721ContractDeployDialog } from "./dialog";
 

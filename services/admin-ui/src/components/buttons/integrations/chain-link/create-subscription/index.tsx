@@ -8,7 +8,7 @@ import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
-import { createSubscriptionVRFCoordinatorV2MockABI } from "@framework/abis";
+import createSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/createSubscription/VRFCoordinatorV2Mock.json";
 
 export interface IChainLinkSubscriptionCreateButtonProps {
   className?: string;

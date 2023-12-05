@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-import { unBlacklistERC1155BlacklistABI } from "@framework/abis";
+import unBlacklistERC1155BlacklistABI from "@framework/abis/unBlacklist/ERC1155Blacklist.json";
 
 export interface IAccessListUnBlacklistDialogProps {
   open: boolean;

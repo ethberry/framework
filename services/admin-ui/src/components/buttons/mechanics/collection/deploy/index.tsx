@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ICollectionContractDeployDto, IContract, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
-import { deployCollectionCollectionFactoryFacetABI } from "@framework/abis";
+import deployCollectionCollectionFactoryFacetABI from "@framework/abis/deployCollection/CollectionFactoryFacet.json";
 
 import { CollectionContractDeployDialog } from "./dialog";
 

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
 
-import WaitListSetRewardABI from "../../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
+import WaitListSetRewardABI from "@framework/abis/setReward/WaitList.json";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;

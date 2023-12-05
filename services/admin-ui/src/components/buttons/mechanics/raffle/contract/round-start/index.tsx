@@ -11,7 +11,7 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
-import { startRoundLotteryRandomABI } from "@framework/abis";
+import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;

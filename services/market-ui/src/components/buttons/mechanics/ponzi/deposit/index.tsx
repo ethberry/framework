@@ -9,7 +9,7 @@ import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
 
-import PonziDepositABI from "../../../../../abis/mechanics/ponzi/deposit/deposit.abi.json";
+import PonziDepositABI from "@framework/abis/deposit/Ponzi.json";
 
 export interface IPonziDepositButtonProps {
   className?: string;

@@ -11,7 +11,7 @@ import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/t
 
 import { StakingRuleUploadDialog } from "./upload-dialog";
 import { sorter } from "../../../../../utils/sorter";
-import { setRulesStakingABI } from "@framework/abis";
+import setRulesStakingABI from "@framework/abis/setRules/Staking.json";
 
 export interface IStakingRuleCreateButtonProps {
   className?: string;

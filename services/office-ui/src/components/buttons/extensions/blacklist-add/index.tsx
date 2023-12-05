@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import BlacklistABI from "../../../../abis/extensions/blacklist-add/blacklist.abi.json";
+import BlacklistABI from "@framework/abis/blacklist/ERC1155Blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 

@@ -8,7 +8,7 @@ import type { IContract } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkSetSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import { setSubscriptionIdERC721GenesBesuABI } from "@framework/abis";
+import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/setSubscriptionId/ERC721GenesBesu.json";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import TopUpABI from "../../../../../abis/exchange/top-up/topUp.abi.json";
+import TopUpABI from "@framework/abis/topUp/ExchangeMockFacet.json";
 
 import { ITopUpDto, TopUpDialog } from "./dialog";
 

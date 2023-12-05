@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import MysteryBoxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purchase/mysterybox.abi.json";
+import MysteryBoxPurchaseABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

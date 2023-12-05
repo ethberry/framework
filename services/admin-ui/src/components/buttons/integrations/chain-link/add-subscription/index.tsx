@@ -9,7 +9,7 @@ import { SystemModuleType } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import { addConsumerVRFCoordinatorV2MockABI } from "@framework/abis";
+import addConsumerVRFCoordinatorV2MockABI from "@framework/abis/addConsumer/VRFCoordinatorV2Mock.json";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;

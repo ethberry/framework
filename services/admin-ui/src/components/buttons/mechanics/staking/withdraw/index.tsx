@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { withdrawBalanceReentrancyStakingRewardABI } from "@framework/abis";
+import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;

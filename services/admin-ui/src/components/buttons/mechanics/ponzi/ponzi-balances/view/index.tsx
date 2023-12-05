@@ -15,7 +15,7 @@ import type { IBalance } from "@framework/types";
 
 import { emptyBalance } from "../../../../../common/interfaces";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
-import { withdrawTokenPonziABI } from "@framework/abis";
+import withdrawTokenPonziABI from "@framework/abis/withdrawToken/Ponzi.json";
 
 export interface IPonziBalanceDialogProps {
   open: boolean;

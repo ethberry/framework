@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
+import TemplateLendABI from "@framework/abis/lend/ExchangeRentableFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 import type { ILendDto } from "./dialog";

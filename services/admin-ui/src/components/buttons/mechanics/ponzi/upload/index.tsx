@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
 import { PonziRuleUploadDialog } from "./upload-dialog";
-import { setRulesPonziABI } from "@framework/abis";
+import setRulesPonziABI from "@framework/abis/setRules/Ponzi.json";
 
 export interface IPonziRuleCreateButtonProps {
   className?: string;

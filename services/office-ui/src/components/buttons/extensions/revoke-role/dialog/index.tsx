@@ -14,7 +14,7 @@ import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessControl, IContract, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import RevokeRoleABI from "../../../../../abis/extensions/revoke-role/revokeRole.abi.json";
+import RevokeRoleABI from "@framework/abis/revokeRole/AccessControlFacet.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;

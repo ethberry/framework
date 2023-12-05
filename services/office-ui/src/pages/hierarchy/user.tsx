@@ -7,7 +7,7 @@ import { TableCell, TableRow } from "@mui/material";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import UserOfABI from "../../abis/mechanics/rentable/erc4907.userOf.abi.json";
+import UserOfABI from "@framework/abis/userOf/ERC721BlacklistDiscreteRentable.json";
 
 export interface ITokenUserView {
   tokenId: string;

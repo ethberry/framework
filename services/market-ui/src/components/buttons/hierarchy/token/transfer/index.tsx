@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
-import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/safeTransferFrom.abi.json";
+import ERC721SafeTransferFromABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

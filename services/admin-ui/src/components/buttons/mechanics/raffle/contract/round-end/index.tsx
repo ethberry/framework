@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { endRoundLotteryRandomABI } from "@framework/abis";
+import endRoundLotteryRandomABI from "@framework/abis/endRound/LotteryRandom.json";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { releasableVestingABI } from "@framework/abis";
+import releasableVestingABI from "@framework/abis/releasable/Vesting.json";
 
 export interface IVestingReleasableButtonProps {
   balance: IBalance;

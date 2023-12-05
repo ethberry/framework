@@ -10,6 +10,7 @@
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
+    "@framework/abis": "0.0.1",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/exchange": "0.0.1",

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { TokenStatus } from "@framework/types";
 import type { IRaffleToken } from "@framework/types";
 
-import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
+import RaffleGetPrizeABI from "@framework/abis/getPrize/LotteryRandom.json";
 
 export interface IRaffleRewardButtonProps {
   className?: string;

@@ -7,7 +7,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ILotteryContractDeployDto, IUser } from "@framework/types";
 
-import { deployLotteryLotteryFactoryFacetABI } from "@framework/abis";
+import deployLotteryLotteryFactoryFacetABI from "@framework/abis/deployLottery/LotteryFactoryFacet.json";
 
 import { LotteryContractDeployDialog } from "./dialog";
 

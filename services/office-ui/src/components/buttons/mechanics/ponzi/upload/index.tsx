@@ -9,7 +9,7 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
-import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
+import PonziSetRulesABI from "@framework/abis/setRules/Ponzi.json";
 
 import { PonziRuleUploadDialog } from "./upload-dialog";
 

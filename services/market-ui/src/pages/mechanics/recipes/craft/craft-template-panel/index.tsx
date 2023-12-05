@@ -13,7 +13,7 @@ import { formatItem, getEthPrice } from "@framework/exchange";
 import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import CraftABI from "../../../../../abis/mechanics/craft/craft.abi.json";
+import CraftABI from "@framework/abis/craft/ExchangeCraftFacet.json";
 
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { sorter } from "../../../../../utils/sorter";

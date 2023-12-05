@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
 
-import { setPregnancyLimitsExchangeBreedFacetABI } from "@framework/abis";
+import setPregnancyLimitsExchangeBreedFacetABI from "@framework/abis/setPregnancyLimits/ExchangeBreedFacet.json";
 
 import type { IBreedLimitDto } from "./dialog";
 import { BreedLimitDialog } from "./dialog";
