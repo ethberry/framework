@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
+import { StakingDepositStatus, StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 import type { IStakingRuleSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -34,6 +34,15 @@ export class StakingRulesService {
     queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
     queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
     queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
+
+    queryBuilder.leftJoinAndSelect(
+      "rule.stakes",
+      "stakes",
+      "stakes.stakingDepositStatus IN(:...stakingDepositStatuses)",
+      {
+        stakingDepositStatuses: [StakingDepositStatus.ACTIVE],
+      },
+    );
 
     queryBuilder.select();
 
@@ -132,6 +141,7 @@ export class StakingRulesService {
           reward_components: "reward.components",
           reward_contract: "reward_components.contract",
           reward_template: "reward_components.template",
+          stakes: "rule.stakes",
         },
       },
     });

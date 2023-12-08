@@ -12,7 +12,12 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { formatItemHtmlList, formatPenalty } from "@framework/exchange";
 import { ListAction, StyledPagination } from "@framework/styled";
-import type { IStakingRule, IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import type {
+  IStakingRule,
+  IStakingDeposit,
+  IStakingRuleDepositSearchDto,
+  IStakingRuleSearchDto,
+} from "@framework/types";
 import {
   DurationUnit,
   IStakingRuleRewardSearchDto,
@@ -25,7 +30,7 @@ import { StakingAllowanceButton, StakingDepositButton } from "../../../../compon
 import { emptyContract } from "../../../../components/common/interfaces";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { normalizeDuration } from "../../../../utils/time";
-import { StakingViewDialog } from "./view";
+import { IStakingRuleExt, StakingViewDialog } from "./view";
 import {
   StyledCard,
   StyledCardActions,
@@ -54,7 +59,7 @@ export const StakingRules: FC = () => {
     handleSearch,
     handleChangePage,
     handleRefreshPage,
-  } = useCollection<IStakingRule, IStakingRuleSearchDto>({
+  } = useCollection<IStakingRuleExt, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
       title: "",
@@ -190,6 +195,14 @@ export const StakingRules: FC = () => {
                                 <FormattedMessage id="form.labels.penalty" />
                               </TableCell>
                               <TableCell align="right">{formatPenalty(rule.penalty)}%</TableCell>
+                            </TableRow>
+                          ) : null}
+                          {rule.stakes.length > 0 ? (
+                            <TableRow>
+                              <TableCell component="th" scope="row">
+                                <FormattedMessage id="form.labels.stakesCount" />
+                              </TableCell>
+                              <TableCell align="right">{rule.stakes.length}</TableCell>
                             </TableRow>
                           ) : null}
                         </TableBody>
