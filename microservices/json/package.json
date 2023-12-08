@@ -34,11 +34,11 @@
     "amqp-connection-manager": "4.1.14",
     "amqplib": "0.10.3",
     "cache-manager-ioredis-yet": "1.2.2",
-    "ethers": "6.8.1",
+    "ethers": "6.9.0",
     "express": "4.18.2",
     "nest-winston": "1.9.4",
     "passport-headerapikey": "1.2.2",
-    "reflect-metadata": "0.1.13",
+    "reflect-metadata": "0.1.14",
     "ts-mixer": "6.0.3",
     "typeorm": "0.3.17",
     "typeorm-naming-strategies": "4.1.0"
@@ -48,11 +48,11 @@
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.5",
     "@nestjs/testing": "10.2.9",
-    "@types/node": "20.9.1",
-    "@typescript-eslint/eslint-plugin": "6.11.0",
-    "@typescript-eslint/parser": "6.11.0",
-    "eslint": "8.54.0",
-    "eslint-config-prettier": "9.0.0",
+    "@types/node": "20.10.4",
+    "@typescript-eslint/eslint-plugin": "6.13.2",
+    "@typescript-eslint/parser": "6.13.2",
+    "eslint": "8.55.0",
+    "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "2.29.0",
@@ -61,7 +61,7 @@
     "eslint-plugin-promise": "6.1.1",
     "rimraf": "5.0.5",
     "tsc-watch": "6.0.4",
-    "typescript": "5.2.2"
+    "typescript": "5.3.3"
   },
   "engines": {
     "node": ">=18"
