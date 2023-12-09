@@ -20,6 +20,7 @@ export class AchievementRuleService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("rule.item", "rule_item");
     queryBuilder.leftJoinAndSelect("rule_item.components", "rule_item_components");
     queryBuilder.leftJoinAndSelect("rule_item_components.template", "rule_item_template");

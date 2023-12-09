@@ -46,7 +46,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         'Purchase',
          102,
          50100101,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

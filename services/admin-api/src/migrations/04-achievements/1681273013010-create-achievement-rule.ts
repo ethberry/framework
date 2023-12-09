@@ -14,7 +14,6 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.achievement_status_enum AS ENUM (
-        'NEW',
         'ACTIVE',
         'INACTIVE'
       );

@@ -54,6 +54,7 @@ export class AchievementSignService {
       userEntity,
     );
 
+    // TODO should we create Redemption only after successful redeem?
     await this.achievementRedemptionService.create({
       userId: userEntity.id,
       achievementLevelId: achievementLevelEntity.id,
@@ -67,27 +68,4 @@ export class AchievementSignService {
       bytecode: claimEntity.id.toString(),
     };
   }
-
-  // public async getSignature(
-  //   verifyingContract: string,
-  //   account: string,
-  //   params: IParams,
-  //   achievementLevelEntity: AchievementLevelEntity,
-  // ): Promise<string> {
-  //   return this.signerService.getManyToManySignature(
-  //     verifyingContract,
-  //     account,
-  //     params,
-  //     achievementLevelEntity.item.components.map(component => ({
-  //       tokenType: Object.values(TokenType).indexOf(component.tokenType),
-  //       token: component.contract.address,
-  //       tokenId:
-  //         component.contract.contractType === TokenType.ERC1155
-  //           ? component.template.tokens[0].tokenId
-  //           : (component.templateId || 0).toString(), // suppression types check with 0
-  //       amount: component.amount,
-  //     })),
-  //     [],
-  //   );
-  // }
 }

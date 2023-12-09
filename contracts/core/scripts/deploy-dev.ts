@@ -161,8 +161,16 @@ async function main() {
   await debug(contracts);
 
   await debug(await erc20BlacklistInstance.blacklist(wallets[1]), "erc20BlacklistInstance.blacklist");
-
   await debug(await erc20BlacklistInstance.blacklist(wallets[2]), "erc20BlacklistInstance.blacklist");
+
+  const erc20WhitelistFactory = await ethers.getContractFactory("ERC20Whitelist");
+  const erc20WhitelistInstance = await erc20WhitelistFactory.deploy("ERC20 WHITELIST", "WL20", amount);
+  contracts.erc20Whitelist = erc20WhitelistInstance;
+  await debug(contracts);
+
+  await debug(await erc20WhitelistInstance.whitelist(wallets[1]), "erc20WhitelistInstance.whitelist");
+  await debug(await erc20WhitelistInstance.whitelist(wallets[2]), "erc20WhitelistInstance.whitelist");
+
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
   contracts.erc721Simple = await erc721SimpleFactory.deploy("GEMSTONES", "GEM721", royalty, baseTokenURI);
   await debug(contracts);
@@ -600,6 +608,10 @@ async function main() {
 
   const dispenserFactory = await ethers.getContractFactory("Dispenser");
   contracts.dispenser = await dispenserFactory.deploy();
+  await debug(contracts);
+
+  const paymentSplitterFactory = await ethers.getContractFactory("GemunionSplitter");
+  contracts.paymentSplitter = await paymentSplitterFactory.deploy([owner.address], [100]);
   await debug(contracts);
 
   // GRANT ROLES

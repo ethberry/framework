@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { Contract, utils, constants } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
@@ -11,6 +11,7 @@ import type { IAchievementItemReport, IAchievementRule, IContract } from "@frame
 import { TokenType } from "@framework/types";
 
 import ClaimABI from "@framework/abis/claim/ExchangeClaimFacet.json";
+import { sorter } from "../../../../utils/sorter";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;
@@ -26,12 +27,16 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
 
   const levelsNotRedeemed = achievementRule.levels.filter(lvl => lvl.redemptions?.length === 0);
 
-  const achievementLevel = levelsNotRedeemed.reduce((foundLevel, nextLevel) => {
-    if (nextLevel.amount > count.count && nextLevel.id > foundLevel.id) {
-      return nextLevel;
-    }
-    return foundLevel;
-  }, levelsNotRedeemed[0]);
+  // const redeemableLevels = achievementRule.levels.filter(lvl => lvl.amount <= count.count);
+
+  // Level to achieve = lowest not redeemed level
+  const achievementLevel = levelsNotRedeemed.sort(sorter("achievementLevel"))[0];
+  // const achievementLevel = levelsNotRedeemed.reduce((foundLevel, nextLevel) => {
+  //   if (nextLevel.amount > count.count && nextLevel.achievementLevel > foundLevel.achievementLevel) {
+  //     return nextLevel;
+  //   }
+  //   return foundLevel;
+  // }, levelsNotRedeemed[0]);
 
   const previousLevels = achievementLevel
     ? achievementRule.levels.filter(({ amount }) => amount < achievementLevel.amount)
@@ -49,9 +54,10 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
           externalId: sign.bytecode, // claimEntity ID
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32),
+          // extra: utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32),
+          extra: utils.hexZeroPad(utils.hexlify(0), 32),
           receiver: achievementRule.contract!.merchant!.wallet,
-          referrer: settings.getReferrer(),
+          referrer: constants.AddressZero,
         },
         achievementLevel.item?.components.map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),

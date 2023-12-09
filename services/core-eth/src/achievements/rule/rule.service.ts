@@ -1,9 +1,11 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
 import { AchievementRuleStatus, ContractEventType, TokenType } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { AchievementRuleEntity } from "./rule.entity";
 import { EventHistoryEntity } from "../../blockchain/event-history/event-history.entity";
@@ -31,6 +33,7 @@ export class AchievementsRuleService {
     private readonly eventHistoryService: EventHistoryService,
     private readonly userService: UserService,
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
   ) {}
 
   public findOne(
@@ -94,11 +97,12 @@ export class AchievementsRuleService {
 
     const { contractId, eventType, eventData } = event;
 
-    if (eventData && "from" in eventData) {
-      const wallet = eventData.from;
+    if (eventData && "account" in eventData) {
+      const wallet = eventData.account;
       // TODO filter all db.contracts or limit rule events
+      const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
       const allContracts = await this.contractService.findAll(
-        {},
+        { chainId },
         {
           select: {
             address: true,
@@ -177,7 +181,7 @@ export class AchievementsRuleService {
         templateId: parent.token.template.id,
       });
     } else {
-      // try to parse eventData//
+      // try to parse eventData
       if (eventData && "item" in eventData) {
         const { tokenType, token, tokenId } = eventData.item;
         eventTokenAsset.push({
@@ -186,6 +190,7 @@ export class AchievementsRuleService {
           templateId: ~~tokenId,
         });
       } else if (eventData && "items" in eventData) {
+        // @ts-ignore
         eventData.items.map(item => {
           const { tokenType, token, tokenId } = item;
           return eventTokenAsset.push({

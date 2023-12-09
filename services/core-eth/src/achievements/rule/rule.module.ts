@@ -1,5 +1,6 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { AchievementRuleEntity } from "./rule.entity";
 import { AchievementsRuleService } from "./rule.service";
@@ -11,6 +12,7 @@ import { ContractModule } from "../../blockchain/hierarchy/contract/contract.mod
 @Module({
   imports: [
     UserModule,
+    ConfigModule,
     ContractModule,
     forwardRef(() => EventHistoryModule),
     AchievementItemModule,
