@@ -15,7 +15,7 @@ import { SystemModuleType, UserRole } from "@framework/types";
 import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
-import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperSxMixin } from "./styled";
+import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperMixin } from "./styled";
 import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
 import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
 
@@ -150,7 +150,7 @@ export const ChainLink: FC = () => {
   const subscriptionTitle = currentSubscription ? "pages.chain-link.id" : "pages.chain-link.noSubscription";
 
   return (
-    <ProgressOverlay isLoading={isLoading} wrapperSx={wrapperSxMixin}>
+    <ProgressOverlay isLoading={isLoading} wrapperSx={wrapperMixin}>
       <Breadcrumbs path={["dashboard", "chain-link"]} />
       {merchantSubscriptions.length ? (
         <Fragment>

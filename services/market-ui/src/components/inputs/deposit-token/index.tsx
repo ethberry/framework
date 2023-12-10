@@ -3,11 +3,11 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Typography } from "@mui/material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
+import { formatItem } from "@framework/exchange";
 import type { IAssetComponent } from "@framework/types";
 
-import { TokenInput } from "./token-input";
 import { sorter } from "../../../utils/sorter";
-import { formatItem } from "@framework/exchange";
+import { TokenInput } from "./token-input";
 
 export const TokenDepositInput: FC = () => {
   const form = useFormContext<any>();
@@ -42,7 +42,7 @@ export const TokenDepositInput: FC = () => {
               readOnly={!!asset.templateId}
             />
             <Box mt={1} sx={{ textAlign: "left" }}>
-              <Typography>{formatItem({ components: [asset] })}</Typography>
+              <Typography>{formatItem({ id: index, components: [asset] })}</Typography>
             </Box>
           </Fragment>
         ))}

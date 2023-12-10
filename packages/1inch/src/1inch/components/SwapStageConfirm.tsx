@@ -44,7 +44,7 @@ export const SwapStageConfirm: FC<ISwapStageConfirmProps> = props => {
       BigNumber.from(swap.fromTokenAmount),
       BigNumber.from(swap.fromToken.decimals),
     );
-    const toTokenQuantity = formatUnits(BigNumber.from(swap.toTokenAmount), BigNumber.from(swap.toToken.decimals));
+    const toTokenQuantity = formatUnits(BigNumber.from(swap.toAmount), BigNumber.from(swap.toToken.decimals));
     const rate = calc`${fromTokenQuantity} / ${toTokenQuantity}`;
     const feeRaw = calc`${swap.tx.gas} * ${swap.tx.gasPrice}`;
 

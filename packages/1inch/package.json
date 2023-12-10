@@ -15,6 +15,7 @@
     "@gemunion/provider-license": "3.0.36",
     "@gemunion/provider-user": "6.0.59",
     "@gemunion/provider-wallet": "3.3.63",
+    "@gemunion/react-hooks": "1.1.68",
     "@gemunion/react-hooks-eth": "1.4.0",
     "@mui/material": "5.14.20",
     "@mui/icons-material": "5.14.19",
@@ -25,7 +26,8 @@
     "notistack": "3.0.1",
     "react-intl": "6.5.5",
     "react-window": "1.8.10",
-    "type-fest": "4.8.3"
+    "type-fest": "4.8.3",
+    "use-debounce": "9.0.4"
   },
   "devDependencies": {
     "@types/react": "18.2.42",

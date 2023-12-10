@@ -27,7 +27,7 @@ export const useQuote = (amountToSend: string, fromToken?: IToken, toToken?: ITo
 
     void api
       .getQuote(fromToken, toToken, safeParseUnits(amountToSend, fromToken).toString())
-      .then(quote => {
+      ?.then(quote => {
         if (!didUnmount) {
           setState(quote);
         }

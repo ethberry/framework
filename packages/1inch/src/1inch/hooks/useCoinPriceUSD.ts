@@ -33,6 +33,6 @@ export const useCoinPriceUSD = (options: IOptions): string => {
     if (!quote) {
       return "";
     }
-    return (+formatUnits(BigNumber.from(quote.toTokenAmount), BigNumber.from(quote.toToken.decimals))).toFixed(2);
+    return (+formatUnits(BigNumber.from(quote?.toAmount), BigNumber.from(quote?.toToken?.decimals))).toFixed(2);
   }, [quote, token, tokenQuantity]);
 };

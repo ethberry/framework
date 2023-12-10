@@ -1,8 +1,8 @@
 import { Grid, Select } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { SxProps, styled } from "@mui/material/styles";
 import { DataGridPremium, gridClasses } from "@mui/x-data-grid-premium";
 
-export const wrapperSxMixin = {
+export const wrapperMixin: SxProps = {
   mb: 2,
 };
 

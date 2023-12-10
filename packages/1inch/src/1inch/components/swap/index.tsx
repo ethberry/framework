@@ -72,14 +72,16 @@ export const Swap: FC = memo(() => {
 
   useEffect(() => {
     if (quote) {
-      setOutput(formatUnits(BigNumber.from(quote.toTokenAmount), BigNumber.from(quote.toToken.decimals)));
+      setOutput(
+        formatUnits(BigNumber.from(quote?.toAmount), BigNumber.from(quote?.toToken?.decimals || toToken.decimals)),
+      );
     } else {
       setOutput("");
     }
-  }, [quote?.toTokenAmount, quote?.toToken.decimals]);
+  }, [quote?.toAmount, quote?.toToken?.decimals]);
 
   useEffect(() => {
-    if (!fromToken && !toToken && tokens.length) {
+    if (!fromToken && !toToken && tokens?.length) {
       setFromToken(tokens.find(token => token.address === GovernanceTokenAddress)!);
       setToToken(tokens.find(token => token.symbol === stableCoinSymbol)!);
     }
@@ -120,8 +122,8 @@ export const Swap: FC = memo(() => {
             {swapState.status === SwapStatus.AWAITING_APPROVAL
               ? formatMessage({ id: "pages.dex.1inch.swap.approve" })
               : swapState.status === SwapStatus.AWAITING_APPROVE_TX
-              ? formatMessage({ id: "pages.dex.1inch.swap.approving" })
-              : ""}
+                ? formatMessage({ id: "pages.dex.1inch.swap.approving" })
+                : ""}
           </StyledSwapHeaderItem>
         </StyledSwapHeader>
       </StyledSwapContainer>
@@ -238,7 +240,7 @@ export const Swap: FC = memo(() => {
               <Typography>{formatMessage({ id: "pages.dex.1inch.swap.txCost" })}</Typography>
             </Grid>
             <Grid item xs={6} sx={{ textAlign: "right" }}>
-              {quote ? `$ ${(quote.estimatedGas * 0.000001).toFixed(5)}` : null}
+              {quote ? `$ ${(quote.gas * 0.000001).toFixed(5)}` : null}
             </Grid>
           </Grid>
         </StyledPaper>
@@ -248,7 +250,7 @@ export const Swap: FC = memo(() => {
         <StyledSwapFormDexInfoTitle>{formatMessage({ id: "pages.dex.1inch.swap.spread" })}</StyledSwapFormDexInfoTitle>
         <StyledSwapFormDexInfoToggle>
           <StyledSwapFormDexInfoToggleActionText>
-            <LoadingText text={quote?.protocols.length} /> {formatMessage({ id: "pages.dex.1inch.swap.selected" })}
+            <LoadingText text={quote?.protocols[0]?.length} /> {formatMessage({ id: "pages.dex.1inch.swap.selected" })}
           </StyledSwapFormDexInfoToggleActionText>
         </StyledSwapFormDexInfoToggle>
       </StyledSwapFormDexInfoContainer>

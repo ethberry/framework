@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import { CSSObject, styled } from "@mui/material/styles";
+import { SxProps, styled } from "@mui/material/styles";
 import { DataGridPremium, gridClasses } from "@mui/x-data-grid-premium";
 
-export const wrapperMixin: CSSObject = {
+export const wrapperMixin: SxProps = {
   width: "100%",
 };
 

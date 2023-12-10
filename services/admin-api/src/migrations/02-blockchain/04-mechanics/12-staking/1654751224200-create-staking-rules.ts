@@ -35,7 +35,7 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         {
           name: "image_url",
           type: "varchar",
-          default: `${imageUrl}`,
+          default: `'${imageUrl}'`,
         },
         {
           name: "description",
