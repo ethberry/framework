@@ -17,6 +17,7 @@ export interface IOneInchContext {
   getOpenNetworkDialog: () => boolean;
   getAllTokens: () => Array<IToken>;
   getQuote: DebouncedState<(fromToken: IToken, toToken: IToken, amount: string) => Promise<IQuote>>;
+  isQuoteLoading?: boolean;
   approveSpender: (fromToken: string) => Promise<ISpender>;
   swap: (fromToken: IToken, toToken: IToken, amount: string, fromAddress: string, slippage: number) => Promise<ISwap>;
 }

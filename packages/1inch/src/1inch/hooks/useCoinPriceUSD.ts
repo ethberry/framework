@@ -17,7 +17,7 @@ export const useCoinPriceUSD = (options: IOptions): string => {
   const { token, tokenQuantity } = options;
 
   const allTokens = useAllTokens();
-  const quote = useQuote(
+  const { quote } = useQuote(
     tokenQuantity,
     token,
     useMemo(() => allTokens.find(token => token.symbol === stableCoinSymbol), [allTokens]),

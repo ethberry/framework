@@ -7,12 +7,14 @@ export interface IQuote {
   fromAmount: string;
   protocols: Array<
     [
-      {
-        name: string;
-        part: number;
-        src: string;
-        dst: string;
-      },
+      [
+        {
+          name: string;
+          part: number;
+          src: string;
+          dst: string;
+        },
+      ],
     ]
   >;
   gas: number;

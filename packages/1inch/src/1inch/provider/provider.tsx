@@ -1,12 +1,11 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
+import { useThrottledCallback } from "use-debounce";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useLicense } from "@gemunion/provider-license";
 import { Networks, networkToChainId, rpcUrls } from "@gemunion/provider-wallet";
 
 import { GasPrice, IQuote, ISpender, ISwap, IToken, Slippage } from "./interfaces";
-
 import { OneInchContext } from "./context";
 
 interface ISettings {
@@ -90,28 +89,20 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
 
   const [cachedTokens, setCachedTokens] = useState<{ [key: string]: Array<IToken> }>({});
 
-  const { fn: apiCall } = useApiCall(
-    (api, { url, data }: any) => {
+  const { fn: getTokenListFn } = useApiCall(
+    (api, data: { chainId: string }) => {
       return api.fetchJson({
-        url: `/1inch/${url}`,
+        url: "/1inch/token-list",
         data,
       });
     },
     { success: false, error: false },
   );
 
-  const request = <T,>(url: string, data: Record<string, any> = {}): Promise<T> => {
-    return apiCall(void 0, {
-      url,
-      data,
-    }) as Promise<T>;
-  };
-
   const getTokenList = (): Promise<{ tokens: Array<IToken> }> => {
-    const chainId = networkToChainId[getNetwork()];
-    return request<{ tokens: Array<IToken> }>("token-list", {
-      chainId,
-    });
+    return getTokenListFn(void 0, {
+      chainId: networkToChainId[getNetwork()],
+    }) as Promise<{ tokens: Array<IToken> }>;
   };
 
   useEffect(() => {
@@ -128,24 +119,72 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     return cachedTokens[networkToChainId[getNetwork()]] || [];
   };
 
-  const getQuote = useDebouncedCallback((fromToken: IToken, toToken: IToken, amount: string): Promise<IQuote> => {
-    return request<IQuote>("quote", {
-      src: fromToken.address,
-      dst: toToken.address,
-      amount,
-      chainId: networkToChainId[getNetwork()],
-      includeGas: true,
-      includeProtocols: true,
-      includeTokensInfo: true,
-    });
-  }, 1000);
+  interface IGetQuoteProps {
+    fromToken: IToken;
+    toToken: IToken;
+    amount: string;
+  }
+
+  const { fn: getQuoteFn, isLoading: isQuoteLoading } = useApiCall(
+    async (api, data: IGetQuoteProps): Promise<IQuote> => {
+      const { fromToken, toToken, amount } = data;
+      const response = await api.fetchJson({
+        url: "/1inch/quote",
+        data: {
+          src: fromToken.address,
+          dst: toToken.address,
+          amount,
+          chainId: networkToChainId[getNetwork()],
+          includeGas: true,
+          includeProtocols: true,
+          includeTokensInfo: true,
+        },
+      });
+
+      return response as IQuote;
+    },
+    { success: false, error: false },
+  );
+
+  const getQuote = useThrottledCallback(
+    (fromToken: IToken, toToken: IToken, amount: string): Promise<IQuote> => {
+      const data = {
+        fromToken,
+        toToken,
+        amount,
+      };
+      return getQuoteFn(void 0, data) as Promise<IQuote>;
+    },
+    2000,
+    { leading: true },
+  );
+
+  const { fn: approveSpenderFn } = useApiCall(
+    (api, data: any) => {
+      return api.fetchJson({
+        url: "/1inch/approve",
+        data,
+      });
+    },
+    { success: false, error: false },
+  );
 
   const approveSpender = (tokenAddress: string): Promise<ISpender> => {
-    return request<ISpender>("approve", {
+    return approveSpenderFn(void 0, {
       tokenAddress,
       chainId: networkToChainId[getNetwork()],
-    });
+    }) as Promise<ISpender>;
   };
+
+  const { fn: swapFn } = useApiCall(
+    (api, data: any) => {
+      return api.fetchJson({
+        url: "/1inch/swap",
+        data,
+      });
+    },
+    { success: false, error: false },
+  );
 
   const swap = (
     fromToken: IToken,
@@ -154,14 +193,14 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     fromAddress: string,
     slippage: number,
   ): Promise<ISwap> => {
-    return request<ISwap>(`swap`, {
+    return swapFn(void 0, {
       src: toToken.address,
       dst: fromToken.address,
       amount,
       from: fromAddress,
       slippage,
       chainId: networkToChainId[getNetwork()],
-    });
+    }) as Promise<ISwap>;
   };
 
   if (!license.isValid()) {
@@ -183,6 +222,7 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
 
         getAllTokens,
         getQuote,
+        isQuoteLoading,
         approveSpender,
         swap,
       }}

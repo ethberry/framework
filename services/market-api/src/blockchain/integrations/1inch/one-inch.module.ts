@@ -13,7 +13,7 @@ import { OneInchController } from "./one-inch.controller";
     HttpModule,
     ThrottlerModule.forRoot([
       {
-        ttl: 500,
+        ttl: 1500,
         limit: 1,
       },
     ]),

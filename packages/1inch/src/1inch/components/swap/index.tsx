@@ -8,6 +8,7 @@ import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 
 import { useWallet } from "@gemunion/provider-wallet";
+import { useDeepCompareEffect } from "@gemunion/react-hooks";
 
 import { GovernanceTokenAddress, IToken, stableCoinSymbol, SwapStatus, useOneInch } from "../../provider";
 import { useAllTokens } from "../../hooks/useAllTokens";
@@ -50,7 +51,7 @@ export const Swap: FC = memo(() => {
   const [quantity, setQuantity] = useState<string>("1");
   const [output, setOutput] = useState<string>("");
   const gasPrice = useGasPrice();
-  const quote = useQuote(quantity, fromToken, toToken);
+  const { quote, isLoading: isQuoteLoading } = useQuote(quantity, fromToken, toToken);
   const web3 = useWeb3React();
   const oneInch = useOneInch();
   const { openConnectWalletDialog } = useWallet();
@@ -70,7 +71,7 @@ export const Swap: FC = memo(() => {
   const walletTokenBalances = useTokenBalances(walletTokens);
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (quote) {
       setOutput(
         formatUnits(BigNumber.from(quote?.toAmount), BigNumber.from(quote?.toToken?.decimals || toToken.decimals)),
@@ -78,7 +79,7 @@ export const Swap: FC = memo(() => {
     } else {
       setOutput("");
     }
-  }, [quote?.toAmount, quote?.toToken?.decimals]);
+  }, [{ quote }]);
 
   useEffect(() => {
     if (!fromToken && !toToken && tokens?.length) {
@@ -232,9 +233,7 @@ export const Swap: FC = memo(() => {
               </Typography>
             </Grid>
             <Grid item xs={6} sx={{ textAlign: "right" }}>
-              <Typography>
-                {(+output).toFixed(5)} {toToken?.symbol}
-              </Typography>
+              <Typography>{output ? `${(+output).toFixed(5)} ${toToken?.symbol}` : null}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>{formatMessage({ id: "pages.dex.1inch.swap.txCost" })}</Typography>
@@ -250,7 +249,8 @@ export const Swap: FC = memo(() => {
         <StyledSwapFormDexInfoTitle>{formatMessage({ id: "pages.dex.1inch.swap.spread" })}</StyledSwapFormDexInfoTitle>
         <StyledSwapFormDexInfoToggle>
           <StyledSwapFormDexInfoToggleActionText>
-            <LoadingText text={quote?.protocols[0]?.length} /> {formatMessage({ id: "pages.dex.1inch.swap.selected" })}
+            <LoadingText text={quote?.protocols[0]?.[0]?.length} loading={isQuoteLoading} />{" "}
+            {formatMessage({ id: "pages.dex.1inch.swap.selected" })}
           </StyledSwapFormDexInfoToggleActionText>
         </StyledSwapFormDexInfoToggle>
       </StyledSwapFormDexInfoContainer>
