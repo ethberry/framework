@@ -10,4 +10,5 @@ export interface IStakingUpdateDto {
   penalty: number;
   maxStake: number;
   recurrent: boolean;
+  advance: boolean;
 }

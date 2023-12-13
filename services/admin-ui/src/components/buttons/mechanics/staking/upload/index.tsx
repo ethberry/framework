@@ -63,7 +63,10 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
       content,
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
-      recurrent: rule.recurrent,
+      terms: {
+        recurrent: rule.recurrent,
+        advance: rule.advance,
+      },
       maxStake: rule.maxStake,
       active: true, // todo add var in interface
     };
@@ -127,6 +130,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
           penalty: 100,
           maxStake: 0,
           recurrent: false,
+          advance: false,
         }}
       />
     </Fragment>

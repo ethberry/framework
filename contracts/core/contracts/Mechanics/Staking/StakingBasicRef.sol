@@ -176,7 +176,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     1. Calculate multiplier (count full periods since stake start)
 
     2. Deposit withdraw
-      2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+      2.1 If withdrawDeposit || ( multiplier > 0 && !rule.terms.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
 
         2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
         2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
@@ -186,7 +186,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     3. Reward transfer
       3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
 
-    4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+    4. If multiplier == 0 && rule.terms.recurrent && !withdrawDeposit && !breakLastPeriod
                                                        -> revert with Error ( first period not yet finished )
     */
 
@@ -223,7 +223,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     uint256 stakePeriod = rule.period;
     // Calculate the multiplier
     // counts only FULL stake cycles
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.terms.recurrent);
 
     // Increment stake's cycle count
     if (multiplier != 0) {
@@ -234,7 +234,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     // If Reward multiplier > 0 AND Rule is not recurrent OR
     // If Stake cycles > 0 AND breakLastPeriod flag is true
     // Withdraw initial Deposit
-    if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
+    if (withdrawDeposit || (multiplier > 0 && !rule.terms.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
       // Deactivate current deposit
       if (stake.activeDeposit) {
         stake.activeDeposit = false;
@@ -278,7 +278,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     // withdrawDeposit and breakLastPeriod flags are false
     // AND staking rule is recurrent
     // revert the transaction.
-    if (multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod) {
+    if (multiplier == 0 && rule.terms.recurrent && !withdrawDeposit && !breakLastPeriod) {
       revert NotComplete();
     }
   }
@@ -564,7 +564,7 @@ contract StakingBasicRef is IStaking, AccessControl, Pausable, TopUp, Wallet, Li
     p.period = rule.period;
     p.penalty = rule.penalty;
     p.maxStake = rule.maxStake;
-    p.recurrent = rule.recurrent;
+    p.terms = rule.terms;
     p.active = rule.active;
 
     emit RuleCreated(ruleId, rule);

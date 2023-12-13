@@ -64,6 +64,10 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "boolean",
         },
         {
+          name: "advance",
+          type: "boolean",
+        },
+        {
           name: "deposit_id",
           type: "bigint",
         },

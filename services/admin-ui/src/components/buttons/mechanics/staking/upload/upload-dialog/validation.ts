@@ -20,4 +20,5 @@ export const validationSchema = object().shape({
     .max(10000, "form.validations.rangeUnderflow"),
   maxStake: number(),
   recurrent: boolean(),
+  advance: boolean(),
 });

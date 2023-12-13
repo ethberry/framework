@@ -31,7 +31,7 @@ import { shouldHaveReentrancyGuard } from "./shared/reentraceReward";
 1. Calculate multiplier (count full periods since stake start)
 
 2. Deposit withdraw
-  2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+  2.1 If withdrawDeposit || ( multiplier > 0 && !rule.terms.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
 
     2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
     2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
@@ -41,7 +41,7 @@ import { shouldHaveReentrancyGuard } from "./shared/reentraceReward";
 3. Reward transfer
   3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
 
-4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+4. If multiplier == 0 && rule.terms.recurrent && !withdrawDeposit && !breakLastPeriod
                                                    -> revert with Error ( first period not yet finished )
 */
 /*
@@ -141,7 +141,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -176,7 +179,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -210,7 +216,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -246,7 +255,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -282,7 +294,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -315,7 +330,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -351,7 +369,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -388,7 +409,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -430,7 +454,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake: 2,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -455,7 +482,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake: 1,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -504,7 +534,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake: 2,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -529,7 +562,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake: 2,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -615,7 +651,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: false,
       };
 
@@ -651,7 +690,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -687,7 +729,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake: 1,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -737,7 +782,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -788,7 +836,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -828,7 +879,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -868,7 +922,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -930,7 +987,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -992,7 +1052,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1065,7 +1128,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1116,7 +1182,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1166,7 +1235,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1224,7 +1296,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty: 5000, // 50%
         maxStake,
-        recurrent: false,
+        terms: {
+          recurrent: false,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1285,7 +1360,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1341,7 +1419,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1413,7 +1494,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: false,
+        terms: {
+          recurrent: false,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1482,7 +1566,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1570,7 +1657,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1669,7 +1759,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1759,7 +1852,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1825,7 +1921,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1900,7 +1999,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -1965,7 +2067,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2028,7 +2133,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2115,7 +2223,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2213,7 +2324,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2292,7 +2406,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2380,7 +2497,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2475,7 +2595,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2580,7 +2703,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2672,7 +2798,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2750,7 +2879,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2836,7 +2968,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -2921,7 +3056,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3019,7 +3157,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3094,7 +3235,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3180,7 +3324,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3256,7 +3403,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3332,7 +3482,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3418,7 +3571,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3505,7 +3661,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3591,7 +3750,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3676,7 +3838,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3762,7 +3927,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3837,7 +4005,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3909,7 +4080,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -3982,7 +4156,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4074,7 +4251,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4178,7 +4358,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4261,7 +4444,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4353,7 +4539,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4434,7 +4623,10 @@ describe("Staking", function () {
         period,
         penalty,
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4520,7 +4712,10 @@ describe("Staking", function () {
         period, // 60 sec
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4585,7 +4780,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4655,7 +4853,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4723,7 +4924,10 @@ describe("Staking", function () {
         period,
         penalty: 10000, // 100%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4788,7 +4992,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4856,7 +5063,10 @@ describe("Staking", function () {
         period,
         penalty: 10000, // 100%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -4921,7 +5131,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5023,7 +5236,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5154,7 +5370,10 @@ describe("Staking", function () {
         period,
         penalty: 10000, // 100%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5272,7 +5491,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5458,7 +5680,10 @@ describe("Staking", function () {
         period,
         penalty: 10000, // 100%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5626,7 +5851,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
       const tx = stakingInstance.setRules([stakeRule]);
@@ -5674,7 +5902,10 @@ describe("Staking", function () {
         period,
         penalty: 10000, // 100%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
       const tx10 = stakingInstance.setRules([stakeRule1]);
@@ -5790,7 +6021,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5862,7 +6096,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 
@@ -5971,7 +6208,10 @@ describe("Staking", function () {
         period,
         penalty: 5000, // 50%
         maxStake,
-        recurrent: true,
+        terms: {
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       };
 

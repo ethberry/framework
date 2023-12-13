@@ -41,7 +41,8 @@ export class StakingRulesServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
-    const { deposit, reward, period, penalty, maxStake, recurrent, active } = rule;
+    const { deposit, reward, period, penalty, maxStake, terms, active } = rule;
+    const { recurrent, advance } = terms;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = { components: [] };
@@ -139,6 +140,7 @@ export class StakingRulesServiceEth {
       penalty: Number(penalty),
       maxStake: Number(maxStake),
       recurrent,
+      advance,
       stakingRuleStatus,
       externalId: ruleId,
       contractId: contractEntity.id,

@@ -5,7 +5,10 @@ export interface IRule {
   period: number;
   penalty: number;
   maxStake: number;
-  recurrent: boolean;
+  terms: {
+    recurrent: boolean;
+    advance: boolean;
+  };
   active: boolean;
 }
 

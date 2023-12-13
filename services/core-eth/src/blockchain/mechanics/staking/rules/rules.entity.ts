@@ -48,6 +48,9 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
   @Column({ type: "boolean" })
   public recurrent: boolean;
 
+  @Column({ type: "boolean" })
+  public advance: boolean;
+
   @Column({
     type: "enum",
     enum: StakingRuleStatus,

@@ -12,7 +12,7 @@ import { ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../inputs/duration";
 import { ContractInput } from "../../../../../inputs/contract";
-import { validationSchema } from "./validation";
+// import { validationSchema } from "./validation";
 
 export interface IStakingRuleUploadDialogProps {
   open: boolean;
@@ -25,12 +25,13 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { contract, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
+  const { contract, penalty, recurrent, advance, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
   const fixedValues = {
     deposit,
     reward,
     penalty,
     recurrent,
+    advance,
     durationAmount,
     durationUnit,
     contract,
@@ -100,6 +101,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       />
       <NumberInput name="maxStake" readOnly={readOnly} />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
+      <CheckboxInput name="advance" readOnly={readOnly} />
     </FormDialog>
   );
 };
