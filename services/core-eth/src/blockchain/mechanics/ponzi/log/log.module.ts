@@ -39,7 +39,7 @@ import { getEventsTopics } from "../../../../common/utils";
           ];
 
         const eventNames = [
-          PonziEventType.RuleCreated,
+          PonziEventType.RuleCreatedP,
           PonziEventType.RuleUpdated,
           PonziEventType.StakingStart,
           PonziEventType.StakingWithdraw,

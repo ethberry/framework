@@ -21,6 +21,7 @@ import type {
   IMergeData,
   IMysteryPurchaseData,
   IMysteryUnpackData,
+  IPonziRuleCreatedData,
   IPurchaseData,
   IPurchaseRandomData,
   IRaffleFinalizeData,
@@ -209,6 +210,13 @@ export class NotificatorService {
   }
 
   // TODO add deposit return event notification?
+
+  // MODULE:STAKING
+  public ponziRuleCreated(data: IPonziRuleCreatedData): Promise<any> {
+    return this.sendMessage(data.ponziRule.contract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_RULE_CREATED, data).toPromise();
+    });
+  }
 
   // MODULE:RAFFLE
   public rafflePurchase(data: IRafflePurchaseData): Promise<any> {

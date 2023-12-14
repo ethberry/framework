@@ -1,4 +1,4 @@
-import { boolean, number, object, string } from "yup";
+import { number, object, string } from "yup";
 
 import { draftValidationSchema } from "@gemunion/yup-rules";
 import { templateAssetValidationSchema, tokenAssetContractIdValidationSchema } from "@gemunion/mui-inputs-asset";
@@ -22,5 +22,4 @@ export const validationSchema = object().shape({
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),
-  recurrent: boolean(),
 });

@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { AssetEntity } from "../../../exchange/asset/asset.entity";
+// import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { StakingRulesEntity } from "./rules.entity";
 import type { IStakingCreateDto } from "./interfaces";
 
@@ -36,7 +36,7 @@ export class StakingRulesService {
     return this.stakingRulesEntityRepository.create(dto).save();
   }
 
-  public async createEmptyAsset(): Promise<AssetEntity> {
-    return this.assetService.create();
-  }
+  // public async createEmptyAsset(): Promise<AssetEntity> {
+  //   return this.assetService.create();
+  // }
 }

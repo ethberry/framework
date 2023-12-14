@@ -12,7 +12,7 @@ import { PonziRulesServiceEth } from "./rules.service.eth";
 export class PonziRulesControllerEth {
   constructor(private readonly ponziServiceEth: PonziRulesServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.PONZI, eventName: PonziEventType.RuleCreated })
+  @EventPattern({ contractType: ContractType.PONZI, eventName: PonziEventType.RuleCreatedP })
   public create(@Payload() event: ILogEvent<IPonziCreateEvent>, @Ctx() context: Log): Promise<void> {
     return this.ponziServiceEth.create(event, context);
   }

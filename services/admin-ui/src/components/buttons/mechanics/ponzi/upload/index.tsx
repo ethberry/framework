@@ -50,7 +50,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
-      })),
+      }))[0],
       reward: rule.reward
         ? rule.reward.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -58,10 +58,14 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
             tokenId: component.templateId,
             amount: component.amount,
           }))
-        : [],
-      content,
-      period: rule.durationAmount, // todo fix same name // seconds in days
-      penalty: rule.penalty || 0,
+        : {
+            /* empty asset */
+          },
+      terms: {
+        period: rule.durationAmount, // todo fix same name // seconds in days
+        penalty: rule.penalty || 0,
+        maxCycles: rule.maxCycles,
+      },
       active: true, // todo add var in interface
     };
     const contract = new Contract(rule.contract.address, setRulesPonziABI, web3Context.provider?.getSigner());
@@ -120,6 +124,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
           durationAmount: 2592000,
           durationUnit: DurationUnit.DAY,
           penalty: 100,
+          maxCycles: 0,
         }}
       />
     </Fragment>

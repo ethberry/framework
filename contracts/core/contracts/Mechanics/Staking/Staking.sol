@@ -88,14 +88,14 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
     Rule storage rule = _rules[ruleId];
 
     // Ensure that the rule exists and is active
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     if (!rule.active) {
       revert NotActive();
     }
 
-    uint256 _maxStake = rule.maxStake;
+    uint256 _maxStake = rule.terms.maxStake;
 
     (, uint256 _stakeRuleCounter) = _stakeCounter[_msgSender()].tryGet(ruleId);
 
@@ -223,7 +223,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
       revert Expired();
     }
 
-    uint256 stakePeriod = rule.period;
+    uint256 stakePeriod = rule.terms.period;
 
     // Determine if it is first advance payment
     bool firstAdvancePayment = rule.terms.advance && stake.cycles == 0;
@@ -308,7 +308,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
     Asset storage depositItem = stake.deposit[itemIndex];
     uint256 stakeAmount = depositItem.amount;
     TokenType depositTokenType = depositItem.tokenType;
-    uint256 penalty = rule.penalty;
+    uint256 penalty = rule.terms.penalty;
 
     // Deduct the penalty from the stake deposit amount if the multiplier is 0.
     if (multiplier == 0 && stake.cycles == 0) {
@@ -578,9 +578,6 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
       }
     }
 
-    p.period = rule.period;
-    p.penalty = rule.penalty;
-    p.maxStake = rule.maxStake;
     p.terms = rule.terms;
     p.active = rule.active;
 
@@ -594,7 +591,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
    */
   function _updateRule(uint256 ruleId, bool active) internal {
     Rule storage rule = _rules[ruleId];
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     _rules[ruleId].active = active;

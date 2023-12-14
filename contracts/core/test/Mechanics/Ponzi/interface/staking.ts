@@ -1,13 +1,12 @@
 export interface IRule {
   deposit: IAsset;
   reward: IAsset;
-  content: IAsset[];
-  period: number;
-  penalty: number;
-  recurrent: boolean;
-  maxCycles: number;
+  terms: {
+    period: number;
+    penalty: number;
+    maxCycles: number;
+  };
   active: boolean;
-  externalId: number;
 }
 
 export interface IAsset {

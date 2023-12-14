@@ -11,12 +11,16 @@ import { PonziRulesEntity } from "./rules.entity";
 import { PonziRulesControllerEth } from "./rules.controller.eth";
 import { PonziRulesServiceEth } from "./rules.service.eth";
 import { signalServiceProvider } from "../../../../common/providers";
+import { TemplateModule } from "../../../hierarchy/template/template.module";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 
 @Module({
   imports: [
     ConfigModule,
     AssetModule,
+    TemplateModule,
     ContractModule,
+    NotificatorModule,
     PonziDepositModule,
     EventHistoryModule,
     TypeOrmModule.forFeature([PonziRulesEntity]),

@@ -73,7 +73,7 @@ contract PonziBasicRef is
     Rule storage rule = _rules[ruleId];
 
     // Ensure that the rule exists and is active
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     if (!rule.active) {
@@ -130,7 +130,7 @@ contract PonziBasicRef is
     }
 
     uint256 startTimestamp = stake.startTimestamp;
-    uint256 stakePeriod = rule.period;
+    uint256 stakePeriod = rule.terms.period;
     uint256 stakeAmount = depositItem.amount;
 
     address payable receiver = payable(stake.owner);
@@ -141,7 +141,7 @@ contract PonziBasicRef is
 
       // PENALTY
       // TODO better penalty calculation
-      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.penalty / 100);
+      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.terms.penalty / 100);
       if (withdrawAmount > 0) {
         Asset memory depositItemWithdraw = depositItem;
         // Empty current stake deposit storage
@@ -165,7 +165,7 @@ contract PonziBasicRef is
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
     // Check cycle count
-    uint256 maxCycles = rule.maxCycles;
+    uint256 maxCycles = rule.terms.maxCycles;
     // multiplier = (maxCycles > 0) ? (multiplier + cycleCount >= maxCycles) ? (maxCycles - cycleCount): multiplier : multiplier;
     if (maxCycles > 0) {
       uint256 cycleCount = stake.cycles;
@@ -231,12 +231,12 @@ contract PonziBasicRef is
   function _setRule(Rule memory rule) internal {
     uint256 ruleId = ++_ruleIdCounter;
     _rules[ruleId] = rule;
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreatedP(ruleId, rule);
   }
 
   function _updateRule(uint256 ruleId, bool active) internal {
     Rule storage rule = _rules[ruleId];
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     _rules[ruleId].active = active;
@@ -299,7 +299,7 @@ contract PonziBasicRef is
     Rule memory rule = _rules[ruleId];
 
     // Ensure that the rule exists
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
 

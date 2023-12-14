@@ -1,26 +1,23 @@
-import { DurationUnit, IAssetDto, StakingRuleStatus } from "@framework/types";
+import { DurationUnit, IAssetDto, PonziRuleStatus, StakingRuleStatus, TokenType } from "@framework/types";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 
-// export interface IStakingItemCreateDto {
+// export interface IPonziItemCreateDto {
 //   tokenType: TokenType;
 //   collection: number;
 //   tokenId: number;
 //   amount: string;
 // }
 
-export interface IStakingCreateDto {
+export interface IPonziCreateDto {
   title: string;
-  description: string;
   externalId?: string;
   deposit: IAssetDto;
   reward: IAssetDto;
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
-  maxStake: number;
-  recurrent: boolean;
-  advance: boolean;
-  stakingRuleStatus?: StakingRuleStatus;
+  maxCycles: number;
+  ponziRuleStatus?: PonziRuleStatus;
   contractId: number;
   contract?: ContractEntity;
 }

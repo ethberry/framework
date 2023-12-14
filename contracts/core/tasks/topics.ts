@@ -81,7 +81,7 @@ enum ContractEventSignature {
 
   // MODULE:STAKING
   // event RuleCreated(uint256 ruleId, Rule rule);
-  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],uint256,uint256,uint256,bool,bool))",
+  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],(uint256,uint256,uint256,bool,bool),bool))",
   RuleUpdated = "RuleUpdated(uint256,bool)",
   StakingStart = "StakingStart(uint256,uint256,address,uint256,uint256)",
   StakingWithdraw = "StakingWithdraw(uint256,address,uint256)",

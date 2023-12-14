@@ -70,6 +70,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'BalanceWithdraw',
        'DepositReturn',
        'DepositPenalty',
+      --MODULE:STAKING
+       'RuleCreatedP',
       --MODULE:EXCHANGE
       --MODULE:CORE
        'Purchase',

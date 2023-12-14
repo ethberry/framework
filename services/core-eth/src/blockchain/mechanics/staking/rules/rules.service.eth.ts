@@ -32,17 +32,27 @@ export class StakingRulesServiceEth {
   ) {}
 
   public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    await this.eventHistoryService.updateHistory(event, context);
     const {
       name,
       args: { rule, ruleId },
     } = event;
     const { address, transactionHash } = context;
 
-    const { deposit, reward, period, penalty, maxStake, terms, active } = rule;
-    const { recurrent, advance } = terms;
+    const { deposit, reward, terms, active } = rule;
+    const { recurrent, advance, period, penalty, maxStake } = terms;
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractEntity = await this.contractService.findOne(
+      { address: address.toLowerCase(), chainId },
+      { relations: { merchant: true } },
+    );
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = { components: [] };
@@ -117,15 +127,6 @@ export class StakingRulesServiceEth {
           amount,
         });
       }
-    }
-
-    const contractEntity = await this.contractService.findOne(
-      { address: address.toLowerCase(), chainId },
-      { relations: { merchant: true } },
-    );
-
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
     }
 
     // new ACTIVE rule is NEW to hide it from display in market

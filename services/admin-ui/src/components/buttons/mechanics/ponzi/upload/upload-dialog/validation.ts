@@ -7,6 +7,5 @@ import { dbIdValidationSchema } from "@gemunion/yup-rules";
 export const validationSchema = object().shape({
   deposit: templateAssetValidationSchema,
   reward: templateAssetValidationSchema,
-  content: templateAssetValidationSchema,
   contractId: dbIdValidationSchema,
 });

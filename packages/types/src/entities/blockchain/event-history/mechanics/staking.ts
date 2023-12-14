@@ -11,6 +11,9 @@ export enum StakingEventType {
   DepositPenalty = "DepositPenalty",
 }
 export interface IStakingRuleTermsStruct {
+  period: string;
+  penalty: string;
+  maxStake: string;
   recurrent: boolean;
   advance: boolean;
 }
@@ -19,9 +22,6 @@ export interface IStakingRuleStruct {
   deposit: Array<IAssetItem>;
   reward: Array<IAssetItem>;
   content: Array<Array<IAssetItem>>;
-  period: string;
-  penalty: string;
-  maxStake: string;
   terms: IStakingRuleTermsStruct;
   active: boolean;
 }

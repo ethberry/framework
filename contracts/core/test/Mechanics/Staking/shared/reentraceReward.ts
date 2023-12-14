@@ -56,10 +56,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -135,10 +135,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -209,10 +209,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -292,10 +292,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -378,10 +378,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [[], [], [], []],
-          period,
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period,
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -462,10 +462,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 5000, // 50%
-          maxStake,
           terms: {
+            period,
+            penalty: 5000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -556,10 +556,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 10000, // 100%
-          maxStake,
           terms: {
+            period,
+            penalty: 10000, // 100%
+            maxStake,
             recurrent: true,
             advance: false,
           },
@@ -657,10 +657,10 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 10000, // 50%
-          maxStake,
           terms: {
+            period,
+            penalty: 10000, // 50%
+            maxStake,
             recurrent: true,
             advance: false,
           },

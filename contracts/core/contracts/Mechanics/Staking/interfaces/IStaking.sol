@@ -13,6 +13,9 @@ import {Asset, Params} from "../../../Exchange/lib/interfaces/IAsset.sol";
 interface IStaking {
   // TODO move period, penalty, maxStake? to StakingTerms
   struct StakingTerms {
+    uint256 penalty;
+    uint256 period;
+    uint256 maxStake;
     bool recurrent;
     bool advance;
   }
@@ -21,9 +24,6 @@ interface IStaking {
     Asset[] deposit;
     Asset[] reward;
     Asset[][] content;
-    uint256 period;
-    uint256 penalty;
-    uint256 maxStake;
     StakingTerms terms;
     bool active;
   }

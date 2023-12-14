@@ -14,3 +14,4 @@ export * from "./transfer";
 export * from "./mystery-box";
 export * from "./dismantle";
 export * from "./referral";
+export * from "./ponzi";

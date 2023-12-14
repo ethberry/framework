@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import type { IPonziRule } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -26,7 +26,8 @@ export interface IPonziRuleUploadDialogProps {
 export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, contract, description, penalty, deposit, reward, durationAmount, durationUnit } = initialValues;
+  const { id, title, contract, description, penalty, deposit, reward, durationAmount, durationUnit, maxCycles } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -37,6 +38,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
     durationAmount,
     durationUnit,
     contract,
+    maxCycles,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -98,6 +100,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
         }}
         readOnly={readOnly}
       />
+      <NumberInput name="maxCycles" readOnly={readOnly} />
     </FormDialog>
   );
 };

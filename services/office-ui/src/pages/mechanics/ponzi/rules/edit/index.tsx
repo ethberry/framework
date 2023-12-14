@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -98,7 +98,6 @@ export const PonziEditDialog: FC<IPonziStakingEditDialogProps> = props => {
         readOnly={readOnly}
       />
       <NumberInput name="maxCycles" />
-      <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );
 };

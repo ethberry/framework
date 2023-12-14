@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import type { IPonziRule } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -26,7 +26,8 @@ export interface IPonziRuleUploadDialogProps {
 export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, contract, description, penalty, deposit, reward, durationAmount, durationUnit } = initialValues;
+  const { id, title, contract, description, penalty, deposit, reward, durationAmount, durationUnit, maxCycles } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -34,6 +35,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
     deposit,
     reward,
     penalty,
+    maxCycles,
     durationAmount,
     durationUnit,
     contract,
@@ -64,7 +66,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
             autoSelect
-            multiple
+            // multiple
             prefix="deposit"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
@@ -74,7 +76,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
           <TemplateAssetInput
             allowEmpty
             autoSelect
-            multiple
+            // multiple
             prefix="reward"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
@@ -98,6 +100,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
         }}
         readOnly={readOnly}
       />
+      <NumberInput name="maxCycles" readOnly={readOnly} />
     </FormDialog>
   );
 };
