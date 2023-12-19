@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays } from "date-fns";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -11,6 +12,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -31,59 +33,66 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         id,
         title,
         description,
-        achievement_type,
         event_type,
         contract_id,
         item_id,
         achievement_status,
+        start_timestamp,
+        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
         1,
         'Marketplace',
         '${simpleFormatting}',
-        'MARKETPLACE',
         'Purchase',
          102,
          50100101,
         'ACTIVE',
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         2,
         'Craft',
         '${simpleFormatting}',
-        'CRAFT',
         'Craft',
         10306,
         50100102,
         'ACTIVE',
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         3,
         'Collection',
         '${simpleFormatting}',
-        'COLLECTION',
         'CollectionDeployed',
         null,
         50100103,
         'INACTIVE',
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         4,
         'Ecommerce',
         '${simpleFormatting}',
-        'ECOMMERCE',
         null,
         null,
         50100104,
         'INACTIVE',
         '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
+        '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.achievement_rule_id_seq', 5000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

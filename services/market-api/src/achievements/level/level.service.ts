@@ -25,15 +25,15 @@ export class AchievementLevelService {
 
     queryBuilder.leftJoinAndSelect("achievement.redemptions", "redemptions");
 
-    queryBuilder.leftJoinAndSelect("achievement.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("achievement.reward", "reward");
+    queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
+    queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
+    queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
 
     queryBuilder.leftJoinAndSelect(
-      "item_template.tokens",
-      "item_tokens",
-      "item_contract.contractType IN(:...tokenTypes)",
+      "reward_template.tokens",
+      "reward_tokens",
+      "reward_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 

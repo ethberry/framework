@@ -36,7 +36,7 @@ export class ChainLinkContractServiceEth {
 
     // DEV ONLY
     // !!!should work only on Gemunion's BESUs!!!
-    if (chainId !== 13377 && chainId !== Number(testChainId)) {
+    if (chainId !== 10001 && chainId !== 10000) {
       return;
     }
 

@@ -4,15 +4,6 @@ import { ns } from "@framework/constants";
 export class CreateAchievementRule1681273013010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.achievement_type_enum AS ENUM (
-        'MARKETPLACE',
-        'CRAFT',
-        'COLLECTION',
-        'ECOMMERCE'
-      );
-    `);
-
-    await queryRunner.query(`
       CREATE TYPE ${ns}.achievement_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
@@ -36,10 +27,6 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "achievement_type",
-          type: `${ns}.achievement_type_enum`,
-        },
-        {
           name: "event_type",
           type: `${ns}.event_history_event_enum`,
           isNullable: true,
@@ -58,6 +45,15 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           name: "achievement_status",
           type: `${ns}.achievement_status_enum`,
           default: "'ACTIVE'",
+        },
+        {
+          name: "start_timestamp",
+          type: "timestamptz",
+        },
+        {
+          name: "end_timestamp",
+          type: "timestamptz",
+          isNullable: true,
         },
         {
           name: "created_at",

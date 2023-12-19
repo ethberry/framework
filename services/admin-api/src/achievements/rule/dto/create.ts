@@ -1,12 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsInt, IsOptional, Min, ValidateNested, IsISO8601, IsString } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementRuleCreateDto } from "../interfaces";
-import { AchievementType, ContractEventType } from "@framework/types";
-import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import { AchievementRuleStatus, ContractEventType } from "@framework/types";
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AchievementRuleCreateDto extends SearchableDto implements IAchievementRuleCreateDto {
   @ApiPropertyOptional({
@@ -18,19 +19,32 @@ export class AchievementRuleCreateDto extends SearchableDto implements IAchievem
   public contractId: number;
 
   @ApiProperty({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
-
-  @ApiProperty()
-  @Transform(({ value }) => value as AchievementType)
-  @IsEnum(AchievementType, { message: "badInput" })
-  public achievementType: AchievementType;
+  @Type(() => AllTypesDto)
+  public item: InstanceType<typeof AllTypesDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsEnum(ContractEventType, { message: "badInput" })
   public eventType: ContractEventType;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
+  @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
+  public startTimestamp: string;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
+  public endTimestamp: string;
+
+  @ApiProperty({
+    enum: AchievementRuleStatus,
+  })
+  @Transform(({ value }) => value as AchievementRuleStatus)
+  @IsEnum(AchievementRuleStatus, { message: "badInput" })
+  public achievementStatus: AchievementRuleStatus;
 }

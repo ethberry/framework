@@ -47,7 +47,7 @@ export class AchievementSignService {
     const claimEntity = await this.claimService.create(
       {
         account: account.toLowerCase(),
-        item: achievementLevelEntity.item,
+        item: achievementLevelEntity.reward,
         endTimestamp: new Date(0).toISOString(),
         chainId: userEntity.chainId,
       },

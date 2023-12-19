@@ -9,11 +9,9 @@ export interface IAchievementLevel extends ISearchable {
   achievementRuleId: number;
   achievementRule: IAchievementRule;
   // TODO rename to reward?
-  item?: IAsset;
-  itemId: number;
+  reward?: IAsset;
+  rewardId: number;
   amount: number;
   parameters: any;
-  startTimestamp: string;
-  endTimestamp: string; // OR null ?
   redemptions?: Array<IAchievementRedemption>;
 }

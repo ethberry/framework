@@ -164,6 +164,7 @@ export class ContractService {
     }
 
     // so far this is used only to filter out SOULBOUND tokens
+    // and to filter out EXTERNAL contracts for achievements
     if (excludeFeatures.length) {
       Object.assign(where, {
         // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md

@@ -44,6 +44,12 @@ export class AchievementRuleEntity extends SearchableEntity implements IAchievem
   })
   public achievementStatus: AchievementRuleStatus;
 
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
+
   @OneToMany(_type => AchievementLevelEntity, component => component.achievementRule)
   public levels: Array<AchievementLevelEntity>;
 

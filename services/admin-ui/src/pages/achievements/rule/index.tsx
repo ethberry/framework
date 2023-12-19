@@ -12,7 +12,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
-import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
+import { AchievementRuleStatus, TokenType } from "@framework/types";
 
 import { AchievementRuleEditDialog } from "./edit";
 
@@ -37,25 +37,26 @@ export const AchievementRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      achievementType: AchievementType.MARKETPLACE,
       achievementStatus: AchievementRuleStatus.ACTIVE,
       // eventType: """,
       contractId: 0,
       item: getEmptyTemplate(TokenType.ERC20),
+      startTimestamp: new Date().toISOString(),
+      endTimestamp: new Date().toISOString(),
     },
     search: {
       query: "",
-      achievementType: [],
       achievementStatus: [],
     },
-    filter: ({ title, description, contractId, item, achievementStatus, achievementType, eventType }) => ({
+    filter: ({ title, description, contractId, item, achievementStatus, eventType, startTimestamp, endTimestamp }) => ({
       title,
       description,
       contractId: contractId === 0 ? null : contractId,
       item: item ? cleanUpAsset(item) : { components: [] },
       achievementStatus,
-      achievementType,
       eventType,
+      startTimestamp,
+      endTimestamp,
     }),
   });
 
