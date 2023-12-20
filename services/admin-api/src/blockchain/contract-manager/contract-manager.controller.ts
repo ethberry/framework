@@ -1,11 +1,10 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { ContractManagerSignService } from "./contract-manager.sign.service";
-import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
 import {
   Erc1155ContractDeployDto,
@@ -29,12 +28,6 @@ export class ContractManagerController {
     private readonly contractManagerSignService: ContractManagerSignService,
     private readonly contractManagerService: ContractManagerService,
   ) {}
-
-  @Get("/:id")
-  @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractManagerEntity | null> {
-    return this.contractManagerService.findOne({ id });
-  }
 
   @Post("/erc20")
   public erc20Token(@Body() dto: Erc20ContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
