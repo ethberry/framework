@@ -98,7 +98,7 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
                   />
                 </TableCell>
                 <TableCell>
-                  <Typography>{`${level.title}, get: ${formatItem(level.item)}`}</Typography>
+                  <Typography>{`${level.title}, get: ${formatItem(level.reward)}`}</Typography>
                 </TableCell>
               </TableRow>
             ))}

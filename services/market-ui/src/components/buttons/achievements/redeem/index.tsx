@@ -59,7 +59,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
           receiver: achievementRule.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        achievementLevel.item?.components.map(component => ({
+        achievementLevel.reward?.components.map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           // pass templateId instead of tokenId = 0
