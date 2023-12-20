@@ -17,7 +17,7 @@ const delay = 1; // block delay
 const delayMs = 1200; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 10n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 12n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size
@@ -402,10 +402,13 @@ async function main() {
           },
         ],
         content: [],
-        period: 30 * 84600,
-        penalty: 1,
-        maxStake: 0,
-        recurrent: false,
+        terms: {
+          period: 30 * 84600,
+          penalty: 1,
+          maxStake: 0,
+          recurrent: false,
+          advance: false,
+        },
         active: true,
       },
     ]),
@@ -433,10 +436,13 @@ async function main() {
           },
         ],
         content: [],
-        period: 30 * 84600,
-        penalty: 1,
-        maxStake: 0,
-        recurrent: false,
+        terms: {
+          period: 30 * 84600,
+          penalty: 1,
+          maxStake: 0,
+          recurrent: false,
+          advance: false,
+        },
         active: true,
       },
     ]),
@@ -473,10 +479,13 @@ async function main() {
             },
           ],
         ],
-        period: 1 * 84600,
-        penalty: 0,
-        maxStake: 0,
-        recurrent: true,
+        terms: {
+          period: 30 * 84600,
+          penalty: 1,
+          maxStake: 0,
+          recurrent: true,
+          advance: false,
+        },
         active: true,
       },
     ]),
