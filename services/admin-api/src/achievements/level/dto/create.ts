@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementLevelCreateDto } from "../interfaces";
-import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AchievementLevelCreateDto extends SearchableDto implements IAchievementLevelCreateDto {
   @ApiProperty()
@@ -19,11 +19,11 @@ export class AchievementLevelCreateDto extends SearchableDto implements IAchieve
   public achievementRuleId: number;
 
   @ApiProperty({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public reward: ItemDto;
+  @Type(() => AllTypesDto)
+  public reward: InstanceType<typeof AllTypesDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

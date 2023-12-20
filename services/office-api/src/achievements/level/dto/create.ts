@@ -1,12 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsISO8601, IsOptional, IsString, Max, Min, ValidateNested } from "class-validator";
+import { IsInt, IsOptional, Max, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
 
 import { IAchievementLevelCreateDto } from "../interfaces";
-import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AchievementLevelCreateDto extends SearchableDto implements IAchievementLevelCreateDto {
   @ApiProperty()
@@ -20,11 +19,11 @@ export class AchievementLevelCreateDto extends SearchableDto implements IAchieve
   public achievementRuleId: number;
 
   @ApiProperty({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => AllTypesDto)
+  public reward: InstanceType<typeof AllTypesDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
@@ -36,15 +35,4 @@ export class AchievementLevelCreateDto extends SearchableDto implements IAchieve
   @IsOptional()
   // @IsJSON({ message: "patternMismatch" })
   public parameters: Record<string, string | number>;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsISO8601({}, { message: "patternMismatch" })
-  @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
-  public startTimestamp: string;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsISO8601({}, { message: "patternMismatch" })
-  public endTimestamp: string;
 }

@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementLevelUpdateDto } from "../interfaces";
-import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AddressUpdateDto extends SearchableDto implements IAchievementLevelUpdateDto {
   @ApiPropertyOptional()
@@ -15,12 +15,12 @@ export class AddressUpdateDto extends SearchableDto implements IAchievementLevel
   public achievementLevel: number;
 
   @ApiPropertyOptional({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => ItemDto)
-  public reward: ItemDto;
+  @Type(() => AllTypesDto)
+  public reward: InstanceType<typeof AllTypesDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
