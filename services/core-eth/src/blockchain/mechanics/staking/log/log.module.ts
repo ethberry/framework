@@ -11,6 +11,7 @@ import {
   ContractType,
   ModuleType,
   NodeEnv,
+  ReferralProgramEventType,
   StakingEventType,
 } from "@framework/types";
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -45,6 +46,11 @@ import { getEventsTopics } from "../../../../common/utils";
           StakingEventType.DepositFinish,
           StakingEventType.DepositReturn,
           StakingEventType.DepositPenalty,
+          // MODULE:REFERRAL
+          ReferralProgramEventType.ReferralEvent,
+          ReferralProgramEventType.ReferralProgram,
+          ReferralProgramEventType.ReferralWithdraw,
+          ReferralProgramEventType.ReferralReward,
           // MODULE:PAUSE
           ContractEventType.Paused,
           ContractEventType.Unpaused,

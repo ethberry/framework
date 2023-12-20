@@ -5,6 +5,7 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.20;
+import "hardhat/console.sol";
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
@@ -141,6 +142,8 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     uint256 commission = (currentRound.total * comm) / 100;
     currentRound.total -= commission;
 
+    // TODO send round commission to owner
+
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
@@ -187,14 +190,8 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     // aggregate data
     uint256 len = currentRound.tickets.length;
     for (uint8 l = 0; l < len; l++) {
-      uint8 tmp2 = 0;
-      for (uint8 j = 0; j < 6; j++) {
-        // TODO fixme bitwise operations
-        // if (currentRound.tickets[l][currentRound.values[j]]) {
-        tmp2++;
-        // }
-      }
-      currentRound.aggregation[tmp2]++;
+      uint8 result = countMatch(currentRound.tickets[l], currentRound.values);
+      currentRound.aggregation[result]++;
     }
 
     emit RoundFinalized(currentRound.roundId, currentRound.values);
@@ -237,57 +234,59 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       revert WrongRound();
     }
 
-    // ticketFactory.burn(tokenId);
-    // set status PRIZE = true
-    ticketFactory.setTicketData(tokenId);
+    // count win numbers
+    uint8 result = countMatch(data.numbers, ticketRound.values);
 
-    uint8[] memory coefficient = new uint8[](7);
-    coefficient[0] = 0;
-    coefficient[1] = 15;
-    coefficient[2] = 50;
-    coefficient[3] = 70;
-    coefficient[4] = 110;
-    coefficient[5] = 140;
-    coefficient[6] = 220;
+    if (result > 0) {
+      uint8[] memory coefficient = new uint8[](7);
+      coefficient[0] = 0;
+      coefficient[1] = 15;
+      coefficient[2] = 50;
+      coefficient[3] = 70;
+      coefficient[4] = 110;
+      coefficient[5] = 140;
+      coefficient[6] = 220;
 
-    uint8[7] memory aggregation = ticketRound.aggregation;
+      uint8[7] memory aggregation = ticketRound.aggregation;
 
-    uint256 sumc;
-    for (uint8 l = 0; l < 7; l++) {
-      uint256 ag = aggregation[l];
-      uint256 co = coefficient[l];
-      sumc = sumc + (ag * co);
-    }
-
-    uint256 point = ticketRound.total / sumc;
-
-    uint8 result = 0;
-
-    for (uint8 j = 0; j < 6; j++) {
-      for (uint8 k = 0; k < 6; k++) {
-        if (uint8(data.numbers[31 - k]) == ticketRound.values[j]) {
-          result++;
-          break;
-        }
+      uint256 sumc;
+      for (uint8 l = 0; l < 7; l++) {
+        uint256 ag = aggregation[l];
+        uint256 co = coefficient[l];
+        sumc = sumc + (ag * co);
       }
+
+      uint256 point = sumc > 0 ? ticketRound.total / sumc : 0;
+
+      // set PRIZE status = true
+      ticketFactory.setTicketData(tokenId);
+      // ticketFactory.burn(tokenId);
+
+      // calculate Prize amount
+      uint256 amount = point * coefficient[result];
+
+      if (amount > 0) {
+
+        if (amount > ticketRound.total) {
+          revert BalanceExceed();
+        }
+
+        ticketRound.balance -= amount;
+
+        ticketRound.acceptedAsset.amount = amount;
+        ExchangeUtils.spend(
+          ExchangeUtils._toArray(ticketRound.acceptedAsset),
+          _msgSender(),
+          DisabledTokenTypes(false, false, false, false, false)
+        );
+      }
+
+      emit Prize(_msgSender(), roundId, tokenId, amount);
+    } else {
+      // TODO burn token if no prize?
+      // ticketFactory.burn(tokenId);
+      revert WrongToken();
     }
-
-    uint256 amount = point * coefficient[result];
-
-    if (amount > ticketRound.total) {
-      revert BalanceExceed();
-    }
-
-    ticketRound.balance -= amount;
-
-    ticketRound.acceptedAsset.amount = amount;
-    ExchangeUtils.spend(
-      ExchangeUtils._toArray(ticketRound.acceptedAsset),
-      _msgSender(),
-      DisabledTokenTypes(false, false, false, false, false)
-    );
-
-    emit Prize(_msgSender(), roundId, tokenId, amount);
   }
 
   // RELEASE BALANCE
@@ -298,15 +297,24 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
 
     Round storage ticketRound = _rounds[roundNumber];
 
-    if (block.timestamp < ticketRound.endTimestamp + _timeLag) {
-      revert NotComplete();
-    }
-
     if (ticketRound.balance == 0) {
       revert ZeroBalance();
     }
 
-    uint256 roundBalance = ticketRound.total;
+    uint8[7] memory aggregation = ticketRound.aggregation;
+
+    // check if round has any winners
+    bool hasWinners = false;
+    for (uint8 l = 1; l < 7; l++) {
+      hasWinners = aggregation[l] > 0;
+    }
+
+    if (hasWinners && block.timestamp < ticketRound.endTimestamp + _timeLag) {
+      revert NotComplete();
+    }
+
+    // RELEASE ALL ROUND BALANCE
+    uint256 roundBalance = ticketRound.balance;
     ticketRound.balance = 0;
 
     ticketRound.acceptedAsset.amount = roundBalance;
@@ -317,6 +325,22 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     );
 
     emit Released(roundNumber, roundBalance);
+  }
+
+  // COUNT TICKET MATCH
+  function countMatch(bytes32 ticketNumbers, uint8[6] memory values) internal virtual returns (uint8) {
+    uint8 ticketMatch = 0;
+
+    for (uint8 j = 0; j < 6; j++) {
+      for (uint8 k = 0; k < 6; k++) {
+        if (uint8(ticketNumbers[31 - k]) == values[j]) {
+          ticketMatch++;
+          break;
+        }
+      }
+    }
+
+    return ticketMatch;
   }
 
   // PAUSABLE

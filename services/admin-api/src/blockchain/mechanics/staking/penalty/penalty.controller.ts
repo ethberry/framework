@@ -1,4 +1,4 @@
-import { HttpCode, Controller, Get, Param, ParseIntPipe, UseInterceptors } from "@nestjs/common";
+import { HttpCode, Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { StakingPenaltyService } from "./penalty.service";

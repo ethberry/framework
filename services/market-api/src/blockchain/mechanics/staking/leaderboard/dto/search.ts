@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min, ValidateNested } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
@@ -31,10 +31,16 @@ export class StakingLeaderboardSearchDto extends PaginationDto implements IStaki
   @Type(() => StakingReportItemSearchDto)
   public deposit: StakingReportItemSearchDto;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: StakingReportItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => StakingReportItemSearchDto)
   public reward: StakingReportItemSearchDto;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => [true, "true"].includes(value))
+  public emptyReward: boolean;
 }

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { enqueueSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IClaimUploadDto } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";

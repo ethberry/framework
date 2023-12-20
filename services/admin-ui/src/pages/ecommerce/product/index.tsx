@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 import { ProductStatus } from "@framework/types";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -86,7 +85,7 @@ export const Product: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(product => (
-            <ListItem key={product.id}>
+            <StyledListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
@@ -97,7 +96,7 @@ export const Product: FC = () => {
                   disabled={product.productStatus === ProductStatus.INACTIVE}
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

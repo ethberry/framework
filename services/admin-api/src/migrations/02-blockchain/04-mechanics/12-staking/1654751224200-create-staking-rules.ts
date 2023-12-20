@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 
 export class CreateStakingRules1654751224200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -33,6 +33,11 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "image_url",
+          type: "varchar",
+          default: `'${imageUrl}'`,
+        },
+        {
           name: "description",
           type: "json",
         },
@@ -57,6 +62,11 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         {
           name: "recurrent",
           type: "boolean",
+        },
+        {
+          name: "advance",
+          type: "boolean",
+          default: false,
         },
         {
           name: "deposit_id",

@@ -4,9 +4,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
+import { ContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ContractFeatures } from "@framework/types";
 
 export interface ITransferDto {
   token: ITokenAsset;

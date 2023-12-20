@@ -4,11 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
-import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
+import DeployERC1155TokenABI from "@framework/abis/deployERC1155Token/ERC1155FactoryFacet.json";
 
 import { Erc1155ContractDeployDialog } from "./dialog";
 

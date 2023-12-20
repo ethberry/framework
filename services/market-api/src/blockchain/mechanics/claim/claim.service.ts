@@ -1,7 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, ZeroAddress, zeroPadValue, toBeHex } from "ethers";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
@@ -99,15 +99,17 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
-    const { account, endTimestamp } = dto;
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity, referrer?: string): Promise<ClaimEntity> {
+    const { account, endTimestamp, item } = dto;
 
-    const assetEntity = await this.assetService.create();
+    // create new asset and update it with actual item
+    // const assetEntity = await this.assetService.create();
+    // await this.assetService.update(assetEntity, { components: dto.item.components });
 
     const claimEntity = await this.claimEntityRepository
       .create({
         account,
-        item: assetEntity,
+        item,
         signature: "0x",
         nonce: "",
         merchantId: userEntity.merchantId,
@@ -115,38 +117,37 @@ export class ClaimService {
       })
       .save();
 
-    return this.update({ id: claimEntity.id }, dto, userEntity);
+    return this.update({ id: claimEntity.id }, dto, userEntity, referrer);
   }
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
     dto: IClaimUpdateDto,
     userEntity: UserEntity,
+    referrer?: string,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp, chainId } = dto;
 
-    let claimEntity = await this.findOneWithRelations(where);
-
+    const claimEntity = await this.findOneWithRelations(where);
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
     }
-
+    // check permissions
     if (claimEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
-
     // Update only NEW Claims
     if (claimEntity.claimStatus !== ClaimStatus.NEW) {
       throw new BadRequestException("claimRedeemed");
     }
 
-    await this.assetService.update(claimEntity.item, item);
-
-    claimEntity = await this.findOneWithRelations(where);
-
-    if (!claimEntity) {
-      throw new NotFoundException("claimNotFound");
-    }
+    // console.log("UPDATEASSET", claimEntity.item, item);
+    // await this.assetService.update(claimEntity.item, item);
+    //
+    // claimEntity = await this.findOneWithRelations(where);
+    // if (!claimEntity) {
+    //   throw new NotFoundException("claimNotFound");
+    // }
 
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
@@ -157,12 +158,10 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         nonce,
-        // @TODO fix to use expiresAt as extra, temporary set to empty
-        extra: encodeBytes32String("0x"),
+        extra: zeroPadValue(toBeHex(Math.ceil(new Date(endTimestamp).getTime() / 1000)), 32),
         receiver: claimEntity.merchant.wallet,
-        referrer: ZeroAddress,
+        referrer: referrer || ZeroAddress,
       },
-
       claimEntity,
     );
 

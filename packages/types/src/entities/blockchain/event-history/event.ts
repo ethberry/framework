@@ -34,7 +34,6 @@ import type { TWaitListEvents } from "./mechanics/waitlist";
 
 export enum ContractEventType {
   // MODULE:ERC20
-  Snapshot = "Snapshot",
   Approval = "Approval",
   Transfer = "Transfer",
 
@@ -116,6 +115,9 @@ export enum ContractEventType {
   ReturnDeposit = "ReturnDeposit",
   DepositPenalty = "DepositPenalty",
 
+  // MODULE:PONZI
+  RuleCreatedP = "RuleCreatedP",
+
   // MODULE:EXCHANGE
   // MODULE:CORE
   Purchase = "Purchase",
@@ -161,11 +163,16 @@ export enum ContractEventType {
 
   // MODULE:ECOMMERCE
   EcommercePurchase = "EcommercePurchase",
+
+  // MODULE:REFERRAL
+  ReferralEvent = "ReferralEvent",
+  ReferralProgram = "ReferralProgram",
+  ReferralReward = "ReferralReward",
+  ReferralWithdraw = "ReferralWithdraw",
 }
 
 export enum ContractEventSignature {
   // MODULE:ERC20
-  Snapshot = "Snapshot(uint256)",
   Approval = "Approval(address,address,uint256)",
   Transfer = "Transfer(address,address,uint256)",
 
@@ -253,7 +260,7 @@ export enum ContractEventSignature {
 
   // MODULE:STAKING
   // event RuleCreated(uint256 ruleId, Rule rule);
-  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],uint256,uint256,uint256,bool,bool))",
+  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],(uint256,uint256,uint256,bool,bool),bool))",
   RuleUpdated = "RuleUpdated(uint256,bool)",
   StakingStart = "StakingStart(uint256,uint256,address,uint256,uint256)",
   StakingWithdraw = "StakingWithdraw(uint256,address,uint256)",
@@ -311,6 +318,7 @@ export enum ContractEventSignature {
   PaymentEthSent = "PaymentEthSent(address,uint256)",
 
   // MODULE:PONZI
+  RuleCreatedP = "RuleCreatedP(uint256,((uint8,address,uint256,uint256),(uint8,address,uint256,uint256),(uint256,uint256,uint256),bool))",
   FinalizedToken = "FinalizedToken(address,uint256)",
   WithdrawToken = "WithdrawToken(address,uint256)",
   ReferralBonus = "ReferralBonus(address,address,uint256)",
@@ -326,6 +334,7 @@ export enum ContractEventSignature {
   EcommercePurchase = "EcommercePurchase(??)",
 
   // MODULE:REFERRAL
+  ReferralEvent = "ReferralEvent(address,(uint8,address,uint256,uint256)[])",
   ReferralProgram = "ReferralProgram((uint256,uint256,uint8,bool))",
   ReferralReward = "ReferralReward(address,address,uint8,address,uint256)",
   ReferralWithdraw = "ReferralWithdraw(address,address,uint256)",

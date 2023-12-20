@@ -5,11 +5,11 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
+import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
 
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
@@ -31,7 +31,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),
@@ -75,7 +75,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         message="pages.lottery.rounds.start"
         className={className}
         dataTestId="LotteryRoundStartButton"
-        disabled={disabled}
+        disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
         variant={variant}
       />
       <LotteryStartRoundDialog

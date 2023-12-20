@@ -5,11 +5,11 @@ import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
-import WaitListSetRewardABI from "../../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
+import WaitListSetRewardABI from "@framework/abis/setReward/WaitList.json";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;
@@ -21,7 +21,7 @@ export interface IWailtListListGenerateButtonProps {
 export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> = props => {
   const {
     className,
-    waitListList: { id },
+    waitListList: { id, contract, root },
     disabled,
     variant,
   } = props;
@@ -77,7 +77,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
       variant={variant}
     />
   );

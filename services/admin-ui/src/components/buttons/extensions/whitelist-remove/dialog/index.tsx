@@ -2,17 +2,16 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-
-import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
+import unWhitelistERC20WhitelistABI from "@framework/abis/unWhitelist/ERC20Whitelist.json";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
@@ -36,7 +35,7 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
   );
 
   const metaUnWhitelist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, UnWhitelistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, unWhitelistERC20WhitelistABI, web3Context.provider?.getSigner());
     return contract.unWhitelist(values.account) as Promise<void>;
   });
 
@@ -58,12 +57,12 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
         {rows.length ? (
           <List>
             {rows.map(access => (
-              <ListItem key={access.id}>
+              <StyledListItem key={access.id}>
                 <ListItemText>{access.account}</ListItemText>
                 <ListActions>
                   <ListAction onClick={handleUnWhitelist(access)} message="dialogs.unWhitelist" icon={Delete} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

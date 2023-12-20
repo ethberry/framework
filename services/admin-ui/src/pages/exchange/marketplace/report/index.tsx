@@ -18,11 +18,11 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { formatItem } from "@framework/exchange";
 import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateInput } from "../../../../components/inputs/template";
-import { formatPrice } from "../../../../utils/money";
 import { ReportDataView } from "./report-data-view";
 
 export const MarketplaceReport: FC = () => {
@@ -99,7 +99,7 @@ export const MarketplaceReport: FC = () => {
       field: "price",
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatPrice({ id: 0, components: value }),
+      valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatItem({ id: 0, components: value }),
       flex: 1,
       minWidth: 100
     },

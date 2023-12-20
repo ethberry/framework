@@ -5,13 +5,14 @@ import { Contract, utils } from "ethers";
 import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { getEthPrice } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
-import PromoPurchaseABI from "../../../../../abis/mechanics/promo/purchase/purchase.abi.json";
+import PurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
+import PurchaseMysteryABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IPromoWithMystery extends IAssetPromo {
@@ -36,7 +37,11 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, PromoPurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        PurchaseABI.concat(PurchaseMysteryABI),
+        web3Context.provider?.getSigner(),
+      );
 
       return mysteryComponents && mysteryComponents.length > 0
         ? (contract.purchaseMystery(

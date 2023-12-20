@@ -3,11 +3,11 @@ import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typog
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { formatItem } from "../../../../../utils/money";
 
 interface IErc721TemplateListItemProps {
   template: ITemplate;

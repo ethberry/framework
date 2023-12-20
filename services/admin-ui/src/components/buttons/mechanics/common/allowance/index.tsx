@@ -3,12 +3,12 @@ import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
+import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -41,7 +41,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(contract.address, approveERC20BlacklistABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");

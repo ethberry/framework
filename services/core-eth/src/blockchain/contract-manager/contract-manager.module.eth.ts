@@ -36,6 +36,7 @@ import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module
 import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
 import { ChainLinkLogModule } from "../integrations/chain-link/contract/log/log.module";
 import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
+import { PaymentSplitterLogModule } from "../mechanics/payment-splitter/log/log.module";
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     VestingLogModule,
     StakingLogModule,
     PonziLogModule,
+    PaymentSplitterLogModule,
     LotteryLogModule,
     LotteryTicketLogModule,
     RaffleLogModule,

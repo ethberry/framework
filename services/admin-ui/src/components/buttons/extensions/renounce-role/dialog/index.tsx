@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,11 +10,10 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAccessControl, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
-
-import RenounceRoleABI from "../../../../../abis/extensions/renounce-role/renounceRole.abi.json";
+import renounceRoleAccessControlFacetABI from "@framework/abis/renounceRole/AccessControlFacet.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -40,7 +39,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   );
 
   const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, RenounceRoleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, renounceRoleAccessControlFacetABI, web3Context.provider?.getSigner());
     return contract.renounceRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)
@@ -74,7 +73,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
         {rows.length ? (
           <List>
             {rows.map(access => (
-              <ListItem key={access.id}>
+              <StyledListItem key={access.id}>
                 <ListItemText>
                   {access.account}
                   <br />
@@ -83,7 +82,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                 <ListActions>
                   <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

@@ -21,23 +21,17 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
   public achievementRule: AchievementRuleEntity;
 
   @Column({ type: "int" })
-  public itemId: number;
+  public rewardId: number;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public item: AssetEntity;
+  public reward: AssetEntity;
 
   @Column({ type: "int" })
   public amount: number;
 
   @Column({ type: "json" })
   public parameters: Record<string, string | number>;
-
-  @Column({ type: "timestamptz" })
-  public startTimestamp: string;
-
-  @Column({ type: "timestamptz" })
-  public endTimestamp: string;
 
   @JoinColumn()
   @OneToMany(_type => AchievementRedemptionEntity, component => component.achievementLevel)

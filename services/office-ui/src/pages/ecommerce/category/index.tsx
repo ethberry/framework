@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -57,13 +56,13 @@ export const Category: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(category => (
-            <ListItem key={category.id}>
+            <StyledListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -1,19 +1,15 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsInt, IsOptional, Min, ValidateNested, IsISO8601, IsString } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
+import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 
-import { ItemDto } from "../../../blockchain/exchange/asset/dto";
 import { IAchievementRuleUpdateDto } from "../interfaces";
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsEnum(AchievementType, { message: "badInput" })
-  public achievementType: AchievementType;
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsEnum(AchievementRuleStatus, { message: "badInput" })
@@ -33,10 +29,23 @@ export class AchievementRuleUpdateDto extends SearchableDto implements IAchievem
   public contractId: number;
 
   @ApiPropertyOptional({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => AllTypesDto)
+  public item: InstanceType<typeof AllTypesDto>;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
+  @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
+  public startTimestamp: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
+  public endTimestamp: string;
 }

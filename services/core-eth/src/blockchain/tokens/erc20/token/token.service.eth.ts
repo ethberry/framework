@@ -7,7 +7,6 @@ import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IErc1363TransferReceivedEvent,
   IErc20TokenApproveEvent,
-  IErc20TokenSnapshotEvent,
   IErc20TokenTransferEvent,
 } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
@@ -74,14 +73,6 @@ export class Erc20TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
-
-  public async snapshot(event: ILogEvent<IErc20TokenSnapshotEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const { address, transactionHash } = context;
-
-    await this.signalClientProxy.emit(SignalEventType.TRANSACTION_HASH, { address, transactionHash }).toPromise();
   }
 
   public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {

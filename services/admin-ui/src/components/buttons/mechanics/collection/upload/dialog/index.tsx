@@ -2,16 +2,11 @@ import React, { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import type { ICollectionUploadDto } from "@framework/types";
 
-import type { ICollectionRow } from "../index";
 import { validationSchema } from "./validation";
 import { FileInput } from "./file-input";
 import { CollectionInfoPopover } from "./popover";
-
-export interface ICollectionUploadDto {
-  files: Array<File>;
-  tokens: ICollectionRow[];
-}
 
 export interface ICollectionUploadDialogProps {
   open: boolean;

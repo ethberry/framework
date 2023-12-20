@@ -6,8 +6,7 @@ import { TableCell, TableRow } from "@mui/material";
 
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-
-import UserOfABI from "../../abis/mechanics/rentable/erc4907.userOf.abi.json";
+import userOfERC721BlacklistDiscreteRentableABI from "@framework/abis/userOf/ERC721BlacklistDiscreteRentable.json";
 
 export interface ITokenUserView {
   tokenId: string;
@@ -20,7 +19,11 @@ export const TokenUserView: FC<ITokenUserView> = props => {
 
   const getCurrentUser = useMetamaskValue(
     async (_a: null, web3Context: Web3ContextType) => {
-      const contract = new Contract(address, UserOfABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        address,
+        userOfERC721BlacklistDiscreteRentableABI,
+        web3Context.provider?.getSigner(),
+      );
       if ((await contract.provider.getCode(address)) !== "0x") {
         const user = await contract.userOf(tokenId);
         return user as string;

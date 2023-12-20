@@ -9,7 +9,6 @@ enum ContractEventSignature {
   // MODULE:ERC20
   Transfer = "Transfer(address,address,uint256)",
   Approval = "Approval(address,address,uint256)",
-  Snapshot = "Snapshot(uint256)",
 
   // MODULE:ERC721
   ApprovalForAll = "ApprovalForAll(address,address,bool)",
@@ -82,7 +81,7 @@ enum ContractEventSignature {
 
   // MODULE:STAKING
   // event RuleCreated(uint256 ruleId, Rule rule);
-  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],uint256,uint256,uint256,bool,bool))",
+  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],(uint256,uint256,uint256,bool,bool),bool))",
   RuleUpdated = "RuleUpdated(uint256,bool)",
   StakingStart = "StakingStart(uint256,uint256,address,uint256,uint256)",
   StakingWithdraw = "StakingWithdraw(uint256,address,uint256)",
@@ -167,39 +166,12 @@ export const abiEncode = function (value: string, type: string): string {
 
 task("topics", "Generate topics", async (_, hre) => {
   const _blockNumber = await hre.ethers.provider.getBlockNumber();
-  // const topics1 = [
-  //   ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef", null, null],
-  //   [
-  //     "0x63373d1c4696214b898952999c9aaec57dac1ee2723cec59bea6888f489a9772",
-  //     null,
-  //     null,
-  //     [
-  //       "0x0000000000000000000000000b7aee586fa4df49e95cc2c2def7b59dbfae4d6f",
-  //       "0x000000000000000000000000b4f1f8e92a2e64489d78d113263114f5de7d4f32",
-  //       "0x000000000000000000000000959c136b28ba6eb8a01be195b5f4d83213b08a2d",
-  //       "0x0000000000000000000000000e73f2e4e12bd525c2453c89869fe684ab76ed82",
-  //       "0x000000000000000000000000bf99725ec3be155e5c8d257fc1e3193f2c55fbf9",
-  //       "0x00000000000000000000000023f5669cbb87ae7a675d8201f445ae3cb63f75c3",
-  //     ],
-  //   ],
-  // ];
-  // const topicSigs: Array<string> = [];
   const topicS: Array<any> = [];
   const topicSEnum: Array<any> = [];
   console.info("ContractEventSignature len:", Object.values(ContractEventSignature).length);
   Object.values(ContractEventSignature).map((value, index) => {
-    // const eventSig = value.split("(");
-    // console.log("eventSig", eventSig);
-    // const eventArgs = eventSig[eventSig.length - 1].split(")")[0].split(",");
-    // console.log("eventParams[]", eventArgs);
-    // const top: Array<string | Array<string> | null> = [keccak256It(value)];
-    // eventArgs.map(arg => top.push(null));
     topicS.push(keccak256It(value));
-    // Transfer = "Transfer(address,address,uint256)",
     topicSEnum.push(`${value} = "${keccak256It(value)}"`);
-    // console.log("topicS", topicS);
-    // console.log("value", value);
-    // index > 1 ? process.exit(0) : console.log("next");
     return index;
   });
   fs.writeFileSync("topics.txt", topicS.toString(), { encoding: "utf-8", flag: "w+" });

@@ -43,7 +43,7 @@ export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.numbers" />
+                <FormattedMessage id="form.labels.number" />
               </TableCell>
               <TableCell align="right">{number || formatMessage({ id: "pages.lottery.rounds.wait" })}</TableCell>
             </TableRow>

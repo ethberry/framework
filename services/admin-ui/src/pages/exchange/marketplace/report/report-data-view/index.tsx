@@ -2,10 +2,9 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 
+import { formatPriceHistory } from "@framework/exchange";
 import { ContractEventType, IEventHistoryReport, IExchangePurchaseEvent } from "@framework/types";
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
-
-import { formatPriceHistory } from "../../../../../utils/money";
 
 export interface IEventDataViewProps {
   row: IEventHistoryReport;

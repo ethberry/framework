@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItemText } from "@mui/material";
 import { TxHashLink } from "@gemunion/mui-scanner";
-
 // Hooks
 import { useIndexedDB } from "react-indexed-db-hook";
+
+import { StyledListItem } from "@framework/styled";
 
 import { ITabPanelProps } from "../tabs";
 
@@ -30,7 +31,7 @@ export const ProfileNotifications: FC<ITabPanelProps> = props => {
   return (
     <List disablePadding={true}>
       {txs.map(tx => (
-        <ListItem key={tx.id} disableGutters>
+        <StyledListItem key={tx.id}>
           <ListItemText sx={{ width: 0.3 }}>Type # {tx.txType}</ListItemText>
           <ListItemText sx={{ width: 0.7 }}>
             <TxHashLink hash={tx.txHash} length={42} />
@@ -39,7 +40,7 @@ export const ProfileNotifications: FC<ITabPanelProps> = props => {
           {/* <ListActions> */}
           {/*  <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} /> */}
           {/* </ListActions> */}
-        </ListItem>
+        </StyledListItem>
       ))}
     </List>
   );

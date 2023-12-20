@@ -4,11 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.abi.json";
+import WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 

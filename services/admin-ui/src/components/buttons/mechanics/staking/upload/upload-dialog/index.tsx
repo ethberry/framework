@@ -4,16 +4,15 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput } from "@gemunion/mui-inputs-core";
 import type { IStakingRule } from "@framework/types";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../inputs/duration";
 import { ContractInput } from "../../../../../inputs/contract";
-import { validationSchema } from "./validation";
+// import { validationSchema } from "./validation";
 
 export interface IStakingRuleUploadDialogProps {
   open: boolean;
@@ -26,31 +25,30 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, contract, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
+  const { contract, penalty, recurrent, advance, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
   const fixedValues = {
     deposit,
     reward,
     penalty,
     recurrent,
+    advance,
     durationAmount,
     durationUnit,
     contract,
     maxStake,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.create";
-
+  const message = "dialogs.create";
+  // TODO validation to allow empty templateID
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message={message}
       testId="StakingEditForm"
       disabled={false}
       {...rest}
     >
-      {id ? <TextInput name="title" /> : null}
-      {id ? <RichTextEditor name="description" /> : null}
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>
@@ -66,17 +64,20 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
             autoSelect
             multiple
             prefix="deposit"
+            allowEmpty={true}
+            disableClear={false}
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
-            allowEmpty
-            autoSelect
+            autoSelect={false}
             multiple
             prefix="reward"
             readOnly={readOnly}
+            allowEmpty={true}
+            disableClear={false}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>
@@ -100,6 +101,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       />
       <NumberInput name="maxStake" readOnly={readOnly} />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
+      <CheckboxInput name="advance" readOnly={readOnly} />
     </FormDialog>
   );
 };

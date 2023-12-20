@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { InputType } from "@gemunion/types-collection";
 import { ContractStatus, ModuleType } from "@framework/types";
 
 interface IContractInputProps {
@@ -15,7 +16,7 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
 
   useEffect(() => {
-    form.setValue(`${prefix}.contractId`, 0);
+    form.setValue(`${prefix}.contractId`, InputType.awaited);
   }, [tokenType]);
 
   return (

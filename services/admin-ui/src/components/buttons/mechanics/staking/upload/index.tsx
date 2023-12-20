@@ -6,11 +6,12 @@ import { Contract } from "ethers";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
-import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
+import { sorter } from "../../../../../utils/sorter";
+import setRulesStakingABI from "@framework/abis/setRules/Staking.json";
 
 export interface IStakingRuleCreateButtonProps {
   className?: string;
@@ -45,7 +46,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
-      deposit: rule.deposit?.components.map(component => ({
+      deposit: rule.deposit?.components.sort(sorter("templateId")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
@@ -60,13 +61,16 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
           }))
         : [],
       content,
-      period: rule.durationAmount, // todo fix same name // seconds in days
-      penalty: rule.penalty || 0,
-      recurrent: rule.recurrent,
-      maxStake: rule.maxStake,
+      terms: {
+        period: rule.durationAmount, // todo fix same name // seconds in days
+        penalty: rule.penalty || 0,
+        maxStake: rule.maxStake,
+        recurrent: rule.recurrent,
+        advance: rule.advance,
+      },
       active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, setRulesStakingABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -75,21 +79,23 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
     const content = [] as Array<any>;
     if (rule.reward) {
       for (const row of rule.reward.components) {
-        const {
-          rows: [mysteryBox],
-        } = await fn(void 0, { templateIds: [row.templateId] });
-        // MODULE:MYSTERYBOX
-        if (mysteryBox) {
-          content.push(
-            (mysteryBox as IMysteryBox).item!.components.map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.contract!.address,
-              tokenId: component.templateId || 0,
-              amount: component.amount,
-            })),
-          );
-        } else {
-          content.push([]);
+        if (row.templateId) {
+          const {
+            rows: [mysteryBox],
+          } = await fn(void 0, { templateIds: [row.templateId] });
+          // MODULE:MYSTERYBOX
+          if (mysteryBox) {
+            content.push(
+              (mysteryBox as IMysteryBox).item!.components.map(component => ({
+                tokenType: Object.values(TokenType).indexOf(component.tokenType),
+                token: component.contract!.address,
+                tokenId: component.templateId || 0,
+                amount: component.amount,
+              })),
+            );
+          } else {
+            content.push([]);
+          }
         }
       }
       if (!content.length) content.push([]);
@@ -124,6 +130,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
           penalty: 100,
           maxStake: 0,
           recurrent: false,
+          advance: false,
         }}
       />
     </Fragment>

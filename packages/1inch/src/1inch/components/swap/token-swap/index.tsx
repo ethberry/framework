@@ -27,7 +27,6 @@ export const SwapToken: FC<ISwapTokenProps> = props => {
 
   const { formatMessage } = useIntl();
   const [localQuantity, setLocalQuantity, immediateLocalQuantity] = useDebounce<string>(quantity, 450);
-
   const gasPrice = useGasPrice();
   const { maxSpend } = useMemo<{
     maxSpend: string;

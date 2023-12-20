@@ -8,14 +8,16 @@ pragma solidity ^0.8.20;
 import {Asset} from "../../../Exchange/lib/interfaces/IAsset.sol";
 
 interface IPonzi {
+  struct RuleTerms {
+    uint256 period;
+    uint256 penalty;
+    uint256 maxCycles;
+  }
+
   struct Rule {
     Asset deposit;
     Asset reward;
-    uint256 period;
-    uint256 maxCycles;
-    uint256 penalty;
-    uint256 externalId;
-//    uint256 maxDeposit;
+    RuleTerms terms;
     bool active;
   }
 
@@ -28,6 +30,6 @@ interface IPonzi {
     bool activeDeposit;
   }
 
-  event RuleCreated(uint256 ruleId, Rule rule, uint256 externalId);
+  event RuleCreatedP(uint256 ruleId, Rule rule);
   event RuleUpdated(uint256 ruleId, bool active);
 }

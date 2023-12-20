@@ -1,13 +1,12 @@
 import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
@@ -89,7 +88,7 @@ export const Erc998Token: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(token => (
-            <ListItem key={token.id} disableGutters>
+            <StyledListItem key={token.id}>
               <ListItemText>
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
@@ -101,7 +100,7 @@ export const Erc998Token: FC = () => {
                 />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

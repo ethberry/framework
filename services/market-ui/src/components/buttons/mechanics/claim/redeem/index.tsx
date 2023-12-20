@@ -4,11 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
-import { SystemModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, SystemModuleType, TokenType } from "@framework/types";
 
-import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
+import ClaimABI from "@framework/abis/claim/ExchangeClaimFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 
@@ -54,13 +54,15 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
     return metaFn(claim);
   };
 
+  const date = new Date();
+
   return (
     <ListAction
       onClick={handleClick}
       icon={Redeem}
       message="form.tips.redeem"
       className={className}
-      disabled={disabled}
+      disabled={disabled || claim.claimStatus !== ClaimStatus.NEW || new Date(claim.endTimestamp) > date}
       dataTestId="ClaimRedeemButton"
       variant={variant}
     />

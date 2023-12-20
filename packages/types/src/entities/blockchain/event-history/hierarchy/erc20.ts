@@ -10,8 +10,4 @@ export interface IErc20TokenApproveEvent {
   value: string;
 }
 
-export interface IErc20TokenSnapshotEvent {
-  id: string;
-}
-
-export type TErc20Events = IErc20TokenTransferEvent | IErc20TokenApproveEvent | IErc20TokenSnapshotEvent;
+export type TErc20Events = IErc20TokenTransferEvent | IErc20TokenApproveEvent;

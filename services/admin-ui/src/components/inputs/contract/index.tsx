@@ -13,6 +13,8 @@ export interface IContractInputProps {
     contractStatus?: Array<ContractStatus>;
     contractModule?: Array<ModuleType>;
     contractFeatures?: Array<ContractFeatures>;
+    includeExternalContracts?: boolean;
+    excludeFeatures?: Array<ContractFeatures>;
   };
 }
 

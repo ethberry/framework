@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
 import { LotteryTokenViewDialog } from "./view";
@@ -55,7 +54,7 @@ export const LotteryTokens: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(token => (
-            <ListItem key={token.id}>
+            <StyledListItem key={token.id}>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
@@ -70,7 +69,7 @@ export const LotteryTokens: FC = () => {
               <ListActions>
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

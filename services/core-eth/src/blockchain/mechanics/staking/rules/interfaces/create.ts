@@ -1,12 +1,12 @@
-import { DurationUnit, IAssetDto, StakingRuleStatus, TokenType } from "@framework/types";
+import { DurationUnit, IAssetDto, StakingRuleStatus } from "@framework/types";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 
-export interface IStakingItemCreateDto {
-  tokenType: TokenType;
-  collection: number;
-  tokenId: number;
-  amount: string;
-}
+// export interface IStakingItemCreateDto {
+//   tokenType: TokenType;
+//   collection: number;
+//   tokenId: number;
+//   amount: string;
+// }
 
 export interface IStakingCreateDto {
   title: string;
@@ -19,6 +19,7 @@ export interface IStakingCreateDto {
   penalty: number;
   maxStake: number;
   recurrent: boolean;
+  advance: boolean;
   stakingRuleStatus?: StakingRuleStatus;
   contractId: number;
   contract?: ContractEntity;

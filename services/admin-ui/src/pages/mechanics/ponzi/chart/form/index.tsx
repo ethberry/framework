@@ -22,8 +22,8 @@ interface IPonziReportSearchFormProps {
 export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
   const { recentDeposits, handleSwitchDeposit, onSubmit, initialValues, open } = props;
 
-  const { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
-  const fixedValues = { contractId, deposit, reward, emptyReward, startTimestamp, endTimestamp };
+  const { contractId, deposit, reward, startTimestamp, endTimestamp } = initialValues;
+  const fixedValues = { contractId, deposit, reward, startTimestamp, endTimestamp };
 
   // @TODO Add validation
   return (
@@ -40,7 +40,7 @@ export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
             <EntityInput
               name="contractId"
               controller="contracts"
-              data={{ contractModule: [ModuleType.STAKING] }}
+              data={{ contractModule: [ModuleType.PONZI] }}
               autoselect
               disableClear
             />
@@ -48,9 +48,7 @@ export const PonziChartSearchForm: FC<IPonziReportSearchFormProps> = props => {
           <Grid item xs={6}>
             <SwitchInput name={recentDeposits ? "recentDeposits" : "allDeposits"} onChange={handleSwitchDeposit} />
           </Grid>
-          <Grid item xs={6}>
-            <SwitchInput name="emptyReward" />
-          </Grid>
+          <Grid item xs={6}></Grid>
           <Grid item xs={6}>
             <SearchTokenSelectInput prefix="deposit" />
           </Grid>

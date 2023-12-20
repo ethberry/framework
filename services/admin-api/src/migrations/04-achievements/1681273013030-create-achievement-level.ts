@@ -26,7 +26,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "item_id",
+          name: "reward_id",
           type: "bigint",
         },
         {
@@ -43,14 +43,6 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           default: "'{}'",
         },
         {
-          name: "start_timestamp",
-          type: "timestamptz",
-        },
-        {
-          name: "end_timestamp",
-          type: "timestamptz",
-        },
-        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -61,7 +53,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["item_id"],
+          columnNames: ["reward_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",

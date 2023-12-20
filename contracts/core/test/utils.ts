@@ -68,8 +68,6 @@ export const isEqualEventArgObj = (args: any): any => {
   return (eventValues: any): boolean => {
     for (const key of Object.keys(args)) {
       if (JSON.stringify(eventValues[key]) !== JSON.stringify(args[key])) {
-        // console.error(`eventValues[${key}]`, JSON.stringify(eventValues[key]));
-        // console.error(`args[${key}]`, JSON.stringify(args[key]));
         return false;
       }
     }

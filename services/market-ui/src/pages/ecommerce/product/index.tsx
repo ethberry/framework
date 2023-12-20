@@ -4,12 +4,12 @@ import { useIntl } from "react-intl";
 import { Box, Grid, Hidden, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
+import { formatItem } from "@framework/exchange";
+import { IProduct } from "@framework/types";
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api-firebase";
-import { IProduct } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { formatPrice } from "../../../utils/money";
 import { Carousel } from "./carousel";
 import { StyledPaper } from "./styled";
 
@@ -71,7 +71,7 @@ export const Product: FC = () => {
             <Box py={2}>
               <StyledPaper>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {formatPrice(product.productItems[0].price)}
+                  {formatItem(product.productItems[0].price)}
                 </Typography>
               </StyledPaper>
             </Box>
@@ -84,7 +84,7 @@ export const Product: FC = () => {
           <Grid item xs={12} md={3}>
             <StyledPaper>
               <Typography variant="body2" color="textSecondary" component="p">
-                {formatPrice(product.productItems[0].price)}
+                {formatItem(product.productItems[0].price)}
               </Typography>
             </StyledPaper>
           </Grid>

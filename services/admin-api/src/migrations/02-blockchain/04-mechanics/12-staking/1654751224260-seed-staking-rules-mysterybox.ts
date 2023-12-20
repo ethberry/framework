@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInterface {
@@ -115,6 +115,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       INSERT INTO ${ns}.staking_rules (
         id,
         title,
+        image_url,
         description,
         duration_amount,
         penalty,
@@ -122,12 +123,14 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         deposit_id,
         reward_id,
         staking_rule_status,
+        external_id,
         contract_id,                               
         created_at,
         updated_at
       ) VALUES (
         116,
         'NATIVE > MYSTERYBOX',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -135,12 +138,14 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         81611,
         81612,
         'ACTIVE',
+        116,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         126,
         'ERC20 > MYSTERYBOX',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -148,12 +153,14 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         81621,
         81622,
         'ACTIVE',
+        126,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         136,
         'ERC721 > MYSTERYBOX',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -161,12 +168,14 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         81631,
         81632,
         'ACTIVE',
+        136,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         146,
         'ERC998 > MYSTERYBOX',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -174,12 +183,14 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         81641,
         81642,
         'ACTIVE',
+        146,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         156,
         'ERC1155 > MYSTERYBOX',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -187,6 +198,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         81651,
         81652,
         'ACTIVE',
+        156,
         12501,       
         '${currentDateTime}',
         '${currentDateTime}'

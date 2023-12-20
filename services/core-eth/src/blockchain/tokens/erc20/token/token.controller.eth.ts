@@ -6,7 +6,6 @@ import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IErc1363TransferReceivedEvent,
   IErc20TokenApproveEvent,
-  IErc20TokenSnapshotEvent,
   IErc20TokenTransferEvent,
 } from "@framework/types";
 import { ContractEventType, ContractType, Erc1363EventType } from "@framework/types";
@@ -25,11 +24,6 @@ export class Erc20TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IErc20TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc20TokenServiceEth.approval(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: ContractEventType.Snapshot })
-  public snapshot(@Payload() event: ILogEvent<IErc20TokenSnapshotEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc20TokenServiceEth.snapshot(event, context);
   }
 
   @EventPattern([

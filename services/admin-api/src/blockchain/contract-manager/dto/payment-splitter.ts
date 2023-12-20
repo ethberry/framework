@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEthereumAddress, IsString } from "class-validator";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+// import { IsBigInt } from "@gemunion/nest-js-validators";
 
 import type { IWalletContractDeployDto } from "@framework/types";
 
@@ -19,6 +19,7 @@ export class PaymentSplitterContractDeployDto implements IWalletContractDeployDt
     isArray: true,
   })
   @IsArray({ message: "typeMismatch" })
-  @IsBigInt({}, { message: "typeMismatch" })
+  // @IsBigInt({}, { message: "typeMismatch" })
+  // TODO validate SUM(shares) = 100 %
   shares: Array<string>;
 }

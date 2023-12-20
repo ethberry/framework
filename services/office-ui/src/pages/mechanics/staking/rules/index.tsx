@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -12,8 +12,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type {
   IStakingRule,
   IStakingRuleDepositSearchDto,
@@ -56,6 +55,7 @@ export const StakingRules: FC = () => {
     baseUrl: "/staking/rules",
     empty: {
       title: "new STAKING rule",
+      imageUrl: "",
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
@@ -64,9 +64,10 @@ export const StakingRules: FC = () => {
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ title, description }) => ({
+    filter: ({ title, description, imageUrl }) => ({
       title,
       description,
+      imageUrl,
     }),
     search: {
       query: "",
@@ -126,13 +127,13 @@ export const StakingRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id} disableGutters>
+            <StyledListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
               <ListActions>
                 <StakingToggleRuleButton rule={rule} />
                 <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -13,7 +13,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import BreedABI from "../../../../abis/mechanics/breed/main/breed.abi.json";
+import BreedABI from "@framework/abis/breed/ExchangeBreedFacet.json";
 
 import { CommonContractInput } from "../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";

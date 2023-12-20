@@ -11,14 +11,13 @@ import {IERC4907} from "@gemunion/contracts-erc721/contracts/interfaces/IERC4907
 
 import {METADATA_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
-import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
-import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {DiamondOverride} from "../../Diamond/override/DiamondOverride.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {SignatureValidator} from "../override/SignatureValidator.sol";
 import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
 import {SignerMissingRole, WrongAmount} from "../../utils/errors.sol";
 
-contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeRentableFacet is SignatureValidator, DiamondOverride {
   using SafeCast for uint256;
 
   event Lend(address account, address to, uint64 expires, uint256 externalId, Asset item, Asset[] price);
@@ -60,6 +59,8 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
       item,
       price
     );
+
+    _afterPurchase(params.referrer, price);
   }
 
   function lendMany(
@@ -87,7 +88,9 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
       price
     );
 
-    for (uint256 i = 0; i < items.length; ) {
+    _afterPurchase(params.referrer, price);
+
+  for (uint256 i = 0; i < items.length; ) {
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         params.referrer /* to */,

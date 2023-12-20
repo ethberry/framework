@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -10,13 +10,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton } from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
 import { PonziEditDialog } from "./edit";
 
 export const PonziRules: FC = () => {
@@ -102,7 +101,7 @@ export const PonziRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id} disableGutters>
+            <StyledListItem key={rule.id}>
               <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
               <div></div>
               <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
@@ -110,7 +109,7 @@ export const PonziRules: FC = () => {
                 <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(rule)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

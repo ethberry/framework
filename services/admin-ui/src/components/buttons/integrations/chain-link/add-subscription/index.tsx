@@ -1,17 +1,15 @@
 import { FC, Fragment, useState } from "react";
-
 import { RecentActors } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-
-import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
-
-import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+
+import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import addConsumerVRFCoordinatorV2MockABI from "@framework/abis/addConsumer/VRFCoordinatorV2Mock.json";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;
@@ -30,7 +28,11 @@ export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = 
   const metaAddConsumer = useSystemContract<IContract, SystemModuleType>(
     async (values: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType, systemContract: IContract) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(systemContract.address, VrfAddConsumer, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        addConsumerVRFCoordinatorV2MockABI,
+        web3Context.provider?.getSigner(),
+      );
       const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
       return contract.addConsumer(subId, values.address) as Promise<void>;
     },

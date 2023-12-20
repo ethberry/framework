@@ -1,6 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsBoolean, IsInt, IsEnum, Min, IsOptional } from "class-validator";
+import { Transform } from "class-transformer";
 
 import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
@@ -50,16 +50,32 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
+  @ApiPropertyOptional({
+    enum: ContractFeatures,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
   public excludeFeatures: Array<ContractFeatures>;
 
-  @ApiProperty({
-    minimum: 1,
+  @ApiPropertyOptional()
+  @IsOptional()
+  // https://github.com/typestack/class-transformer/issues/626
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
   })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public merchantId: number;
+  @IsBoolean({ message: "typeMismatch" })
+  public includeExternalContracts: boolean;
 
   public chainId: number;
-  public includeExternalContracts: boolean;
+  public merchantId: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public contractId?: number;
 }

@@ -6,13 +6,12 @@
 
 pragma solidity ^0.8.20;
 
-import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
-import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {DiamondOverride} from "../../Diamond/override/DiamondOverride.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {SignatureValidator} from "../override/SignatureValidator.sol";
 import {Asset, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
 
-contract ExchangeMockFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeMockFacet is SignatureValidator, DiamondOverride {
 
   constructor() SignatureValidator() {}
 

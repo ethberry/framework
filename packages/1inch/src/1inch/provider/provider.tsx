@@ -1,11 +1,11 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import fetch from "cross-fetch";
+import { useThrottledCallback } from "use-debounce";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useLicense } from "@gemunion/provider-license";
-import { Networks, networkToChainId } from "@gemunion/provider-wallet";
+import { Networks, networkToChainId, rpcUrls } from "@gemunion/provider-wallet";
 
 import { GasPrice, IQuote, ISpender, ISwap, IToken, Slippage } from "./interfaces";
-
 import { OneInchContext } from "./context";
 
 interface ISettings {
@@ -26,7 +26,6 @@ const STORAGE_NAME = "settings";
 export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = props => {
   const {
     children,
-    baseUrl = "https://api.1inch.exchange/v3.0/",
     defaultNetwork = Networks.ETHEREUM,
     defaultGasPrice = GasPrice.MEDIUM,
     defaultSlippage = Slippage.HIGH,
@@ -57,6 +56,11 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     save(STORAGE_NAME, newSettings);
   };
 
+  const getRpcUrl = (): string | undefined => {
+    const chainId = networkToChainId[getNetwork()];
+    return rpcUrls[chainId][0];
+  };
+
   const getGasPrice = (): GasPrice => {
     return settings.gasPrice || defaultGasPrice;
   };
@@ -85,24 +89,24 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
 
   const [cachedTokens, setCachedTokens] = useState<{ [key: string]: Array<IToken> }>({});
 
-  const request = <T,>(url: string, data: Record<string, any> = {}): Promise<T> => {
-    const newUrl = new URL(`${baseUrl}${networkToChainId[getNetwork()]}${url}`);
+  const { fn: getTokenListFn } = useApiCall(
+    (api, data: { chainId: string }) => {
+      return api.fetchJson({
+        url: "/1inch/token-list",
+        data,
+      });
+    },
+    { success: false, error: false },
+  );
 
-    Object.keys(data).forEach(key => {
-      newUrl.searchParams.append(key, data[key]);
-    });
-
-    return fetch(newUrl.toString(), {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
-      }),
-    }).then<T>(r => r.json());
+  const getTokenList = (): Promise<{ tokens: Array<IToken> }> => {
+    return getTokenListFn(void 0, {
+      chainId: networkToChainId[getNetwork()],
+    }) as Promise<{ tokens: Array<IToken> }>;
   };
 
   useEffect(() => {
-    void request<{ tokens: Array<IToken> }>("/tokens").then(r => {
+    void getTokenList().then(r => {
       const tokens = Object.values(r.tokens);
       setCachedTokens({
         ...cachedTokens,
@@ -115,17 +119,72 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     return cachedTokens[networkToChainId[getNetwork()]] || [];
   };
 
-  const getQuote = (fromToken: IToken, toToken: IToken, amount: string): Promise<IQuote> => {
-    return request<IQuote>("/quote", {
-      fromTokenAddress: fromToken.address,
-      toTokenAddress: toToken.address,
-      amount,
-    });
+  interface IGetQuoteProps {
+    fromToken: IToken;
+    toToken: IToken;
+    amount: string;
+  }
+
+  const { fn: getQuoteFn, isLoading: isQuoteLoading } = useApiCall(
+    async (api, data: IGetQuoteProps): Promise<IQuote> => {
+      const { fromToken, toToken, amount } = data;
+      const response = await api.fetchJson({
+        url: "/1inch/quote",
+        data: {
+          src: fromToken.address,
+          dst: toToken.address,
+          amount,
+          chainId: networkToChainId[getNetwork()],
+          includeGas: true,
+          includeProtocols: true,
+          includeTokensInfo: true,
+        },
+      });
+
+      return response as IQuote;
+    },
+    { success: false, error: false },
+  );
+
+  const getQuote = useThrottledCallback(
+    (fromToken: IToken, toToken: IToken, amount: string): Promise<IQuote> => {
+      const data = {
+        fromToken,
+        toToken,
+        amount,
+      };
+      return getQuoteFn(void 0, data) as Promise<IQuote>;
+    },
+    2000,
+    { leading: true },
+  );
+
+  const { fn: approveSpenderFn } = useApiCall(
+    (api, data: any) => {
+      return api.fetchJson({
+        url: "/1inch/approve",
+        data,
+      });
+    },
+    { success: false, error: false },
+  );
+
+  const approveSpender = (tokenAddress: string): Promise<ISpender> => {
+    return approveSpenderFn(void 0, {
+      tokenAddress,
+      chainId: networkToChainId[getNetwork()],
+    }) as Promise<ISpender>;
   };
 
-  const approveSpender = (): Promise<ISpender> => {
-    return request<ISpender>("/approve/spender");
-  };
+  const { fn: swapFn } = useApiCall(
+    (api, data: any) => {
+      return api.fetchJson({
+        url: "/1inch/swap",
+        data,
+      });
+    },
+    { success: false, error: false },
+  );
 
   const swap = (
     fromToken: IToken,
@@ -134,13 +193,14 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
     fromAddress: string,
     slippage: number,
   ): Promise<ISwap> => {
-    return request<ISwap>("/swap", {
-      toTokenAddress: toToken.address,
-      fromTokenAddress: fromToken.address,
+    return swapFn(void 0, {
+      src: toToken.address,
+      dst: fromToken.address,
       amount,
-      fromAddress,
+      from: fromAddress,
       slippage,
-    });
+      chainId: networkToChainId[getNetwork()],
+    }) as Promise<ISwap>;
   };
 
   if (!license.isValid()) {
@@ -152,6 +212,7 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
       value={{
         getNetwork,
         setNetwork,
+        getRpcUrl,
         getGasPrice,
         setGasPrice,
         getSlippage,
@@ -161,6 +222,7 @@ export const OneInchProvider: FC<PropsWithChildren<IOneInchProviderProps>> = pro
 
         getAllTokens,
         getQuote,
+        isQuoteLoading,
         approveSpender,
         swap,
       }}

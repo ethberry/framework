@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOff } from "@mui/icons-material";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 

@@ -4,11 +4,11 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import VestingReleaseABI from "../../../../../abis/mechanics/vesting/release/release.abi.json";
+import VestingReleaseABI from "@framework/abis/release/Vesting.json";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;
@@ -46,7 +46,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
       message="form.tips.release"
       className={className}
       dataTestId="VestingReleaseButton"
-      disabled={disabled}
+      disabled={disabled || balance.amount === "0"}
       variant={variant}
     />
   );

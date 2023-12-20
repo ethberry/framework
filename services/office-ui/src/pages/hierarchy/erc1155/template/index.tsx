@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -9,14 +9,13 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
-import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
-import { cleanUpAsset } from "../../../../utils/money";
 import { Erc1155TemplateEditDialog } from "./edit";
 
 export const Erc1155Template: FC = () => {
@@ -88,7 +87,7 @@ export const Erc1155Template: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(template => (
-            <ListItem key={template.id} disableGutters sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={template.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListActions dataTestId="TemplateActionsMenuButton">
@@ -99,16 +98,9 @@ export const Erc1155Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintButton
-                  template={template}
-                  disabled={
-                    template.templateStatus === TemplateStatus.INACTIVE ||
-                    template.contract?.contractType === TokenType.NATIVE ||
-                    template.contract?.contractFeatures.includes(ContractFeatures.GENES)
-                  }
-                />
+                <MintButton template={template} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

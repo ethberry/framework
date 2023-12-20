@@ -4,11 +4,11 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
-import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
+import GrantRoleABI from "@framework/abis/grantRole/AccessControlFacet.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 

@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
-import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto, TokenStatus } from "@framework/types";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -58,7 +57,7 @@ export const RaffleTokenList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "auto" }}>
           {rows.map(token => (
-            <ListItem key={token.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={token.id} wrap>
               <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
@@ -67,13 +66,10 @@ export const RaffleTokenList: FC = () => {
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
               <ListActions>
-                <RaffleRewardButton
-                  token={token}
-                  disabled={token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
-                />
+                <RaffleRewardButton token={token} />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

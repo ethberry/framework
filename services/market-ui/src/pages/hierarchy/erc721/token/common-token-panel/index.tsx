@@ -2,11 +2,11 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
+import { formatItemHtmlList } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { Erc721TransferButton, TokenSellButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { computeTokenAsset } from "../../../../../utils/token";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
@@ -33,13 +33,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
             <FormattedMessage id="pages.token.priceTitle" />
           </StyledTypography>
         </StyledToolbar>
-        <StyledList component="ul">
-          {formatPrice(price)
-            .split(", ")
-            .map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-        </StyledList>
+        <StyledList component="ul">{formatItemHtmlList(price)}</StyledList>
       </CardContent>
       <CardActions>
         <Grid container alignItems="center" spacing={1}>

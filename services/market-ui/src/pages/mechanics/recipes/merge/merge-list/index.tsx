@@ -5,12 +5,9 @@ import { FormattedMessage } from "react-intl";
 
 import { StyledPagination } from "@framework/styled";
 import type { IMerge, IMergeSearchDto } from "@framework/types";
-import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TokenType } from "@gemunion/types-blockchain";
 
 import { MergeItem } from "./item";
 
@@ -20,7 +17,6 @@ export const MergeList: FC = () => {
       baseUrl: "/recipes/merge",
       search: {
         query: "",
-        contractId: void 0,
       },
     });
 
@@ -34,20 +30,7 @@ export const MergeList: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MergeSearchForm">
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <EntityInput
-              name="contractId"
-              controller="contracts"
-              data={{
-                contractModule: [ModuleType.HIERARCHY],
-                contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
-              }}
-            />
-          </Grid>
-        </Grid>
-      </CommonSearchForm>
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MergeSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

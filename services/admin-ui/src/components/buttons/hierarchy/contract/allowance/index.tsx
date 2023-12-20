@@ -4,13 +4,12 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
+import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.json";
+import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -24,7 +23,7 @@ export interface IAllowanceButtonProps {
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const {
     className,
-    contract: { address, contractType, decimals },
+    contract: { address, contractFeatures, contractType, decimals },
     disabled,
     variant,
   } = props;
@@ -41,13 +40,21 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(address, ERC20ApproveABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(address, approveERC20BlacklistABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, values.amount) as Promise<any>;
     } else if (contractType === TokenType.ERC721 || contractType === TokenType.ERC998) {
-      const contractErc721 = new Contract(address, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
+      const contractErc721 = new Contract(
+        address,
+        setApprovalForAllERC1155BlacklistABI,
+        web3Context.provider?.getSigner(),
+      );
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
     } else if (contractType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(address, ERC1155SetApprovalForAllABI, web3Context.provider?.getSigner());
+      const contractErc1155 = new Contract(
+        address,
+        setApprovalForAllERC1155BlacklistABI,
+        web3Context.provider?.getSigner(),
+      );
       return contractErc1155.setApprovalForAll(values.address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
@@ -68,7 +75,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         message="form.buttons.allowance"
         className={className}
         dataTestId="AllowanceButton"
-        disabled={disabled}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />
       <AllowanceDialog

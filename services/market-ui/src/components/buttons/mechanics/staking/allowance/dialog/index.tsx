@@ -28,7 +28,6 @@ export interface IStakingAllowanceDialogProps {
 
 export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
-
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {

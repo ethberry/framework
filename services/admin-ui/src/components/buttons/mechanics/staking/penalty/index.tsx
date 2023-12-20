@@ -3,12 +3,12 @@ import { Policy } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { formatEther } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
+import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import StakingCountersABI from "../../../../../abis/mechanics/staking/stakingCounters.abi.json";
-import { formatEther } from "../../../../../utils/money";
+import getPenaltyStakingABI from "@framework/abis/getPenalty/Staking.json";
 
 export interface IStakingPenaltyBalanceButtonProps {
   balance: IBalance;
@@ -22,7 +22,7 @@ export const StakingPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProps> 
 
   const metaGetPenalty = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(balance.account, StakingCountersABI, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, getPenaltyStakingABI, web3Context.provider?.getSigner());
       return contract.getPenalty(balance.token!.template!.contract!.address, balance.token!.tokenId) as Promise<any>;
     },
     { success: false },

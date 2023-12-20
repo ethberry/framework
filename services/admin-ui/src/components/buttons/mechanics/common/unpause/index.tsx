@@ -4,11 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
+import unpausePausableABI from "@framework/abis/unpause/Pausable.json";
 
 export interface IUnPauseButtonProps {
   className?: string;
@@ -26,7 +26,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
   } = props;
 
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, unpausePausableABI, web3Context.provider?.getSigner());
     return contract.unpause() as Promise<void>;
   });
 

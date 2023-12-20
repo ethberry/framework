@@ -2,10 +2,9 @@ import { FC } from "react";
 import { Grid, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
+import { formatEther } from "@framework/exchange";
 import type { IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
-
-import { formatEther } from "../../utils/money";
 
 export interface IMysteryboxContentProps {
   mysterybox?: IMysteryBox;

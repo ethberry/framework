@@ -5,11 +5,11 @@ import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
-import WaitListSetRewardABI from "../../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
+import setRewardWaitListABI from "@framework/abis/setReward/WaitList.json";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;
@@ -22,7 +22,7 @@ export interface IWailtListListGenerateButtonProps {
 export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> = props => {
   const {
     className,
-    waitListList: { id },
+    waitListList: { id, contract, root },
     disabled,
     variant,
     onRefreshPage,
@@ -42,7 +42,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
   );
 
   const metaFn = useMetamask((result: IWaitListList, web3Context: Web3ContextType) => {
-    const contract = new Contract(result.contract.address, WaitListSetRewardABI, web3Context.provider?.getSigner());
+    const contract = new Contract(result.contract.address, setRewardWaitListABI, web3Context.provider?.getSigner());
 
     return contract.setReward(
       {
@@ -80,7 +80,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
       variant={variant}
     />
   );

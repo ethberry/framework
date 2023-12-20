@@ -11,13 +11,13 @@ import {TEMPLATE_ID} from "@gemunion/contracts-utils/contracts/attributes.sol";
 import {IERC721GeneralizedCollection} from "@gemunion/contracts-erc721/contracts/interfaces/IERC721GeneralizedCollection.sol";
 
 import {SignatureValidator} from "../override/SignatureValidator.sol";
-import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
-import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+
+import {DiamondOverride} from "../../Diamond/override/DiamondOverride.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {Asset, Params, DisabledTokenTypes} from "../lib/interfaces/IAsset.sol";
 import {SignerMissingRole, WrongToken} from "../../utils/errors.sol";
 
-contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeMergeFacet is SignatureValidator, DiamondOverride {
   event Merge(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
@@ -37,9 +37,18 @@ contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, Pausab
     uint256 length = price.length;
     for (uint256 i = 0; i < length; ) {
       Asset memory item = price[i];
+
+      // check for same contract
+      if (i > 0 && item.token != price[0].token) {
+        revert WrongToken();
+      }
+
+      // todo should we try..catch call?
+      // check for token existence with correct metadata
       uint256 templateId = IERC721GeneralizedCollection(item.token).getRecordFieldValue(item.tokenId, TEMPLATE_ID);
 
-      if (templateId != expectedId) {
+      // check for same template
+      if (expectedId != 0 && templateId != expectedId) {
         revert WrongToken();
       }
 
@@ -53,5 +62,7 @@ contract ExchangeMergeFacet is SignatureValidator, AccessControlInternal, Pausab
     ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Merge(_msgSender(), params.externalId, items, price);
+
+    _afterPurchase(params.referrer, price);
   }
 }

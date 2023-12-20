@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, IconButton } from "@mui/material";
+import { Alert, Box, IconButton } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
 import { StyledPopover, StyledText } from "./styled";
@@ -44,7 +44,9 @@ export const AllowanceInfoPopover: FC = () => {
         disableRestoreFocus
       >
         <StyledText>
-          <FormattedMessage id="alert.approve" />
+          <Alert severity="warning">
+            <FormattedMessage id="alert.approve" />
+          </Alert>
         </StyledText>
       </StyledPopover>
     </Box>

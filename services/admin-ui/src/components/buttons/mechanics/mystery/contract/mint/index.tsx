@@ -5,14 +5,13 @@ import { Contract } from "ethers";
 
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
-
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -42,7 +41,11 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
-    const contractMysteryBox = new Contract(address, MysteryMintBoxABI, web3Context.provider?.getSigner());
+    const contractMysteryBox = new Contract(
+      address,
+      mintBoxERC721MysteryBoxBlacklistABI,
+      web3Context.provider?.getSigner(),
+    );
     const items = values.mysteryBox!.item!.components.map(item => ({
       tokenType: Object.values(TokenType).indexOf(item.tokenType),
       token: item.contract!.address,

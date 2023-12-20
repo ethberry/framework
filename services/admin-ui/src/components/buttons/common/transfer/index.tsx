@@ -5,13 +5,13 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20TransferABI from "../../../../abis/hierarchy/erc20/transfer/erc20.transfer.abi.json";
-import ERC721SafeTransferFromABI from "../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
-import ERC1155SafeTransferFromABI from "../../../../abis/hierarchy/erc1155/transfer/erc1155.safeTransferFrom.abi.json";
+import safeTransferFromERC1155BlacklistABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
+import safeTransferFromERC721BlacklistABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
+import transferERC20BlacklistABI from "@framework/abis/transfer/ERC20Blacklist.json";
 
 import { ITransferDto, TransferDialog } from "./dialog";
 
@@ -25,7 +25,7 @@ export interface ITransferButtonProps {
 export const TransferButton: FC<ITransferButtonProps> = props => {
   const {
     className,
-    contract: { address, contractType, id },
+    contract: { address, contractFeatures, contractType, id },
     disabled,
     variant,
   } = props;
@@ -40,17 +40,17 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         value: asset.amount,
       }) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
-      const contract = new Contract(address, ERC20TransferABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, transferERC20BlacklistABI, web3Context.provider?.getSigner());
       return contract.transfer(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
-      const contract = new Contract(address, ERC721SafeTransferFromABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, safeTransferFromERC721BlacklistABI, web3Context.provider?.getSigner());
       return contract["safeTransferFrom(address,address,uint256)"](
         web3Context.account,
         values.address,
         asset.token.tokenId,
       ) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC1155) {
-      const contract = new Contract(address, ERC1155SafeTransferFromABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, safeTransferFromERC1155BlacklistABI, web3Context.provider?.getSigner());
       return contract.safeTransferFrom(
         web3Context.account,
         values.address,
@@ -84,7 +84,7 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         message="form.buttons.transfer"
         className={className}
         dataTestId="TransferButton"
-        disabled={disabled}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />
       <TransferDialog

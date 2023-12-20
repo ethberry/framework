@@ -1,14 +1,15 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography } from "@mui/material";
+import { addSeconds, formatDistance } from "date-fns";
+
+import { formatItem, formatPenalty } from "@framework/exchange";
+import { DurationUnit, IAsset } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SwitchInput } from "@gemunion/mui-inputs-core";
 
-import { DurationUnit, IAsset } from "@framework/types";
-import { validationSchema } from "./validation";
-import { formatComplexPrice, formatPenalty } from "../../../utils/money";
 import { normalizeDuration } from "../../../utils/time";
-import { addSeconds, formatDistance } from "date-fns";
+import { validationSchema } from "./validation";
 
 export interface IDepositRule {
   deposit?: IAsset;
@@ -51,7 +52,7 @@ export const DepositRewardDialog: FC<IRewardDialogProps> = props => {
         <FormattedMessage
           id="dialogs.reward-item"
           values={{
-            item: formatComplexPrice(rule.reward),
+            item: formatItem(rule.reward),
             period: `${formatMessage(
               { id: `enums.durationUnit.${rule.durationUnit}` },
               {

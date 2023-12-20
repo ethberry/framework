@@ -4,13 +4,13 @@ import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { getEthPrice } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
+import TemplateLendABI from "@framework/abis/lend/ExchangeRentableFacet.json";
 
-import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import type { ILendDto } from "./dialog";
 import { LendDialog } from "./dialog";

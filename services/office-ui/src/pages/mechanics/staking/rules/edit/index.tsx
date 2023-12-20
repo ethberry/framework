@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule } from "@framework/types";
@@ -27,6 +28,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const {
     id,
     title,
+    imageUrl,
     description,
     penalty,
     recurrent,
@@ -39,6 +41,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const fixedValues = {
     id,
     title,
+    imageUrl,
     description,
     deposit,
     reward,
@@ -90,6 +93,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
         readOnly={readOnly}
       />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

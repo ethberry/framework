@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
@@ -10,12 +10,11 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import ERC998WhitelistChildABI from "../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
+import ERC998WhitelistChildABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
@@ -148,7 +147,7 @@ export const Erc998Composition: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(composition => (
-            <ListItem key={composition.id} disableGutters>
+            <StyledListItem key={composition.id}>
               <ListItemText sx={{ flex: "0 1 80%" }}>
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
@@ -156,7 +155,7 @@ export const Erc998Composition: FC = () => {
                 <ListAction onClick={handleView(composition)} message="form.tips.view" icon={Visibility} />
                 <ListAction onClick={handleDelete(composition)} message="form.tips.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

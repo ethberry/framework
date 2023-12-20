@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { addDays } from "date-fns";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -41,12 +40,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         title,
         description,
         achievement_rule_id,
-        item_id,
+        reward_id,
         amount,
         parameters,
         achievement_level,
-        start_timestamp,
-        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
@@ -57,9 +54,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100101,
         5,
         '${defaultJSON}',
-        1,
-        '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',                
+        1,              
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -72,8 +67,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${defaultJSON}',
         2,
         '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
-        '${currentDateTime}',
         '${currentDateTime}'
       ), (
         3,
@@ -84,8 +77,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         15,
         '${defaultJSON}',
         3,
-        '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -98,8 +89,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${defaultJSON}',
         1,
         '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
-        '${currentDateTime}',
         '${currentDateTime}'
       ), (
         5,
@@ -110,8 +99,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         10,
         '${defaultJSON}',
         2,
-        '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -124,8 +111,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${defaultJSON}',
         1,
         '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
-        '${currentDateTime}',
         '${currentDateTime}'
       ), (
         7,
@@ -136,8 +121,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         10,
         '${defaultJSON}',
         1,
-        '${currentDateTime}',
-        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

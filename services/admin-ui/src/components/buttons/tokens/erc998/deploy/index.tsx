@@ -4,11 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc998ContractDeployDto, IUser } from "@framework/types";
 import { Erc998ContractTemplates } from "@framework/types";
 
-import DeployERC998TokenABI from "../../../../../abis/hierarchy/erc998/contract-deploy/deployERC998Token.abi.json";
+import deployERC998TokenERC998FactoryFacetABI from "@framework/abis/deployERC998Token/ERC998FactoryFacet.json";
 
 import { Erc998ContractDeployDialog } from "./dialog";
 
@@ -26,7 +26,11 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc998ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC998TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployERC998TokenERC998FactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC998Token(
         {

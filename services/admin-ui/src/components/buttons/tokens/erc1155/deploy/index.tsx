@@ -4,11 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
-import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
+import deployERC1155TokenERC1155FactoryFacetABI from "@framework/abis/deployERC1155Token/ERC1155FactoryFacet.json";
 
 import { Erc1155ContractDeployDialog } from "./dialog";
 
@@ -26,7 +26,11 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc1155ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC1155TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployERC1155TokenERC1155FactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC1155Token(
         {

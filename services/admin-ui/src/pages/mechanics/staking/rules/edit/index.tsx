@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+// import { FormWatcher } from "@gemunion/mui-form";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ModuleType, StakingRuleStatus } from "@framework/types";
@@ -28,6 +30,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const {
     id,
     title,
+    imageUrl,
     description,
     penalty,
     recurrent,
@@ -42,6 +45,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const fixedValues = {
     id,
     title,
+    imageUrl,
     description,
     deposit,
     reward,
@@ -86,9 +90,11 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
         ) : null}
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
-            autoSelect
+            autoSelect={false}
             prefix="deposit"
             readOnly={readOnly}
+            allowEmpty={true}
+            disableClear={false}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>
@@ -121,6 +127,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
       />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
       <NumberInput name="maxStake" readOnly={readOnly} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

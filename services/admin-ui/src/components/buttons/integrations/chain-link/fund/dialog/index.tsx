@@ -5,14 +5,13 @@ import { Contract } from "ethers";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 import { TextInput } from "@gemunion/mui-inputs-core";
-
-import LinkBalanceOfABI from "../../../../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
+import { formatEther } from "@framework/exchange";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
-import { formatEther } from "../../../../../../utils/money";
-import type { IContract } from "@framework/types";
-import { SystemModuleType } from "@framework/types";
+import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
 
 export interface IChainLinkFundDto {
   subscriptionId: number;
@@ -34,7 +33,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        LinkBalanceOfABI,
+        balanceOfBasicTokenABI,
         web3Context.provider?.getSigner(),
       );
       const value = await contract.callStatic.balanceOf(web3Context.account);

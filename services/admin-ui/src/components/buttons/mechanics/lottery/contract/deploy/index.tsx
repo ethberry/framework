@@ -4,10 +4,10 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ILotteryContractDeployDto, IUser } from "@framework/types";
 
-import DeployLotteryABI from "../../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
+import deployLotteryLotteryFactoryFacetABI from "@framework/abis/deployLottery/LotteryFactoryFacet.json";
 
 import { LotteryContractDeployDialog } from "./dialog";
 
@@ -25,7 +25,11 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ILotteryContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployLotteryABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployLotteryLotteryFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployLottery(
         {

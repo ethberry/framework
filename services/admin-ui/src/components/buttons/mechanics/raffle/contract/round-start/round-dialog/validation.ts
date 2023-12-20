@@ -4,7 +4,6 @@ import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 import { dbIdValidationSchema } from "@gemunion/yup-rules";
 
-// TODO validations
 export const validationSchema = object().shape({
   contractId: dbIdValidationSchema,
   address: addressValidationSchema,

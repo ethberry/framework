@@ -1,30 +1,24 @@
-import { FC, useEffect } from "react";
+import { FC, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
-
 import { useSnackbar } from "notistack";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
-import { isAccessTokenExpired, useApi } from "@gemunion/provider-api-firebase";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
 
 export const Signal: FC = () => {
+  const [socket, setSocket] = useState<Socket | null>(null);
+
   const api = useApi();
   const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-
   const isUserAuthenticated = user.isAuthenticated();
 
-  useEffect(() => {
-    if (!isUserAuthenticated) {
-      return;
-    }
-
-    if (isAccessTokenExpired()) {
-      void api.refreshToken();
-    }
+  const activateSocket = async () => {
+    await api.refreshToken();
 
     const socket = io(`${process.env.SIGNAL_BE_URL}`, {
       extraHeaders: {
@@ -71,13 +65,33 @@ export const Signal: FC = () => {
       },
     );
 
+    setSocket(socket);
+  };
+
+  const deactivateSocket = (socket: Socket) => {
+    socket.off("exception");
+    socket.off("connect_failed");
+    socket.off(SignalEventType.TRANSACTION_HASH);
+    socket.disconnect();
+    setSocket(null);
+  };
+
+  // TODO handle if token is expired and changed in localstorage - need to reinitiate socket
+  useLayoutEffect(() => {
+    if (!socket && isUserAuthenticated) {
+      void activateSocket();
+    }
+
+    if (socket && !isUserAuthenticated) {
+      deactivateSocket(socket);
+    }
+
     return () => {
-      socket.off("exception");
-      socket.off("connect_failed");
-      socket.off(SignalEventType.TRANSACTION_HASH);
-      socket.disconnect();
+      if (socket) {
+        deactivateSocket(socket);
+      }
     };
-  }, [isUserAuthenticated]);
+  }, [socket, isUserAuthenticated]);
 
   return null;
 };

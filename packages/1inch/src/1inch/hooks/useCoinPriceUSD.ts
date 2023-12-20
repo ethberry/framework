@@ -17,7 +17,7 @@ export const useCoinPriceUSD = (options: IOptions): string => {
   const { token, tokenQuantity } = options;
 
   const allTokens = useAllTokens();
-  const quote = useQuote(
+  const { quote } = useQuote(
     tokenQuantity,
     token,
     useMemo(() => allTokens.find(token => token.symbol === stableCoinSymbol), [allTokens]),
@@ -33,6 +33,6 @@ export const useCoinPriceUSD = (options: IOptions): string => {
     if (!quote) {
       return "";
     }
-    return (+formatUnits(BigNumber.from(quote.toTokenAmount), BigNumber.from(quote.toToken.decimals))).toFixed(2);
+    return (+formatUnits(BigNumber.from(quote?.toAmount), BigNumber.from(quote?.toToken?.decimals))).toFixed(2);
   }, [quote, token, tokenQuantity]);
 };

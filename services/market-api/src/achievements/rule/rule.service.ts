@@ -20,21 +20,22 @@ export class AchievementRuleService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("rule.item", "rule_item");
     queryBuilder.leftJoinAndSelect("rule_item.components", "rule_item_components");
     queryBuilder.leftJoinAndSelect("rule_item_components.template", "rule_item_template");
     queryBuilder.leftJoinAndSelect("rule_item_components.contract", "rule_item_contract");
     queryBuilder.leftJoinAndSelect("rule.levels", "levels");
     queryBuilder.leftJoinAndSelect("rule.items", "items");
-    queryBuilder.leftJoinAndSelect("levels.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("levels.reward", "reward");
+    queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
+    queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
+    queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
 
     queryBuilder.leftJoinAndSelect(
-      "item_template.tokens",
-      "item_tokens",
-      "item_contract.contractType IN(:...tokenTypes)",
+      "reward_template.tokens",
+      "reward_tokens",
+      "reward_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 

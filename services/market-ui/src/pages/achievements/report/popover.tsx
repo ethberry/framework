@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { IconButton, Popover, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { formatItem } from "@framework/exchange";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { formatPrice } from "../../../utils/money";
 import { StyledPopoverWrapper, StyledTable } from "./styled";
 
 export interface IAchievementInfoProps {
@@ -82,7 +82,7 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
                 <FormattedMessage id={`pages.achievements.info.items`} />
               </TableCell>
               <TableCell>
-                <Typography>{formatPrice(rule.item)}</Typography>
+                <Typography>{formatItem(rule.item)}</Typography>
               </TableCell>
             </TableRow>
             {rule.levels.reverse().map(level => (
@@ -98,7 +98,7 @@ export const AchievementInfoPopover: FC<IAchievementInfoProps> = props => {
                   />
                 </TableCell>
                 <TableCell>
-                  <Typography>{`${level.title}, get: ${formatPrice(level.item)}`}</Typography>
+                  <Typography>{`${level.title}, get: ${formatItem(level.reward)}`}</Typography>
                 </TableCell>
               </TableRow>
             ))}

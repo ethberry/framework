@@ -95,7 +95,7 @@ export class AchievementLevelService {
   }
 
   public async create(dto: IAchievementLevelCreateDto, userEntity: UserEntity): Promise<AchievementLevelEntity> {
-    const { item, parameters, achievementRuleId, ...rest } = dto;
+    const { reward, parameters, achievementRuleId, ...rest } = dto;
 
     const achievementRuleEntity = await this.achievementRuleService.findOne(
       {
@@ -112,15 +112,15 @@ export class AchievementLevelService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const itemEntity = await this.assetService.create();
-    await this.assetService.update(itemEntity, item, userEntity);
+    const rewardEntity = await this.assetService.create();
+    await this.assetService.update(rewardEntity, reward, userEntity);
 
     return this.achievementLevelEntityRepository
       .create({
         ...rest,
         parameters,
         achievementRuleId,
-        item: itemEntity,
+        reward: rewardEntity,
       })
       .save();
   }
@@ -130,14 +130,14 @@ export class AchievementLevelService {
     dto: IAchievementLevelUpdateDto,
     userEntity: UserEntity,
   ): Promise<AchievementLevelEntity> {
-    const { item, parameters, ...rest } = dto;
+    const { reward, parameters, ...rest } = dto;
 
     const achievementLevelEntity = await this.findOne(where, {
       relations: {
         achievementRule: {
           contract: true,
         },
-        item: {
+        reward: {
           components: true,
         },
       },
@@ -151,8 +151,8 @@ export class AchievementLevelService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    if (item) {
-      await this.assetService.update(achievementLevelEntity.item, item, userEntity);
+    if (reward) {
+      await this.assetService.update(achievementLevelEntity.reward, reward, userEntity);
     }
 
     if (parameters) {

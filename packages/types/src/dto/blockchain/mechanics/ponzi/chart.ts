@@ -9,8 +9,7 @@ export interface IPonziChartItemSearchDto {
 export interface IPonziChartSearchDto extends IPaginationDto {
   contractId?: number | InputType;
   deposit: IPonziChartItemSearchDto;
-  reward?: IPonziChartItemSearchDto;
-  emptyReward?: boolean;
+  reward: IPonziChartItemSearchDto;
   startTimestamp: string;
   endTimestamp: string;
 }

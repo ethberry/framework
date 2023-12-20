@@ -9,6 +9,7 @@ import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { deployPonzi } from "./fixture";
 import { deployERC1363 } from "../../ERC20/shared/fixtures";
+import { isEqualEventArgArrObj } from "../../utils";
 
 describe("Ponzi", function () {
   const period = 300;
@@ -17,19 +18,12 @@ describe("Ponzi", function () {
 
   const erc20Factory = () => deployERC1363("ERC20Simple", { amount: parseEther("1000000000") });
 
-  const refProgram = {
-    maxRefs: 10n,
-    refReward: 10n * 100n, // 10.00 %
-    refDecrease: 10n, // 10% - 1% - 0.1% - 0.01% etc.
-  };
-
   describe("setRule", function () {
     it("should fail edit when Rule not exist", async function () {
       const ponziInstance = await deployPonzi();
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -42,16 +36,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.updateRule(2, false);
       await expect(tx1).to.be.revertedWithCustomError(ponziInstance, "NotExist");
@@ -62,7 +52,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -75,16 +64,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
     });
 
     it("should set multiple Rules", async function () {
@@ -92,7 +77,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -105,16 +89,11 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 2,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -127,15 +106,11 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // todo count 2 Events?
     });
 
@@ -144,7 +119,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -157,16 +131,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.updateRule(1, false);
       await expect(tx1).to.emit(ponziInstance, "RuleUpdated").withArgs(1, false);
@@ -193,17 +163,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        externalId: 1,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.deposit(owner.address, 2, { value: 100 });
       await expect(tx1).to.be.revertedWithCustomError(ponziInstance, "NotExist");
@@ -216,7 +181,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -229,16 +193,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: false,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.deposit(owner.address, 1, { value: 100 });
       await expect(tx1).to.be.revertedWithCustomError(ponziInstance, "NotActive");
@@ -251,7 +211,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -264,16 +223,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.deposit(owner.address, 1, { value: 100 });
       await expect(tx1).to.be.revertedWithCustomError(ponziInstance, "WrongAmount");
@@ -286,7 +241,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -299,16 +253,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       const tx1 = ponziInstance.deposit(owner.address, 1, { value: 1000 });
       await expect(tx1).to.emit(ponziInstance, "StakingStart");
@@ -321,7 +271,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -334,16 +283,12 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
@@ -367,7 +312,6 @@ describe("Ponzi", function () {
       const ponziInstance = await deployPonzi();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -380,17 +324,17 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       // function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
 
@@ -437,7 +381,6 @@ describe("Ponzi", function () {
       const ponziInstance = await deployPonzi();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -450,17 +393,17 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       const tx1 = ponziInstance.connect(receiver).deposit(owner.address, 1, {
         value: 1000,
@@ -493,7 +436,6 @@ describe("Ponzi", function () {
       const ponziInstance = await deployPonzi();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -506,17 +448,17 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       const tx1 = ponziInstance.connect(receiver).deposit(owner.address, 1, {
         value: 1000,
@@ -568,7 +510,6 @@ describe("Ponzi", function () {
       const ponziInstance = await deployPonzi();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -581,17 +522,17 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       const tx1 = ponziInstance.deposit(owner.address, 1, {
         value: 1000,
@@ -641,7 +582,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -654,17 +594,17 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       const tx1 = ponziInstance.deposit(owner.address, 1, {
         value: 1000,
@@ -697,7 +637,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -710,17 +649,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
@@ -767,7 +702,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -780,17 +714,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULE
       const tx = ponziInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
       // STAKE
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
@@ -880,7 +810,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -893,16 +822,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -915,17 +843,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // STAKE 1
       const tx1 = ponziInstance.deposit(owner.address, 1, {
@@ -962,7 +886,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -975,16 +898,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -997,17 +919,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // STAKE 1
       const tx1 = ponziInstance.deposit(owner.address, 1, {
@@ -1042,7 +960,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -1055,16 +972,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -1077,17 +993,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // FINALIZE 1
       const tx3 = ponziInstance.finalizeByRuleId(1);
@@ -1103,7 +1015,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -1116,16 +1027,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -1138,17 +1048,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // FINALIZE 1
       const tx3 = ponziInstance.finalizeByToken(tokenZero);
@@ -1194,7 +1100,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -1207,16 +1112,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -1229,17 +1133,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // STAKE 1
       const tx1 = ponziInstance.deposit(owner.address, 1, {
@@ -1292,7 +1192,6 @@ describe("Ponzi", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -1305,16 +1204,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -1327,17 +1225,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // STAKE 1
       const tx1 = ponziInstance.deposit(owner.address, 1, {
@@ -1377,19 +1271,13 @@ describe("Ponzi", function () {
   });
 
   describe("Referral", function () {
-    it("should Deposit with Reward (multi ref)", async function () {
+    it("should Deposit with Ref", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
 
       const ponziInstance = await deployPonzi();
       const erc20Instance = await erc20Factory();
 
-      const tx0 = ponziInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
-      await expect(tx0)
-        .to.emit(ponziInstance, "ReferralProgram")
-        .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
-
       const stakeRule1 = {
-        externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
           token: ZeroAddress,
@@ -1402,16 +1290,15 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 1000,
         },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
+        terms: {
+          maxCycles: 2,
+          period, // 60 sec
+          penalty,
+        },
         active: true,
       };
 
       const stakeRule2 = {
-        externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
           token: await erc20Instance.getAddress(),
@@ -1424,17 +1311,13 @@ describe("Ponzi", function () {
           tokenId: 0,
           amount: 100,
         },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
+        terms: { maxCycles: 2, period, penalty },
         active: true,
       };
 
       // SET RULES
       const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
+      await expect(tx).to.emit(ponziInstance, "RuleCreatedP");
 
       // STAKE 1-1
       const tx11 = ponziInstance.connect(owner).deposit(receiver.address, 1, {
@@ -1444,13 +1327,15 @@ describe("Ponzi", function () {
       const stakeBalance1 = await ethers.provider.getBalance(await ponziInstance.getAddress());
       expect(stakeBalance1).to.equal(stakeRule1.deposit.amount);
       await expect(tx11)
-        .to.emit(ponziInstance, "ReferralReward")
+        .to.emit(ponziInstance, "ReferralEvent")
         .withArgs(
-          owner.address,
           receiver.address,
-          0,
-          tokenZero,
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
+          isEqualEventArgArrObj({
+            tokenType: 0n, // NATIVE
+            token: ZeroAddress,
+            tokenId: 0n,
+            amount: WeiPerEther,
+          }),
         );
 
       // STAKE 1-2
@@ -1461,22 +1346,15 @@ describe("Ponzi", function () {
       const stakeBalance2 = await ethers.provider.getBalance(await ponziInstance.getAddress());
       expect(stakeBalance2).to.equal(stakeRule1.deposit.amount * 2n);
       await expect(tx12)
-        .to.emit(ponziInstance, "ReferralReward")
+        .to.emit(ponziInstance, "ReferralEvent")
         .withArgs(
-          stranger.address,
           owner.address,
-          0,
-          tokenZero,
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
-        );
-      await expect(tx12)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(
-          stranger.address,
-          receiver.address,
-          1,
-          tokenZero,
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
+          isEqualEventArgArrObj({
+            tokenType: 0n, // NATIVE
+            token: ZeroAddress,
+            tokenId: 0n,
+            amount: WeiPerEther,
+          }),
         );
 
       // STAKE 1-3
@@ -1487,190 +1365,16 @@ describe("Ponzi", function () {
       const stakeBalance3 = await ethers.provider.getBalance(await ponziInstance.getAddress());
       expect(stakeBalance3).to.equal(stakeRule1.deposit.amount * 3n);
       await expect(tx13)
-        .to.emit(ponziInstance, "ReferralReward")
+        .to.emit(ponziInstance, "ReferralEvent")
         .withArgs(
-          receiver.address,
           stranger.address,
-          0,
-          tokenZero,
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
+          isEqualEventArgArrObj({
+            tokenType: 0n, // NATIVE
+            token: ZeroAddress,
+            tokenId: 0n,
+            amount: WeiPerEther,
+          }),
         );
-      await expect(tx13)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(
-          receiver.address,
-          owner.address,
-          1,
-          tokenZero,
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
-        );
-
-      // WITHDRAW REF REWARD 1
-      const refBalance0 = await ponziInstance.connect(receiver).getBalance(receiver.address, tokenZero);
-      expect(refBalance0).to.equal(
-        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
-      );
-      const tx2 = ponziInstance.connect(receiver).withdrawReward(tokenZero);
-      await expect(tx2).to.emit(ponziInstance, "ReferralWithdraw").withArgs(receiver.address, tokenZero, refBalance0);
-      await expect(tx2).to.changeEtherBalance(receiver, refBalance0);
-
-      // WITHDRAW REF REWARD 2
-      const refBalance1 = await ponziInstance.connect(owner).getBalance(owner.address, tokenZero);
-      expect(refBalance1).to.equal(
-        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
-          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
-      );
-      const tx21 = ponziInstance.connect(owner).withdrawReward(tokenZero);
-      await expect(tx21).to.emit(ponziInstance, "ReferralWithdraw").withArgs(owner.address, tokenZero, refBalance1);
-      await expect(tx21).to.changeEtherBalance(owner, refBalance1);
-
-      // WITHDRAW REF REWARD 3
-      const refBalance2 = await ponziInstance.connect(owner).getBalance(stranger.address, tokenZero);
-      expect(refBalance2).to.equal(
-        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
-      );
-      const tx22 = ponziInstance.connect(stranger).withdrawReward(tokenZero);
-      await expect(tx22).to.emit(ponziInstance, "ReferralWithdraw").withArgs(stranger.address, tokenZero, refBalance2);
-      await expect(tx22).to.changeEtherBalance(stranger, refBalance2);
-    });
-
-    it("should Deposit with Auto Reward (multi ref)", async function () {
-      const [owner, receiver, stranger] = await ethers.getSigners();
-
-      const ponziInstance = await deployPonzi();
-      const erc20Instance = await erc20Factory();
-
-      const tx0 = ponziInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
-      await expect(tx0)
-        .to.emit(ponziInstance, "ReferralProgram")
-        .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
-
-      const stakeRule1 = {
-        externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: ZeroAddress,
-          tokenId: 0,
-          amount: WeiPerEther,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: ZeroAddress,
-          tokenId: 0,
-          amount: 1000,
-        },
-        content: [],
-        maxCycles: 2,
-        period, // 60 sec
-        penalty,
-        recurrent: false,
-        active: true,
-      };
-      const stakeRule2 = {
-        externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: await erc20Instance.getAddress(),
-          tokenId: 0,
-          amount: 100,
-        },
-        reward: {
-          tokenType: 1, // ERC20
-          token: await erc20Instance.getAddress(),
-          tokenId: 0,
-          amount: 100,
-        },
-        content: [],
-        maxCycles: 2,
-        period,
-        penalty,
-        recurrent: false,
-        active: true,
-      };
-
-      const refReward0 =
-        ((WeiPerEther / 100n) * // level 0
-          ((refProgram.refReward / 100n) | 0n)) /
-        refProgram.refDecrease ** 0n;
-
-      const refReward1 =
-        ((WeiPerEther / 100n) * // level 1
-          ((refProgram.refReward / 100n) | 0n)) /
-        refProgram.refDecrease ** 1n;
-
-      // SET RULES
-      const tx = ponziInstance.setRules([stakeRule1, stakeRule2]);
-      await expect(tx).to.emit(ponziInstance, "RuleCreated");
-
-      // SET AUTO REWARD
-      await ponziInstance.setAutoWithdrawal(true);
-
-      // STAKE 1-1
-      const tx11 = ponziInstance.connect(owner).deposit(receiver.address, 1, {
-        value: stakeRule1.deposit.amount,
-      });
-      await expect(tx11).to.emit(ponziInstance, "StakingStart");
-      const stakeBalance1 = await ethers.provider.getBalance(await ponziInstance.getAddress());
-
-      expect(stakeBalance1).to.equal(stakeRule1.deposit.amount - refReward0);
-      await expect(tx11)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(owner.address, receiver.address, 0, tokenZero, refReward0);
-      await expect(tx11).to.emit(ponziInstance, "ReferralWithdraw").withArgs(receiver.address, tokenZero, refReward0);
-      await expect(tx11).to.changeEtherBalance(receiver, refReward0);
-
-      // STAKE 1-2
-      const tx12 = ponziInstance.connect(stranger).deposit(owner.address, 1, {
-        value: stakeRule1.deposit.amount,
-      });
-      await expect(tx12).to.emit(ponziInstance, "StakingStart");
-      const stakeBalance2 = await ethers.provider.getBalance(await ponziInstance.getAddress());
-      expect(stakeBalance2).to.equal(stakeRule1.deposit.amount * 2n - refReward0 * 2n);
-      await expect(tx12)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(stranger.address, owner.address, 0, tokenZero, refReward0);
-      await expect(tx12)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(stranger.address, receiver.address, 1, tokenZero, refReward1);
-      await expect(tx12).to.emit(ponziInstance, "ReferralWithdraw").withArgs(owner.address, tokenZero, refReward0);
-      await expect(tx12).to.changeEtherBalance(owner, refReward0);
-
-      // STAKE 1-3
-      const tx13 = ponziInstance.connect(receiver).deposit(stranger.address, 1, {
-        value: stakeRule1.deposit.amount,
-      });
-      await expect(tx13).to.emit(ponziInstance, "StakingStart");
-      const stakeBalance3 = await ethers.provider.getBalance(await ponziInstance.getAddress());
-      expect(stakeBalance3).to.equal(stakeRule1.deposit.amount * 3n - refReward0 * 3n);
-      await expect(tx13)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(receiver.address, stranger.address, 0, tokenZero, refReward0);
-      await expect(tx13)
-        .to.emit(ponziInstance, "ReferralReward")
-        .withArgs(receiver.address, owner.address, 1, tokenZero, refReward1);
-      await expect(tx13).to.emit(ponziInstance, "ReferralWithdraw").withArgs(stranger.address, tokenZero, refReward0);
-      await expect(tx13).to.changeEtherBalance(stranger, refReward0);
-
-      // WITHDRAW REF REWARD 1
-      const refBalance0 = await ponziInstance.connect(receiver).getBalance(receiver.address, tokenZero);
-      expect(refBalance0).to.equal(refReward1);
-      const tx2 = ponziInstance.connect(receiver).withdrawReward(tokenZero);
-      await expect(tx2).to.emit(ponziInstance, "ReferralWithdraw").withArgs(receiver.address, tokenZero, refBalance0);
-      await expect(tx2).to.changeEtherBalance(receiver, refBalance0);
-
-      // WITHDRAW REF REWARD 2
-      const refBalance1 = await ponziInstance.connect(owner).getBalance(owner.address, tokenZero);
-      expect(refBalance1).to.equal(refReward1);
-      const tx21 = ponziInstance.connect(owner).withdrawReward(tokenZero);
-      await expect(tx21).to.emit(ponziInstance, "ReferralWithdraw").withArgs(owner.address, tokenZero, refBalance1);
-      await expect(tx21).to.changeEtherBalance(owner, refBalance1);
-
-      // WITHDRAW REF REWARD 3
-      const refBalance2 = await ponziInstance.connect(owner).getBalance(stranger.address, tokenZero);
-      expect(refBalance2).to.equal(0);
-      const tx22 = ponziInstance.connect(stranger).withdrawReward(tokenZero);
-      await expect(tx22).to.be.revertedWith("Referral: Zero balance");
     });
   });
 });

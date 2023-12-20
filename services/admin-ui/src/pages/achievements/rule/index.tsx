@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
@@ -9,12 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
-import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
+import { AchievementRuleStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset } from "../../../utils/money";
 import { AchievementRuleEditDialog } from "./edit";
 
 export const AchievementRules: FC = () => {
@@ -38,25 +37,26 @@ export const AchievementRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      achievementType: AchievementType.MARKETPLACE,
       achievementStatus: AchievementRuleStatus.ACTIVE,
       // eventType: """,
       contractId: 0,
       item: getEmptyTemplate(TokenType.ERC20),
+      startTimestamp: new Date().toISOString(),
+      endTimestamp: new Date().toISOString(),
     },
     search: {
       query: "",
-      achievementType: [],
       achievementStatus: [],
     },
-    filter: ({ title, description, contractId, item, achievementStatus, achievementType, eventType }) => ({
+    filter: ({ title, description, contractId, item, achievementStatus, eventType, startTimestamp, endTimestamp }) => ({
       title,
       description,
       contractId: contractId === 0 ? null : contractId,
       item: item ? cleanUpAsset(item) : { components: [] },
       achievementStatus,
-      achievementType,
       eventType,
+      startTimestamp,
+      endTimestamp,
     }),
   });
 
@@ -73,14 +73,14 @@ export const AchievementRules: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(rule => (
-            <ListItem key={rule.id}>
+            <StyledListItem key={rule.id}>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(rule)} message="form.buttons.edit" icon={Create} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

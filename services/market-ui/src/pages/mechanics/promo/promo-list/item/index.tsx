@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IAssetPromo } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { PromoPurchaseButton } from "../../../../../components/buttons";
-import { formatPrice } from "../../../../../utils/money";
 
 interface IAssetPromoItemProps {
   promo: IAssetPromo;
@@ -30,7 +30,7 @@ export const AssetPromoItem: FC<IAssetPromoItemProps> = props => {
             <RichTextDisplay data={promo.item?.components[0]?.template?.description} />
           </StyledCardContentDescription>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(promo.price)}
+            {formatItem(promo.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

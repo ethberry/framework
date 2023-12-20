@@ -3,13 +3,13 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IMysteryBox } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import MysteryMintBoxABI from "../../../../../../abis/mechanics/mystery-box/mint/mysterybox.mintBox.abi.json";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
@@ -44,7 +44,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
   const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
     const contractMysterybox = new Contract(
       template!.contract!.address,
-      MysteryMintBoxABI,
+      mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
     const items = values.mysteryBox!.item!.components.map(item => ({

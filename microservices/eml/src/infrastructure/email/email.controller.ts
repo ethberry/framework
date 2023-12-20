@@ -1,10 +1,11 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
+import { formatUnits } from "ethers";
 
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import type { IDummyPayload, IPayload, IVrfPayload } from "./interfaces";
+import type { IDummyPayload, IPayload, IStakingBalancePayload, IVrfPayload } from "./interfaces";
 
 @Controller()
 export class EmailController {
@@ -55,6 +56,26 @@ export class EmailController {
       to: [payload.merchant.email],
       data: {
         vrfSubId: payload.merchant.chainLinkSubscriptions![0].vrfSubId.toString(),
+      },
+    });
+  }
+
+  // STAKING
+  @EventPattern(EmailType.STAKING_BALANCE)
+  async stakingBalance(@Payload() payload: IStakingBalancePayload): Promise<IEmailResult> {
+    return this.mailjetService.sendTemplate({
+      template: 5292694,
+      to: [payload.contract.merchant!.email],
+      data: {
+        // STAKING
+        stakingTitle: payload.contract.title,
+        stakingAddress: payload.contract.address,
+        // TOKEN
+        tokenTitle: payload.token.template!.title,
+        tokenAddress: payload.token.template!.contract!.address,
+        // BALANCES
+        tokenBalance: formatUnits(payload.balance, payload.token.template!.contract!.decimals),
+        depositAmount: formatUnits(payload.deposit, payload.token.template!.contract!.decimals),
       },
     });
   }

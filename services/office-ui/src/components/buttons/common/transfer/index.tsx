@@ -5,13 +5,13 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20TransferABI from "../../../../abis/hierarchy/erc20/transfer/erc20.transfer.abi.json";
-import ERC721SafeTransferFromABI from "../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
-import ERC1155SafeTransferFromABI from "../../../../abis/hierarchy/erc1155/transfer/erc1155.safeTransferFrom.abi.json";
+import ERC20TransferABI from "@framework/abis/transfer/ERC20Blacklist.json";
+import ERC721SafeTransferFromABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
+import ERC1155SafeTransferFromABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
 
 import { ITransferDto, TransferDialog } from "./dialog";
 
@@ -25,7 +25,7 @@ export interface ITransferButtonProps {
 export const TransferButton: FC<ITransferButtonProps> = props => {
   const {
     className,
-    contract: { address, contractType, id },
+    contract: { address, contractFeatures, contractType, id },
     disabled,
     variant,
   } = props;
@@ -84,7 +84,7 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         message="form.buttons.transfer"
         className={className}
         dataTestId="TransferButton"
-        disabled={disabled}
+        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />
       <TransferDialog

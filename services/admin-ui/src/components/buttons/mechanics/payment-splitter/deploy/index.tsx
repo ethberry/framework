@@ -4,12 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPaymentSplitterContractDeployDto, IUser } from "@framework/types";
 
-import DeployPaymentSplitterABI from "../../../../../abis/mechanics/payment-splitter/deploy/deployPaymentSplitter.abi.json";
-
 import { PaymentSplitterContractDeployDialog } from "./dialog";
+import deployPaymentSplitterPaymentSplitterFactoryFacetABI from "@framework/abis/deployPaymentSplitter/PaymentSplitterFactoryFacet.json";
 
 export interface IPaymentSplitterContractDeployButtonProps {
   className?: string;
@@ -27,7 +26,7 @@ export const PaymentSplitterContractDeployButton: FC<IPaymentSplitterContractDep
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        DeployPaymentSplitterABI,
+        deployPaymentSplitterPaymentSplitterFactoryFacetABI,
         web3Context.provider?.getSigner(),
       );
 
@@ -50,7 +49,7 @@ export const PaymentSplitterContractDeployButton: FC<IPaymentSplitterContractDep
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/paymentSplitter",
+        url: "/contract-manager/payment-splitter",
         method: "POST",
         data: {
           payees: values.shares.map(({ payee }: { payee: string }) => payee),

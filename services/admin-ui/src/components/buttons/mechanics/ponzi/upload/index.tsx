@@ -6,11 +6,11 @@ import { Contract } from "ethers";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
-import PonziSetRulesABI from "../../../../../abis/mechanics/ponzi/upload/setRules.abi.json";
 import { PonziRuleUploadDialog } from "./upload-dialog";
+import setRulesPonziABI from "@framework/abis/setRules/Ponzi.json";
 
 export interface IPonziRuleCreateButtonProps {
   className?: string;
@@ -50,7 +50,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
-      })),
+      }))[0],
       reward: rule.reward
         ? rule.reward.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -58,13 +58,17 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
             tokenId: component.templateId,
             amount: component.amount,
           }))
-        : [],
-      content,
-      period: rule.durationAmount, // todo fix same name // seconds in days
-      penalty: rule.penalty || 0,
+        : {
+            /* empty asset */
+          },
+      terms: {
+        period: rule.durationAmount, // todo fix same name // seconds in days
+        penalty: rule.penalty || 0,
+        maxCycles: rule.maxCycles,
+      },
       active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract.address, PonziSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, setRulesPonziABI, web3Context.provider?.getSigner());
     return contract.setRules([ponziRule]) as Promise<void>;
   });
 
@@ -120,6 +124,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
           durationAmount: 2592000,
           durationUnit: DurationUnit.DAY,
           penalty: 100,
+          maxCycles: 0,
         }}
       />
     </Fragment>

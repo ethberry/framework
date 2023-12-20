@@ -1,6 +1,15 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { encodeBytes32String, getUint, parseEther, toBeHex, toQuantity, WeiPerEther, ZeroAddress } from "ethers";
+import {
+  encodeBytes32String,
+  getUint,
+  hexlify,
+  parseEther,
+  toBeHex,
+  toQuantity,
+  WeiPerEther,
+  ZeroAddress,
+} from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -578,13 +587,16 @@ describe("Lottery", function () {
       const tx1 = lotteryInstance.releaseFunds(1);
       await expect(tx1)
         .to.emit(lotteryInstance, "Released")
-        .withArgs(1, amount - (amount / 100n) * BigInt(lotteryConfig.commission));
+        // .withArgs(1, amount - (amount / 100n) * BigInt(lotteryConfig.commission));
+        .withArgs(1, amount);
       await expect(tx1).changeTokenBalances(
         erc20Instance,
         [owner, lotteryInstance],
         [
-          amount - (amount / 100n) * BigInt(lotteryConfig.commission),
-          -(amount - (amount / 100n) * BigInt(lotteryConfig.commission)),
+          // amount - (amount / 100n) * BigInt(lotteryConfig.commission),
+          // -(amount - (amount / 100n) * BigInt(lotteryConfig.commission)),
+          amount,
+          -amount,
         ],
       );
     });
@@ -738,12 +750,208 @@ describe("Lottery", function () {
       await time.advanceBlockTo(latest.add(web3.utils.toBN(lotteryConfig.timeLagBeforeRelease + 1)));
 
       const tx1 = lotteryInstance.releaseFunds(1);
-      const total = WeiPerEther - (WeiPerEther / 100n) * BigInt(lotteryConfig.commission);
+      // const total = WeiPerEther - (WeiPerEther / 100n) * BigInt(lotteryConfig.commission);
+      const total = WeiPerEther;
       await expect(tx1).to.emit(lotteryInstance, "Released").withArgs(1, total);
       await expect(tx1).changeEtherBalances([lotteryInstance, owner], [-total, total]);
     });
 
     it("should get prize from previous round", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
+
+      await erc20Instance.mint(receiver.address, amount * 2n);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount * 2n);
+
+      await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.getAddress());
+      await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
+
+      if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
+        await expect(tx02)
+          .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+          .withArgs(1, await lotteryInstance.getAddress());
+      }
+
+      // ROUND 1
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        0, // maxTicket count
+      );
+
+      // BUY TICKET @EXCHANGE
+      const networkE = await ethers.provider.getNetwork();
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
+
+      // DUMMY ROUND
+      // winValues [ 23n, 8n, 18n, 12n, 10n, 13n ] with randomness = hexlify(nonce)
+      const ticketValues = [23, 8, 18, 12, 10, 13];
+      const ticketNumbers = getNumbersBytes(ticketValues);
+
+      const dbRoundId = 101;
+      const signature = await generateOneToOneSignature({
+        account: receiver.address,
+        params: {
+          externalId: dbRoundId, // externalId: db roundId
+          expiresAt,
+          nonce: encodeBytes32String("nonce"),
+          extra: ticketNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
+        },
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+      });
+
+      const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
+        {
+          nonce: encodeBytes32String("nonce"),
+          externalId: dbRoundId, // externalId: db roundId
+          expiresAt,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
+          extra: ticketNumbers,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        signature,
+      );
+      await expect(tx0)
+        .to.emit(exchangeInstance, "PurchaseLottery")
+        .withArgs(
+          receiver.address,
+          dbRoundId, // externalId: db roundId
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount: amount * 1n,
+          }),
+          1n,
+          ticketNumbers,
+        );
+      await expect(tx0).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      const tx = await lotteryInstance.endRound();
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      if (network.name === "hardhat") {
+        // RANDOM
+        await randomRequest(lotteryInstance, vrfInstance, hexlify(nonce));
+      } else {
+        const eventFilter = lotteryInstance.filters.RoundFinalized();
+        const events = await lotteryInstance.queryFilter(eventFilter);
+        expect(events.length).to.be.greaterThan(0);
+        expect(events[0].args?.round).to.equal(1);
+      }
+
+      // ROUND 2
+      const tx1 = await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        0, // maxTicket count
+      );
+      const current1: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(lotteryInstance, "RoundStarted")
+        .withArgs(
+          2n, // round 2
+          toQuantity(current1),
+          0n,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
+
+      const tx2 = lotteryInstance.connect(receiver).getPrize(tokenId, 1);
+      await expect(tx2).to.emit(lotteryInstance, "Prize");
+      // TODO .withArgs(receiver.address, 1, 1, prizeAmount);
+
+      // TEST METADATA
+      const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
+      const decodedMeta = decodeMetadata(metadata as any[]);
+      expect(decodedMeta.PRIZE).to.equal(1n);
+      expect(decodedMeta.ROUND).to.equal(BigInt(dbRoundId));
+      expect(toBeHex(decodedMeta.NUMBERS, 32)).to.equal(ticketNumbers);
+    });
+
+    it("should fail get prize from previous round: no Prize", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
@@ -922,16 +1130,7 @@ describe("Lottery", function () {
         );
 
       const tx2 = lotteryInstance.connect(receiver).getPrize(tokenId, 1);
-      await expect(tx2).to.emit(lotteryInstance, "Prize");
-      // TODO .withArgs(receiver.address, 1, 1, prizeAmount);
-
-      // TEST METADATA
-      const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
-      const decodedMeta = decodeMetadata(metadata as any[]);
-      expect(decodedMeta.PRIZE).to.equal(1n);
-      expect(decodedMeta.ROUND).to.equal(BigInt(dbRoundId));
-      expect(toBeHex(decodedMeta.NUMBERS, 32)).to.equal(params.extra);
-      // expect(getBytesNumbersArr(decodedMeta.NUMBERS)).to.have.all.members(values);
+      await expect(tx2).to.be.revertedWithCustomError(lotteryInstance, "WrongToken");
     });
 
     it("should fail get prize from previous round: expired", async function () {
@@ -1120,7 +1319,7 @@ describe("Lottery", function () {
       await expect(tx2).to.be.revertedWithCustomError(lotteryInstance, "Expired");
     });
 
-    it("should fail: is not releasable yet", async function () {
+    it("should release without delay: if no tickets win", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
@@ -1257,6 +1456,161 @@ describe("Lottery", function () {
         expect(events.length).to.be.greaterThan(0);
         expect(events[0].args?.round).to.equal(1);
       }
+
+      // NO WAIT for RELEASE
+      const tx1 = lotteryInstance.releaseFunds(1);
+      const total = amount;
+      await expect(tx1).to.emit(lotteryInstance, "Released").withArgs(1, total);
+      await expect(tx1).changeTokenBalances(erc20Instance, [lotteryInstance, owner], [-total, total]);
+    });
+
+    it("should fail: is not releasable yet", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
+
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
+
+      await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.getAddress());
+      await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
+
+      if (network.name === "hardhat") {
+        // Set VRFV2 Subscription
+        const tx01 = lotteryInstance.setSubscriptionId(subscriptionId);
+        await expect(tx01).to.emit(lotteryInstance, "VrfSubscriptionSet").withArgs(1);
+
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.getAddress());
+        await expect(tx02)
+          .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+          .withArgs(1, await lotteryInstance.getAddress());
+      }
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        0, // maxTicket count
+      );
+
+      // DUMMY ROUND
+      // winValues [ 23n, 8n, 18n, 12n, 10n, 13n ] with randomness = hexlify(nonce)
+      const ticketValues = [23, 8, 18, 12, 10, 13];
+      const ticketNumbers = getNumbersBytes(ticketValues);
+
+      // BUY TICKET @EXCHANGE
+      const networkE = await ethers.provider.getNetwork();
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "EXCHANGE", owner);
+
+      const signature = await generateOneToOneSignature({
+        account: receiver.address,
+        params: {
+          externalId,
+          expiresAt,
+          nonce: encodeBytes32String("nonce2"),
+          extra: ticketNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
+        },
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+      });
+
+      const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
+        {
+          externalId, // wtf?
+          expiresAt,
+          nonce: encodeBytes32String("nonce2"),
+          extra: ticketNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        signature,
+      );
+      await expect(tx0)
+        .to.emit(exchangeInstance, "PurchaseLottery")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount: amount * 1n,
+          }),
+          1n,
+          ticketNumbers,
+        );
+      await expect(tx0).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      const tx = await lotteryInstance.endRound();
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      if (network.name === "hardhat") {
+        // RANDOM
+        await randomRequest(lotteryInstance, vrfInstance, hexlify(nonce));
+      } else {
+        const eventFilter = lotteryInstance.filters.RoundFinalized();
+        const events = await lotteryInstance.queryFilter(eventFilter);
+        expect(events.length).to.be.greaterThan(0);
+        expect(events[0].args?.round).to.equal(1);
+      }
+
+      const eventFilter = lotteryInstance.filters.RoundFinalized();
+      const events = await lotteryInstance.queryFilter(eventFilter);
+      const { winValues } = recursivelyDecodeResult(events[0].args);
+      expect(winValues.join(",")).to.equal(ticketValues.join(","));
 
       // NO WAIT for RELEASE
       const tx1 = lotteryInstance.releaseFunds(1);
@@ -1605,7 +1959,7 @@ describe("Lottery", function () {
     });
   });
 
-  describe("get prize", function () {
+  describe("Get prize", function () {
     it("should get prize: Jackpot 1 ticket", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 

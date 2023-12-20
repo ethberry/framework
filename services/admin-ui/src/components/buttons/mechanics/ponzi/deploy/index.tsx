@@ -4,13 +4,12 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 
-import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPonzi.abi.json";
-
 import { PonziContractDeployDialog } from "./dialog";
+import deployPonziPonziFactoryFacetABI from "@framework/abis/deployPonzi/PonziFactoryFacet.json";
 
 export interface IPonziContractDeployButtonProps {
   className?: string;
@@ -26,7 +25,11 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPonziContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployPonziABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployPonziPonziFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployPonzi(
         {

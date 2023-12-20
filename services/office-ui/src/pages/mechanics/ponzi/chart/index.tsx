@@ -21,6 +21,7 @@ export const PonziChart: FC = () => {
   >({
     baseUrl: "/ponzi/chart",
     search: {
+      contractId: InputType.awaited,
       deposit: {
         tokenType: TokenType.ERC20,
         contractId: InputType.awaited,
@@ -29,7 +30,6 @@ export const PonziChart: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: InputType.awaited,
       },
-      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },

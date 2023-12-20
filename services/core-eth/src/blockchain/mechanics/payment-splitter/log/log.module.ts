@@ -23,7 +23,10 @@ import { getEventsTopics } from "../../../../common/utils";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
-        const paymentSplitterContracts = await contractService.findAllByType([ModuleType.PONZI]);
+        const paymentSplitterContracts = await contractService.findAllByType([
+          ModuleType.PONZI,
+          ModuleType.PAYMENT_SPLITTER,
+        ]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

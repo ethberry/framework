@@ -5,7 +5,7 @@ import { Mixin } from "ts-mixer";
 import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
 import type { IMergeSignDto } from "@framework/types";
 
-export class DismantleSignDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements IMergeSignDto {
+export class MergeSignDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements IMergeSignDto {
   @ApiProperty({
     minimum: 1,
   })
@@ -14,12 +14,13 @@ export class DismantleSignDto extends Mixin(AccountDto, ReferrerOptionalDto, Cha
   public mergeId: number;
 
   @ApiProperty({
+    type: Number,
     minimum: 1,
     isArray: true,
   })
   @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
   public tokenIds: Array<number>;
 }

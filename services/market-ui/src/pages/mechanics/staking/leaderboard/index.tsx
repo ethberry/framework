@@ -2,17 +2,17 @@ import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4, FilterList } from "@mui/icons-material";
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, useGridApiContext } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { InputType } from "@gemunion/types-collection";
+import { formatEther } from "@framework/exchange";
 import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
 import { StakingLeaderboardSearchForm } from "./form";
-import { formatEther } from "../../../../utils/money";
 
 export const StakingLeaderboard: FC = () => {
   const {
@@ -31,6 +31,7 @@ export const StakingLeaderboard: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: InputType.awaited,
       },
+      emptyReward: false,
       reward: {
         tokenType: TokenType.ERC721,
         contractId: InputType.awaited,
@@ -47,9 +48,9 @@ export const StakingLeaderboard: FC = () => {
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
       renderCell: (params: GridCellParams) => {
+        const apiRef = useGridApiContext();
         const row = params.row as IStakingLeaderboard;
-        // @ts-ignore
-        const index: number = params.api.getRowIndexRelativeToVisibleRows(row.id);
+        const index: number = apiRef.current.getRowIndexRelativeToVisibleRows(row.id);
         return (
           <Grid container direction="row" alignItems="center">
             {row.rank === StakingLeaderboardRank.GOLD ? <Filter1 /> : null}

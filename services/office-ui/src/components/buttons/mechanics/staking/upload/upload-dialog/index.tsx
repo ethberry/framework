@@ -33,6 +33,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
     description,
     penalty,
     recurrent,
+    advance,
     deposit,
     reward,
     maxStake,
@@ -47,6 +48,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
     reward,
     penalty,
     recurrent,
+    advance,
     durationAmount,
     durationUnit,
     contract,
@@ -114,6 +116,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       />
       <NumberInput name="maxStake" readOnly={readOnly} />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
+      <CheckboxInput name="advance" readOnly={readOnly} />
     </FormDialog>
   );
 };

@@ -3,11 +3,11 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
+import ReceiveRewardABI from "@framework/abis/receiveReward/ReentrancyStakingReward.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 

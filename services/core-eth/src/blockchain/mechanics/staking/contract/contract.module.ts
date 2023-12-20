@@ -9,11 +9,23 @@ import { StakingPenaltyModule } from "../penalty/penalty.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
+import { StakingDepositModule } from "../deposit/deposit.module";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { StakingContractServiceCron } from "./contract.service.cron";
 
 @Module({
-  imports: [EventHistoryModule, TokenModule, TemplateModule, AssetModule, StakingPenaltyModule, ConfigModule],
-  providers: [Logger, signalServiceProvider, StakingContractServiceEth],
+  imports: [
+    EventHistoryModule,
+    TokenModule,
+    TemplateModule,
+    AssetModule,
+    ContractModule,
+    StakingDepositModule,
+    StakingPenaltyModule,
+    ConfigModule,
+  ],
+  providers: [Logger, signalServiceProvider, StakingContractServiceEth, StakingContractServiceCron],
   controllers: [StakingRulesControllerEth],
-  exports: [StakingContractServiceEth],
+  exports: [StakingContractServiceEth, StakingContractServiceCron],
 })
 export class StakingContractModule {}

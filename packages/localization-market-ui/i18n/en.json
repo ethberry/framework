@@ -2,6 +2,7 @@
   "alert": {
     "allowanceWarning": "You are going to allow all tokens of the contract",
     "approve": "Please approve ingredients to Exchange before using this mechanic",
+    "deposit": "You're about to deposit tokens according to the chosen rule",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "redirect": "You will be redirected in a moment",
     "uncaughtError": "Uncaught error happened"
@@ -46,6 +47,7 @@
     "grade": "Upgrade attribute",
     "join": "Join",
     "lend": "Lend token",
+    "merge": "Merge",
     "penalty": "Penalty: {item}% of deposit {description}",
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
@@ -100,8 +102,10 @@
     },
     "chainId": {
       "1": "ETHEREUM",
+      "10000": "GEMUNION",
       "13377": "GEMUNION",
       "13378": "BESU",
+      "10001": "BESU",
       "137": "POLYGON",
       "42161": "ARBITRUM",
       "5": "GOERLI",
@@ -248,7 +252,6 @@
       "RuleCreated": "RuleCreated",
       "RuleUpdated": "RuleUpdated",
       "SetMaxChild": "SetMaxChild",
-      "Snapshot": "Snapshot",
       "StakingFinish": "StakingFinish",
       "StakingStart": "StakingStart",
       "StakingWithdraw": "StakingWithdraw",
@@ -436,6 +439,7 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
+      "emptyReward": "Empty reward",
       "endDate": "End date",
       "endTimestamp": "End date",
       "event": "Event",
@@ -461,6 +465,7 @@
       "lottery": "Lottery",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
+      "maxStake": "Max Stakes",
       "merchantId": "Merchant",
       "minPrice": "Min. price",
       "mom": "Mom",
@@ -486,6 +491,9 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
+      "stakeStat": "Staking statistics",
+      "stakesTotal": "Total stakes",
+      "stakesCount": "Active stakes",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startDate": "Start date",
@@ -504,6 +512,7 @@
       "tokenStatus": "Token status",
       "tokenType": "Type",
       "twitterUrl": "Twitter",
+      "tvl": "TVL",
       "tx": "Tx hash",
       "type": "Type",
       "updatedAt": "Updated",
@@ -946,10 +955,12 @@
       },
       "purchase": {
         "count": "{current} of {max} sold",
-        "price": "Ticket Price",
+        "notStarted": "Round not started yet",
+        "price": "Ticket Price: {price}",
         "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "title": "Buy a ticket"
+        "title": "Buy a ticket",
+        "titleRound": "Buy a ticket for round #{roundId}"
       },
       "title": "Lottery",
       "tokens": {
@@ -1111,9 +1122,12 @@
       "purchase": {
         "commission": "{commission}% commission",
         "count": "{current} of {max} sold",
+        "notStarted": "Round not started yet",
+        "price": "Ticket Price: {price}",
         "rules": "Just buy a ticket. Random will choose a winner",
         "sold": "{count} sold",
-        "title": "Buy a ticket"
+        "title": "Buy a ticket",
+        "titleRound": "Buy a ticket for round #{roundId}"
       },
       "title": "Raffle",
       "tokens": {
@@ -1135,6 +1149,7 @@
       "ingredients": "Ingredients",
       "merge": {
         "approve": "Please approve ingredients to Exchange before",
+        "popover": "Merge {price} to {item}",
         "price": "Price",
         "title": "Merge recipe: {title}"
       },
@@ -1229,6 +1244,7 @@
   "snackbar": {
     "addedToCart": "Added to cart",
     "blockchainError": "Blockchain error",
+    "blockchainErrorReason": "Blockchain error {reason}",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "duplicateAccount": "Duplicate account",

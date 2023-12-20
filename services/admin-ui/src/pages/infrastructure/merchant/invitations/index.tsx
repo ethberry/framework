@@ -1,12 +1,12 @@
 import { FC, Fragment } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IOtp } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";
@@ -38,17 +38,17 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((otp: IOtp) => (
-              <ListItem key={otp.uuid} disableGutters>
+              <StyledListItem key={otp.uuid}>
                 <ListItemText>{otp.user!.displayName}</ListItemText>
                 <ListActions>
                   <ListAction message="form.tips.delete" icon={Delete} onClick={handleDelete(otp)} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))
           ) : (
-            <ListItem disableGutters>
+            <StyledListItem>
               <FormattedMessage id="pages.merchant.invitations.empty" />
-            </ListItem>
+            </StyledListItem>
           )}
         </List>
       </ProgressOverlay>

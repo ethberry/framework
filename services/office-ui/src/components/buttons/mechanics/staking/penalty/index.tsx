@@ -3,12 +3,12 @@ import { Policy } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { formatEther } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
+import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import StakingCountersABI from "../../../../../abis/mechanics/staking/stakingCounters.abi.json";
-import { formatEther } from "../../../../../utils/money";
+import StakingCountersABI from "@framework/abis/getPenalty/Staking.json";
 
 export interface IStakingPenaltyBalanceButtonProps {
   balance: IBalance;

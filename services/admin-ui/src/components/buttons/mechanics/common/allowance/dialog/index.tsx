@@ -39,6 +39,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);
+      form.trigger("contractId");
     };
 
   return (
@@ -51,7 +52,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     >
       {showAlert ? (
         <Alert severity="warning">
-          <FormattedMessage id="message.allowanceUSDTWarning" />
+          <FormattedMessage id="messages.allowanceUSDTWarning" />
         </Alert>
       ) : null}
       <CommonContractInput

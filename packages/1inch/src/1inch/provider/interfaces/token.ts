@@ -1,4 +1,5 @@
 export interface IToken {
+  chainId: number;
   symbol: string;
   name: string;
   address: string;

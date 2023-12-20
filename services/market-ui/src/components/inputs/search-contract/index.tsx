@@ -13,6 +13,9 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
 
   const form = useFormContext();
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
+  const emptyReward = useWatch({ name: "emptyReward" });
+
+  const disabled = prefix === "reward" && emptyReward;
 
   useEffect(() => {
     form.setValue(`${prefix}.contractId`, 0);
@@ -26,6 +29,8 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
         contractType: [tokenType],
         contractModule: [ModuleType.HIERARCHY],
       }}
+      disabled={disabled}
+      disableClear
       autoselect
     />
   );

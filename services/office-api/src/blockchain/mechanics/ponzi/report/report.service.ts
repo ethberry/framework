@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { parse } from "json2csv";
+
 import type { IPonziReportSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";

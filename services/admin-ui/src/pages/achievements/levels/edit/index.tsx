@@ -1,8 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { DateInput } from "@gemunion/mui-inputs-picker";
-import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
@@ -20,29 +19,16 @@ export interface IAchievementLevelEditDialogProps {
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    item,
-    amount,
-    parameters,
-    startTimestamp,
-    endTimestamp,
-    achievementRuleId,
-    achievementLevel,
-  } = initialValues;
+  const { id, title, description, reward, amount, parameters, achievementRuleId, achievementLevel } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
-    item,
+    reward,
     amount,
     achievementRuleId,
     parameters: JSON.stringify(parameters),
     achievementLevel,
-    startTimestamp,
-    endTimestamp,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -56,20 +42,18 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       {...rest}
     >
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
+      <NumberInput name="achievementLevel" />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <NumberInput name="amount" />
       <TemplateAssetInput
         allowEmpty
         autoSelect
         multiple
-        prefix="item"
+        prefix="reward"
         // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
-      <JsonInput name="metadata" />
-      <NumberInput name="amount" />
-      <NumberInput name="achievementLevel" />
-      <DateInput name="startTimestamp" />
-      <DateInput name="endTimestamp" />
+      {/* <JsonInput name="parameters" /> */}
     </FormDialog>
   );
 };

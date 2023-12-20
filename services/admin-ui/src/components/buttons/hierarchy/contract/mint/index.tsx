@@ -6,13 +6,13 @@ import { Web3ContextType } from "@web3-react/core";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
-import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
-import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
+import mintERC20BlacklistABI from "@framework/abis/mint/ERC20Blacklist.json";
+import mintCommonERC721BlacklistABI from "@framework/abis/mintCommon/ERC721Blacklist.json";
+import mintERC1155BlacklistABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import type { IMintTokenDto } from "./dialog";
@@ -28,7 +28,7 @@ export interface IMintButtonProps {
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
-    contract: { address, id: contractId, contractType, decimals },
+    contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
   } = props;
@@ -54,21 +54,21 @@ export const MintButton: FC<IMintButtonProps> = props => {
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         templateComponent.contract.address,
-        ERC20MintABI,
+        mintERC20BlacklistABI,
         web3Context.provider?.getSigner(),
       );
-      return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
+      return contractErc20["mint(address,uint256)"](values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.contract.address,
-        ERC721MintCommonABI,
+        mintCommonERC721BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         templateComponent.contract.address,
-        ERC1155MintABI,
+        mintERC1155BlacklistABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(
@@ -109,7 +109,12 @@ export const MintButton: FC<IMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="ContractMintButton"
-        disabled={disabled || !hasAccess}
+        disabled={
+          disabled ||
+          contractType === TokenType.NATIVE ||
+          contractFeatures.includes(ContractFeatures.GENES) ||
+          !hasAccess
+        }
         variant={variant}
       />
       <MintTokenDialog

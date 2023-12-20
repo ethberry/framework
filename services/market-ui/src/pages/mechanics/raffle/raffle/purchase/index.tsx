@@ -3,13 +3,14 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { formatItem } from "@framework/exchange";
 import { IContract, IRaffleRound } from "@framework/types";
 
-import { formatItem } from "../../../../../utils/money";
 import { RafflePurchaseButton } from "../../../../../components/buttons";
 import { emptyRaffleRound } from "../../../../../components/common/interfaces";
-import { StyledTypography } from "./styled";
+import { InfoPopover } from "../../../../../components/popover";
 import { AllowanceButton } from "./allowance";
+import { StyledTypography } from "./styled";
 
 interface IRafflePurchaseProps {
   contract: IContract;
@@ -48,38 +49,35 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
     void fetchRaffle();
   }, []);
 
+  const title = round?.roundId ? "pages.raffle.purchase.titleRound" : "pages.raffle.purchase.title";
+
   return (
     <Fragment>
       <ProgressOverlay isLoading={isLoading}>
-        <PageHeader message="pages.raffle.purchase.title">
-          <StyledTypography>{round ? `Round ${round.roundId}` : ""}</StyledTypography>
-          <StyledTypography>{round ? `Price: ${formatItem(round.price)}` : "Round not Active!"}</StyledTypography>
+        <PageHeader message={title} data={{ roundId: round?.roundId }}>
+          <InfoPopover>
+            <StyledTypography>
+              <FormattedMessage
+                id={round?.roundId ? "pages.lottery.purchase.price" : "pages.lottery.purchase.notStarted"}
+                values={{ price: formatItem(round?.price) }}
+              />
+            </StyledTypography>
 
-          <StyledTypography>
-            {round && round && round.maxTickets > 0 ? (
-              <FormattedMessage
-                id="pages.raffle.purchase.count"
-                // @ts-ignore
-                values={{ current: round.ticketCount, max: round?.maxTickets }}
-              />
-            ) : (
-              <FormattedMessage
-                id="pages.raffle.purchase.sold"
-                // @ts-ignore
-                values={{ count: round ? round.ticketCount : 0 }}
-              />
-            )}
-          </StyledTypography>
+            <StyledTypography>
+              {round?.maxTickets > 0 ? (
+                <FormattedMessage
+                  id="pages.raffle.purchase.count"
+                  values={{ current: round?.ticketCount, max: round?.maxTickets }}
+                />
+              ) : (
+                <FormattedMessage id="pages.raffle.purchase.sold" values={{ count: round?.ticketCount || 0 }} />
+              )}
+            </StyledTypography>
+          </InfoPopover>
 
           <AllowanceButton contract={contract} />
 
-          {round ? (
-            <RafflePurchaseButton
-              round={round}
-              // @ts-ignore
-              disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
-            />
-          ) : null}
+          <RafflePurchaseButton round={round} />
         </PageHeader>
       </ProgressOverlay>
     </Fragment>

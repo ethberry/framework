@@ -19,6 +19,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
 import { StakingContractService } from "./contract.service";
+import { IStakingDepositBalanceCheck } from "../deposit/deposit.service";
 
 @ApiBearerAuth()
 @Controller("/staking/contracts")
@@ -47,6 +48,12 @@ export class StakingController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity | null> {
     return this.stakingContractService.findOne({ id });
+  }
+
+  @Get("/balance/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public checkBalance(@Param("id", ParseIntPipe) id: number): Promise<Array<IStakingDepositBalanceCheck | null>> {
+    return this.stakingContractService.checkBalance(id);
   }
 
   @Delete("/:id")

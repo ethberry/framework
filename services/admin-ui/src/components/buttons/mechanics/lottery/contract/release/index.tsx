@@ -4,10 +4,10 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 
-import LotteryReleaseABI from "../../../../../../abis/mechanics/lottery/round/release/releaseFunds.abi.json";
+import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
 
 export interface ILotteryReleaseButtonProps {
   className?: string;
@@ -21,7 +21,11 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
   const { className, disabled, round, variant, onRefreshPage } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(round.contract!.address, LotteryReleaseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      round.contract!.address,
+      releaseFundsLotteryRandomABI,
+      web3Context.provider?.getSigner(),
+    );
     return contract.releaseFunds(round.roundId) as Promise<void>;
   });
 

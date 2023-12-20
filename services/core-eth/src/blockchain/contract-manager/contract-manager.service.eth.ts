@@ -27,6 +27,7 @@ import {
   CollectionContractTemplates,
   ContractFeatures,
   ContractSecurity,
+  ContractStatus,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
   Erc721ContractTemplates,
@@ -68,6 +69,7 @@ import { ClaimService } from "../mechanics/claim/claim.service";
 import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log.service";
 import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
 import { decodeExternalId } from "../../common/utils";
+import { PaymentSplitterLogService } from "../mechanics/payment-splitter/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -93,6 +95,7 @@ export class ContractManagerServiceEth {
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
     private readonly ponziLogService: PonziLogService,
+    private readonly paymentSplitterLogService: PaymentSplitterLogService,
     private readonly lotteryLogService: LotteryLogService,
     private readonly lotteryTicketLogService: LotteryTicketLogService,
     private readonly raffleLogService: RaffleLogService,
@@ -734,17 +737,20 @@ export class ContractManagerServiceEth {
       title: `${ModuleType.PAYMENT_SPLITTER} (new)`,
       description: emptyStateString,
       parameters: {
-        payees: payees.toString(),
-        shares: shares.toString(),
+        payees: payees.map(payee => payee.toLowerCase()),
+        shares: shares.map(share => share.toLowerCase()),
       },
       imageUrl,
+      contractFeatures: [],
+      // TODO active from deploy?
+      contractStatus: ContractStatus.ACTIVE,
       contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.waitListLogService.addListener({
+    this.paymentSplitterLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
@@ -777,10 +783,11 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       // TODO better set ContractFeatures
-      contractFeatures:
-        contractTemplate === "0"
-          ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
-          : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures: [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL],
+      // contractFeatures:
+      //   contractTemplate === "0"
+      //     ? [ContractFeatures.WITHDRAW, ContractFeatures.ALLOWANCE, ContractFeatures.REFERRAL]
+      //     : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(context.blockNumber.toString(), 16),

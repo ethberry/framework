@@ -56,10 +56,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -132,10 +135,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -203,10 +209,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -283,10 +292,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period, // 60 sec
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period, // 60 sec
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -366,10 +378,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [[], [], [], []],
-          period,
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period,
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -447,10 +462,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 5000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period,
+            penalty: 5000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -526,7 +544,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
               tokenType: 2, // ERC721
               token: await erc721Instance.getAddress(),
               tokenId,
-              amount,
+              amount: 1n,
             },
           ],
           reward: [
@@ -538,10 +556,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 10000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period,
+            penalty: 10000, // 100%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 
@@ -636,10 +657,13 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
             },
           ],
           content: [],
-          period,
-          penalty: 10000, // 50%
-          maxStake,
-          recurrent: true,
+          terms: {
+            period,
+            penalty: 10000, // 50%
+            maxStake,
+            recurrent: true,
+            advance: false,
+          },
           active: true,
         };
 

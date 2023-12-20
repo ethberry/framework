@@ -3,4 +3,5 @@ export enum EmailType {
   FEEDBACK = "FEEDBACK",
   LINK_TOKEN = "LINK_TOKEN",
   INVITE = "INVITE",
+  STAKING_BALANCE = "STAKING_BALANCE",
 }

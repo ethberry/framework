@@ -6,18 +6,18 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { getEthPrice } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
+import { bool36ArrayToByte32 } from "@framework/traits-ui";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
-import { getEthPrice } from "../../../../../utils/money";
-import { bool36ArrayToByte32 } from "@framework/traits-ui";
+import LotteryPurchaseABI from "@framework/abis/purchaseLottery/ExchangeLotteryFacet.json";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;
   clearForm: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   round: Partial<ILotteryRound>;
   ticketNumbers: Array<boolean>;
   variant?: ListActionVariant;
@@ -95,7 +95,12 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       buttonVariant="contained"
       className={className}
       dataTestId="LotteryPurchaseButton"
-      disabled={disabled}
+      disabled={
+        disabled ||
+        !round?.roundId ||
+        // @ts-ignore
+        (!!round.maxTickets && round.maxTickets > 0 && round.maxTickets <= round.ticketCount)
+      }
       variant={variant}
     />
   );

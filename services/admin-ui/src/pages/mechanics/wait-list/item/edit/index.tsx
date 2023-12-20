@@ -3,9 +3,9 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ContractStatus, IWaitListItem } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ContractStatus, IWaitListItem } from "@framework/types";
 
 export interface IWaitListDialogProps {
   open: boolean;

@@ -5,12 +5,12 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IGrade, IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
+import UpgradeABI from "@framework/abis/upgrade/ExchangeGradeFacet.json";
+
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";

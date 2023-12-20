@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,12 +9,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset, formatItem } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IMerge, IMergeSearchDto } from "@framework/types";
 import { MergeStatus, TokenType } from "@framework/types";
 
-import { cleanUpAsset, formatItem } from "../../../../utils/money";
 import { MergeEditDialog } from "./edit";
 
 export const Merge: FC = () => {
@@ -85,14 +84,14 @@ export const Merge: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(merge => (
-            <ListItem key={merge.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={merge.id} wrap>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.item)}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(merge)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(merge)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

@@ -10,15 +10,17 @@ import { StakingDepositService } from "./deposit.service";
 import { StakingDepositEntity } from "./deposit.entity";
 import { StakingDepositControllerEth } from "./deposit.controller.eth";
 import { StakingDepositServiceEth } from "./deposit.service.eth";
-import { signalServiceProvider } from "../../../../common/providers";
+import { emlServiceProvider, signalServiceProvider } from "../../../../common/providers";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { StakingPenaltyModule } from "../penalty/penalty.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
+import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 
 @Module({
   imports: [
     ConfigModule,
+    BalanceModule,
     AssetModule,
     TokenModule,
     TemplateModule,
@@ -28,7 +30,7 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
     NotificatorModule,
     TypeOrmModule.forFeature([StakingDepositEntity]),
   ],
-  providers: [Logger, signalServiceProvider, StakingDepositService, StakingDepositServiceEth],
+  providers: [Logger, signalServiceProvider, emlServiceProvider, StakingDepositService, StakingDepositServiceEth],
   controllers: [StakingDepositControllerEth],
   exports: [StakingDepositService, StakingDepositServiceEth],
 })

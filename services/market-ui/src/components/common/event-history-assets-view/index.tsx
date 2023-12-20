@@ -3,10 +3,10 @@ import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+import { formatEther } from "@framework/exchange";
 import { TokenType } from "@framework/types";
 import type { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
-import { formatEther } from "../../../utils/money";
 import {
   StyledAssetsWrapper,
   StyledDataViewAddressLinkWrapper,

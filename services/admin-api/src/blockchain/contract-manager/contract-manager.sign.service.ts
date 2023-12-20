@@ -108,8 +108,8 @@ export class ContractManagerSignService {
       dto.contractTemplate === Erc721ContractTemplates.LOTTERY
         ? ModuleType.LOTTERY
         : dto.contractTemplate === Erc721ContractTemplates.RAFFLE
-        ? ModuleType.RAFFLE
-        : ModuleType.HIERARCHY;
+          ? ModuleType.RAFFLE
+          : ModuleType.HIERARCHY;
     await this.contractManagerService.validateDeployment(userEntity, moduleType, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
@@ -664,14 +664,14 @@ export class ContractManagerSignService {
       {
         EIP712: [
           { name: "params", type: "Params" },
-          { name: "args", type: "WalletArgs" },
+          { name: "args", type: "PaymentSplitterArgs" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
           { name: "externalId", type: "uint256" },
         ],
-        WalletArgs: [
+        PaymentSplitterArgs: [
           { name: "payees", type: "address[]" },
           { name: "shares", type: "uint256[]" },
         ],
@@ -1035,6 +1035,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json",
           chainId,
         );
+      case StakingContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingBasicRef.sol/StakingBasicRef.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -1058,6 +1063,11 @@ export class ContractManagerSignService {
       case PonziContractTemplates.REFERRAL:
         return getContractABI(
           "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
+          chainId,
+        );
+      case PonziContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/PonziBasicRef.sol/PonziBasicRef.json",
           chainId,
         );
       default:
@@ -1092,7 +1102,7 @@ export class ContractManagerSignService {
   // MODULE:WALLET
   public getBytecodeByPaymentSplitterContractTemplate(_dto: IWalletContractDeployDto, chainId: number) {
     return getContractABI(
-      "@framework/core-contracts/artifacts/@gemunion/contracts-utils/contracts/contracts/PaymentSplitter.sol/PaymentSplitter.json",
+      "@framework/core-contracts/artifacts/contracts/Mechanics/PaymentSplitter/PaymentSplitter.sol/GemunionSplitter.json",
       chainId,
     );
   }

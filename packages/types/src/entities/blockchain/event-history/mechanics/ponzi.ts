@@ -1,7 +1,7 @@
 import { IAssetItem } from "../exchange/common";
 
 export enum PonziEventType {
-  RuleCreated = "RuleCreated",
+  RuleCreatedP = "RuleCreatedP",
   RuleUpdated = "RuleUpdated",
   StakingStart = "StakingStart",
   StakingWithdraw = "StakingWithdraw",
@@ -27,20 +27,22 @@ export interface IFinalizedTokenEvent {
   amount: string;
 }
 
-export interface IPonziRuleStruct {
-  deposit: Array<IAssetItem>;
-  reward: Array<IAssetItem>;
+export interface IPonziRuleTermsStruct {
   period: string;
   maxCycles: string;
   penalty: string;
-  externalId: string;
+}
+
+export interface IPonziRuleStruct {
+  deposit: IAssetItem;
+  reward: IAssetItem;
+  terms: IPonziRuleTermsStruct;
   active: boolean;
 }
 
 export interface IPonziCreateEvent {
   ruleId: string;
   rule: IPonziRuleStruct;
-  externalId: string;
 }
 
 export interface IPonziUpdateEvent {

@@ -1,35 +1,52 @@
-import { ChangeEvent } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert, Box, Typography } from "@mui/material";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import type { IAssetComponent, IToken } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { formatItem } from "@framework/exchange";
+import type { IAssetComponent } from "@framework/types";
 
-import { formatTokenTitle } from "../../../utils/token";
+import { sorter } from "../../../utils/sorter";
+import { TokenInput } from "./token-input";
 
-export const TokenDepositInput: () => any = () => {
-  const deposit: IAssetComponent[] = useWatch({ name: "deposit" });
+export const TokenDepositInput: FC = () => {
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("tokenIds", [option?.tokenId] ?? [0]);
-    form.setValue("tokenId", option?.id ?? 0, { shouldDirty: true });
-    form.setValue("token.tokenId", option?.tokenId ?? 0);
-  };
+  const { fields } = useFieldArray({ name: "deposit", control: form.control });
+  const deposits: IAssetComponent[] = useWatch({ name: "deposit" });
+  const assets: IAssetComponent[] = fields.map(
+    (field, index) =>
+      ({
+        ...field,
+        ...deposits[index],
+      }) as IAssetComponent,
+  );
 
-  return deposit.map(dep =>
-    dep.tokenType === TokenType.ERC721 || dep.tokenType === TokenType.ERC998 ? (
-      <EntityInput
-        key={dep.id}
-        name="tokenId"
-        controller="tokens"
-        data={{
-          contractIds: [dep.contractId],
-          templateIds: dep.templateId ? [dep.templateId] : [],
-        }}
-        getTitle={(token: IToken) => formatTokenTitle(token)}
-        onChange={handleChange}
-      />
-    ) : null,
+  return (
+    <Fragment>
+      <Alert severity="info">
+        <FormattedMessage id="alert.deposit" />
+      </Alert>
+      <Box>
+        {assets.sort(sorter("templateId")).map((asset, index) => (
+          <Fragment key={asset.id}>
+            <TokenInput
+              key={asset.id}
+              prefix={`tokens[${index}]`}
+              index={index}
+              data={{
+                contractIds: [asset.contractId],
+                templateIds: asset.templateId ? [asset.templateId] : [],
+              }}
+              tokenType={asset.tokenType}
+              readOnly={!!asset.templateId}
+            />
+            <Box mt={1} sx={{ textAlign: "left" }}>
+              <Typography>{formatItem({ id: index, components: [asset] })}</Typography>
+            </Box>
+          </Fragment>
+        ))}
+      </Box>
+    </Fragment>
   );
 };

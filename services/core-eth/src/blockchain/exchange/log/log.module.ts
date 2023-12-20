@@ -64,6 +64,7 @@ import { getEventsTopics } from "../../../common/utils";
           // MODULE:MYSTERYBOX
           ExchangeEventType.PurchaseMysteryBox,
           // MODULE:REFERRAL
+          ReferralProgramEventType.ReferralEvent,
           ReferralProgramEventType.ReferralProgram,
           ReferralProgramEventType.ReferralWithdraw,
           ReferralProgramEventType.ReferralReward,

@@ -43,18 +43,12 @@ export class PonziChartSearchDto extends PaginationDto implements IPonziChartSea
   @Type(() => PonziChartItemSearchDto)
   public deposit: PonziChartItemSearchDto;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: PonziChartItemSearchDto,
   })
-  @IsOptional()
   @ValidateNested()
   @Type(() => PonziChartItemSearchDto)
   public reward: PonziChartItemSearchDto;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => [true, "true"].includes(value))
-  public emptyReward: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()

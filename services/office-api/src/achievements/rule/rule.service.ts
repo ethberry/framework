@@ -22,7 +22,7 @@ export class AchievementRuleService {
     dto: Partial<IAchievementRuleSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<AchievementRuleEntity>, number]> {
-    const { query, achievementType, achievementStatus, contractIds, eventType, skip, take } = dto;
+    const { query, achievementStatus, contractIds, eventType, skip, take } = dto;
     const queryBuilder = this.achievementRuleEntityRepository.createQueryBuilder("achievement");
 
     queryBuilder.select();
@@ -36,16 +36,6 @@ export class AchievementRuleService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
-
-    if (achievementType) {
-      if (achievementType.length === 1) {
-        queryBuilder.andWhere("achievement.achievementType = :achievementType", {
-          achievementType: achievementType[0],
-        });
-      } else {
-        queryBuilder.andWhere("achievement.achievementType IN(:...achievementType)", { achievementType });
-      }
-    }
 
     if (achievementStatus) {
       if (achievementStatus.length === 1) {
@@ -108,19 +98,13 @@ export class AchievementRuleService {
     dto: IAchievementRuleAutocompleteDto,
     userEntity: UserEntity,
   ): Promise<Array<AchievementRuleEntity>> {
-    const { achievementType = [], achievementStatus = [] } = dto;
+    const { achievementStatus = [] } = dto;
 
     const where = {
       contract: {
         chainId: userEntity.chainId,
       },
     };
-
-    if (achievementType.length) {
-      Object.assign(where, {
-        achievementType: In(achievementType),
-      });
-    }
 
     if (achievementStatus.length) {
       Object.assign(where, {

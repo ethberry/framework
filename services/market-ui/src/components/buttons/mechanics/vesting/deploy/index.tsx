@@ -5,11 +5,11 @@ import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract, IUser } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import VestingDeployABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
+import VestingDeployABI from "@framework/abis/deployVesting/VestingFactoryFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

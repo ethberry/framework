@@ -2,25 +2,50 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { IStakingRule } from "@framework/types";
+import { formatItem, formatPenalty } from "@framework/exchange";
+import type { IStakingDeposit, IStakingRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 
-import { formatItem, formatPenalty } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
+import { StakingDepositStatus } from "@framework/types";
+
+export interface IStakingRuleExt extends IStakingRule {
+  stakes: Array<IStakingDeposit>;
+}
 
 export interface IStakingViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IStakingRule;
+  initialValues: IStakingRuleExt;
 }
 
 export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { title, description, deposit, reward, durationAmount, durationUnit, penalty, recurrent, contract } =
-    initialValues;
+  const {
+    title,
+    description,
+    deposit,
+    reward,
+    durationAmount,
+    durationUnit,
+    penalty,
+    recurrent,
+    contract,
+    stakes = [],
+  } = initialValues;
+
+  // STATS
+  const totalStakesCount = stakes.length;
+  const activeStakesCount = stakes.filter(stake => stake.stakingDepositStatus === StakingDepositStatus.ACTIVE).length;
+  let totalComp = deposit ? deposit.components : [];
+  if (deposit) {
+    totalComp = deposit.components.map(item => {
+      return { ...item, amount: (BigInt(item.amount) * BigInt(activeStakesCount)).toString() };
+    });
+  }
 
   const { formatMessage } = useIntl();
 
@@ -99,6 +124,43 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
           </TableBody>
         </Table>
       </TableContainer>
+      {totalStakesCount > 0 ? (
+        <TableContainer component={Paper}>
+          <Table aria-label="staking rule history">
+            <TableBody>
+              <TableRow>
+                <TableCell align="center" scope="row">
+                  <FormattedMessage id="form.labels.stakeStat" />
+                </TableCell>
+              </TableRow>
+              {totalStakesCount > 0 ? (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    <FormattedMessage id="form.labels.stakesTotal" />
+                  </TableCell>
+                  <TableCell align="right">{totalStakesCount}</TableCell>
+                </TableRow>
+              ) : null}
+              {activeStakesCount > 0 ? (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    <FormattedMessage id="form.labels.stakesCount" />
+                  </TableCell>
+                  <TableCell align="right">{activeStakesCount}</TableCell>
+                </TableRow>
+              ) : null}
+              {activeStakesCount > 0 ? (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    <FormattedMessage id="form.labels.tvl" />
+                  </TableCell>
+                  <TableCell align="right">{formatItem({ components: totalComp })}</TableCell>
+                </TableRow>
+              ) : null}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : null}
     </ConfirmationDialog>
   );
 };

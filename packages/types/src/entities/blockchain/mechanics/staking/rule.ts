@@ -29,6 +29,7 @@ export enum StakingRewardTokenType {
 }
 
 export interface IStakingRule extends ISearchable {
+  imageUrl: string | null;
   depositId: number;
   deposit?: IAsset;
   rewardId: number;
@@ -38,6 +39,7 @@ export interface IStakingRule extends ISearchable {
   penalty: number;
   maxStake: number;
   recurrent: boolean;
+  advance: boolean;
   stakingRuleStatus: StakingRuleStatus;
   externalId: string;
   contractId: number;

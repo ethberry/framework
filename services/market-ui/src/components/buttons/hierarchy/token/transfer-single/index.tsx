@@ -3,11 +3,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import ERC1155SafeTransferFromABI from "../../../../../abis/hierarchy/erc1155/transfer/transfer.abi.json";
+import ERC1155SafeTransferFromABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
 
 import type { IErc1155TransferDto } from "./dialog";
 import { Erc1155TransferDialog } from "./dialog";

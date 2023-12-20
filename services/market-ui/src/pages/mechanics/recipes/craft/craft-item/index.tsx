@@ -35,7 +35,7 @@ export const CraftItem: FC = () => {
     <Fragment>
       <Breadcrumbs
         path={["dashboard", "recipes", "recipes.craft"]}
-        data={[{}, {}, selected.item?.components[0].template]}
+        data={[{}, {}, { title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }]}
       />
 
       <PageHeader
@@ -49,7 +49,7 @@ export const CraftItem: FC = () => {
             {selected.item?.components.map(component => {
               return (
                 <StyledImageListItem key={component.template!.id}>
-                  <Box component="img" src={component.template!.imageUrl} alt="Gemunion template image" />
+                  <Box component="img" src={component.template!.imageUrl} alt={component.template!.title} />
                 </StyledImageListItem>
               );
             })}

@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
-import { Box, Button, Chip, List, ListItem, ListItemText } from "@mui/material";
+import { Box, Button, Chip, List, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -81,7 +81,7 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
         <List disablePadding={true}>
           {rows.length ? (
             rows.map((address: IAddress, i: number) => (
-              <ListItem key={address.id || i} disableGutters>
+              <StyledListItem key={address.id || i}>
                 <ListItemText
                   primary={
                     <Fragment>
@@ -109,12 +109,12 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
                   <ListAction onClick={handleEdit(address)} message="form.buttons.edit" icon={Edit} />
                   <ListAction onClick={handleDelete(address)} message="form.buttons.delete" icon={Delete} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))
           ) : (
-            <ListItem disableGutters>
+            <StyledListItem>
               <FormattedMessage id="pages.profile.addresses.empty" />
-            </ListItem>
+            </StyledListItem>
           )}
         </List>
       </ProgressOverlay>

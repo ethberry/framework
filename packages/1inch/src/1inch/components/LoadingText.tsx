@@ -8,9 +8,7 @@ export interface ILoadingTextProps {
 
 export const LoadingText: FC<ILoadingTextProps> = props => {
   const { text, loading } = props;
-  return text && !loading ? (
-    <>{text}</>
-  ) : (
+  return loading ? (
     <span
       style={{
         width: "20px",
@@ -21,5 +19,7 @@ export const LoadingText: FC<ILoadingTextProps> = props => {
     >
       <CircularProgress />
     </span>
-  );
+  ) : text ? (
+    <>{text}</>
+  ) : null;
 };

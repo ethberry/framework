@@ -4,11 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 
-import DeployPonziABI from "../../../../../abis/mechanics/ponzi/deploy/deployPonzi.abi.json";
+import DeployPonziABI from "@framework/abis/deployPonzi/PonziFactoryFacet.json";
 
 import { PonziContractDeployDialog } from "./dialog";
 

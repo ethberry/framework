@@ -3,14 +3,13 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { getEthPrice } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
-
-import { getEthPrice } from "../../../../../utils/money";
+import StakingDepositABI from "@framework/abis/deposit/Staking.json";
 
 export interface IStakingDepositSimpleButtonProps {
   className?: string;
@@ -34,7 +33,6 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       referrer: constants.AddressZero,
     };
     const tokenId = rule.deposit!.components[0].templateId;
-
     return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;

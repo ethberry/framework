@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Grid, List, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -43,7 +42,7 @@ export const RaffleRounds: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(round => (
-            <ListItem key={round.id}>
+            <StyledListItem key={round.id}>
               <ListItemText sx={{ width: 0.2 }}>
                 {round.contract?.title} #{round.roundId}
               </ListItemText>
@@ -53,14 +52,12 @@ export const RaffleRounds: FC = () => {
                 <RaffleRoundEndButton
                   contract={round.contract!}
                   disabled={
-                    round.contract!.parameters.roundId !== round.id ||
                     round.contract!.contractStatus === ContractStatus.INACTIVE ||
-                    !round.contract!.parameters.vrfSubId ||
-                    !round.contract!.parameters.isConsumer
+                    round.contract!.parameters.roundId !== round.id
                   }
                 />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

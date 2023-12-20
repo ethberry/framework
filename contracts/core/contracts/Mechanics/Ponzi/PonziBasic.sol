@@ -53,7 +53,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
 
   function deposit(address, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule memory rule = _rules[ruleId];
-    require(rule.externalId != 0, "Ponzi: rule doesn't exist");
+    require(rule.terms.period != 0, "Ponzi: rule doesn't exist");
     require(rule.active, "Ponzi: rule doesn't active");
 
     uint256 stakeId = _stakeIdCounter++;
@@ -86,7 +86,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
     require(stake.activeDeposit, "Ponzi: deposit withdrawn already");
 
     uint256 startTimestamp = stake.startTimestamp;
-    uint256 stakePeriod = rule.period;
+    uint256 stakePeriod = rule.terms.period;
     uint256 stakeAmount = depositItem.amount;
 
     address payable receiver = payable(stake.owner);
@@ -96,7 +96,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
       stake.activeDeposit = false;
 
       // PENALTY
-      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.penalty / 100);
+      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.terms.penalty / 100);
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), withdrawAmount);
@@ -111,7 +111,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
     // Check cycle count
-    uint256 maxCycles = rule.maxCycles;
+    uint256 maxCycles = rule.terms.maxCycles;
     // multiplier = (maxCycles > 0) ? (multiplier + cycleCount >= maxCycles) ? (maxCycles - cycleCount): multiplier : multiplier;
     if (maxCycles > 0) {
       uint256 cycleCount = stake.cycles;
@@ -163,12 +163,12 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
   function _setRule(Rule memory rule) internal {
     uint256 ruleId = _ruleIdCounter++;
     _rules[ruleId] = rule;
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreatedP(ruleId, rule);
   }
 
   function _updateRule(uint256 ruleId, bool active) internal {
     Rule memory rule = _rules[ruleId];
-    require(rule.period != 0, "Ponzi: rule does not exist");
+    require(rule.terms.period != 0, "Ponzi: rule does not exist");
     _rules[ruleId].active = active;
     emit RuleUpdated(ruleId, active);
   }
@@ -205,7 +205,7 @@ contract PonziBasic is IPonzi, AccessControl, Pausable {
 
   function finalizeByRuleId(uint256 ruleId) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Rule memory rule = _rules[ruleId];
-    require(rule.externalId != 0, "Ponzi: rule doesn't exist");
+    require(rule.terms.period != 0, "Ponzi: rule doesn't exist");
     address token = rule.deposit.token;
     uint256 finalBalance;
 

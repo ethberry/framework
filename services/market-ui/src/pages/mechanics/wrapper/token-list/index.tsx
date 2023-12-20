@@ -12,7 +12,7 @@ import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { StyledPagination } from "@framework/styled";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import MintBoxABI from "../../../../abis/mechanics/wrapper/mint/mintBox.abi.json";
+import MintBoxABI from "@framework/abis/mintBox/ERC721Wrapper.json";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 import { WrapperEditDialog } from "./edit";

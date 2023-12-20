@@ -4,11 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
 
-import StakingUpdateRuleABI from "../../../../../abis/mechanics/staking/rule-toggle/updateRule.abi.json";
+import StakingUpdateRuleABI from "@framework/abis/updateRule/Ponzi.json";
 
 export interface IStakingToggleRuleButtonProps {
   className?: string;

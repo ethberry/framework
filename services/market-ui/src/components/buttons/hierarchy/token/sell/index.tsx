@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Sell } from "@mui/icons-material";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 

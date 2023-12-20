@@ -7,9 +7,8 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { formatEther } from "@framework/exchange";
 import { IReferralLeaderboard } from "@framework/types";
-
-import { formatEther } from "../../../../utils/money";
 
 export const ReferralLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangePaginationModel } =

@@ -12,14 +12,14 @@ import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {MINTER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 
 import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
-import {AccessControlInternal} from "../../Diamond/override/AccessControlInternal.sol";
-import {PausableInternal} from "../../Diamond/override/PausableInternal.sol";
+import {DiamondOverride} from "../../Diamond/override/DiamondOverride.sol";
+import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {SignatureValidator} from "../override/SignatureValidator.sol";
 import {ExchangeStorage} from "../storage/ExchangeStorage.sol";
 import {Asset, Params} from "../lib/interfaces/IAsset.sol";
 import {LimitExceed, CountExceed, NotAnOwner, SignerMissingRole} from "../../utils/errors.sol";
 
-contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeBreedFacet is SignatureValidator, DiamondOverride {
   event Breed(address account, uint256 externalId, Asset matron, Asset sire);
 
   using SafeCast for uint256;
@@ -54,6 +54,8 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
     IERC721Random(item.token).mintRandom(_msgSender(), params.externalId);
 
     emit Breed(_msgSender(), params.externalId, item, price);
+
+    _afterPurchase(params.referrer, ExchangeUtils._toArrayConcat(item, price));
   }
 
   function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {

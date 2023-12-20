@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, List, ListItem, ListItemText } from "@mui/material";
+import { Button, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -10,12 +10,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
-import { ContractStatus } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
 import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
 import { WaitListListGenerateButton } from "../../../../components/buttons/mechanics/wait-list/list/generate";
@@ -82,28 +80,16 @@ export const WaitListList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(waitListList => (
-            <ListItem key={waitListList.id}>
+            <StyledListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListActions dataTestId="WaitListActionsMenuButton">
                 <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(waitListList)} message="form.buttons.delete" icon={Delete} />
-                <WaitListListCreateButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                  onRefreshPage={handleRefreshPage}
-                />
-                <WaitListListUploadButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                  onRefreshPage={handleRefreshPage}
-                />
-                <WaitListListGenerateButton
-                  waitListList={waitListList}
-                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
-                  onRefreshPage={handleRefreshPage}
-                />
+                <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

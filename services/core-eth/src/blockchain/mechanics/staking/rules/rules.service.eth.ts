@@ -32,59 +32,14 @@ export class StakingRulesServiceEth {
   ) {}
 
   public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
     const {
       name,
       args: { rule, ruleId },
     } = event;
     const { address, transactionHash } = context;
 
-    const { deposit, reward, period, penalty, maxStake, recurrent, active } = rule;
-
-    // DEPOSIT ARRAY
-    const depositItem: IAssetDto = { components: [] };
-
-    for (const dep of deposit) {
-      const { tokenId, amount } = dep;
-      const depositTemplate = await this.templateService.findOne(
-        { id: Number(tokenId) },
-        { relations: { contract: true } },
-      );
-
-      if (!depositTemplate) {
-        throw new NotFoundException("depositTemplateNotFound");
-      }
-
-      depositItem.components.push({
-        tokenType: depositTemplate.contract.contractType!,
-        contractId: depositTemplate.contract.id,
-        templateId: depositTemplate.id,
-        amount,
-      });
-    }
-
-    // REWARD ARRAY
-    const rewardItem: IAssetDto = { components: [] };
-
-    for (const rew of reward) {
-      const { tokenId, amount } = rew;
-
-      const rewardTemplate = await this.templateService.findOne(
-        { id: Number(tokenId) },
-        { relations: { contract: true } },
-      );
-
-      if (!rewardTemplate) {
-        throw new NotFoundException("rewardTemplateNotFound");
-      }
-
-      rewardItem.components.push({
-        tokenType: rewardTemplate.contract.contractType!,
-        contractId: rewardTemplate.contract.id,
-        templateId: rewardTemplate.id,
-        amount,
-      });
-    }
+    const { deposit, reward, terms, active } = rule;
+    const { recurrent, advance, period, penalty, maxStake } = terms;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -95,6 +50,83 @@ export class StakingRulesServiceEth {
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+
+    // DEPOSIT ARRAY
+    const depositItem: IAssetDto = { components: [] };
+
+    for (const dep of deposit) {
+      const { tokenId, token, amount } = dep;
+      if (tokenId !== "0") {
+        const depositTemplate = await this.templateService.findOne(
+          { id: Number(tokenId) },
+          { relations: { contract: true } },
+        );
+
+        if (!depositTemplate) {
+          throw new NotFoundException("depositTemplateNotFound");
+        }
+
+        depositItem.components.push({
+          tokenType: depositTemplate.contract.contractType!,
+          contractId: depositTemplate.contract.id,
+          templateId: depositTemplate.id,
+          amount,
+        });
+      } else {
+        const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+        if (!contractEntity) {
+          throw new NotFoundException("depositContractNotFound");
+        }
+
+        depositItem.components.push({
+          tokenType: contractEntity.contractType!,
+          contractId: contractEntity.id,
+          templateId: null,
+          amount,
+        });
+      }
+    }
+
+    // REWARD ARRAY
+    const rewardItem: IAssetDto = { components: [] };
+
+    for (const rew of reward) {
+      const { tokenId, token, amount } = rew;
+
+      if (tokenId !== "0") {
+        const rewardTemplate = await this.templateService.findOne(
+          { id: Number(tokenId) },
+          { relations: { contract: true } },
+        );
+
+        if (!rewardTemplate) {
+          throw new NotFoundException("rewardTemplateNotFound");
+        }
+
+        rewardItem.components.push({
+          tokenType: rewardTemplate.contract.contractType!,
+          contractId: rewardTemplate.contract.id,
+          templateId: rewardTemplate.id,
+          amount,
+        });
+      } else {
+        const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+        if (!contractEntity) {
+          throw new NotFoundException("depositContractNotFound");
+        }
+
+        rewardItem.components.push({
+          tokenType: contractEntity.contractType!,
+          contractId: contractEntity.id,
+          templateId: null,
+          amount,
+        });
+      }
     }
 
     // new ACTIVE rule is NEW to hide it from display in market
@@ -109,6 +141,7 @@ export class StakingRulesServiceEth {
       penalty: Number(penalty),
       maxStake: Number(maxStake),
       recurrent,
+      advance,
       stakingRuleStatus,
       externalId: ruleId,
       contractId: contractEntity.id,

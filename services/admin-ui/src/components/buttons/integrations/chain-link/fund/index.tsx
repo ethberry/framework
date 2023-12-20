@@ -3,14 +3,13 @@ import { Savings } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-
-import LinkTransferAndCallABI from "../../../../../abis/integrations/chain-link/fund/transferAndCall.abi.json";
-
-import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import { SystemModuleType } from "@framework/types";
 import type { IContract } from "@framework/types";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+
+import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
+import transferAndCallERC677ABI from "@framework/abis/transferAndCall/ERC677.json";
 
 export interface IChainLinkFundButtonProps {
   subscriptionId: number;
@@ -34,7 +33,7 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        LinkTransferAndCallABI,
+        transferAndCallERC677ABI,
         web3Context.provider?.getSigner(),
       );
       const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);

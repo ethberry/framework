@@ -12,9 +12,9 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
-import {SignatureValidator} from "../utils/SignatureValidator.sol";
-import {BalanceExceed,LimitExceed,RefProgramSet} from "../utils/errors.sol";
-import {Asset,TokenType} from "../Exchange/lib/interfaces/IAsset.sol";
+import {ExchangeUtils} from "../Exchange/lib/ExchangeUtils.sol";
+import {BalanceExceed,LimitExceed,ZeroBalance,RefProgramSet} from "../utils/errors.sol";
+import {Asset, Params, TokenType, DisabledTokenTypes} from "../Exchange/lib/interfaces/IAsset.sol";
 
 abstract contract LinearReferral is Context, AccessControl {
   using SafeERC20 for IERC20;
@@ -92,31 +92,35 @@ abstract contract LinearReferral is Context, AccessControl {
     }
   }
 
-  function withdrawReward(address token) public returns (bool success) {
+  function withdrawReward(address token) public {
     uint256 rewardAmount = _rewardBalances[_msgSender()][token];
+
     if (rewardAmount == 0) {
-      revert BalanceExceed();
+      revert ZeroBalance();
     }
-    bool result;
+    // Check contract balances
     if (token == address(0)) {
       if (address(this).balance < rewardAmount) {
         revert BalanceExceed();
       }
-      _rewardBalances[_msgSender()][token] = 0;
-      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
-      Address.sendValue(payable(_msgSender()), rewardAmount);
-      result = true;
     } else {
       uint256 balanceErc20 = IERC20(token).balanceOf(address(this));
       if (balanceErc20 < rewardAmount) {
         revert BalanceExceed();
       }
-      _rewardBalances[_msgSender()][token] = 0;
-      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
-      SafeERC20.safeTransfer(IERC20(token), _msgSender(), rewardAmount);
-      result = true;
     }
-    return result;
+
+    // Create a new Asset object representing the reward (NATIVE or ERC20 only)
+    Asset memory rewardItem = Asset(
+      token == address(0) ? TokenType.NATIVE : TokenType.ERC20,
+      token,
+      0,
+      rewardAmount
+    );
+    // Transfer the reward Asset to the receiver.
+    ExchangeUtils.spend(ExchangeUtils._toArray(rewardItem), _msgSender(), DisabledTokenTypes(false, false, true, true, true));
+
+    emit ReferralWithdraw(_msgSender(), token, rewardAmount);
   }
 
   function getBalance(address referral, address token) public view returns (uint256 balance) {

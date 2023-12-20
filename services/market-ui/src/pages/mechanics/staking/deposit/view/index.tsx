@@ -6,9 +6,9 @@ import { format } from "date-fns";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { formatItem, formatPenalty } from "@framework/exchange";
 import type { IStakingDeposit } from "@framework/types";
 
-import { formatItem, formatPenalty } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
@@ -20,7 +20,9 @@ export interface IStakesViewDialogProps {
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { stakingRule, startTimestamp, withdrawTimestamp } = initialValues;
+  // TODO Property depositAsset does not exist on type IStakingDeposit
+  // @ts-ignore
+  const { stakingRule, depositAsset, startTimestamp, withdrawTimestamp } = initialValues;
   const { penalty } = stakingRule || { penalty: 0 };
 
   const { formatMessage } = useIntl();
@@ -58,7 +60,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatItem(stakingRule?.deposit)}</TableCell>
+              <TableCell align="right">{formatItem(depositAsset)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

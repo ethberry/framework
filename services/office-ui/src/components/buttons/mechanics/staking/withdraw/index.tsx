@@ -4,11 +4,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import StakingWithdrawABI from "../../../../../abis/mechanics/staking/stakingWithdraw.abi.json";
+import StakingWithdrawABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;

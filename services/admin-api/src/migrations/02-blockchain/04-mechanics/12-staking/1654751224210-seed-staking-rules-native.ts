@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface {
@@ -169,6 +169,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       INSERT INTO ${ns}.staking_rules (
         id,
         title,
+        image_url,
         description,
         duration_amount,
         penalty,
@@ -176,12 +177,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         deposit_id,
         reward_id,
         staking_rule_status,
+        external_id,
         contract_id,                               
         created_at,
         updated_at
       ) VALUES (
         111,
         'NATIVE > NATIVE',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -189,12 +192,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81111,
         81112,
         'ACTIVE',
+        111,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         112,
         'NATIVE > ERC20',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -202,12 +207,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81121,
         81122,
         'ACTIVE',
+        112,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         113,
         'NATIVE > ERC721',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -215,12 +222,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81131,
         81132,
         'ACTIVE',
+        113,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         114,
         'NATIVE > ERC998',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -228,12 +237,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81141,
         81142,
         'ACTIVE',
+        114,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         115,
         'NATIVE > ERC1155',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -241,12 +252,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81151,
         81152,
         'ACTIVE',
+        115,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         119,
         'NATIVE > NONE',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -254,12 +267,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         81199,
         null,
         'ACTIVE',
+        119,
         12501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         211,
         'NATIVE > NATIVE (new)',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -267,12 +282,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         82111,
         82112,
         'INACTIVE',
+        211,
         12502,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         311,
         'NATIVE > NATIVE (inactive)',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -280,12 +297,14 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         83111,
         83112,
         'INACTIVE',
+        311,
         12503,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         411,
         'NATIVE > NATIVE (BEP)',
+        '${imageUrl}',
         '${simpleFormatting}',
         604800,
         1,
@@ -293,6 +312,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         84111,
         84112,
         'INACTIVE',
+        411,
         12504,
         '${currentDateTime}',
         '${currentDateTime}'

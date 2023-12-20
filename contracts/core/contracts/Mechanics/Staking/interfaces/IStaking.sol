@@ -8,15 +8,23 @@ pragma solidity ^0.8.20;
 
 import {Asset, Params} from "../../../Exchange/lib/interfaces/IAsset.sol";
 
+
+
 interface IStaking {
+  // TODO move period, penalty, maxStake? to StakingTerms
+  struct StakingTerms {
+    uint256 penalty;
+    uint256 period;
+    uint256 maxStake;
+    bool recurrent;
+    bool advance;
+  }
+
   struct Rule {
     Asset[] deposit;
     Asset[] reward;
     Asset[][] content;
-    uint256 period;
-    uint256 penalty;
-    uint256 maxStake;
-    bool recurrent;
+    StakingTerms terms;
     bool active;
   }
 

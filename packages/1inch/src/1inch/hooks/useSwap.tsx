@@ -35,7 +35,7 @@ export const approve = async (
   const signer = provider.getSigner();
   const erc20Contract = new Contract(fromToken.address, AllowanceABI, signer);
 
-  const { address: spenderAddress } = await api.approveSpender();
+  const { address: spenderAddress } = await api.approveSpender(fromToken.address);
 
   const allowance = await erc20Contract.allowance(await signer.getAddress(), spenderAddress);
 
@@ -81,7 +81,7 @@ export const useSwap = (
   };
 
   const execute = useMetamask(
-    async (_, web3Context: Web3ContextType) => {
+    async (web3Context: Web3ContextType) => {
       const signer = web3Context.provider!.getSigner();
       try {
         // Activate
@@ -170,7 +170,7 @@ export const useSwap = (
             enqueueSnackbar(
               `Converted ${formatUnits(swap.fromTokenAmount, swap.fromToken.decimals)} ${
                 swap.fromToken.symbol
-              } to ${formatUnits(swap.toTokenAmount, swap.toToken.decimals)} ${swap.toToken.symbol}`,
+              } to ${formatUnits(swap.toAmount, swap.toToken.decimals)} ${swap.toToken.symbol}`,
               { variant: "success" },
             ),
           1000,

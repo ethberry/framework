@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementRule } from "@framework/types";
-import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
+import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { AchievementLevelEntity } from "../level/level.entity";
@@ -12,12 +12,6 @@ import { AchievementItemEntity } from "../item/item.entity";
 
 @Entity({ schema: ns, name: "achievement_rule" })
 export class AchievementRuleEntity extends SearchableEntity implements IAchievementRule {
-  @Column({
-    type: "enum",
-    enum: AchievementType,
-  })
-  public achievementType: AchievementType;
-
   @Column({
     type: "enum",
     enum: ContractEventType,
@@ -43,6 +37,12 @@ export class AchievementRuleEntity extends SearchableEntity implements IAchievem
     enum: AchievementRuleStatus,
   })
   public achievementStatus: AchievementRuleStatus;
+
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
 
   @OneToMany(_type => AchievementLevelEntity, component => component.achievementRule)
   public levels: Array<AchievementLevelEntity>;

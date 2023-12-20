@@ -2,14 +2,13 @@ import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import type { ISearchableDto } from "@gemunion/types-collection";
 import type { IStakingRuleSearchDto } from "@framework/types";
 import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
 
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { StakingRulesEntity } from "./rules.entity";
-import type { IStakingRuleAutocompleteDto } from "./interfaces";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { StakingRulesEntity } from "./rules.entity";
+import type { IStakingRuleAutocompleteDto, IStakingRuleUpdateDto } from "./interfaces";
 
 @Injectable()
 export class StakingRulesService {
@@ -191,7 +190,7 @@ export class StakingRulesService {
 
   public async update(
     where: FindOptionsWhere<StakingRulesEntity>,
-    dto: Partial<ISearchableDto>,
+    dto: IStakingRuleUpdateDto,
     userEntity: UserEntity,
   ): Promise<StakingRulesEntity> {
     const stakingRuleEntity = await this.findOne(where, { relations: { contract: true } });

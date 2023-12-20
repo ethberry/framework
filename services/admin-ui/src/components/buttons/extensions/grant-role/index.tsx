@@ -4,13 +4,12 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
-import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
-
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
+import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessControlFacet.json";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -38,7 +37,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, GrantRoleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, grantRoleAccessControlFacetABI, web3Context.provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 

@@ -5,8 +5,8 @@ import "react-multi-carousel/lib/styles.css";
 
 import type { IMysteryBox } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { MultiCarouselButtonGroup } from "./button-group";
+import { Root } from "./styled";
 
 declare interface IMultiCarouselMysteryboxProps {
   mysteryBoxes: Array<IMysteryBox>;
@@ -22,13 +22,12 @@ export enum IResolutions {
 export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props => {
   const { mysteryBoxes, component: Component } = props;
 
-  const classes = useStyles();
   const there = useTheme();
 
   const responsive = {
     [IResolutions.DESKTOP]: {
       breakpoint: {
-        max: document.documentElement.clientWidth, // there.breakpoints.values.lg
+        max: 3000,
         min: there.breakpoints.values.md,
       },
       items: 3,
@@ -55,19 +54,22 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
   const deviceType = isSmallScreen ? IResolutions.MOBILE : isMediumScreen ? IResolutions.TABLET : IResolutions.DESKTOP;
 
   return (
-    <Carousel
-      deviceType={deviceType}
-      className={classes.container}
-      itemClass={classes.item}
-      responsive={responsive}
-      arrows={false}
-      renderButtonGroupOutside={true}
-      customButtonGroup={<MultiCarouselButtonGroup />}
-      infinite
-    >
-      {mysteryBoxes.map(mysterybox => (
-        <Component key={mysterybox.id} mysteryBox={mysterybox} />
-      ))}
-    </Carousel>
+    <Root>
+      <Carousel
+        ssr
+        deviceType={deviceType}
+        className={"MultiCarouselMysteryBox-Container"}
+        itemClass={"MultiCarouselMysteryBox-Item"}
+        responsive={responsive}
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<MultiCarouselButtonGroup />}
+        infinite
+      >
+        {mysteryBoxes.map(mysterybox => (
+          <Component key={mysterybox.id} mysteryBox={mysterybox} />
+        ))}
+      </Carousel>
+    </Root>
   );
 };

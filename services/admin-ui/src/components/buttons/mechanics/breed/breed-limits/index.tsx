@@ -4,11 +4,11 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
 
-import BreedSetPregnancyLimitsABI from "../../../../../abis/mechanics/breed/breed-limits/setPregnancyLimits.abi.json";
+import setPregnancyLimitsExchangeBreedFacetABI from "@framework/abis/setPregnancyLimits/ExchangeBreedFacet.json";
 
 import type { IBreedLimitDto } from "./dialog";
 import { BreedLimitDialog } from "./dialog";
@@ -36,7 +36,7 @@ export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
     (values: IBreedLimitDto, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(
         systemContract.address,
-        BreedSetPregnancyLimitsABI,
+        setPregnancyLimitsExchangeBreedFacetABI,
         web3Context.provider?.getSigner(),
       );
       return contract.setPregnancyLimits(values.count, values.time, values.maxTime) as Promise<void>;

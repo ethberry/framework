@@ -6,11 +6,11 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { formatEther } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
-import { formatEther } from "../../../../../utils/money";
 import { createValidationSchema, editValidationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {

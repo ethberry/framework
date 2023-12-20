@@ -16,7 +16,7 @@ import { InputType } from "@gemunion/types-collection";
 import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
-import { formatPrice } from "../../../../utils/money";
+import { formatItem } from "@framework/exchange";
 import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
 import { SearchContractInput } from "../../../../components/inputs/search-contract";
 
@@ -172,7 +172,7 @@ export const StakingReport: FC = () => {
         rows={rows.map((stake: IStakingDeposit) => ({
           id: stake.id,
           account: stake.account,
-          deposit: formatPrice(stake.stakingRule?.deposit),
+          deposit: formatItem(stake.stakingRule?.deposit),
           stakingRule: stake.stakingRule?.title,
           createdAt: stake.createdAt,
         }))}

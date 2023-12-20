@@ -1,20 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import type { IQuote, IToken } from "../provider";
 import { useOneInch } from "../provider";
-
-import { useAsyncStateInOrder } from "./useAsyncStateInOrder";
 import { safeParseUnits } from "../helpers/safeParseUnits";
 
-export const useQuote = (amountToSend: string, fromToken?: IToken, toToken?: IToken): IQuote | null => {
-  const [state, setState, clear] = useAsyncStateInOrder<IQuote | null>(null);
-  const api = useOneInch();
+export interface IUseQuoteReturn {
+  quote: IQuote | null;
+  isLoading?: boolean;
+}
+
+export const useQuote = (amountToSend: string, fromToken?: IToken, toToken?: IToken): IUseQuoteReturn => {
+  const { getQuote, isQuoteLoading } = useOneInch();
+  const [quote, setQuote] = useState<IQuote | null>(null);
 
   let didUnmount = false;
 
+  const handleQuote = async (from: IToken, to: IToken, amount: string) => {
+    const quoteResponse = await getQuote(from, to, safeParseUnits(amount, from).toString());
+    if (quoteResponse && !didUnmount) {
+      setQuote(quoteResponse);
+    } else {
+      setQuote(null);
+    }
+  };
+
   useEffect(() => {
-    setState(null);
-    clear();
+    setQuote(null);
 
     if (
       !fromToken ||
@@ -22,26 +33,18 @@ export const useQuote = (amountToSend: string, fromToken?: IToken, toToken?: ITo
       fromToken?.address === toToken?.address ||
       ![fromToken, toToken, amountToSend].every(el => !!el)
     ) {
-      return () => {};
+      return;
     }
 
-    void api
-      .getQuote(fromToken, toToken, safeParseUnits(amountToSend, fromToken).toString())
-      .then(quote => {
-        if (!didUnmount) {
-          setState(quote);
-        }
-      })
-      .catch(e => {
-        console.error(e);
-        if (!didUnmount) {
-          setState(null);
-        }
-      });
+    void handleQuote(fromToken, toToken, amountToSend);
+
     return () => {
       didUnmount = true;
     };
   }, [fromToken, toToken, amountToSend]);
 
-  return state;
+  return {
+    quote,
+    isLoading: isQuoteLoading,
+  };
 };

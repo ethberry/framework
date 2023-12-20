@@ -1,8 +1,12 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
+import { AchievementRuleStatus, TokenType } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -11,17 +15,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
-import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
-import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
-
 import { FormRefresher } from "../../../components/forms/form-refresher";
-import { cleanUpAsset } from "../../../utils/money";
 import { AchievementLevelEditDialog } from "./edit";
-
+//
 export const emptyAchievementRule = {
-  achievementType: AchievementType.MARKETPLACE,
+  achievementStatus: AchievementRuleStatus.ACTIVE,
 } as IAchievementRule;
 
 export const AchievementLevels: FC = () => {
@@ -51,12 +49,10 @@ export const AchievementLevels: FC = () => {
       title: "",
       description: emptyStateString,
       amount: 0,
-      parameters: { [TokenMetadata.RARITY]: "0" },
+      // parameters: { [TokenMetadata.RARITY]: "0" },
       achievementLevel: 1,
       achievementRule: emptyAchievementRule,
-      item: getEmptyTemplate(TokenType.ERC20),
-      startTimestamp: new Date().toISOString(),
-      endTimestamp: new Date().toISOString(),
+      reward: getEmptyTemplate(TokenType.ERC20),
     },
     search: {
       query: "",
@@ -66,37 +62,31 @@ export const AchievementLevels: FC = () => {
       id,
       title,
       description,
-      item,
+      reward,
       amount,
-      parameters,
+      // parameters,
       achievementLevel,
       achievementRuleId,
       achievementRule,
-      startTimestamp,
-      endTimestamp,
     }) =>
       id
         ? {
             title,
             description,
-            item: cleanUpAsset(item),
+            reward: cleanUpAsset(reward),
             amount,
-            parameters: JSON.parse(parameters),
+            // parameters: JSON.parse(parameters),
             achievementRule,
             achievementLevel,
-            startTimestamp,
-            endTimestamp,
           }
         : {
             title,
             description,
             amount,
-            parameters: JSON.parse(parameters),
-            item: cleanUpAsset(item),
+            // parameters: JSON.parse(parameters),
+            reward: cleanUpAsset(reward),
             achievementRuleId,
             achievementLevel,
-            startTimestamp,
-            endTimestamp,
           },
   });
 
@@ -135,15 +125,14 @@ export const AchievementLevels: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(level => (
-            <ListItem key={level.id}>
+            <StyledListItem key={level.id}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
-              <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

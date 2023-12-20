@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { formatPenalty, formatItem } from "@framework/exchange";
 import { IPonziRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { formatPenalty, formatPrice } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IPonziViewDialogProps {
@@ -49,13 +49,13 @@ export const PonziViewDialog: FC<IPonziViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatPrice(deposit)}</TableCell>
+              <TableCell align="right">{formatItem(deposit)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.reward" />
               </TableCell>
-              <TableCell align="right">{formatPrice(reward)}</TableCell>
+              <TableCell align="right">{formatItem(reward)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

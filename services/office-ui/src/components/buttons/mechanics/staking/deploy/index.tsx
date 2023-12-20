@@ -4,11 +4,11 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IStakingContractDeployDto, IUser } from "@framework/types";
 import { StakingContractTemplates } from "@framework/types";
 
-import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
+import DeployStakingABI from "@framework/abis/deployStaking/StakingFactoryFacet.json";
 
 import { StakingDeployDialog } from "./dialog";
 

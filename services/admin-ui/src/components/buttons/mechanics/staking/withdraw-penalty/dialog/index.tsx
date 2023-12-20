@@ -2,19 +2,19 @@ import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItemText, Typography } from "@mui/material";
 import { PriceChange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
+import { formatEther } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import StakingWithdrawABI from "../../../../../../abis/mechanics/staking/stakingWithdraw.abi.json";
-import { formatEther } from "../../../../../../utils/money";
+import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
 
 export interface IStakingWithdrawPenaltyDialogProps {
   open: boolean;
@@ -40,7 +40,11 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   );
 
   const metaWithdrawPenalty = useMetamask((values: IAssetComponent, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, StakingWithdrawABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      data.address,
+      withdrawBalanceReentrancyStakingRewardABI,
+      web3Context.provider?.getSigner(),
+    );
 
     return contract.withdrawBalance({
       tokenType: Object.keys(TokenType).indexOf(values.tokenType),
@@ -81,7 +85,7 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
         {rows.length ? (
           <List>
             {rows.map(comp => (
-              <ListItem key={comp.id}>
+              <StyledListItem key={comp.id}>
                 <ListItemText sx={{ width: 0.6 }}>{`${comp.template!.title} ${
                   comp.token ? ` #${comp.token.tokenId}` : ""
                 }`}</ListItemText>
@@ -89,7 +93,7 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
                 <ListActions>
                   <ListAction onClick={handleWithdraw(comp)} message="form.buttons.withdraw" icon={PriceChange} />
                 </ListActions>
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         ) : (

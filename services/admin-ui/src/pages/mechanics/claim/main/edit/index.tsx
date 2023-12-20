@@ -6,7 +6,7 @@ import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
 import type { IClaim } from "@framework/types";
-import { BusinessType, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

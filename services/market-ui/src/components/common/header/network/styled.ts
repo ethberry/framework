@@ -1,8 +1,8 @@
 import { Badge, SvgIcon } from "@mui/material";
-import { CSSObject, styled } from "@mui/material/styles";
+import { SxProps, styled } from "@mui/material/styles";
 import { Circle } from "@mui/icons-material";
 
-export const spinnerMixin: CSSObject = {
+export const spinnerMixin: SxProps = {
   svg: {
     color: "#FFFFFF",
   },

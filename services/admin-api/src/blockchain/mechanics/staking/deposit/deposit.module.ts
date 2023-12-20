@@ -3,9 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { StakingDepositService } from "./deposit.service";
 import { StakingDepositEntity } from "./deposit.entity";
+import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([StakingDepositEntity])],
+  imports: [BalanceModule, TypeOrmModule.forFeature([StakingDepositEntity])],
   providers: [StakingDepositService],
   exports: [StakingDepositService],
 })

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -7,8 +7,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -86,38 +85,32 @@ export const WaitListContracts: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => (
-            <ListItem key={contract.id}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListActions>
-                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  icon={Delete}
-                  message="form.buttons.delete"
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <GrantRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RevokeRoleButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <RenounceRoleButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <PauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <UnPauseButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <AllowanceButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <TopUpButton contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
-                <EthListenerAddButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <EthListenerRemoveButton
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-              </ListActions>
-            </ListItem>
-          ))}
+          {rows.map(contract => {
+            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
+            return (
+              <StyledListItem key={contract.id}>
+                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                <ListActions>
+                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    icon={Delete}
+                    message="form.buttons.delete"
+                    disabled={itemDisabled}
+                  />
+                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
+                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
+                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
+                  <PauseButton contract={contract} disabled={itemDisabled} />
+                  <UnPauseButton contract={contract} disabled={itemDisabled} />
+                  <AllowanceButton contract={contract} disabled={itemDisabled} />
+                  <TopUpButton contract={contract} disabled={itemDisabled} />
+                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
+                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                </ListActions>
+              </StyledListItem>
+            );
+          })}
         </List>
       </ProgressOverlay>
 

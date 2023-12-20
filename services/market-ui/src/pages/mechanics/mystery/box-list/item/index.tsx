@@ -2,12 +2,12 @@ import { FC } from "react";
 import { CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
+import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia, StyledTemplateItemCard } from "@framework/styled";
 import type { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
-import { formatItem } from "../../../../../utils/money";
 
 interface IMysteryBoxListItemProps {
   mysteryBox: IMysteryBox;

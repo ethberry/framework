@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { BalanceEntity } from "./balance.entity";
+import { ModuleType } from "@framework/types";
 
 @Injectable()
 export class BalanceService {
@@ -30,6 +31,29 @@ export class BalanceService {
 
   public delete(where: FindOptionsWhere<BalanceEntity>): Promise<DeleteResult> {
     return this.balanceEntityRepository.delete(where);
+  }
+
+  public searchByAddress(address: string): Promise<Array<BalanceEntity>> {
+    return this.balanceEntityRepository.find({
+      where: {
+        account: address,
+        token: {
+          template: {
+            contract: {
+              contractModule: ModuleType.HIERARCHY,
+            },
+          },
+        },
+      },
+      join: {
+        alias: "balance",
+        leftJoinAndSelect: {
+          token: "balance.token",
+          template: "token.template",
+          contract: "template.contract",
+        },
+      },
+    });
   }
 
   public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {

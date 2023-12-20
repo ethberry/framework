@@ -6,16 +6,16 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { getEthPrice } from "@framework/exchange";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/purchase.abi.json";
-import { getEthPrice } from "../../../../../utils/money";
+import RafflePurchaseABI from "@framework/abis/purchaseRaffle/ExchangeRaffleFacet.json";
 
 export interface IRafflePurchaseButtonProps {
   className?: string;
-  disabled: boolean;
+  disabled?: boolean;
   round: Partial<IRaffleRound>;
   variant?: ListActionVariant;
 }
@@ -90,7 +90,11 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       buttonVariant="contained"
       className={className}
       dataTestId="RafflePurchaseButton"
-      disabled={disabled}
+      disabled={
+        disabled ||
+        !round?.roundId ||
+        (!!round.maxTickets && round.maxTickets > 0 && round.maxTickets <= round.ticketCount!)
+      }
       variant={variant}
     />
   );

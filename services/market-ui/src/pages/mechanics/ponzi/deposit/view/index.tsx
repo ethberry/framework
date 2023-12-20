@@ -4,9 +4,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { formatPenalty, formatItem } from "@framework/exchange";
 import { IPonziDeposit } from "@framework/types";
 
-import { formatPenalty, formatPrice } from "../../../../../utils/money";
 import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
@@ -50,13 +50,13 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatPrice(ponziRule?.deposit)}</TableCell>
+              <TableCell align="right">{formatItem(ponziRule?.deposit)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.reward" />
               </TableCell>
-              <TableCell align="right">{formatPrice(ponziRule?.reward)}</TableCell>
+              <TableCell align="right">{formatItem(ponziRule?.reward)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

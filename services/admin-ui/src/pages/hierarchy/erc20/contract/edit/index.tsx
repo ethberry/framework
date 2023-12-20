@@ -5,11 +5,11 @@ import { Alert } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { formatEther } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { BusinessType, ContractStatus } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
-import { formatEther } from "../../../../../utils/money";
 import { UpgradeProductTypeDialog } from "../../../../../components/dialogs/product-type";
 import { createValidationSchema, editValidationSchema } from "./validation";
 

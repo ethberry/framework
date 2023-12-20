@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -9,8 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
@@ -68,7 +67,7 @@ export const VestingContracts: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "auto" }}>
           {rows.map(vesting => (
-            <ListItem key={vesting.id} sx={{ flexWrap: "wrap" }}>
+            <StyledListItem key={vesting.id} wrap>
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
@@ -78,7 +77,7 @@ export const VestingContracts: FC = () => {
                 <TopUpButton contract={vesting} />
                 <TransferOwnershipButton contract={vesting} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

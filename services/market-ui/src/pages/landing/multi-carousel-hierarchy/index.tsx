@@ -5,8 +5,8 @@ import "react-multi-carousel/lib/styles.css";
 
 import type { ITemplate } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { MultiCarouselButtonGroup } from "./button-group";
+import { Root } from "./styled";
 
 declare interface IMultiCarouselHierarchyProps {
   templates: Array<ITemplate>;
@@ -22,13 +22,12 @@ export enum IResolutions {
 export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props => {
   const { templates, component: Component } = props;
 
-  const classes = useStyles();
   const there = useTheme();
 
   const responsive = {
     [IResolutions.DESKTOP]: {
       breakpoint: {
-        max: document.documentElement.clientWidth, // there.breakpoints.values.lg
+        max: 3000,
         min: there.breakpoints.values.md,
       },
       items: 3,
@@ -55,19 +54,22 @@ export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props =>
   const deviceType = isSmallScreen ? IResolutions.MOBILE : isMediumScreen ? IResolutions.TABLET : IResolutions.DESKTOP;
 
   return (
-    <Carousel
-      deviceType={deviceType}
-      className={classes.container}
-      itemClass={classes.item}
-      responsive={responsive}
-      arrows={false}
-      renderButtonGroupOutside={true}
-      customButtonGroup={<MultiCarouselButtonGroup />}
-      infinite
-    >
-      {templates.map(template => (
-        <Component key={template.id} template={template} />
-      ))}
-    </Carousel>
+    <Root>
+      <Carousel
+        ssr
+        deviceType={deviceType}
+        className={"MultiCarouselHierarchy-Container"}
+        itemClass={"MultiCarouselHierarchy-Item"}
+        responsive={responsive}
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<MultiCarouselButtonGroup />}
+        infinite
+      >
+        {templates.map(template => (
+          <Component key={template.id} template={template} />
+        ))}
+      </Carousel>
+    </Root>
   );
 };

@@ -3,7 +3,7 @@ import type { IToken } from "./token";
 export interface ISwap {
   fromToken: IToken;
   toToken: IToken;
-  toTokenAmount: string;
+  toAmount: string;
   fromTokenAmount: string;
   protocols: Array<string>;
   tx: {

@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { MonetizationOn } from "@mui/icons-material";
 
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { PonziBalanceDialog } from "./view";

@@ -21,6 +21,7 @@ import type {
   IMergeData,
   IMysteryPurchaseData,
   IMysteryUnpackData,
+  IPonziRuleCreatedData,
   IPurchaseData,
   IPurchaseRandomData,
   IRaffleFinalizeData,
@@ -29,6 +30,7 @@ import type {
   IRaffleRoundEndData,
   IRaffleRoundStartData,
   IRentUserUpdateData,
+  IStakingBalanceCheck,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
@@ -38,6 +40,7 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
+import { IReferralEventData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -200,7 +203,20 @@ export class NotificatorService {
     });
   }
 
+  public stakingBalanceCheck(data: IStakingBalanceCheck): Promise<any> {
+    return this.sendMessage(data.stakingContract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_BALANCE_CHECK, data).toPromise();
+    });
+  }
+
   // TODO add deposit return event notification?
+
+  // MODULE:STAKING
+  public ponziRuleCreated(data: IPonziRuleCreatedData): Promise<any> {
+    return this.sendMessage(data.ponziRule.contract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_RULE_CREATED, data).toPromise();
+    });
+  }
 
   // MODULE:RAFFLE
   public rafflePurchase(data: IRafflePurchaseData): Promise<any> {
@@ -275,6 +291,13 @@ export class NotificatorService {
   public breed(data: IBreedData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.BREED, data).toPromise();
+    });
+  }
+
+  // MODULE:REFERRAL
+  public referralEvent(data: IReferralEventData): Promise<any> {
+    return this.sendMessage(data.contract.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.REFERRAL, data).toPromise();
     });
   }
 }

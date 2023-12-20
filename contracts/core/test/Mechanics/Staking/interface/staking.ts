@@ -2,10 +2,13 @@ export interface IRule {
   deposit: IAsset[];
   reward: IAsset[];
   content: IAsset[][];
-  period: number;
-  penalty: number;
-  maxStake: number;
-  recurrent: boolean;
+  terms: {
+    period: number;
+    penalty: number;
+    maxStake: number;
+    recurrent: boolean;
+    advance: boolean;
+  };
   active: boolean;
 }
 

@@ -1,8 +1,10 @@
 import { FC } from "react";
-import { Alert, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+
+import { StyledAlert } from "./styled";
 
 export interface IRaffleContractDeployDialogProps {
   open: boolean;
@@ -21,12 +23,12 @@ export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = 
       disabled={false}
       {...props}
     >
-      <Alert severity="warning" sx={{ mt: 2 }}>
+      <StyledAlert severity="warning">
         <FormattedMessage id="alert.minterRole" />
-      </Alert>
-      <Alert severity="warning" sx={{ mt: 2 }}>
+      </StyledAlert>
+      <StyledAlert severity="warning">
         <FormattedMessage id="alert.randomChainlink" />
-      </Alert>
+      </StyledAlert>
       <Typography>This contract has no options, you can click `OK` to continue</Typography>
     </FormDialog>
   );

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
@@ -10,11 +10,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { cleanUpAsset } from "@framework/exchange";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAssetPromo } from "@framework/types";
 
-import { cleanUpAsset } from "../../../../utils/money";
 import { AssetPromoEditDialog } from "./edit";
 
 export const AssetPromo: FC = () => {
@@ -74,13 +73,13 @@ export const AssetPromo: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(promo => (
-            <ListItem key={promo.id}>
+            <StyledListItem key={promo.id}>
               <ListItemText>{promo.item?.components[0].template?.title}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleEdit(promo)} message="form.buttons.edit" icon={Create} />
                 <ListAction onClick={handleDelete(promo)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

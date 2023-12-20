@@ -17,18 +17,18 @@ import {PAUSER_ROLE} from "@gemunion/contracts-utils/contracts/roles.sol";
 import {Wallet} from "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import {PaymentSplitter} from "@gemunion/contracts-utils/contracts/PaymentSplitter.sol";
 
-import {LinearReferralPonzi} from "./LinearReferralPonzi.sol";
 import {IPonzi} from "./interfaces/IPonzi.sol";
 import {TopUp} from "../../utils/TopUp.sol";
 import {Asset, TokenType, DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
 import {ZeroBalance, NotExist, NotActive, BalanceExceed, NotComplete, Expired, NotAnOwner, WrongStake} from "../../utils/errors.sol";
+import "../../Referral/Referral.sol";
 
 contract Ponzi is
   IPonzi,
   AccessControl,
   Pausable,
-  LinearReferralPonzi,
+  Referral,
   TopUp,
   Wallet,
   PaymentSplitter,
@@ -73,7 +73,7 @@ contract Ponzi is
     Rule storage rule = _rules[ruleId];
 
     // Ensure that the rule exists and is active
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     if (!rule.active) {
@@ -105,7 +105,7 @@ contract Ponzi is
     _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
   }
 
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferralPonzi) {
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(Referral) {
     return super._afterPurchase(referrer, price);
   }
 
@@ -130,7 +130,7 @@ contract Ponzi is
     }
 
     uint256 startTimestamp = stake.startTimestamp;
-    uint256 stakePeriod = rule.period;
+    uint256 stakePeriod = rule.terms.period;
     uint256 stakeAmount = depositItem.amount;
 
     address payable receiver = payable(stake.owner);
@@ -141,7 +141,7 @@ contract Ponzi is
 
       // PENALTY
       // TODO better penalty calculation
-      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.penalty / 100);
+      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.terms.penalty / 100);
       if (withdrawAmount > 0) {
         Asset memory depositItemWithdraw = depositItem;
         // Empty current stake deposit storage
@@ -149,15 +149,6 @@ contract Ponzi is
         // Transfer the deposit Asset to the receiver.
         ExchangeUtils.spend(ExchangeUtils._toArray(depositItemWithdraw), receiver, _disabledTypes);
       }
-      //      // Transfer the deposit Asset to the receiver.
-      //      ExchangeUtils.spend(ExchangeUtils._toArray(depositItemWithdraw), receiver, _disabledTypes);
-
-      //      if (depositItem.tokenType == TokenType.NATIVE) {
-      //        Address.sendValue(payable(receiver), withdrawAmount);
-      //        emit PaymentEthSent(receiver, withdrawAmount);
-      //      } else if (depositItem.tokenType == TokenType.ERC20) {
-      //        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
-      //      }
     } else {
       stake.startTimestamp = block.timestamp;
     }
@@ -165,7 +156,7 @@ contract Ponzi is
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
     // Check cycle count
-    uint256 maxCycles = rule.maxCycles;
+    uint256 maxCycles = rule.terms.maxCycles;
     // multiplier = (maxCycles > 0) ? (multiplier + cycleCount >= maxCycles) ? (maxCycles - cycleCount): multiplier : multiplier;
     if (maxCycles > 0) {
       uint256 cycleCount = stake.cycles;
@@ -190,14 +181,6 @@ contract Ponzi is
 
       // Transfer the reward Asset to the receiver.
       ExchangeUtils.spend(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
-
-      //      if (rewardItem.tokenType == TokenType.NATIVE) {
-      //        rewardAmount = rewardItem.amount * multiplier;
-      //        Address.sendValue(payable(receiver), rewardAmount);
-      //      } else if (rewardItem.tokenType == TokenType.ERC20) {
-      //        rewardAmount = rewardItem.amount * multiplier;
-      //        SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
-      //      }
     }
 
     if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) {
@@ -213,8 +196,6 @@ contract Ponzi is
     if (startTimestamp <= finishTimestamp) {
       return (finishTimestamp - startTimestamp) / period;
     } else return 0;
-
-    //  return (finishTimestamp - startTimestamp) / period;
   }
 
   // RULES
@@ -231,12 +212,12 @@ contract Ponzi is
   function _setRule(Rule memory rule) internal {
     uint256 ruleId = ++_ruleIdCounter;
     _rules[ruleId] = rule;
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreatedP(ruleId, rule);
   }
 
   function _updateRule(uint256 ruleId, bool active) internal {
     Rule storage rule = _rules[ruleId];
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     _rules[ruleId].active = active;
@@ -299,7 +280,7 @@ contract Ponzi is
     Rule memory rule = _rules[ruleId];
 
     // Ensure that the rule exists
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
 

@@ -5,10 +5,10 @@ import { Contract } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/mui-lists";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListItem } from "@framework/types";
 
-import ClaimABI from "../../../../../abis/mechanics/wait-list/claim/claim.abi.json";
+import ClaimABI from "@framework/abis/claim/WaitList.json";
 
 export interface IWaitListClaimButtonProps {
   className?: string;

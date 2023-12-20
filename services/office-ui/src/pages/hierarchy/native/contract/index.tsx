@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -8,8 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
@@ -24,7 +23,6 @@ import { UnWhitelistButton } from "../../../../components/buttons/extensions/whi
 import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
 import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
 import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { SnapshotButton } from "../../../../components/buttons/hierarchy/contract/snapshot";
 import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
@@ -98,7 +96,7 @@ export const NativeContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(contract => (
-            <ListItem key={contract.id} disableGutters>
+            <StyledListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
               <ListActions dataTestId="ContractActionsMenuButton">
                 <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
@@ -118,12 +116,11 @@ export const NativeContract: FC = () => {
                 <MintButton contract={contract} disabled={true} />
                 <AllowanceButton contract={contract} disabled={true} />
                 <TransferButton contract={contract} disabled={true} />
-                <SnapshotButton contract={contract} disabled={true} />
                 <RoyaltyButton contract={contract} disabled={true} />
                 <EthListenerAddButton contract={contract} disabled={true} />
                 <EthListenerRemoveButton contract={contract} disabled={true} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

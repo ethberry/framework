@@ -32,6 +32,7 @@ echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC20_WHITELIST_ADDR=$ERC20_WHITELIST_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/admin-api/.env.$WMODE
@@ -74,6 +75,7 @@ echo WAIT_LIST_ADDR=$WAIT_LIST_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/admin-api/.env.$WMODE
 echo PONZI_ADDR=$PONZI_ADDR  >>./services/admin-api/.env.$WMODE
 echo DISPENSER_ADDR=$DISPENSER_ADDR  >>./services/admin-api/.env.$WMODE
+echo PAYMENT_SPLITTER_ADDR=$PAYMENT_SPLITTER_ADDR  >>./services/admin-api/.env.$WMODE
 
 touch ./services/admin-ui/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/admin-ui/.env.$WMODE

@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Grid, List, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ListAction, ListActions } from "@framework/mui-lists";
-import { StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IBreed } from "@framework/types";
 
 import { BreedLimitButton } from "../../../../components/buttons";
@@ -40,13 +39,13 @@ export const BreedBreeds: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map(breed => (
-            <ListItem key={breed.id}>
+            <StyledListItem key={breed.id}>
               {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
               <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(breed)} message="form.tips.view" icon={Visibility} />
               </ListActions>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </ProgressOverlay>

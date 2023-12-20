@@ -1,31 +1,32 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
-import { HowToVote } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
+import { HowToVote } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
-import { TokenType } from "@framework/types";
+import { ListAction } from "@framework/styled";
+import { IContract, TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.approve.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
+import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
+import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
+import ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
-import { ListAction } from "@framework/mui-lists";
 
 export interface IAllowanceButtonProps {
   token?: any;
   isSmall?: boolean;
-  contractId?: number;
+  contract?: IContract;
+  isDisabled?: boolean;
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken(), isSmall = false, contractId } = props;
-  const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
+  const { token = getEmptyToken(), isSmall = false, contract = undefined /*, isDisabled = false */ } = props;
 
+  const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
   const handleAllowance = (): void => {
     setIsAllowanceDialogOpen(true);
   };
@@ -59,9 +60,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   });
 
   const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
-    await metaFn(values).finally(() => {
-      setIsAllowanceDialogOpen(false);
-    });
+    await metaFn(values);
   };
 
   return (
@@ -85,8 +84,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         open={isAllowanceDialogOpen}
         initialValues={{
           token,
-          address: "",
-          contractId,
+          address: contract ? contract.address : "",
+          contractId: contract ? contract.id : undefined,
         }}
       />
     </Fragment>

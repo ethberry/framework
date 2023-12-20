@@ -8,5 +8,6 @@ export interface IStakingLeaderboardItemSearchDto {
 
 export interface IStakingLeaderboardSearchDto extends IPaginationDto {
   deposit: IStakingLeaderboardItemSearchDto;
-  reward: IStakingLeaderboardItemSearchDto;
+  reward?: IStakingLeaderboardItemSearchDto;
+  emptyReward?: boolean;
 }

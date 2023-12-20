@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, NotAcceptableException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
@@ -35,6 +35,7 @@ export class MergeService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("merge.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("merge.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
@@ -88,6 +89,7 @@ export class MergeService {
       join: {
         alias: "merge",
         leftJoinAndSelect: {
+          merchant: "merge.merchant",
           item: "merge.item",
           item_components: "item.components",
           item_template: "item_components.template",
@@ -124,6 +126,38 @@ export class MergeService {
       throw new NotFoundException("tokenNotFound");
     }
 
+    // test tokens and merge recipe
+    // TODO test unique in DTO or in at front?
+    const unique = [...new Set(tokenIds)];
+    if (unique.length !== tokenIds.length) {
+      throw new NotAcceptableException("wrongTokenDuplicate");
+    }
+
+    if (mergeEntity.price.components[0].amount !== tokenIds.length.toString()) {
+      throw new NotAcceptableException("wrongTokenAmount");
+    }
+
+    const recipeTmplIds = mergeEntity.price.components.filter(comp => comp.templateId).map(comp => comp.templateId);
+    const priceTmplIds = tokenEntities.map(token => token.templateId);
+
+    if (recipeTmplIds.length > 0) {
+      if (recipeTmplIds.length > 1) {
+        throw new NotAcceptableException("wrongRecipe");
+      }
+
+      if (priceTmplIds.filter(t => t !== recipeTmplIds[0]).length > 0) {
+        throw new NotAcceptableException("wrongTokenTemplate");
+      }
+    } else {
+      const recipeCntrId = mergeEntity.price.components[0].contractId;
+      if (tokenEntities.filter(t => t.template.contractId !== recipeCntrId).length > 0) {
+        throw new NotAcceptableException("wrongTokenContract");
+      }
+    }
+
+    const priceTemplateId = recipeTmplIds.length > 0 ? BigInt(recipeTmplIds[0] || 0) : 0n;
+
+    // todo next mechanic Fuze? =)
     // const rarity = Number(tokenEntities.metadata.RARITY) || 1;
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
@@ -137,7 +171,7 @@ export class MergeService {
         externalId: mergeEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: zeroPadValue(toBeHex(priceTemplateId), 32),
         receiver: mergeEntity.merchant.wallet,
         referrer,
       },
@@ -170,7 +204,7 @@ export class MergeService {
         amount: "1",
       })),
       // PRICE token to merge
-      tokenEntities.map(tokenEntity => ({
+      tokenEntities.sort(sorter("tokenId")).map(tokenEntity => ({
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,

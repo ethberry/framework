@@ -23,13 +23,13 @@ import {IERC721Random} from "../../ERC721/interfaces/IERC721Random.sol";
 import {IERC721Simple} from "../../ERC721/interfaces/IERC721Simple.sol";
 import {IERC1155Simple} from "../../ERC1155/interfaces/IERC1155Simple.sol";
 import {ExchangeUtils} from "../../Exchange/lib/ExchangeUtils.sol";
-import {LinearReferral} from "../../Referral/LinearReferral.sol";
 import {IERC721_MYSTERY_ID} from "../../utils/interfaces.sol";
 import {TopUp} from "../../utils/TopUp.sol";
 import {ZeroBalance,NotExist,WrongRule,UnsupportedTokenType,NotComplete,Expired,NotAnOwner,WrongStake,WrongToken,LimitExceed,NotActive} from "../../utils/errors.sol";
 import {IERC721MysteryBox} from "../MysteryBox/interfaces/IERC721MysteryBox.sol";
 import {IStaking} from "./interfaces/IStaking.sol";
 import {Asset,Params,TokenType,DisabledTokenTypes} from "../../Exchange/lib/interfaces/IAsset.sol";
+import "../../Referral/Referral.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -38,7 +38,7 @@ import {Asset,Params,TokenType,DisabledTokenTypes} from "../../Exchange/lib/inte
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearReferral, ReentrancyGuard {
+contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, ReentrancyGuard {
   using Address for address;
   using EnumerableMap for EnumerableMap.AddressToUintMap;
   using EnumerableMap for EnumerableMap.UintToUintMap;
@@ -88,14 +88,14 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     Rule storage rule = _rules[ruleId];
 
     // Ensure that the rule exists and is active
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     if (!rule.active) {
       revert NotActive();
     }
 
-    uint256 _maxStake = rule.maxStake;
+    uint256 _maxStake = rule.terms.maxStake;
 
     (, uint256 _stakeRuleCounter) = _stakeCounter[_msgSender()].tryGet(ruleId);
 
@@ -160,14 +160,17 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         _depositBalancesMap.set(depositItem.token, balance + depositItem.amount);
 
         // Do something with referrer
-        if (referrer != address(0)) {
-          _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
-        }
+        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
 
         unchecked {
           i++;
         }
       }
+    }
+
+    // ADVANCE REWARD
+    if (rule.terms.advance) {
+      receiveReward(stakeId, false, false);
     }
   }
 
@@ -176,7 +179,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     1. Calculate multiplier (count full periods since stake start)
 
     2. Deposit withdraw
-      2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+      2.1 If withdrawDeposit || ( multiplier > 0 && !rule.terms.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
 
         2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
         2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
@@ -186,7 +189,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     3. Reward transfer
       3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
 
-    4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+    4. If multiplier == 0 && rule.terms.recurrent && !withdrawDeposit && !breakLastPeriod
                                                        -> revert with Error ( first period not yet finished )
     */
 
@@ -220,36 +223,47 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       revert Expired();
     }
 
-    uint256 stakePeriod = rule.period;
+    uint256 stakePeriod = rule.terms.period;
+
+    // Determine if it is first advance payment
+    bool firstAdvancePayment = rule.terms.advance && stake.cycles == 0;
     // Calculate the multiplier
     // counts only FULL stake cycles
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
-
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, stake.cycles, rule.terms.recurrent, rule.terms.advance);
     // Increment stake's cycle count
     if (multiplier != 0) {
       stake.cycles += multiplier;
     }
 
-    // Iterate by Array<deposit>
-    uint256 lengthDeposit = stake.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; ) {
-      // If withdrawDeposit flag is true OR
-      // If Reward multiplier > 0 AND Rule is not recurrent OR
-      // If Stake cycles > 0 AND breakLastPeriod flag is true
-      // Withdraw initial Deposit
-      if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
-        emit DepositWithdraw(stakeId, receiver, block.timestamp);
-        // Deactivate current deposit
+    // WITHDRAW INITIAL DEPOSIT
+    // if withdrawDeposit flag is true OR
+    // if Reward multiplier > 0 AND Rule is not recurrent OR
+    // if Stake cycles > 0 AND breakLastPeriod flag is true
+    if (withdrawDeposit || (multiplier > 0 && !rule.terms.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
+      // Deactivate current deposit
+      if (stake.activeDeposit) {
         stake.activeDeposit = false;
-
-        withdrawDepositItem(stakeId, i, multiplier, receiver);
-      } else {
-        // Update the start timestamp of the stake.
-        stake.startTimestamp = block.timestamp;
       }
+
+      emit DepositWithdraw(stakeId, receiver, block.timestamp);
+
+      // Iterate by Array<deposit>
+      uint256 lengthDeposit = stake.deposit.length;
+      for (uint256 i = 0; i < lengthDeposit; ) {
+        withdrawDepositItem(stakeId, i, multiplier, receiver);
 
       unchecked {
         i++;
+      }
+      }
+
+    } else {
+
+      // Update the start timestamp of the stake
+      // if multiplier > 0 AND
+      // if it is not first Advance Payment
+      if (!firstAdvancePayment && multiplier > 0){
+        stake.startTimestamp = block.timestamp;
       }
     }
 
@@ -269,12 +283,13 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         }
       }
     }
+
+    // REVERT THE TRANSACTION
     // IF the multiplier is zero
     // AND
     // withdrawDeposit and breakLastPeriod flags are false
     // AND staking rule is recurrent
-    // revert the transaction.
-    if (multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod) {
+    if (multiplier == 0 && rule.terms.recurrent && !withdrawDeposit && !breakLastPeriod) {
       revert NotComplete();
     }
   }
@@ -293,7 +308,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     Asset storage depositItem = stake.deposit[itemIndex];
     uint256 stakeAmount = depositItem.amount;
     TokenType depositTokenType = depositItem.tokenType;
-    uint256 penalty = rule.penalty;
+    uint256 penalty = rule.terms.penalty;
 
     // Deduct the penalty from the stake deposit amount if the multiplier is 0.
     if (multiplier == 0 && stake.cycles == 0) {
@@ -465,12 +480,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     uint256 startTimestamp,
     uint256 finishTimestamp,
     uint256 period,
-    bool recurrent
+    uint256 cycles,
+    bool recurrent,
+    bool advance
   ) internal pure virtual returns (uint256) {
     if (startTimestamp <= finishTimestamp) {
       uint256 multiplier = (finishTimestamp - startTimestamp) / period;
-      // If staking rule is not recurrent, limit reward to 1 cycle
+      // If a staking rule is not recurrent, limit reward to 1 cycle
       if (!recurrent && multiplier > 1) {
+        return 1;
+      }
+      // If a staking term is an advance payment, set multiplier to 1
+      if (advance && cycles == 0) {
         return 1;
       }
       return multiplier;
@@ -557,10 +578,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       }
     }
 
-    p.period = rule.period;
-    p.penalty = rule.penalty;
-    p.maxStake = rule.maxStake;
-    p.recurrent = rule.recurrent;
+    p.terms = rule.terms;
     p.active = rule.active;
 
     emit RuleCreated(ruleId, rule);
@@ -573,7 +591,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    */
   function _updateRule(uint256 ruleId, bool active) internal {
     Rule storage rule = _rules[ruleId];
-    if (rule.period == 0) {
+    if (rule.terms.period == 0) {
       revert NotExist();
     }
     _rules[ruleId].active = active;
@@ -695,7 +713,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    * @param referrer The Referrer address.
    * @param price The deposited Asset[].
    */
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(Referral) {
     return super._afterPurchase(referrer, price);
   }
 
