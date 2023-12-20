@@ -1,5 +1,4 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-
 import { hexlify, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
@@ -10,7 +9,6 @@ import type {
   IErc20TokenDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
-  ILotteryContractDeployDto,
   IMysteryContractDeployDto,
   IPonziContractDeployDto,
   IStakingContractDeployDto,
@@ -31,18 +29,18 @@ import {
 } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { ContractManagerService } from "./contract-manager.service";
-import { AssetEntity } from "../exchange/asset/asset.entity";
-import { getContractABI } from "./utils";
 import { ContractService } from "../hierarchy/contract/contract.service";
+import { AssetEntity } from "../exchange/asset/asset.entity";
+import { ContractManagerService } from "./contract-manager.service";
+import { getContractABI } from "./utils";
 
 @Injectable()
 export class ContractManagerSignService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    private readonly contractManagerService: ContractManagerService,
     private readonly contractService: ContractService,
+    private readonly contractManagerService: ContractManagerService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -54,7 +52,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -108,14 +106,14 @@ export class ContractManagerSignService {
       dto.contractTemplate === Erc721ContractTemplates.LOTTERY
         ? ModuleType.LOTTERY
         : dto.contractTemplate === Erc721ContractTemplates.RAFFLE
-        ? ModuleType.RAFFLE
-        : ModuleType.HIERARCHY;
+          ? ModuleType.RAFFLE
+          : ModuleType.HIERARCHY;
     await this.contractManagerService.validateDeployment(userEntity, moduleType, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -151,7 +149,7 @@ export class ContractManagerSignService {
           externalId: userEntity.id,
         },
         args: {
-          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate),
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
           baseTokenURI: dto.baseTokenURI,
@@ -171,7 +169,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -228,7 +226,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -268,7 +266,6 @@ export class ContractManagerSignService {
         },
       },
     );
-
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
@@ -282,7 +279,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -345,7 +342,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -417,7 +414,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -470,7 +467,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -509,16 +506,16 @@ export class ContractManagerSignService {
   }
 
   // MODULE:WAITLIST
-  public async waitList(dto: IWaitListContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async waitList(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByWaitListContractTemplate(dto, userEntity.chainId);
+    const { bytecode } = await this.getBytecodeByWaitListContractTemplate({}, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAIT_LIST, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -542,99 +539,6 @@ export class ContractManagerSignService {
           nonce,
           bytecode,
           externalId: userEntity.id,
-        },
-      },
-    );
-
-    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
-  // MODULE:RAFFLE
-  public async raffle(userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByRaffleContractTemplate(userEntity.chainId);
-
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.RAFFLE, null);
-
-    const signature = await this.signer.signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: await this.contractService
-          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
-      },
-      // Types
-      {
-        EIP712: [{ name: "params", type: "Params" }],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-          { name: "externalId", type: "uint256" },
-        ],
-      },
-      // Values
-      {
-        params: {
-          nonce,
-          bytecode,
-          externalId: userEntity.id,
-        },
-      },
-    );
-
-    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
-  // MODULE:LOTTERY
-  public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByLotteryContractTemplate(dto, userEntity.chainId);
-
-    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
-
-    const signature = await this.signer.signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: await this.contractService
-          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "LotteryArgs" },
-        ],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-          { name: "externalId", type: "uint256" },
-        ],
-        LotteryArgs: [{ name: "config", type: "LotteryConfig" }],
-        LotteryConfig: [
-          { name: "timeLagBeforeRelease", type: "uint256" },
-          { name: "commission", type: "uint256" },
-        ],
-      },
-      // Values
-      {
-        params: {
-          nonce,
-          bytecode,
-          externalId: userEntity.id,
-        },
-        args: {
-          config: dto.config,
         },
       },
     );
@@ -652,7 +556,7 @@ export class ContractManagerSignService {
     const signature = await this.signer.signTypedData(
       // Domain
       {
-        name: "ContractManager",
+        name: ModuleType.CONTRACT_MANAGER,
         version: "1.0.0",
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
@@ -785,7 +689,7 @@ export class ContractManagerSignService {
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RANDOM:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC721//randomERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
+          "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
           chainId,
         );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE:
@@ -844,7 +748,7 @@ export class ContractManagerSignService {
         );
       case Erc998ContractTemplates.RANDOM:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json",
+          "@framework/core-contracts/artifacts/contracts/ERC998/random/ERC998Random.sol/ERC998Random.json",
           chainId,
         );
       case Erc998ContractTemplates.RENTABLE:
@@ -984,6 +888,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json",
           chainId,
         );
+      case StakingContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingBasicRef.sol/StakingBasicRef.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -1009,6 +918,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/Ponzi.sol/Ponzi.json",
           chainId,
         );
+      case PonziContractTemplates.LINEAR_REFERRAL:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Ponzi/PonziBasicRef.sol/PonziBasicRef.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -1018,22 +932,6 @@ export class ContractManagerSignService {
   public getBytecodeByWaitListContractTemplate(_dto: IWaitListContractDeployDto, chainId: number) {
     return getContractABI(
       "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json",
-      chainId,
-    );
-  }
-
-  // MODULE:RAFFLE
-  public getBytecodeByRaffleContractTemplate(chainId: number) {
-    return getContractABI(
-      "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandom.sol/RaffleRandom.json",
-      chainId,
-    );
-  }
-
-  // MODULE:LOTTERY
-  public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto, chainId: number) {
-    return getContractABI(
-      "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandom.sol/LotteryRandom.json",
       chainId,
     );
   }
