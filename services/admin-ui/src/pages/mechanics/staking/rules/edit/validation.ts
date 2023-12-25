@@ -13,7 +13,7 @@ export const validationSchema = object().shape({
   stakingRuleStatus: mixed<StakingRuleStatus>()
     .oneOf(Object.values(StakingRuleStatus))
     .required("form.validations.valueMissing"),
-  // deposit: templateAssetValidationSchema,
+  deposit: templateAssetValidationSchema,
   reward: templateAssetValidationSchema,
   contractId: dbIdValidationSchema,
 });
