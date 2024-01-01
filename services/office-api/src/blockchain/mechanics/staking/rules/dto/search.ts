@@ -114,5 +114,6 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
+  @Transform(({ value }) => Number(value))
   public merchantId: number;
 }

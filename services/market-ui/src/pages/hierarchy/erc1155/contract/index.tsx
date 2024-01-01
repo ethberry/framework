@@ -1,11 +1,12 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
+import { useParams } from "react-router";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
 import { StyledAvatar } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
@@ -13,13 +14,29 @@ import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contac
 import { Erc1155TemplateList } from "../template-list";
 
 export const Erc1155Contract: FC = () => {
-  const { selected, isLoading } = useCollection<IContract>({
-    baseUrl: "/erc1155/contracts",
-    empty: {
-      title: "",
-      description: emptyStateString,
-    },
-  });
+  const { id } = useParams<{ id: string }>();
+
+  const [selected, setSelected] = useState<IContract>({
+    title: "",
+    description: emptyStateString,
+  } as IContract);
+
+  const { fn: getContractFn, isLoading } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: `/erc1155/contracts/${id}`,
+      }),
+    { success: false, error: false },
+  );
+
+  const getContract = async () => {
+    const contract = await getContractFn();
+    setSelected(contract);
+  };
+
+  useEffect(() => {
+    void getContract();
+  }, []);
 
   if (isLoading) {
     return <Spinner />;

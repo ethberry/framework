@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useIndexedDB } from "react-indexed-db-hook";
 import { useLocation } from "react-router";
@@ -7,18 +7,17 @@ import { io, Socket } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
+import { useAppDispatch, collectionActions } from "@gemunion/redux";
 import type { IUser } from "@framework/types";
 import { ContractEventSignature, SignalEventType } from "@framework/types";
 
-import { SignalContext, TPageRefresher } from "./context";
 import { EventRouteMatch } from "./constants";
 
-export const SignalProvider: FC<PropsWithChildren> = props => {
-  const { children = null } = props;
+export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const location = useLocation();
-
-  const refresher = useRef<TPageRefresher | null>(null);
+  const dispatch = useAppDispatch();
+  const { setNeedRefresh } = collectionActions;
 
   const api = useApi();
   const user = useUser<IUser>();
@@ -28,10 +27,6 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
   const { add } = useIndexedDB("txs");
 
   const isUserAuthenticated = user.isAuthenticated();
-
-  const setPageRefresher = (fn: TPageRefresher | null) => {
-    refresher.current = fn;
-  };
 
   const handleEvent = async (dto: { transactionHash: string; transactionType?: ContractEventSignature }) => {
     if (dto.transactionType) {
@@ -60,8 +55,8 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
           EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch] as string,
         );
 
-      if (isRouteMatchToEvent && refresher.current) {
-        void refresher.current();
+      if (isRouteMatchToEvent) {
+        dispatch(setNeedRefresh(true));
       }
     } else {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
@@ -121,5 +116,5 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
     };
   }, [socket, isUserAuthenticated]);
 
-  return <SignalContext.Provider value={{ setPageRefresher }}>{children}</SignalContext.Provider>;
+  return null;
 };

@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IPonziRule, PonziRuleStatus } from "@framework/types";
@@ -20,7 +20,7 @@ export interface IPonziDepositButtonProps {
 
 export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaDeposit = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract.address, PonziDepositABI, web3Context.provider?.getSigner());
@@ -28,7 +28,6 @@ export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
     // const tokenId = 0;
     // const tokenId = rule.deposit!.components[0].templateId; // for 1155
 
-    const referrer = settings.getReferrer();
     // TODO check ponzi contract referral feature?
     return contract.deposit(referrer, rule.externalId, {
       value: getEthPrice(rule.deposit),

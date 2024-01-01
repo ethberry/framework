@@ -3,15 +3,15 @@ import { IconButton, Tooltip } from "@mui/material";
 import { Link } from "@mui/icons-material";
 import { constants } from "ethers";
 
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppDispatch, useAppSelector, settingsActions } from "@gemunion/redux";
 
 export const Referrer: FC = () => {
-  const settings = useSettings();
-
-  const referrer = settings.getReferrer();
+  const { referrer } = useAppSelector(state => state.settings);
+  const { setReferrer } = settingsActions;
+  const dispatch = useAppDispatch();
 
   const handleRemoveReferrer = () => {
-    settings.setReferrer(constants.AddressZero);
+    dispatch(setReferrer(constants.AddressZero));
   };
 
   if (referrer === constants.AddressZero) {

@@ -5,7 +5,7 @@ import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -28,7 +28,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
   const [isMergeDialogOpen, setIsMergeDialogOpen] = useState(false);
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -81,7 +81,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           mergeId: merge.id,
           tokenIds: values.tokenIds,
         },
