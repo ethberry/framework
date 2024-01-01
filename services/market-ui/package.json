@@ -54,7 +54,7 @@
     "@gemunion/provider-wallet": "3.3.65",
     "@gemunion/react-hooks": "1.1.70",
     "@gemunion/react-hooks-eth": "1.4.2",
-    "@gemunion/redux": "1.0.0",
+    "@gemunion/redux": "0.2.0",
     "@gemunion/types-blockchain": "1.2.8",
     "@gemunion/types-collection": "1.5.14",
     "@gemunion/types-jwt": "0.3.12",

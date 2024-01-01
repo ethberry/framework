@@ -55,7 +55,7 @@
     "@gemunion/provider-wallet": "3.3.65",
     "@gemunion/react-hooks": "1.1.70",
     "@gemunion/react-hooks-eth": "1.4.2",
-    "@gemunion/redux": "1.0.0",
+    "@gemunion/redux": "0.2.0",
     "@gemunion/types-coin-gecko": "0.3.2",
     "@gemunion/types-collection": "1.5.14",
     "@gemunion/yup-rules": "4.2.29",
