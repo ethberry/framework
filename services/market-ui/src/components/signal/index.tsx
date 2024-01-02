@@ -5,8 +5,11 @@ import { io, Socket } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
+import { collectionActions, useAppDispatch } from "@gemunion/redux";
 import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
+
+import { EventRouteMatch } from "./constants";
 
 export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -16,6 +19,8 @@ export const Signal: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const isUserAuthenticated = user.isAuthenticated();
+  const dispatch = useAppDispatch();
+  const { setNeedRefresh } = collectionActions;
 
   const activateSocket = async () => {
     await api.refreshToken();
@@ -57,6 +62,16 @@ export const Signal: FC = () => {
               variant: "success",
             },
           );
+
+          const isRouteMatchToEvent =
+            Object.keys(EventRouteMatch).includes(dto.transactionType) &&
+            location.pathname.startsWith(
+              EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch] as string,
+            );
+
+          if (isRouteMatchToEvent) {
+            dispatch(setNeedRefresh(true));
+          }
         } else {
           enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
             variant: "success",
