@@ -159,13 +159,12 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, Referral, 
         (, uint256 balance) = _depositBalancesMap.tryGet(depositItem.token);
         _depositBalancesMap.set(depositItem.token, balance + depositItem.amount);
 
-        // Do something with referrer
-        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
-
         unchecked {
           i++;
         }
       }
+      // Do something with referrer
+      _afterPurchase(referrer, _stakes[stakeId].deposit);
     }
 
     // ADVANCE REWARD

@@ -351,7 +351,10 @@ import {
   SeedWrapperAt1563804000370,
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
+import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 
+// TEST DATA 100k topics
+// import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -401,6 +404,7 @@ const config: PostgresConnectionOptions = {
     StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
+    ReferralEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -754,6 +758,7 @@ const config: PostgresConnectionOptions = {
     SeedGameBalance1686896594710,
 
     /* alter prod migrations */
+    // SeedTestDataAt9763804000120,
   ],
 };
 

@@ -60,12 +60,12 @@ export const ReferralReport: FC = () => {
       flex: 0.3
     },
     {
-      field: "account",
-      headerName: formatMessage({ id: "form.labels.account" }),
+      field: "referrer",
+      headerName: formatMessage({ id: "form.labels.referrer" }),
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <AddressLink address={params.value} />
+          <AddressLink address={params.value} length={42} />
         );
       },
       flex: 3,
@@ -88,6 +88,13 @@ export const ReferralReport: FC = () => {
     {
       field: "contract",
       headerName: formatMessage({ id: "form.labels.contract" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100
+    },
+    {
+      field: "event",
+      headerName: formatMessage({ id: "form.labels.eventType" }),
       sortable: true,
       flex: 1,
       minWidth: 100
@@ -142,9 +149,10 @@ export const ReferralReport: FC = () => {
         columns={columns}
         rows={rows.map((reward: IReferralReward) => ({
           id: reward.id,
-          account: reward.account,
+          referrer: reward.referrer,
           item: formatItem(reward.item),
           price: formatItem(reward.price),
+          event: reward.history?.parent?.eventType,
           contract: reward.contract!.title,
           createdAt: reward.createdAt,
         }))}

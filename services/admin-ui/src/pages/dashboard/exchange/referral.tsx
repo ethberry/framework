@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-import { BarChart, Leaderboard, Share, Timeline } from "@mui/icons-material";
+import { BarChart } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -21,18 +21,10 @@ export const ReferralSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.exchange.referral" />
+            <FormattedMessage id="pages.dashboard.mechanics.referral" />
           </ListSubheader>
         }
       >
-        {/* <ListItemButton component={RouterLink} to="/referral/cabinet"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Share /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.referral.cabinet.title" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItemButton> */}
         {/* <ListItemButton component={RouterLink} to="/referral/leaderboard"> */}
         {/*  <ListItemIcon> */}
         {/*    <Leaderboard /> */}

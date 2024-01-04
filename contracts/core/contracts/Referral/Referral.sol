@@ -11,7 +11,7 @@ import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 import {Asset} from "../Exchange/lib/interfaces/IAsset.sol";
 
 contract Referral is Context {
-  event ReferralEvent(address indexed account, Asset[] price);
+  event ReferralEvent(address indexed account, address indexed referrer, Asset[] price);
 
   function _afterPurchase(address referrer, Asset[] memory price) internal virtual {
     referralEvent(referrer, price);
@@ -22,6 +22,6 @@ contract Referral is Context {
       return;
     }
 
-    emit ReferralEvent(initReferrer, price);
+    emit ReferralEvent(_msgSender(), initReferrer, price);
   }
 }

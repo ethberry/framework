@@ -38,7 +38,7 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
       {...rest}
     >
       <TextInput name="title" />
-      <SelectInput name="rentStatus" options={RentRuleStatus} disabledOptions={[RentRuleStatus.NEW]} />
+      {id ? <SelectInput name="rentStatus" options={RentRuleStatus} disabledOptions={[RentRuleStatus.NEW]} /> : null}
       <EntityInput name="contractId" controller="contracts" data={{ contractFeatures: [ContractFeatures.RENTABLE] }} />
       <TemplateAssetInput
         allowEmpty

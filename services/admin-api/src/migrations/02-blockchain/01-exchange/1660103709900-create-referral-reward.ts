@@ -23,6 +23,7 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
         {
           name: "level",
           type: "int",
+          isNullable: true,
         },
         {
           name: "contract_id",
@@ -30,8 +31,17 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "amount",
-          type: "uint256",
+          name: "price_id",
+          type: "bigint",
+        },
+        {
+          name: "item_id",
+          type: "bigint",
+          isNullable: true,
+        },
+        {
+          name: "history_id",
+          type: "int",
         },
         {
           name: "created_at",
@@ -47,6 +57,24 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["history_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.event_history`,
           onDelete: "CASCADE",
         },
       ],

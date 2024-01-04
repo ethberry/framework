@@ -42,6 +42,7 @@ export interface IBonus {
 
 export interface IReferralEvent {
   account: string;
+  referrer: string;
   price: Array<IAssetItem>;
 }
 

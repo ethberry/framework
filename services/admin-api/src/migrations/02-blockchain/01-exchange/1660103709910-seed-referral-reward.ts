@@ -12,75 +12,79 @@ export class SeedReferralRewardAt1660103709910 implements MigrationInterface {
       return;
     }
 
-    const currentDateTime = new Date().toISOString();
-    const now = new Date();
+    // const currentDateTime = new Date().toISOString();
+    // const now = new Date();
 
-    await queryRunner.query(`
-      INSERT INTO ${ns}.referral_reward (
-        account,
-        referrer,
-        level,
-        amount,
-        created_at,
-        updated_at
-      ) VALUES (
-        '${wallets[0]}',
-        '${wallets[1]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 1).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[0]}',
-        '${wallets[1]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 1).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[0]}',
-        '${wallets[2]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 2).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[0]}',
-        '${wallets[2]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 2).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[0]}',
-        '${wallets[2]}',
-        1,
-        '${(WeiPerEther / 10n).toString()}',
-        '${subDays(now, 3).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[1]}',
-        '${wallets[2]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 3).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[0]}',
-        '${wallets[2]}',
-        1,
-        '${(WeiPerEther / 10n).toString()}',
-        '${subDays(now, 4).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[1]}',
-        '${wallets[2]}',
-        0,
-        '${WeiPerEther.toString()}',
-        '${subDays(now, 4).toISOString()}',
-        '${currentDateTime}'
-      );
-    `);
+    // TODO create Assets
+    // TODO create History
+    // await queryRunner.query(`
+    //   INSERT INTO ${ns}.referral_reward (
+    //     account,
+    //     referrer,
+    //     level,
+    //     price_id,
+    //     contract_id,
+    //     history_id,
+    //     created_at,
+    //     updated_at
+    //   ) VALUES (
+    //     '${wallets[0]}',
+    //     '${wallets[1]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 1).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[0]}',
+    //     '${wallets[1]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 1).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[0]}',
+    //     '${wallets[2]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 2).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[0]}',
+    //     '${wallets[2]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 2).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[0]}',
+    //     '${wallets[2]}',
+    //     1,
+    //     '${(WeiPerEther / 10n).toString()}',
+    //     '${subDays(now, 3).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[1]}',
+    //     '${wallets[2]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 3).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[0]}',
+    //     '${wallets[2]}',
+    //     1,
+    //     '${(WeiPerEther / 10n).toString()}',
+    //     '${subDays(now, 4).toISOString()}',
+    //     '${currentDateTime}'
+    //   ), (
+    //     '${wallets[1]}',
+    //     '${wallets[2]}',
+    //     0,
+    //     '${WeiPerEther.toString()}',
+    //     '${subDays(now, 4).toISOString()}',
+    //     '${currentDateTime}'
+    //   );
+    // `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

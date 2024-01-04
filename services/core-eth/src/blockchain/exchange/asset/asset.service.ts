@@ -227,7 +227,6 @@ export class AssetService {
     price: Array<IAssetItem>,
   ): Promise<{ items: Array<AssetComponentHistoryEntity>; price: Array<AssetComponentHistoryEntity> }> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
     return {
       items: await Promise.allSettled(
         items.map(async ({ tokenType, token, tokenId, amount }) => {
@@ -300,7 +299,21 @@ export class AssetService {
               { relations: { token: { template: true } } },
             );
 
-            if (!tokenNestedEventHistoryEntity) {
+            const tokenNestedEventHistoryEntityTemplate = await this.eventHistoryService.findOne(
+              {
+                // transactionHash: eventHistoryEntity.transactionHash,
+                parentId: eventHistoryEntity.id,
+                contractId: contractEntity.id,
+                token: {
+                  template: {
+                    id: Number(tokenId),
+                  },
+                },
+              },
+              { relations: { token: { template: true } } },
+            );
+
+            if (!tokenNestedEventHistoryEntity && !tokenNestedEventHistoryEntityTemplate) {
               this.loggerService.error(new NotFoundException("nestedEventNotFound"), "item", AssetService.name);
               // throw new NotFoundException("nestedEventNotFound");
             }
@@ -308,7 +321,9 @@ export class AssetService {
             // for random 721 & 998: TokenID will be updated in Transfer event at next transaction
             // if not found history could be updated in Transfer event at next transaction...
             Object.assign(assetComponentHistoryItem, {
-              token: isRandom ? null : tokenNestedEventHistoryEntity?.token || null,
+              token: isRandom
+                ? null
+                : tokenNestedEventHistoryEntity?.token || tokenNestedEventHistoryEntityTemplate?.token || null,
               contract: contractEntity,
             });
           }
