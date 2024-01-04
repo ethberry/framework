@@ -301,7 +301,7 @@ import {
   SeedProductToCategory1683724061710,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
-  SeedReferralRewardAt1660103709910,
+  // SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
   SeedStakingDepositErc20Erc20At1654751224322,
@@ -639,7 +639,7 @@ const config: PostgresConnectionOptions = {
     SeedAssetPromoMysteryBoxAt1658980521050,
 
     CreateReferralRewardAt1660103709900,
-    SeedReferralRewardAt1660103709910,
+    // SeedReferralRewardAt1660103709910,
 
     // LOTTERY
     SeedContractLotteryTicketAt1563804000180,
