@@ -91,6 +91,7 @@ export class AchievementsRuleService {
 
   public async processEvent(id: number): Promise<void> {
     const event = await this.eventHistoryService.findOneWithRelations({ id });
+
     if (!event) {
       throw new NotFoundException("eventNotFound");
     }
@@ -128,35 +129,43 @@ export class AchievementsRuleService {
           if (rules.length) {
             // Check each rule condition
             rules.map(async rule => {
-              const ruleAsset = rule.item;
-              // if rule with Asset - compare with event assets
-              if (ruleAsset.components) {
-                // get Asset from eventData
-                const eventAsset = this.getEventTokenAsset(event);
-                // if both Assets - check deeper
-                if (eventAsset.length) {
-                  // Check if any one rule.item == event.item
-                  ruleAsset.components.map(asset => {
-                    return eventAsset.map(async item => {
-                      // if Rule.Asset condition met - create achievementsItem
-                      if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
-                        if (asset.templateId === item.templateId || !asset.templateId) {
-                          return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+              // CHECK RULE TIMEFRAME
+              const ruleStartTime = rule.startTimestamp;
+              const ruleEndTime = rule.endTimestamp;
+              const timeNow = Date.now();
+              if (Number(ruleStartTime) <= timeNow && Number(ruleEndTime) >= timeNow) {
+                const ruleAsset = rule.item;
+                // if rule with Asset - compare with event assets
+                if (ruleAsset.components) {
+                  // get Asset from eventData
+                  const eventAsset = this.getEventTokenAsset(event);
+                  // if both Assets - check deeper
+                  if (eventAsset.length) {
+                    // Check if any one rule.item == event.item
+                    ruleAsset.components.map(asset => {
+                      return eventAsset.map(async item => {
+                        // if Rule.Asset condition met - create achievementsItem
+                        if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
+                          if (asset.templateId === item.templateId || !asset.templateId) {
+                            return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                          } else {
+                            return void 0;
+                          }
                         } else {
                           return void 0;
                         }
-                      } else {
-                        return void 0;
-                      }
+                      });
                     });
-                  });
-                  return void 0;
+                    return void 0;
+                  } else {
+                    return void 0;
+                  }
                 } else {
-                  return void 0;
+                  // Rule condition met - create achievementsItem
+                  return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
                 }
               } else {
-                // Rule condition met - create achievementsItem
-                return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                return null;
               }
             });
           }
