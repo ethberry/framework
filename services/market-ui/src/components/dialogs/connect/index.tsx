@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
-import { MetaMaskButton, WalletConnectButton } from "@gemunion/provider-wallet";
+import { MetaMaskButton, ParticleButton, WalletConnectButton } from "@gemunion/provider-wallet";
 
 import { CloseButton } from "../../buttons";
 
@@ -23,6 +23,8 @@ export const ConnectWallet: FC<IConnectWalletProps> = props => {
       <DialogContent>
         <MetaMaskButton onClick={onClose} data-testid="ConnectMetamaskButton" />
         <WalletConnectButton onClick={onClose} data-testid="ConnectWalletConnectButton" />
+        <ParticleButton onClick={onClose} type="google" data-testid="ConnectParticleGoogleButton" />
+        <ParticleButton onClick={onClose} type="facebook" data-testid="ConnectParticleFacebookButton" />
       </DialogContent>
     </Dialog>
   );

@@ -1,0 +1,72 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/mui-packages/issues"
+  },
+  "dependencies": {
+    "@gemunion/constants": "0.12.8",
+    "@gemunion/mui-page-layout": "2.3.19",
+    "@gemunion/types-jwt": "0.3.12",
+    "uuid": "9.0.1"
+  },
+  "description": "react component",
+  "devDependencies": {
+    "@gemunion/provider-api": "7.0.55",
+    "@gemunion/provider-license": "3.0.38",
+    "@gemunion/provider-user": "6.0.61",
+    "@gemunion/provider-wallet": "3.3.65",
+    "@mui/material": "5.15.2",
+    "@mui/styles": "5.15.2",
+    "@types/uuid": "9.0.7",
+    "@web3-react/core": "8.2.3",
+    "notistack": "3.0.1",
+    "react": "18.2.0",
+    "react-intl": "6.5.5",
+    "react-router": "6.21.1",
+    "react-router-dom": "6.21.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@gemunion/metamask-login",
+  "peerDependencies": {
+    "@gemunion/provider-api": "^7.0.0",
+    "@gemunion/provider-license": "^3.0.0",
+    "@gemunion/provider-user": "^6.0.0",
+    "@gemunion/provider-wallet": "^3.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
+    "@web3-react/core": "^8.0.0",
+    "notistack": "^3.0.0",
+    "react": "^18.0.0",
+    "react-intl": "^6.0.0",
+    "react-router": "^6.0.0",
+    "react-router-dom": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/mui-packages"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepare": "npm run build",
+    "preversion": "npm run build && npm run test",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "3.2.22"
+}

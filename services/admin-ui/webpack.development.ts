@@ -24,6 +24,9 @@ const config: Configuration = {
   resolve: {
     alias: {
       "@mui/x-license-pro": path.join(__dirname, "node_modules/@mui/x-license-pro"),
+      "@gemunion/provider-wallet": path.join(__dirname, "node_modules/@gemunion/provider-wallet"),
+      "@gemunion/firebase-login": path.join(__dirname, "node_modules/@gemunion/firebase-login"),
+      "@gemunion/redux": path.join(__dirname, "node_modules/@gemunion/redux"),
       ethers: path.join(__dirname, "node_modules/ethers"),
     },
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
