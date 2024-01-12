@@ -5,6 +5,7 @@
     "deposit": "You're about to deposit tokens according to the chosen rule",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "redirect": "You will be redirected in a moment",
+    "openseaFee": "OpenSea will take 2.5% as a fee",
     "uncaughtError": "Uncaught error happened"
   },
   "components": {
@@ -52,6 +53,7 @@
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
+    "sellOpensea": "Create OpenSea Listing",
     "staking-duration": "First period ends {duration}",
     "transfer": "Transfer",
     "transferOwnership": "Transfer ownership",
@@ -107,6 +109,7 @@
       "13378": "BESU",
       "10001": "BESU",
       "137": "POLYGON",
+      "11155111": "SEPOLIA",
       "42161": "ARBITRUM",
       "5": "GOERLI",
       "56": "BINANCE",

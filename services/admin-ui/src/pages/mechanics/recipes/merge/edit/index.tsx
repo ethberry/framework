@@ -5,8 +5,7 @@ import { Alert } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import type { IMerge } from "@framework/types";
-import { ContractStatus, MergeStatus, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, IMerge, ContractStatus, MergeStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -49,6 +48,7 @@ export const MergeEditDialog: FC<IMergeEditDialogProps> = props => {
         prefix="price"
         contract={{
           data: {
+            excludeFeatures: [ContractFeatures.EXTERNAL],
             contractModule: [ModuleType.HIERARCHY],
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },

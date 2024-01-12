@@ -130,6 +130,7 @@ export class AchievementsRuleService {
             // Check each rule condition
             rules.map(async rule => {
               // CHECK RULE TIMEFRAME
+              // TODO fix format and check date
               const ruleStartTime = rule.startTimestamp;
               const ruleEndTime = rule.endTimestamp;
               const timeNow = Date.now();
