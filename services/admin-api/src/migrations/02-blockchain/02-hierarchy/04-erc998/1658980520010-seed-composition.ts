@@ -73,8 +73,8 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20401, -- bep
-        20217, -- busd
+          20401, -- bep
+          20216, -- weth
         1,
         '${currentDateTime}',
         '${currentDateTime}'

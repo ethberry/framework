@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Result, WeiPerEther, ZeroAddress } from "ethers";
+import { Result, WeiPerEther, ZeroAddress, formatEther } from "ethers";
 import fs from "fs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
@@ -17,7 +17,7 @@ const delay = 1; // block delay
 const delayMs = 1200; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 12n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 3268n; // !!!SET INITIAL SUB ID!!!
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size
@@ -29,6 +29,8 @@ const contracts: Record<string, any> = {};
 
 async function main() {
   const [owner, receiver, stranger] = await ethers.getSigners();
+
+  const balance0 = await ethers.provider.getBalance(owner.address);
 
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
@@ -560,10 +562,6 @@ async function main() {
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   await debug(contracts);
 
-  const busdFactory = await ethers.getContractFactory("BEP20Token");
-  contracts.busd = await busdFactory.deploy();
-  await debug(contracts);
-
   const wethFactory = await ethers.getContractFactory("WETH9");
   contracts.weth =
     network.name !== "binance_test"
@@ -683,6 +681,12 @@ async function main() {
     [await contracts.exchange.getAddress()],
     [METADATA_ROLE],
   );
+
+  const balance1 = await ethers.provider.getBalance(owner.address);
+  console.info("owner address:", owner.address);
+  console.info("ETH Balance0:", formatEther(balance0), "ETH");
+  console.info("ETH Balance1:", formatEther(balance1), "ETH");
+  console.info("ETH SPENT:", formatEther(balance0 - balance1), "ETH");
 }
 
 main()

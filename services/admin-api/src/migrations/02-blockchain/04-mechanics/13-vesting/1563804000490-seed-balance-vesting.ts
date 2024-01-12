@@ -38,7 +38,7 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
       ), (
         '${vestingCliffAddress}',
         '${(100n * WeiPerEther).toString()}',
-        102170101,
+        102010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );
