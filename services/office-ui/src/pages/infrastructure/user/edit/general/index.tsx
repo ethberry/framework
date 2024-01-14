@@ -31,7 +31,7 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
 
   return (
     <>
-      <TextInput name="email" autoComplete="username" onClick={onClick} />
+      <TextInput name="email" autoComplete="off" onClick={onClick} />
       <TextInput name="displayName" />
       <SelectInput name="gender" options={EnabledGenders} />
       <SelectInput name="country" options={EnabledCountries} />

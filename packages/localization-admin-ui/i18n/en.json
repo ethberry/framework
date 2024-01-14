@@ -41,6 +41,7 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
+        "notMatch": "Current wallet does not match with the profile wallet",
         "notValid": "Invalid network. Please switch to correct network according to your profile",
         "test": "Test"
       }

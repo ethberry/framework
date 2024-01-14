@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { enqueueSnackbar } from "notistack";
 import { AuthType } from "@particle-network/auth";
@@ -20,12 +20,6 @@ export const useConnectParticle = (props: IUseConnectParticle) => {
   const { setActiveConnector } = walletActions;
   const dispatch = useAppDispatch();
   const { connectCallback } = useWallet();
-
-  useEffect(() => {
-    particleAuth.connectEagerly().catch(() => {
-      console.debug("Failed to connect eagerly to particle wallet");
-    });
-  }, []);
 
   return useCallback(
     (type: AuthType) => {

@@ -7,7 +7,6 @@ import { RESERVED_ERROR_CODES, SERVER_ERROR_CODE_RANGE, STANDARD_ERROR_MAP } fro
 import { downForMaintenance } from "@gemunion/license-messages";
 import { useLicense } from "@gemunion/provider-license";
 import { useWallet } from "@gemunion/provider-wallet";
-import { useAppSelector } from "@gemunion/redux";
 
 import { IHandlerOptionsParams } from "./interfaces";
 import { BlockchainErrorType, parseBlockchainError } from "./error-handler";
@@ -21,7 +20,6 @@ export const useMetamaskWallet = <T = any>(
   const web3ContextGlobal = useWeb3React();
   const { isActive } = web3ContextGlobal;
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
-  const { isDialogOpen } = useAppSelector(state => state.wallet);
 
   const { formatMessage } = useIntl();
   const { success = true, error = true } = options;
@@ -38,7 +36,6 @@ export const useMetamaskWallet = <T = any>(
 
     if (!isActive) {
       context = await openConnectWalletDialog();
-    } else if (isDialogOpen) {
       closeConnectWalletDialog();
     }
 

@@ -69,8 +69,6 @@ export const FirebaseLogin: FC<IFirebaseLogin> = props => {
   const authFb = getAuth(firebase);
 
   const onWalletVerified = async (token: string) => {
-    console.log("token", token);
-
     if (!token) {
       return;
     }

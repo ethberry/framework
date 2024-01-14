@@ -23,8 +23,7 @@ export const ConnectWallet: FC<IConnectWalletProps> = props => {
       <DialogContent>
         <MetaMaskButton onClick={onClose} data-testid="ConnectMetamaskButton" />
         <WalletConnectButton onClick={onClose} data-testid="ConnectWalletConnectButton" />
-        <ParticleButton onClick={onClose} type="google" data-testid="ConnectParticleGoogleButton" />
-        <ParticleButton onClick={onClose} type="facebook" data-testid="ConnectParticleFacebookButton" />
+        <ParticleButton onClick={onClose} data-testid="ConnectParticleGoogleButton" />
       </DialogContent>
     </Dialog>
   );

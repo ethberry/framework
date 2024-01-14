@@ -62,7 +62,7 @@ export const WalletProvider: FC<PropsWithChildren> = props => {
     if (profile?.chainId) {
       dispatch(setNetwork(networks[profile.chainId]));
     }
-  }, [profile]);
+  }, [profile?.chainId]);
 
   if (!license.isValid()) {
     return null;

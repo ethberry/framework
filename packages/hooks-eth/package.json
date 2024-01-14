@@ -21,7 +21,6 @@
   "devDependencies": {
     "@gemunion/provider-license": "3.0.38",
     "@gemunion/provider-wallet": "3.3.65",
-    "@gemunion/redux": "0.2.0",
     "@web3-react/core": "8.2.3",
     "notistack": "3.0.1",
     "react": "18.2.0",
@@ -37,7 +36,6 @@
   "peerDependencies": {
     "@gemunion/provider-license": "^3.0.0",
     "@gemunion/provider-wallet": "^3.0.0",
-    "@gemunion/redux": "^0.2.0",
     "@web3-react/core": "^8.0.0",
     "notistack": "^3.0.0",
     "react": "^18.0.0",
