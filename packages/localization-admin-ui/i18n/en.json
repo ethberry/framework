@@ -680,6 +680,7 @@
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",
       "addresses": "Addresses",
+      "advance": "Advance reward payment",
       "allDeposits": "All deposits",
       "allStakes": "All Stakes",
       "allUsers": "All Users",
@@ -798,6 +799,7 @@
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "referrer": "Referrer",
       "rentStatus": "Status",
       "reward": "Reward",
       "role": "Role",
@@ -1131,6 +1133,7 @@
         "promo": "Promo",
         "raffle": "Raffle",
         "recipes": "Recipes",
+        "referral": "Referral",
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
@@ -1447,6 +1450,21 @@
         "title": "Merge recipes"
       },
       "title": "Recipes"
+    },
+    "referral": {
+      "cabinet": {
+        "title": "Cabinet"
+      },
+      "chart": {
+        "title": "Chart"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "title": "Referral program"
     },
     "rent": {
       "title": "Rent"

@@ -41,7 +41,6 @@ export const Dashboard: FC = () => {
         <Grid item xs={12} sm={4}>
           <PersonalSection />
           <MarketplaceSection />
-          <ReferralSection />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
@@ -63,6 +62,7 @@ export const Dashboard: FC = () => {
           <PonziSection />
         </Grid>
         <Grid item xs={12} sm={4}>
+          <ReferralSection />
           <EcommerceSection />
           <DexSection />
           <CoinGeckoSection />

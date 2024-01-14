@@ -14,6 +14,7 @@ import "./get-rule";
 import "./flat";
 import "./grant";
 import "./get-sub";
+import "./get-royalty";
 import "./get-receipt-by-hash";
 import "./parse-dispenser-tx";
 import "./calc/error-id";

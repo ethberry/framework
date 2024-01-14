@@ -1,5 +1,9 @@
 import { ContractEventSignature } from "@framework/types";
 
 export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature, string>> = {
-  ERC1155TokenDeployed: "/erc1155/contracts",
+  Claim: "/claim",
+  Lend: "/rent/tokens",
+  LendMany: "/rent/tokens",
+  Purchase: "/tokens",
+  OwnershipTransferred: "/vesting",
 };

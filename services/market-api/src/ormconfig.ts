@@ -28,7 +28,7 @@ import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
@@ -88,7 +88,7 @@ const config: PostgresConnectionOptions = {
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
-    ReferralRewardEntity,
+    ReferralEntity,
 
     // mechanics
     CraftEntity,

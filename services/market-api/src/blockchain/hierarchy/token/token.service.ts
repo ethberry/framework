@@ -262,6 +262,8 @@ export class TokenService {
 
     // MODULE:RENT
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
+
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");
     queryBuilder.leftJoinAndSelect("rent_price.components", "rent_price_components");

@@ -5,6 +5,16 @@ import { Transform, Type } from "class-transformer";
 import { ContractFeatures, ITemplateAutocompleteDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
+  @ApiPropertyOptional({
+    enum: TemplateStatus,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<TemplateStatus>)
+  @IsEnum(TemplateStatus, { each: true, message: "badInput" })
   public templateStatus: Array<TemplateStatus>;
 
   @ApiPropertyOptional({

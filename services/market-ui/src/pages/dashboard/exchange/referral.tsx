@@ -25,22 +25,22 @@ export const ReferralSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/referral/cabinet">
-          <ListItemIcon>
-            <Share />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.referral.cabinet.title" />
-          </ListItemText>
-        </ListItemButton>
-        <ListItemButton component={RouterLink} to="/referral/leaderboard">
-          <ListItemIcon>
-            <Leaderboard />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.referral.leaderboard.title" />
-          </ListItemText>
-        </ListItemButton>
+        {/* <ListItemButton component={RouterLink} to="/referral/cabinet"> */}
+        {/*  <ListItemIcon> */}
+        {/*    <Share /> */}
+        {/*  </ListItemIcon> */}
+        {/*  <ListItemText> */}
+        {/*    <FormattedMessage id="pages.referral.cabinet.title" /> */}
+        {/*  </ListItemText> */}
+        {/* </ListItemButton> */}
+        {/* <ListItemButton component={RouterLink} to="/referral/leaderboard"> */}
+        {/*  <ListItemIcon> */}
+        {/*    <Leaderboard /> */}
+        {/*  </ListItemIcon> */}
+        {/*  <ListItemText> */}
+        {/*    <FormattedMessage id="pages.referral.leaderboard.title" /> */}
+        {/*  </ListItemText> */}
+        {/* </ListItemButton> */}
         <ListItemButton component={RouterLink} to="/referral/report/search">
           <ListItemIcon>
             <BarChart />
@@ -49,14 +49,14 @@ export const ReferralSection: FC = () => {
             <FormattedMessage id="pages.referral.report.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/referral/report/chart">
-          <ListItemIcon>
-            <Timeline />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.referral.chart.title" />
-          </ListItemText>
-        </ListItemButton>
+        {/* <ListItemButton component={RouterLink} to="/referral/report/chart"> */}
+        {/*  <ListItemIcon> */}
+        {/*    <Timeline /> */}
+        {/*  </ListItemIcon> */}
+        {/*  <ListItemText> */}
+        {/*    <FormattedMessage id="pages.referral.chart.title" /> */}
+        {/*  </ListItemText> */}
+        {/* </ListItemButton> */}
       </List>
     </StyledPaper>
   );

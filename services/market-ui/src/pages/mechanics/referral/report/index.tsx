@@ -11,9 +11,11 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { formatEther } from "@framework/exchange";
+// import { formatEther } from "@framework/exchange";
 import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
+import { formatItem } from "@framework/exchange";
 
+// TODO rework to use assets
 export const ReferralReport: FC = () => {
   const {
     rows,
@@ -58,8 +60,8 @@ export const ReferralReport: FC = () => {
       flex: 0.3
     },
     {
-      field: "referrer",
-      headerName: formatMessage({ id: "form.labels.referrer" }),
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.account" }),
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
@@ -70,10 +72,23 @@ export const ReferralReport: FC = () => {
       minWidth: 360
     },
     {
-      field: "amount",
-      headerName: formatMessage({ id: "form.labels.amount" }),
+      field: "item",
+      headerName: formatMessage({ id: "form.labels.item" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => formatEther(value),
+      flex: 1,
+      minWidth: 100
+    },
+    {
+      field: "price",
+      headerName: formatMessage({ id: "form.labels.price" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100
+    },
+    {
+      field: "contract",
+      headerName: formatMessage({ id: "form.labels.contract" }),
+      sortable: true,
       flex: 1,
       minWidth: 100
     },
@@ -127,8 +142,10 @@ export const ReferralReport: FC = () => {
         columns={columns}
         rows={rows.map((reward: IReferralReward) => ({
           id: reward.id,
-          referrer: reward.referrer,
-          amount: reward.amount,
+          account: reward.account,
+          item: formatItem(reward.item),
+          price: formatItem(reward.price),
+          contract: reward.contract!.title,
           createdAt: reward.createdAt,
         }))}
         autoHeight

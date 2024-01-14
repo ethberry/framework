@@ -57,13 +57,13 @@ export class StakingDepositServiceEth {
 
   public async depositStart(event: ILogEvent<IStakingDepositStartEvent>, context: Log): Promise<void> {
     // event DepositStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
-
-    await this.eventHistoryService.updateHistory(event, context);
     const {
       name,
       args: { stakingId, ruleId, owner, startTimestamp, tokenIds },
     } = event;
     const { address, transactionHash } = context;
+
+    await this.eventHistoryService.updateHistory(event, context);
 
     const stakingRuleEntity = await this.stakingRulesService.findOne(
       { externalId: ruleId, contract: { address: address.toLowerCase() } },
@@ -87,7 +87,8 @@ export class StakingDepositServiceEth {
         // TODO we must be sure to sort components same order in rule and contract
         const tokenEntity = await this.tokenService.getToken(
           tokenId,
-          stakingRuleEntity.deposit.components.filter(comp => comp.tokenType === TokenType.ERC721)[i].contract.address,
+          // stakingRuleEntity.deposit.components.filter(comp => comp.tokenType === TokenType.ERC721)[i].contract.address,
+          stakingRuleEntity.deposit.components[i].contract.address,
         );
 
         if (!tokenEntity) {
@@ -100,8 +101,17 @@ export class StakingDepositServiceEth {
           contractId: tokenEntity.template.contractId,
           templateId: tokenEntity.templateId,
           tokenId: tokenEntity.id,
-          amount: "1",
+          amount: stakingRuleEntity.deposit.components[i].amount,
         });
+
+        // TODO should we add a new type DEPOSIT?
+        // await this.assetService.createAssetHistory({
+        //   exchangeType: ExchangeType.PRICE,
+        //   historyId: historyEntity.id,
+        //   contractId: tokenEntity.template.contractId,
+        //   tokenId: tokenEntity.id,
+        //   amount: stakingRuleEntity.deposit.components[i].amount,
+        // });
       }
 
       await this.assetService.createAsset(newAssetEntity, depositComponets);

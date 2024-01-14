@@ -91,6 +91,7 @@ export class AchievementsRuleService {
 
   public async processEvent(id: number): Promise<void> {
     const event = await this.eventHistoryService.findOneWithRelations({ id });
+
     if (!event) {
       throw new NotFoundException("eventNotFound");
     }
@@ -128,6 +129,14 @@ export class AchievementsRuleService {
           if (rules.length) {
             // Check each rule condition
             rules.map(async rule => {
+              // CHECK RULE TIMEFRAME
+              // TODO fix format and check date
+              const ruleStartTime = rule.startTimestamp;
+              const ruleEndTime = rule.endTimestamp;
+              const timeNow = Date.now();
+              if (ruleStartTime !== ruleEndTime && (Number(ruleStartTime) > timeNow || Number(ruleEndTime) < timeNow)) {
+                return null;
+              }
               const ruleAsset = rule.item;
               // if rule with Asset - compare with event assets
               if (ruleAsset.components) {
