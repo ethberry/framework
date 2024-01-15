@@ -93,7 +93,8 @@ export class MerchantService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    if (wallet) {
+    // CHECK ONLY IF CHANGING
+    if (wallet && wallet !== merchantEntity.wallet) {
       const count = await this.count({
         wallet,
       });

@@ -14,7 +14,8 @@ export class RmqService {
   ) {}
 
   public async setMerchant(merchant: MerchantEntity): Promise<Record<string, any> | undefined> {
-    const rmqAddress = this.configService.get<string>("RMQ_ADMIN_URL", "http://admin:password@localhost:15672");
+    const rmqAdminAddr = this.configService.get<string>("RMQ_ADMIN_URL", "http://localhost:15672");
+    const rmqAdminLogin = this.configService.get<string>("RMQ_ADMIN_LOGIN", "admin:password");
     const rmqUserPasswordHash = await this.getMerchantPasswordHash(merchant.apiKey);
     const rmqUserName = `merchant${merchant.id}`;
 
@@ -23,7 +24,7 @@ export class RmqService {
       return this.httpService
         .post<Record<string, any>>(
           // URL
-          `${rmqAddress}/api/definitions`,
+          `${rmqAdminAddr}/api/definitions`,
           // DATA
           {
             users: [
@@ -49,6 +50,7 @@ export class RmqService {
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Basic ${Buffer.from(rmqAdminLogin).toString("base64")}`,
             },
           },
         )
@@ -60,12 +62,18 @@ export class RmqService {
   }
 
   public async getMerchantPasswordHash(password: string): Promise<Record<string, any> | undefined> {
-    const rmqAddress = this.configService.get<string>("RMQ_ADMIN_URL", "http://admin:password@localhost:15672");
+    const rmqAddress = this.configService.get<string>("RMQ_ADMIN_URL", "http://localhost:15672");
+    const rmqAdminLogin = this.configService.get<string>("RMQ_ADMIN_LOGIN", "admin:password");
 
     return this.httpService
       .get<Record<string, any>>(
         // URL
         `${rmqAddress}/api/auth/hash_password/${password}`,
+        {
+          headers: {
+            Authorization: `Basic ${Buffer.from(rmqAdminLogin).toString("base64")}`,
+          },
+        },
       )
       .pipe(map(({ data }) => data))
       .toPromise();
