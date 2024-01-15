@@ -45,7 +45,7 @@
     "@gemunion/provider-coingecko": "2.0.70",
     "@gemunion/provider-license": "3.0.38",
     "@gemunion/provider-localization": "4.0.1",
-    "@gemunion/provider-picker": "5.0.52",
+    "@gemunion/provider-picker": "5.0.53",
     "@gemunion/provider-popup": "1.0.43",
     "@gemunion/provider-test-id": "1.0.67",
     "@gemunion/provider-theme": "7.0.1",
