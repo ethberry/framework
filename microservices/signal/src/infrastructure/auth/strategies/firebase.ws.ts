@@ -11,7 +11,7 @@ import { UserEntity } from "../../user/user.entity";
 import { APP_PROVIDER } from "../auth.constants";
 
 // https://socket.io/docs/v4/handling-cors/
-const ExtractJwtFromSocketIoHandshake: JwtFromRequestFunction = (req: Request) => {
+const ExtractJwtFromSocketIoHandshake: JwtFromRequestFunction<any> = (req: Request) => {
   // @ts-ignore
   return ExtractJwt.fromAuthHeaderWithScheme("bearer")(req.handshake);
 };
