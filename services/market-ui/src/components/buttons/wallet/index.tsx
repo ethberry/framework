@@ -32,7 +32,7 @@ export const WalletButton: FC = () => {
   };
 
   const isChainValid = !profile || !chainId || profile?.chainId === chainId;
-  const isAccountMatch = !profile || !account || profile?.wallet === account;
+  const isAccountMatch = !profile || !account || profile?.wallet === account.toLowerCase();
 
   const tooltipTitle = useMemo(() => {
     switch (true) {
