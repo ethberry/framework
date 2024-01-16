@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useIndexedDB } from "react-indexed-db-hook";
-import { useLocation } from "react-router";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
 
@@ -15,7 +14,6 @@ import { EventRouteMatch } from "./constants";
 
 export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const location = useLocation();
   const dispatch = useAppDispatch();
   const { setNeedRefresh } = collectionActions;
 
@@ -40,14 +38,6 @@ export const Signal: FC = () => {
           variant: "success",
         },
       );
-      await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(
-        event => {
-          console.info("DB ID Generated: ", event);
-        },
-        error => {
-          console.error(error);
-        },
-      );
 
       const isRouteMatchToEvent =
         Object.keys(EventRouteMatch).includes(dto.transactionType) &&
@@ -58,6 +48,15 @@ export const Signal: FC = () => {
       if (isRouteMatchToEvent) {
         dispatch(setNeedRefresh(true));
       }
+
+      await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(
+        event => {
+          console.info("DB ID Generated: ", event);
+        },
+        error => {
+          console.error(error);
+        },
+      );
     } else {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
         variant: "success",
