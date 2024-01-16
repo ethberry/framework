@@ -18,7 +18,7 @@ export class MetadataTokenService {
     private readonly configService: ConfigService,
   ) {}
 
-  public getToken(address: string, tokenId: string): Promise<TokenEntity | null> {
+  public getToken(address: string, tokenId: string, chainId?: number): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
@@ -26,14 +26,18 @@ export class MetadataTokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
+    if (chainId && chainId !== 0) {
+      queryBuilder.andWhere("contract.chainId = :chainId", { chainId });
+    }
+
     queryBuilder.andWhere("contract.address = :address", { address });
     queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
 
     return queryBuilder.getOne();
   }
 
-  public async getTokenMetadata(address: string, tokenId: bigint): Promise<IOpenSeaTokenMetadata> {
-    const tokenEntity = await this.getToken(address, tokenId.toString());
+  public async getTokenMetadata(address: string, tokenId: bigint, chainId: number): Promise<IOpenSeaTokenMetadata> {
+    const tokenEntity = await this.getToken(address, tokenId.toString(), chainId);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -47,7 +51,7 @@ export class MetadataTokenService {
       name: tokenEntity.template.title,
       description: getText(tokenEntity.template.description),
       image: tokenEntity.template.imageUrl,
-      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
+      external_url: `${baseUrl}/metadata/${chainId}/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       attributes: this.formatMetadata(metadata),
     };
   }

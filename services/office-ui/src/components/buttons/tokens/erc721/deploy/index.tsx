@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
@@ -8,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc721ContractDeployDto, IUser } from "@framework/types";
 import { Erc721ContractTemplates } from "@framework/types";
 
-import DeployERC721TokenABI from "@framework/abis/deployERC721Token/ERC721FactoryFacet.json";
+import deployERC721TokenERC721FactoryFacetABI from "@framework/abis/deployERC721Token/ERC721FactoryFacet.json";
 
 import { Erc721ContractDeployDialog } from "./dialog";
 
@@ -28,11 +29,18 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
   } = props;
 
   const { profile } = useUser<IUser>();
+  const { chainId } = useWeb3React();
+  // TOKEN URI WITH CHAIN_ID
+  const tokenURI = `${process.env.JSON_URL}/metadata/${chainId ? chainId.toString() : "0"}`;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC721TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployERC721TokenERC721FactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC721Token(
         {
@@ -83,7 +91,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
           contractTemplate,
           name: "",
           symbol: "",
-          baseTokenURI: `${process.env.JSON_URL}/metadata`,
+          baseTokenURI: tokenURI,
           royalty: 0,
         }}
       />

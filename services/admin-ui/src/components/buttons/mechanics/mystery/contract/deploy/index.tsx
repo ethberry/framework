@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
@@ -21,6 +22,9 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
+  const { chainId } = useWeb3React();
+  // TOKEN URI WITH CHAIN_ID
+  const tokenURI = `${process.env.JSON_URL}/metadata/${chainId ? chainId.toString() : "0"}`;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IMysteryContractDeployDto, web3Context, sign, systemContract: IContract) => {
@@ -80,7 +84,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
           contractTemplate: MysteryContractTemplates.SIMPLE,
           name: "",
           symbol: "",
-          baseTokenURI: `${process.env.JSON_URL}/metadata`,
+          baseTokenURI: tokenURI,
           royalty: 0,
         }}
       />
