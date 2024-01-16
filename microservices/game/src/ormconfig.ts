@@ -32,7 +32,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
 };
 
 export default config;

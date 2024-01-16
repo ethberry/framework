@@ -66,9 +66,9 @@
     "lint": "eslint . --fix --ext .ts,.tsx",
     "prebuild": "rimraf dist",
     "prepublish": "npm run build",
-    "start": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
-    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
-    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+    "start": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
     "test": "exit 0"
   },
   "title": "CRON",
