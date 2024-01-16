@@ -509,6 +509,7 @@ services:
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
+      LOG_MODE: "${LOG_MODE}"
       HOST: "${HOST}"
       PORT: "${PORT_JSON_API}"
       # admin api
