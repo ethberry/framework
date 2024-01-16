@@ -91,6 +91,7 @@
       "10001": "BESU",
       "137": "POLYGON",
       "42161": "ARBITRUM",
+      "11155111": "SEPOLIA",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI",
