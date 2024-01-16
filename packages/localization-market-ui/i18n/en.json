@@ -26,6 +26,7 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
+        "notMatch": "Current wallet does not match with the profile wallet",
         "notValid": "Invalid network. Please switch to correct network according to your profile",
         "test": "Test"
       }
@@ -896,7 +897,11 @@
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login",
-      "signInWithMetamask": "Sign in with Metamask"
+      "signInWithMetamask": "Sign in with Metamask",
+      "signInWith": {
+        "facebook": "Sign in with Facebook",
+        "google": "Sign in with Google"
+      }
     },
     "history": {
       "token": {

@@ -3,7 +3,7 @@ import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { useWallet } from "@gemunion/provider-wallet";
+import { useAppDispatch, walletActions } from "@gemunion/redux";
 
 import { CloseButton } from "../../buttons";
 
@@ -16,7 +16,8 @@ export const WalletMenuDialog: FC<IWalletDialogProps> = props => {
   const { onClose, open } = props;
 
   const { connector } = useWeb3React();
-  const { setActiveConnector } = useWallet();
+  const { setActiveConnector } = walletActions;
+  const dispatch = useAppDispatch();
 
   const handleDisconnect = () => {
     if (connector?.deactivate) {
@@ -25,7 +26,7 @@ export const WalletMenuDialog: FC<IWalletDialogProps> = props => {
       void connector.resetState();
     }
 
-    setActiveConnector(null);
+    dispatch(setActiveConnector(null));
     onClose();
   };
 
