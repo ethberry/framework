@@ -84,8 +84,9 @@ export class MerchantService {
   public async update(
     where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
+    userEntity: UserEntity,
   ): Promise<MerchantEntity | null> {
-    const { wallet, ...rest } = dto;
+    const { wallet, ratePlan, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
@@ -110,6 +111,13 @@ export class MerchantService {
       merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
 
       await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.ADMIN);
+    }
+
+    // UPDATING RATE-PLAN for SUPER ADMIN ONLY !!!
+    if (userEntity.userRoles.includes(UserRole.SUPER)) {
+      if (ratePlan) {
+        Object.assign(merchantEntity, { ratePlan });
+      }
     }
 
     Object.assign(merchantEntity, rest);

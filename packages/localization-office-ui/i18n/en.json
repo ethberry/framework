@@ -205,6 +205,11 @@
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
     },
+    "ratePlan": {
+      "BRONZE": "BRONZE",
+      "SILVER": "SILVER",
+      "GOLD": "GOLD"
+    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -451,6 +456,7 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "random": "Random",
+      "ratePlan": "Rate Plan",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
