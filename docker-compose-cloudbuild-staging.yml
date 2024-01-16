@@ -293,6 +293,7 @@ services:
       THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
       # RMQ
       RMQ_ADMIN_URL: "${RMQ_ADMIN_URL}"
+      RMQ_ADMIN_LOGIN: "${RMQ_ADMIN_LOGIN}"
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
@@ -342,6 +343,8 @@ services:
       THROTTLE_TTL: "${THROTTLE_TTL}"
       THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
       # RMQ
+      RMQ_ADMIN_URL: "${RMQ_ADMIN_URL}"
+      RMQ_ADMIN_LOGIN: "${RMQ_ADMIN_LOGIN}"
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
