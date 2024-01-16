@@ -1,4 +1,4 @@
 export enum UserFormTabs {
   general = "general",
-  addresses = "addresses",
+  // addresses = "addresses",
 }

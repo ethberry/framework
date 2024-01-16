@@ -339,7 +339,8 @@
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
       "MERCHANT": "Merchant",
-      "OWNER": "Owner"
+      "OWNER": "Owner",
+      "SUPER": "Super Admin"
     },
     "userStatus": {
       "ACTIVE": "Active",

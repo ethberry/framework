@@ -252,10 +252,9 @@
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
-      "MANAGER": "Manager",
       "MERCHANT": "Merchant",
       "OWNER": "Owner",
-      "USER": "User"
+      "SUPER": "Super Admin"
     },
     "userStatus": {
       "ACTIVE": "Active",

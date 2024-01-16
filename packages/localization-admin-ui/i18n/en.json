@@ -577,7 +577,8 @@
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
       "MANAGER": "Manager",
-      "OWNER": "Owner"
+      "OWNER": "Owner",
+      "SUPER": "Super Admin"
     },
     "userStatus": {
       "ACTIVE": "Active",

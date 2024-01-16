@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { IUser } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
-import { UserAddresses } from "./adresses";
+// import { UserAddresses } from "./adresses";
 import { UserFormTabs } from "./tabs";
 import { UserGeneralForm } from "./general";
 import { validationSchema } from "./validation";
@@ -50,6 +50,7 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     };
   }, []);
 
+  // TODO fix user addresses by implementing useLocalCollection
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -65,7 +66,7 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
       </Tabs>
 
       <UserGeneralForm createdAt={createdAt} open={value === UserFormTabs.general} />
-      <UserAddresses userId={id} open={value === UserFormTabs.addresses} />
+      {/* <UserAddresses userId={id} open={value === UserFormTabs.addresses} /> */}
     </FormDialog>
   );
 };
