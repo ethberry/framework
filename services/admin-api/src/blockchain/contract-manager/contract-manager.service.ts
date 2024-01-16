@@ -32,9 +32,11 @@ export class ContractManagerService {
     contractType: TokenType | null,
   ): Promise<void> {
     const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+
     const count = await this.contractService.count({
       contractModule,
       contractType: contractType || IsNull(),
+      merchantId: userEntity.merchantId,
     });
 
     if (count >= limit) {
