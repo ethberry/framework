@@ -20,24 +20,38 @@ export class AuthMetamaskService {
   ) {}
 
   public async login(dto: IMetamaskDto): Promise<ICustomToken> {
-    const { nonce, signature, wallet } = dto;
+    const { displayName, email, imageUrl, nonce, signature, wallet } = dto;
 
     if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
       throw new ForbiddenException("signatureDoesNotMatch");
     }
 
-    let userEntity = await this.userService.findOne({ wallet });
+    let userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
     if (!userEntity) {
-      const userFb = await this.admin.auth().createUser({});
+      let userFb;
+
+      if (email) {
+        userFb = await this.admin.auth().getUserByEmail(email);
+      }
+
+      if (!userFb) {
+        userFb = await this.admin.auth().createUser({
+          displayName,
+          email,
+          photoURL: imageUrl,
+        });
+      }
 
       userEntity = await this.userService.import({
-        displayName: wallet,
+        displayName: displayName || wallet.toLowerCase(),
+        imageUrl: imageUrl || "",
+        email: email || "",
         language: EnabledLanguages.EN,
         userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
         sub: userFb.uid,
-        wallet,
+        wallet: wallet.toLowerCase(),
         chainId: Number(defaultChainId),
       });
     }
