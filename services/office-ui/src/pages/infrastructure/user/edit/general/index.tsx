@@ -33,8 +33,8 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
     <>
       <TextInput name="email" autoComplete="off" onClick={onClick} />
       <TextInput name="displayName" />
-      <SelectInput name="gender" options={EnabledGenders} />
-      <SelectInput name="country" options={EnabledCountries} />
+      {/* <SelectInput name="gender" options={EnabledGenders} /> */}
+      {/* <SelectInput name="country" options={EnabledCountries} /> */}
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
       <Divider sx={{ my: 2 }} />

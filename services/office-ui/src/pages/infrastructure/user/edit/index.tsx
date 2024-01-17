@@ -28,15 +28,24 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     setValue(newValue);
   };
 
-  const { id, email, displayName, language, gender, country, imageUrl, userRoles, userStatus, comment, createdAt } =
-    initialValues;
+  const {
+    id,
+    email,
+    displayName,
+    language,
+    /* gender, country, */ imageUrl,
+    userRoles,
+    userStatus,
+    comment,
+    createdAt,
+  } = initialValues;
 
   const fixedValues = {
     id,
     email,
     displayName,
-    gender: gender ?? "",
-    country: country ?? "",
+    // gender: gender ?? "",
+    // country: country ?? "",
     language,
     imageUrl,
     userRoles,

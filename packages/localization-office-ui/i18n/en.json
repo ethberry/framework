@@ -250,11 +250,11 @@
       "NONE": "None"
     },
     "userRoles": {
-      "ADMIN": "Admin",
-      "CUSTOMER": "Customer",
-      "MERCHANT": "Merchant",
-      "OWNER": "Owner",
-      "SUPER": "Super Admin"
+      "SUPER": "SUPER",
+      "ADMIN": "ADMIN",
+      "OWNER": "OWNER",
+      "MANAGER": "MANAGER",
+      "CUSTOMER": "CUSTOMER"
     },
     "userStatus": {
       "ACTIVE": "Active",
