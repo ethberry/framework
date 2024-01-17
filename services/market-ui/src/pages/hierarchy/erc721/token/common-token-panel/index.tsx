@@ -44,7 +44,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
             <Erc721TransferButton token={token} />
           </Grid>
           <Grid item xs={12}>
-            <AllowanceButton token={computeTokenAsset(token)} />
+            <AllowanceButton token={computeTokenAsset(token)} contract={token.template?.contract} />
           </Grid>
         </Grid>
       </CardActions>

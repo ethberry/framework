@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { ListAction } from "@framework/styled";
-import { IContract, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
 import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
@@ -63,6 +63,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     await metaFn(values);
   };
 
+  const disabled = (contract || token?.template?.contract)?.contractFeatures.includes(ContractFeatures.SOULBOUND);
+
   return (
     <Fragment>
       {isSmall ? (
@@ -70,10 +72,17 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
           onClick={handleAllowance}
           icon={HowToVote}
           message="form.tips.allowance"
+          disabled={disabled}
           dataTestId="StakeDepositAllowanceButton"
         />
       ) : (
-        <Button variant="outlined" startIcon={<HowToVote />} onClick={handleAllowance} data-testid="AllowanceButton">
+        <Button
+          disabled={disabled}
+          variant="outlined"
+          startIcon={<HowToVote />}
+          onClick={handleAllowance}
+          data-testid="AllowanceButton"
+        >
           <FormattedMessage id="form.buttons.allowance" />
         </Button>
       )}
