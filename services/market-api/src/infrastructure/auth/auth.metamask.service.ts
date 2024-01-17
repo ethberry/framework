@@ -31,15 +31,21 @@ export class AuthMetamaskService {
     if (!userEntity) {
       let userFb;
 
+      // CHECK IF USER EMAIL EXISTS IN FIREBASE
       if (email) {
-        userFb = await this.admin.auth().getUserByEmail(email);
+        try {
+          userFb = await this.admin.auth().getUserByEmail(email);
+        } catch (err) {
+          console.error(err.errorInfo, "firebase.getUserByEmail");
+        }
       }
-
+      // CREATE USER IN FIREBASE
       if (!userFb) {
         userFb = await this.admin.auth().createUser({
           displayName,
           email,
           photoURL: imageUrl,
+          emailVerified: !!email,
         });
       }
 
