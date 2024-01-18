@@ -20,8 +20,7 @@
 # DEV ONLY !!!
 # export $(cat ./.env.test | sed 's/#.*//g' | xargs)
 
-# lerna run build --concurrency 1
- lerna run build --stream
+ lerna run build --concurrency 1
 
  lerna exec --scope @framework/admin-api -- npm run test
  lerna exec --scope @framework/traits-api -- npm run test
