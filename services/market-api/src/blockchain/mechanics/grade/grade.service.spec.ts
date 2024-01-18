@@ -4,6 +4,7 @@ import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WeiPerEther } from "ethers";
 
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { SignerModule } from "@framework/nest-js-module-exchange-signer";
@@ -13,6 +14,8 @@ import ormconfig from "../../../ormconfig";
 import { GradeService } from "./grade.service";
 import { GradeEntity } from "./grade.entity";
 import { TokenModule } from "../../hierarchy/token/token.module";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { SettingsModule } from "../../../infrastructure/settings/settings.module";
 
 describe("GradeService", () => {
   let gradeService: GradeService;
@@ -32,8 +35,19 @@ describe("GradeService", () => {
         }),
         GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([GradeEntity]),
+        SecretManagerModule.forRootAsync(SecretManagerModule, {
+          imports: [ConfigModule],
+          inject: [ConfigService],
+          useFactory: (configService: ConfigService) => {
+            return {
+              keyFile: configService.get<string>("GCLOUD_KEYFILE_BASE64_PATH", ""),
+            };
+          },
+        }),
         SignerModule,
         TokenModule,
+        ContractModule,
+        SettingsModule,
       ],
       providers: [Logger, GradeService],
     }).compile();
