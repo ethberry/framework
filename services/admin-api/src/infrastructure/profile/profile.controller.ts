@@ -1,16 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Put, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Res } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 
 import { Public, User } from "@gemunion/nest-js-utils";
+import { MetamaskDto } from "@gemunion/nest-js-module-metamask";
 
-import { UserEntity } from "../user/user.entity";
 import { ProfileService } from "./profile.service";
+import { UserEntity } from "../user/user.entity";
 import { ProfileUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/profile")
-export class ProfileGeneralController {
+export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Public()
@@ -31,5 +32,15 @@ export class ProfileGeneralController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async deleteProfile(@User() userEntity: UserEntity): Promise<void> {
     await this.profileService.delete(userEntity);
+  }
+
+  @Post("/wallet")
+  public attachWallet(@User() userEntity: UserEntity, @Body() dto: MetamaskDto): Promise<UserEntity> {
+    return this.profileService.attach(userEntity, dto);
+  }
+
+  @Delete("/wallet")
+  public detachWallet(@User() userEntity: UserEntity): Promise<UserEntity> {
+    return this.profileService.detach(userEntity);
   }
 }

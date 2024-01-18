@@ -33,7 +33,8 @@
         "login": "Login",
         "logout": "Logout",
         "merchant": "Merchant",
-        "profile": "Profile"
+        "profile": "Profile",
+        "settings": "Settings"
       },
       "theme": {
         "switch": "Switch theme"
@@ -1359,7 +1360,16 @@
         "addresses": "Addresses",
         "general": "General",
         "notifications": "Notifications",
-        "subscriptions": "Subscriptions"
+        "subscriptions": "Subscriptions",
+        "settings": "Settings"
+      },
+      "settings": {
+        "wallet": {
+          "attach": "Attach",
+          "connectedWallet": "Connected wallet",
+          "detach": "Detach",
+          "title": "My wallet"
+        }
       },
       "title": "Profile"
     },

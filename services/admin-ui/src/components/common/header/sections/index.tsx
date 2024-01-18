@@ -78,6 +78,15 @@ export const Sections: FC = () => {
           onClick={handleMenuClose}
           color="inherit"
           component={RouterNavLink}
+          to="/profile/settings"
+          selected={!!matchPath(location.pathname, "/profile/settings")}
+        >
+          <FormattedMessage id="components.header.menu.settings" />
+        </MenuItem>
+        <MenuItem
+          onClick={handleMenuClose}
+          color="inherit"
+          component={RouterNavLink}
           to="/merchant"
           selected={!!matchPath(location.pathname, "/merchant")}
         >
