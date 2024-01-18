@@ -5,6 +5,7 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
+// TODO should we import it from @framework/abis ?
 import vestingJSON from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
 
 export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
