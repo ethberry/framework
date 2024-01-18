@@ -898,10 +898,11 @@
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login",
-      "signInWithMetamask": "Sign in with Metamask",
+      "particleWallet": "Particle Wallet",
       "signInWith": {
         "facebook": "Sign in with Facebook",
-        "google": "Sign in with Google"
+        "google": "Sign in with Google",
+        "metamask": "Sign in with Metamask"
       }
     },
     "history": {

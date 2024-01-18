@@ -1208,7 +1208,13 @@
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
-      "login": "Login"
+      "login": "Login",
+      "particleWallet": "Particle Wallet",
+      "signInWith": {
+        "facebook": "Sign in with Facebook",
+        "google": "Sign in with Google",
+        "metamask": "Sign in with Metamask"
+      }
     },
     "kanban": {
       "title": "Orders"
