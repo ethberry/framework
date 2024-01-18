@@ -22,7 +22,8 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "profile": "Profile"
+        "profile": "Profile",
+        "settings": "Settings"
       },
       "theme": {
         "switch": "Switch theme"
@@ -867,7 +868,16 @@
       "tabs": {
         "addresses": "Addresses",
         "general": "General",
-        "subscriptions": "Subscriptions"
+        "subscriptions": "Subscriptions",
+        "settings": "Settings"
+      },
+      "settings": {
+        "wallet": {
+          "attach": "Attach",
+          "connectedWallet": "Connected wallet",
+          "detach": "Detach",
+          "title": "My wallet"
+        }
       },
       "title": "Profile"
     },

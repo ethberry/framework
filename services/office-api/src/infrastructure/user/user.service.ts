@@ -112,6 +112,10 @@ export class UserService {
     return this.userEntityRepository.create(dto).save();
   }
 
+  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+    return this.userEntityRepository.count({ where });
+  }
+
   public async removeRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
     const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
     queryBuilder.set({

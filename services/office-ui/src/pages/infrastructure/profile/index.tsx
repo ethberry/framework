@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router";
 import { ProfileAddresses } from "./adresses";
 import { ProfileGeneral } from "./general";
 import { ProfileSubscriptions } from "./subscriptions";
+import { ProfileSettings } from "./settings";
 import { ProfileTabs } from "./tabs";
 
 export const Profile: FC = () => {
@@ -30,6 +31,7 @@ export const Profile: FC = () => {
       <ProfileGeneral open={value === ProfileTabs.general} />
       <ProfileAddresses open={value === ProfileTabs.addresses} />
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
+      <ProfileSettings open={value === ProfileTabs.settings} />
     </Fragment>
   );
 };
