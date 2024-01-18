@@ -229,6 +229,58 @@ services:
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
+  core-eth-binance:
+    container_name: core-eth-binance
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API_BINANCE}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      REDIS_WATCHER_URL: "${REDIS_WATCHER_URL}"
+      REDIS_CACHE_URL: "${REDIS_CACHE_URL}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL_ADMIN}"
+      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      # FE
+      FE_URL: "${ADMIN_FE_URL}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID_BINANCE}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_GEMUNION}"
+      LATENCY: "${LATENCY}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE}"
+      STARTING_BLOCK: "${STARTING_BLOCK}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+      DISPENSER_ADDR: "${DISPENSER_ADDR}"
+      # DEV
+      LINK_ADDR: "${LINK_ADDR}"
+      VRF_ADDR: "${VRF_ADDR}"
+    ports:
+      - "${PORT_RPC_API}:${PORT_RPC_API}"
+
   json-api:
     container_name: json-api
     image: gcr.io/halogen-framing-335807/framework-img:latest
@@ -319,30 +371,6 @@ services:
       # cron-api
       - "${PORT_CRON_API}:${PORT_CRON_API}"
 
-  emailer:
-    container_name: emailer
-    image: gcr.io/halogen-framing-335807/framework-img:latest
-    command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
-    environment:
-      # common
-      NODE_OPTIONS: --max-old-space-size=8192
-      HOST: 0.0.0.0
-      # RMQ
-      RMQ_URL: "${RMQ_URL}"
-      RMQ_QUEUE_EMAIL: email
-      # mailjet
-      MAILJET_PUBLIC_KEY: "${MAILJET_PUBLIC_KEY}"
-      MAILJET_PRIVATE_KEY: "${MAILJET_PRIVATE_KEY}"
-      MAILJET_FROM: "${MAILJET_FROM}"
-      # logDNA
-      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-      # GEMUNION
-      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
-    ports:
-      # emailer
-      - "${PORT_EML_API}:${PORT_EML_API}"
-
-
   signal-api:
     container_name: signal-api
     image: gcr.io/halogen-framing-335807/framework-img:latest
@@ -384,6 +412,29 @@ services:
       # signal-api
       - "${PORT_SIGNAL_API}:${PORT_SIGNAL_API}"
 
+  emailer:
+    container_name: emailer
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
+    environment:
+      # common
+      NODE_OPTIONS: --max-old-space-size=8192
+      HOST: 0.0.0.0
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: email
+      # mailjet
+      MAILJET_PUBLIC_KEY: "${MAILJET_PUBLIC_KEY}"
+      MAILJET_PRIVATE_KEY: "${MAILJET_PRIVATE_KEY}"
+      MAILJET_FROM: "${MAILJET_FROM}"
+      # logDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    ports:
+      # emailer
+      - "${PORT_EML_API}:${PORT_EML_API}"
+
   nginx:
     container_name: nginx
     image: nginx
@@ -418,7 +469,8 @@ services:
       - admin-api
       - market-api
       - office-api
+      - cron-api
       - json-api
       - game-api
-      - cron-api
       - signal-api
+      - emailer

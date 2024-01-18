@@ -10,50 +10,6 @@ volumes:
 
 services:
 
-  #  adminb2b-ui:
-  #    container_name: adminb2b-ui
-  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "Admin-UI-B2B"
-
-  #  adminb2c-ui:
-  #    container_name: adminb2c-ui
-  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "Admin-UI-B2C"
-
-  #  market-ui:
-  #    container_name: market-ui
-  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-market-ui:/home/node/framework/services/market-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "market-UI"
-
-  #  office-ui:
-  #    container_name: office-ui
-  #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
-  #    command: "sh /home/node/framework/scripts/logDna.sh"
-  #    volumes:
-  #      - static-office-ui:/home/node/framework/services/office-ui/dist/
-  #    environment:
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      BASE_APP: "office-UI"
-
   adminb2b-api:
     container_name: adminb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
@@ -493,7 +449,7 @@ services:
       JSON_RPC_ADDR: "${JSON_RPC_ADDR_BINANCE_TEST}"
       LATENCY: "${LATENCY}"
       CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
-      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_BINANCE_TEST}"
       STARTING_BLOCK: "${STARTING_BINANCE_BLOCK}"
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_BINANCE_TEST}"
