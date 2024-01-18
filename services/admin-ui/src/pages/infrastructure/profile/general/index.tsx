@@ -52,7 +52,7 @@ export const ProfileGeneral: FC<ITabPanelProps> = props => {
   return (
     <Grid>
       <FormWrapper initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        <TextInput name="email" autoComplete="username" onClick={onClick} />
+        <TextInput name="email" autoComplete="off" onClick={onClick} />
         <TextInput name="displayName" />
         <SelectInput name="gender" options={EnabledGenders} />
         <SelectInput name="country" options={EnabledCountries} />

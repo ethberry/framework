@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils, constants } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
@@ -23,7 +23,7 @@ interface IAchievementRedeemButtonProps {
 
 export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props => {
   const { achievementRule, className, count = { count: 0 }, disabled, variant = ListActionVariant.button } = props;
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const levelsNotRedeemed = achievementRule.levels.filter(lvl => lvl.redemptions?.length === 0);
 
@@ -83,7 +83,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
         method: "POST",
         data: {
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           achievementLevelId: achievementLevel.id,
         },
       },

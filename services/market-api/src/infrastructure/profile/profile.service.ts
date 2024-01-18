@@ -1,5 +1,6 @@
-import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
+import { Inject, BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { Not } from "typeorm";
+import { app } from "firebase-admin";
 
 import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
 import { MetamaskService } from "@gemunion/nest-js-module-metamask";
@@ -8,15 +9,27 @@ import { UserStatus } from "@framework/types";
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
 import type { IProfileUpdateDto } from "./interfaces";
+import { APP_PROVIDER } from "../auth/auth.constants";
 
 @Injectable()
 export class ProfileService {
   constructor(
+    @Inject(APP_PROVIDER)
+    private readonly admin: app.App,
     private readonly metamaskService: MetamaskService,
     private readonly userService: UserService,
   ) {}
 
-  public update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
+  public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
+    // UPDATE FIREBASE USER EMAIL
+    if (dto.email && dto.email.toString() !== userEntity.email.toLowerCase()) {
+      try {
+        await this.admin.auth().updateUser(userEntity.sub, { email: dto.email });
+      } catch (err) {
+        console.error(err.errorInfo, "firebase.updateUser");
+      }
+    }
+
     Object.assign(userEntity, dto);
     return userEntity.save();
   }

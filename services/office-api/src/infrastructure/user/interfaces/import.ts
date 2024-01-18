@@ -5,4 +5,5 @@ export interface IUserImportDto extends IUserCommonDto {
   userRoles: Array<UserRole>;
   sub: string;
   chainId: number;
+  wallet?: string;
 }

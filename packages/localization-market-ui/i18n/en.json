@@ -5,6 +5,7 @@
     "deposit": "You're about to deposit tokens according to the chosen rule",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "redirect": "You will be redirected in a moment",
+    "openseaFee": "OpenSea will take 2.5% as a fee",
     "uncaughtError": "Uncaught error happened"
   },
   "components": {
@@ -25,6 +26,7 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
+        "notMatch": "Current wallet does not match with the profile wallet",
         "notValid": "Invalid network. Please switch to correct network according to your profile",
         "test": "Test"
       }
@@ -52,6 +54,7 @@
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
+    "sellOpensea": "Create OpenSea Listing",
     "staking-duration": "First period ends {duration}",
     "transfer": "Transfer",
     "transferOwnership": "Transfer ownership",
@@ -107,6 +110,7 @@
       "13378": "BESU",
       "10001": "BESU",
       "137": "POLYGON",
+      "11155111": "SEPOLIA",
       "42161": "ARBITRUM",
       "5": "GOERLI",
       "56": "BINANCE",
@@ -335,7 +339,8 @@
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
       "MERCHANT": "Merchant",
-      "OWNER": "Owner"
+      "OWNER": "Owner",
+      "SUPER": "Super Admin"
     },
     "userStatus": {
       "ACTIVE": "Active",
@@ -893,7 +898,12 @@
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login",
-      "signInWithMetamask": "Sign in with Metamask"
+      "particleWallet": "Particle Wallet",
+      "signInWith": {
+        "facebook": "Sign in with Facebook",
+        "google": "Sign in with Google",
+        "metamask": "Sign in with Metamask"
+      }
     },
     "history": {
       "token": {

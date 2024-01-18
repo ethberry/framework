@@ -6,7 +6,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, ContractTransaction, ethers } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 
-import { GovernanceTokenAddress, IOneInchContext, ISwap, IToken, SwapStatus } from "../provider";
+import { IOneInchContext, ISwap, IToken, SwapStatus } from "../provider";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import AllowanceABI from "./allowance.abi.json";
@@ -35,7 +35,7 @@ export const approve = async (
   const signer = provider.getSigner();
   const erc20Contract = new Contract(fromToken.address, AllowanceABI, signer);
 
-  const { address: spenderAddress } = await api.approveSpender(fromToken.address);
+  const { to: spenderAddress } = await api.approveSpender(fromToken.address);
 
   const allowance = await erc20Contract.allowance(await signer.getAddress(), spenderAddress);
 
@@ -88,40 +88,38 @@ export const useSwap = (
         const parsedAmountFromToken = safeParseUnits(amountToSend, fromToken);
 
         // Approve
-        if (fromToken.address !== GovernanceTokenAddress) {
-          try {
-            setSwapStatus(SwapStatus.AWAITING_APPROVAL);
-            enqueueSnackbar(
-              formatMessage(
-                { id: "pages.dex.1inch.snackbar.approve-1inch" },
-                fromToken as unknown as Record<string, string>,
+        try {
+          setSwapStatus(SwapStatus.AWAITING_APPROVAL);
+          enqueueSnackbar(
+            formatMessage(
+              { id: "pages.dex.1inch.snackbar.approve-1inch" },
+              fromToken as unknown as Record<string, string>,
+            ),
+            {
+              variant: "info",
+              action: () => (
+                <Button
+                  href="https://help.1inch.exchange/en/articles/4585113-why-do-i-need-to-approve-my-tokens-before-a-trade"
+                  target="_blank"
+                >
+                  <FormattedMessage id="pages.dex.1inch.buttons.learn-more" />
+                </Button>
               ),
-              {
-                variant: "info",
-                action: () => (
-                  <Button
-                    href="https://help.1inch.exchange/en/articles/4585113-why-do-i-need-to-approve-my-tokens-before-a-trade"
-                    target="_blank"
-                  >
-                    <FormattedMessage id="pages.dex.1inch.buttons.learn-more" />
-                  </Button>
-                ),
-              },
-            );
-            // Give users time to read the message
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            },
+          );
+          // Give users time to read the message
+          await new Promise(resolve => setTimeout(resolve, 2000));
 
-            const tx = await approve(parsedAmountFromToken, fromToken, web3Context.provider!, api);
-            setSwapStatus(SwapStatus.AWAITING_APPROVE_TX);
-            if (tx) {
-              await waitForTx(tx.hash, web3Context.provider!);
-            }
-            enqueueSnackbar("Approved!", { variant: "success" });
-          } catch (e) {
-            enqueueSnackbar("Approval denied. Swap cancelled.", { variant: "error" });
-            console.error(e);
-            throw e;
+          const tx = await approve(parsedAmountFromToken, fromToken, web3Context.provider!, api);
+          setSwapStatus(SwapStatus.AWAITING_APPROVE_TX);
+          if (tx) {
+            await waitForTx(tx.hash, web3Context.provider!);
           }
+          enqueueSnackbar("Approved!", { variant: "success" });
+        } catch (e) {
+          enqueueSnackbar("Approval denied. Swap cancelled.", { variant: "error" });
+          console.error(e);
+          throw e;
         }
         setSwapStatus(SwapStatus.PREPARING_TX);
 

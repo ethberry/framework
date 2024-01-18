@@ -34,7 +34,10 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
         throw new UnauthorizedException("unauthorized");
       });
 
-    let userEntity = await this.userService.findOne({ sub: data.sub }, { relations: { merchant: true } });
+    let userEntity = await this.userService.findOne(
+      { sub: data.sub },
+      { relations: { merchant: { chainLinkSubscriptions: true } } },
+    );
 
     if (!userEntity) {
       const firebaseUser = await this.admin
@@ -56,7 +59,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
       });
     }
 
-    const roles = [UserRole.SUPER];
+    const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];
     if (!userEntity.userRoles.some(role => roles.includes(role))) {
       throw new UnauthorizedException("userHasWrongRole");
     }

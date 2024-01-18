@@ -3,13 +3,13 @@ import { SnackbarProvider } from "notistack";
 
 import { ApiProviderFirebase } from "@gemunion/provider-api-firebase";
 import { UserProviderFirebase } from "@gemunion/provider-user-firebase";
-import { SettingsProvider } from "@gemunion/provider-settings";
 import { ThemeProvider } from "@gemunion/provider-theme";
 import { LicenseProvider } from "@gemunion/provider-license";
 import { LocalizationProvider } from "@gemunion/provider-localization";
 import { PopupProvider } from "@gemunion/provider-popup";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { PickerProvider } from "@gemunion/provider-picker";
+import { ReduxProvider, store } from "@gemunion/redux";
 import { i18n } from "@framework/localization-office-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
@@ -18,10 +18,10 @@ import { themeProps } from "../components/theme";
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
   return (
-    <ApiProviderFirebase baseUrl={process.env.BE_URL} storageName={ns}>
-      <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
-        <UserProviderFirebase>
-          <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
+    <ReduxProvider store={store}>
+      <ApiProviderFirebase baseUrl={process.env.BE_URL} storageName={ns}>
+        <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
+          <UserProviderFirebase>
             <ThemeProvider {...themeProps}>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
@@ -33,9 +33,9 @@ export const Providers: FC<PropsWithChildren> = props => {
                 </SnackbarProvider>
               </LocalizationProvider>
             </ThemeProvider>
-          </SettingsProvider>
-        </UserProviderFirebase>
-      </LicenseProvider>
-    </ApiProviderFirebase>
+          </UserProviderFirebase>
+        </LicenseProvider>
+      </ApiProviderFirebase>
+    </ReduxProvider>
   );
 };

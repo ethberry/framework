@@ -8,7 +8,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { ReferralReportService } from "./report.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ReferralReportSearchDto } from "../reward/dto";
-import { ReferralRewardEntity } from "../reward/reward.entity";
+import { ReferralEntity } from "../reward/reward.entity";
 
 @ApiBearerAuth()
 @Controller("/referral/report")
@@ -20,7 +20,7 @@ export class ReferralReportController {
   public search(
     @Query() dto: ReferralReportSearchDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<ReferralRewardEntity>, number]> {
+  ): Promise<[Array<ReferralEntity>, number]> {
     return this.referralReportService.search(dto, userEntity);
   }
 

@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
@@ -23,7 +23,7 @@ export interface IRafflePurchaseButtonProps {
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   const { className, disabled, round, variant = ListActionVariant.button } = props;
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -36,7 +36,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
           receiver: round.contract?.address,
-          referrer: settings.getReferrer(),
+          referrer,
         },
         {
           tokenType: 2,
@@ -69,7 +69,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           contractId: round.contractId,
         },
       },

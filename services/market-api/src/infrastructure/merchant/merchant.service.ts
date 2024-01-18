@@ -88,7 +88,7 @@ export class MerchantService {
       })
       .save();
 
-    const merchant = await this.findOne({ id: merchantEntity.id }, { select: { apiKey: true } });
+    const merchant = await this.findOne({ id: merchantEntity.id }, { select: { id: true, apiKey: true } });
 
     if (!merchant) {
       throw new NotFoundException("merchantNotFound");

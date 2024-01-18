@@ -93,7 +93,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
             autoSelect={false}
             prefix="deposit"
             readOnly={readOnly}
-            allowEmpty={true}
+            allowEmpty
             disableClear={false}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />

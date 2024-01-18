@@ -4,10 +4,11 @@ import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
 import { ProfileTabs } from "./tabs";
-import { ProfileGeneral } from "./general";
-import { ProfileSubscriptions } from "./subscriptions";
 import { ProfileAddresses } from "./adresses";
+import { ProfileGeneral } from "./general";
 import { ProfileNotifications } from "./notifications";
+import { ProfileSubscriptions } from "./subscriptions";
+import { ProfileSettings } from "./settings";
 
 export const Profile: FC = () => {
   const { tab = ProfileTabs.general } = useParams<{ tab: ProfileTabs }>();
@@ -32,6 +33,7 @@ export const Profile: FC = () => {
       <ProfileAddresses open={value === ProfileTabs.addresses} />
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
       <ProfileNotifications open={value === ProfileTabs.notifications} />
+      <ProfileSettings open={value === ProfileTabs.settings} />
     </Fragment>
   );
 };

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { getEthPrice } from "@framework/exchange";
@@ -33,7 +33,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
     component => component.contract!.contractModule === ModuleType.MYSTERY,
   );
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -51,7 +51,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
               nonce: utils.arrayify(sign.nonce),
               extra: utils.formatBytes32String("0x"),
               receiver: promo.merchant!.wallet,
-              referrer: settings.getReferrer(),
+              referrer,
             },
             [
               ...promo.box!.item!.components.sort(sorter("id")).map(component => ({
@@ -89,7 +89,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
               nonce: utils.arrayify(sign.nonce),
               extra: utils.formatBytes32String("0x"),
               receiver: promo.merchant!.wallet,
-              referrer: settings.getReferrer(),
+              referrer,
             },
             promo.item?.components.sort(sorter("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -122,7 +122,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           promoId: promo.id,
         },
       },

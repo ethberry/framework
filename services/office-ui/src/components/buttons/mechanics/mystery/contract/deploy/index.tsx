@@ -1,16 +1,16 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IMysteryContractDeployDto, IUser } from "@framework/types";
+import type { IMysteryContractDeployDto, IUser, IContract } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import DeployMysteryBoxABI from "@framework/abis/deployMysterybox/MysteryBoxFactoryFacet.json";
-
 import { MysteryContractDeployDialog } from "./dialog";
+import deployMysteryboxMysteryBoxFactoryFacetABI from "@framework/abis/deployMysterybox/MysteryBoxFactoryFacet.json";
 
 export interface IMysteryContractDeployButtonProps {
   className?: string;
@@ -22,11 +22,18 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
+  const { chainId } = useWeb3React();
+  // TOKEN URI WITH CHAIN_ID
+  const tokenURI = `${process.env.JSON_URL}/metadata/${chainId ? chainId.toString() : "0"}`;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IMysteryContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployMysteryBoxABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployMysteryboxMysteryBoxFactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployMysterybox(
         {
@@ -77,7 +84,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
           contractTemplate: MysteryContractTemplates.SIMPLE,
           name: "",
           symbol: "",
-          baseTokenURI: `${process.env.JSON_URL}/metadata`,
+          baseTokenURI: tokenURI,
           royalty: 0,
         }}
       />

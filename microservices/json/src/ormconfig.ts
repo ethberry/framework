@@ -14,7 +14,7 @@ const config: PostgresConnectionOptions = {
   entities: [AssetEntity, AssetComponentEntity, ContractEntity, TemplateEntity, TokenEntity],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
 };
 
 export default config;

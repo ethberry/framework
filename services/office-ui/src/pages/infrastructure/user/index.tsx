@@ -80,8 +80,8 @@ export const User: FC = () => {
             <StyledListItem key={user.id}>
               <ListItemText>{user.displayName}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(user)} message="form.actions.edit" icon={Create} />
-                <ListAction onClick={handleDelete(user)} message="form.actions.delete" icon={Delete} />
+                <ListAction onClick={handleEdit(user)} message="form.buttons.edit" icon={Create} />
+                <ListAction onClick={handleDelete(user)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </StyledListItem>
           ))}

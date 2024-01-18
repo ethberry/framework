@@ -6,7 +6,7 @@ import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -44,7 +44,7 @@ export interface IBreedDto {
 }
 
 export const Breed: FC = () => {
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -86,7 +86,7 @@ export const Breed: FC = () => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           momId: values.mom.tokenId,
           dadId: values.dad.tokenId,
         },

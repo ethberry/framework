@@ -1,16 +1,16 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { Card, CardContent, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { formatItem, getEthPrice } from "@framework/exchange";
-import type { IContract, ICraft, ICraftSearchDto, ITemplate } from "@framework/types";
+import type { IContract, ICraft, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import CraftABI from "@framework/abis/craft/ExchangeCraftFacet.json";
@@ -26,15 +26,25 @@ export interface ICraftTemplatePanelProps {
 export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   const { template } = props;
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
-  const { rows, isLoading } = useCollection<ICraft, ICraftSearchDto>({
-    baseUrl: "/recipes/craft",
-    embedded: true,
-    search: {
-      templateId: template.id,
-    },
-  });
+  const [rows, setRows] = useState<ICraft[]>([]);
+
+  const { fn: getCraftFn, isLoading } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: "/recipes/craft",
+        data: {
+          templateId: template.id,
+        },
+      }),
+    { success: false, error: false },
+  );
+
+  const getCraft = async () => {
+    const json = await getCraftFn();
+    setRows(json.rows);
+  };
 
   const metaFnWithSign = useServerSignature(
     (values: ICraft, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -83,7 +93,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           craftId: values.id,
         },
       },
@@ -95,6 +105,10 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   const handleCraft = (craft: ICraft) => {
     return async () => await metaFn(craft);
   };
+
+  useEffect(() => {
+    void getCraft();
+  }, []);
 
   if (isLoading) {
     return null;

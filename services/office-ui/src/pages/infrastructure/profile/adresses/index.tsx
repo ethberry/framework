@@ -10,10 +10,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";
+import { emptyAddress } from "../../../../components/common/interfaces";
+import type { ITabPanelProps } from "../tabs";
 import { AddressEditDialog } from "./edit";
-import { ITabPanelProps } from "../tabs";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;

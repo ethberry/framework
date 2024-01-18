@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
 
 import { AddressPipe, ApiAddress, ApiBigInt, BigIntPipe, Public } from "@gemunion/nest-js-utils";
 import type { IOpenSeaTokenMetadata } from "@framework/types";
@@ -12,11 +12,12 @@ export class MetadataTokenController {
 
   @ApiBigInt("tokenId")
   @ApiAddress("address")
-  @Get("/:address/:tokenId")
+  @Get("/:chainId/:address/:tokenId")
   public getTokenMetadata(
+    @Param("chainId", ParseIntPipe) chainId: number,
     @Param("address", AddressPipe) address: string,
     @Param("tokenId", BigIntPipe) tokenId: bigint,
   ): Promise<IOpenSeaTokenMetadata> {
-    return this.metadataTokenService.getTokenMetadata(address, tokenId);
+    return this.metadataTokenService.getTokenMetadata(address, tokenId, chainId);
   }
 }

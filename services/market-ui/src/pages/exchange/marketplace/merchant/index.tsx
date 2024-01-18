@@ -1,25 +1,41 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
+import { useParams } from "react-router";
 import { Skeleton } from "@mui/lab";
 
 import { StyledAvatar } from "@framework/styled";
-import type { IContractSearchDto, IMerchant } from "@framework/types";
+import type { IMerchant } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
 
 import { ContractList } from "../contract-list";
 
 export const Merchant: FC = () => {
-  const { selected, isLoading } = useCollection<IMerchant, IContractSearchDto>({
-    baseUrl: "/merchants",
-    empty: {
-      title: "",
-      description: emptyStateString,
-    },
-    redirect: () => "",
-  });
+  const { id } = useParams<{ id: string }>();
+
+  const [selected, setSelected] = useState<IMerchant>({
+    title: "",
+    description: emptyStateString,
+  } as IMerchant);
+
+  const { fn: getMerchantFn, isLoading } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: `/merchants/${id}`,
+      }),
+    { success: false, error: false },
+  );
+
+  const getMerchant = async () => {
+    const merchant = await getMerchantFn();
+    setSelected(merchant);
+  };
+
+  useEffect(() => {
+    void getMerchant();
+  }, []);
 
   if (isLoading) {
     return <Spinner />;

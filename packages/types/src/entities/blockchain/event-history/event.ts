@@ -334,7 +334,7 @@ export enum ContractEventSignature {
   EcommercePurchase = "EcommercePurchase(??)",
 
   // MODULE:REFERRAL
-  ReferralEvent = "ReferralEvent(address,(uint8,address,uint256,uint256)[])",
+  ReferralEvent = "ReferralEvent(address,address,(uint8,address,uint256,uint256)[])",
   ReferralProgram = "ReferralProgram((uint256,uint256,uint8,bool))",
   ReferralReward = "ReferralReward(address,address,uint8,address,uint256)",
   ReferralWithdraw = "ReferralWithdraw(address,address,uint256)",

@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import {
   DataGridPremiumProps,
@@ -9,9 +9,9 @@ import {
 } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import { defaultItemsPerPage, humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
-import { useCollection } from "@gemunion/react-hooks";
+import { IHandleChangePaginationModelProps, useApiCall } from "@gemunion/react-hooks";
 import type { ICraft, IEventHistory } from "@framework/types";
 
 import { EventDataView } from "../../../../../exchange/transactions/event-data-view";
@@ -24,14 +24,37 @@ export interface ICraftTransactionsProps {
 export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
   const { craft } = props;
 
-  const { rows, count, search, isLoading, handleChangePaginationModel } = useCollection<IEventHistory, any>({
-    search: {
-      craftId: craft.id,
-    },
-    baseUrl: `/events/craft`,
-    embedded: true, // excludes craftId from url
-    redirect: () => "",
+  const [rows, setRows] = useState<IEventHistory[]>([]);
+  const [count, setCount] = useState<number>(0);
+  const [search, setSearch] = useState({
+    skip: 0,
+    take: defaultItemsPerPage,
   });
+
+  const handleChangePaginationModel = (model: IHandleChangePaginationModelProps) => {
+    const { page, pageSize } = model;
+    setSearch({
+      skip: page * pageSize,
+      take: pageSize,
+    });
+  };
+
+  const { fn: getCraftHistoryFn, isLoading } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: "/events/craft",
+        data: {
+          craftId: craft.id,
+        },
+      }),
+    { success: false, error: false },
+  );
+
+  const getCraftHistory = async () => {
+    const json = await getCraftHistoryFn();
+    setRows(json.rows);
+    setCount(json.count);
+  };
 
   const { formatMessage } = useIntl();
 
@@ -83,10 +106,15 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
     [],
   );
 
+  useEffect(() => {
+    if (!rows.length) {
+      void getCraftHistory();
+    }
+  }, []);
+
   return (
     <StyledDataGridPremium
       pagination
-      paginationMode="server"
       rowCount={count}
       paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
       onPaginationModelChange={handleChangePaginationModel}

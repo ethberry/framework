@@ -37,6 +37,7 @@ import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
 import { PaymentSplitterSection } from "./mechanics/payment-splitter";
 import { WaitListSection } from "./mechanics/wait-list";
+import { ReferralSection } from "./exchange/referral";
 
 export const Dashboard: FC = () => {
   return (
@@ -78,6 +79,7 @@ export const Dashboard: FC = () => {
           <MarketplaceSection />
           <EcommerceSection />
           <AchievementsSection />
+          <ReferralSection />
         </Grid>
       </Grid>
     </Root>

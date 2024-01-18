@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -24,7 +24,7 @@ interface IMysteryBoxBuyButtonProps {
 export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => {
   const { className, disabled, mysteryBox, variant = ListActionVariant.button } = props;
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -81,7 +81,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           mysteryBoxId: mysteryBox.id,
         },
       },

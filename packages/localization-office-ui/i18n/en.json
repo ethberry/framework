@@ -22,7 +22,8 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "profile": "Profile"
+        "profile": "Profile",
+        "settings": "Settings"
       },
       "theme": {
         "switch": "Switch theme"
@@ -30,6 +31,8 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
+        "notMatch": "Current wallet does not match with the profile wallet",
+        "notValid": "Invalid network. Please switch to correct network according to your profile",
         "test": "Test"
       }
     }
@@ -89,6 +92,7 @@
       "10001": "BESU",
       "137": "POLYGON",
       "42161": "ARBITRUM",
+      "11155111": "SEPOLIA",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI",
@@ -202,6 +206,11 @@
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
     },
+    "ratePlan": {
+      "BRONZE": "BRONZE",
+      "SILVER": "SILVER",
+      "GOLD": "GOLD"
+    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -242,12 +251,11 @@
       "NONE": "None"
     },
     "userRoles": {
-      "ADMIN": "Admin",
-      "CUSTOMER": "Customer",
-      "MANAGER": "Manager",
-      "MERCHANT": "Merchant",
-      "OWNER": "Owner",
-      "USER": "User"
+      "SUPER": "SUPER",
+      "ADMIN": "ADMIN",
+      "OWNER": "OWNER",
+      "MANAGER": "MANAGER",
+      "CUSTOMER": "CUSTOMER"
     },
     "userStatus": {
       "ACTIVE": "Active",
@@ -448,6 +456,7 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "random": "Random",
+      "ratePlan": "Rate Plan",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
@@ -777,7 +786,13 @@
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
-      "login": "Login"
+      "login": "Login",
+      "particleWallet": "Particle Wallet",
+      "signInWith": {
+        "facebook": "Sign in with Facebook",
+        "google": "Sign in with Google",
+        "metamask": "Sign in with Metamask"
+      }
     },
     "marketplace": {
       "chart": {
@@ -853,7 +868,16 @@
       "tabs": {
         "addresses": "Addresses",
         "general": "General",
-        "subscriptions": "Subscriptions"
+        "subscriptions": "Subscriptions",
+        "settings": "Settings"
+      },
+      "settings": {
+        "wallet": {
+          "attach": "Attach",
+          "connectedWallet": "Connected wallet",
+          "detach": "Detach",
+          "title": "My wallet"
+        }
       },
       "title": "Profile"
     },

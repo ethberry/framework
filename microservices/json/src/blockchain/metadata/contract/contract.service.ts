@@ -23,8 +23,8 @@ export class MetadataContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async getContractMetadata(address: string): Promise<IOpenSeaContractMetadata> {
-    const contractEntity = await this.findOne({ address });
+  public async getContractMetadata(address: string, chainId: number): Promise<IOpenSeaContractMetadata> {
+    const contractEntity = await this.findOne(chainId && chainId !== 0 ? { address, chainId } : { address });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
@@ -36,7 +36,7 @@ export class MetadataContractService {
       name: contractEntity.title,
       description: getText(contractEntity.description),
       image: contractEntity.imageUrl,
-      external_link: `${baseUrl}/metadata/${contractEntity.address}`,
+      external_link: `${baseUrl}/metadata/${chainId}/${contractEntity.address}`,
     };
   }
 }

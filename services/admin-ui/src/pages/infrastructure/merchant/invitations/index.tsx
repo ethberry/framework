@@ -18,6 +18,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
     // @ts-ignore
     useCollection<IOtp>({
       empty: {
+        uuid: "1",
         user: {
           displayName: "",
         },
@@ -39,7 +40,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
           {rows.length ? (
             rows.map((otp: IOtp) => (
               <StyledListItem key={otp.uuid}>
-                <ListItemText>{otp.user!.displayName}</ListItemText>
+                <ListItemText>{otp.user?.displayName}</ListItemText>
                 <ListActions>
                   <ListAction message="form.tips.delete" icon={Delete} onClick={handleDelete(otp)} />
                 </ListActions>
@@ -58,7 +59,7 @@ export const MerchantInvitations: FC<ITabPanelProps> = props => {
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
         initialValues={{ id: selected.uuid, ...selected }}
-        getTitle={(otp: IOtp) => otp.user!.displayName}
+        getTitle={(otp: IOtp) => otp.user?.displayName || ""}
       />
     </Fragment>
   );

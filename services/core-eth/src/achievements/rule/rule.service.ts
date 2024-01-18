@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { AchievementRuleStatus, ContractEventType, TokenType } from "@framework/types";
+import { AchievementRuleStatus, ContractEventType, ContractManagerEventType, TokenType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { AchievementRuleEntity } from "./rule.entity";
@@ -91,71 +91,84 @@ export class AchievementsRuleService {
 
   public async processEvent(id: number): Promise<void> {
     const event = await this.eventHistoryService.findOneWithRelations({ id });
+
     if (!event) {
       throw new NotFoundException("eventNotFound");
     }
 
     const { contractId, eventType, eventData } = event;
 
-    if (eventData && "account" in eventData) {
-      const wallet = eventData.account;
-      // TODO filter all db.contracts or limit rule events
-      const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-      const allContracts = await this.contractService.findAll(
-        { chainId },
-        {
-          select: {
-            address: true,
+    // do not check ContractManager's deploy events
+    // TODO rename CM's events args account -> addr
+    if (!(<any>Object).values(ContractManagerEventType).includes(eventType)) {
+      if (eventData && "account" in eventData) {
+        const wallet = eventData.account;
+        // TODO filter all db.contracts or limit rule events
+        const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+        const allContracts = await this.contractService.findAll(
+          { chainId },
+          {
+            select: {
+              address: true,
+            },
           },
-        },
-      );
+        );
 
-      // Check only user events
-      if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
-        const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
+        // Check only user events
+        if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
+          const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
-        // find event User
-        if (!userEntity) {
-          this.loggerService.error("userNotFound", wallet, AchievementsRuleService.name);
-          throw new NotFoundException("userNotFound");
-        }
+          // find event User
+          if (!userEntity) {
+            this.loggerService.error("userNotFound", wallet, AchievementsRuleService.name);
+            throw new NotFoundException("userNotFound");
+          }
 
-        // Find appropriate rules
-        const rules = await this.findAllWithRelations(contractId, eventType);
-        if (rules.length) {
-          // Check each rule condition
-          rules.map(async rule => {
-            const ruleAsset = rule.item;
-            // if rule with Asset - compare with event assets
-            if (ruleAsset.components) {
-              // get Asset from eventData
-              const eventAsset = this.getEventTokenAsset(event);
-              // if both Assets - check deeper
-              if (eventAsset.length) {
-                // Check if any one rule.item == event.item
-                ruleAsset.components.map(asset => {
-                  return eventAsset.map(async item => {
-                    // if Rule.Asset condition met - create achievementsItem
-                    if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
-                      if (asset.templateId === item.templateId || !asset.templateId) {
-                        return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+          // Find appropriate rules
+          const rules = await this.findAllWithRelations(contractId, eventType);
+          if (rules.length) {
+            // Check each rule condition
+            rules.map(async rule => {
+              // CHECK RULE TIMEFRAME
+              // TODO fix format and check date
+              const ruleStartTime = rule.startTimestamp;
+              const ruleEndTime = rule.endTimestamp;
+              const timeNow = Date.now();
+              if (ruleStartTime !== ruleEndTime && (Number(ruleStartTime) > timeNow || Number(ruleEndTime) < timeNow)) {
+                return null;
+              }
+              const ruleAsset = rule.item;
+              // if rule with Asset - compare with event assets
+              if (ruleAsset.components) {
+                // get Asset from eventData
+                const eventAsset = this.getEventTokenAsset(event);
+                // if both Assets - check deeper
+                if (eventAsset.length) {
+                  // Check if any one rule.item == event.item
+                  ruleAsset.components.map(asset => {
+                    return eventAsset.map(async item => {
+                      // if Rule.Asset condition met - create achievementsItem
+                      if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
+                        if (asset.templateId === item.templateId || !asset.templateId) {
+                          return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                        } else {
+                          return void 0;
+                        }
                       } else {
                         return void 0;
                       }
-                    } else {
-                      return void 0;
-                    }
+                    });
                   });
-                });
-                return void 0;
+                  return void 0;
+                } else {
+                  return void 0;
+                }
               } else {
-                return void 0;
+                // Rule condition met - create achievementsItem
+                return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
               }
-            } else {
-              // Rule condition met - create achievementsItem
-              return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
-            }
-          });
+            });
+          }
         }
       }
     }

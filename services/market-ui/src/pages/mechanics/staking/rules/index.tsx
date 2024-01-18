@@ -12,12 +12,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { formatItemHtmlList, formatPenalty } from "@framework/exchange";
 import { ListAction, StyledPagination } from "@framework/styled";
-import type {
-  IStakingRule,
-  IStakingDeposit,
-  IStakingRuleDepositSearchDto,
-  IStakingRuleSearchDto,
-} from "@framework/types";
+import type { IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
   IStakingRuleRewardSearchDto,

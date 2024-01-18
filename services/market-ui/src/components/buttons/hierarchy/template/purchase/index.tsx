@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { getEthPrice } from "@framework/exchange";
@@ -26,7 +26,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const { className, disabled, template, variant = ListActionVariant.button } = props;
   const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
 
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -39,7 +39,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
           receiver: template.contract!.merchant!.wallet,
-          referrer: settings.getReferrer(),
+          referrer,
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
@@ -71,7 +71,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           templateId: template.id,
           amount: values.amount,
         },

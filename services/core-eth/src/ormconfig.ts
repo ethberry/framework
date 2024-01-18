@@ -43,6 +43,7 @@ import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
+import { ReferralEntity } from "./blockchain/mechanics/referral/referral.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -89,6 +90,7 @@ const config: PostgresConnectionOptions = {
     PonziRulesEntity,
     WaitListListEntity,
     WaitListItemEntity,
+    ReferralEntity,
     /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,
@@ -97,7 +99,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV !== "production",
+  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
 };
 
 export default config;

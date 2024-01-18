@@ -110,6 +110,7 @@ const config: Configuration = {
     },
   },
   watchOptions: {
+    poll: 1000,
     aggregateTimeout: 0,
     followSymlinks: true,
   },

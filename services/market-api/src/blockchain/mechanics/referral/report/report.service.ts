@@ -5,11 +5,12 @@ import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
+import { formatItem } from "@framework/exchange";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { ReferralRewardEntity } from "../reward/reward.entity";
+import { ReferralEntity } from "../reward/reward.entity";
 import { ReferralRewardService } from "../reward/reward.service";
-import { formatEther } from "../reward/reward.utils";
+// import { formatEther } from "../reward/reward.utils";
 
 @Injectable()
 export class ReferralReportService {
@@ -22,7 +23,7 @@ export class ReferralReportService {
   public async search(
     dto: Partial<IReferralReportSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<ReferralRewardEntity>, number]> {
+  ): Promise<[Array<ReferralEntity>, number]> {
     return this.referralRewardService.search(dto, userEntity);
   }
 
@@ -50,19 +51,24 @@ export class ReferralReportService {
     return Promise.all([this.entityManager.query(queryString, [startTimestamp, endTimestamp, userEntity.wallet]), 0]);
   }
 
+  // TODO rework to use asset
   public async export(dto: Partial<IReferralReportSearchDto>, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
     const [list] = await this.search(rest, userEntity);
 
-    const headers = ["id", "referrer", "createdAt", "amount"];
+    const headers = ["id", "referrer", "account", "item", "price", "contract", "eventType", "createdAt"];
 
     return parse(
       list.map(referralRewardEntity => ({
         id: referralRewardEntity.id,
         referrer: referralRewardEntity.referrer,
+        account: referralRewardEntity.account,
+        item: formatItem(referralRewardEntity.item),
+        price: formatItem(referralRewardEntity.price),
+        contract: referralRewardEntity.contract.title,
+        eventType: referralRewardEntity.history?.parent?.eventType,
         createdAt: referralRewardEntity.createdAt,
-        amount: formatEther(referralRewardEntity.amount),
       })),
       { fields: headers },
     );

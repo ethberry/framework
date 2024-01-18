@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -6,15 +6,16 @@ import { useNavigate } from "react-router";
 import { Card, CardContent, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { formatItem } from "@framework/exchange";
-import type { IContract, IDismantle, IDismantleSearchDto, IToken } from "@framework/types";
+import type { IContract, IDismantle, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import DismantleABI from "@framework/abis/dismantle/ExchangeDismantleFacet.json";
+
 import { sorter } from "../../../../../utils/sorter";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { getDismantleMultiplier } from "./utils";
@@ -28,15 +29,24 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const { token } = props;
 
   const navigate = useNavigate();
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
+  const [rows, setRows] = useState<IDismantle[]>([]);
 
-  const { rows, isLoading } = useCollection<IDismantle, IDismantleSearchDto>({
-    baseUrl: "/recipes/dismantle",
-    embedded: true,
-    search: {
-      templateId: token.templateId,
-    },
-  });
+  const { fn: getDismantleFn, isLoading } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: "/recipes/dismantle",
+        data: {
+          templateId: token.templateId,
+        },
+      }),
+    { success: false, error: false },
+  );
+
+  const getDismantle = async () => {
+    const json = await getDismantleFn();
+    setRows(json.rows);
+  };
 
   const metaFnWithSign = useServerSignature(
     (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -93,7 +103,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           dismantleId: values.id,
           tokenId: token.id,
         },
@@ -109,6 +119,12 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
         navigate("/tokens");
       });
   };
+
+  useEffect(() => {
+    if (!rows.length) {
+      void getDismantle();
+    }
+  }, []);
 
   if (isLoading) {
     return null;

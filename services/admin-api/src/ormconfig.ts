@@ -176,7 +176,6 @@ import {
   SeedBalanceCollectionAt1679894500430,
   SeedBalanceErc1155At1563804020450,
   SeedBalanceErc20At1563804020420,
-  SeedBalanceErc20BusdAt1563804020423,
   SeedBalanceErc20Erc998At1563804020450,
   SeedBalanceErc20LinkAt1563804020424,
   SeedBalanceErc20UsdtAt1563804020421,
@@ -207,7 +206,6 @@ import {
   SeedContractErc1155At1563804000150,
   SeedContractErc1155DumbWayToDieAt1563804000151,
   SeedContractErc20At1563804000120,
-  SeedContractErc20BusdAt1563804000123,
   SeedContractErc20LINKAt1563804000124,
   SeedContractErc20UsdtAt1563804000121,
   SeedContractErc20WethAt1563804000122,
@@ -301,7 +299,7 @@ import {
   SeedProductToCategory1683724061710,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
-  SeedReferralRewardAt1660103709910,
+  // SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
   SeedStakingDepositErc20Erc20At1654751224322,
@@ -321,7 +319,6 @@ import {
   SeedTemplateCollectionAt1679894500230,
   SeedTemplateErc1155At1563804000250,
   SeedTemplateErc20At1563804000220,
-  SeedTemplateErc20BusdAt1563804000223,
   SeedTemplateErc20LinkAt1563804000224,
   SeedTemplateErc20UsdtAt1563804000221,
   SeedTemplateErc20WethAt1563804000222,
@@ -335,7 +332,6 @@ import {
   SeedTokenCollectionAt1679894500330,
   SeedTokenErc1155At1563804000350,
   SeedTokenErc20At1563804000320,
-  SeedTokenErc20BusdAt1563804000323,
   SeedTokenErc20LinkAt1563804000324,
   SeedTokenErc20UsdtAt1563804000321,
   SeedTokenErc20WethAt1563804000322,
@@ -351,7 +347,10 @@ import {
   SeedWrapperAt1563804000370,
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
+import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 
+// TEST DATA 100k topics
+// import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -401,6 +400,7 @@ const config: PostgresConnectionOptions = {
     StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
+    ReferralEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -431,7 +431,7 @@ const config: PostgresConnectionOptions = {
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV !== NodeEnv.production,
+  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.
@@ -469,7 +469,6 @@ const config: PostgresConnectionOptions = {
     SeedContractErc20At1563804000120,
     SeedContractErc20UsdtAt1563804000121,
     SeedContractErc20WethAt1563804000122,
-    SeedContractErc20BusdAt1563804000123,
     SeedContractErc20LINKAt1563804000124,
     SeedContractErc721At1563804000130,
     SeedContractErc721CryptoKittiesAt1563804000131,
@@ -483,7 +482,6 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc20UsdtAt1563804000221,
     SeedTemplateErc20WethAt1563804000222,
-    SeedTemplateErc20BusdAt1563804000223,
     SeedTemplateErc20LinkAt1563804000224,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
@@ -495,7 +493,6 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc20At1563804000320,
     SeedTokenErc20UsdtAt1563804000321,
     SeedTokenErc20WethAt1563804000322,
-    SeedTokenErc20BusdAt1563804000323,
     SeedTokenErc20LinkAt1563804000324,
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
@@ -506,7 +503,6 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc20UsdtAt1563804020421,
     SeedBalanceErc20WethAt1563804020422,
-    SeedBalanceErc20BusdAt1563804020423,
     SeedBalanceErc20LinkAt1563804020424,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
@@ -636,7 +632,7 @@ const config: PostgresConnectionOptions = {
     SeedAssetPromoMysteryBoxAt1658980521050,
 
     CreateReferralRewardAt1660103709900,
-    SeedReferralRewardAt1660103709910,
+    // SeedReferralRewardAt1660103709910,
 
     // LOTTERY
     SeedContractLotteryTicketAt1563804000180,
@@ -755,6 +751,7 @@ const config: PostgresConnectionOptions = {
     SeedGameBalance1686896594710,
 
     /* alter prod migrations */
+    // SeedTestDataAt9763804000120,
   ],
 };
 

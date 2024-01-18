@@ -1,24 +1,21 @@
-import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useIndexedDB } from "react-indexed-db-hook";
-import { useLocation } from "react-router";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
+import { useAppDispatch, collectionActions } from "@gemunion/redux";
 import type { IUser } from "@framework/types";
 import { ContractEventSignature, SignalEventType } from "@framework/types";
 
-import { SignalContext, TPageRefresher } from "./context";
 import { EventRouteMatch } from "./constants";
 
-export const SignalProvider: FC<PropsWithChildren> = props => {
-  const { children = null } = props;
+export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const location = useLocation();
-
-  const refresher = useRef<TPageRefresher | null>(null);
+  const dispatch = useAppDispatch();
+  const { setNeedRefresh } = collectionActions;
 
   const api = useApi();
   const user = useUser<IUser>();
@@ -28,10 +25,6 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
   const { add } = useIndexedDB("txs");
 
   const isUserAuthenticated = user.isAuthenticated();
-
-  const setPageRefresher = (fn: TPageRefresher | null) => {
-    refresher.current = fn;
-  };
 
   const handleEvent = async (dto: { transactionHash: string; transactionType?: ContractEventSignature }) => {
     if (dto.transactionType) {
@@ -45,6 +38,17 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
           variant: "success",
         },
       );
+
+      const isRouteMatchToEvent =
+        Object.keys(EventRouteMatch).includes(dto.transactionType) &&
+        location.pathname.startsWith(
+          EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch] as string,
+        );
+
+      if (isRouteMatchToEvent) {
+        dispatch(setNeedRefresh(true));
+      }
+
       await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(
         event => {
           console.info("DB ID Generated: ", event);
@@ -53,16 +57,6 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
           console.error(error);
         },
       );
-
-      const isRouteMatchToEvent =
-        Object.keys(EventRouteMatch).includes(dto.transactionType) &&
-        location.pathname.startsWith(
-          EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch] as string,
-        );
-
-      if (isRouteMatchToEvent && refresher.current) {
-        void refresher.current();
-      }
     } else {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
         variant: "success",
@@ -121,5 +115,5 @@ export const SignalProvider: FC<PropsWithChildren> = props => {
     };
   }, [socket, isUserAuthenticated]);
 
-  return <SignalContext.Provider value={{ setPageRefresher }}>{children}</SignalContext.Provider>;
+  return null;
 };

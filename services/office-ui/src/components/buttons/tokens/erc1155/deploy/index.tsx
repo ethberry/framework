@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
@@ -8,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
-import DeployERC1155TokenABI from "@framework/abis/deployERC1155Token/ERC1155FactoryFacet.json";
+import deployERC1155TokenERC1155FactoryFacetABI from "@framework/abis/deployERC1155Token/ERC1155FactoryFacet.json";
 
 import { Erc1155ContractDeployDialog } from "./dialog";
 
@@ -22,11 +23,18 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
+  const { chainId } = useWeb3React();
+  // TOKEN URI WITH CHAIN_ID
+  const tokenURI = `${process.env.JSON_URL}/metadata/${chainId ? chainId.toString() : "0"}`;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc1155ContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC1155TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        deployERC1155TokenERC1155FactoryFacetABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC1155Token(
         {
@@ -63,7 +71,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         icon={Add}
         message="form.buttons.deploy"
         className={className}
-        data-testid="Erc1155ContractDeployButton"
+        dataTestId="Erc1155ContractDeployButton"
         disabled={disabled}
         variant={variant}
       />
@@ -73,7 +81,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         open={isDeployDialogOpen}
         initialValues={{
           contractTemplate: Erc1155ContractTemplates.SIMPLE,
-          baseTokenURI: `${process.env.JSON_URL}/metadata`,
+          baseTokenURI: tokenURI,
           royalty: 0,
         }}
       />

@@ -6,6 +6,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  ExchangeType,
   IReferralEvent,
   IReferralRewardEvent,
   IReferralWithdrawEvent,
@@ -40,7 +41,7 @@ export class ReferralServiceEth {
   public async refEvent(event: ILogEvent<IReferralEvent>, context: Log): Promise<void> {
     const { address, transactionHash } = context;
     const { name, args } = event;
-    const { account, price } = args;
+    const { account, referrer, price } = args;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -50,9 +51,12 @@ export class ReferralServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    const historyEntity = await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+
+    const { parentId } = historyEntity;
 
     let assetEntity: AssetEntity | null = null;
+    let itemAssetEntity: AssetEntity | null = null;
     let referralAssetId;
 
     if (price.length > 0) {
@@ -85,11 +89,50 @@ export class ReferralServiceEth {
       if (!assetEntity) {
         throw new NotFoundException("assetNotFound");
       }
+
+      // FIND ITEM BY PARENT EXCHANGE EVENT
+      // TODO consider Deposit events too
+      if (parentId) {
+        const assetHistory = await this.assetService.findAll(
+          {
+            historyId: parentId,
+            exchangeType: ExchangeType.ITEM,
+          },
+          { relations: { token: { template: { contract: true } }, contract: true } },
+        );
+
+        if (assetHistory.length > 0) {
+          itemAssetEntity = await this.assetService.create();
+
+          const itemComponets = [];
+
+          for (const item of assetHistory) {
+            itemComponets.push({
+              tokenType: item.contract.contractType!,
+              contractId: item.contractId,
+              templateId: item.token.templateId,
+              tokenId: item.tokenId,
+              amount: item.amount,
+            });
+          }
+
+          await this.assetService.createAsset(itemAssetEntity, itemComponets);
+        }
+      }
+
+      await this.referralService.create({
+        account: account.toLowerCase(),
+        referrer: referrer.toLowerCase(),
+        contractId: contractEntity.id,
+        priceId: assetEntity.id,
+        itemId: itemAssetEntity ? itemAssetEntity.id : null,
+        historyId: historyEntity.id,
+      });
     }
 
     // NOTIFY GAME
     await this.notificatorService.referralEvent({
-      account,
+      account: account.toLowerCase(),
       contract: contractEntity,
       price: assetEntity,
       transactionHash,
@@ -104,6 +147,7 @@ export class ReferralServiceEth {
       .toPromise();
   }
 
+  // TODO rework for new entity with assets
   public async reward(event: ILogEvent<IReferralRewardEvent>, context: Log): Promise<void> {
     const { transactionHash } = context;
     const { name, args } = event;

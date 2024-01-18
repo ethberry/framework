@@ -93,6 +93,7 @@ export class ContractManagerService {
     const count = await this.contractService.count({
       contractModule,
       contractType: contractType || IsNull(),
+      merchantId: userEntity.merchantId,
     });
 
     if (count >= limit) {

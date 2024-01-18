@@ -29,6 +29,7 @@ export const StyledSwapContainer = styled(Box)`
   overflow: hidden;
   border-radius: 20px;
   background: white;
+  min-height: 120px;
 `;
 
 export const StyledSwapHeader = styled(Box)`
@@ -41,6 +42,7 @@ export const StyledSwapHeader = styled(Box)`
 export const StyledSwapHeaderItem = styled(Box)`
   font-weight: bolder;
   opacity: 1;
+  padding-bottom: 16px;
 `;
 
 export const StyledSwapFormContainer = styled(Box)`

@@ -119,7 +119,7 @@ const config: PostgresConnectionOptions = {
   // We are using migrations, synchronize should market-api set to false.
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === NodeEnv.development,
+  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
 };
 
 export default config;

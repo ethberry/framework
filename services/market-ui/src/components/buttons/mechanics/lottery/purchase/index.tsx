@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { useSettings } from "@gemunion/provider-settings";
+import { useAppSelector } from "@gemunion/redux";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { bool36ArrayToByte32 } from "@framework/traits-ui";
@@ -25,7 +25,7 @@ export interface ILotteryPurchaseButtonProps {
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const { clearForm, ticketNumbers, round, disabled, className, variant = ListActionVariant.button } = props;
-  const settings = useSettings();
+  const { referrer } = useAppSelector(state => state.settings);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -39,7 +39,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             nonce: utils.arrayify(sign.nonce),
             extra: bool36ArrayToByte32(ticketNumbers),
             receiver: round.contract?.address,
-            referrer: settings.getReferrer(),
+            referrer,
           },
           {
             tokenType: 2,
@@ -73,7 +73,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         data: {
           chainId,
           account,
-          referrer: settings.getReferrer(),
+          referrer,
           ticketNumbers: bool36ArrayToByte32(ticketNumbers),
           contractId: round.contractId,
         },

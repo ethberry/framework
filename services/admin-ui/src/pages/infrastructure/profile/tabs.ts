@@ -1,8 +1,9 @@
 export enum ProfileTabs {
-  general = "general",
-  subscriptions = "subscriptions",
-  notifications = "notifications",
   addresses = "addresses",
+  general = "general",
+  notifications = "notifications",
+  settings = "settings",
+  subscriptions = "subscriptions",
 }
 
 export interface ITabPanelProps {
