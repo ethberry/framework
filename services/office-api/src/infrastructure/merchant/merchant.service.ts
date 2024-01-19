@@ -110,7 +110,7 @@ export class MerchantService {
     if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {
       merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
 
-      await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.ADMIN);
+      await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.OWNER);
     }
 
     // UPDATING RATE-PLAN for SUPER ADMIN ONLY !!!
