@@ -28,14 +28,16 @@ export class MerchantService {
 
   public async update(dto: IMerchantUpdateDto, userEntity: UserEntity): Promise<MerchantEntity | null> {
     const { wallet } = dto;
-
+    // CHECK DUPLICATE WALLET ONLY IF CHANGING
     if (wallet) {
-      const count = await this.count({
-        wallet,
-      });
+      if (wallet.toLowerCase() !== userEntity.merchant.wallet.toLowerCase()) {
+        const count = await this.count({
+          wallet,
+        });
 
-      if (count) {
-        throw new ConflictException("duplicateAccount");
+        if (count) {
+          throw new ConflictException("duplicateAccount");
+        }
       }
     }
 
