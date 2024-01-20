@@ -186,6 +186,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
+      APP_NAME: "core-eth-besu"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
@@ -231,6 +232,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
+      APP_NAME: "core-eth-binance"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
@@ -272,6 +274,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
+      APP_NAME: "core-eth-binance-test"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
