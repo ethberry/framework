@@ -1,11 +1,12 @@
 import { FC } from "react";
 
+import { useUser } from "@gemunion/provider-user";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import type { IMerchant } from "@framework/types";
-import { MerchantStatus, RatePlanType } from "@framework/types";
+import type { IMerchant, IUser } from "@framework/types";
+import { MerchantStatus, RatePlanType, UserRole } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -18,6 +19,7 @@ export interface IEditMerchantDialogProps {
 
 export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
   const { initialValues, ...rest } = props;
+  const { profile } = useUser<IUser>();
 
   const { id, title, description, email, imageUrl, merchantStatus, wallet, ratePlan } = initialValues;
   const fixedValues = {
@@ -33,13 +35,15 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
+  const readOnly = !profile.userRoles.includes(UserRole.SUPER);
+
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TextInput name="email" autoComplete="username" />
       {id ? <SelectInput name="merchantStatus" options={MerchantStatus} /> : null}
-      {id ? <SelectInput name="ratePlan" options={RatePlanType} /> : null}
+      {id ? <SelectInput readOnly={readOnly} name="ratePlan" options={RatePlanType} /> : null}
       <TextInput name="wallet" />
       <AvatarInput name="imageUrl" />
     </FormDialog>

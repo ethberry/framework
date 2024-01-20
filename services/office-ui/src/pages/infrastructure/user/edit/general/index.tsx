@@ -4,11 +4,13 @@ import { format, parseISO } from "date-fns";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { EnabledLanguages } from "@framework/constants";
-import { UserRole, UserStatus } from "@framework/types";
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { useUser } from "@gemunion/provider-user";
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+
+import { EnabledLanguages } from "@framework/constants";
+import { IUser, UserRole, UserStatus } from "@framework/types";
+// import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 
 export interface IUserGeneralFormProps {
   open: boolean;
@@ -18,6 +20,7 @@ export interface IUserGeneralFormProps {
 export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
   const { createdAt, open } = props;
 
+  const { profile } = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -29,6 +32,8 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
     return null;
   }
 
+  const disabledRoles = profile.userRoles.includes(UserRole.SUPER) ? [] : [UserRole.SUPER, UserRole.ADMIN];
+
   return (
     <>
       <TextInput name="email" autoComplete="off" onClick={onClick} />
@@ -38,7 +43,7 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
       <Divider sx={{ my: 2 }} />
-      <SelectInput multiple name="userRoles" options={UserRole} />
+      <SelectInput multiple name="userRoles" options={UserRole} disabledOptions={disabledRoles} />
       <SelectInput name="userStatus" options={UserStatus} />
       <TextInput name="comment" multiline />
       <StaticInput name="createdAt" value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")} />

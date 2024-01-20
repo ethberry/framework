@@ -14,17 +14,23 @@ export class EthLoggerService {
     private readonly coreEthServiceBesuProxy: ClientProxy,
     @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
     private readonly coreEthServiceBinanceProxy: ClientProxy,
+    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE_TEST)
+    private readonly coreEthServiceBinanceTestProxy: ClientProxy,
   ) {}
 
   public async addListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return dto.chainId === 56 || dto.chainId === 97
+    return dto.chainId === 56
       ? this.coreEthServiceBinanceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
-      : this.coreEthServiceBesuProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
+      : dto.chainId === 97
+        ? this.coreEthServiceBinanceTestProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
+        : this.coreEthServiceBesuProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
   }
 
   public async removeListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return dto.chainId === 56 || dto.chainId === 97
+    return dto.chainId === 56
       ? this.coreEthServiceBinanceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
-      : this.coreEthServiceBesuProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
+      : dto.chainId === 97
+        ? this.coreEthServiceBinanceTestProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
+        : this.coreEthServiceBesuProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
   }
 }

@@ -118,6 +118,10 @@ export class MerchantService {
       if (ratePlan) {
         Object.assign(merchantEntity, { ratePlan });
       }
+    } else {
+      if (ratePlan) {
+        throw new ForbiddenException("insufficientPermissions");
+      }
     }
 
     Object.assign(merchantEntity, rest);

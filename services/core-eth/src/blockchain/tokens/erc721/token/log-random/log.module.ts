@@ -37,7 +37,6 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractFeatures.RANDOM,
           ContractFeatures.GENES,
         ]);
-        //
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

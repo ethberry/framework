@@ -279,8 +279,7 @@ export class ContractService {
       .createQueryBuilder("contract")
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
-      // it should be nested array
-      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });
+      .andWhere("NOT (contract.contractFeatures && :features)", { features: [ContractFeatures.EXTERNAL] });
 
     if (contractType) {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
@@ -319,8 +318,7 @@ export class ContractService {
       .createQueryBuilder("contract")
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
-      // it should be nested array
-      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });
+      .andWhere("NOT (contract.contractFeatures && :features)", { features: [ContractFeatures.EXTERNAL] });
 
     if (contractType) {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
@@ -355,9 +353,8 @@ export class ContractService {
       .createQueryBuilder("contract")
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
-      // it should be nested array
-      .andWhere("NOT (contract.contractFeatures && :contractFeatures)", {
-        contractFeatures: [ContractFeatures.EXTERNAL, ContractFeatures.RANDOM, ContractFeatures.GENES],
+      .andWhere("NOT (contract.contractFeatures && :features)", {
+        features: [ContractFeatures.EXTERNAL, ContractFeatures.RANDOM, ContractFeatures.GENES],
       });
 
     if (contractType) {

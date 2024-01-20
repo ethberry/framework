@@ -1,4 +1,12 @@
-import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  Logger,
+  LoggerService,
+  NotFoundException,
+  ForbiddenException,
+} from "@nestjs/common";
 import { ArrayOverlap, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -78,13 +86,30 @@ export class UserService {
     return this.userEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<UserEntity>, dto: Partial<IUserUpdateDto>): Promise<UserEntity> {
-    const { ...rest } = dto;
+  public async update(
+    where: FindOptionsWhere<UserEntity>,
+    dto: Partial<IUserUpdateDto>,
+    user: UserEntity,
+  ): Promise<UserEntity> {
+    const { userRoles, ...rest } = dto;
 
     const userEntity = await this.userEntityRepository.findOne({ where });
 
     if (!userEntity) {
       throw new NotFoundException("userNotFound");
+    }
+
+    // UPDATING CERTAIN USER-ROLES for SUPER ADMIN ONLY !!!
+    if (userRoles) {
+      if (userRoles.includes(UserRole.SUPER) || userRoles.includes(UserRole.ADMIN)) {
+        if (user.userRoles.includes(UserRole.SUPER)) {
+          Object.assign(userEntity, userRoles);
+        } else {
+          throw new ForbiddenException("insufficientPermissions");
+        }
+      } else {
+        Object.assign(userEntity, userRoles);
+      }
     }
 
     Object.assign(userEntity, rest);
