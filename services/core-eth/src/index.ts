@@ -57,49 +57,6 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  /*
-  // Process jobs from as many servers or processes as you like
-  const redisQueueName = configService.get<string>("REDIS_QUEUE_NAME", "ETH_EVENTS");
-  const sharedConfigWorker = {
-    redis: {
-      url: configService.get<string>("REDIS_WS_URL", "redis://localhost:6379/"),
-    },
-    storeJobs: false,
-    sendEvents: false,
-    getEvents: false,
-  };
-
-  const discoveryService: DiscoveryService = app.get<DiscoveryService>(DiscoveryService);
-  const getQueue = new Queue(redisQueueName, sharedConfigWorker);
-
-  getQueue.process(async (job: IRedisJob, _done: any): Promise<Observable<any>> => {
-    console.info(`PROCESSING JOB ${job.id}, route: ${job.data.route}`);
-
-    const discoveredMethodsWithMeta = await getHandlerByPattern(job.data.route, discoveryService);
-    if (!discoveredMethodsWithMeta.length) {
-      console.info(`Handler not found for: ${job.data.route}`);
-      return Promise.reject(EMPTY);
-    }
-
-    return await Promise.allSettled(
-      discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
-        return (
-          discoveredMethodWithMeta.discoveredMethod.handler.bind(
-            discoveredMethodWithMeta.discoveredMethod.parentClass.instance,
-          ) as MessageHandler
-        )(job.data.decoded, job.data.context);
-      }),
-    ).then(res => {
-      res.forEach(r => {
-        if (r.status === "rejected") {
-          console.error(r);
-        }
-      });
-      return from(["OK"]);
-    });
-  });
-   */
-
   await app
     .startAllMicroservices()
     .then(() => console.info(`Core-Eth service is subscribed to ${rmqUrl}/${rmqQueueEth}`));
