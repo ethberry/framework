@@ -348,6 +348,7 @@ import {
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { AddNetworkSettings9993803000020 } from "./migrations/06-alter/9993803000020-add-network-settings";
 
 // TEST DATA 100k topics
 // import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
@@ -751,6 +752,7 @@ const config: PostgresConnectionOptions = {
 
     /* alter prod migrations */
     // SeedTestDataAt9763804000120,
+    AddNetworkSettings9993803000020,
   ],
 };
 
