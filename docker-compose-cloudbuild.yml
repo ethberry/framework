@@ -306,7 +306,7 @@ services:
       CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
       STARTING_BLOCK: "${STARTING_BLOCK_BINANCE_TEST}"
     ports:
-      - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
+      - "${PORT_RPC_API_BINANCE_TEST}:${PORT_RPC_API_BINANCE_TEST}"
 
   json-api:
     container_name: json-api
