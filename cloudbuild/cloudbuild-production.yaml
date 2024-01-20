@@ -57,7 +57,7 @@ steps:
       - "rolling-action"
       - "replace"
       - "fw-group"
-      - "--max-unavailable=4"
+      - "--max-unavailable=0"
       - "--region=us-central1"
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME-img']
 timeout: 3600s
