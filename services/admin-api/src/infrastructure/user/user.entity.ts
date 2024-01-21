@@ -34,7 +34,7 @@ export class UserEntity extends IdDateBaseEntity implements IUser {
   @Column({ type: "varchar" })
   public wallet: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "int" })
   public chainId: number;
 
   @Column({

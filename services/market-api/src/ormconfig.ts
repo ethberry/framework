@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { NodeEnv } from "@framework/types";
+// import { NodeEnv } from "@framework/types";
 
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
@@ -47,6 +47,7 @@ import { OrderEntity } from "./ecommerce/order/order.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
 import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { PhotoEntity } from "./ecommerce/photo/photo.entity";
+import { NetworkEntity } from "./infrastructure/network/network.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
@@ -117,6 +118,7 @@ const config: PostgresConnectionOptions = {
     AddressEntity,
     CategoryEntity,
     MerchantEntity,
+    NetworkEntity,
     OrderEntity,
     OrderItemEntity,
     PhotoEntity,

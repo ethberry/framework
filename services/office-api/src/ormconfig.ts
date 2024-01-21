@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { NodeEnv } from "@framework/types";
+// import { NodeEnv } from "@framework/types";
 
 // contract-manager
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
@@ -39,6 +39,7 @@ import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.e
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 // infrastructure
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
+import { NetworkEntity } from "./infrastructure/network/network.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 /* ecommerce */
 import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
@@ -91,6 +92,7 @@ const config: PostgresConnectionOptions = {
     WaitListItemEntity,
     WaitListListEntity,
     /* infrastructure */
+    NetworkEntity,
     OtpEntity,
     UserEntity,
     SettingsEntity,
