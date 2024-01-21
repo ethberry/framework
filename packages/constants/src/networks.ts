@@ -84,9 +84,9 @@ export const networks = {
     chainName: "Mumbai",
     chainId: 80001,
     rpcUrls: [
+      "https://rpc-mumbai.maticvigil.com",
       "https://matic-mumbai.chainstacklabs.com",
       "https://matic-testnet-archive-rpc.bwarelabs.com",
-      "https://rpc-mumbai.maticvigil.com",
     ],
     blockExplorerUrls: ["https://mumbai.polygonscan.com"],
     nativeCurrency: {
