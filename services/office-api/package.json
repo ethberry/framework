@@ -17,7 +17,7 @@
     "@gemunion/constants": "0.12.8",
     "@gemunion/draft-js-utils": "1.2.33",
     "@gemunion/nest-js-guards": "3.1.9",
-    "@gemunion/nest-js-module-ethers-gcp": "5.1.0-redis-beta.12",
+    "@gemunion/nest-js-module-ethers-gcp": "6.1.0",
     "@gemunion/nest-js-module-helmet": "4.0.30",
     "@gemunion/nest-js-module-license": "4.0.22",
     "@gemunion/nest-js-module-metamask": "3.1.18",
