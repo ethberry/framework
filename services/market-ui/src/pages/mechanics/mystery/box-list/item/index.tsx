@@ -8,6 +8,8 @@ import type { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryBoxPurchaseButton } from "../../../../../components/buttons";
+import { getChainIconParams } from "../../../../../components/common/header/network/utils";
+import { StyledSvgIcon } from "../../../../../components/common/header/network/styled";
 
 interface IMysteryBoxListItemProps {
   mysteryBox: IMysteryBox;
@@ -15,6 +17,8 @@ interface IMysteryBoxListItemProps {
 
 export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
   const { mysteryBox } = props;
+
+  const { chainIcon, viewBox } = getChainIconParams(mysteryBox.template?.contract?.chainId || 56);
 
   return (
     <StyledTemplateItemCard>
@@ -31,8 +35,13 @@ export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Grid container alignItems="center">
-          <MysteryBoxPurchaseButton mysteryBox={mysteryBox} />
+        <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
+          <Grid item xs={10} alignItems="center">
+            <MysteryBoxPurchaseButton mysteryBox={mysteryBox} />
+          </Grid>
+          <Grid item xs={2} alignItems="flex-end">
+            <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
+          </Grid>
         </Grid>
       </CardActions>
     </StyledTemplateItemCard>
