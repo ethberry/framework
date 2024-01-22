@@ -5,7 +5,7 @@ import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { TokenMetadata } from "@framework/types";
 
-import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
+import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared";
 import { amount, METADATA_ROLE, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { VRFCoordinatorV2Mock } from "../../typechain-types";

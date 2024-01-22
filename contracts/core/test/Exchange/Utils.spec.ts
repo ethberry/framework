@@ -13,7 +13,7 @@ import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
-import { deployDiamond } from "./shared/fixture";
+import { deployDiamond } from "./shared";
 
 const enabled = {
   native: false,

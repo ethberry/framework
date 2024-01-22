@@ -6,7 +6,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 import { isEqualEventArgArrObj } from "../utils";
-import { deployDiamond, deployErc721Base } from "./shared/fixture";
+import { deployDiamond, deployErc721Base } from "./shared";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 
 describe("Diamond Exchange Merge", function () {

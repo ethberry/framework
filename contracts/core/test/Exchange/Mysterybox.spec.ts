@@ -4,7 +4,7 @@ import { Contract, encodeBytes32String, ZeroAddress } from "ethers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared";
 import { isEqualEventArgArrObj } from "../utils";
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";

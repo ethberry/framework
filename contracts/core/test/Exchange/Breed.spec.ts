@@ -11,7 +11,7 @@ import { VRFCoordinatorV2Mock } from "../../typechain-types";
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../utils";
-import { deployDiamond, deployErc721Base } from "./shared/fixture";
+import { deployDiamond, deployErc721Base } from "./shared";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeMetadata } from "../shared/metadata";
