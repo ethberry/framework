@@ -11,7 +11,7 @@ export interface IArtifact {
   abi: Array<IAbiObj>;
 }
 
-// LIST OF FUNCTIONS WE NEED TO INCLUDE TO PAC
+// LIST OF FUNCTIONS WE NEED TO INCLUDE TO @FW/PACKAGES
 export const fwFunctionNames = [
   "addConsumer",
   "approve",
@@ -69,6 +69,7 @@ export const fwFunctionNames = [
   "setReward",
   "setRules",
   "setSubscriptionId",
+  "spend",
   "startRound",
   "topUp",
   "transfer",

@@ -7,11 +7,11 @@ import { FormattedMessage } from "react-intl";
 import { NodeEnv } from "@framework/types";
 
 export const CollectionSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-
-  if (!isDevelopment) {
-    return null;
-  }
+  // const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  //
+  // if (!isDevelopment) {
+  //   return null;
+  // }
 
   return (
     <Paper sx={{ mb: 2 }}>

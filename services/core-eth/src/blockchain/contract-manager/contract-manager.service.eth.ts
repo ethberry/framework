@@ -37,7 +37,7 @@ import {
   MysteryContractTemplates,
   RmqProviderType,
   SignalEventType,
-  StakingContractFeatures,
+  // StakingContractFeatures,
   // StakingContractTemplates,
   TemplateStatus,
   TokenType,
@@ -300,7 +300,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       cap: batchSize.toString(),
       contractId: contractEntity.id,
-      templateStatus: TemplateStatus.INACTIVE,
+      templateStatus: TemplateStatus.HIDDEN,
     });
 
     const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "$url/collection");
@@ -767,11 +767,11 @@ export class ContractManagerServiceEth {
   public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { account, args, externalId },
+      args: { account, externalId },
     } = event;
     const { transactionHash } = context;
 
-    const { contractTemplate } = args;
+    // const { contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 

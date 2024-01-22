@@ -53,6 +53,7 @@
   "setReward",
   "setRules",
   "setSubscriptionId",
+  "spend",
   "startRound",
   "topUp",
   "transfer",
