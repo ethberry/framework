@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -105,7 +105,7 @@ export class ClaimService {
   }
 
   public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
-    const { account, endTimestamp } = dto;
+    const { account, endTimestamp, claimType } = dto;
 
     const assetEntity = await this.assetService.create();
     const claimEntity = await this.claimEntityRepository
@@ -116,7 +116,7 @@ export class ClaimService {
         nonce: "",
         merchantId: userEntity.merchantId,
         endTimestamp,
-        claimType: ClaimType.TOKEN,
+        claimType,
       })
       .save();
 
@@ -145,7 +145,7 @@ export class ClaimService {
       throw new BadRequestException("claimRedeemed");
     }
 
-    if (claimEntity.claimType !== ClaimType.TOKEN) {
+    if (claimEntity.claimType !== ClaimType.TOKEN && claimEntity.claimType !== ClaimType.TEMPLATE) {
       throw new BadRequestException("claimWrongType");
     }
 
@@ -169,7 +169,7 @@ export class ClaimService {
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
         receiver: claimEntity.merchant.wallet,
-        referrer: ZeroAddress,
+        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
       },
       claimEntity,
     );
@@ -222,7 +222,7 @@ export class ClaimService {
       mapLimit(
         claims,
         10,
-        async ({ account, endTimestamp, tokenType, address, templateId, amount }: IClaimRowDto) => {
+        async ({ account, endTimestamp, tokenType, address, templateId, amount, claimType }: IClaimRowDto) => {
           const contractEntity = await this.contractService.findOne({
             address,
             merchantId: userEntity.merchantId,
@@ -234,6 +234,7 @@ export class ClaimService {
 
           return this.create(
             {
+              claimType,
               chainId: userEntity.chainId,
               account,
               endTimestamp,

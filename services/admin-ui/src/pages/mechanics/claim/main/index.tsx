@@ -12,7 +12,7 @@ import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
@@ -42,6 +42,7 @@ export const Claim: FC = () => {
   } = useCollection<IClaim, IClaimSearchDto>({
     baseUrl: "/claims",
     empty: {
+      claimType: ClaimType.TEMPLATE,
       account: "",
       item: emptyItem,
       endTimestamp: new Date(0).toISOString(),
@@ -50,7 +51,12 @@ export const Claim: FC = () => {
       account: "",
       claimStatus: [],
     },
-    filter: ({ item, account, endTimestamp }) => ({ item: cleanUpAsset(item), account, endTimestamp }),
+    filter: ({ item, account, endTimestamp, claimType }) => ({
+      item: cleanUpAsset(item),
+      account,
+      endTimestamp,
+      claimType,
+    }),
   });
 
   const { formatMessage } = useIntl();

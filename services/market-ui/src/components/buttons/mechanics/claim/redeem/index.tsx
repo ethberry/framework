@@ -31,6 +31,8 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         web3Context.provider?.getSigner(),
       );
 
+      console.log("values", values);
+
       return contract.claim(
         {
           externalId: values.id,
@@ -38,7 +40,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
           nonce: utils.arrayify(values.nonce),
           extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(values.endTimestamp).getTime() / 1000)), 32),
           receiver: values.merchant!.wallet,
-          referrer: constants.AddressZero,
+          referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
         },
         values.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),

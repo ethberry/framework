@@ -351,6 +351,7 @@ import {
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
 
 // TEST DATA 100k topics
 // import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
@@ -757,6 +758,7 @@ const config: PostgresConnectionOptions = {
 
     /* alter prod migrations */
     // SeedTestDataAt9763804000120,
+    AlterClaimTypeEnum1900000000000,
   ],
 };
 

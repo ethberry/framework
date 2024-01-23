@@ -20,12 +20,13 @@ export interface IClaimEditDialogProps {
 export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, account, endTimestamp } = initialValues;
+  const { id, item, account, endTimestamp, claimType } = initialValues;
   const fixedValues = {
     id,
     item,
     account,
     endTimestamp,
+    claimType,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
