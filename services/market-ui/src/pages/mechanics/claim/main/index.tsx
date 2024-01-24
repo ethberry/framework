@@ -33,7 +33,7 @@ export const Claim: FC = () => {
     search: {
       account,
       claimStatus: [ClaimStatus.NEW],
-      claimType: [ClaimType.VESTING, ClaimType.TOKEN],
+      claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
     },
   });
 
@@ -60,7 +60,7 @@ export const Claim: FC = () => {
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{formatItem(claim.item)}</ListItemText>
               <ListActions>
-                {claim.claimType === ClaimType.TOKEN ? (
+                {claim.claimType === ClaimType.TOKEN || claim.claimType === ClaimType.TEMPLATE ? (
                   <ClaimRedeemButton claim={claim} />
                 ) : (
                   <VestingDeployButton claim={claim} />

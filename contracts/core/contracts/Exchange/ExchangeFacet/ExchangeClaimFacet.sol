@@ -34,11 +34,9 @@ contract ExchangeClaimFacet is SignatureValidator, DiamondOverride {
     ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(_msgSender(), params.externalId, items);
-    //    params.referrer = claimType;
-    //    _afterPurchase(params.referrer, items);
   }
 
-  // send NFT to msgSender
+  // send NFT to msgSender from merchant (params.receiver)
   function spend(Params memory params, Asset[] memory items, bytes calldata signature) external payable whenNotPaused {
     if (!_hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, new Asset[](0), signature))) {
       revert SignerMissingRole();
@@ -53,8 +51,6 @@ contract ExchangeClaimFacet is SignatureValidator, DiamondOverride {
     ExchangeUtils.spendFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(_msgSender(), params.externalId, items);
-    //    params.referrer = claimType;
-    //    _afterPurchase(params.referrer, items);
   }
 
 }

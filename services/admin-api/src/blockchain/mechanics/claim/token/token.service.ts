@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -76,7 +76,7 @@ export class ClaimTokenService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "claim.createdAt": "ASC",
+      "claim.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -169,7 +169,7 @@ export class ClaimTokenService {
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
         receiver: claimEntity.merchant.wallet,
-        referrer: ZeroAddress,
+        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
       },
       claimEntity,
     );

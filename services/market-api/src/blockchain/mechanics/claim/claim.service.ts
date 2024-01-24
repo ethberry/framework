@@ -37,6 +37,7 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
 
     queryBuilder.select();
 

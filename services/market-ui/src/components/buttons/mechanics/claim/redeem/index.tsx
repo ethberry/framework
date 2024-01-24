@@ -27,27 +27,32 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
     (values: IClaim, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(
         systemContract.address,
-        claim.claimType === ClaimType.TOKEN ? ClaimABI : SpendABI,
+        claim.claimType === ClaimType.TOKEN ? SpendABI : ClaimABI,
         web3Context.provider?.getSigner(),
       );
 
-      return contract.claim(
-        {
-          externalId: values.id,
-          expiresAt: Math.ceil(new Date(values.endTimestamp).getTime() / 1000),
-          nonce: utils.arrayify(values.nonce),
-          extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(values.endTimestamp).getTime() / 1000)), 32),
-          receiver: values.merchant!.wallet,
-          referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
-        },
-        values.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract?.address,
-          tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        })),
-        values.signature,
-      ) as Promise<void>;
+      const params = {
+        externalId: values.id,
+        expiresAt: Math.ceil(new Date(values.endTimestamp).getTime() / 1000),
+        nonce: utils.arrayify(values.nonce),
+        extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(values.endTimestamp).getTime() / 1000)), 32),
+        receiver: values.merchant!.wallet,
+        referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
+      };
+
+      const item = values.item?.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
+        token: component.contract?.address,
+        tokenId:
+          values.claimType === ClaimType.TEMPLATE
+            ? (component.templateId || 0).toString()
+            : (component.tokenId || 0).toString(), // suppression types check with 0
+        amount: component.amount,
+      }));
+
+      return values.claimType === ClaimType.TEMPLATE
+        ? (contract.claim(params, item, values.signature) as Promise<void>)
+        : (contract.spend(params, item, values.signature) as Promise<void>);
     },
   );
 

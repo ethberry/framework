@@ -76,7 +76,7 @@ export class ClaimTemplateService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "claim.createdAt": "ASC",
+      "claim.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
