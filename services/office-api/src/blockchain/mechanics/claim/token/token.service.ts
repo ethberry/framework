@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -17,21 +17,21 @@ import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { AssetService } from "../../../exchange/asset/asset.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
-import { ClaimEntity } from "./claim.entity";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ClaimEntity } from "../claim.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Injectable()
-export class ClaimService {
+export class ClaimTokenService {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
-    private readonly assetService: AssetService,
+    protected readonly assetService: AssetService,
     private readonly signerService: SignerService,
     private readonly contractService: ContractService,
   ) {}
@@ -72,7 +72,7 @@ export class ClaimService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "claim.createdAt": "ASC",
+      "claim.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -166,7 +166,7 @@ export class ClaimService {
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
         receiver: claimEntity.merchant.wallet,
-        referrer: ZeroAddress,
+        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
       },
       claimEntity,
     );
@@ -206,7 +206,7 @@ export class ClaimService {
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+        tokenId: (component.tokenId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       [],
@@ -219,7 +219,7 @@ export class ClaimService {
       mapLimit(
         claims,
         10,
-        async ({ account, endTimestamp, tokenType, address, templateId, amount }: IClaimRowDto) => {
+        async ({ account, endTimestamp, tokenType, address, templateId, tokenId, amount }: IClaimRowDto) => {
           const contractEntity = await this.contractService.findOne({
             address,
             merchantId: userEntity.merchantId,
@@ -234,12 +234,14 @@ export class ClaimService {
               chainId: userEntity.chainId,
               account,
               endTimestamp,
+              claimType: ClaimType.TOKEN,
               item: {
                 components: [
                   {
                     tokenType,
                     contractId: contractEntity.id,
                     templateId,
+                    tokenId,
                     amount,
                   },
                 ],
@@ -250,9 +252,9 @@ export class ClaimService {
         },
         (e, results) => {
           if (e) {
-            this.loggerService.error(e, ClaimService.name);
+            this.loggerService.error(e, ClaimTokenService.name);
           }
-          resolve(results as Array<ClaimEntity>);
+          resolve(results?.filter(Boolean) as Array<ClaimEntity>);
         },
       );
     });

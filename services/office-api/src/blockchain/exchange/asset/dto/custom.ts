@@ -33,6 +33,12 @@ export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenTyp
     @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
     public templateId: number;
 
+    @ApiPropertyOptional()
+    @IsInt({ message: "typeMismatch" })
+    @Min(1, { message: "rangeUnderflow" })
+    @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
+    public tokenId: number;
+
     @ApiProperty({
       type: Number,
     })

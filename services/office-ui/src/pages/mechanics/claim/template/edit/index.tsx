@@ -6,7 +6,7 @@ import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IClaim } from "@framework/types";
-import { ModuleType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -17,13 +17,14 @@ export interface IClaimEditDialogProps {
   initialValues: IClaim;
 }
 
-export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
+export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, account, merchantId, endTimestamp } = initialValues;
+  const { id, item, claimType, account, merchantId, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
+    claimType,
     account,
     merchantId,
     endTimestamp,
@@ -46,8 +47,10 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        forceAmount
       />
-      <DateTimeInput name="endTimestamp" />
+      <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />
     </FormDialog>
   );
 };

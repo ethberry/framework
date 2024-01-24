@@ -9,18 +9,18 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
-import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
-import { ClaimEditDialog } from "./edit";
+import { ClaimTokenEditDialog } from "./edit";
 
-export const Claim: FC = () => {
+export const ClaimToken: FC = () => {
   const { profile } = useUser<IUser>();
 
   const {
@@ -44,20 +44,22 @@ export const Claim: FC = () => {
     handleDeleteConfirm,
     handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: "/claims",
+    baseUrl: "/claims/tokens",
     empty: {
       account: "",
-      item: emptyItem,
-      merchantId: profile.merchantId,
+      item: emptyToken,
+      claimType: ClaimType.TOKEN,
       endTimestamp: new Date(0).toISOString(),
+      merchantId: profile.merchantId,
     },
     search: {
       account: "",
       claimStatus: [],
       merchantId: profile.merchantId,
     },
-    filter: ({ item, account, endTimestamp, merchantId }) => ({
+    filter: ({ item, claimType, account, endTimestamp, merchantId }) => ({
       item: cleanUpAsset(item),
+      claimType,
       account,
       endTimestamp,
       merchantId,
@@ -67,13 +69,13 @@ export const Claim: FC = () => {
   const { formatMessage } = useIntl();
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "claims"]} />
+      <Breadcrumbs path={["dashboard", "claims", "claims.token"]} />
 
-      <PageHeader message="pages.claims.title">
+      <PageHeader message="pages.claims.token.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <ClaimUploadButton onRefreshPage={handleRefreshPage} />
+        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TOKEN} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
@@ -141,7 +143,7 @@ export const Claim: FC = () => {
         }}
       />
 
-      <ClaimEditDialog
+      <ClaimTokenEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

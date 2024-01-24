@@ -1,18 +1,9 @@
-import { Logger, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { Module } from "@nestjs/common";
 
-import { SignerModule } from "@framework/nest-js-module-exchange-signer";
-
-import { ContractModule } from "../../hierarchy/contract/contract.module";
-import { AssetModule } from "../../exchange/asset/asset.module";
-import { ClaimEntity } from "./claim.entity";
-import { ClaimService } from "./claim.service";
-import { ClaimController } from "./claim.controller";
+import { ClaimTemplateModule } from "./template/template.module";
+import { ClaimTokenModule } from "./token/token.module";
 
 @Module({
-  imports: [SignerModule, AssetModule, ContractModule, TypeOrmModule.forFeature([ClaimEntity])],
-  providers: [Logger, ClaimService],
-  controllers: [ClaimController],
-  exports: [ClaimService],
+  imports: [ClaimTemplateModule, ClaimTokenModule],
 })
 export class ClaimModule {}

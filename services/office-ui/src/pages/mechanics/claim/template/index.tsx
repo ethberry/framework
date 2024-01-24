@@ -4,21 +4,25 @@ import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyToken } from "@gemunion/mui-inputs-asset";
+import { useUser } from "@gemunion/provider-user";
+import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
-import type { IClaim, IClaimSearchDto } from "@framework/types";
+import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
-import { ClaimTokenEditDialog } from "./edit";
+import { ClaimTemplateEditDialog } from "./edit";
 
-export const ClaimToken: FC = () => {
+export const ClaimTemplate: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -40,35 +44,38 @@ export const ClaimToken: FC = () => {
     handleDeleteConfirm,
     handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: "/claims/tokens",
+    baseUrl: "/claims/templates",
     empty: {
       account: "",
-      item: emptyToken,
-      claimType: ClaimType.TOKEN,
+      item: emptyItem,
+      merchantId: profile.merchantId,
+      claimType: ClaimType.TEMPLATE,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [],
+      merchantId: profile.merchantId,
     },
-    filter: ({ item, claimType, account, endTimestamp }) => ({
+    filter: ({ item, claimType, account, endTimestamp, merchantId }) => ({
       item: cleanUpAsset(item),
       claimType,
       account,
       endTimestamp,
+      merchantId,
     }),
   });
 
   const { formatMessage } = useIntl();
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "claims", "claims.token"]} />
+      <Breadcrumbs path={["dashboard", "claims", "claims.template"]} />
 
-      <PageHeader message="pages.claims.token.title">
+      <PageHeader message="pages.claims.template.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TOKEN} />
+        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TEMPLATE} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
@@ -83,6 +90,9 @@ export const ClaimToken: FC = () => {
       >
         <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />
           </Grid>
@@ -133,7 +143,7 @@ export const ClaimToken: FC = () => {
         }}
       />
 
-      <ClaimTokenEditDialog
+      <ClaimTemplateEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
