@@ -25,7 +25,7 @@ export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
     enum: ClaimType,
   })
   @Transform(({ value }) => value as ClaimType)
-  @IsEnum(ClaimType, { message: "typeMismatch" })
+  @IsEnum(ClaimType, { message: "badInput" })
   public claimType: ClaimType;
 
   public chainId: number;

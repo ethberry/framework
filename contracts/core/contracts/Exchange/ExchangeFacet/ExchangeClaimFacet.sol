@@ -34,8 +34,8 @@ contract ExchangeClaimFacet is SignatureValidator, DiamondOverride {
     ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(_msgSender(), params.externalId, items);
-
-    _afterPurchase(params.referrer, items);
+    //    params.referrer = claimType;
+    //    _afterPurchase(params.referrer, items);
   }
 
   // send NFT to msgSender
@@ -53,8 +53,8 @@ contract ExchangeClaimFacet is SignatureValidator, DiamondOverride {
     ExchangeUtils.spendFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(_msgSender(), params.externalId, items);
-
-    _afterPurchase(params.referrer, items);
+    //    params.referrer = claimType;
+    //    _afterPurchase(params.referrer, items);
   }
 
 }
