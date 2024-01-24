@@ -35,8 +35,7 @@ export const debug = async (obj: IObj | Record<string, Contract>, name?: string,
     await blockAwaitMs(delayMs);
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
-    const tx = Object.values(obj).pop();
-    const contract = tx;
+    const contract = Object.values(obj).pop();
     await blockAwait(delay, delayMs);
     const address = await contract.getAddress();
     fs.appendFileSync(

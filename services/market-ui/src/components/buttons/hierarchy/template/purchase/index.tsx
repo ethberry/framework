@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, utils, constants } from "ethers";
 
 import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -39,7 +39,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
           receiver: template.contract!.merchant!.wallet,
-          referrer,
+          referrer: referrer || constants.AddressZero,
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),

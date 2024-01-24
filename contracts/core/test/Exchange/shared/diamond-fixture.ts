@@ -25,6 +25,7 @@ export async function getFacetCuts(
   selectors: Array<string>, // function selectors
   facetAddress: string, // new facet address
   diamondAddr: string, // diamond loupe address
+  remove = false, // remove facets flag
 ): Promise<void> {
   const diamondLoupeFacet = await ethers.getContractAt("DiamondLoupeFacet", diamondAddr);
 
@@ -32,7 +33,7 @@ export async function getFacetCuts(
   const toReplace = [];
   for (const selector of selectors) {
     const facet = await diamondLoupeFacet.facetAddress(selector);
-    if (facet === ZeroAddress) {
+    if (facet === ZeroAddress && !remove) {
       toAdd.push(selector);
     } else {
       toReplace.push(selector);
@@ -49,7 +50,7 @@ export async function getFacetCuts(
   if (toReplace.length > 0) {
     cut.push({
       facetAddress,
-      action: FacetCutAction.Replace,
+      action: !remove ? FacetCutAction.Replace : FacetCutAction.Remove,
       functionSelectors: toReplace,
     });
   }
@@ -230,6 +231,64 @@ export async function updateFacetDiamond(
     console.info("DiamondFacetAddresses:", recursivelyDecodeResult(result as unknown as Result));
   }
   if (log) console.info("Completed diamond upgrade (REPLACE)");
+  if (log) console.info("");
+  return diamond;
+}
+
+// REMOVE OLD FACE
+export async function removeFacetDiamond(
+  DiamondName = "Diamond",
+  diamondAddress: string,
+  FacetNames: Array<string>, // Facet names which need to replace
+  options?: Record<string, any>,
+): Promise<BaseContract> {
+  const { log, logSelectors } = options || {};
+
+  // attach DIAMOND
+  const diamond = await ethers.getContractAt(DiamondName, diamondAddress);
+  // attach DiamondCutFacet
+  const diamondCutFacet = await ethers.getContractAt("DiamondCutFacet", diamondAddress);
+  const diamondLoupeFacet = await ethers.getContractAt("DiamondLoupeFacet", diamondAddress);
+  if (log) console.info("Diamond attached:", await diamond.getAddress());
+
+  // * deploy and REPLACE facets
+  if (log) console.info("");
+  if (log) console.info("Deploying new facets");
+  const cut: Array<{ facetAddress: string; action: number; functionSelectors: string[] }> = [];
+  for (const FacetName of FacetNames) {
+    const facet = await ethers.getContractAt(FacetName, diamondAddress);
+    if (log) console.info(`${FacetName} attached: ${diamondAddress}`);
+    const facetSelectors = getSelectors(facet, { logSelectors });
+    // combine selector cut actions
+    if (await loupeExists(diamondAddress)) {
+      await getFacetCuts(cut, facetSelectors, ZeroAddress, diamondAddress, true);
+    } else {
+      cut.push({
+        facetAddress: ZeroAddress,
+        action: FacetCutAction.Remove,
+        functionSelectors: facetSelectors,
+      });
+    }
+  }
+
+  // cut Facets
+  if (log) console.info("");
+  if (log) console.info("Diamond Cut:", cut);
+
+  // ZeroAddress because we do not need to init diamond and 0x because no need to make a functional call
+  const tx = await diamondCutFacet.diamondCut(cut, ZeroAddress, "0x");
+
+  if (log) console.info("Diamond cut tx: ", tx.hash);
+  const receipt = await tx.wait();
+  if (!receipt?.status) {
+    throw Error(`Diamond upgrade failed: ${tx.hash}`);
+  }
+  // LOG ALL FACET ADDRESSES
+  if (log) {
+    const result = await diamondLoupeFacet.facetAddresses();
+    console.info("DiamondFacetAddresses:", recursivelyDecodeResult(result as unknown as Result));
+  }
+  if (log) console.info("Completed diamond upgrade (REMOVE)");
   if (log) console.info("");
   return diamond;
 }

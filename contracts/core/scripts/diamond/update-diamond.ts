@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import fs from "fs";
 import { camelToSnakeCase } from "@gemunion/contracts-helpers";
 import { debug } from "../utils/deploy-utils";
-import { addFacetDiamond, deployDiamond, updateFacetDiamond } from "../../test/Exchange/shared";
+import { addFacetDiamond, deployDiamond, updateFacetDiamond, removeFacetDiamond } from "../../test/Exchange/shared";
 
 const currentBlock: { number: number } = { number: 1 };
 const contracts: Record<string, any> = {};
@@ -17,7 +17,7 @@ async function main() {
   );
 
   // DIAMOND EXCHANGE DEPLOY (INIT)
-  const exchangeInstance = await deployDiamond("DiamondExchange", ["ExchangeClaimFacet1"], "DiamondExchangeInit", {
+  const exchangeInstance = await deployDiamond("DiamondExchange", ["ExchangeClaimFacet"], "DiamondExchangeInit", {
     log: true,
     logSelectors: true,
   });
@@ -37,6 +37,12 @@ async function main() {
 
   // UPDATE DIAMOND EXCHANGE (REPLACE FACET)
   await updateFacetDiamond("DiamondExchange", exchangeAddr, ["ExchangeClaimFacet"], {
+    log: true,
+    logSelectors: true,
+  });
+
+  // REMOVE DIAMOND FACET (REMOVE)
+  await removeFacetDiamond("DiamondExchange", exchangeAddr, ["ExchangeClaimFacet"], {
     log: true,
     logSelectors: true,
   });

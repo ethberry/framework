@@ -95,7 +95,9 @@ export const ClaimToken: FC = () => {
             <StyledListItem key={claim.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{claim.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
-                {claim.item.components.map(component => component.template?.title).join(", ")}
+                {claim.item.components
+                  .map(component => `${component.template?.title} #${component.token?.tokenId}`)
+                  .join(", ")}
               </ListItemText>
               <ListActions>
                 <ListAction

@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { FormWatcher } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
@@ -38,6 +39,7 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
       testId="ClaimEditDialog"
       {...rest}
     >
+      <FormWatcher />
       <TextInput name="account" />
       <TokenAssetInput
         multiple

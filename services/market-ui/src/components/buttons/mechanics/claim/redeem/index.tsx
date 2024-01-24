@@ -46,7 +46,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         tokenId:
           values.claimType === ClaimType.TEMPLATE
             ? (component.templateId || 0).toString()
-            : (component.tokenId || 0).toString(), // suppression types check with 0
+            : component.token!.tokenId.toString(), // suppression types check with 0
         amount: component.amount,
       }));
 

@@ -3,10 +3,20 @@ import { Contract } from "ethers";
 import fs from "fs";
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-helpers";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { deployDiamond } from "../test/Exchange/shared/fixture";
+import { deployDiamond } from "../test/Exchange/shared/diamond-fixture";
+// import { deployDiamond_BSC } from "../test/Exchange/shared/fixture_bsc";
 
 const delay = 2; // block delay
 const delayMs = 1100; // block delay ms
+
+// COST TEST-NET
+// 0.953918023227665418 BNB
+// 0.734582158227665418 BNB
+
+// COST MAINNET
+// BNB 0.87705253
+// $272
+// BNB 0.87705253 ~ $275
 
 interface IObj {
   address?: string;
@@ -44,8 +54,7 @@ async function main() {
     `STARTING_BLOCK=${currentBlock.number}\n`,
   );
 
-  // LINK & VRF
-  // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
+  // LINK & VRF - HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
 
   // DIAMOND CM
   const cmInstance = await deployDiamond(
@@ -67,6 +76,7 @@ async function main() {
       "UseFactoryFacet",
       "AccessControlFacet",
       "PausableFacet",
+      "DiamondLoupeFacet",
     ],
     "DiamondCMInit",
     {
@@ -95,10 +105,11 @@ async function main() {
       "PausableFacet",
       "AccessControlFacet",
       "WalletFacet",
+      "DiamondLoupeFacet",
     ],
     "DiamondExchangeInit",
     {
-      log: false,
+      log: true,
       logSelectors: false,
     },
   );
@@ -106,15 +117,14 @@ async function main() {
   await debug(contracts);
 
   const exchangeAddress = await exchangeInstance.getAddress();
-  // const exchangeAddress = "0x5fee6631bfa86057c5878ea170564b67774e1fe8";
 
   const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
-  // const factoryInstance = await ethers.getContractAt("UseFactoryFacet", "0x3e40ebe3dd88fb5dd927bcd6ec5cac4b6c41f0b1");
 
+  // GRANT ROLES
   await debug(await factoryInstance.addFactory(exchangeAddress, MINTER_ROLE), "contractManager.addFactory");
-
   await debug(await factoryInstance.addFactory(exchangeAddress, METADATA_ROLE), "contractManager.addFactory");
 
+  // DEPLOY DISPENSER
   const dispenserFactory = await ethers.getContractFactory("Dispenser");
   contracts.dispenser = await dispenserFactory.deploy();
   await debug(contracts);

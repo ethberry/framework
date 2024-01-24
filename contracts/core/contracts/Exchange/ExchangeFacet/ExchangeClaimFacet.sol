@@ -52,5 +52,4 @@ contract ExchangeClaimFacet is SignatureValidator, DiamondOverride {
 
     emit Claim(_msgSender(), params.externalId, items);
   }
-
 }

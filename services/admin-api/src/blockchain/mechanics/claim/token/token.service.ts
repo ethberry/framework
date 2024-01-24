@@ -44,6 +44,7 @@ export class ClaimTokenService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
@@ -99,6 +100,7 @@ export class ClaimTokenService {
           item_components: "item.components",
           item_contract: "item_components.contract",
           item_template: "item_components.template",
+          item_token: "item_components.token",
         },
       },
     });
@@ -202,6 +204,7 @@ export class ClaimTokenService {
     params: IParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
+    console.log("getSignatureclaim_components", claimEntity.item.components);
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
@@ -209,7 +212,7 @@ export class ClaimTokenService {
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: (component.tokenId || 0).toString(), // suppression types check with 0
+        tokenId: component.token.tokenId.toString(),
         amount: component.amount,
       })),
       [],

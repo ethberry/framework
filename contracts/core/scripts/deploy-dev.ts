@@ -5,19 +5,20 @@ import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { blockAwait, camelToSnakeCase } from "@gemunion/contracts-helpers";
-import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
+import { METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
+import { getBaseTokenURI } from "@framework/constants";
 
 import { getContractName } from "../test/utils";
 import { expiresAt, externalId } from "../test/constants";
-import { deployDiamond } from "../test/Exchange/shared/fixture";
+import { deployDiamond } from "../test/Exchange/shared";
 import { debug, grantRoles, recursivelyDecodeResult } from "./utils/deploy-utils";
 
 // DELAY CONFIG
 const delay = 1; // block delay
-const delayMs = 1200; // block delay ms (low for localhost, high for binance etc.)
+const delayMs = 300; // block delay ms (low for localhost, high for binance etc.)
 
 // VRF CONFIG
-const vrfSubId = network.name === "besu" ? 1n : 3268n; // !!!SET INITIAL SUB ID!!!
+const vrfSubId = network.name === "besu" ? 1n : 2n; // !!!SET INITIAL SUB ID!!! (2n for gemunion-besu)
 
 // COLLECTION size
 const batchSize = 3; // Generative collection size
@@ -29,9 +30,9 @@ const contracts: Record<string, any> = {};
 
 async function main() {
   const [owner, receiver, stranger] = await ethers.getSigners();
+  const { chainId } = network.config;
 
   const balance0 = await ethers.provider.getBalance(owner.address);
-
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
   fs.appendFileSync(
@@ -85,6 +86,7 @@ async function main() {
       "UseFactoryFacet",
       "AccessControlFacet",
       "PausableFacet",
+      "DiamondLoupeFacet",
     ],
     "DiamondCMInit",
     {
@@ -116,6 +118,7 @@ async function main() {
       "PausableFacet",
       "AccessControlFacet",
       "WalletFacet",
+      "DiamondLoupeFacet",
     ],
     "DiamondExchangeInit",
     {
@@ -174,23 +177,38 @@ async function main() {
   await debug(await erc20WhitelistInstance.whitelist(wallets[2]), "erc20WhitelistInstance.whitelist");
 
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Simple = await erc721SimpleFactory.deploy("GEMSTONES", "GEM721", royalty, baseTokenURI);
+  contracts.erc721Simple = await erc721SimpleFactory.deploy("GEMSTONES", "GEM721", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc721InactiveFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Inactive = await erc721InactiveFactory.deploy("ERC721 INACTIVE", "OFF721", royalty, baseTokenURI);
+  contracts.erc721Inactive = await erc721InactiveFactory.deploy(
+    "ERC721 INACTIVE",
+    "OFF721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const erc721NewFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721New = await erc721NewFactory.deploy("ERC721 NEW", "NEW721", royalty, baseTokenURI);
+  contracts.erc721New = await erc721NewFactory.deploy("ERC721 NEW", "NEW721", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc721BlacklistFactory = await ethers.getContractFactory("ERC721Blacklist");
-  contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("ERC721 BLACKLIST", "BL721", royalty, baseTokenURI);
+  contracts.erc721Blacklist = await erc721BlacklistFactory.deploy(
+    "ERC721 BLACKLIST",
+    "BL721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const ERC721DiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
-  contracts.erc721Discrete = await ERC721DiscreteFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
+  contracts.erc721Discrete = await ERC721DiscreteFactory.deploy(
+    "ERC721 ARMOUR",
+    "LVL721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   // const randomContractName =
@@ -202,7 +220,12 @@ async function main() {
   const randomContractName = getContractName("ERC721DiscreteRandom", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
-  contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
+  contracts.erc721Random = await erc721RandomFactory.deploy(
+    "ERC721 WEAPON",
+    "RNG721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   await debug(await contracts.erc721Random.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
@@ -217,12 +240,17 @@ async function main() {
   console.info("SubscriptionConsumerAdded", subId, consumer);
 
   const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
-  contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
+  contracts.erc721Soulbound = await erc721SoulboundFactory.deploy(
+    "ERC721 MEDAL",
+    "SB721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const genesContractName = getContractName("ERC721Genes", network.name);
   const erc721GenesFactory = await ethers.getContractFactory(genesContractName);
-  contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 DNA", "DNA721", royalty, baseTokenURI);
+  contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 DNA", "DNA721", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   await debug(await contracts.erc721Genes.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
@@ -232,35 +260,65 @@ async function main() {
   );
 
   const erc721RentableFactory = await ethers.getContractFactory("ERC721Rentable");
-  contracts.erc721Rentable = await erc721RentableFactory.deploy("T-SHIRT (rentable)", "TS721", royalty, baseTokenURI);
+  contracts.erc721Rentable = await erc721RentableFactory.deploy(
+    "T-SHIRT (rentable)",
+    "TS721",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   // ERC998
 
   const erc998SimpleFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998Simple = await erc998SimpleFactory.deploy("ERC998 SIMPLE", "GEM998", royalty, baseTokenURI);
+  contracts.erc998Simple = await erc998SimpleFactory.deploy(
+    "ERC998 SIMPLE",
+    "GEM998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const erc998InactiveFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998Inactive = await erc998InactiveFactory.deploy("ERC998 INACTIVE", "OFF998", royalty, baseTokenURI);
+  contracts.erc998Inactive = await erc998InactiveFactory.deploy(
+    "ERC998 INACTIVE",
+    "OFF998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const erc998NewFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998New = await erc998NewFactory.deploy("ERC998 NEW", "NEW998", royalty, baseTokenURI);
+  contracts.erc998New = await erc998NewFactory.deploy("ERC998 NEW", "NEW998", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc998BlacklistFactory = await ethers.getContractFactory("ERC998Blacklist");
-  contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
+  contracts.erc998Blacklist = await erc998BlacklistFactory.deploy(
+    "ERC998 BLACKLIST",
+    "BL998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const ERC998DiscreteFactory = await ethers.getContractFactory("ERC998Discrete");
-  contracts.erc998Discrete = await ERC998DiscreteFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
+  contracts.erc998Discrete = await ERC998DiscreteFactory.deploy(
+    "ERC998 LVL",
+    "LVL998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const randomContract998Name = getContractName("ERC998Random", network.name);
 
   const erc998RandomFactory = await ethers.getContractFactory(randomContract998Name);
-  const erc998RandomInstance: any = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
+  const erc998RandomInstance: any = await erc998RandomFactory.deploy(
+    "ERC998 HERO",
+    "RNG998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   contracts.erc998Random = erc998RandomInstance;
   await debug(contracts);
 
@@ -277,7 +335,7 @@ async function main() {
 
   const genes998ContractName = getContractName("ERC998Genes", network.name);
   const erc998GenesFactory = await ethers.getContractFactory(genes998ContractName);
-  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (traits)", "DNA998", royalty, baseTokenURI);
+  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (traits)", "DNA998", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   await debug(await contracts.erc998Genes.setSubscriptionId(vrfSubId), "randomInstance.setSubscription");
@@ -287,16 +345,31 @@ async function main() {
   );
 
   const erc998RentableFactory = await ethers.getContractFactory("ERC998Rentable");
-  contracts.erc998Rentable = await erc998RentableFactory.deploy("C-SHIRT (rentable)", "REN998", royalty, baseTokenURI);
+  contracts.erc998Rentable = await erc998RentableFactory.deploy(
+    "C-SHIRT (rentable)",
+    "REN998",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   // TODO contracts are too big
   const erc998Owner20Factory = await ethers.getContractFactory("ERC998ERC20Simple");
-  contracts.erc998OwnerErc20 = await erc998Owner20Factory.deploy("OWNER ERC20", "OWN20", royalty, baseTokenURI);
+  contracts.erc998OwnerErc20 = await erc998Owner20Factory.deploy(
+    "OWNER ERC20",
+    "OWN20",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const erc998Owner1155Factory = await ethers.getContractFactory("ERC998ERC1155Simple");
-  contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
+  contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy(
+    "OWNER ERC1155",
+    "OWN1155",
+    royalty,
+    getBaseTokenURI(chainId),
+  );
   await debug(contracts);
 
   const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
@@ -304,24 +377,24 @@ async function main() {
     "OWNER FULL",
     "OWNFULL",
     royalty,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
   );
   await debug(contracts);
 
   const erc1155SimpleFactory = await ethers.getContractFactory("ERC1155Simple");
-  contracts.erc1155Simple = await erc1155SimpleFactory.deploy(royalty, baseTokenURI);
+  contracts.erc1155Simple = await erc1155SimpleFactory.deploy(royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc1155InactiveFactory = await ethers.getContractFactory("ERC1155Simple");
-  contracts.erc1155Inactive = await erc1155InactiveFactory.deploy(royalty, baseTokenURI);
+  contracts.erc1155Inactive = await erc1155InactiveFactory.deploy(royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc1155NewFactory = await ethers.getContractFactory("ERC1155Simple");
-  contracts.erc1155New = await erc1155NewFactory.deploy(royalty, baseTokenURI);
+  contracts.erc1155New = await erc1155NewFactory.deploy(royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const erc1155BlacklistFactory = await ethers.getContractFactory("ERC1155Blacklist");
-  contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
+  contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const vestingFactory = await ethers.getContractFactory("Vesting");
@@ -329,7 +402,12 @@ async function main() {
   await debug(contracts);
 
   const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryBoxSimple");
-  const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
+  const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy(
+    "Mysterybox",
+    "MB721",
+    100,
+    getBaseTokenURI(chainId),
+  );
   contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
   await debug(contracts);
 
@@ -339,7 +417,12 @@ async function main() {
   );
 
   const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryBoxPausable");
-  const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
+  const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy(
+    "Mysterybox",
+    "MB-P721",
+    100,
+    getBaseTokenURI(chainId),
+  );
   contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
   await debug(contracts);
 
@@ -353,7 +436,7 @@ async function main() {
     "Mysterybox",
     "MB-BL721",
     100,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
   );
   contracts.erc721MysteryboxBlacklist = mysteryboxBlacklistInstance;
   await debug(contracts);
@@ -368,7 +451,7 @@ async function main() {
     "Mysterybox",
     "MB-BL-PL721",
     100,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
   );
   contracts.erc721MysteryboxBlacklistPausable = mysteryboxBlacklistPausableInstance;
   await debug(contracts);
@@ -505,7 +588,7 @@ async function main() {
     "LOTTERY TICKET",
     "LOTT721",
     royalty,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
   );
   await debug(contracts);
 
@@ -530,7 +613,7 @@ async function main() {
     "RAFFLE TICKET",
     "RAFF721",
     royalty,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
   );
   await debug(contracts);
 
@@ -552,7 +635,7 @@ async function main() {
     "COLLECTION SIMPLE",
     "COLL721",
     royalty,
-    baseTokenURI,
+    getBaseTokenURI(chainId),
     batchSize,
     owner.address,
   );
@@ -599,7 +682,7 @@ async function main() {
   await debug(await contracts.waitList.setReward(params, items), "waitList.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
-  contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
+  contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, getBaseTokenURI(chainId));
   await debug(contracts);
 
   const ponziFactory = await ethers.getContractFactory("Ponzi");
