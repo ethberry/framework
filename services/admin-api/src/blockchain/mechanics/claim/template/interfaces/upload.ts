@@ -1,3 +1,4 @@
+import { ClaimType } from "@framework/types";
 import type { IBCAssetTemplateDto } from "@framework/types";
 
 export interface IClaimRowDto extends IBCAssetTemplateDto {
@@ -7,4 +8,5 @@ export interface IClaimRowDto extends IBCAssetTemplateDto {
 
 export interface IClaimUploadDto {
   claims: Array<IClaimRowDto>;
+  claimType: ClaimType;
 }

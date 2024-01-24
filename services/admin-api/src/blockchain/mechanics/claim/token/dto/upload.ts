@@ -1,14 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsISO8601, IsString, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { IsArray, IsEnum, IsISO8601, IsString, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
+import { ClaimType } from "@framework/types";
 import { AccountDto } from "@gemunion/collection";
 
 import type { IClaimRowDto, IClaimUploadDto } from "../interfaces";
-import { BCAssetTemplateDto } from "../../../exchange/asset/dto";
+import { BCAssetTokenDto } from "../../../../exchange/asset/dto";
 
-export class ClaimRowDto extends Mixin(BCAssetTemplateDto, AccountDto) implements IClaimRowDto {
+export class ClaimRowDto extends Mixin(BCAssetTokenDto, AccountDto) implements IClaimRowDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
@@ -24,4 +25,11 @@ export class ClaimUploadDto implements IClaimUploadDto {
   @ValidateNested()
   @Type(() => ClaimRowDto)
   public claims: Array<ClaimRowDto>;
+
+  @ApiProperty({
+    enum: ClaimType,
+  })
+  @Transform(({ value }) => value as ClaimType)
+  @IsEnum(ClaimType, { message: "typeMismatch" })
+  public claimType: ClaimType;
 }

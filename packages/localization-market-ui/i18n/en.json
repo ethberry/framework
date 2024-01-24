@@ -123,6 +123,7 @@
       "REDEEMED": "Redeemed"
     },
     "claimType": {
+      "TEMPLATE": "Template",
       "TOKEN": "Token",
       "VESTING": "Vesting"
     },

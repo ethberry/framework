@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { AccountOptionalDto } from "@gemunion/collection";
 import type { IClaimUpdateDto } from "@framework/types";
 
-import { AllTypesDto } from "../../../exchange/asset/dto/custom";
+import { AllTypesDto } from "../../../../exchange/asset/dto/custom";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({

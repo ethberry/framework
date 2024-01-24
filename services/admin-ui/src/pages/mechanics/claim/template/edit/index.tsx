@@ -4,7 +4,6 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-
 import type { IClaim } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
@@ -17,13 +16,14 @@ export interface IClaimEditDialogProps {
   initialValues: IClaim;
 }
 
-export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
+export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, account, endTimestamp } = initialValues;
+  const { id, item, claimType, account, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
+    claimType,
     account,
     endTimestamp,
   };

@@ -12,13 +12,13 @@ import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
-import { ClaimEditDialog } from "./edit";
+import { ClaimTokenEditDialog } from "./edit";
 
-export const Claim: FC = () => {
+export const ClaimToken: FC = () => {
   const {
     rows,
     count,
@@ -40,29 +40,41 @@ export const Claim: FC = () => {
     handleDeleteConfirm,
     handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: "/claims",
+    baseUrl: "/claims/tokens",
     empty: {
       account: "",
       item: emptyItem,
+      claimType: ClaimType.TOKEN,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [],
     },
-    filter: ({ item, account, endTimestamp }) => ({ item: cleanUpAsset(item), account, endTimestamp }),
+    filter: ({ item, claimType, account, endTimestamp }) => {
+      console.log("item", item);
+      const cleanedItem = cleanUpAsset(item);
+      console.log("cleanedItem", cleanedItem);
+
+      return {
+        item: cleanUpAsset(item),
+        claimType,
+        account,
+        endTimestamp,
+      };
+    },
   });
 
   const { formatMessage } = useIntl();
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "claims"]} />
+      <Breadcrumbs path={["dashboard", "claims", "claims.token"]} />
 
-      <PageHeader message="pages.claims.title">
+      <PageHeader message="pages.claims.token.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <ClaimUploadButton onRefreshPage={handleRefreshPage} />
+        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TOKEN} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
@@ -127,7 +139,7 @@ export const Claim: FC = () => {
         }}
       />
 
-      <ClaimEditDialog
+      <ClaimTokenEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

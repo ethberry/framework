@@ -1050,6 +1050,12 @@
     },
     "claims": {
       "defaultItemTitle": "{account}",
+      "template": {
+        "title": "Claim Templates"
+      },
+      "token": {
+        "title": "Claim Tokens"
+      },
       "title": "Claim"
     },
     "coin-gecko": {

@@ -15,12 +15,20 @@ export const ClaimSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/claims">
+        <ListItemButton component={RouterLink} to="/claims/templates">
           <ListItemIcon>
             <MarkunreadMailbox />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.claims.title" />
+            <FormattedMessage id="pages.claims.template.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/claims/tokens">
+          <ListItemIcon>
+            <MarkunreadMailbox />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.claims.token.title" />
           </ListItemText>
         </ListItemButton>
       </List>

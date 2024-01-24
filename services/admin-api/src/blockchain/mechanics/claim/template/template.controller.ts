@@ -16,30 +16,30 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { ClaimService } from "./claim.service";
-import { ClaimEntity } from "./claim.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ClaimTemplateService } from "./template.service";
+import { ClaimEntity } from "../claim.entity";
 import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimUploadDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/claims")
-export class ClaimController {
-  constructor(private readonly claimService: ClaimService) {}
+@Controller("/claims/templates")
+export class ClaimTemplateController {
+  constructor(private readonly claimTemplateService: ClaimTemplateService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
-    return this.claimService.search(dto, userEntity);
+    return this.claimTemplateService.search(dto, userEntity);
   }
 
   @Post("/")
   public create(@Body() dto: ClaimCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
-    return this.claimService.create(dto, userEntity);
+    return this.claimTemplateService.create(dto, userEntity);
   }
 
   @Post("/upload")
   public upload(@Body() dto: ClaimUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    return this.claimService.upload(dto, userEntity);
+    return this.claimTemplateService.upload(dto, userEntity);
   }
 
   @Put("/:id")
@@ -48,18 +48,18 @@ export class ClaimController {
     @Body() dto: ClaimUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ClaimEntity | null> {
-    return this.claimService.update({ id }, dto, userEntity);
+    return this.claimTemplateService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<ClaimEntity | null> {
-    return this.claimService.findOneWithRelations({ id });
+    return this.claimTemplateService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.claimService.delete({ id }, userEntity);
+    await this.claimTemplateService.delete({ id }, userEntity);
   }
 }

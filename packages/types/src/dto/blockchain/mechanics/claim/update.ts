@@ -1,3 +1,3 @@
 import type { IClaimCreateDto } from "./create";
 
-export interface IClaimUpdateDto extends IClaimCreateDto {}
+export interface IClaimUpdateDto extends Omit<IClaimCreateDto, "claimType"> {}
