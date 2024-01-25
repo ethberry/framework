@@ -1,20 +1,23 @@
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Param } from "@nestjs/common";
 
 import { AddressPipe, ApiAddress, ApiBigInt, BigIntPipe, Public } from "@gemunion/nest-js-utils";
 import type { IOpenSeaTokenMetadata } from "@framework/types";
 
 import { MetadataTokenService } from "./token.service";
+// TODO import from nest-js-utils after publish
+import { ApiChainId, ChainIdPipe } from "../../../utils";
 
 @Public()
 @Controller("/metadata")
 export class MetadataTokenController {
   constructor(private readonly metadataTokenService: MetadataTokenService) {}
 
-  @ApiBigInt("tokenId")
+  @ApiChainId("chainId")
   @ApiAddress("address")
+  @ApiBigInt("tokenId")
   @Get("/:chainId/:address/:tokenId")
   public getTokenMetadata(
-    @Param("chainId", ParseIntPipe) chainId: number,
+    @Param("chainId", ChainIdPipe) chainId: number,
     @Param("address", AddressPipe) address: string,
     @Param("tokenId", BigIntPipe) tokenId: bigint,
   ): Promise<IOpenSeaTokenMetadata> {
