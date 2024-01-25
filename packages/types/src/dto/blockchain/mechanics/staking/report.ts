@@ -17,4 +17,5 @@ export interface IStakingReportSearchDto extends IPaginationDto {
   reward: IStakingReportItemSearchDto;
   startTimestamp: string;
   endTimestamp: string;
+  merchantId?: number;
 }

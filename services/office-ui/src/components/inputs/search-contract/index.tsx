@@ -14,10 +14,11 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
 
   const form = useFormContext();
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
+  const merchantId = useWatch({ name: "merchantId" });
 
   useEffect(() => {
     form.setValue(`${prefix}.contractId`, InputType.awaited);
-  }, [tokenType]);
+  }, [tokenType, merchantId]);
 
   return (
     <EntityInput
@@ -27,6 +28,7 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
         contractType: [tokenType],
         contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
         contractModule: [ModuleType.HIERARCHY],
+        merchantId,
       }}
       autoselect
     />

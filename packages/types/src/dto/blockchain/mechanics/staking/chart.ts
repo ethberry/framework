@@ -13,4 +13,5 @@ export interface IStakingChartSearchDto extends IPaginationDto {
   emptyReward?: boolean;
   startTimestamp: string;
   endTimestamp: string;
+  merchantId?: number;
 }

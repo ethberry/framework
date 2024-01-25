@@ -50,7 +50,10 @@ export class StakingRulesService {
       );
     }
 
-    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+    queryBuilder.andWhere("deposit_contract.merchantId = :merchantId", {
+      merchantId,
+    });
+    queryBuilder.andWhere("reward_contract.merchantId = :merchantId", {
       merchantId,
     });
 

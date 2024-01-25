@@ -36,6 +36,7 @@ export class StakingDepositService {
       contractIds,
       account,
       emptyReward,
+      merchantId,
       stakingDepositStatus,
       deposit,
       reward,
@@ -87,6 +88,11 @@ export class StakingDepositService {
 
     // deposit always exists
     if (deposit) {
+      if (merchantId) {
+        queryBuilder.andWhere("deposit_contract.merchantId = :merchantId", {
+          merchantId,
+        });
+      }
       if (deposit.tokenType) {
         if (deposit.tokenType.length === 1) {
           queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
@@ -113,6 +119,11 @@ export class StakingDepositService {
 
     // reward is optional
     if (!emptyReward && reward) {
+      if (merchantId) {
+        queryBuilder.andWhere("reward_contract.merchantId = :merchantId", {
+          merchantId,
+        });
+      }
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {

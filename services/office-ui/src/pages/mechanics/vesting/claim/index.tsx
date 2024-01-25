@@ -4,6 +4,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -93,6 +94,9 @@ export const VestingClaim: FC = () => {
         testId="VestingClaimSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />
           </Grid>

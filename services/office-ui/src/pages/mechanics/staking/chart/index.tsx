@@ -8,13 +8,16 @@ import { utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
 import { InputType } from "@gemunion/types-collection";
-import type { IStakingChartSearchDto, IToken } from "@framework/types";
+import type { IStakingChartSearchDto, IToken, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { StakingChartSearchForm } from "./form";
 
 export const StakingChart: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
     IToken,
     IStakingChartSearchDto
@@ -30,6 +33,7 @@ export const StakingChart: FC = () => {
         contractId: InputType.awaited,
       },
       emptyReward: false,
+      merchantId: profile.merchantId,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },

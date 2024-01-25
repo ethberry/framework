@@ -85,6 +85,14 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
 
-  public chainId: number;
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
+
+  public chainId: number;
 }

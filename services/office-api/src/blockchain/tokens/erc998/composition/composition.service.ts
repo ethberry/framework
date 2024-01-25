@@ -18,7 +18,7 @@ export class Erc998CompositionService {
     dto: Partial<ICompositionSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<CompositionEntity>, number]> {
-    const { parentIds, childIds, query, skip, take } = dto;
+    const { parentIds, childIds, merchantId, query, skip, take } = dto;
 
     const queryBuilder = this.compositionEntityRepository.createQueryBuilder("composition");
 
@@ -73,6 +73,13 @@ export class Erc998CompositionService {
         queryBuilder.andWhere("composition.childId IN(:...childIds)", { childIds });
       }
     }
+
+    queryBuilder.andWhere("parent.merchantId = :merchantId", {
+      merchantId,
+    });
+    queryBuilder.andWhere("child.merchantId = :merchantId", {
+      merchantId,
+    });
 
     queryBuilder.andWhere("parent.chainId = :chainId", {
       chainId: userEntity.chainId,

@@ -313,7 +313,9 @@
       "transfer": "Transfer",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
-      "upload": "Upload"
+      "unwhitelist": "Un whitelist",
+      "upload": "Upload",
+      "whitelist": "Whitelist"
     },
     "hints": {
       "editNotAllowed": "Editing of this rule is not allowed",
@@ -371,6 +373,7 @@
       "contractModule": "Module type",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "contractType": "Contract type",
       "count": "Max breeds count",
       "country": "Country",
       "craftStatus": "Status",

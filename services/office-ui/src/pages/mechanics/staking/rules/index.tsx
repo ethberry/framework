@@ -29,6 +29,7 @@ import {
 } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
+import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {
@@ -102,14 +103,15 @@ export const StakingRules: FC = () => {
       >
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <EntityInput name="merchantId" controller="merchants" autoselect disableClear />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
+            <SearchMerchantContractsInput
               name="contractIds"
-              controller="contracts"
               multiple
-              data={{ contractModule: [ModuleType.STAKING] }}
+              data={{
+                contractModule: [ModuleType.STAKING],
+              }}
             />
           </Grid>
           <Grid item xs={6}>

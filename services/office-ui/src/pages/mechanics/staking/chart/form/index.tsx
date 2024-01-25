@@ -4,10 +4,12 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { SwitchInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingChartSearchDto } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
+import { StakingContractInput } from "../../../../../components/inputs/staking-contract";
 
 interface IStakingReportSearchFormProps {
   recentDeposits: boolean;
@@ -20,8 +22,8 @@ interface IStakingReportSearchFormProps {
 export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props => {
   const { recentDeposits, handleSwitchDeposit, onSubmit, initialValues, open } = props;
 
-  const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
-  const fixedValues = { deposit, reward, emptyReward, startTimestamp, endTimestamp };
+  const { deposit, reward, emptyReward, merchantId, startTimestamp, endTimestamp } = initialValues;
+  const fixedValues = { deposit, reward, emptyReward, merchantId, startTimestamp, endTimestamp };
 
   return (
     <FormWrapper
@@ -33,6 +35,12 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput name="merchantId" controller="merchants" disableClear />
+          </Grid>
+          <Grid item xs={6}>
+            <StakingContractInput />
+          </Grid>
           <Grid item xs={6}>
             <SwitchInput name={recentDeposits ? "recentDeposits" : "allDeposits"} onChange={handleSwitchDeposit} />
           </Grid>

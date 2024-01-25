@@ -4,8 +4,8 @@ import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 
+import { AllTypesDto } from "../../../blockchain/exchange/asset/dto";
 import { IAchievementLevelCreateDto } from "../interfaces";
-import { AllTypesDto } from "../../../blockchain/exchange/asset/dto/custom";
 
 export class AchievementLevelCreateDto extends SearchableDto implements IAchievementLevelCreateDto {
   @ApiProperty()

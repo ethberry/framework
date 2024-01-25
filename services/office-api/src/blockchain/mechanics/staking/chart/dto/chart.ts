@@ -69,4 +69,12 @@ export class StakingChartSearchDto extends PaginationDto implements IStakingChar
   @IsISO8601({}, { message: "patternMismatch" })
   @ValidateIf(o => !!o.startTimestamp)
   public endTimestamp: string;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Transform(({ value }) => Number(value))
+  public merchantId: number;
 }

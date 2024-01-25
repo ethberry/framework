@@ -41,6 +41,14 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @IsEnum(TokenStatus, { each: true, message: "badInput" })
   public tokenStatus: Array<TokenStatus>;
 
-  public chainId: number;
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
+
+  public chainId: number;
 }
