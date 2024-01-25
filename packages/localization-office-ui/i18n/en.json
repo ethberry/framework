@@ -297,6 +297,7 @@
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
+      "ponziBalance": "Ponzi balance",
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
