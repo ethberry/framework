@@ -157,7 +157,7 @@ export class MarketplaceService {
   }
 
   public async supply(dto: Partial<IMarketplaceSupplySearchDto>, userEntity: UserEntity): Promise<any> {
-    const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [] } = dto;
+    const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [], merchantId } = dto;
 
     // prettier-ignore
     const queryString = `
@@ -182,6 +182,10 @@ export class MarketplaceService {
             (template.contract_id = ANY($5) OR cardinality($5) = 0)
           AND
             contract.chain_id = $6
+          ${!merchantId ? "" : `
+          AND
+            contract.merchant_id = $7
+          `}
         GROUP BY
             attribute
         ORDER BY
@@ -197,6 +201,7 @@ export class MarketplaceService {
         templateIds,
         contractIds,
         userEntity.chainId,
+        ...(merchantId ? [merchantId] : []),
       ]),
       0,
     ]);

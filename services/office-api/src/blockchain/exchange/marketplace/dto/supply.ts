@@ -50,4 +50,13 @@ export class MarketplaceSupplySearchDto extends SearchDto implements IMarketplac
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public templateIds: Array<number>;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Transform(({ value }) => Number(value))
+  public merchantId: number;
 }

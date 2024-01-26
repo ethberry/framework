@@ -8,4 +8,5 @@ export interface IMarketplaceSupplySearchDto {
   tokenType: TokenType;
   contractIds: Array<number>;
   templateIds: Array<number>;
+  merchantId?: number;
 }

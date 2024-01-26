@@ -63,6 +63,25 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "LEVEL": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "RARITY": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon"
+    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -820,6 +839,11 @@
     "marketplace": {
       "chart": {
         "title": "Chart"
+      },
+      "grade": {
+        "amount": "Amount",
+        "attribute": "Grade",
+        "title": "Grade"
       },
       "report": {
         "title": "Report"
