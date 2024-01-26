@@ -6,7 +6,6 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -19,6 +18,7 @@ import ERC998WhitelistChildABI from "@framework/abis/whiteListChild/ERC998Blackl
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 
@@ -121,7 +121,7 @@ export const Erc998Composition: FC = () => {
         <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
             <SearchMerchantContractsInput

@@ -8,7 +8,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
@@ -17,6 +16,7 @@ import { VestingDeployButton } from "../../../../components/buttons";
 import { AllowanceButton } from "../../../../components/buttons/mechanics/common/allowance";
 import { TopUpButton } from "../../../../components/buttons/mechanics/common/top-up";
 import { TransferOwnershipButton } from "../../../../components/buttons/extensions/transfer-ownership";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -59,7 +59,7 @@ export const VestingContracts: FC = () => {
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} name="account">
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
         </Grid>
       </CommonSearchForm>

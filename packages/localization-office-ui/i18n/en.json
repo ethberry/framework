@@ -104,11 +104,24 @@
       "REDEEMED": "Redeemed"
     },
     "contractFeatures": {
+      "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
+      "DISCRETE": "Discrete",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
+      "GENES": "Genes",
+      "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
+      "PAUSABLE": "Pausable",
+      "RANDOM": "Random",
       "REFERRAL": "Linear referral",
+      "RENTABLE": "Rentable",
       "SOULBOUND": "Soulbound",
+      "SPLITTER": "Payment Splitter",
+      "STABLE_COIN": "Stable Coin",
+      "STATEHASH": "State Hash",
+      "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {

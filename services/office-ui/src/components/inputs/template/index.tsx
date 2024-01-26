@@ -1,9 +1,8 @@
-import { FC } from "react";
-import { useWatch } from "react-hook-form";
+import { FC, useEffect } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { useUser } from "@gemunion/provider-user";
-import { ContractFeatures, IUser, TemplateStatus } from "@framework/types";
+import { ContractFeatures, TemplateStatus } from "@framework/types";
 
 export interface ITemplateInputProps {
   contractFeatures?: Array<ContractFeatures>;
@@ -13,21 +12,27 @@ export interface ITemplateInputProps {
 export const TemplateInput: FC<ITemplateInputProps> = props => {
   const { templateStatus = [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN], contractFeatures } = props;
 
-  const { profile } = useUser<IUser>();
+  const name = "templateIds";
 
+  const form = useFormContext();
   const tokenType = useWatch({ name: "tokenType" });
+  const merchantId = useWatch({ name: "merchantId" });
   const contractIds = useWatch({ name: "contractIds" });
+
+  useEffect(() => {
+    form.setValue(name, [], { shouldDirty: true, shouldTouch: true });
+  }, [merchantId]);
 
   return (
     <EntityInput
-      name="templateIds"
+      name={name}
       controller="templates"
       data={{
         contractIds,
         templateStatus,
         contractFeatures,
         contractType: [tokenType],
-        merchantId: profile.merchantId,
+        merchantId,
       }}
       multiple
     />

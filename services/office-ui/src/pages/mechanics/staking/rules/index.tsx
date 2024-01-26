@@ -4,7 +4,6 @@ import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -30,6 +29,7 @@ import {
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { StakingRuleEditDialog } from "./edit";
 
 export const StakingRules: FC = () => {
@@ -103,7 +103,7 @@ export const StakingRules: FC = () => {
       >
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" autoselect disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
             <SearchMerchantContractsInput

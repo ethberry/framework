@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf } from "class-validator";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
@@ -30,6 +30,15 @@ export class MarketplaceReportSearchDto extends SearchDto implements IMarketplac
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public templateIds: Array<number>;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Transform(({ value }) => Number(value))
+  public merchantId: number;
 
   @ApiPropertyOptional()
   @IsOptional()

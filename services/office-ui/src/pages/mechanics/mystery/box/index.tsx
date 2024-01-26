@@ -4,7 +4,6 @@ import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -19,6 +18,7 @@ import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { MysteryBoxMintButton } from "../../../../components/buttons/mechanics/mystery/box/mint";
 import { ContractInput } from "../../../../components/forms/template-search/contract-input";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { MysteryboxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
@@ -52,9 +52,6 @@ export const MysteryBox: FC = () => {
       template: {
         price: emptyPrice,
       } as ITemplate,
-      // @ts-ignore
-      // this is only filter for contract autocomplete
-      merchantId: profile.merchantId,
     },
     search: {
       query: "",
@@ -103,7 +100,7 @@ export const MysteryBox: FC = () => {
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" />
+            <SearchMerchantInput />
           </Grid>
           <Grid item xs={6}>
             <ContractInput

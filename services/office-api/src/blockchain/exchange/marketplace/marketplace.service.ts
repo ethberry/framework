@@ -5,17 +5,19 @@ import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
-import { ExchangeType, TokenType } from "@framework/types";
+import { ContractEventType, ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
-import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
+import { AssetComponentHistoryEntity } from "../asset/asset-component-history.entity";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class MarketplaceService {
   constructor(
-    @InjectRepository(TokenEntity)
-    protected readonly tokenEntityRepository: Repository<TokenEntity>,
+    @InjectRepository(EventHistoryEntity)
+    protected readonly eventHistoryEntityRepository: Repository<EventHistoryEntity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
@@ -23,60 +25,85 @@ export class MarketplaceService {
   public async search(
     dto: Partial<IMarketplaceReportSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<TokenEntity>, number]> {
-    const { query, contractIds, templateIds, startTimestamp, endTimestamp, skip, take } = dto;
+  ): Promise<[Array<EventHistoryEntity>, number]> {
+    const { query, contractIds, templateIds, merchantId, startTimestamp, endTimestamp, skip, take } = dto;
 
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndMapMany(
+      "history.items",
+      AssetComponentHistoryEntity,
+      "item",
+      "history.id = item.historyId AND item.exchangeType = :exchangeType1",
+      {
+        exchangeType1: ExchangeType.ITEM,
+      },
+    );
+    queryBuilder.leftJoinAndSelect("item.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_template_contract");
+    queryBuilder.leftJoinAndSelect("item.contract", "item_contract");
+
+    queryBuilder.leftJoinAndMapMany(
+      "history.price",
+      AssetComponentHistoryEntity,
+      "price",
+      "history.id = price.historyId AND price.exchangeType = :exchangeType2",
+      {
+        exchangeType2: ExchangeType.PRICE,
+      },
+    );
+    queryBuilder.leftJoinAndSelect("price.token", "price_token");
+    queryBuilder.leftJoinAndSelect("price_token.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_template_contract");
+    queryBuilder.leftJoinAndSelect("price.contract", "price_contract");
+
+    queryBuilder.innerJoinAndMapOne(
+      "history.contract",
+      ContractEntity,
+      "contract",
+      "history.address = contract.address",
+    );
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
 
-    queryBuilder.leftJoinAndSelect("token.history", "item_history");
-    queryBuilder.leftJoinAndSelect("item_history.history", "exchange_history");
-    queryBuilder.leftJoinAndSelect(
-      "exchange_history.assets",
-      "price_history",
-      "price_history.exchangeType = :exchangeType",
-      { exchangeType: ExchangeType.PRICE },
-    );
-    queryBuilder.leftJoinAndSelect("price_history.token", "price_token");
-    queryBuilder.leftJoinAndSelect("price_token.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_history.contract", "price_contract");
+    if (merchantId) {
+      queryBuilder.andWhere("contract.merchantId = :merchantId", {
+        merchantId,
+      });
+    }
 
-    // DEV
-    queryBuilder.andWhere("item_history.id IS NOT NULL");
+    queryBuilder.andWhere("history.event_type = :eventType", { eventType: ContractEventType.Purchase });
 
-    queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
-      contractType: [TokenType.ERC721, TokenType.ERC1155],
+    queryBuilder.andWhere("item_contract.contractType IN(:...contractType)", {
+      contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     });
 
     if (templateIds) {
       if (templateIds.length === 1) {
-        queryBuilder.andWhere("token.templateId = :templateId", {
+        queryBuilder.andWhere("item_token.templateId = :templateId", {
           templateId: templateIds[0],
         });
       } else {
-        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+        queryBuilder.andWhere("item_token.templateId IN(:...templateIds)", { templateIds });
       }
     }
 
     if (contractIds) {
       if (contractIds.length === 1) {
-        queryBuilder.andWhere("template.contractId = :contractId", {
+        queryBuilder.andWhere("item_template.contractId = :contractId", {
           contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+        queryBuilder.andWhere("item_template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
     if (startTimestamp && endTimestamp) {
-      queryBuilder.andWhere("token.createdAt >= :startTimestamp AND token.createdAt < :endTimestamp", {
+      queryBuilder.andWhere("history.createdAt >= :startTimestamp AND history.createdAt < :endTimestamp", {
         startTimestamp,
         endTimestamp,
       });
@@ -85,7 +112,7 @@ export class MarketplaceService {
     if (query) {
       queryBuilder.leftJoin(
         qb => {
-          qb.getQuery = () => `LATERAL json_array_elements(template.description->'blocks')`;
+          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
           return qb;
         },
         `blocks`,
@@ -93,7 +120,7 @@ export class MarketplaceService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -103,8 +130,7 @@ export class MarketplaceService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "token.createdAt": "DESC",
-      "token.id": "DESC",
+      "history.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -118,11 +144,13 @@ export class MarketplaceService {
     const headers = ["id", "title", "createdAt", "price"];
 
     return parse(
-      list.map(tokenEntity => ({
-        id: tokenEntity.id,
-        title: tokenEntity.template.title,
-        createdAt: tokenEntity.createdAt,
-        price: formatPrice(tokenEntity.template.price),
+      list.map(eventHistoryEntity => ({
+        id: eventHistoryEntity.id,
+        // @ts-ignore
+        title: eventHistoryEntity.item.template.title,
+        createdAt: eventHistoryEntity.createdAt,
+        // @ts-ignore
+        price: formatPrice(eventHistoryEntity.item.template.price),
       })),
       { fields: headers },
     );
@@ -133,7 +161,7 @@ export class MarketplaceService {
 
     // prettier-ignore
     const queryString = `
-        SELECT 
+        SELECT
             COUNT(token.id)::INTEGER AS count,
             (token.metadata->>$1)::INTEGER as attribute
         FROM
@@ -175,31 +203,47 @@ export class MarketplaceService {
   }
 
   public async chart(dto: Partial<IMarketplaceReportSearchDto>, userEntity: UserEntity): Promise<any> {
-    const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
+    const { templateIds = [], contractIds = [], merchantId, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
     const queryString = `
-        SELECT 
-            COUNT(token.id)::INTEGER AS count,
-            date_trunc('day', token.created_at) as date
+        SELECT
+             SUM(c2.amount) as sum,
+             COUNT(item_token.id)::INTEGER AS count,
+             date_trunc('day', event_history.created_at) as date
         FROM
-            ${ns}.token
-          LEFT JOIN 
-            ${ns}.template ON template.id = token.template_id
+            ${ns}.token as item_token
+          INNER JOIN
+            ${ns}.asset_component_history c1 ON c1.token_id = item_token.id AND c1.exchange_type = 'ITEM'
+          INNER JOIN
+            ${ns}.event_history ON event_history.id = c1.history_id AND event_history.event_type = 'Purchase'
+          INNER JOIN
+            ${ns}.asset_component_history c2 ON c2.history_id = event_history.id AND c2.exchange_type = 'PRICE'
+          INNER JOIN
+            ${ns}.token price_token ON c2.token_id = price_token.id
           LEFT JOIN
-            ${ns}.contract ON contract.id = template.contract_id
-        WHERE
-            (token.template_id = ANY($1) OR cardinality($1) = 0)
-          AND
-            (template.contract_id = ANY($2) OR cardinality($2) = 0)
-          AND
-            (token.created_at >= $3 AND token.created_at < $4)
-          AND
-            contract.chain_id = $5
-        GROUP BY
-            date
-        ORDER BY
-            date
+            ${ns}.template as item_template ON item_template.id = item_token.template_id
+          LEFT JOIN
+            ${ns}.contract as item_contract ON item_contract.id = item_template.contract_id
+          LEFT JOIN
+            ${ns}.template as price_template ON price_template.id = price_token.template_id
+          LEFT JOIN
+            ${ns}.contract as price_contract ON price_contract.id = price_template.contract_id
+          WHERE
+              (item_token.template_id = ANY($1) OR cardinality($1) = 0)
+            AND
+              (item_template.contract_id = ANY($2) OR cardinality($2) = 0)
+            AND
+              (event_history.created_at >= $3 AND event_history.created_at < $4)
+            AND
+              item_contract.chain_id = $5
+            ${!merchantId ? "" : `
+            AND
+              item_contract.merchant_id = $6
+            `}
+          GROUP BY
+              date
+          ORDER BY date
     `;
 
     return Promise.all([
@@ -209,6 +253,7 @@ export class MarketplaceService {
         startTimestamp,
         endTimestamp,
         userEntity.chainId,
+        ...(merchantId ? [merchantId] : []),
       ]),
       0,
     ]);

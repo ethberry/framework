@@ -3,10 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { MarketplaceService } from "./marketplace.service";
 import { MarketplaceController } from "./marketplace.controller";
-import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TokenEntity])],
+  imports: [TypeOrmModule.forFeature([EventHistoryEntity])],
   providers: [MarketplaceService],
   controllers: [MarketplaceController],
   exports: [MarketplaceService],

@@ -43,9 +43,11 @@ export class ContractService {
     });
     queryBuilder.addSelect(["templates.id", "templates.amount"]);
 
-    queryBuilder.andWhere("contract.merchantId = :merchantId", {
-      merchantId,
-    });
+    if (merchantId) {
+      queryBuilder.andWhere("contract.merchantId = :merchantId", {
+        merchantId,
+      });
+    }
 
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,

@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useWatch } from "react-hook-form";
+import { FC, useEffect } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
@@ -19,7 +19,12 @@ interface IContractInputProps {
 export const ContractInput: FC<IContractInputProps> = props => {
   const { name, data = {}, multiple, readOnly } = props;
 
+  const form = useFormContext();
   const merchantId = useWatch({ name: "merchantId" });
+
+  useEffect(() => {
+    form.setValue(name, [], { shouldDirty: true, shouldTouch: true });
+  }, [merchantId]);
 
   return (
     <EntityInput

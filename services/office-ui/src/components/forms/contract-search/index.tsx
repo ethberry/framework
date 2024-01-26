@@ -3,9 +3,10 @@ import { Grid } from "@mui/material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
+
+import { SearchMerchantInput } from "../../inputs/search-merchant";
 
 interface IContractSearchFormProps {
   onSubmit: (values: IContractSearchDto) => Promise<void>;
@@ -24,7 +25,7 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
     <CommonSearchForm initialValues={fixedValues} onSubmit={onSubmit} open={open} testId="ContractSearchForm">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <EntityInput name="merchantId" controller="merchants" disableClear />
+          <SearchMerchantInput disableClear />
         </Grid>
         <Grid item xs={6}>
           <SelectInput name="contractStatus" options={ContractStatus} multiple />

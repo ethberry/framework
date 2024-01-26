@@ -3,7 +3,6 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -18,6 +17,7 @@ import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/ty
 import { WaitListListCreateButton } from "../../../../components/buttons/mechanics/wait-list/list/create";
 import { WaitListListUploadButton } from "../../../../components/buttons/mechanics/wait-list/list/upload";
 import { WaitListListGenerateButton } from "../../../../components/buttons/mechanics/wait-list/list/generate";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -92,7 +92,7 @@ export const WaitListList: FC = () => {
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
         </Grid>
       </CommonSearchForm>

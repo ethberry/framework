@@ -4,7 +4,6 @@ import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -18,6 +17,7 @@ import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../components/buttons";
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { ClaimTokenEditDialog } from "./edit";
 
 export const ClaimToken: FC = () => {
@@ -91,7 +91,7 @@ export const ClaimToken: FC = () => {
         <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />

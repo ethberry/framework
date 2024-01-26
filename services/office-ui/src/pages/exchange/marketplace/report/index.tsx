@@ -1,23 +1,35 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useCallback } from "react";
 import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGridPremium,
+  DataGridPremiumProps,
+  GridCellParams,
+  gridClasses,
+  GridRowParams,
+} from "@mui/x-data-grid-premium";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import { AddressLink } from "@gemunion/mui-scanner";
 import { formatItem } from "@framework/exchange";
-import type { IAssetComponent, IMarketplaceReportSearchDto, IToken } from "@framework/types";
+import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateInput } from "../../../../components/inputs/template";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
+import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
+import { ReportDataView } from "./report-data-view";
 
 export const MarketplaceReport: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -27,17 +39,17 @@ export const MarketplaceReport: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePaginationModel,
-  } = useCollection<IToken, IMarketplaceReportSearchDto>({
+  } = useCollection<IEventHistoryReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
       query: "",
       contractIds: [],
       templateIds: [],
+      merchantId: profile.merchantId,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
   });
-
   const { formatMessage } = useIntl();
 
   const { fn } = useApiCall(async (api, values) => {
@@ -51,10 +63,20 @@ export const MarketplaceReport: FC = () => {
     return fn(void 0, search);
   };
 
+  const getDetailPanelContent = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelContent"]>>(
+    ({ row }: GridRowParams<IEventHistoryReport>) => <ReportDataView row={row} />,
+    [],
+  );
+
+  const getDetailPanelHeight = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelHeight"]>>(
+    () => "auto" as const,
+    [],
+  );
+
   // prettier-ignore
   const columns = [
     {
-      field: "id",
+      field: "tokenId",
       headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
       flex: 0
@@ -63,6 +85,18 @@ export const MarketplaceReport: FC = () => {
       field: "title",
       headerName: formatMessage({ id: "form.labels.title" }),
       sortable: false,
+      flex: 1,
+      minWidth: 200
+    },
+    {
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.address" }),
+      sortable: false,
+      renderCell: (params: GridCellParams<any, string>) => {
+        return (
+          <AddressLink address={params.value} length={18} />
+        );
+      },
       flex: 1,
       minWidth: 200
     },
@@ -81,7 +115,7 @@ export const MarketplaceReport: FC = () => {
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
-    }
+    },
   ];
 
   return (
@@ -104,6 +138,9 @@ export const MarketplaceReport: FC = () => {
         testId="MarketplaceReportSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SearchMerchantInput />
+          </Grid>
           <Grid item xs={12} md={6}>
             <DateTimeInput name="startTimestamp" />
           </Grid>
@@ -111,11 +148,10 @@ export const MarketplaceReport: FC = () => {
             <DateTimeInput name="endTimestamp" />
           </Grid>
           <Grid item xs={12} md={6}>
-            <EntityInput
+            <SearchMerchantContractsInput
               name="contractIds"
-              controller="contracts"
               multiple
-              data={{ contractType: [TokenType.ERC721, TokenType.ERC1155] }}
+              data={{ contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -124,7 +160,7 @@ export const MarketplaceReport: FC = () => {
         </Grid>
       </CommonSearchForm>
 
-      <DataGrid
+      <DataGridPremium
         pagination
         paginationMode="server"
         rowCount={count}
@@ -133,13 +169,32 @@ export const MarketplaceReport: FC = () => {
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={rows.map((token: IToken) => ({
-          id: token.id,
-          title: token.template?.title,
-          price: token.exchange![0].history?.assets,
-          createdAt: token.createdAt,
-        }))}
+        rowThreshold={0}
+        getDetailPanelHeight={getDetailPanelHeight}
+        getDetailPanelContent={getDetailPanelContent}
+        rows={rows.map((event: IEventHistoryReport) => {
+          return {
+            id: event.id,
+            tokenId: event.items[0]?.token?.id,
+            title: event.items[0]?.token?.template?.title,
+            account: (event.eventData as any).account,
+            eventData: event.eventData,
+            eventType: event.eventType,
+            price: event.price,
+            createdAt: event.createdAt,
+            items: event.items,
+          };
+        })}
+        // rows={rows}
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            p: 1.5,
+          },
+        }}
         autoHeight
+        disableAggregation
+        disableRowGrouping
       />
     </Fragment>
   );

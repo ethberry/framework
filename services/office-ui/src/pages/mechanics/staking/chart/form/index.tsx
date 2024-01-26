@@ -4,12 +4,12 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { SwitchInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingChartSearchDto } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
 import { StakingContractInput } from "../../../../../components/inputs/staking-contract";
+import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 
 interface IStakingReportSearchFormProps {
   recentDeposits: boolean;
@@ -36,7 +36,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
             <StakingContractInput />

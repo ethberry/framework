@@ -7,7 +7,6 @@ import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from
 
 import { SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
@@ -22,6 +21,7 @@ import { formatItem } from "@framework/exchange";
 import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
 import { SearchContractInput } from "../../../../components/inputs/search-contract";
 import { StakingContractInput } from "../../../../components/inputs/staking-contract";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 
 export const StakingReport: FC = () => {
   const { profile } = useUser<IUser>();
@@ -136,7 +136,7 @@ export const StakingReport: FC = () => {
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
             <StakingContractInput />

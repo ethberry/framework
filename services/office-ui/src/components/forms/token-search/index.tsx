@@ -5,8 +5,9 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import type { ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 
+import { SearchMerchantInput } from "../../inputs/search-merchant";
+import { SearchMerchantContractsInput } from "../../inputs/search-merchant-contracts";
 import { TemplateInput } from "../../inputs/template";
 import { FormRefresher } from "../form-refresher";
 
@@ -51,15 +52,10 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractType, contractModule, merchantId }}
-            />
+            <SearchMerchantContractsInput name="contractIds" multiple data={{ contractType, contractModule }} />
           </Grid>
           <Grid item xs={6}>
             <TemplateInput />

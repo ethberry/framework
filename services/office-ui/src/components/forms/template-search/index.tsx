@@ -3,10 +3,10 @@ import { Grid } from "@mui/material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { SearchMerchantInput } from "../../inputs/search-merchant";
 import { FormRefresher } from "../form-refresher";
 import { ContractInput } from "./contract-input";
 
@@ -30,7 +30,7 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       <FormRefresher onRefreshPage={onRefreshPage} />
       <Grid container spacing={2} alignItems="flex-end">
         <Grid item xs={12}>
-          <EntityInput name="merchantId" controller="merchants" />
+          <SearchMerchantInput disableClear />
         </Grid>
         <Grid item xs={6}>
           <ContractInput name="contractIds" multiple data={{ contractType, contractModule }} />

@@ -3,11 +3,12 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IMarketplaceReportSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateInput } from "../../../../../components/inputs/template";
+import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
+import { SearchMerchantContractsInput } from "../../../../../components/inputs/search-merchant-contracts";
 
 interface IMarketplaceReportSearchFormProps {
   onSubmit: (values: IMarketplaceReportSearchDto) => Promise<void>;
@@ -18,8 +19,8 @@ interface IMarketplaceReportSearchFormProps {
 export const MarketplaceChartSearchForm: FC<IMarketplaceReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { startTimestamp, endTimestamp, contractIds, templateIds } = initialValues;
-  const fixedValues = { startTimestamp, endTimestamp, contractIds, templateIds };
+  const { startTimestamp, endTimestamp, merchantId, contractIds, templateIds } = initialValues;
+  const fixedValues = { startTimestamp, endTimestamp, merchantId, contractIds, templateIds };
 
   return (
     <FormWrapper
@@ -31,6 +32,9 @@ export const MarketplaceChartSearchForm: FC<IMarketplaceReportSearchFormProps> =
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SearchMerchantInput />
+          </Grid>
           <Grid item xs={12} md={6}>
             <DateTimeInput name="startTimestamp" />
           </Grid>
@@ -38,9 +42,8 @@ export const MarketplaceChartSearchForm: FC<IMarketplaceReportSearchFormProps> =
             <DateTimeInput name="endTimestamp" />
           </Grid>
           <Grid item xs={12} md={6}>
-            <EntityInput
+            <SearchMerchantContractsInput
               name="contractIds"
-              controller="contracts"
               multiple
               data={{ contractType: [TokenType.ERC721, TokenType.ERC1155] }}
             />
