@@ -3,14 +3,15 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormWatcher } from "@gemunion/mui-form";
 import { DateInput } from "@gemunion/mui-inputs-picker";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IAchievementRule } from "@framework/types";
-import { AchievementRuleStatus, ContractEventType, ContractFeatures } from "@framework/types";
+import { AchievementRuleStatus, ContractEventType, ContractFeatures, ContractStatus } from "@framework/types";
 
-import { ContractInput } from "../../../../components/inputs/contract";
+import { ContractInput } from "./contract";
 import { validationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {
@@ -48,15 +49,16 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       testId="AchievementRuleEditForm"
       {...rest}
     >
+      <FormWatcher />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="eventType" options={ContractEventType} />
       <ContractInput
         name="contractId"
         related="address"
         controller="contracts"
-        data={{ excludeFeatures: [ContractFeatures.EXTERNAL] }}
+        data={{ excludeFeatures: [ContractFeatures.EXTERNAL], contractStatus: [ContractStatus.ACTIVE] }}
       />
+      <SelectInput name="eventType" options={ContractEventType} />
       <Typography sx={{ mt: 2 }} variant="inherit">
         <FormattedMessage id="form.labels.achievementItem" />
       </Typography>

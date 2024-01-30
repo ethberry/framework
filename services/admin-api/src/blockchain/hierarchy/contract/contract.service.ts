@@ -186,6 +186,7 @@ export class ContractService {
         address: true,
         contractType: true,
         contractFeatures: true,
+        contractModule: true,
         decimals: true,
         symbol: true,
       },
