@@ -27,9 +27,9 @@ export const ContractInput: FC<IContractInputProps> = props => {
     form.setValue(name, option?.id ?? 0, { shouldDirty: true });
     form.setValue(`contract.${related}`, option?.address ?? "0x");
     form.setValue("contract.decimals", option?.decimals ?? 0);
-    form.setValue("contract.moduleType", option?.moduleType ?? 0);
-    form.setValue("contract.contractType", option?.contractType ?? 0);
-    form.setValue("contract.contractFeatures", option?.contractFeatures ?? 0);
+    form.setValue("contract.contractModule", option?.contractModule);
+    form.setValue("contract.contractType", option?.contractType);
+    form.setValue("contract.contractFeatures", option?.contractFeatures);
   };
 
   return <EntityInput name={name} controller={controller} data={data} onChange={handleChange} autoselect />;

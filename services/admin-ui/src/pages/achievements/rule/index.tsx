@@ -9,6 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { InputType } from "@gemunion/types-collection";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
@@ -38,8 +39,7 @@ export const AchievementRules: FC = () => {
       title: "",
       description: emptyStateString,
       achievementStatus: AchievementRuleStatus.ACTIVE,
-      // eventType: """,
-      contractId: 0,
+      contractId: InputType.awaited,
       item: getEmptyTemplate(TokenType.ERC20),
       startTimestamp: new Date().toISOString(),
       endTimestamp: new Date().toISOString(),

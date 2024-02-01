@@ -1,3 +1,4 @@
+import { InputType } from "@gemunion/types-collection";
 import type { ISearchable } from "@gemunion/types-collection";
 
 import type { IAchievementLevel } from "./level";
@@ -10,7 +11,7 @@ export enum AchievementRuleStatus {
 }
 
 export interface IAchievementRule extends ISearchable {
-  contractId: number | null;
+  contractId: number | null | InputType;
   contract?: IContract;
   eventType: ContractEventType | null;
   item?: IAsset;
