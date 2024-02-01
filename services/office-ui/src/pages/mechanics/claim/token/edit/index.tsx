@@ -46,7 +46,7 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC998] }}
       />
       <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />
     </FormDialog>

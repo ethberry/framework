@@ -3,6 +3,8 @@ import { Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
+import { NodeEnv } from "@framework/types";
+
 import { ProfileAddresses } from "./adresses";
 import { ProfileGeneral } from "./general";
 import { ProfileSubscriptions } from "./subscriptions";
@@ -21,15 +23,19 @@ export const Profile: FC = () => {
     navigate(`/profile/${newValue === ProfileTabs.general ? "" : newValue}`);
   };
 
+  const shouldHideAddress = process.env.NODE_ENV === NodeEnv.production;
+
   return (
     <Fragment>
       <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} sx={{ mb: 2 }}>
-        {Object.values(ProfileTabs).map(tab => (
-          <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
-        ))}
+        {Object.values(ProfileTabs).map(tab =>
+          shouldHideAddress && tab === ProfileTabs.addresses ? null : (
+            <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
+          ),
+        )}
       </Tabs>
       <ProfileGeneral open={value === ProfileTabs.general} />
-      <ProfileAddresses open={value === ProfileTabs.addresses} />
+      {!shouldHideAddress ? <ProfileAddresses open={value === ProfileTabs.addresses} /> : null}
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
       <ProfileSettings open={value === ProfileTabs.settings} />
     </Fragment>
