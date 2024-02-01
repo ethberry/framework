@@ -17,7 +17,7 @@ export const MerchantListItem: FC<IMerchantListItemProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/marketplace/merchants/${merchant.id}`}>
         <CardHeader title={merchant.title} />
-        <StyledCardMedia height={140} image={merchant.imageUrl} title={`${merchant.title}`} />
+        <StyledCardMedia image={merchant.imageUrl} title={`${merchant.title}`} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={merchant.description} />

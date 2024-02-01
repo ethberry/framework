@@ -32,7 +32,7 @@ export class Erc20ContractService extends ContractService {
   }
 
   public async create(dto: IErc20ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
-    const { address, symbol, decimals, title, description } = dto;
+    const { address, symbol, imageUrl = "", decimals, title, description } = dto;
 
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
     // there is no exception for merchantId=1, to create token use office
@@ -52,7 +52,7 @@ export class Erc20ContractService extends ContractService {
         name: title,
         title,
         description,
-        imageUrl: "",
+        imageUrl,
         chainId: userEntity.chainId,
         merchantId: userEntity.merchantId,
       })
@@ -63,7 +63,7 @@ export class Erc20ContractService extends ContractService {
         title,
         description,
         contract: contractEntity,
-        imageUrl: "",
+        imageUrl,
       })
       .save();
 

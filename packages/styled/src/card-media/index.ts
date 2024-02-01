@@ -8,5 +8,6 @@ export interface IStyledCardMediaProps extends CardMediaProps {
 export const StyledCardMedia = styled(CardMedia, {
   shouldForwardProp: prop => prop !== "height",
 })<IStyledCardMediaProps>(({ height = 200 }) => ({
+  backgroundSize: "contain",
   height,
 }));
