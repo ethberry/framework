@@ -47,8 +47,8 @@ export const AttachWalletButton: FC = () => {
         ?.getSigner()
         .signMessage(`${phrase}${data.nonce}`)
         .then((signature: string) => {
-          setData({ ...data, wallet: web3Context.account!, signature });
-          return attachCall.fn(void 0, { ...data, wallet: web3Context.account!, signature });
+          setData({ ...data, wallet: account!, signature });
+          return attachCall.fn(void 0, { ...data, wallet: account!, signature });
         }) as Promise<void>;
     },
     { success: false },
