@@ -3,7 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
-import { ContractFeatures, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ModuleType,
+  TemplateStatus,
+  TokenMetadata,
+  TokenRarity,
+  TokenStatus,
+  TokenType,
+} from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
@@ -86,9 +94,13 @@ export class TokenService {
       chainId: userEntity.chainId,
     });
 
-    if (account) {
+    // TODO ERC20 tokens must be shown without balance?
+    if (account && !contractType.includes(TokenType.ERC20)) {
       queryBuilder.andWhere("balance.account = :account", { account });
     }
+
+    // SHOW TOKENS ONLY WITH ACTIVE TEMPLATE
+    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     const rarity = metadata[TokenMetadata.RARITY];
     if (rarity) {

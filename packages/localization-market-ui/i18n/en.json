@@ -680,6 +680,7 @@
       },
       "hierarchy": {
         "erc1155": "ERC1155",
+        "erc20": "ERC20",
         "erc721": "ERC721",
         "erc998": "ERC998"
       },
@@ -836,6 +837,19 @@
       },
       "tokens": {
         "title": "ERC1155 Tokens"
+      }
+    },
+    "erc20": {
+      "title": "ERC20",
+      "token": {
+        "title": "ERC20 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC20 Tokens"
       }
     },
     "erc721": {

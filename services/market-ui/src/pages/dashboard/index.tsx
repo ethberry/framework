@@ -5,6 +5,7 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { Root, StyledDivider } from "./styled";
 
+import { Erc20Section } from "./hierarchy/erc20";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
@@ -41,6 +42,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={12} sm={4}>
           <PersonalSection />
           <MarketplaceSection />
+          <Erc20Section />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
