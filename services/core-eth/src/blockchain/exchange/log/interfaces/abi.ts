@@ -12,7 +12,7 @@ import ExchangeRaffleFacetSol from "@framework/core-contracts/artifacts/contract
 import ExchangeRentableFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeRentableFacet.sol/ExchangeRentableFacet.json";
 import ExchangeUtilsSol from "@framework/core-contracts/artifacts/contracts/Exchange/lib/ExchangeUtils.sol/ExchangeUtils.json";
 
-export const ABI = new Interface([
+export const ABIExchange = new Interface([
   ...new Set(
     ExchangeBreedFacetSol.abi
       .concat(ExchangeClaimFacetSol.abi)

@@ -19,7 +19,7 @@ import {
 import { ExchangeLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ABI } from "./interfaces";
+import { ABIExchange } from "./interfaces";
 import { testChainId } from "@framework/constants";
 import { getEventsTopics } from "../../../common/utils";
 
@@ -94,7 +94,7 @@ import { getEventsTopics } from "../../../common/utils";
           contract: {
             contractType: ContractType.EXCHANGE,
             contractAddress: exchangeEntity.address,
-            contractInterface: ABI,
+            contractInterface: ABIExchange,
             topics,
           },
           block: {

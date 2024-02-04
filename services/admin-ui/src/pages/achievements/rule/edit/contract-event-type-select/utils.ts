@@ -20,9 +20,6 @@ export enum ContractHierarchyERC1155EventType {
 
 export enum ContractHierarchyERC721EventType {
   Approval = "Approval",
-  RedeemClaim = "RedeemClaim",
-  UnpackClaim = "UnpackClaim",
-  UnpackMysteryBox = "UnpackMysteryBox",
   LevelUp = "LevelUp",
   Blacklisted = "Blacklisted",
   UnBlacklisted = "UnBlacklisted",
@@ -32,9 +29,6 @@ export enum ContractHierarchyERC721EventType {
 export enum ContractHierarchyERC721RandomEventType {
   MintRandom = "MintRandom",
   Approval = "Approval",
-  RedeemClaim = "RedeemClaim",
-  UnpackClaim = "UnpackClaim",
-  UnpackMysteryBox = "UnpackMysteryBox",
   LevelUp = "LevelUp",
   Blacklisted = "Blacklisted",
   UnBlacklisted = "UnBlacklisted",
@@ -46,13 +40,10 @@ export enum ContractHierarchyERC998EventType {
   Blacklisted = "Blacklisted",
   LevelUp = "LevelUp",
   ReceivedChild = "ReceivedChild",
-  RedeemClaim = "RedeemClaim",
   Transfer = "Transfer",
   TransferChild = "TransferChild",
   UnBlacklisted = "UnBlacklisted",
   UnWhitelistedChild = "UnWhitelistedChild",
-  UnpackClaim = "UnpackClaim",
-  UnpackMysteryBox = "UnpackMysteryBox",
   WhitelistedChild = "WhitelistedChild",
 }
 
@@ -62,13 +53,10 @@ export enum ContractHierarchyERC998RandomEventType {
   LevelUp = "LevelUp",
   MintRandom = "MintRandom",
   ReceivedChild = "ReceivedChild",
-  RedeemClaim = "RedeemClaim",
   Transfer = "Transfer",
   TransferChild = "TransferChild",
   UnBlacklisted = "UnBlacklisted",
   UnWhitelistedChild = "UnWhitelistedChild",
-  UnpackClaim = "UnpackClaim",
-  UnpackMysteryBox = "UnpackMysteryBox",
   WhitelistedChild = "WhitelistedChild",
 }
 
@@ -105,7 +93,50 @@ export enum ContractManagerEventType {
   WaitListDeployed = "WaitListDeployed",
 }
 
-// HIERARCHY ACHIEVEMENT EVENTS
+// STAKING ACHIEVEMENT EVENTS
+export enum ContractStakingEventType {
+  RuleCreated = "RuleCreated",
+  RuleUpdated = "RuleUpdated",
+  DepositStart = "DepositStart",
+  DepositWithdraw = "DepositWithdraw",
+  DepositFinish = "DepositFinish",
+  DepositReturn = "DepositReturn",
+  DepositPenalty = "DepositPenalty",
+}
+
+export enum ContractMysteryBoxEventType {
+  UnpackMysteryBox = "UnpackMysteryBox",
+}
+
+export enum ContractWrapperEventType {
+  UnpackWrapper = "UnpackWrapper",
+}
+
+export enum ContractLotteryEventType {
+  RoundStarted = "RoundStarted",
+  RoundEnded = "RoundEnded",
+  RoundFinalized = "RoundFinalized",
+  Prize = "Prize",
+  Released = "Released",
+  PaymentEthReceived = "PaymentEthReceived",
+}
+
+export const getLotteryEventType = (contract: IContract): Record<string, string> => {
+  const { contractType, contractFeatures } = contract;
+
+  switch (contractType) {
+    case TokenType.ERC721:
+      switch (contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES)) {
+        case true:
+          return ContractHierarchyERC721RandomEventType;
+        default:
+          return ContractHierarchyERC721EventType;
+      }
+    default:
+      return ContractLotteryEventType;
+  }
+};
+
 export const getHierarchyEventType = (contract: IContract): Record<string, string> => {
   const { contractType, contractFeatures } = contract;
 
@@ -150,6 +181,18 @@ export const getEventTypeByContractModule = (contract?: IContract): Record<strin
       return ContractExchangeEventType;
     case ModuleType.CONTRACT_MANAGER:
       return ContractManagerEventType;
+    case ModuleType.STAKING:
+      return ContractStakingEventType;
+    case ModuleType.MYSTERY:
+      return ContractMysteryBoxEventType;
+    case ModuleType.RAFFLE:
+      return getLotteryEventType(contract);
+    case ModuleType.LOTTERY:
+      return getLotteryEventType(contract);
+    case ModuleType.PONZI:
+      return ContractStakingEventType;
+    case ModuleType.WRAPPER:
+      return ContractWrapperEventType;
     default: {
       // throw new Error("wrong contract");
       return {};

@@ -34,11 +34,6 @@ enum ContractEventSignature {
   TransferSingle = "TransferSingle(address,address,address,uint256,uint256)",
   URI = "URI(string,uint256)",
 
-  // MODULE:CLAIM
-  // TODO REMOVE?
-  RedeemClaim = "RedeemClaim()",
-  UnpackClaim = "UnpackClaim()",
-
   // MODULE:LOTTERY
   RoundFinalized = "RoundFinalized(uint256,uint8[6])",
   // event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
