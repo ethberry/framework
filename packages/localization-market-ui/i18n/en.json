@@ -350,6 +350,7 @@
     "buttons": {
       "GRADE": "Grade",
       "add": "Add",
+      "addToMetamask": "Add to MetaMask",
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
