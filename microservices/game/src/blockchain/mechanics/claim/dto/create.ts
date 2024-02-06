@@ -6,15 +6,15 @@ import { Mixin } from "ts-mixer";
 import { AccountDto, ChainIdDto } from "@gemunion/collection";
 import { ClaimType, IClaimCreateDto } from "@framework/types";
 
-import { ItemDto } from "../../../exchange/asset/dto";
+import { NotNativeDto } from "../../../exchange/asset/dto";
 
 export class ClaimItemCreateDto extends Mixin(AccountDto, ChainIdDto) implements IClaimCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: NotNativeDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
