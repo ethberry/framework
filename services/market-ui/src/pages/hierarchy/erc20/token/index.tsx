@@ -7,7 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IToken } from "@framework/types";
 
-import { CommonErc0TokenPanel } from "./common-token-panel";
+import { CommonErc20TokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc20Token: FC = () => {
@@ -44,7 +44,7 @@ export const Erc20Token: FC = () => {
         <Grid item xs={12} sm={3}>
           {selected.templateId ? (
             <>
-              <CommonErc0TokenPanel token={selected} />
+              <CommonErc20TokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

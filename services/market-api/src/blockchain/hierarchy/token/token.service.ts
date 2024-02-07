@@ -246,6 +246,8 @@ export class TokenService {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -273,9 +275,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     // MODULE:RENT
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
-
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");
     queryBuilder.leftJoinAndSelect("rent_price.components", "rent_price_components");

@@ -11,9 +11,9 @@ import { StyledPaper } from "../styled";
 export const Erc20Section: FC = () => {
   const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
 
-  if (!isDevelopment) {
-    return null;
-  }
+  // if (!isDevelopment) {
+  //   return null;
+  // }
 
   return (
     <StyledPaper>
