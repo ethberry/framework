@@ -17,4 +17,5 @@ export interface IStakingDepositSearchDto extends IPaginationDto {
   startTimestamp: string;
   endTimestamp: string;
   contractIds: Array<number>;
+  merchantId?: number;
 }

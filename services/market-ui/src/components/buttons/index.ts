@@ -1,4 +1,6 @@
 export * from "./hierarchy/token/sell";
+export * from "./hierarchy/token/erc20-add-to-metamask";
+export * from "./hierarchy/token/erc20-transfer";
 export * from "./hierarchy/token/transfer";
 export * from "./hierarchy/token/transfer-single";
 export * from "./hierarchy/token/lend";

@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
@@ -85,12 +85,13 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     minimum: 1,
   })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
   public merchantId: number;
 
   public chainId: number;

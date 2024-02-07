@@ -5,6 +5,7 @@ import { Alert } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { formatEther } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { BusinessType, ContractStatus } from "@framework/types";
@@ -27,6 +28,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
     id,
     title,
     description,
+    imageUrl,
     contractStatus,
     name,
     symbol,
@@ -42,6 +44,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
   const fixedValues = {
     id,
     title,
+    imageUrl,
     address,
     symbol,
     decimals,
@@ -90,6 +93,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
       {id ? (
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { ICompositionSearchDto } from "@framework/types";
@@ -29,4 +29,12 @@ export class CompositionSearchDto extends SearchDto implements ICompositionSearc
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public childIds: Array<number>;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public merchantId: number;
 }

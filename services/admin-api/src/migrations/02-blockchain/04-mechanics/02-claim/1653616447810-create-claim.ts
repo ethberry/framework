@@ -15,6 +15,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.claim_type_enum AS ENUM (
+        'TEMPLATE',
         'TOKEN',
         'VESTING'
       );
@@ -49,7 +50,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
         {
           name: "claim_type",
           type: `${ns}.claim_type_enum`,
-          default: "'TOKEN'",
+          default: "'TEMPLATE'",
         },
         {
           name: "signature",

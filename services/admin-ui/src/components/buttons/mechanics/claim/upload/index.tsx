@@ -3,9 +3,10 @@ import { Add } from "@mui/icons-material";
 import { useIntl } from "react-intl";
 import { enqueueSnackbar } from "notistack";
 
-import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { ClaimType } from "@framework/types";
 import type { IClaim, IClaimUploadDto } from "@framework/types";
+import { useApiCall } from "@gemunion/react-hooks";
 
 import { ClaimUploadDialog } from "./dialog";
 
@@ -13,11 +14,12 @@ export interface IClaimUploadButtonProps {
   className?: string;
   disabled?: boolean;
   onRefreshPage: () => Promise<void>;
+  claimType: ClaimType;
   variant?: ListActionVariant;
 }
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
-  const { className, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
+  const { className, claimType, disabled, onRefreshPage, variant = ListActionVariant.button } = props;
 
   const { formatMessage } = useIntl();
 
@@ -31,6 +33,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
           url: "/claims/upload",
           data: {
             claims: claims.map(({ id: _id, ...rest }) => rest),
+            claimType,
           },
           method: "POST",
         })
@@ -81,6 +84,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         isLoading={isLoading}
         initialValues={{
           claims: [],
+          claimType,
         }}
       />
     </Fragment>

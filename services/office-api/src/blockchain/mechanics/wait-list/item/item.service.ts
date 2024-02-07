@@ -25,11 +25,8 @@ export class WaitListItemService {
     private readonly waitListListService: WaitListListService,
   ) {}
 
-  public async search(
-    dto: Partial<IWaitListItemSearchDto>,
-    userEntity: UserEntity,
-  ): Promise<[Array<WaitListItemEntity>, number]> {
-    const { skip, take, account, listIds } = dto;
+  public async search(dto: Partial<IWaitListItemSearchDto>): Promise<[Array<WaitListItemEntity>, number]> {
+    const { skip, take, account, listIds, merchantId } = dto;
 
     const queryBuilder = this.waitListItemEntityRepository.createQueryBuilder("waitlist");
 
@@ -42,7 +39,7 @@ export class WaitListItemService {
     queryBuilder.addSelect(["contract.contractStatus"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
-      merchantId: userEntity.merchantId,
+      merchantId,
     });
 
     if (listIds) {
@@ -63,7 +60,7 @@ export class WaitListItemService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "waitlist.createdAt": "ASC",
+      "waitlist.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

@@ -6,7 +6,7 @@ import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { isEqualArray, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
-import { deployDiamond, deployErc721Base } from "./shared/fixture";
+import { deployDiamond, deployErc721Base } from "./shared";
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 

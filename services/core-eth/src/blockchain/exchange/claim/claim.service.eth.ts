@@ -43,6 +43,7 @@ export class ExchangeClaimServiceEth {
             item: "claim.item",
             item_components: "item.components",
             item_template: "item_components.template",
+            item_token: "item_components.token",
             item_contract: "item_components.contract",
           },
         },

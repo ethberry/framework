@@ -93,8 +93,9 @@ export const formatPriceHistory = (components?: Array<IAssetComponentHistory>): 
 
 export const cleanUpAsset = ({ components }: IAsset = { components: [], id: 0 }) => {
   return {
-    components: components.map(({ id, tokenType, contractId, templateId, amount }) => ({
+    components: components.map(({ id, tokenId, tokenType, contractId, templateId, amount }) => ({
       id,
+      tokenId,
       tokenType,
       contractId,
       templateId,

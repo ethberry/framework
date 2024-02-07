@@ -5,4 +5,6 @@ export interface IMarketplaceReportSearchDto extends ISearchDto {
   endTimestamp: string;
   contractIds: Array<number>;
   templateIds: Array<number>;
+
+  merchantId?: number;
 }

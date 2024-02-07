@@ -15,7 +15,7 @@ export class StakingReportService {
     dto: Partial<IStakingReportSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<StakingDepositEntity>, number]> {
-    const { deposit, reward, contractId, ...rest } = dto;
+    const { deposit, reward, merchantId, contractId, ...rest } = dto;
     return this.stakingDepositService.search(
       {
         contractIds: [contractId as number],
@@ -27,6 +27,7 @@ export class StakingReportService {
           tokenType: [reward!.tokenType],
           contractIds: [reward!.contractId as number],
         },
+        merchantId: merchantId as number,
         ...rest,
       },
       userEntity,

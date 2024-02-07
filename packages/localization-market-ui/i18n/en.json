@@ -123,6 +123,7 @@
       "REDEEMED": "Redeemed"
     },
     "claimType": {
+      "TEMPLATE": "Template",
       "TOKEN": "Token",
       "VESTING": "Vesting"
     },
@@ -249,7 +250,6 @@
       "RandomnessRequest": "RandomnessRequest",
       "RandomnessRequestId": "RandomnessRequestId",
       "ReceivedChild": "ReceivedChild",
-      "RedeemClaim": "RedeemClaim",
       "RoleAdminChanged": "RoleAdminChanged",
       "RoleGranted": "RoleGranted",
       "RoleRevoked": "RoleRevoked",
@@ -268,7 +268,6 @@
       "UnBlacklisted": "UnBlacklisted",
       "UnWhitelisted": "UnWhitelisted",
       "UnWhitelistedChild": "UnWhitelistedChild",
-      "UnpackClaim": "UnpackClaim",
       "UnpackMysteryBox": "UnpackMysteryBox",
       "UnpackWrapper": "UnpackWrapper",
       "Unpaused": "Unpaused",
@@ -351,6 +350,7 @@
     "buttons": {
       "GRADE": "Grade",
       "add": "Add",
+      "addToMetamask": "Add to MetaMask",
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
@@ -679,6 +679,7 @@
       },
       "hierarchy": {
         "erc1155": "ERC1155",
+        "erc20": "ERC20",
         "erc721": "ERC721",
         "erc998": "ERC998"
       },
@@ -835,6 +836,19 @@
       },
       "tokens": {
         "title": "ERC1155 Tokens"
+      }
+    },
+    "erc20": {
+      "title": "ERC20",
+      "token": {
+        "title": "ERC20 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC20 Tokens"
       }
     },
     "erc721": {

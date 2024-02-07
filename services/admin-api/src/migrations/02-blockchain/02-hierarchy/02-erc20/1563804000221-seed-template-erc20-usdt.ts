@@ -40,7 +40,7 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
         0,
-        '100000000000',
+        '0',
         'ACTIVE',
         ${process.env.NODE_ENV === NodeEnv.production ? 12 : 20215},
         '${currentDateTime}',

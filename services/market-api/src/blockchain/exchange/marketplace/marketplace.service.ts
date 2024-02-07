@@ -164,7 +164,7 @@ export class MarketplaceService {
         nonce,
         extra: encodeBytes32String("0x"),
         receiver: templateEntity.contract.merchant.wallet,
-        referrer,
+        referrer: referrer === null ? ZeroAddress : referrer,
       },
       templateEntity,
     );

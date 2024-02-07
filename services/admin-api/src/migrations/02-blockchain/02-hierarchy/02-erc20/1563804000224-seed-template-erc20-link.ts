@@ -8,6 +8,9 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
+    const linkTokenImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fchainlink-coin-icon.png?alt=media&token=a36a5dca-b194-4ba2-b775-8562a722b0d6";
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,
@@ -25,7 +28,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 33 : 1021801},
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${linkTokenImgUrl}',
         null,
         0,
         '100000000000',
@@ -37,7 +40,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 34 : 2021801},
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${linkTokenImgUrl}',
         null,
         0,
         '100000000000',
@@ -49,7 +52,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 35 : 3021801},
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${linkTokenImgUrl}',
         null,
         0,
         '100000000000',
@@ -61,7 +64,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 36 : 4021801},
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${linkTokenImgUrl}',
         null,
         0,
         '100000000000',
@@ -73,7 +76,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 37 : 5021801},
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${linkTokenImgUrl}',
         null,
         0,
         '100000000000',

@@ -1,5 +1,7 @@
 export * from "./1563803000010-create-settings";
 export * from "./1563803000020-seed-settings";
+export * from "./1563803000060-create-network";
+export * from "./1563803000070-seed-network";
 export * from "./1563803000110-create-merchant";
 export * from "./1563803000120-seed-merchant";
 export * from "./1563803000130-create-user";

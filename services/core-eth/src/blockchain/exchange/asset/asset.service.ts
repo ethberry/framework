@@ -289,7 +289,6 @@ export class AssetService {
             // 721 && 998 and 1155 (i.e. dismantle)
             const tokenNestedEventHistoryEntity = await this.eventHistoryService.findOne(
               {
-                // transactionHash: eventHistoryEntity.transactionHash,
                 parentId: eventHistoryEntity.id,
                 contractId: contractEntity.id,
                 token: {
@@ -301,7 +300,6 @@ export class AssetService {
 
             const tokenNestedEventHistoryEntityTemplate = await this.eventHistoryService.findOne(
               {
-                // transactionHash: eventHistoryEntity.transactionHash,
                 parentId: eventHistoryEntity.id,
                 contractId: contractEntity.id,
                 token: {
@@ -315,7 +313,6 @@ export class AssetService {
 
             if (!tokenNestedEventHistoryEntity && !tokenNestedEventHistoryEntityTemplate) {
               this.loggerService.error(new NotFoundException("nestedEventNotFound"), "item", AssetService.name);
-              // throw new NotFoundException("nestedEventNotFound");
             }
 
             // for random 721 & 998: TokenID will be updated in Transfer event at next transaction

@@ -1,4 +1,5 @@
 import type { IBCAssetTemplateDto } from "../../exchange/asset/bc-asset";
+import { ClaimType } from "../../../../entities";
 
 export interface IClaimRowDto extends IBCAssetTemplateDto {
   id?: string;
@@ -8,4 +9,5 @@ export interface IClaimRowDto extends IBCAssetTemplateDto {
 
 export interface IClaimUploadDto {
   claims: Array<IClaimRowDto>;
+  claimType: ClaimType;
 }

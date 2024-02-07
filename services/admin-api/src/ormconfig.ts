@@ -16,6 +16,7 @@ import { BusinessType, NodeEnv } from "@framework/types";
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
+import { NetworkEntity } from "./infrastructure/network/network.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
@@ -114,6 +115,7 @@ import {
   CreateMerchant1563803000110,
   CreateMerge1697979517000,
   CreateMysterybox1653616447910,
+  CreateNetwork1563803000060,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
   CreateOtp1563803000160,
@@ -283,6 +285,7 @@ import {
   SeedMysteryBoxErc721At1653616447930,
   SeedMysteryBoxErc998At1653616447940,
   SeedMysteryBoxMixedAt1653616447970,
+  SeedNetwork1563803000070,
   SeedOrder1683724062010,
   SeedPage1563803000220,
   SeedParameter1683724061610,
@@ -348,7 +351,7 @@ import {
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
-import { AddNetworkSettings9993803000020 } from "./migrations/06-alter/9993803000020-add-network-settings";
+import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
 
 // TEST DATA 100k topics
 // import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
@@ -363,6 +366,7 @@ const config: PostgresConnectionOptions = {
     UserEntity,
     OtpEntity,
     SettingsEntity,
+    NetworkEntity,
     RatePlanEntity,
     /* blockchain */
     ContractManagerEntity,
@@ -447,6 +451,8 @@ const config: PostgresConnectionOptions = {
 
     CreateSettings1563803000010,
     SeedSettings1563803000020,
+    CreateNetwork1563803000060,
+    SeedNetwork1563803000070,
     CreateMerchant1563803000110,
     CreateChainLinkSubscriptions1563803000121,
     SeedMerchant1563803000120,
@@ -753,7 +759,7 @@ const config: PostgresConnectionOptions = {
 
     /* alter prod migrations */
     // SeedTestDataAt9763804000120,
-    AddNetworkSettings9993803000020,
+    AlterClaimTypeEnum1900000000000,
   ],
 };
 

@@ -1,13 +1,12 @@
 import { FC, MouseEvent, useState } from "react";
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { SANDBOX_CHAINS } from "@gemunion/provider-wallet";
-import { availableChains } from "@framework/constants";
 import type { IUser } from "@framework/types";
+import { useAppSelector } from "@gemunion/redux";
 
 import { spinnerMixin, StyledBadge, StyledCircle, StyledSvgIcon } from "./styled";
 import { getChainIconParams } from "./utils";
@@ -15,9 +14,9 @@ import { getChainIconParams } from "./utils";
 export const NetworkButton: FC = () => {
   const user = useUser<IUser>();
   const { formatMessage } = useIntl();
-  const { chainId: web3ChainId } = useWeb3React();
   const [anchor, setAnchor] = useState<Element | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { networks } = useAppSelector(state => state.wallet);
 
   const handleMenuOpen = (event: MouseEvent): void => {
     setAnchor(event.currentTarget);
@@ -34,7 +33,7 @@ export const NetworkButton: FC = () => {
     setIsLoading(false);
   };
 
-  if (!user?.profile) {
+  if (!user?.profile || !Object.keys(networks).length) {
     return null;
   }
 
@@ -62,24 +61,26 @@ export const NetworkButton: FC = () => {
         </StyledBadge>
       </Tooltip>
       <Menu id="select-chainId" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
-        {availableChains.map(chainId => {
-          const { chainIcon, viewBox } = getChainIconParams(chainId);
-          return (
-            <MenuItem
-              key={chainId}
-              selected={chainId === web3ChainId}
-              onClick={handleSelectNetwork(chainId)}
-              color="inherit"
-            >
-              <ListItemIcon>
-                <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
-              </ListItemIcon>
-              <ListItemText>
-                <FormattedMessage id={`enums.chainId.${chainId}`} />
-              </ListItemText>
-            </MenuItem>
-          );
-        })}
+        {Object.values(networks)
+          .sort((a, b) => Number(a.order) - Number(b.order))
+          .map(network => {
+            const { chainIcon, viewBox } = getChainIconParams(network.chainId);
+            return (
+              <MenuItem
+                key={network.chainId}
+                selected={network.chainId === chainId}
+                onClick={handleSelectNetwork(network.chainId)}
+                color="inherit"
+              >
+                <ListItemIcon>
+                  <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
+                </ListItemIcon>
+                <ListItemText>
+                  <FormattedMessage id={`enums.chainId.${network.chainId}`} />
+                </ListItemText>
+              </MenuItem>
+            );
+          })}
       </Menu>
     </ProgressOverlay>
   );

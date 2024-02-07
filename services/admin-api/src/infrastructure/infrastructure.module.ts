@@ -9,6 +9,7 @@ import { OtpModule } from "./otp/otp.module";
 import { ProfileModule } from "./profile/profile.module";
 import { SettingsModule } from "./settings/settings.module";
 import { UserModule } from "./user/user.module";
+import { NetworkModule } from "./network/network.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserModule } from "./user/user.module";
     HealthModule,
     InvitationModule,
     MerchantModule,
+    NetworkModule,
     OtpModule,
     ProfileModule,
     SettingsModule,

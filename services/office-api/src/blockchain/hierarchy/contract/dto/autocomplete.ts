@@ -70,6 +70,14 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   public includeExternalContracts: boolean;
 
   public chainId: number;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 
   @ApiPropertyOptional()

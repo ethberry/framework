@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
@@ -48,9 +48,10 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     minimum: 1,
   })
+  @IsOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)

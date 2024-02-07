@@ -17,6 +17,7 @@ import type { IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { VestingClaimUploadButton } from "../../../../components/buttons";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { VestingClaimEditDialog } from "./edit";
 
 export const VestingClaim: FC = () => {
@@ -93,6 +94,9 @@ export const VestingClaim: FC = () => {
         testId="VestingClaimSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SearchMerchantInput disableClear />
+          </Grid>
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />
           </Grid>

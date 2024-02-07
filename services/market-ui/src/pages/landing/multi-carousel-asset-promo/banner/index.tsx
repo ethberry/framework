@@ -15,6 +15,8 @@ import {
   StyledTime,
   StyledTitle,
 } from "./styled";
+import { getChainIconParams } from "../../../../components/common/header/network/utils";
+import { StyledSvgIcon } from "../../../../components/common/header/network/styled";
 
 interface IBannerProps {
   promo: IAssetPromo;
@@ -22,6 +24,8 @@ interface IBannerProps {
 
 export const AssetPromoBanner: FC<IBannerProps> = props => {
   const { promo } = props;
+  const { chainIcon, viewBox } = getChainIconParams(promo.item?.components[0].contract?.chainId || 56);
+
   const [time, setTime] = useState("");
 
   let interval: NodeJS.Timeout;
@@ -58,7 +62,14 @@ export const AssetPromoBanner: FC<IBannerProps> = props => {
           </StyledDescription>
           <StyledTime>{time}</StyledTime>
           <StyledButtonWrapper>
-            <PromoPurchaseButton promo={promo} />
+            <Grid container spacing={1} justifyContent="center" alignItems="center">
+              <Grid item xs={12} alignItems="center">
+                <PromoPurchaseButton promo={promo} />
+              </Grid>
+              <Grid item xs={12} alignItems="center">
+                <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
+              </Grid>
+            </Grid>
           </StyledButtonWrapper>
         </StyledContent>
       </Grid>

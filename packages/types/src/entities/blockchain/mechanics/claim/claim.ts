@@ -10,6 +10,7 @@ export enum ClaimStatus {
 }
 
 export enum ClaimType {
+  TEMPLATE = "TEMPLATE",
   TOKEN = "TOKEN",
   VESTING = "VESTING",
 }

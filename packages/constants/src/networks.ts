@@ -1,5 +1,6 @@
 export const networks = {
   "1": {
+    order: 1,
     chainName: "Ethereum",
     chainId: 1,
     rpcUrls: [
@@ -15,6 +16,7 @@ export const networks = {
     },
   },
   "5": {
+    order: 2,
     chainName: "Goerly",
     chainId: 5,
     rpcUrls: ["https://rpc.goerli.mudit.blog"],
@@ -26,6 +28,7 @@ export const networks = {
     },
   },
   "56": {
+    order: 3,
     chainName: "Binance Smart Chain",
     chainId: 56,
     rpcUrls: [
@@ -41,6 +44,7 @@ export const networks = {
     },
   },
   "97": {
+    order: 4,
     chainName: "Binance Smart Chain Testnet",
     chainId: 97,
     rpcUrls: [
@@ -59,6 +63,7 @@ export const networks = {
     },
   },
   "137": {
+    order: 5,
     chainName: "Polygon",
     chainId: 137,
     rpcUrls: [
@@ -74,7 +79,24 @@ export const networks = {
       decimals: 18,
     },
   },
+  "80001": {
+    order: 6,
+    chainName: "Mumbai",
+    chainId: 80001,
+    rpcUrls: [
+      "https://rpc-mumbai.maticvigil.com",
+      "https://matic-mumbai.chainstacklabs.com",
+      "https://matic-testnet-archive-rpc.bwarelabs.com",
+    ],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com"],
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18,
+    },
+  },
   "10000": {
+    order: 7,
     chainName: "Gemunion",
     chainId: 10000,
     rpcUrls: ["https://besu.gemunion.io"],
@@ -86,6 +108,7 @@ export const networks = {
     },
   },
   "10001": {
+    order: 8,
     chainName: "Besu",
     chainId: 10001,
     rpcUrls: ["http://127.0.0.1:8545"],
@@ -96,22 +119,8 @@ export const networks = {
       decimals: 18,
     },
   },
-  "80001": {
-    chainName: "Mumbai",
-    chainId: 80001,
-    rpcUrls: [
-      "https://matic-mumbai.chainstacklabs.com",
-      "https://matic-testnet-archive-rpc.bwarelabs.com",
-      "https://rpc-mumbai.maticvigil.com",
-    ],
-    blockExplorerUrls: ["https://mumbai.polygonscan.com"],
-    nativeCurrency: {
-      name: "MATIC",
-      symbol: "MATIC",
-      decimals: 18,
-    },
-  },
   "11155111": {
+    order: 9,
     chainName: "Sepolia",
     chainId: 11155111,
     rpcUrls: ["https://rpc.sepolia.org"],

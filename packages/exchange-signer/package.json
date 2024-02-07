@@ -10,11 +10,11 @@
   "dependencies": {
     "@framework/types": "0.0.1",
     "@gemunion/contracts-constants": "5.0.17",
-    "@gemunion/nest-js-module-ethers-gcp": "5.1.0-redis-beta.12",
-    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.24"
+    "@gemunion/nest-js-module-ethers-gcp": "6.1.1",
+    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.25"
   },
   "devDependencies": {
-    "@nestjs/common": "10.3.0",
+    "@nestjs/common": "10.3.1",
     "@nestjs/config": "3.1.1",
     "ethers": "6.10.0"
   },

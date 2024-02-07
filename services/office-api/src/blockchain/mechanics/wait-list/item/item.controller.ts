@@ -27,11 +27,8 @@ export class WaitListItemController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(
-    @Query() dto: WaitListItemSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<[Array<WaitListItemEntity>, number]> {
-    return this.waitListItemService.search(dto, userEntity);
+  public search(@Query() dto: WaitListItemSearchDto): Promise<[Array<WaitListItemEntity>, number]> {
+    return this.waitListItemService.search(dto);
   }
 
   @Post("/")

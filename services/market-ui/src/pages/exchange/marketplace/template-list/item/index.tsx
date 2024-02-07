@@ -20,7 +20,7 @@ export const TemplateListItem: FC<IErc721TemplateListItemProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/marketplace/templates/${template.id}`}>
         <CardHeader title={template.title} />
-        <StyledCardMedia height={140} image={template.imageUrl} />
+        <StyledCardMedia image={template.imageUrl} />
         <CardContent>
           <StyledCardContentDescription>
             <RichTextDisplay data={template.description} />

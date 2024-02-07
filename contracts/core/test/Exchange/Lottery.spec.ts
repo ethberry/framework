@@ -9,7 +9,7 @@ import { getContractName, isEqualEventArgObj } from "../utils";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
-import { deployDiamond } from "./shared/fixture";
+import { deployDiamond } from "./shared";
 
 describe("Diamond Exchange Lottery", function () {
   const factory = async (facetName = "ExchangeLotteryFacet"): Promise<any> => {

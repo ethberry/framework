@@ -137,6 +137,8 @@ export class AchievementRuleService {
       join: {
         alias: "rule",
         leftJoinAndSelect: {
+          // TODO get only necessary relations - module, type, features and decimals
+          contract: "rule.contract",
           item: "rule.item",
           item_components: "item.components",
           item_contract: "item_components.contract",

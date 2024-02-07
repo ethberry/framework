@@ -4,7 +4,6 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -15,6 +14,7 @@ import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IAssetPromo, IAssetPromoSearchDto, IUser } from "@framework/types";
 
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { AssetPromoEditDialog } from "./edit";
 
 export const AssetPromo: FC = () => {
@@ -82,7 +82,7 @@ export const AssetPromo: FC = () => {
       >
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SearchMerchantInput disableClear />
           </Grid>
         </Grid>
       </CommonSearchForm>

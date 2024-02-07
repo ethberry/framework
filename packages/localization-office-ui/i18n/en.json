@@ -63,6 +63,25 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "LEVEL": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "RARITY": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon"
+    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -104,11 +123,24 @@
       "REDEEMED": "Redeemed"
     },
     "contractFeatures": {
+      "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
+      "DISCRETE": "Discrete",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
+      "GENES": "Genes",
+      "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
+      "PAUSABLE": "Pausable",
+      "RANDOM": "Random",
       "REFERRAL": "Linear referral",
+      "RENTABLE": "Rentable",
       "SOULBOUND": "Soulbound",
+      "SPLITTER": "Payment Splitter",
+      "STABLE_COIN": "Stable Coin",
+      "STATEHASH": "State Hash",
+      "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {
@@ -297,6 +329,7 @@
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
+      "ponziBalance": "Ponzi balance",
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
@@ -312,7 +345,9 @@
       "transfer": "Transfer",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
-      "upload": "Upload"
+      "unwhitelist": "Un whitelist",
+      "upload": "Upload",
+      "whitelist": "Whitelist"
     },
     "hints": {
       "editNotAllowed": "Editing of this rule is not allowed",
@@ -370,6 +405,7 @@
       "contractModule": "Module type",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "contractType": "Contract type",
       "count": "Max breeds count",
       "country": "Country",
       "craftStatus": "Status",
@@ -666,6 +702,12 @@
     },
     "claims": {
       "defaultItemTitle": "{account}",
+      "template": {
+        "title": "Claim Templates"
+      },
+      "token": {
+        "title": "Claim Tokens"
+      },
       "title": "Claim"
     },
     "dashboard": {
@@ -797,6 +839,11 @@
     "marketplace": {
       "chart": {
         "title": "Chart"
+      },
+      "grade": {
+        "amount": "Amount",
+        "attribute": "Grade",
+        "title": "Grade"
       },
       "report": {
         "title": "Report"

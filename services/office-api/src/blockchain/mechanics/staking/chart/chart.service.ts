@@ -15,7 +15,7 @@ export class StakingChartService {
   ) {}
 
   public async chart(dto: IStakingChartSearchDto, userEntity: UserEntity): Promise<any> {
-    const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
+    const { deposit, reward, merchantId, emptyReward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
     const queryString = `
@@ -39,6 +39,7 @@ export class StakingChartService {
                             INNER JOIN
                         ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
                                                               AND deposit_contract.chain_id = $3
+                                                              AND deposit_contract.merchant_id = $6
                                                               AND deposit_contract.contract_type = $4
                                                               AND deposit_contract.id = $5
                         ${emptyReward ? "" : `
@@ -47,8 +48,9 @@ export class StakingChartService {
                             INNER JOIN
                         ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
                                                               AND reward_contract.chain_id = $3
-                                                              AND reward_contract.contract_type = $6
-                                                              AND reward_contract.id = $7
+                                                              AND reward_contract.merchant_id = $6
+                                                              AND reward_contract.contract_type = $7
+                                                              AND reward_contract.id = $8
                         `}
                             CROSS JOIN generate_series(staking_deposit.start_timestamp, (staking_deposit.start_timestamp +  (staking_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
                    WHERE staking_deposit.start_timestamp <= $2
@@ -69,13 +71,14 @@ export class StakingChartService {
       this.entityManager.query(
         queryString,
         emptyReward
-          ? [startTimestamp, endTimestamp, userEntity.chainId, deposit.tokenType, deposit.contractId]
+          ? [startTimestamp, endTimestamp, userEntity.chainId, deposit.tokenType, deposit.contractId, merchantId]
           : [
               startTimestamp,
               endTimestamp,
               userEntity.chainId,
               deposit.tokenType,
               deposit.contractId,
+              merchantId,
               reward!.tokenType,
               reward!.contractId,
             ],

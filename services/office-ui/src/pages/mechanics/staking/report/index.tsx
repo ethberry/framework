@@ -10,17 +10,22 @@ import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { InputType } from "@gemunion/types-collection";
-import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
+import type { IStakingDeposit, IStakingReportSearchDto, IUser } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
-
 import { formatItem } from "@framework/exchange";
+
 import { SearchTokenSelectInput } from "../../../../components/inputs/search-token-select";
 import { SearchContractInput } from "../../../../components/inputs/search-contract";
+import { StakingContractInput } from "../../../../components/inputs/staking-contract";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 
 export const StakingReport: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -47,6 +52,7 @@ export const StakingReport: FC = () => {
         contractId: InputType.awaited,
       },
       emptyReward: false,
+      merchantId: profile.merchantId,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
@@ -129,6 +135,12 @@ export const StakingReport: FC = () => {
         testId="StakingReportSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <SearchMerchantInput disableClear />
+          </Grid>
+          <Grid item xs={6}>
+            <StakingContractInput />
+          </Grid>
           <Grid item xs={6}>
             <SelectInput name="stakingDepositStatus" options={StakingDepositStatus} multiple />
           </Grid>

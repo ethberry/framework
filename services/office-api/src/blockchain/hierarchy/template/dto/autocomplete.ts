@@ -62,5 +62,13 @@ export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
   public contractIds: Array<number>;
 
   public chainId: number;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 }

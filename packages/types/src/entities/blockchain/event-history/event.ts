@@ -60,10 +60,6 @@ export enum ContractEventType {
   TransferSingle = "TransferSingle",
   URI = "URI",
 
-  // MODULE:CLAIM
-  RedeemClaim = "RedeemClaim",
-  UnpackClaim = "UnpackClaim",
-
   // MODULE:LOTTERY
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
@@ -199,11 +195,6 @@ export enum ContractEventSignature {
   TransferBatch = "TransferBatch(address,address,address,uint256[],uint256[])",
   TransferSingle = "TransferSingle(address,address,address,uint256,uint256)",
   URI = "URI(string,uint256)",
-
-  // MODULE:CLAIM
-  // TODO REMOVE?
-  RedeemClaim = "RedeemClaim()",
-  UnpackClaim = "UnpackClaim()",
 
   // event Merge(address account, uint256 externalId, Asset[] items, Asset[] price);
   // MODULE:MERGE

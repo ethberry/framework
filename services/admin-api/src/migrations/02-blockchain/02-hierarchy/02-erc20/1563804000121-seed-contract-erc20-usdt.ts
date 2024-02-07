@@ -60,7 +60,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         'Tether USD',
         'USDT',
-        6,
+        18,
         0,
         '',
         'ACTIVE',

@@ -3,7 +3,6 @@ import { Button, Grid, List, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -16,6 +15,7 @@ import { ListAction, ListActions, StyledListItem, StyledPagination } from "@fram
 import type { IGrade, IGradeSearchDto, IUser } from "@framework/types";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { GradeEditDialog } from "./edit";
 
 export const Grade: FC = () => {
@@ -88,10 +88,10 @@ export const Grade: FC = () => {
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="ExchangeSearchForm">
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <SelectInput multiple name="gradeStatus" options={GradeStatus} />
+            <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput name="merchantId" controller="merchants" disableClear />
+            <SelectInput multiple name="gradeStatus" options={GradeStatus} />
           </Grid>
         </Grid>
       </CommonSearchForm>

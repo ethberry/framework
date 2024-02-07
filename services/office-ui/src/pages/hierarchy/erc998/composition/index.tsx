@@ -6,21 +6,25 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
-import type { IComposition, ICompositionSearchDto } from "@framework/types";
+import type { IComposition, ICompositionSearchDto, IUser } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ERC998WhitelistChildABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
+import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
+import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 
 export const Erc998Composition: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -44,6 +48,7 @@ export const Erc998Composition: FC = () => {
     search: {
       parentIds: [],
       childIds: [],
+      merchantId: profile.merchantId,
     },
   });
 
@@ -115,10 +120,12 @@ export const Erc998Composition: FC = () => {
       >
         <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SearchMerchantInput disableClear />
+          </Grid>
           <Grid item xs={6}>
-            <EntityInput
+            <SearchMerchantContractsInput
               name="parentIds"
-              controller="contracts"
               multiple
               data={{
                 contractType: [TokenType.ERC998],
@@ -129,9 +136,8 @@ export const Erc998Composition: FC = () => {
             />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
+            <SearchMerchantContractsInput
               name="childIds"
-              controller="contracts"
               multiple
               data={{
                 contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
