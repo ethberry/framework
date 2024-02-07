@@ -7,6 +7,8 @@ import { NodeEnv } from "@framework/types";
 export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const usdtImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -25,7 +27,7 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 11 : 1021501},
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         null,
         0,
         '100000000000',
@@ -37,7 +39,7 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 12 : 2021501},
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         null,
         0,
         '0',
@@ -49,7 +51,7 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 13 : 3021501},
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         null,
         0,
         '100000000000',
@@ -61,7 +63,7 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 14 : 4021501},
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         null,
         0,
         '100000000000',

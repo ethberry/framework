@@ -11,6 +11,8 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const linkAddr = process.env.LINK_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
+    const linkImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fchainlink-coin-icon.png?alt=media&token=a36a5dca-b194-4ba2-b775-8562a722b0d6";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -38,7 +40,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         '${chainId}',
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${linkImgUrl}',
         'ChainLink LINK',
         'LINK',
         18,
@@ -57,7 +59,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         56,
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${linkImgUrl}',
         'ChainLink LINK',
         'LINK',
         18,
@@ -76,7 +78,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         1,
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${linkImgUrl}',
         'ChainLink LINK',
         'LINK',
         18,
@@ -95,7 +97,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         137,
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${linkImgUrl}',
         'ChainLink LINK',
         'LINK',
         18,
@@ -114,7 +116,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         97,
         'LINK',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${linkImgUrl}',
         'ChainLink LINK',
         'LINK',
         18,

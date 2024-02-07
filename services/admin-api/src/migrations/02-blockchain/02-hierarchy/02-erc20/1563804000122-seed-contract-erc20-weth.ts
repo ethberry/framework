@@ -11,6 +11,8 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
+    const wethImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2FWETHlogo.png?alt=media&token=db89a916-7ade-49ba-9a17-23dba10e2b79";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -38,7 +40,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         '${chainId}',
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         'Wrapped ETH',
         'WETH',
         18,
@@ -57,7 +59,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         56,
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         'Wrapped ETH',
         'WETH',
         18,
@@ -76,7 +78,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         1,
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         'Wrapped ETH',
         'WETH',
         18,
@@ -95,7 +97,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         137,
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         'Wrapped ETH',
         'WETH',
         18,
