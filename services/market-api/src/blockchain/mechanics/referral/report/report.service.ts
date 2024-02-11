@@ -8,7 +8,7 @@ import { ns } from "@framework/constants";
 import { formatItem } from "@framework/exchange";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { ReferralEntity } from "../reward/reward.entity";
+import { ReferralRewardEntity } from "../reward/reward.entity";
 import { ReferralRewardService } from "../reward/reward.service";
 // import { formatEther } from "../reward/reward.utils";
 
@@ -23,7 +23,7 @@ export class ReferralReportService {
   public async search(
     dto: Partial<IReferralReportSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<ReferralEntity>, number]> {
+  ): Promise<[Array<ReferralRewardEntity>, number]> {
     return this.referralRewardService.search(dto, userEntity);
   }
 

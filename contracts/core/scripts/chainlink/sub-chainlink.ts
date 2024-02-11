@@ -80,6 +80,18 @@ async function main() {
     const linkAmount = WeiPerEther * 1000n;
     await debug(await linkInstance.connect(besuOwner).transfer(owner.address, linkAmount), "transfer1000LinkToOwner");
   }
+  // GET ETH TOKEN to OWNER
+  if (network.name !== "besu") {
+    // SEND ETH to FW OWNER on gemunion besu only
+    const ethAmount = WeiPerEther * 1000n;
+    await debug(
+      await _moneybag.sendTransaction({
+        to: owner.address,
+        value: ethAmount, // Sends exactly 1000.0 ether
+      }),
+      "fund 1000 ETH",
+    );
+  }
 
   // CREATE VRF SUBSCRIPTION
   await debug(await vrfInstance.createSubscription(), "createSubscription");

@@ -132,6 +132,8 @@ import {
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
   CreateReferralRewardAt1660103709900,
+  CreateReferralProgramAt1660003709900,
+  CreateReferralTreeAt1660203709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
@@ -350,8 +352,9 @@ import {
   SeedWrapperAt1563804000370,
 } from "./migrations";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
+import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
 
 // TEST DATA 100k topics
 // import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
@@ -405,7 +408,8 @@ const config: PostgresConnectionOptions = {
     StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
-    ReferralEntity,
+    ReferralRewardEntity,
+    ReferralProgramEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -638,6 +642,8 @@ const config: PostgresConnectionOptions = {
     SeedAssetPromoMysteryBoxAt1658980521050,
 
     CreateReferralRewardAt1660103709900,
+    CreateReferralProgramAt1660003709900,
+    CreateReferralTreeAt1660203709900,
     // SeedReferralRewardAt1660103709910,
 
     // LOTTERY

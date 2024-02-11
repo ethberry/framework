@@ -43,6 +43,8 @@ export * from "./mechanics/wait-list/item";
 
 export * from "./mechanics/referral/leaderboard";
 export * from "./mechanics/referral/reward";
+export * from "./mechanics/referral/program";
+export * from "./mechanics/referral/tree";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

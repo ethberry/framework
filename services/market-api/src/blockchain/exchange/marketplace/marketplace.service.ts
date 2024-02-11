@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { encodeBytes32String, ethers, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -26,6 +25,7 @@ import {
   conduitKey,
   getItemType,
 } from "../../../common/utils/opensea";
+import { ReferralService } from "../../mechanics/referral/program/referral.service";
 
 @Injectable()
 export class MarketplaceService {
@@ -35,7 +35,7 @@ export class MarketplaceService {
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
     private readonly contractService: ContractService,
-    protected readonly configService: ConfigService,
+    protected readonly referralService: ReferralService,
   ) {}
 
   public async sell(dto: ITokenSellDto, userEntity: UserEntity): Promise<any> {
@@ -143,6 +143,9 @@ export class MarketplaceService {
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
+
+    // DO REFERRAL LOGIC
+    // await this.referralService.referralPurchase(account, referrer, templateEntity.contract.merchantId);
 
     const cap = BigInt(templateEntity.cap);
     if (cap > 0 && cap <= BigInt(templateEntity.amount)) {
