@@ -7,14 +7,14 @@ import { ns } from "@framework/constants";
 import type { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { ReferralEntity } from "./reward.entity";
+import { ReferralRewardEntity } from "./reward.entity";
 // import { formatEther } from "./reward.utils";
 
 @Injectable()
 export class ReferralRewardService {
   constructor(
-    @InjectRepository(ReferralEntity)
-    private readonly referralRewardEntityRepository: Repository<ReferralEntity>,
+    @InjectRepository(ReferralRewardEntity)
+    private readonly referralRewardEntityRepository: Repository<ReferralRewardEntity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
@@ -22,7 +22,7 @@ export class ReferralRewardService {
   public async search(
     dto: Partial<IReferralReportSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<ReferralEntity>, number]> {
+  ): Promise<[Array<ReferralRewardEntity>, number]> {
     const { query, startTimestamp, endTimestamp, skip, take } = dto;
     const queryBuilder = this.referralRewardEntityRepository.createQueryBuilder("reward");
 
@@ -86,9 +86,9 @@ export class ReferralRewardService {
   }
 
   public findOne(
-    where: FindOptionsWhere<ReferralEntity>,
-    options?: FindOneOptions<ReferralEntity>,
-  ): Promise<ReferralEntity | null> {
+    where: FindOptionsWhere<ReferralRewardEntity>,
+    options?: FindOneOptions<ReferralRewardEntity>,
+  ): Promise<ReferralRewardEntity | null> {
     return this.referralRewardEntityRepository.findOne({ where, ...options });
   }
 

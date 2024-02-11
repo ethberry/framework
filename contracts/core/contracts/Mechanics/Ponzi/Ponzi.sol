@@ -90,18 +90,6 @@ contract Ponzi is
     // Transfer tokens from user to this contract.
     ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), _msgSender(), address(this), _disabledTypes);
 
-    //    if (depositItem.tokenType == TokenType.NATIVE) {
-    //      require(msg.value == depositItem.amount, "Ponzi: wrong amount");
-    //      emit PaymentEthReceived(_msgSender(), msg.value);
-    //    } else if (depositItem.tokenType == TokenType.ERC20) {
-    //      IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
-    //    } else {
-    //      revert("Ponzi: unsupported token type");
-    //    }
-    //
-    //    Asset[] memory depositItems = new Asset[](1);
-    //    depositItems[0] = depositItem;
-
     _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
   }
 

@@ -24,7 +24,7 @@ export default {
       timeout: 142000,
       accounts: [
         "0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63", // 0xfe3b557e8fb62b89f4916b721be55ceb828dbd73
-        "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3", // 0x627306090abaB3A6e1400e9345bC60c78a8BEf57
+        "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3", // 0x627306090abab3a6e1400e9345bc60c78a8bef57
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
@@ -42,7 +42,7 @@ export default {
       url: process.env.JSON_RPC_ADDR_GEMUNION,
       timeout: 30000,
       accounts: [
-        process.env.GEMUNION_PRIVATE_KEY_PROD, // 0x7008594bB5764beDE9c0511b0E1322e7fC5048D3
+        process.env.GEMUNION_PRIVATE_KEY_PROD, // 0x7008594bb5764bede9c0511b0e1322e7fc5048d3
         "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3", // 0x627306090abaB3A6e1400e9345bC60c78a8BEf57
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
         "0x93551a60e21c15bd7cf36eb98cadba972e44aed3e7405f3bcee3c8d8fcb03c95", // gemunion-besu owner 0x61284003E50b2D7cA2B95F93857abB78a1b0F3Ca
@@ -52,9 +52,9 @@ export default {
       url: process.env.JSON_RPC_ADDR_BINANCE,
       chainId: 56,
       gasPrice: 20000000000,
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-      },
+      accounts: [
+        process.env.GEMUNION_PRIVATE_KEY_PROD, // 0x7008594bB5764beDE9c0511b0E1322e7fC5048D3
+      ],
     },
     // has to have underscore
     binance_test: {
@@ -65,12 +65,24 @@ export default {
       gasPrice: 5000000000,
       accounts: [
         process.env.GEMUNION_PRIVATE_KEY_STAGE, // 0xf6bD844ED9Ebd5FA533D0Ae26fD864aF6FD61Df2
+        // process.env.GEMUNION_PRIVATE_KEY_PROD, // 0x7008594bB5764beDE9c0511b0E1322e7fC5048D3
       ],
     },
     goerli: {
       url: process.env.JSON_RPC_ADDR_GOERLY,
       accounts: [process.env.PRIVATE_KEY],
       timeout: 142000,
+    },
+    sepolia: {
+      url: process.env.JSON_RPC_ADDR_SEPOLIA,
+      chainId: 11155111,
+      // gasPrice: "auto",
+      // gas: 2100000,
+      // gasPrice: 5000000000,
+      accounts: [
+        process.env.GEMUNION_PRIVATE_KEY_STAGE, // 0xf6bD844ED9Ebd5FA533D0Ae26fD864aF6FD61Df2
+        process.env.GEMUNION_PRIVATE_KEY_PROD, // 0x7008594bB5764beDE9c0511b0E1322e7fC5048D3
+      ],
     },
   },
   solidity: {
@@ -98,8 +110,10 @@ export default {
   gasReporter: {
     enabled: process.env.REPORT_GAS === "true",
   },
-  contractSizer: {
-    alphaSort: false,
-    outputFile: "./framework-sizes.txt",
+  etherscan: {
+    apiKey: {
+      bscTestnet: process.env.ETHERSCAN_API_KEY,
+      bsc: process.env.ETHERSCAN_API_KEY,
+    },
   },
 } as HardhatUserConfig;

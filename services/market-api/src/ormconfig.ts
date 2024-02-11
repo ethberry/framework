@@ -28,7 +28,7 @@ import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
@@ -64,6 +64,7 @@ import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity"
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-parameter.entity";
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -89,7 +90,8 @@ const config: PostgresConnectionOptions = {
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
-    ReferralEntity,
+    ReferralRewardEntity,
+    ReferralProgramEntity,
 
     // mechanics
     CraftEntity,

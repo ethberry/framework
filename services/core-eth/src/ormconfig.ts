@@ -43,7 +43,9 @@ import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralEntity } from "./blockchain/mechanics/referral/referral.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/referral.reward.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/referral/tree/referral.tree.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -90,7 +92,9 @@ const config: PostgresConnectionOptions = {
     PonziRulesEntity,
     WaitListListEntity,
     WaitListItemEntity,
-    ReferralEntity,
+    ReferralRewardEntity,
+    ReferralTreeEntity,
+    ReferralProgramEntity,
     /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,

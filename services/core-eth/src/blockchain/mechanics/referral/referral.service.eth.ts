@@ -30,12 +30,12 @@ export class ReferralServiceEth {
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     private readonly configService: ConfigService,
-    private readonly referralService: ReferralService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly assetService: AssetService,
     private readonly notificatorService: NotificatorService,
+    private readonly referralService: ReferralService,
   ) {}
 
   public async refEvent(event: ILogEvent<IReferralEvent>, context: Log): Promise<void> {
@@ -90,8 +90,9 @@ export class ReferralServiceEth {
         throw new NotFoundException("assetNotFound");
       }
 
-      // FIND ITEM BY PARENT EXCHANGE EVENT
+      let refInfo;
       // TODO consider Deposit events too
+      // FIND ITEM BY PARENT EXCHANGE EVENT
       if (parentId) {
         const assetHistory = await this.assetService.findAll(
           {
@@ -107,6 +108,15 @@ export class ReferralServiceEth {
           const itemComponets = [];
 
           for (const item of assetHistory) {
+            // DO REFERRAL TREE LOGIC
+            const { merchantId } = item.contract;
+
+            // TODO consider item with mixed merchants
+            // DO ONLY ONCE for asset (all asset components belongs to the same merchant)
+            if (!refInfo) {
+              refInfo = await this.referralService.referralEventLevel(merchantId, account, referrer);
+            }
+
             itemComponets.push({
               tokenType: item.contract.contractType!,
               contractId: item.contractId,
@@ -120,14 +130,20 @@ export class ReferralServiceEth {
         }
       }
 
-      await this.referralService.create({
-        account: account.toLowerCase(),
-        referrer: referrer.toLowerCase(),
-        contractId: contractEntity.id,
-        priceId: assetEntity.id,
-        itemId: itemAssetEntity ? itemAssetEntity.id : null,
-        historyId: historyEntity.id,
-      });
+      // IF IT IS REFERRAL EVENT
+      // TOOD should we save events if no active ref program?
+      if (refInfo && refInfo.refLevel > 0 && refInfo.refProgramId > 0) {
+        await this.referralService.create({
+          account: account.toLowerCase(),
+          referrer: referrer.toLowerCase(),
+          contractId: contractEntity.id,
+          priceId: assetEntity.id,
+          itemId: itemAssetEntity ? itemAssetEntity.id : null,
+          historyId: historyEntity.id,
+          share: refInfo.refShare, // TODO rename to 1st ref share
+          refProgramId: refInfo.refProgramId,
+        });
+      }
     }
 
     // NOTIFY GAME

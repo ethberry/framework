@@ -21,9 +21,13 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "level",
+          name: "share",
           type: "int",
           isNullable: true,
+        },
+        {
+          name: "ref_program_id",
+          type: "int",
         },
         {
           name: "contract_id",
@@ -75,6 +79,12 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           columnNames: ["history_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.event_history`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["ref_program_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.referral_program`,
           onDelete: "CASCADE",
         },
       ],

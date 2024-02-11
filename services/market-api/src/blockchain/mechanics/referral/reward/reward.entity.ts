@@ -6,9 +6,10 @@ import { ns } from "@framework/constants";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { EventHistoryEntity } from "../../../event-history/event-history.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ReferralProgramEntity } from "../program/referral.program.entity";
 
 @Entity({ schema: ns, name: "referral_reward" })
-export class ReferralEntity extends IdDateBaseEntity implements IReferralReward {
+export class ReferralRewardEntity extends IdDateBaseEntity implements IReferralReward {
   @Column({ type: "varchar" })
   public account: string;
 
@@ -16,7 +17,7 @@ export class ReferralEntity extends IdDateBaseEntity implements IReferralReward 
   public referrer: string;
 
   @Column({ type: "int" })
-  public level: number;
+  public share: number;
 
   @Column({ type: "int" })
   public priceId: number;
@@ -45,4 +46,11 @@ export class ReferralEntity extends IdDateBaseEntity implements IReferralReward 
   @JoinColumn()
   @OneToOne(_type => ContractEntity)
   public contract: ContractEntity;
+
+  @Column({ type: "int" })
+  public refProgramId: number;
+
+  @JoinColumn()
+  @OneToOne(_type => ReferralProgramEntity)
+  public refProgram: ReferralProgramEntity;
 }
