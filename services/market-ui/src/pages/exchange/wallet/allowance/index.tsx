@@ -1,14 +1,15 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { HowToVote } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useApiCall } from "@gemunion/react-hooks";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { ListAction } from "@framework/styled";
-import { ContractFeatures, IContract, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, SystemModuleType, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
 import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
@@ -19,12 +20,46 @@ import { AllowanceDialog, IAllowanceDto } from "./dialog";
 export interface IAllowanceButtonProps {
   token?: any;
   isSmall?: boolean;
-  contract?: IContract;
+  contract?: Partial<IContract>;
   isDisabled?: boolean;
+  isExchange?: boolean;
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const { token = getEmptyToken(), isSmall = false, contract = undefined /*, isDisabled = false */ } = props;
+  const {
+    token = getEmptyToken(),
+    isSmall = false,
+    contract = undefined,
+    isExchange = false /*, isDisabled = false */,
+  } = props;
+
+  const [exchange, setExchange] = useState<IContract | null>(null);
+
+  const { chainId } = useWeb3React();
+
+  const { fn: getContractExchangeFn } = useApiCall(
+    api =>
+      api.fetchJson({
+        url: `/contracts/system`,
+        method: "POST",
+        data: {
+          contractModule: SystemModuleType.EXCHANGE,
+          chainId,
+        },
+      }),
+    { success: false, error: false },
+  );
+
+  const getSystemExchange = async () => {
+    const exchange = await getContractExchangeFn();
+    setExchange(exchange);
+  };
+
+  useEffect(() => {
+    if (!contract && !exchange && isExchange && chainId) {
+      void getSystemExchange();
+    }
+  }, [chainId]);
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
   const handleAllowance = (): void => {
@@ -93,8 +128,9 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         open={isAllowanceDialogOpen}
         initialValues={{
           token,
-          address: contract ? contract.address : "",
-          contractId: contract ? contract.id : undefined,
+          address:
+            contract && contract.address ? contract.address : exchange && exchange.address ? exchange.address : "",
+          contractId: contract && contract.id ? contract.id : exchange && exchange.id ? exchange.id : undefined,
         }}
       />
     </Fragment>

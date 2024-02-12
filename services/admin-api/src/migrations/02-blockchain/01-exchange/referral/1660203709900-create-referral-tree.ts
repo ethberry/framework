@@ -31,6 +31,7 @@ export class CreateReferralTreeAt1660203709900 implements MigrationInterface {
         {
           name: "temp",
           type: "bool",
+          default: false,
         },
         {
           name: "created_at",

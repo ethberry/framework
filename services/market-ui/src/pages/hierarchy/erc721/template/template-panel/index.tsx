@@ -8,6 +8,7 @@ import type { ITemplate } from "@framework/types";
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
+import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 
 export interface ICommonTemplatePanelProps {
   template: ITemplate;
@@ -29,6 +30,7 @@ export const Erc721TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
       </CardContent>
       <CardActions>
         <TemplatePurchaseButton template={template} />
+        <AllowanceButton token={template.price} isSmall isExchange />
       </CardActions>
     </StyledCard>
   );

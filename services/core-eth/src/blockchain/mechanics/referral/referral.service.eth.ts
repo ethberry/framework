@@ -131,8 +131,8 @@ export class ReferralServiceEth {
       }
 
       // IF IT IS REFERRAL EVENT
-      // TOOD should we save events if no active ref program?
-      if (refInfo && refInfo.refLevel > 0 && refInfo.refProgramId > 0) {
+      // TODO should we save events if there is no active ref program or referer not registered?
+      if (refInfo && refInfo.refShare > 0) {
         await this.referralService.create({
           account: account.toLowerCase(),
           referrer: referrer.toLowerCase(),
@@ -141,7 +141,7 @@ export class ReferralServiceEth {
           itemId: itemAssetEntity ? itemAssetEntity.id : null,
           historyId: historyEntity.id,
           share: refInfo.refShare, // TODO rename to 1st ref share
-          refProgramId: refInfo.refProgramId,
+          merchantId: refInfo.merchantId,
         });
       }
     }

@@ -26,8 +26,9 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "ref_program_id",
+          name: "merchant_id",
           type: "int",
+          isNullable: true,
         },
         {
           name: "contract_id",
@@ -82,10 +83,10 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["ref_program_id"],
+          columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.referral_program`,
-          onDelete: "CASCADE",
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "SET NULL",
         },
       ],
     });

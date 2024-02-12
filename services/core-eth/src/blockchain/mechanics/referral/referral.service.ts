@@ -11,14 +11,15 @@ import { ReferralTreeService } from "./tree/referral.tree.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 
 export interface IRefChainQuery {
+  level: number;
   wallet: string;
   share: number;
   reflen: number;
+  temp: boolean;
 }
 
 export interface IRefEventCalc {
-  refProgramId: number;
-  refLevel: number;
+  merchantId: number;
   refShare: number;
 }
 
@@ -66,7 +67,7 @@ export class ReferralService {
 
     // DO NOT REGISTER SELF-REFERRERS
     if (refProgram && refProgram.merchant.wallet.toLowerCase() !== wallet.toLowerCase()) {
-      // LOOK FOR LEVEL 1 (it means referrer had purchases from merchant)
+      // LOOK FOR LEVEL 1 referrer (it means referrer had purchases from merchant)
       const refTreeOne = await this.referralTreeService.findOne({
         merchantId,
         wallet: wallet.toLowerCase(),
@@ -74,7 +75,7 @@ export class ReferralService {
         referral: ZeroAddress,
         level: 1,
       });
-      // GET ANY CONFIRMED REF RECORDS FOR WALLET
+      // GET ANY CONFIRMED REF RECORDS FOR buyer's WALLET
       const accRefs = await this.referralTreeService.findOne({ merchantId, wallet: wallet.toLowerCase(), temp: false });
       if (!refTreeOne && !accRefs) {
         // REGISTER WALLET AS MERCHANT's REFERRAL LEVEL 1 (temporary)
@@ -83,33 +84,27 @@ export class ReferralService {
     }
   }
 
-  // TODO test it
+  // TODO test it for edge cases
   public async referralEventLevel(
     merchantId: number,
     account: string,
     referrer: string,
   ): Promise<IRefEventCalc | void> {
-    // todo findOne enough?
-    const refProgramLevels = await this.referralProgramService.findAll({ merchantId }, { order: { level: "ASC" } });
+    // FIND MERCHANT'S REF PROGRAM
+    const refProgramLevelZero = await this.referralProgramService.findOne({ merchantId, level: 0 });
     // IF THERE IS MERCHANT REF PROGRAM
-    if (refProgramLevels && refProgramLevels.length > 0) {
-      // GET ALL ref tree for referrer
-      const refTree = await this.referralTreeService.findAll(
-        {
-          merchantId,
-          wallet: referrer.toLowerCase(),
-          // temp: false,
-        },
-        { order: { level: "ASC" } },
-      );
-
-      // IF REFERRER REGISTERED
-      if (refTree && refTree.length > 0) {
-        const refMax = refTree[refTree.length - 1].level;
-        // CONFIRM temp LEVEL 1 REF
-        if (refMax === 1 && refTree[refTree.length - 1].temp) {
-          Object.assign(refTree[refTree.length - 1], { temp: false });
-          await refTree[refTree.length - 1].save();
+    if (refProgramLevelZero) {
+      // GET CURRENT REFERRER WALLET-to-MERCHANT CHAIN
+      const refChain = await this.getRefChain(referrer.toLowerCase(), merchantId);
+      // IF REFERRER WAS REGISTERED
+      if (refChain && refChain.length > 0) {
+        const currentRefLevel = refChain[0].level;
+        // CONFIRM TEMP LEVEL 1 REF
+        if (currentRefLevel === 1 && refChain[0].temp) {
+          await this.referralTreeService.updateIfExist(
+            { merchantId, wallet: referrer.toLowerCase(), level: 1, temp: true },
+            { temp: false },
+          );
         }
         // REMOVE TEMP REF LEVEL 1 IF EXIST
         await this.referralTreeService.deleteIfExist({
@@ -120,90 +115,72 @@ export class ReferralService {
           temp: true,
         });
 
-        // GET CURRENT REFERRER ACCOUNT-to-MERCHANT CHAIN
-        const refChain = await this.getRefChain(referrer.toLowerCase());
-        // GET CURRENT ACCOUNT-to-MERCHANT CHAIN
-        const accChain = await this.getRefChain(account.toLowerCase());
+        // GET ANY CONFIRMED REF RECORDS FOR buyer's ACCOUNT
+        const accRefs = await this.referralTreeService.findOne({
+          merchantId,
+          wallet: account.toLowerCase(),
+          temp: false,
+        });
 
-        if (accChain.length > 0 && accChain.length < refChain.length) {
-          const refLevel = refChain.length > accChain.length ? accChain[0].reflen : refChain[0].reflen;
-          const refShare = refChain.length > accChain.length ? accChain[0].share : refChain[0].share;
-          return { refProgramId: refProgramLevels[0].id, refLevel, refShare };
-          // RETURN ACCOUNT's REF LEVEL
-          // return refMax;
-        } else {
-          const refData = {
+        // IF ACCOUNT WAS NOT REGISTERED IN REF TREE - CREATE
+        if (!accRefs) {
+          // CREATE PAIR account+referrer with next ref level
+          await this.referralTreeService.createIfNotExist({
             merchantId,
             wallet: account.toLowerCase(),
             referral: referrer.toLowerCase(),
-            level: refMax + 1,
-            // TODO false default
+            level: currentRefLevel + 1,
             temp: false,
-          };
-
-          const sameRef = await this.referralTreeService.findOne(refData);
-          // CHECK IF SAME REF CHAIN ALREADY SAVED
-          if (!sameRef) {
-            // CREATE PAIR account+referrer with next ref level
-            await this.referralTreeService.create(refData);
-          }
-          // REMOVE TEMP REF LEVEL 1 IF EXIST
-          await this.referralTreeService.deleteIfExist({
-            merchantId,
-            wallet: account.toLowerCase(),
-            referral: ZeroAddress,
-            level: 1,
-            temp: true,
           });
-
-          const refLevel =
-            refChain.length > accChain.length && accChain.length > 0 ? accChain[0].reflen : refChain[0].reflen;
-          const refShare =
-            refChain.length > accChain.length && accChain.length > 0 ? accChain[0].share : refChain[0].share;
-          return { refProgramId: refProgramLevels[0].id, refLevel, refShare };
-          // RETURN ACCOUNT's REF LEVEL
-          // return refMax;
         }
-      } else {
-        // IF REFERRER WAS NOT REGISTERED - confirm account's temporary level 1 ref if exist
-        const accRef = await this.referralTreeService.findOne({
-          wallet: account.toLowerCase(),
+        // REMOVE TEMP REF LEVEL 1 IF EXIST
+        await this.referralTreeService.deleteIfExist({
           merchantId,
+          wallet: account.toLowerCase(),
           referral: ZeroAddress,
           level: 1,
           temp: true,
         });
-        if (accRef) {
-          Object.assign(accRef, { temp: false });
-          await accRef.save();
-          // RETURN ACCOUNT's REF LEVEL
-          return { refProgramId: refProgramLevels[0].id, refLevel: 1, refShare: 0 };
-        }
+        return { merchantId, refShare: refChain[0].share };
+      } else {
+        // IF REFERRER WAS NOT REGISTERED - confirm account's temporary level 1 ref if exist
+        await this.referralTreeService.updateIfExist(
+          {
+            wallet: account.toLowerCase(),
+            merchantId,
+            referral: ZeroAddress,
+            level: 1,
+            temp: true,
+          },
+          { temp: false },
+        );
+        // RETURN ACCOUNT's REF LEVEL 0
+        return { merchantId, refShare: 0 };
       }
     }
   }
 
-  public async getRefChain(referrer: string): Promise<Array<IRefChainQuery>> {
+  public async getRefChain(referrer: string, merchantId: number): Promise<Array<IRefChainQuery>> {
     const queryRunner = this.dataSource.createQueryRunner();
 
-    const result = await queryRunner.query(`
+    const result: Array<IRefChainQuery> = await queryRunner.query(`
         WITH RECURSIVE ref_tree AS (
-            SELECT wallet, referral, level, merchant_id, 1 as refLen
+            SELECT wallet, referral, level, merchant_id, temp, 1 as refLen
             FROM ${ns}.referral_tree
-            WHERE wallet like '${referrer.toLowerCase()}%'
+            WHERE wallet = '${referrer}'
+              AND merchant_id = ${merchantId}
             UNION
-            SELECT t.wallet, t.referral, t.level, t.merchant_id, rt.refLen + 1
+            SELECT t.wallet, t.referral, t.level, t.merchant_id, t.temp, rt.refLen + 1
             FROM ${ns}.referral_tree t
-                     INNER JOIN ref_tree rt ON t.wallet = rt.referral AND rt.level > 0 )
-        SELECT ref_tree.wallet, rp.share, ref_tree.refLen --,ref_tree.referral
+                     INNER JOIN ref_tree rt ON t.merchant_id = rt.merchant_id AND t.wallet = rt.referral AND rt.level > 0
+        )
+        SELECT ref_tree.level, ref_tree.wallet, rp.share, ref_tree.refLen, ref_tree.temp
         FROM ref_tree
-                 left join gemunion.referral_program rp on ref_tree.merchant_id = rp.merchant_id and ref_tree.refLen = rp.level
+                 left join ${ns}.referral_program rp on ref_tree.merchant_id = rp.merchant_id and ref_tree.refLen = rp.level
         order by ref_tree.refLen;
     `);
 
-    // TODO Entity
     if (result && result.length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return result;
     } else {
       return [];
