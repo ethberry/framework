@@ -2,12 +2,13 @@ import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, DeepPartial } from "typeorm";
 
-import { ReferralProgramEntity } from "./referral.program.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
-import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
-import { ReferralProgramSearchDto, ReferralProgramUpdateDto } from "./dto";
 import { UserRole } from "@framework/types";
+
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
+import { ReferralProgramEntity } from "./referral.program.entity";
+import { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
+import { ReferralProgramSearchDto } from "./dto";
 
 @Injectable()
 export class ReferralProgramService {
@@ -87,7 +88,10 @@ export class ReferralProgramService {
     }
   }
 
-  public async createRefProgram(dto: IReferralProgramCreateDto, userEntity: UserEntity): Promise<void> {
+  public async createRefProgram(
+    dto: IReferralProgramCreateDto,
+    userEntity: UserEntity,
+  ): Promise<ReferralProgramEntity[]> {
     const { merchantId, levels } = dto;
     // TEST MERCHANT
     if (merchantId === userEntity.merchantId) {
@@ -97,12 +101,12 @@ export class ReferralProgramService {
       }
 
       // CREATE ALL REF PROGRAM LEVELS
-      await Promise.all(
+      return Promise.all(
         levels.map(
           async (level, indx) =>
             await this.create({
               merchantId,
-              level: indx,
+              level: indx + 1,
               share: level.share,
             }),
         ),
@@ -116,7 +120,7 @@ export class ReferralProgramService {
     merchantId: number,
     dto: IReferralProgramUpdateDto,
     userEntity: UserEntity,
-  ): Promise<void> {
+  ): Promise<ReferralProgramEntity[]> {
     const { levels } = dto;
 
     if (userEntity.userRoles.includes(UserRole.SUPER) || userEntity.merchantId === merchantId) {
@@ -138,12 +142,12 @@ export class ReferralProgramService {
       }
 
       // CREATE ALL REF PROGRAM LEVELS
-      await Promise.all(
+      return Promise.all(
         levels.map(
           async (level, indx) =>
             await this.create({
               merchantId,
-              level: indx,
+              level: indx + 1,
               share: level.share,
             }),
         ),

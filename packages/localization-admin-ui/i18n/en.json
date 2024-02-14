@@ -765,6 +765,7 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "level": "Level",
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
@@ -814,6 +815,8 @@
       "productId": "Product",
       "productItemId": "Item",
       "productStatus": "Status",
+      "programLevel": "Program level",
+      "programLevels": "Program levels",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
@@ -920,6 +923,7 @@
       "growthRate": "2",
       "instagramUrl": "https://instagram.com/",
       "item": "Bottle of water",
+      "level": "1",
       "listId": "Default list",
       "listIds": "Default list",
       "maxCycles": "0",
@@ -1501,6 +1505,10 @@
       },
       "leaderboard": {
         "title": "Leaderboard"
+      },
+      "program": {
+        "levels": "Referral program levels",
+        "title": "Program"
       },
       "report": {
         "title": "Report"

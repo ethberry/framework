@@ -23,7 +23,10 @@ export class ReferralProgramController {
   }
 
   @Post("/")
-  public create(@Body() dto: ReferralProgramCreateDto, @User() userEntity: UserEntity): Promise<void> {
+  public create(
+    @Body() dto: ReferralProgramCreateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ReferralProgramEntity[]> {
     return this.referralProgramService.createRefProgram(dto, userEntity);
   }
 
@@ -33,7 +36,7 @@ export class ReferralProgramController {
     @Param("merchantId", ParseIntPipe) merchantId: number,
     @Body() dto: ReferralProgramUpdateDto,
     @User() userEntity: UserEntity,
-  ): Promise<void> {
+  ): Promise<ReferralProgramEntity[]> {
     return this.referralProgramService.updateRefProgram(merchantId, dto, userEntity);
   }
 
