@@ -1,12 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ArrayNotEmpty, IsArray, IsInt, Max, Min, ValidateNested } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsInt, Max, Min, Validate } from "class-validator";
 import { Type } from "class-transformer";
 import { IReferralProgramCreateDto, IReferralProgramLevelDto } from "../interfaces";
+import { RefProgramLevelsRule } from "./levels";
 
 export class ReferralProgramLevelCreateDto implements IReferralProgramLevelDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public level: number;
 
   @ApiProperty()
@@ -27,7 +28,10 @@ export class ReferralProgramCreateDto implements IReferralProgramCreateDto {
   @ApiProperty({ type: () => [ReferralProgramLevelCreateDto] })
   @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
-  @ValidateNested()
+  // @ValidateNested()
+  @Validate(RefProgramLevelsRule, {
+    message: "typeMismatch",
+  })
   @Type(() => ReferralProgramLevelCreateDto)
   public levels: Array<IReferralProgramLevelDto>;
 }

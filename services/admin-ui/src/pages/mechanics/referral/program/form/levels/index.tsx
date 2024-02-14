@@ -5,17 +5,40 @@ import { Add, Delete } from "@mui/icons-material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import type { IReferralProgram } from "@framework/types";
-import { NumberInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 
 export type TReferralProgram = IReferralProgram & {
   id: string;
 };
 
-export const getEmptyProgramLevel = (levels: IReferralProgram[]): Partial<IReferralProgram> => ({
-  level: levels.length + 1,
-  share: 500,
-});
+// LEVEL0 = total share
+// export const getEmptyProgramLevel = (levels: IReferralProgram[]): Array<Partial<IReferralProgram>> => {
+export const getEmptyProgramLevel = (
+  levels: IReferralProgram[],
+): Array<{ merchantId: number; level: number; share: number }> => {
+  if (levels.length === 0) {
+    return [
+      {
+        merchantId: 0,
+        level: 0,
+        share: 1000,
+      },
+      {
+        merchantId: 0,
+        level: levels.length + 1,
+        share: 1000,
+      },
+    ];
+  } else {
+    return [
+      {
+        merchantId: 0,
+        level: levels.length + 1,
+        share: 0,
+      },
+    ];
+  }
+};
 
 export const ReferralProgramLevelsInput: FC = () => {
   const { formatMessage } = useIntl();
@@ -58,7 +81,11 @@ export const ReferralProgramLevelsInput: FC = () => {
         <Box key={program.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box flex={1}>
             <Paper sx={{ p: 2, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>
-              <NumberInput name={`levels[${i}].level`} inputProps={{ min: 1 }} />
+              {i === 0 ? (
+                <FormattedMessage id="pages.referral.program.total" />
+              ) : (
+                <FormattedMessage id="pages.referral.program.level" values={{ level: i }} />
+              )}
               <CurrencyInput name={`levels[${i}].share`} symbol="%" />
             </Paper>
           </Box>

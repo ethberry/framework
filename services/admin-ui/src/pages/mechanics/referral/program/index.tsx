@@ -1,6 +1,6 @@
 import { FC, Fragment, useCallback, useEffect, useState } from "react";
 
-import type { IReferralProgram, IReferralProgramCreateDto, IReferralProgramUpdateDto, IUser } from "@framework/types";
+import type { IReferralProgram, IUser } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
@@ -9,8 +9,15 @@ import { useUser } from "@gemunion/provider-user";
 import { ReferralProgramForm } from "./form";
 import { getEmptyProgramLevel } from "./form/levels";
 
+export interface IReferralProgramLevel {
+  id?: number;
+  level: number;
+  share: number;
+}
+
 export interface IReferralProgramCreate {
-  levels: IReferralProgram[];
+  merchantId: number;
+  levels: Array<IReferralProgramLevel>;
 }
 
 export const ReferralProgram: FC = () => {
@@ -27,7 +34,7 @@ export const ReferralProgram: FC = () => {
   );
 
   const { fn: createReferralProgramLevel, isLoading: isCreateLoading } = useApiCall(
-    (api, data: IReferralProgramCreateDto) =>
+    (api, data: IReferralProgramCreate) =>
       api.fetchJson({
         url: "/referral/program",
         method: "POST",
@@ -36,7 +43,7 @@ export const ReferralProgram: FC = () => {
   );
 
   const { fn: updateReferralProgramLevel, isLoading: isUpdateLoading } = useApiCall(
-    (api, data: IReferralProgramUpdateDto) =>
+    (api, data: IReferralProgramCreate) =>
       api.fetchJson({
         url: `/referral/program/${merchantId}`,
         method: "PUT",
@@ -47,8 +54,11 @@ export const ReferralProgram: FC = () => {
   const handleSubmit = useCallback(
     async (values: IReferralProgramCreate, form: any): Promise<void> => {
       const filteredLevels = values.levels.map(({ level, share }) => ({ level, share }));
-      if (!initialValues?.levels.length || !initialValues.levels[0].id) {
-        await createReferralProgramLevel(form, { merchantId, levels: filteredLevels });
+      // CREATE OR UPDATE
+      if (initialValues?.levels.length === 0) {
+        await createReferralProgramLevel(form, { merchantId, levels: filteredLevels }).then(() => {
+          setInitialValues({ merchantId, levels: filteredLevels });
+        });
       } else {
         await updateReferralProgramLevel(form, { merchantId, levels: filteredLevels });
       }
@@ -58,7 +68,12 @@ export const ReferralProgram: FC = () => {
 
   useEffect(() => {
     void getReferralProgramLevels().then((json: IPaginationResult<IReferralProgram>) => {
-      setInitialValues({ levels: json?.rows || [getEmptyProgramLevel([])] });
+      setInitialValues({
+        merchantId,
+        levels: json?.rows.map(row => ({ merchantId, level: row.level, share: row.share })) || [
+          getEmptyProgramLevel([]),
+        ],
+      });
     });
     return () => setInitialValues(null);
   }, []);

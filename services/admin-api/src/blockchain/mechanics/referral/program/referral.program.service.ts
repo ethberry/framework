@@ -7,7 +7,7 @@ import { UserRole } from "@framework/types";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
 import { ReferralProgramEntity } from "./referral.program.entity";
-import { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
+import { IReferralProgramCreateDto } from "./interfaces";
 import { ReferralProgramSearchDto } from "./dto";
 
 @Injectable()
@@ -94,19 +94,20 @@ export class ReferralProgramService {
   ): Promise<ReferralProgramEntity[]> {
     const { merchantId, levels } = dto;
     // TEST MERCHANT
-    if (merchantId === userEntity.merchantId) {
-      const merchantEntity = await this.merchantService.findOne({ id: dto.merchantId });
-      if (!merchantEntity) {
-        throw new NotFoundException("merchantNotFound");
-      }
+    const merchantEntity = await this.merchantService.findOne({ id: dto.merchantId });
+    if (!merchantEntity) {
+      throw new NotFoundException("merchantNotFound");
+    }
 
+    // TODO test program doesn't exist
+    if (merchantId === userEntity.merchantId || userEntity.userRoles.includes(UserRole.SUPER)) {
       // CREATE ALL REF PROGRAM LEVELS
       return Promise.all(
         levels.map(
           async (level, indx) =>
             await this.create({
               merchantId,
-              level: indx + 1,
+              level: indx,
               share: level.share,
             }),
         ),
@@ -118,49 +119,39 @@ export class ReferralProgramService {
 
   public async updateRefProgram(
     merchantId: number,
-    dto: IReferralProgramUpdateDto,
+    dto: IReferralProgramCreateDto,
     userEntity: UserEntity,
   ): Promise<ReferralProgramEntity[]> {
-    const { levels } = dto;
-
-    if (userEntity.userRoles.includes(UserRole.SUPER) || userEntity.merchantId === merchantId) {
-      const merchantEntity = await this.merchantService.findOne({ id: dto.merchantId });
-      if (!merchantEntity) {
-        throw new NotFoundException("merchantNotFound");
+    if (merchantId !== userEntity.merchantId) {
+      if (userEntity.userRoles.includes(UserRole.SUPER)) {
+        // const refProgram = await this.findAllWithRelations(merchantId, userEntity);
+        // await Promise.all(refProgram.map(async lev => await this.deleteIfExist({ id: lev.id })));
+        // REMOVE OLD
+        await this.deleteProgram(merchantId);
+        // CREATE NEW
+        return await this.createRefProgram(dto, userEntity);
+      } else {
+        throw new ForbiddenException("insufficientPermissions");
       }
-      const refProgram = await this.findAllWithRelations(merchantId, userEntity);
-      // remove old
-      await Promise.all(refProgram.map(async lev => await this.deleteIfExist({ id: lev.id })));
-      await this.createRefProgram(dto, userEntity);
-    }
-
-    // TEST MERCHANT
-    if (merchantId === userEntity.merchantId) {
-      const merchantEntity = await this.merchantService.findOne({ id: dto.merchantId });
-      if (!merchantEntity) {
-        throw new NotFoundException("merchantNotFound");
-      }
-
-      // CREATE ALL REF PROGRAM LEVELS
-      return Promise.all(
-        levels.map(
-          async (level, indx) =>
-            await this.create({
-              merchantId,
-              level: indx + 1,
-              share: level.share,
-            }),
-        ),
-      );
     } else {
-      throw new ForbiddenException("insufficientPermissions");
+      // REMOVE OLD
+      await this.deleteProgram(merchantId);
+      // CREATE NEW
+      return await this.createRefProgram(dto, userEntity);
     }
   }
 
-  public async deleteIfExist(where: FindOptionsWhere<ReferralProgramEntity>): Promise<void> {
+  public async deleteLevelIfExist(where: FindOptionsWhere<ReferralProgramEntity>): Promise<void> {
     const entity = await this.findOne(where);
     if (entity) {
       await entity.remove();
+    }
+  }
+
+  public async deleteProgram(merchantId: number): Promise<void> {
+    const programLevels = await this.findAll({ merchantId });
+    if (programLevels && programLevels.length > 0) {
+      await Promise.all(programLevels.map(level => level.remove()));
     }
   }
 }
