@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ArrayNotEmpty, IsArray, IsInt, Max, Min, Validate } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsInt, Max, Min, Validate, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { IReferralProgramCreateDto, IReferralProgramLevelDto } from "../interfaces";
 import { RefProgramLevelsRule } from "./levels";
@@ -28,7 +28,7 @@ export class ReferralProgramCreateDto implements IReferralProgramCreateDto {
   @ApiProperty({ type: () => [ReferralProgramLevelCreateDto] })
   @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
-  // @ValidateNested()
+  @ValidateNested()
   @Validate(RefProgramLevelsRule, {
     message: "typeMismatch",
   })
