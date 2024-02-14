@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { FormWrapper, FormWatcher } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 
 import { ReferralProgramLevelsInput } from "./levels";
 import { IReferralProgramCreate } from "../index";
@@ -28,10 +28,10 @@ export const ReferralProgramForm: FC<IReferralProgramFormProps> = props => {
       validationSchema={validationSchema}
       initialValues={fixedValues}
       onSubmit={onSubmit}
+      showPrompt={false}
       testId="ReferralProgramForm"
     >
       <ReferralProgramLevelsInput />
-      <FormWatcher />
     </FormWrapper>
   );
 };

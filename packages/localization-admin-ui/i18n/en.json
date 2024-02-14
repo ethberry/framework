@@ -1008,7 +1008,7 @@
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
       "stepMismatch": "{label} is invalid",
-      "totalMismatch": "Total is invalid",
+      "refProgramTotal": "Total is invalid. Must be sum of all levels",
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
       "typeMismatch": "{label} is invalid",
