@@ -1011,6 +1011,7 @@
       "refProgramTotal": "Total is invalid. Must be sum of all levels",
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
+      "totalMismatch": "Total is invalid. Must be sum of all levels",
       "typeMismatch": "{label} is invalid",
       "valid": "??",
       "valueMissing": "{label} is required",

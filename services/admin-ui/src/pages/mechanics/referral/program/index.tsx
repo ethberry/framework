@@ -68,11 +68,13 @@ export const ReferralProgram: FC = () => {
 
   useEffect(() => {
     void getReferralProgramLevels().then((json: IPaginationResult<IReferralProgram>) => {
+      const levels = json?.rows?.length
+        ? json?.rows.map(row => ({ merchantId: row.merchantId, level: row.level, share: row.share }))
+        : [...getEmptyProgramLevel([], merchantId)];
+
       setInitialValues({
         merchantId,
-        levels: json?.rows.map(row => ({ merchantId, level: row.level, share: row.share })) || [
-          getEmptyProgramLevel([]),
-        ],
+        levels,
       });
     });
     return () => setInitialValues(null);
