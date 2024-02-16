@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
+export class CreateReferralRewardAt1660005709900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.referral_reward`,
@@ -19,11 +19,6 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
         {
           name: "referrer",
           type: "varchar",
-        },
-        {
-          name: "share",
-          type: "int",
-          isNullable: true,
         },
         {
           name: "merchant_id",

@@ -16,10 +16,13 @@ import { ReferralProgramEntity } from "./program/referral.program.entity";
 import { ReferralTreeEntity } from "./tree/referral.tree.entity";
 import { ReferralProgramService } from "./program/referral.program.service";
 import { ReferralTreeService } from "./tree/referral.tree.service";
+import { ReferralRewardShareEntity } from "./share/referral.reward.share.entity";
+import { ReferralRewardShareService } from "./share/referral.reward.share.service";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ReferralRewardEntity]),
+    TypeOrmModule.forFeature([ReferralRewardShareEntity]),
     TypeOrmModule.forFeature([ReferralProgramEntity]),
     TypeOrmModule.forFeature([ReferralTreeEntity]),
     EventHistoryModule,
@@ -35,9 +38,16 @@ import { ReferralTreeService } from "./tree/referral.tree.service";
     ReferralService,
     ReferralProgramService,
     ReferralTreeService,
+    ReferralRewardShareService,
     ReferralServiceEth,
   ],
   controllers: [ReferralControllerEth],
-  exports: [ReferralService, ReferralProgramService, ReferralTreeService, ReferralServiceEth],
+  exports: [
+    ReferralService,
+    ReferralProgramService,
+    ReferralTreeService,
+    ReferralRewardShareService,
+    ReferralServiceEth,
+  ],
 })
 export class ReferralModule {}

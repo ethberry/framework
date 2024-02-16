@@ -1,12 +1,16 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsISO8601, IsOptional, IsString, ValidateIf, Min } from "class-validator";
+import { IsISO8601, IsOptional, IsString, ValidateIf, IsArray, IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
-import { IReferralReportSearchDto } from "@framework/types";
+// import { IReferralClaimSearchDto } from "@framework/types";
 
-export class ReferralRewardSearchDto extends SearchDto implements IReferralReportSearchDto {
+export interface IReferralClaimSearchDto {
+  merchantIds?: Array<number>;
+}
+
+export class ReferralClaimSearchDto extends SearchDto implements IReferralClaimSearchDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

@@ -421,6 +421,7 @@
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Status",
+      "claimed": "Claimed",
       "claimType": "Type",
       "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
@@ -495,6 +496,7 @@
       "roundId": "Round",
       "roundIds": "Round",
       "score": "Score",
+      "share": "Share",
       "sort": "Sort by",
       "stakeStat": "Staking statistics",
       "stakesTotal": "Total stakes",
@@ -1183,6 +1185,9 @@
       "title": "Recipes"
     },
     "referral": {
+      "reward": {
+        "title": "Rewards"
+      },
       "cabinet": {
         "title": "Cabinet"
       },

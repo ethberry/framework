@@ -21,6 +21,7 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { AssetEntity } from "../../exchange/asset/asset.entity";
+import { ReferralRewardShareService } from "./share/referral.reward.share.service";
 
 @Injectable()
 export class ReferralServiceEth {
@@ -36,6 +37,7 @@ export class ReferralServiceEth {
     private readonly assetService: AssetService,
     private readonly notificatorService: NotificatorService,
     private readonly referralService: ReferralService,
+    private readonly referralRewardShareService: ReferralRewardShareService,
   ) {}
 
   public async refEvent(event: ILogEvent<IReferralEvent>, context: Log): Promise<void> {
@@ -112,7 +114,7 @@ export class ReferralServiceEth {
             const { merchantId } = item.contract;
 
             // TODO consider item with mixed merchants
-            // DO ONLY ONCE for asset (all asset components belongs to the same merchant)
+            // DO ONLY ONCE (all asset components belongs to the same merchant)
             if (!refInfo) {
               refInfo = await this.referralService.referralEventLevel(merchantId, account, referrer);
             }
@@ -132,17 +134,21 @@ export class ReferralServiceEth {
 
       // IF IT IS REFERRAL EVENT
       // TODO should we save events if there is no active ref program or referer not registered?
-      if (refInfo && refInfo.refShare > 0) {
-        await this.referralService.create({
+      if (refInfo && refInfo.refChain.length > 0) {
+        // CREATE REWARD
+        const rewardEntity = await this.referralService.create({
           account: account.toLowerCase(),
           referrer: referrer.toLowerCase(),
           contractId: contractEntity.id,
           priceId: assetEntity.id,
           itemId: itemAssetEntity ? itemAssetEntity.id : null,
           historyId: historyEntity.id,
-          share: refInfo.refShare, // TODO rename to 1st ref share
+          // share: refInfo.refShare, // TODO rename to 1st ref share
           merchantId: refInfo.merchantId,
         });
+
+        // CREATE SHARES
+        await this.referralRewardShareService.createShares(rewardEntity.id, refInfo.merchantId, refInfo.refChain);
       }
     }
 

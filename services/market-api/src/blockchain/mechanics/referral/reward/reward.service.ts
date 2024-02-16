@@ -8,7 +8,11 @@ import type { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralRepo
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "./reward.entity";
-// import { formatEther } from "./reward.utils";
+import { IReferralClaimSearchDto } from "../claim/dto";
+
+export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
+  merchantIds: Array<number>;
+}
 
 @Injectable()
 export class ReferralRewardService {
@@ -20,10 +24,11 @@ export class ReferralRewardService {
   ) {}
 
   public async search(
-    dto: Partial<IReferralReportSearchDto>,
+    dto: Partial<IReferralRewardSearchDto>,
     userEntity: UserEntity,
+    noClaim?: boolean,
   ): Promise<[Array<ReferralRewardEntity>, number]> {
-    const { query, startTimestamp, endTimestamp, skip, take } = dto;
+    const { merchantIds, query, startTimestamp, endTimestamp, skip, take } = dto;
     const queryBuilder = this.referralRewardEntityRepository.createQueryBuilder("reward");
 
     queryBuilder.select();
@@ -44,9 +49,28 @@ export class ReferralRewardService {
     queryBuilder.leftJoinAndSelect("reward.history", "history");
     queryBuilder.leftJoinAndSelect("history.parent", "parent");
 
-    queryBuilder.andWhere("reward.referrer = :referrer", {
+    queryBuilder.leftJoinAndSelect("reward.shares", "shares");
+
+    queryBuilder.andWhere("shares.referrer = :referrer", {
       referrer: userEntity.wallet,
     });
+
+    if (noClaim) {
+      // queryBuilder.andWhere("shares.claim = :claim", {
+      //   claim: IsNull(),
+      // });
+      queryBuilder.andWhere("shares.claimId is null");
+    }
+
+    if (merchantIds) {
+      if (merchantIds.length === 1) {
+        queryBuilder.andWhere("reward.merchantId = :merchantId", {
+          merchantId: merchantIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("reward.merchantId IN(:...merchantIds)", { merchantIds });
+      }
+    }
 
     if (startTimestamp && endTimestamp) {
       queryBuilder.andWhere("reward.createdAt >= :startTimestamp AND reward.createdAt < :endTimestamp", {
@@ -59,8 +83,17 @@ export class ReferralRewardService {
       queryBuilder.andWhere("reward.referrer ILIKE '%' || :referrer || '%'", { referrer: query });
     }
 
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
+    if (query) {
+      queryBuilder.andWhere("reward.referrer ILIKE '%' || :referrer || '%'", { referrer: query });
+    }
+
+    if (skip) {
+      queryBuilder.skip(skip);
+    }
+
+    if (take) {
+      queryBuilder.take(take);
+    }
 
     return queryBuilder.getManyAndCount();
   }
@@ -109,5 +142,38 @@ export class ReferralRewardService {
       })),
       { fields: headers },
     );
+  }
+
+  public async getRefRewards(
+    dto: Partial<IReferralClaimSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<ReferralRewardEntity>, number]> {
+    const { merchantIds = [] } = dto;
+
+    const [allRefEvents, count] = await this.search(
+      { merchantIds: merchantIds.length > 0 ? merchantIds : [userEntity.merchantId] },
+      userEntity,
+    );
+
+    // console.log("allRefEvents", allRefEvents);
+
+    return [allRefEvents, count];
+  }
+
+  public async createRefClaims(
+    dto: Partial<IReferralClaimSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<ReferralRewardEntity>, number]> {
+    const { merchantIds = [] } = dto;
+
+    const [allRefEvents, count] = await this.search(
+      { merchantIds: merchantIds.length > 0 ? merchantIds : [userEntity.merchantId] },
+      userEntity,
+      true,
+    );
+
+    // console.log("allRefEvents", allRefEvents);
+
+    return [allRefEvents, count];
   }
 }

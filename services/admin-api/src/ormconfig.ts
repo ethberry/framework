@@ -131,9 +131,11 @@ import {
   CreateProductToCategory1683724061700,
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
-  CreateReferralRewardAt1660103709900,
+  CreateReferralClaimAt1660006909900,
   CreateReferralProgramAt1660003709900,
-  CreateReferralTreeAt1660203709900,
+  CreateReferralRewardAt1660005709900,
+  CreateReferralRewardSharesAt1660006919900,
+  CreateReferralTreeAt1660004709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
@@ -641,10 +643,13 @@ const config: PostgresConnectionOptions = {
     SeedAssetPromoErc1155At1658980521050,
     SeedAssetPromoMysteryBoxAt1658980521050,
 
-    CreateReferralRewardAt1660103709900,
+    // REFERRAl PROGRAM
     CreateReferralProgramAt1660003709900,
-    CreateReferralTreeAt1660203709900,
+    CreateReferralTreeAt1660004709900,
+    CreateReferralRewardAt1660005709900,
     // SeedReferralRewardAt1660103709910,
+    CreateReferralRewardSharesAt1660006919900,
+    CreateReferralClaimAt1660006909900,
 
     // LOTTERY
     SeedContractLotteryTicketAt1563804000180,

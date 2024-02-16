@@ -12,7 +12,7 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 // import { formatEther } from "@framework/exchange";
-import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
+import { IReferralReportSearchDto, IReferralEvents } from "@framework/types";
 import { formatItem } from "@framework/exchange";
 
 // TODO rework to use assets
@@ -26,7 +26,7 @@ export const ReferralReport: FC = () => {
     handleSearch,
     handleToggleFilters,
     handleChangePaginationModel,
-  } = useCollection<IReferralReward, IReferralReportSearchDto>({
+  } = useCollection<IReferralEvents, IReferralReportSearchDto>({
     baseUrl: "/referral/report/search",
     empty: {
       createdAt: new Date().toISOString(),
@@ -147,7 +147,7 @@ export const ReferralReport: FC = () => {
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={rows.map((reward: IReferralReward) => ({
+        rows={rows.map((reward: IReferralEvents) => ({
           id: reward.id,
           referrer: reward.referrer,
           item: formatItem(reward.item),

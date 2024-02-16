@@ -2,11 +2,12 @@ import type { RouteObject } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 import { ReferralCabinet } from "./cabinet";
-import { ReferralLeaderboard } from "./leaderboard";
+// import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
 import { ReferralChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
 import { ReferralSection } from "../../dashboard/exchange/referral";
+import { ReferralReward } from "./reward";
 
 export const referralRoutes: Array<RouteObject> = [
   {
@@ -20,11 +21,12 @@ export const referralRoutes: Array<RouteObject> = [
           </IndexWrapper>
         ),
       },
+      { path: "/referral/reward", element: <ReferralReward /> },
       {
         path: "/referral/cabinet",
         children: [{ index: true, element: <ReferralCabinet /> }],
       },
-      { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
+      // { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       {
         path: "/referral/report",
         children: [
@@ -33,6 +35,7 @@ export const referralRoutes: Array<RouteObject> = [
           { path: "/referral/report/chart", element: <ReferralChart /> },
         ],
       },
+      // { path: "/referral/reward/search", element: <ReferralRewards /> },
     ],
   },
 ];

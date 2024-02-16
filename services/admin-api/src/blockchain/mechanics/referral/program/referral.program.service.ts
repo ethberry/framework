@@ -9,6 +9,7 @@ import { MerchantService } from "../../../../infrastructure/merchant/merchant.se
 import { ReferralProgramEntity } from "./referral.program.entity";
 import { IReferralProgramCreateDto } from "./interfaces";
 import { ReferralProgramSearchDto } from "./dto";
+import { sorter } from "../../../../common/utils/sorter";
 
 @Injectable()
 export class ReferralProgramService {
@@ -102,16 +103,27 @@ export class ReferralProgramService {
     // TODO test program doesn't exist
     if (merchantId === userEntity.merchantId || userEntity.userRoles.includes(UserRole.SUPER)) {
       // CREATE ALL REF PROGRAM LEVELS
-      return Promise.all(
-        levels.map(
-          async (level, indx) =>
-            await this.create({
-              merchantId,
-              level: indx,
-              share: level.share,
-            }),
-        ),
-      );
+      const levelsArr = [];
+      for (const level of levels.sort(sorter("level"))) {
+        levelsArr.push(
+          await this.create({
+            merchantId,
+            level: level.level,
+            share: level.share,
+          }),
+        );
+      }
+      return levelsArr;
+      // return Promise.all(
+      //   levels.sort(sorter("level")).map(
+      //     async level =>
+      //       await this.create({
+      //         merchantId,
+      //         level: level.level,
+      //         share: level.share,
+      //       }),
+      //   ),
+      // );
     } else {
       throw new ForbiddenException("insufficientPermissions");
     }

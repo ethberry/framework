@@ -46,6 +46,8 @@ import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/pen
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/referral.reward.entity";
 import { ReferralTreeEntity } from "./blockchain/mechanics/referral/tree/referral.tree.entity";
 import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/referral/referral.claim.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/share/referral.reward.share.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -95,6 +97,8 @@ const config: PostgresConnectionOptions = {
     ReferralRewardEntity,
     ReferralTreeEntity,
     ReferralProgramEntity,
+    ReferralClaimEntity,
+    ReferralRewardShareEntity,
     /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,

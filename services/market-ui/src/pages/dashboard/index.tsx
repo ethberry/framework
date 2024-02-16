@@ -20,7 +20,6 @@ import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
 import { RecipesSection } from "./mechanics/recipes";
 import { AssetPromoSection } from "./mechanics/promo";
-import { ReferralSection } from "./exchange/referral";
 import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
 import { WrapperSection } from "./mechanics/wrapper";
@@ -32,6 +31,7 @@ import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
 import { DexSection } from "./integrations/dex";
+import { ReferralSection } from "./exchange/referral";
 
 export const Dashboard: FC = () => {
   return (

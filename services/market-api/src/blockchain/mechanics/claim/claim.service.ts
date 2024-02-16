@@ -1,18 +1,19 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { hexlify, randomBytes, ZeroAddress, zeroPadValue, toBeHex } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, ModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class ClaimService {
@@ -95,12 +96,13 @@ export class ClaimService {
           item_components: "item.components",
           item_contract: "item_components.contract",
           item_template: "item_components.template",
+          item_token: "item_components.token",
         },
       },
     });
   }
 
-  public async create(dto: IClaimCreateDto, userEntity: UserEntity, referrer?: string): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp, item } = dto;
 
     // create new asset and update it with actual item
@@ -118,16 +120,34 @@ export class ClaimService {
       })
       .save();
 
-    return this.update({ id: claimEntity.id }, dto, userEntity, referrer);
+    return this.update({ id: claimEntity.id }, dto, userEntity);
+  }
+
+  public async createEmpty(
+    account: string,
+    merchantId: number,
+    itemId: number,
+    claimType: ClaimType,
+  ): Promise<ClaimEntity> {
+    return await this.claimEntityRepository
+      .create({
+        account,
+        itemId,
+        signature: "0x",
+        nonce: "",
+        merchantId,
+        endTimestamp: new Date(0).toISOString(),
+        claimType,
+      })
+      .save();
   }
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
     dto: IClaimUpdateDto,
     userEntity: UserEntity,
-    referrer?: string,
   ): Promise<ClaimEntity> {
-    const { account, item, endTimestamp, chainId } = dto;
+    const { account, endTimestamp, chainId } = dto;
 
     const claimEntity = await this.findOneWithRelations(where);
     if (!claimEntity) {
@@ -161,7 +181,7 @@ export class ClaimService {
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(endTimestamp).getTime() / 1000)), 32),
         receiver: claimEntity.merchant.wallet,
-        referrer: referrer || ZeroAddress,
+        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
       },
       claimEntity,
     );
@@ -180,15 +200,20 @@ export class ClaimService {
       verifyingContract,
       account,
       params,
-      claimEntity.item.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId:
-          component.contract.contractType === TokenType.ERC1155
-            ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      })),
+      claimEntity.item.components
+        .slice()
+        .sort(sorter("id"))
+        .map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract.address,
+          tokenId:
+            component.contract.contractType === TokenType.ERC1155
+              ? component.template.tokens[0].tokenId
+              : claimEntity.claimType === ClaimType.TEMPLATE
+                ? (component.templateId || 0).toString()
+                : (component.token.tokenId || 0).toString(), // suppression types check with 0
+          amount: component.amount,
+        })),
       [],
     );
   }

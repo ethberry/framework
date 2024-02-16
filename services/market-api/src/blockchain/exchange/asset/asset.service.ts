@@ -9,7 +9,7 @@ import {
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IAssetDto } from "@framework/types";
+import type { IAssetComponentDto, IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
@@ -117,5 +117,25 @@ export class AssetService {
     options?: FindOneOptions<AssetEntity>,
   ): Promise<AssetEntity | null> {
     return this.assetEntityRepository.findOne({ where, ...options });
+  }
+
+  public summarize(dto: Array<IAssetComponentDto>): Array<IAssetComponentDto> {
+    const summaryMap: { [name: string]: IAssetComponentDto } = {};
+    // Summarize values based on the name
+    dto.forEach(comp => {
+      const { contractId, tokenId, templateId, amount } = comp;
+      const name = `${contractId}${tokenId}${templateId}`;
+      if (summaryMap[name] === undefined) {
+        summaryMap[name] = comp;
+      } else {
+        summaryMap[name] = {
+          ...comp,
+          amount: (BigInt(summaryMap[name].amount) + BigInt(amount)).toString(),
+        };
+      }
+    });
+
+    // Convert the summary map back to an array of objects
+    return Object.values(summaryMap).map(name => name);
   }
 }

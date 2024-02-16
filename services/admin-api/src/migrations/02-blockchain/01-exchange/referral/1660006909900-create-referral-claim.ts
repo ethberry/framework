@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateReferralTreeAt1660203709900 implements MigrationInterface {
+export class CreateReferralClaimAt1660006909900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.referral_tree`,
+      name: `${ns}.referral_claim`,
       columns: [
         {
           name: "id",
@@ -13,25 +13,12 @@ export class CreateReferralTreeAt1660203709900 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "level",
-          type: "int",
-        },
-        {
-          name: "wallet",
+          name: "account",
           type: "varchar",
         },
         {
-          name: "referral",
-          type: "varchar",
-        },
-        {
-          name: "merchant_id",
+          name: "claim_id",
           type: "int",
-        },
-        {
-          name: "temp",
-          type: "bool",
-          default: false,
         },
         {
           name: "created_at",
@@ -44,9 +31,9 @@ export class CreateReferralTreeAt1660203709900 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["merchant_id"],
+          columnNames: ["claim_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
+          referencedTableName: `${ns}.claim`,
           onDelete: "CASCADE",
         },
       ],
@@ -56,6 +43,6 @@ export class CreateReferralTreeAt1660203709900 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.referral_tree`);
+    await queryRunner.dropTable(`${ns}.referral_reward`);
   }
 }

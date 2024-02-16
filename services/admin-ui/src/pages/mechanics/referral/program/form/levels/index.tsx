@@ -13,8 +13,8 @@ export type TReferralProgram = IReferralProgram & {
   id: string;
 };
 
-// LEVEL0 = total share
-// export const getEmptyProgramLevel = (levels: IReferralProgram[]): Array<Partial<IReferralProgram>> => {
+// LEVEL0 = total shares
+// ADD LEVEL = default 1%
 export const getEmptyProgramLevel = (
   levels: IReferralProgram[],
   merchantId: number,
@@ -36,8 +36,8 @@ export const getEmptyProgramLevel = (
     return [
       {
         merchantId,
-        level: levels.length + 1,
-        share: 0,
+        level: levels[levels.length - 1].level + 1,
+        share: 100,
       },
     ];
   }
@@ -63,7 +63,7 @@ export const ReferralProgramLevelsInput: FC = () => {
     (): (() => void) => (): void => {
       append(getEmptyProgramLevel(values, merchantId));
     },
-    [merchantId],
+    [merchantId, values],
   );
 
   const handleOptionDelete =

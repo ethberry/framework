@@ -28,10 +28,10 @@ export class ReferralProgramCreateDto implements IReferralProgramCreateDto {
   @ApiProperty({ type: () => [ReferralProgramLevelCreateDto] })
   @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
-  @ValidateNested()
   @Validate(RefProgramLevelsRule, {
     message: "typeMismatch",
   })
+  @ValidateNested()
   @Type(() => ReferralProgramLevelCreateDto)
   public levels: Array<IReferralProgramLevelDto>;
 }

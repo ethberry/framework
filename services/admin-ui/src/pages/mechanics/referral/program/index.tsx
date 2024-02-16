@@ -8,6 +8,7 @@ import { useUser } from "@gemunion/provider-user";
 
 import { ReferralProgramForm } from "./form";
 import { getEmptyProgramLevel } from "./form/levels";
+import { sorter } from "../../../../utils/sorter";
 
 export interface IReferralProgramLevel {
   id?: number;
@@ -53,7 +54,9 @@ export const ReferralProgram: FC = () => {
 
   const handleSubmit = useCallback(
     async (values: IReferralProgramCreate, form: any): Promise<void> => {
-      const filteredLevels = values.levels.map(({ level, share }) => ({ level, share }));
+      const filteredLevels = values.levels
+        .sort(sorter("level"))
+        .map((lev, indx) => ({ level: indx, share: lev.share }));
       // CREATE OR UPDATE
       if (initialValues?.levels.length === 0) {
         await createReferralProgramLevel(form, { merchantId, levels: filteredLevels }).then(() => {

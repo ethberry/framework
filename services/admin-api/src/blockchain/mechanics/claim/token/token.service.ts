@@ -204,7 +204,6 @@ export class ClaimTokenService {
     params: IParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    console.log("getSignatureclaim_components", claimEntity.item.components);
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
