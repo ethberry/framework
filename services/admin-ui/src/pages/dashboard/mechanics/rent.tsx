@@ -3,7 +3,7 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { CarRental } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { optionsLock } from "../../../utils/lock";
+import { optionsLock } from "../../../utils/config";
 
 export const RentSection: FC = () => {
   if (!optionsLock("RentSection")) {

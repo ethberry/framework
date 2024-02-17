@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { StyledPaper } from "../styled";
-import { optionsLock } from "../../../utils/lock";
+import { optionsLock } from "../../../utils/config";
 
 export const ReferralSection: FC = () => {
   if (!optionsLock("ReferralSection")) {

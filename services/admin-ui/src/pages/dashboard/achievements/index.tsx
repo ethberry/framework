@@ -4,7 +4,7 @@ import { BarChart, FormatListNumberedRtl, SportsScore } from "@mui/icons-materia
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/lock";
+import { optionsLock } from "../../../utils/config";
 
 export const AchievementsSection: FC = () => {
   if (!optionsLock("AchievementsSection")) {

@@ -8,7 +8,7 @@ import { TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
-import { optionsLock } from "../../../../utils/lock";
+import { optionsLock } from "../../../../utils/config";
 
 export interface IEthListenerRemoveButtonProps {
   className?: string;
