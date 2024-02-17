@@ -7,6 +7,9 @@
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
+  "buttons": {
+    "download-metamask": "Download Metamask"
+  },
   "components": {
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",

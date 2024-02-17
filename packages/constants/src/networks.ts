@@ -29,7 +29,7 @@ export const networks = {
   },
   "56": {
     order: 3,
-    chainName: "Binance Smart Chain",
+    chainName: "BNB Chain",
     chainId: 56,
     rpcUrls: [
       "https://bsc-dataseed.binance.org",
@@ -45,7 +45,7 @@ export const networks = {
   },
   "97": {
     order: 4,
-    chainName: "Binance Smart Chain Testnet",
+    chainName: "BNB Chain Testnet",
     chainId: 97,
     rpcUrls: [
       "https://data-seed-prebsc-1-s1.binance.org:8545",
@@ -57,8 +57,8 @@ export const networks = {
     ],
     blockExplorerUrls: ["https://testnet.bscscan.com"],
     nativeCurrency: {
-      name: "BNB",
-      symbol: "BNB",
+      name: "tBNB",
+      symbol: "tBNB",
       decimals: 18,
     },
   },

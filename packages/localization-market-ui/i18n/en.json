@@ -8,6 +8,9 @@
     "openseaFee": "OpenSea will take 2.5% as a fee",
     "uncaughtError": "Uncaught error happened"
   },
+  "buttons": {
+    "download-metamask": "Download Metamask"
+  },
   "components": {
     "header": {
       "checkout": "Checkout",
