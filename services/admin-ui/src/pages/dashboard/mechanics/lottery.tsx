@@ -4,7 +4,7 @@ import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-ma
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { optionsLock } from "../../../utils/lock";
 
 export const LotterySection: FC = () => {
   if (!optionsLock("LotterySection")) {

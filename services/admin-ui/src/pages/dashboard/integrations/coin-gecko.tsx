@@ -4,7 +4,7 @@ import { Paid, WaterfallChart } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { optionsLock } from "../../../utils/lock";
 
 export const CoinGeckoSection: FC = () => {
   if (!optionsLock("CoinGeckoSection")) {

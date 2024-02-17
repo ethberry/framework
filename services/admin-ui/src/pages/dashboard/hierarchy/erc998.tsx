@@ -4,7 +4,7 @@ import { AutoAwesomeMotion, Collections, Extension, Storage } from "@mui/icons-m
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { optionsLock } from "../../../utils/lock";
 
 export const Erc998Section: FC = () => {
   if (!optionsLock("Erc998Section")) {

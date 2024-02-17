@@ -4,7 +4,7 @@ import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { optionsLock } from "../../../utils/lock";
 
 export const CoinMarketCapSection: FC = () => {
   if (!optionsLock("CoinMarketCapSection")) {
