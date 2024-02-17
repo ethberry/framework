@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { ReferralRewardEntity } from "./referral.reward.entity";
 import { ReferralRewardService } from "./referral.reward.service";
