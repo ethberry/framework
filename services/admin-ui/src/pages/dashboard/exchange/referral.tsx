@@ -4,14 +4,11 @@ import { BarChart, Groups } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
-
 import { StyledPaper } from "../styled";
+import { optionsLock } from "../../../utils/config";
 
 export const ReferralSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-
-  if (!isDevelopment) {
+  if (!optionsLock("ReferralSection")) {
     return null;
   }
 
@@ -25,14 +22,6 @@ export const ReferralSection: FC = () => {
           </ListSubheader>
         }
       >
-        {/* <ListItemButton component={RouterLink} to="/referral/leaderboard"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Leaderboard /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.referral.leaderboard.title" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItemButton> */}
         <ListItemButton component={RouterLink} to="/referral/report/search">
           <ListItemIcon>
             <BarChart />
@@ -49,14 +38,6 @@ export const ReferralSection: FC = () => {
             <FormattedMessage id="pages.referral.program.title" />
           </ListItemText>
         </ListItemButton>
-        {/* <ListItemButton component={RouterLink} to="/referral/report/chart"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Timeline /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.referral.chart.title" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItemButton> */}
       </List>
     </StyledPaper>
   );
