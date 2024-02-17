@@ -35,7 +35,7 @@ export const Erc20TokenList: FC<IErc20TokenListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc20", "erc20.tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc20.tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc20.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
