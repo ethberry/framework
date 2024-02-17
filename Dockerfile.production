@@ -1,5 +1,5 @@
 FROM node:20 AS base
-ENV NODE_OPTIONS=--max-old-space-size=7168
+ENV NODE_OPTIONS=--max-old-space-size=8096
 
 LABEL stage=base
 RUN apt-get update
@@ -18,7 +18,7 @@ FROM base AS deps
 LABEL stage=deps
 
 USER node
-ENV NODE_OPTIONS=--max_old_space_size=7168
+ENV NODE_OPTIONS=--max_old_space_size=8096
 RUN mkdir -p /home/node/framework
 WORKDIR /home/node/framework
 
