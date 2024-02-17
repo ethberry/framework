@@ -228,6 +228,28 @@ export class ContractService {
 
     Object.assign(contractEntity, dto);
 
+    // UPDATE ERC20\NATIVE TEMPLATES AS WELL
+    if (contractEntity.contractType === TokenType.NATIVE || contractEntity.contractType === TokenType.ERC20) {
+      const contractEntitywithTemplate = await this.findOne(
+        { id: contractEntity.id },
+        { relations: { templates: true } },
+      );
+      if (!contractEntitywithTemplate) {
+        throw new NotFoundException("contractNotFound");
+      }
+      const template = contractEntitywithTemplate.templates[0];
+
+      if (dto.title) {
+        await Object.assign(template, { title: dto.title }).save();
+      }
+      if (dto.description) {
+        await Object.assign(template, { description: dto.description }).save();
+      }
+      if (dto.imageUrl) {
+        await Object.assign(template, { description: dto.description }).save();
+      }
+    }
+
     return contractEntity.save();
   }
 
