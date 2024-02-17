@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IReferralTree } from "@framework/types";
 import { ns } from "@framework/constants";
-import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
+import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "referral_tree" })
 export class ReferralTreeEntity extends IdDateBaseEntity implements IReferralTree {

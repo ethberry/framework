@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 // import { useNavigate } from "react-router";
+import { useAppDispatch, collectionActions } from "@gemunion/redux";
 
 import { Button, Grid } from "@mui/material";
 import { FilterList, Redeem } from "@mui/icons-material";
@@ -12,16 +13,18 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection, useApiCall } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
-import type { IReferralReportSearchDto } from "@framework/types";
-import { IReferralEvents, IReferralRewardShare } from "@framework/types";
+import type { IReferralRewardShare, IReferralReportSearchDto } from "@framework/types";
+import { ClaimStatus, IReferralEvents } from "@framework/types";
 import { formatItem } from "@framework/exchange";
 
 export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
 }
 
-export interface IReferralRewardShareExt extends IReferralEvents {
-  shares?: Array<IReferralRewardShare>;
+export enum RefClaimStatus {
+  NEW = "NEW",
+  CREATED = "CREATED",
+  CLAIMED = "CLAIMED",
 }
 
 export const ReferralReward: FC = () => {
@@ -35,7 +38,7 @@ export const ReferralReward: FC = () => {
     // handleSearch,
     // handleChangePage,
     handleChangePaginationModel,
-  } = useCollection<IReferralRewardShareExt, IReferralRewardSearchDto>({
+  } = useCollection<IReferralEvents, IReferralRewardSearchDto>({
     baseUrl: "/referral/reward",
     search: {
       merchantIds: [1], // TODO get from user.profile?
@@ -45,7 +48,9 @@ export const ReferralReward: FC = () => {
   });
 
   const { formatMessage } = useIntl();
-  // const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const { setNeedRefresh } = collectionActions;
 
   // prettier-ignore
   const columns = [
@@ -61,24 +66,24 @@ export const ReferralReward: FC = () => {
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <AddressLink address={params.value} length={22} />
+          <AddressLink address={params.value} length={16} />
         );
       },
-      flex: 1.5,
-      minWidth: 150
+      flex: 1,
+      minWidth: 100
     },
     {
       field: "event",
       headerName: formatMessage({ id: "form.labels.event" }),
       sortable: true,
-      flex: 1,
+      flex: 0.7,
       minWidth: 100
     },
     {
       field: "item",
       headerName: formatMessage({ id: "form.labels.item" }),
       sortable: true,
-      flex: 0.8,
+      flex: 0.7,
       minWidth: 100
     },
     {
@@ -105,14 +110,12 @@ export const ReferralReward: FC = () => {
     },
     {
       field: "claim",
-      headerName: formatMessage({ id: "form.labels.claimed" }),
+      headerName: formatMessage({ id: "form.labels.claimStatus" }),
       sortable: true,
-      flex: 0.5,
-      minWidth: 50
+      flex: 0.7,
+      minWidth: 70
     },
   ];
-
-  // console.log("ReferralRewards", rows, count, search);
 
   const { fn: handleClaimApi } = useApiCall(
     api =>
@@ -126,9 +129,26 @@ export const ReferralReward: FC = () => {
   const handleClaim = () => {
     return handleClaimApi(void 0).then((json: any) => {
       console.info(json);
-      // TODO navigate to /claim or show message?
-      // navigate("/claim");
+      // if (isRouteMatchToEvent) {
+      dispatch(setNeedRefresh(true));
+      // }
     });
+  };
+
+  const getClaimStatus = (share: IReferralRewardShare | null) => {
+    if (share && share.claim) {
+      const { claim } = share;
+      switch (claim.claim?.claimStatus) {
+        case ClaimStatus.NEW:
+          return RefClaimStatus.CREATED;
+        case ClaimStatus.REDEEMED:
+          return RefClaimStatus.CLAIMED;
+        default:
+          return RefClaimStatus.CREATED;
+      }
+    } else {
+      return RefClaimStatus.NEW;
+    }
   };
 
   return (
@@ -153,7 +173,7 @@ export const ReferralReward: FC = () => {
           pageSizeOptions={[5, 10, 25, 100]}
           loading={isLoading}
           columns={columns}
-          rows={rows.map((reward: IReferralRewardShareExt, idx) => ({
+          rows={rows.map((reward: IReferralEvents, idx) => ({
             id: idx,
             account: reward.account,
             item: formatItem(reward.item),
@@ -161,7 +181,8 @@ export const ReferralReward: FC = () => {
             share: reward.shares ? `${reward.shares[0].share / 100}%` : `0%`,
             createdAt: reward.createdAt,
             event: reward.history!.parent?.eventType,
-            claim: !!(reward.shares && reward.shares[0].claimId),
+            // claim: !!(reward.shares && reward.shares[0].claimId),
+            claim: getClaimStatus(reward.shares ? reward.shares[0] : null),
           }))}
           autoHeight
         />

@@ -44,6 +44,7 @@ import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
 import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
@@ -80,7 +81,11 @@ import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+/* referral */
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/referral.reward.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
 
+/* migrations */
 import {
   AlterMerchant1687519905550,
   CreateAccessControl1653616447200,
@@ -353,10 +358,10 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
-import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
 
 // TEST DATA 100k topics
 // import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
@@ -411,7 +416,10 @@ const config: PostgresConnectionOptions = {
     WaitListItemEntity,
     WaitListListEntity,
     ReferralRewardEntity,
+    ReferralRewardShareEntity,
     ReferralProgramEntity,
+    ReferralTreeEntity,
+    ReferralClaimEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

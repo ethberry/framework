@@ -7,7 +7,7 @@ import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { EventHistoryEntity } from "../../../event-history/event-history.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
-import { ReferralRewardShareEntity } from "../share/referral.reward.share.entity";
+import { ReferralRewardShareEntity } from "./share/referral.reward.share.entity";
 
 @Entity({ schema: ns, name: "referral_reward" })
 export class ReferralRewardEntity extends IdDateBaseEntity implements IReferralEvents {

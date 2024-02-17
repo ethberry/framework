@@ -3,9 +3,8 @@ import { Column, Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IReferralClaim } from "@framework/types";
 import { ns } from "@framework/constants";
-
-import { ClaimEntity } from "../../claim/claim.entity";
 import { ReferralRewardShareEntity } from "../reward/share/referral.reward.share.entity";
+import { ClaimEntity } from "../../claim/claim.entity";
 
 @Entity({ schema: ns, name: "referral_claim" })
 export class ReferralClaimEntity extends IdDateBaseEntity implements IReferralClaim {

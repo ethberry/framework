@@ -6,9 +6,7 @@ import { parse } from "json2csv";
 import { ns } from "@framework/constants";
 import type { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
 
-// import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { ReferralRewardEntity } from "./reward.entity";
-// import { formatEther } from "./reward.utils";
+import { ReferralRewardEntity } from "./referral.reward.entity";
 
 @Injectable()
 export class ReferralRewardService {

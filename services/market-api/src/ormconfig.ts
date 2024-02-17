@@ -66,7 +66,7 @@ import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-param
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
 import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
-import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/share/referral.reward.share.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
 import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
 
 // Check typeORM documentation for more information.

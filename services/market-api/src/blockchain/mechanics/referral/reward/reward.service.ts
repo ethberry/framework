@@ -50,15 +50,14 @@ export class ReferralRewardService {
     queryBuilder.leftJoinAndSelect("history.parent", "parent");
 
     queryBuilder.leftJoinAndSelect("reward.shares", "shares");
+    queryBuilder.leftJoinAndSelect("shares.claim", "shares_claim");
+    queryBuilder.leftJoinAndSelect("shares_claim.claim", "claim");
 
     queryBuilder.andWhere("shares.referrer = :referrer", {
       referrer: userEntity.wallet,
     });
 
     if (noClaim) {
-      // queryBuilder.andWhere("shares.claim = :claim", {
-      //   claim: IsNull(),
-      // });
       queryBuilder.andWhere("shares.claimId is null");
     }
 

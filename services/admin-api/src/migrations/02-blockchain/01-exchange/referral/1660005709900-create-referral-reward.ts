@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class CreateReferralRewardAt1660005709900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    // DROP OLD TABLE
+    await queryRunner.query(`DROP TABLE IF EXISTS ${ns}.referral_reward CASCADE;`);
+
+    // CREATE NEW TABLE
     const table = new Table({
       name: `${ns}.referral_reward`,
       columns: [

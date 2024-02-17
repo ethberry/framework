@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import type { IReferralLeaderboard, IReferralLeaderboardSearchDto } from "@framework/types";
 
-import { ReferralRewardService } from "../reward/reward.service";
+import { ReferralRewardService } from "../reward/referral.reward.service";
 
 @Injectable()
 export class ReferralLeaderboardService {

@@ -4,8 +4,8 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IReferralRewardShare } from "@framework/types";
 import { ns } from "@framework/constants";
 import { ReferralRewardEntity } from "../referral.reward.entity";
-import { ReferralTreeEntity } from "../tree/referral.tree.entity";
-import { ReferralClaimEntity } from "../referral.claim.entity";
+import { ReferralTreeEntity } from "../../program/tree/referral.tree.entity";
+import { ReferralClaimEntity } from "../../claim/referral.claim.entity";
 
 @Entity({ schema: ns, name: "referral_share" })
 export class ReferralRewardShareEntity extends IdDateBaseEntity implements IReferralRewardShare {

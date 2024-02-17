@@ -43,11 +43,11 @@ import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralRewardEntity } from "./blockchain/mechanics/referral/referral.reward.entity";
-import { ReferralTreeEntity } from "./blockchain/mechanics/referral/tree/referral.tree.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/referral.reward.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
 import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
-import { ReferralClaimEntity } from "./blockchain/mechanics/referral/referral.claim.entity";
-import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/share/referral.reward.share.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

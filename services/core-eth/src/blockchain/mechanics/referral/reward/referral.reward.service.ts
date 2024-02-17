@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository, InjectDataSource } from "@nestjs/typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, DataSource } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
 import { testChainId } from "@framework/constants";
 import { ReferralRewardEntity } from "./referral.reward.entity";
-import { ReferralProgramService } from "./program/referral.program.service";
-import { ReferralTreeService } from "./tree/referral.tree.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ReferralProgramService } from "../program/referral.program.service";
+import { ReferralTreeService } from "../program/tree/referral.tree.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { IRefChainQuery, ReferralRewardShareService } from "./share/referral.reward.share.service";
 
 export interface IRefEventCalc {
@@ -17,35 +17,33 @@ export interface IRefEventCalc {
 }
 
 @Injectable()
-export class ReferralService {
+export class ReferralRewardService {
   constructor(
     @InjectRepository(ReferralRewardEntity)
-    private readonly referralEventEntityRepository: Repository<ReferralRewardEntity>,
+    private readonly referralRewardEntityRepository: Repository<ReferralRewardEntity>,
+    private readonly referralRewardShareService: ReferralRewardShareService,
     private readonly referralProgramService: ReferralProgramService,
     private readonly referralTreeService: ReferralTreeService,
-    private readonly referralRewardShareService: ReferralRewardShareService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
-    @InjectDataSource()
-    private dataSource: DataSource,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<ReferralRewardEntity>,
     options?: FindOneOptions<ReferralRewardEntity>,
   ): Promise<ReferralRewardEntity | null> {
-    return this.referralEventEntityRepository.findOne({ where, ...options });
+    return this.referralRewardEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
     where: FindOptionsWhere<ReferralRewardEntity>,
     options?: FindManyOptions<ReferralRewardEntity>,
   ): Promise<Array<ReferralRewardEntity>> {
-    return this.referralEventEntityRepository.find({ where, ...options });
+    return this.referralRewardEntityRepository.find({ where, ...options });
   }
 
   public async create(dto: DeepPartial<ReferralRewardEntity>): Promise<ReferralRewardEntity> {
-    return this.referralEventEntityRepository.create(dto).save();
+    return this.referralRewardEntityRepository.create(dto).save();
   }
 
   public async referral(wallet: string, contract: string): Promise<void> {

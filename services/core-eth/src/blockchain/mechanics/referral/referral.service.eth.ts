@@ -14,14 +14,14 @@ import {
   SignalEventType,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
-import { ReferralService } from "./referral.service";
+import { ReferralRewardService } from "./reward/referral.reward.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { AssetEntity } from "../../exchange/asset/asset.entity";
-import { ReferralRewardShareService } from "./share/referral.reward.share.service";
+import { ReferralRewardShareService } from "./reward/share/referral.reward.share.service";
 
 @Injectable()
 export class ReferralServiceEth {
@@ -36,7 +36,7 @@ export class ReferralServiceEth {
     private readonly tokenService: TokenService,
     private readonly assetService: AssetService,
     private readonly notificatorService: NotificatorService,
-    private readonly referralService: ReferralService,
+    private readonly referralService: ReferralRewardService,
     private readonly referralRewardShareService: ReferralRewardShareService,
   ) {}
 

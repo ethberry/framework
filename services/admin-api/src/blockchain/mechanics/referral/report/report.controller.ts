@@ -8,7 +8,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { ReferralReportService } from "./report.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ReferralReportSearchDto } from "../reward/dto";
-import { ReferralRewardEntity } from "../reward/reward.entity";
+import { ReferralRewardEntity } from "../reward/referral.reward.entity";
 
 @ApiBearerAuth()
 @Controller("/referral/report")

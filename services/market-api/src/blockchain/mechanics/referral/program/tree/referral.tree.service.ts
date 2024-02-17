@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ReferralTreeEntity } from "./referral.tree.entity";
 
@@ -23,9 +23,5 @@ export class ReferralTreeService {
     options?: FindManyOptions<ReferralTreeEntity>,
   ): Promise<Array<ReferralTreeEntity>> {
     return this.referralTreeEntityRepository.find({ where, ...options });
-  }
-
-  public async create(dto: DeepPartial<ReferralTreeEntity>): Promise<ReferralTreeEntity> {
-    return this.referralTreeEntityRepository.create(dto).save();
   }
 }

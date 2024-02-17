@@ -25,7 +25,6 @@ import {
   conduitKey,
   getItemType,
 } from "../../../common/utils/opensea";
-import { ReferralService } from "../../mechanics/referral/program/referral.service";
 
 @Injectable()
 export class MarketplaceService {
@@ -35,7 +34,6 @@ export class MarketplaceService {
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
     private readonly contractService: ContractService,
-    protected readonly referralService: ReferralService,
   ) {}
 
   public async sell(dto: ITokenSellDto, userEntity: UserEntity): Promise<any> {

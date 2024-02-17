@@ -9,18 +9,9 @@ import { MarketplaceService } from "./marketplace.service";
 import { MarketplaceController } from "./marketplace.controller";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
-import { ReferralProgramModule } from "../../mechanics/referral/program/referral.program.module";
 
 @Module({
-  imports: [
-    ConfigModule,
-    SettingsModule,
-    SignerModule,
-    TemplateModule,
-    TokenModule,
-    ContractModule,
-    ReferralProgramModule,
-  ],
+  imports: [ConfigModule, SettingsModule, SignerModule, TemplateModule, TokenModule, ContractModule],
   providers: [Logger, MarketplaceService],
   controllers: [MarketplaceController],
   exports: [MarketplaceService],

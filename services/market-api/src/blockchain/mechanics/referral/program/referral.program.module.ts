@@ -7,7 +7,6 @@ import { ReferralTreeEntity } from "./tree/referral.tree.entity";
 import { ReferralProgramService } from "./referral.program.service";
 import { ReferralTreeService } from "./tree/referral.tree.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { ReferralService } from "./referral.service";
 
 @Module({
   imports: [
@@ -16,7 +15,7 @@ import { ReferralService } from "./referral.service";
     ConfigModule,
     ContractModule,
   ],
-  providers: [ReferralProgramService, ReferralTreeService, ReferralService],
-  exports: [ReferralProgramService, ReferralTreeService, ReferralService],
+  providers: [ReferralProgramService, ReferralTreeService],
+  exports: [ReferralProgramService, ReferralTreeService],
 })
 export class ReferralProgramModule {}

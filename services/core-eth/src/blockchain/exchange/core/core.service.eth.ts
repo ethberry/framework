@@ -10,7 +10,7 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
-import { ReferralService } from "../../mechanics/referral/referral.service";
+import { ReferralRewardService } from "../../mechanics/referral/reward/referral.reward.service";
 
 @Injectable()
 export class ExchangeCoreServiceEth {
@@ -20,7 +20,7 @@ export class ExchangeCoreServiceEth {
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
-    private readonly referralService: ReferralService,
+    private readonly referralService: ReferralRewardService,
   ) {}
 
   public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {

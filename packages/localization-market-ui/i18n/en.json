@@ -423,7 +423,7 @@
       "categoryIds": "Category",
       "chainId": "Chain",
       "city": "City",
-      "claimStatus": "Status",
+      "claimStatus": "Claim",
       "claimed": "Claimed",
       "claimType": "Type",
       "cliffInMonth": "Cliff in month",
