@@ -4,10 +4,12 @@ import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { NodeEnv } from "@framework/types";
 
 export const CoinMarketCapSection: FC = () => {
-  if (!optionsLock("CoinMarketCapSection")) {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+
+  if (!isDevelopment) {
     return null;
   }
 

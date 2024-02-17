@@ -4,11 +4,10 @@ import { DoNotDisturbOn } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
-import { optionsLock } from "../../../../utils/config";
 
 export interface IEthListenerAddButtonProps {
   className?: string;
@@ -44,7 +43,7 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
     });
   };
 
-  if (!optionsLock("EthListenerAddButton")) {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

@@ -3,11 +3,12 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { Collections } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-
-import { optionsLock } from "../../../utils/config";
+import { NodeEnv } from "@framework/types";
 
 export const PaymentSplitterSection: FC = () => {
-  if (!optionsLock("PaymentSplitterSection")) {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+
+  if (!isDevelopment) {
     return null;
   }
 

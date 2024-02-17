@@ -8,7 +8,6 @@ import type { IUser } from "@framework/types";
 
 import { AttachWalletButton } from "./attach-wallet";
 import { StyledTypography } from "./styled";
-import { EthGetLogsButton } from "../../../../../components/buttons/common/eth-logs";
 
 export const Wallet: FC = () => {
   const { profile } = useUser<IUser>();
@@ -20,7 +19,6 @@ export const Wallet: FC = () => {
         <FormattedMessage id="pages.profile.settings.wallet.connectedWallet" />: {profile.wallet || "N/A"}
       </StyledTypography>
       <AttachWalletButton />
-      <EthGetLogsButton />
     </Grid>
   );
 };

@@ -4,11 +4,10 @@ import { DoNotDisturbOff } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
-import { optionsLock } from "../../../../utils/config";
 
 export interface IEthListenerRemoveButtonProps {
   className?: string;
@@ -44,7 +43,7 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
     });
   };
 
-  if (!optionsLock("EthListenerRemoveButton")) {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

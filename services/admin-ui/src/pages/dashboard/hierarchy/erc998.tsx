@@ -4,10 +4,10 @@ import { AutoAwesomeMotion, Collections, Extension, Storage } from "@mui/icons-m
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { BusinessType } from "@framework/types";
 
 export const Erc998Section: FC = () => {
-  if (!optionsLock("Erc998Section")) {
+  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return null;
   }
 

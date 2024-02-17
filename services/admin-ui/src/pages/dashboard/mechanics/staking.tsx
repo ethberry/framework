@@ -4,10 +4,13 @@ import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { optionsLock } from "../../../utils/config";
+import { NodeEnv } from "@framework/types";
 
 export const StakingSection: FC = () => {
-  if (!optionsLock("StakingSection")) {
+  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isStaging = process.env.NODE_ENV === NodeEnv.staging;
+
+  if (!(isDevelopment || isStaging)) {
     return null;
   }
 
