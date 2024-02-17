@@ -7,10 +7,9 @@ import { FormattedMessage } from "react-intl";
 import { NodeEnv } from "@framework/types";
 
 export const StakingSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-  const isStaging = process.env.NODE_ENV === NodeEnv.staging;
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
 
-  if (!(isDevelopment || isStaging)) {
+  if (isProd) {
     return null;
   }
 

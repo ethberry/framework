@@ -7,9 +7,9 @@ import { FormattedMessage } from "react-intl";
 import { NodeEnv } from "@framework/types";
 
 export const Erc998Section: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
 
-  if (!isDevelopment) {
+  if (isProd) {
     return null;
   }
 
