@@ -150,11 +150,9 @@ export class ReferralRewardService {
     const { merchantIds = [] } = dto;
 
     const [allRefEvents, count] = await this.search(
-      { merchantIds: merchantIds.length > 0 ? merchantIds : [userEntity.merchantId] },
+      { merchantIds: merchantIds.length > 0 ? merchantIds : undefined },
       userEntity,
     );
-
-    // console.log("allRefEvents", allRefEvents);
 
     return [allRefEvents, count];
   }
@@ -170,8 +168,6 @@ export class ReferralRewardService {
       userEntity,
       true,
     );
-
-    // console.log("allRefEvents", allRefEvents);
 
     return [allRefEvents, count];
   }

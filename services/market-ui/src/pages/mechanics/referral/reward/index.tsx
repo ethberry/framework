@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-// import { useNavigate } from "react-router";
 import { useAppDispatch, collectionActions } from "@gemunion/redux";
 
 import { Button, Grid } from "@mui/material";
@@ -41,7 +40,8 @@ export const ReferralReward: FC = () => {
   } = useCollection<IReferralEvents, IReferralRewardSearchDto>({
     baseUrl: "/referral/reward",
     search: {
-      merchantIds: [1], // TODO get from user.profile?
+      // merchantIds: [1, 4], // TODO get list from purchases?
+      merchantIds: [], // search by all merchants
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
@@ -54,11 +54,18 @@ export const ReferralReward: FC = () => {
 
   // prettier-ignore
   const columns = [
+    // {
+    //   field: "id",
+    //   headerName: formatMessage({ id: "form.labels.id" }),
+    //   sortable: true,
+    //   flex: 0.05
+    // },
     {
-      field: "id",
-      headerName: formatMessage({ id: "form.labels.id" }),
+      field: "merchant",
+      headerName: formatMessage({ id: "form.labels.merchant" }),
       sortable: true,
-      flex: 0.05
+      flex: 0.5,
+      // minWidth: 100
     },
     {
       field: "account",
@@ -175,6 +182,7 @@ export const ReferralReward: FC = () => {
           columns={columns}
           rows={rows.map((reward: IReferralEvents, idx) => ({
             id: idx,
+            merchant: reward.merchantId,
             account: reward.account,
             item: formatItem(reward.item),
             price: formatItem(reward.price),

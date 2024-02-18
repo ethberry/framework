@@ -15,6 +15,6 @@ export class ReferralClaimController {
   @Post("/create")
   @HttpCode(204)
   public claim(@User() userEntity: UserEntity): Promise<ReferralClaimEntity | null> {
-    return this.referralClaimService.createRefClaim(userEntity);
+    return this.referralClaimService.createRefClaims(userEntity);
   }
 }
