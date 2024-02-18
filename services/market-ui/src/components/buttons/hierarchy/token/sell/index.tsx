@@ -24,14 +24,6 @@ export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
   const { referrer } = useAppSelector(state => state.settings);
   const { account, chainId } = useWeb3React();
 
-  // disable SELL for unsupported chains (BESU, GEMUNIONBESU, BSC, BSC_testnet etc)
-  if (chainId === 56 || chainId === 97 || chainId === 10000 || chainId === 10001) {
-    return null;
-  }
-  if (token.tokenStatus === TokenStatus.BURNED) {
-    return null;
-  }
-
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
 
   const metaFn = useMetamask((dto: Array<any>, web3Context: Web3ContextType) => {
@@ -93,6 +85,14 @@ export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
   // TIME + 1 day from Now
   const date = new Date();
   date.setDate(date.getDate() + 1);
+
+  // disable SELL for unsupported chains (BESU, GEMUNIONBESU, BSC, BSC_testnet etc)
+  if (chainId === 56 || chainId === 97 || chainId === 10000 || chainId === 10001) {
+    return null;
+  }
+  if (token.tokenStatus === TokenStatus.BURNED) {
+    return null;
+  }
 
   return (
     <Fragment>
