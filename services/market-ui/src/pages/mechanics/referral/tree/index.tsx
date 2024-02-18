@@ -15,12 +15,6 @@ export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
 }
 
-export enum RefClaimStatus {
-  NEW = "NEW",
-  CREATED = "CREATED",
-  CLAIMED = "CLAIMED",
-}
-
 export interface IReferralTreeChain {
   id: number;
   merchant: string;
