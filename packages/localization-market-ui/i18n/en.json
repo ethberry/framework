@@ -923,7 +923,8 @@
       "signInWith": {
         "facebook": "Sign in with Facebook",
         "google": "Sign in with Google",
-        "metamask": "Sign in with Metamask"
+        "metamask": "Sign in with Metamask",
+        "particle": "Sign in with Particle"
       }
     },
     "history": {
