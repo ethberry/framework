@@ -8,6 +8,7 @@ import { ReferralChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
 import { ReferralSection } from "../../dashboard/exchange/referral";
 import { ReferralReward } from "./reward";
+import { ReferralTree } from "./tree";
 
 export const referralRoutes: Array<RouteObject> = [
   {
@@ -22,6 +23,7 @@ export const referralRoutes: Array<RouteObject> = [
         ),
       },
       { path: "/referral/reward", element: <ReferralReward /> },
+      { path: "/referral/tree", element: <ReferralTree /> },
       {
         path: "/referral/cabinet",
         children: [{ index: true, element: <ReferralCabinet /> }],

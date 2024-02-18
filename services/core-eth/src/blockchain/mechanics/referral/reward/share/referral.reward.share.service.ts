@@ -41,6 +41,25 @@ export class ReferralRewardShareService {
     return this.referralRewardShareEntityRepository.create(dto).save();
   }
 
+  public async createShares(
+    rewardId: number,
+    merchantId: number,
+    refChain: Array<IRefChainQuery>,
+  ): Promise<Array<ReferralRewardShareEntity>> {
+    return Promise.all(
+      refChain.map(
+        async chain =>
+          await this.create({
+            referrer: chain.wallet,
+            share: chain.share,
+            level: chain.level,
+            treeId: chain.id,
+            rewardId,
+          }),
+      ),
+    );
+  }
+
   public async getRefChain(referrer: string, merchantId: number): Promise<Array<IRefChainQuery>> {
     const queryRunner = this.dataSource.createQueryRunner();
 
@@ -66,24 +85,5 @@ export class ReferralRewardShareService {
     } else {
       return [];
     }
-  }
-
-  public async createShares(
-    rewardId: number,
-    merchantId: number,
-    refChain: Array<IRefChainQuery>,
-  ): Promise<Array<ReferralRewardShareEntity>> {
-    return Promise.all(
-      refChain.map(
-        async chain =>
-          await this.create({
-            referrer: chain.wallet,
-            share: chain.share,
-            level: chain.level,
-            treeId: chain.id,
-            rewardId,
-          }),
-      ),
-    );
   }
 }

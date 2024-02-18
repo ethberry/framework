@@ -89,7 +89,7 @@ export class ReferralRewardService {
       const refChain = await this.referralRewardShareService.getRefChain(referrer.toLowerCase(), merchantId);
       // IF REFERRER WAS REGISTERED
       if (refChain && refChain.length > 0) {
-        await this.cleanUp(merchantId, account, referrer, refChain);
+        // await this.cleanUp(merchantId, account, referrer, refChain);
         const currentRefLevel = refChain[0].level;
         // GET ANY CONFIRMED REF RECORDS FOR buyer's ACCOUNT
         const accRefs = await this.referralTreeService.findOne({
@@ -110,8 +110,8 @@ export class ReferralRewardService {
         }
         return { merchantId, refChain };
       } else {
-        // IF REFERRER WAS NOT REGISTERED - confirm account's temporary level 1 ref if exist
-        const restrictForBuyersOnly = false; // TODO get from program
+        // IF REFERRER WAS NOT REGISTERED
+        const restrictForBuyersOnly = false; // TODO get it from program?
         if (!restrictForBuyersOnly) {
           // REGISTER REFERRER
           // CREATE TREE LEVEL 1
@@ -141,17 +141,6 @@ export class ReferralRewardService {
           };
           return { merchantId, refChain: [newRefChain] };
         }
-
-        await this.referralTreeService.updateIfExist(
-          {
-            wallet: account.toLowerCase(),
-            merchantId,
-            referral: ZeroAddress,
-            level: 1,
-            temp: true,
-          },
-          { temp: false },
-        );
         // RETURN ZERO
         return { merchantId, refChain: [] };
       }
@@ -191,5 +180,15 @@ export class ReferralRewardService {
       level: 1,
       temp: true,
     });
+    await this.referralTreeService.updateIfExist(
+      {
+        wallet: account.toLowerCase(),
+        merchantId,
+        referral: ZeroAddress,
+        level: 1,
+        temp: true,
+      },
+      { temp: false },
+    );
   }
 }

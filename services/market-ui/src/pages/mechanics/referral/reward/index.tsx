@@ -201,7 +201,6 @@ export const ReferralReward: FC = () => {
             share: reward.shares ? `${reward.shares[0].share / 100}%` : `0%`,
             createdAt: reward.createdAt,
             event: reward.history!.parent?.eventType,
-            // claim: !!(reward.shares && reward.shares[0].claimId),
             claim: getClaimStatus(reward.shares ? reward.shares[0] : null),
           }))}
           autoHeight
