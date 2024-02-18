@@ -7,6 +7,7 @@ import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
 import { ReferralChart } from "./chart";
 import { ReferralProgram } from "./program";
+import { ReferralTree } from "./tree";
 
 export const referralRoutes: Array<RouteObject> = [
   {
@@ -20,8 +21,9 @@ export const referralRoutes: Array<RouteObject> = [
           </IndexWrapper>
         ),
       },
-      { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       { path: "/referral/program", element: <ReferralProgram /> },
+      { path: "/referral/tree", element: <ReferralTree /> },
+      { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       {
         path: "/referral/report",
         children: [

@@ -826,6 +826,7 @@
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
+      "referral": "Referral",
       "rentStatus": "Status",
       "reward": "Reward",
       "role": "Role",
@@ -959,6 +960,7 @@
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
+      "referral": "Referral",
       "rarityMultiplier": "0",
       "recipient": "Recipient",
       "roundIds": "Round",
@@ -1508,6 +1510,9 @@
       },
       "chart": {
         "title": "Chart"
+      },
+      "tree": {
+        "title": "Referral Tree"
       },
       "leaderboard": {
         "title": "Leaderboard"

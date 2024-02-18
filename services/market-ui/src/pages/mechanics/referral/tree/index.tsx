@@ -37,7 +37,7 @@ export const ReferralTree: FC = () => {
   } = useCollection<IReferralTreeChain, IReferralTreeSearchDto>({
     baseUrl: "/referral/tree",
     search: {
-      merchantIds: [1, 2, 3, 4], // search by all merchants
+      merchantIds: [], // search by all merchants
     },
   });
 
