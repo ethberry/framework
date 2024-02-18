@@ -84,6 +84,9 @@ import { AchievementRedemptionEntity } from "./achievements/redemption/redemptio
 /* referral */
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/referral.reward.entity";
 import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
 
 /* migrations */
 import {
@@ -358,13 +361,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
-import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
-import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
-import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
 
-// TEST DATA 100k topics
-// import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -774,10 +771,6 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
-
-    /* alter prod migrations */
-    // SeedTestDataAt9763804000120,
-    AlterClaimTypeEnum1900000000000,
   ],
 };
 
