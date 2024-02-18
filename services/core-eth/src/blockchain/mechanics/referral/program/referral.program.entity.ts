@@ -13,6 +13,9 @@ export class ReferralProgramEntity extends IdDateBaseEntity implements IReferral
   @Column({ type: "int" })
   public share: number;
 
+  @Column({ type: "boolean" })
+  public strict: number;
+
   @Column({ type: "int" })
   public merchantId: number;
 

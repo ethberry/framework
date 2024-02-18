@@ -55,9 +55,12 @@ export class ReferralRewardService {
     }
     const { merchantId } = contractEntity;
 
-    const refProgram = await this.referralProgramService.findOne({ merchantId }, { relations: { merchant: true } });
+    const refProgram = await this.referralProgramService.findOne(
+      { merchantId, level: 0 },
+      { relations: { merchant: true } },
+    );
 
-    // DO NOT REGISTER SELF-REFERRERS
+    // IF EXISTS REF PROGRAM (do not register self-referrers)
     if (refProgram && refProgram.merchant.wallet.toLowerCase() !== wallet.toLowerCase()) {
       // LOOK FOR LEVEL 1 referrer (it means referrer had purchases from merchant)
       const refTreeOne = await this.referralTreeService.findOne({
@@ -79,9 +82,9 @@ export class ReferralRewardService {
   // TODO test it for edge cases
   public async referralEventLevel(merchantId: number, account: string, referrer: string): Promise<IRefEventCalc> {
     // FIND MERCHANT'S REF PROGRAM
-    const refProgramLevelZero = await this.referralProgramService.findOne({ merchantId, level: 0 });
+    const refProgramLevelOne = await this.referralProgramService.findOne({ merchantId, level: 1 });
     // IF THERE IS MERCHANT REF PROGRAM
-    if (refProgramLevelZero) {
+    if (refProgramLevelOne) {
       // GET CURRENT REFERRER WALLET-to-MERCHANT CHAIN
       const refChain = await this.referralRewardShareService.getRefChain(referrer.toLowerCase(), merchantId);
       // IF REFERRER WAS REGISTERED
@@ -108,6 +111,37 @@ export class ReferralRewardService {
         return { merchantId, refChain };
       } else {
         // IF REFERRER WAS NOT REGISTERED - confirm account's temporary level 1 ref if exist
+        const restrictForBuyersOnly = false; // TODO get from program
+        if (!restrictForBuyersOnly) {
+          // REGISTER REFERRER
+          // CREATE TREE LEVEL 1
+          const treeEntity = await this.referralTreeService.create({
+            merchantId,
+            wallet: referrer.toLowerCase(),
+            referral: ZeroAddress,
+            level: 1,
+            temp: false,
+          });
+          // CREATE USER TREE LEVEL if not exist
+          // const treeEntity = await this.referralTreeService.create({
+          //   merchantId,
+          //   wallet: account.toLowerCase(),
+          //   referral: referrer.toLowerCase(),
+          //   level: 1,
+          //   temp: false,
+          // });
+
+          const newRefChain = {
+            id: treeEntity.id,
+            level: 1,
+            wallet: referrer.toLowerCase(),
+            share: refProgramLevelOne.share,
+            reflen: 1,
+            temp: false,
+          };
+          return { merchantId, refChain: [newRefChain] };
+        }
+
         await this.referralTreeService.updateIfExist(
           {
             wallet: account.toLowerCase(),
@@ -118,10 +152,11 @@ export class ReferralRewardService {
           },
           { temp: false },
         );
-        // RETURN ACCOUNT's REF LEVEL 0
+        // RETURN ZERO
         return { merchantId, refChain: [] };
       }
     } else {
+      // RETURN ZERO
       return { merchantId, refChain: [] };
     }
   }

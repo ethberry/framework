@@ -143,7 +143,6 @@ export class ReferralServiceEth {
           priceId: assetEntity.id,
           itemId: itemAssetEntity ? itemAssetEntity.id : null,
           historyId: historyEntity.id,
-          // share: refInfo.refShare, // TODO rename to 1st ref share
           merchantId: refInfo.merchantId,
         });
 

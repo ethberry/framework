@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useAppDispatch, collectionActions } from "@gemunion/redux";
 
 import { Button, Grid } from "@mui/material";
-import { FilterList, Redeem } from "@mui/icons-material";
+import { Redeem } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
@@ -32,8 +32,8 @@ export const ReferralReward: FC = () => {
     rows,
     // search,
     isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
+    // isFiltersOpen,
+    // handleToggleFilters,
     // handleSearch,
     // handleChangePage,
     handleChangePaginationModel,
@@ -53,6 +53,7 @@ export const ReferralReward: FC = () => {
   const { setNeedRefresh } = collectionActions;
 
   // prettier-ignore
+  // TODO make it nice
   const columns = [
     // {
     //   field: "id",
@@ -136,9 +137,7 @@ export const ReferralReward: FC = () => {
   const handleClaim = () => {
     return handleClaimApi(void 0).then((json: any) => {
       console.info(json);
-      // if (isRouteMatchToEvent) {
       dispatch(setNeedRefresh(true));
-      // }
     });
   };
 
@@ -158,15 +157,28 @@ export const ReferralReward: FC = () => {
     }
   };
 
+  const noRows = !(rows.length > 0);
+  const noNewClaims =
+    rows
+      .filter(row => (row.shares ? row.shares[0] : null))
+      .map(row => row.shares)
+      .filter(shares => getClaimStatus(shares ? shares[0] : null) === RefClaimStatus.NEW).length === 0;
+
+  const disabledClaim = noRows || noNewClaims;
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.reward"]} />
 
       <PageHeader message="pages.referral.reward.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-        <Button startIcon={<Redeem />} onClick={handleClaim} data-testid="ClaimButton">
+        {/* <Button */}
+        {/*  startIcon={<FilterList />} */}
+        {/*  onClick={handleToggleFilters} */}
+        {/*  data-testid="ToggleFilterButton" */}
+        {/* > */}
+        {/*  <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} /> */}
+        {/* </Button> */}
+        <Button startIcon={<Redeem />} onClick={handleClaim} disabled={disabledClaim} data-testid="ClaimButton">
           <FormattedMessage id={"form.buttons.claim"} />
         </Button>
       </PageHeader>

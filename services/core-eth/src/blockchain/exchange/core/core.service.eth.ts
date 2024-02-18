@@ -34,8 +34,8 @@ export class ExchangeCoreServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [item], price);
 
-    // PROCESS REFERRAL LOGIC
-    await this.referralService.referral(account.toLowerCase(), item.token.toLowerCase());
+    // PROCESS REFERRAL LOGIC (IF STRICT REF PROGRAM)
+    // await this.referralService.referral(account.toLowerCase(), item.token.toLowerCase());
 
     await this.notificatorService.purchase({
       ...assets,

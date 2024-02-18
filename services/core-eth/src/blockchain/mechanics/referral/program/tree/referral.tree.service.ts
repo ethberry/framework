@@ -35,12 +35,13 @@ export class ReferralTreeService {
     referral: string;
     level: number;
     temp: boolean;
-  }): Promise<void> {
+  }): Promise<ReferralTreeEntity> {
     const { merchantId, wallet, referral, level, temp } = data;
     const entity = await this.findOne({ merchantId, wallet, referral, level, temp });
     if (!entity) {
-      await this.create({ merchantId, wallet, referral, level, temp });
+      return this.create({ merchantId, wallet, referral, level, temp });
     }
+    return entity;
   }
 
   public async deleteIfExist(where: FindOptionsWhere<ReferralTreeEntity>): Promise<void> {
