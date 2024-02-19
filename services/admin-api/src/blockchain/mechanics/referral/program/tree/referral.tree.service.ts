@@ -3,11 +3,11 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DataSource, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { UserRole } from "@framework/types";
 
-import { ReferralTreeEntity } from "./referral.tree.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { ReferralTreeEntity } from "./referral.tree.entity";
 import { IReferralTreeSearchDto } from "./dto";
-import { UserRole } from "../../../../../../../../.nx/cache/17205717911087451789/outputs/packages/types/dist";
 
 export interface IReferralChain {
   id: number;
