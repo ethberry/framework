@@ -4,9 +4,9 @@ import { DataSource, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposito
 
 import { ns } from "@framework/constants";
 
-import { ReferralTreeEntity } from "./referral.tree.entity";
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
-import { IReferralTreeSearchDto } from "./dto";
+import { ReferralTreeEntity } from "./referral.tree.entity";
+import { IReferralTreeSearchDto } from "./interfaces";
 
 export interface IReferralChain {
   id: number;

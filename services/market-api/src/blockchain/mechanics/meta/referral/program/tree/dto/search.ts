@@ -2,11 +2,11 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-export interface IReferralTreeSearchDto {
-  merchantIds: Array<number>;
-}
+import { PaginationDto } from "@gemunion/collection";
 
-export class ReferralTreeSearchDto implements IReferralTreeSearchDto {
+import { IReferralTreeSearchDto } from "../interfaces";
+
+export class ReferralTreeSearchDto extends PaginationDto implements IReferralTreeSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
