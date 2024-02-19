@@ -9,7 +9,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
-import { BreedModule } from "../../../mechanics/breed/breed.module";
+import { BreedModule } from "../../../mechanics/gaming/breed/breed.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { Erc721TokenRandomLogModule } from "./log-random/log.module";

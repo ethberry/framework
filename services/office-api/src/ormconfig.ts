@@ -16,7 +16,7 @@ import { AccessControlEntity } from "./blockchain/extensions/access-control/acce
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 // infrastructure
 import { PageEntity } from "./infrastructure/page/page.entity";
-import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
@@ -28,15 +28,15 @@ import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-c
 // integrations
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 // mechanics
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
-import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
-import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
-import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
-import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
+import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
+import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
+import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
 // infrastructure
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 import { NetworkEntity } from "./infrastructure/network/network.entity";

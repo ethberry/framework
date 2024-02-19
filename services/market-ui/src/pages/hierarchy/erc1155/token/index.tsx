@@ -7,7 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IBalance, ITemplate, IToken } from "@framework/types";
 
-import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
+import { DismantleTokenPanel } from "../../../mechanics/gaming/recipes/dismantle/dismantle-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { StyledDescription, StyledImage } from "./styled";

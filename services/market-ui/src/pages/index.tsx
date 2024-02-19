@@ -16,7 +16,7 @@ import { integrationsRoutes } from "./integrations/routes";
 import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
-import { achievementsRoutes } from "./achievements/routes";
+import { achievementsRoutes } from "./mechanics/meta/achievements/routes";
 import { hierarchyRoutes } from "./hierarchy/routes";
 
 const router = createBrowserRouter([

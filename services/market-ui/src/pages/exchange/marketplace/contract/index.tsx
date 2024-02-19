@@ -10,7 +10,7 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
+import { CraftContactPanel } from "../../../mechanics/gaming/recipes/craft/craft-contact-panel";
 import { TemplateList } from "../template-list";
 
 export const Contract: FC = () => {

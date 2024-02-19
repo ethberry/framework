@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
-import { WaitListModule } from "./wait-list/waitlist.module";
+import { MarketingMechanicsModule } from "./marketing/marketing.module";
 
 @Module({
-  imports: [WaitListModule],
+  imports: [MarketingMechanicsModule],
 })
 export class MechanicsModule {}

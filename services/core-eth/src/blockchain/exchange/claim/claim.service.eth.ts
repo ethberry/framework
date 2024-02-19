@@ -9,7 +9,7 @@ import { ClaimStatus, RmqProviderType, SignalEventType } from "@framework/types"
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { ClaimService } from "../../mechanics/claim/claim.service";
+import { ClaimService } from "../../mechanics/marketing/claim/claim.service";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()

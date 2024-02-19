@@ -7,7 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
-import { MysteryBoxListItem } from "../../../mechanics/mystery/box-list/item";
+import { MysteryBoxListItem } from "../../../mechanics/marketing/mystery/box-list/item";
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 
 export const Mystery: FC<ITabPanelProps> = props => {

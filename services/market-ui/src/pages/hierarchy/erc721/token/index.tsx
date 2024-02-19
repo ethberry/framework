@@ -8,13 +8,13 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IToken } from "@framework/types";
 
 import { TokenHistory } from "../../../../components/common/token-history";
-import { DismantleTokenPanel } from "../../../mechanics/recipes/dismantle/dismantle-token-panel";
-import { GenesTokenPanel } from "../../../mechanics/genes/genes-token-panel";
-import { TraitTokenPanel } from "../../../mechanics/traits/traits-token-panel";
-import { DiscreteTokenPanel } from "../../../mechanics/discrete/discrete-token-panel";
-import { RarityTokenPanel } from "../../../mechanics/rarity/rarity-token-panel";
-import { MysteryTokenPanel } from "../../../mechanics/mystery/token/mystery-token-panel";
-import { LendTokenPanel } from "../../../mechanics/rent/token-item/lend-token-panel";
+import { DismantleTokenPanel } from "../../../mechanics/gaming/recipes/dismantle/dismantle-token-panel";
+import { GenesTokenPanel } from "../../../mechanics/gaming/genes/genes-token-panel";
+import { TraitTokenPanel } from "../../../mechanics/gaming/traits/traits-token-panel";
+import { DiscreteTokenPanel } from "../../../mechanics/gaming/discrete/discrete-token-panel";
+import { RarityTokenPanel } from "../../../mechanics/gaming/rarity/rarity-token-panel";
+import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/mystery-token-panel";
+import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 

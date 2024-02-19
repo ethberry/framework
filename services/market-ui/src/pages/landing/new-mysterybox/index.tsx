@@ -7,7 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import type { IMysteryBox } from "@framework/types";
 
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
-import { MysteryBoxListItem } from "../../mechanics/mystery/box-list/item";
+import { MysteryBoxListItem } from "../../mechanics/marketing/mystery/box-list/item";
 import { StyledTitle } from "./styled";
 
 export const NewMysterybox: FC = () => {

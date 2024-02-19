@@ -4,7 +4,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementRedemption } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { ClaimEntity } from "../../blockchain/mechanics/claim/claim.entity";
+import { ClaimEntity } from "../../blockchain/mechanics/marketing/claim/claim.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementLevelEntity } from "../level/level.entity";
 

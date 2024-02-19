@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { NotificatorModule } from "../../../game/notificator/notificator.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
-import { CraftModule } from "../../mechanics/recipes/craft/craft.module";
+import { CraftModule } from "../../mechanics/gaming/recipes/craft/craft.module";
 import { AssetModule } from "../asset/asset.module";
 import { ExchangeCraftControllerEth } from "./craft.controller.eth";
 import { ExchangeCraftServiceEth } from "./craft.service.eth";

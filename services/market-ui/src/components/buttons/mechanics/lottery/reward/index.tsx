@@ -10,7 +10,7 @@ import type { ILotteryToken } from "@framework/types";
 
 import LotteryGetPrizeABI from "@framework/abis/getPrize/LotteryRandom.json";
 
-import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/token-list/utils";
+import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/gambling/lottery/token-list/utils";
 
 export interface ILotteryRewardButtonProps {
   className?: string;

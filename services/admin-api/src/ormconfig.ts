@@ -40,29 +40,29 @@ import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-lin
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 // mechanics
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
-import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
-import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
-import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
-import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
+import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
+import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/penalty/penalty.entity";
+import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
+import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
+import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
 /* lottery */
-import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
-import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 /* raffle */
-import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/gambling/raffle/round/round.entity";
 /* ponzi */
-import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
-import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
-import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
-import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
+import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
+import { RentEntity } from "./blockchain/mechanics/gaming/rent/rent.entity";
 /* ecommerce */
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { CategoryEntity } from "./ecommerce/category/category.entity";
@@ -77,16 +77,16 @@ import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/p
 import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 /* achievements */
-import { AchievementItemEntity } from "./achievements/item/item.entity";
-import { AchievementLevelEntity } from "./achievements/level/level.entity";
-import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
-import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { AchievementItemEntity } from "./blockchain/mechanics/meta/achievements/item/item.entity";
+import { AchievementLevelEntity } from "./blockchain/mechanics/meta/achievements/level/level.entity";
+import { AchievementRuleEntity } from "./blockchain/mechanics/meta/achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./blockchain/mechanics/meta/achievements/redemption/redemption.entity";
 /* referral */
-import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/referral.reward.entity";
-import { ReferralProgramEntity } from "./blockchain/mechanics/referral/program/referral.program.entity";
-import { ReferralRewardShareEntity } from "./blockchain/mechanics/referral/reward/share/referral.reward.share.entity";
-import { ReferralTreeEntity } from "./blockchain/mechanics/referral/program/tree/referral.tree.entity";
-import { ReferralClaimEntity } from "./blockchain/mechanics/referral/claim/referral.claim.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/referral.reward.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/program/referral.program.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/meta/referral/program/tree/referral.tree.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 
 /* migrations */
 import {

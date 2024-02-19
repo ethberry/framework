@@ -7,7 +7,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ITemplate } from "@framework/types";
 
-import { CraftTemplatePanel } from "../../../mechanics/recipes/craft/craft-template-panel";
+import { CraftTemplatePanel } from "../../../mechanics/gaming/recipes/craft/craft-template-panel";
 import { StyledDescription, StyledImage } from "./styled";
 import { Erc1155TemplatePanel } from "./template-panel";
 

@@ -10,7 +10,7 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
-import { ReferralRewardService } from "../../mechanics/referral/reward/referral.reward.service";
+import { ReferralRewardService } from "../../mechanics/meta/referral/reward/referral.reward.service";
 
 @Injectable()
 export class ExchangeCoreServiceEth {
