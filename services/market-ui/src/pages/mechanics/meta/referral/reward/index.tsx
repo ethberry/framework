@@ -30,12 +30,11 @@ export const ReferralReward: FC = () => {
   const {
     count,
     rows,
-    // search,
+    search,
     isLoading,
     // isFiltersOpen,
     // handleToggleFilters,
     // handleSearch,
-    // handleChangePage,
     handleChangePaginationModel,
   } = useCollection<IReferralEvents, IReferralRewardSearchDto>({
     baseUrl: "/referral/reward",
@@ -187,7 +186,7 @@ export const ReferralReward: FC = () => {
           pagination
           paginationMode="server"
           rowCount={count}
-          // paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
           onPaginationModelChange={handleChangePaginationModel}
           pageSizeOptions={[5, 10, 25, 100]}
           loading={isLoading}

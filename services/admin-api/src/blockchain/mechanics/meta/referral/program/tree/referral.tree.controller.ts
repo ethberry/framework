@@ -4,9 +4,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { ReferralTreeService } from "./referral.tree.service";
-import { ReferralTreeSearchDto } from "./dto";
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
+import { ReferralTreeSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/referral/tree")

@@ -23,8 +23,7 @@ export const ReferralTree: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleRefreshPage,
-    // handleChangePage,
-    // handleChangePaginationModel,
+    handleChangePaginationModel,
   } = useCollection<IReferralTree, IReferralTreeSearchDto>({
     baseUrl: "/referral/tree",
     search: {
@@ -95,10 +94,10 @@ export const ReferralTree: FC = () => {
       {rows.length > 0 ? (
         <DataGrid
           pagination
-          // paginationMode="server"
+          paginationMode="server"
           rowCount={count}
-          // paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
-          // onPaginationModelChange={handleChangePaginationModel}
+          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+          onPaginationModelChange={handleChangePaginationModel}
           pageSizeOptions={[5, 10, 25, 100]}
           loading={isLoading}
           columns={columns}

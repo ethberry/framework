@@ -1,12 +1,13 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { PaginationDto } from "@gemunion/collection";
+import { SearchDto } from "@gemunion/collection";
 
 import { IReferralTreeSearchDto } from "../interfaces";
 
-export class ReferralTreeSearchDto extends PaginationDto implements IReferralTreeSearchDto {
+export class ReferralTreeSearchDto extends Mixin(SearchDto) implements IReferralTreeSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,

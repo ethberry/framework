@@ -156,19 +156,4 @@ export class ReferralRewardService {
 
     return [allRefEvents, count];
   }
-
-  public async createRefClaims(
-    dto: Partial<IReferralClaimSearchDto>,
-    userEntity: UserEntity,
-  ): Promise<[Array<ReferralRewardEntity>, number]> {
-    const { merchantIds = [] } = dto;
-
-    const [allRefEvents, count] = await this.search(
-      { merchantIds: merchantIds.length > 0 ? merchantIds : [userEntity.merchantId] },
-      userEntity,
-      true,
-    );
-
-    return [allRefEvents, count];
-  }
 }
