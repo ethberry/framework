@@ -1,8 +1,12 @@
 import { FC, useEffect } from "react";
-import { Button, Grid } from "@mui/material";
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Box, Grid, Typography } from "@mui/material";
+
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { TreeView, TreeItem } from "@mui/x-tree-view";
+import { ExpandMore, ChevronRight } from "@mui/icons-material";
+// import { useUser } from "@gemunion/provider-user";
+import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
 
 import type { IReferralReportSearchDto } from "@framework/types";
@@ -23,6 +27,15 @@ export interface IReferralTreeChain {
   wallet: string;
   reflen: number;
   share: number;
+}
+
+export interface IRenderTree {
+  id: string;
+  name: string; // wallet
+  share: string;
+  level: number;
+  merchant?: string;
+  children?: readonly IRenderTree[];
 }
 
 export const ReferralTree: FC = () => {
@@ -98,6 +111,139 @@ export const ReferralTree: FC = () => {
     }
   }, [isActive]);
 
+  // {
+  //   "id": 10,
+  //   "merchant": "GEMUNION",
+  //   "wallet": "0xf17f52151ebef6c7334fad080c5704d77216b732",
+  //   "reflen": 1,
+  //   "share": 500
+  // }
+  // const { profile } = useUser<IUser>();
+  // const allTrees = [];
+  // if (rows.length > 0) {
+  //   const merchants = [...new Set(rows.map(row => row.merchant))];
+  //   console.log("merchants", merchants);
+  //   for (const merchant of merchants) {
+  //     const merchantRows = rows.filter(row => row.merchant === merchant);
+  //     console.log("merchantRows", merchantRows);
+  //     allTrees.push([
+  //       {
+  //         id: allTrees.length,
+  //         name: profile.wallet,
+  //         share: "",
+  //         level: 0,
+  //         merchant,
+  //       },
+  //     ]);
+  //     console.log("allTrees0", allTrees);
+  //     const merchantTree = merchantRows.map(mrow => ({
+  //       id: mrow.id,
+  //       name: mrow.wallet,
+  //       share: `${mrow.share / 100}%`,
+  //       level: mrow.reflen,
+  //       merchant: mrow.merchant,
+  //     }));
+  //     console.log("merchantTree", merchantTree);
+  //     if (merchantTree.length > 0) {
+  //       allTrees[allTrees.length - 1].concat(merchantTree);
+  //     }
+  //     console.log("allTrees1", allTrees);
+  //   }
+  // }
+  // console.log("allTrees", allTrees);
+
+  // CREATE TREE DATA
+  const treeData: IRenderTree = {
+    id: "root",
+    name: "Referral Tree",
+    level: 0,
+    share: "",
+    merchant: "GEMUNION",
+    children: [
+      {
+        id: "1",
+        name: "Child - 1",
+        level: 1,
+        share: "5%",
+      },
+      {
+        id: "2",
+        name: "Child - 2",
+        level: 1,
+        share: "5%",
+        children: [
+          {
+            id: "3",
+            name: "Child - 21",
+            level: 2,
+            share: "3%",
+          },
+          {
+            id: "4",
+            name: "Child - 22",
+            level: 2,
+            share: "3%",
+            children: [
+              {
+                id: "5",
+                name: "Child - 221",
+                level: 3,
+                share: "2%",
+              },
+              {
+                id: "6",
+                name: "Child - 222",
+                level: 3,
+                share: "2%",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const renderTreeLabel = (wallet: string, level: number, share?: string) => (
+    // <Grid container spacing={2}>
+    //   <Grid item lg={4} sm={6} xs={12} key={nodes.id}>
+    //     <Typography>{`${nodes.name}-${nodes.share || nodes.merchant}`}</Typography>
+    //   </Grid>
+    // </Grid>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        p: 0.5,
+        pr: 0,
+      }}
+    >
+      {/* <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} /> */}
+      <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
+        <AddressLink address={wallet} />
+      </Typography>
+      {share ? (
+        <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
+          {`share: ${share} (level ${level})`}
+        </Typography>
+      ) : null}
+      {/* <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit", flexGrow: 1 }}> */}
+      {/*  {`Level ${level}`} */}
+      {/* </Typography> */}
+    </Box>
+  );
+
+  const renderTree = (nodes: IRenderTree) => (
+    // <TreeItem key={nodes.id} nodeId={nodes.id} label={`${nodes.name}-${nodes.share || nodes.merchant}`}>
+    <TreeItem key={nodes.id} nodeId={nodes.id} label={renderTreeLabel(nodes.name, nodes.level, nodes.share)}>
+      {/* <Grid container spacing={2}> */}
+      {/*  <Grid item lg={4} sm={6} xs={12} key={1}> */}
+      {/*    <Typography>{nodes.share}</Typography> */}
+      {/*  </Grid> */}
+      {/* </Grid> */}
+      {Array.isArray(nodes.children) ? nodes.children.map(node => renderTree(node)) : null}
+    </TreeItem>
+  );
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.tree"]} />
@@ -135,6 +281,18 @@ export const ReferralTree: FC = () => {
           autoHeight
         />
       ) : null}
+      {/* <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}> */}
+      {/* </Box> */}
+      <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}>
+        <TreeView
+          aria-label="rich object"
+          defaultCollapseIcon={<ExpandMore />}
+          defaultExpanded={["root"]}
+          defaultExpandIcon={<ChevronRight />}
+        >
+          {renderTree(treeData)}
+        </TreeView>
+      </Box>
     </Grid>
   );
 };

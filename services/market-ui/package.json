@@ -70,6 +70,7 @@
     "@mui/x-data-grid-premium": "6.19.4",
     "@mui/x-date-pickers-pro": "6.19.4",
     "@mui/x-license-pro": "6.10.2",
+    "@mui/x-tree-view": "6.17.0",
     "@observablehq/plot": "0.6.13",
     "@uniswap/widgets": "2.59.0",
     "@web3-react/core": "8.2.3",

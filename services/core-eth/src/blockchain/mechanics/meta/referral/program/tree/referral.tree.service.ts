@@ -35,11 +35,12 @@ export class ReferralTreeService {
     referral: string;
     level: number;
     temp: boolean;
+    parent?: ReferralTreeEntity;
   }): Promise<ReferralTreeEntity> {
-    const { merchantId, wallet, referral, level, temp } = data;
+    const { merchantId, wallet, referral, level, temp, parent } = data;
     const entity = await this.findOne({ merchantId, wallet, referral, level, temp });
     if (!entity) {
-      return this.create({ merchantId, wallet, referral, level, temp });
+      return this.create({ merchantId, wallet, referral, level, temp, parent });
     }
     return entity;
   }
