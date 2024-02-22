@@ -8,4 +8,5 @@ export interface IReferralTree extends IIdDateBase {
   merchantId: number;
   merchant: IMerchant;
   temp: boolean;
+  children: Array<IReferralTree>;
 }

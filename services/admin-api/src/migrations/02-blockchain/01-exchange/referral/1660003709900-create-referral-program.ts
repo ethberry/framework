@@ -25,6 +25,11 @@ export class CreateReferralProgramAt1660003709900 implements MigrationInterface 
           type: "int",
         },
         {
+          name: "strict",
+          type: "boolean",
+          default: false,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

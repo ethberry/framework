@@ -8,6 +8,7 @@ import { ReferralProgramService } from "./referral.program.service";
 import { ReferralTreeService } from "./tree/referral.tree.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ReferralTreeController } from "./tree/referral.tree.controller";
+import { ReferralProgramController } from "./referral.program.controller";
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { ReferralTreeController } from "./tree/referral.tree.controller";
     ConfigModule,
     ContractModule,
   ],
-  controllers: [ReferralTreeController],
+  controllers: [ReferralProgramController, ReferralTreeController],
   providers: [ReferralProgramService, ReferralTreeService],
   exports: [ReferralProgramService, ReferralTreeService],
 })

@@ -91,6 +91,17 @@ export class ReferralRewardService {
       if (refChain && refChain.length > 0) {
         // await this.cleanUp(merchantId, account, referrer, refChain);
         const currentRefLevel = refChain[0].level;
+
+        // GET parent entity
+        const parent = await this.referralTreeService.findOne({
+          merchantId,
+          wallet: referrer.toLowerCase(),
+          level: currentRefLevel,
+        });
+        if (!parent) {
+          throw new NotFoundException("referrerNotFound");
+        }
+
         // GET ANY CONFIRMED REF RECORDS FOR buyer's ACCOUNT
         const accRefs = await this.referralTreeService.findOne({
           merchantId,
@@ -106,33 +117,33 @@ export class ReferralRewardService {
             referral: referrer.toLowerCase(),
             level: currentRefLevel + 1,
             temp: false,
+            parent,
           });
         }
         return { merchantId, refChain };
       } else {
         // IF REFERRER WAS NOT REGISTERED
-        const restrictForBuyersOnly = false; // TODO get it from program?
+        const restrictForBuyersOnly = false; // TODO get it later from program?
         if (!restrictForBuyersOnly) {
-          // REGISTER REFERRER
-          // CREATE TREE LEVEL 1
-          const treeEntity = await this.referralTreeService.create({
+          // REGISTER REFERRER AND CREATE TREE LEVEL 1
+          const treeEntityRef = await this.referralTreeService.create({
             merchantId,
             wallet: referrer.toLowerCase(),
             referral: ZeroAddress,
             level: 1,
             temp: false,
           });
+          // REGISTER ACCOUNT - REF PAIR
+          await this.referralTreeService.create({
+            merchantId,
+            wallet: account.toLowerCase(),
+            referral: referrer.toLowerCase(),
+            level: 1,
+            parent: treeEntityRef,
+          });
           // CREATE USER TREE LEVEL if not exist
-          // const treeEntity = await this.referralTreeService.create({
-          //   merchantId,
-          //   wallet: account.toLowerCase(),
-          //   referral: referrer.toLowerCase(),
-          //   level: 1,
-          //   temp: false,
-          // });
-
           const newRefChain = {
-            id: treeEntity.id,
+            id: treeEntityRef.id,
             level: 1,
             wallet: referrer.toLowerCase(),
             share: refProgramLevelOne.share,
@@ -150,45 +161,45 @@ export class ReferralRewardService {
     }
   }
 
-  public async cleanUp(
-    merchantId: number,
-    account: string,
-    referrer: string,
-    refChain: Array<IRefChainQuery>,
-  ): Promise<IRefEventCalc | void> {
-    const currentRefLevel = refChain[0].level;
-    // CONFIRM TEMP LEVEL 1 REF
-    if (currentRefLevel === 1 && refChain[0].temp) {
-      await this.referralTreeService.updateIfExist(
-        { merchantId, wallet: referrer.toLowerCase(), level: 1, temp: true },
-        { temp: false },
-      );
-    }
-    // REMOVE TEMP REF LEVEL 1 IF EXIST
-    await this.referralTreeService.deleteIfExist({
-      merchantId,
-      wallet: account.toLowerCase(),
-      referral: ZeroAddress,
-      level: 1,
-      temp: true,
-    });
-    // REMOVE TEMP REF LEVEL 1 IF EXIST
-    await this.referralTreeService.deleteIfExist({
-      merchantId,
-      wallet: account.toLowerCase(),
-      referral: ZeroAddress,
-      level: 1,
-      temp: true,
-    });
-    await this.referralTreeService.updateIfExist(
-      {
-        wallet: account.toLowerCase(),
-        merchantId,
-        referral: ZeroAddress,
-        level: 1,
-        temp: true,
-      },
-      { temp: false },
-    );
-  }
+  // public async cleanUp(
+  //   merchantId: number,
+  //   account: string,
+  //   referrer: string,
+  //   refChain: Array<IRefChainQuery>,
+  // ): Promise<IRefEventCalc | void> {
+  //   const currentRefLevel = refChain[0].level;
+  //   // CONFIRM TEMP LEVEL 1 REF
+  //   if (currentRefLevel === 1 && refChain[0].temp) {
+  //     await this.referralTreeService.updateIfExist(
+  //       { merchantId, wallet: referrer.toLowerCase(), level: 1, temp: true },
+  //       { temp: false },
+  //     );
+  //   }
+  //   // REMOVE TEMP REF LEVEL 1 IF EXIST
+  //   await this.referralTreeService.deleteIfExist({
+  //     merchantId,
+  //     wallet: account.toLowerCase(),
+  //     referral: ZeroAddress,
+  //     level: 1,
+  //     temp: true,
+  //   });
+  //   // REMOVE TEMP REF LEVEL 1 IF EXIST
+  //   await this.referralTreeService.deleteIfExist({
+  //     merchantId,
+  //     wallet: account.toLowerCase(),
+  //     referral: ZeroAddress,
+  //     level: 1,
+  //     temp: true,
+  //   });
+  //   await this.referralTreeService.updateIfExist(
+  //     {
+  //       wallet: account.toLowerCase(),
+  //       merchantId,
+  //       referral: ZeroAddress,
+  //       level: 1,
+  //       temp: true,
+  //     },
+  //     { temp: false },
+  //   );
+  // }
 }

@@ -1,54 +1,28 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Box, Grid, SvgIcon, Typography } from "@mui/material";
-import { Done, ExpandMore, ChevronRight } from "@mui/icons-material";
+import { Alert, Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
+import { ChevronRight, Done, ExpandMore } from "@mui/icons-material";
 
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { TreeView, TreeItem } from "@mui/x-tree-view";
-// import { useUser } from "@gemunion/provider-user";
+import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
 
-import type { IReferralReportSearchDto } from "@framework/types";
+import { useAppSelector } from "@gemunion/redux";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 
 import { StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
+import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
 }
 
-export interface IReferralTreeChain {
-  id: number;
-  merchant: string;
-  wallet: string;
-  reflen: number;
-  share: number;
-}
-
-export interface IRenderTree {
-  id: string;
-  name: string; // wallet
-  share: string;
-  level: number;
-  merchant?: string;
-  children?: readonly IRenderTree[];
-}
-
 export const ReferralTree: FC = () => {
-  const {
-    count,
-    rows,
-    search,
-    isLoading,
-    // isFiltersOpen,
-    // handleToggleFilters,
-    // handleSearch,
-    handleChangePaginationModel,
-  } = useCollection<IReferralTreeChain, IReferralTreeSearchDto>({
+  const { rows, isLoading } = useCollection<IReferralTree, IReferralTreeSearchDto>({
     baseUrl: "/referral/tree",
     search: {
       merchantIds: [], // search by all merchants
@@ -58,9 +32,12 @@ export const ReferralTree: FC = () => {
   const clipboard = useClipboard();
   const { formatMessage } = useIntl();
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
+  const { referrer } = useAppSelector(state => state.settings);
+
   const { isActive, account = "" } = useWeb3React();
 
   const [copied, setCopied] = useState<boolean>(false);
+  const [programs, setPrograms] = useState<Array<IRefProgramsLevels>>([emptyRefProgram]);
 
   const handleCopy = () => {
     clipboard.copy();
@@ -70,49 +47,6 @@ export const ReferralTree: FC = () => {
     }, 1000);
   };
 
-  // prettier-ignore
-  // TODO make it nice
-  const columns = [
-    // {
-    //   field: "id",
-    //   headerName: formatMessage({ id: "form.labels.id" }),
-    //   sortable: true,
-    //   flex: 0.05
-    // },
-    {
-      field: "merchant",
-      headerName: formatMessage({ id: "form.labels.merchant" }),
-      sortable: true,
-      flex: 1,
-      // minWidth: 100
-    },
-    {
-      field: "wallet",
-      headerName: formatMessage({ id: "form.labels.wallet" }),
-      sortable: false,
-      renderCell: (params: GridCellParams<any, string>) => {
-        return (
-          <AddressLink address={params.value} />
-        );
-      },
-      flex: 1.5,
-      minWidth: 150
-    },
-    {
-      field: "reflen",
-      headerName: formatMessage({ id: "form.labels.level" }),
-      sortable: true,
-      flex: 0.3,
-    },
-    {
-      field: "share",
-      headerName: formatMessage({ id: "form.labels.share" }),
-      sortable: true,
-      flex: 0.5,
-      minWidth: 50
-    },
-  ];
-
   useEffect(() => {
     if (!isActive) {
       void openConnectWalletDialog();
@@ -121,151 +55,27 @@ export const ReferralTree: FC = () => {
     }
   }, [isActive]);
 
-  // {
-  //   "id": 10,
-  //   "merchant": "GEMUNION",
-  //   "wallet": "0xf17f52151ebef6c7334fad080c5704d77216b732",
-  //   "reflen": 1,
-  //   "share": 500
-  // }
-  // const { profile } = useUser<IUser>();
-  // const allTrees = [];
-  // if (rows.length > 0) {
-  //   const merchants = [...new Set(rows.map(row => row.merchant))];
-  //   console.log("merchants", merchants);
-  //   for (const merchant of merchants) {
-  //     const merchantRows = rows.filter(row => row.merchant === merchant);
-  //     console.log("merchantRows", merchantRows);
-  //     allTrees.push([
-  //       {
-  //         id: allTrees.length,
-  //         name: profile.wallet,
-  //         share: "",
-  //         level: 0,
-  //         merchant,
-  //       },
-  //     ]);
-  //     console.log("allTrees0", allTrees);
-  //     const merchantTree = merchantRows.map(mrow => ({
-  //       id: mrow.id,
-  //       name: mrow.wallet,
-  //       share: `${mrow.share / 100}%`,
-  //       level: mrow.reflen,
-  //       merchant: mrow.merchant,
-  //     }));
-  //     console.log("merchantTree", merchantTree);
-  //     if (merchantTree.length > 0) {
-  //       allTrees[allTrees.length - 1].concat(merchantTree);
-  //     }
-  //     console.log("allTrees1", allTrees);
-  //   }
-  // }
-  // console.log("allTrees", allTrees);
+  useEffect(() => {
+    if (rows && rows.length) {
+      setPrograms(
+        rows.map(row => ({
+          merchantId: row.merchantId,
+          levels: row.merchant.refLevels!.map(lev => ({ level: lev.level, share: lev.share })),
+        })),
+      );
+    }
+  }, [rows]);
 
-  // CREATE TREE DATA
-  const treeData: IRenderTree[] = [
-    {
-      id: "root",
-      name: "Referral Tree",
-      level: 0,
-      share: "",
-      merchant: "GEMUNION",
-      children: [
-        {
-          id: "1",
-          name: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-          level: 1,
-          share: "5%",
-        },
-        {
-          id: "2",
-          name: "0xebc4dda28eb070c7cab9b62a8c5d84da7fa9cefd",
-          level: 1,
-          share: "5%",
-          children: [
-            {
-              id: "3",
-              name: "0xb53e364dd5d5f1da81e45be0f0b86cc99b57c96a",
-              level: 2,
-              share: "3%",
-            },
-            {
-              id: "4",
-              name: "0xba9b259fb6da3d0adaf14cdd8dfe8e1eb3a2bff0",
-              level: 2,
-              share: "3%",
-              children: [
-                {
-                  id: "5",
-                  name: "0x6e2a836ae29bdd2d3baad1cbbaa3a3e3e7b5cbff",
-                  level: 3,
-                  share: "2%",
-                },
-                {
-                  id: "6",
-                  name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
-                  level: 3,
-                  share: "2%",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "root2",
-      name: "Merchant 2",
-      level: 0,
-      share: "",
-      merchant: "Meow Dao",
-      children: [
-        {
-          id: "21",
-          name: "0x2fbf0f4f0ccdaddfffd53b12031ffda39da29beb",
-          level: 1,
-          share: "5%",
-        },
-        {
-          id: "22",
-          name: "0x10d78de741ac636ddafd789acdc2244ca221d849",
-          level: 1,
-          share: "5%",
-          children: [
-            {
-              id: "23",
-              name: "0x7ed2e0afadeda9f288959af3ddcdcc8bd17be6aa",
-              level: 2,
-              share: "3%",
-            },
-            {
-              id: "24",
-              name: "0xfd827ddabfacd0322ba0277dad4bbd143719f5a2",
-              level: 2,
-              share: "3%",
-              children: [
-                {
-                  id: "25",
-                  name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
-                  level: 3,
-                  share: "2%",
-                },
-                {
-                  id: "26",
-                  name: "0x3faf80d7cc2fdc5dbefcecdec2b5cc34c78dbe5f",
-                  level: 3,
-                  share: "2%",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  const renderTreeLabel = (node: IRenderTree) => {
-    const { name, merchant, level, share } = node;
+  const renderTreeLabel = (node: IReferralTree) => {
+    const { id, wallet, merchant, level /* share */ } = node;
+    const depth = calculateDepth(rows[0], id);
+    const level0 = getRefLevelShare(programs, merchant.id, 0);
+    const totalShares = level0.share / 100;
+    const { share, totalCount } = getRefLevelShare(programs, merchant.id, depth || level);
+    const shareLabel =
+      wallet === account.toLowerCase() // SELF
+        ? `Total referral program share: ${totalShares}% on ${totalCount} levels`
+        : `Your share from level ${depth || level} is ${share ? share / 100 : 0}%`;
 
     return (
       <Box
@@ -277,22 +87,21 @@ export const ReferralTree: FC = () => {
           pr: 0,
         }}
       >
-        {/* <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} /> */}
         <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
-          {merchant || <AddressLink address={name} />}
+          {wallet === account.toLowerCase() ? merchant.title : <AddressLink address={wallet} />}
         </Typography>
         {share ? (
           <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit" }}>
-            {`share: ${share} (level ${level})`}
+            {shareLabel}
           </Typography>
         ) : null}
       </Box>
     );
   };
 
-  const renderTree = (nodes: IRenderTree) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={renderTreeLabel(nodes)}>
-      {Array.isArray(nodes.children) ? nodes.children.map(node => renderTree(node)) : null}
+  const renderTree = (row: IReferralTree) => (
+    <TreeItem key={row.id} nodeId={row.id.toString()} label={renderTreeLabel(row)}>
+      {row.children.length > 0 ? row.children.map(items => renderTree(items)) : null}
     </TreeItem>
   );
 
@@ -302,57 +111,47 @@ export const ReferralTree: FC = () => {
 
       <PageHeader message="pages.referral.tree.title"></PageHeader>
 
-      <StyledCopyRefLinkWrapper>
-        <StyledTextField
-          value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
-          variant="standard"
-          label={formatMessage({ id: "pages.referral.tree.refLink" })}
-          inputRef={clipboard.target}
-          fullWidth
-          InputProps={{
-            endAdornment: (
-              <Button onClick={handleCopy}>
-                {!copied ? (
-                  <FormattedMessage id="form.buttons.copy" />
-                ) : (
-                  <SvgIcon component={Done} width={32} height={32} />
-                )}
-              </Button>
-            ),
-          }}
-        />
-      </StyledCopyRefLinkWrapper>
-
-      {rows.length > 0 ? (
-        <DataGrid
-          pagination
-          paginationMode="server"
-          rowCount={count}
-          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
-          onPaginationModelChange={handleChangePaginationModel}
-          pageSizeOptions={[5, 10, 25, 100]}
-          loading={isLoading}
-          columns={columns}
-          rows={rows.map((tree: IReferralTreeChain, idx) => ({
-            id: idx,
-            merchant: tree.merchant,
-            wallet: tree.wallet,
-            share: `${tree.share / 100}%`,
-            reflen: tree.reflen,
-          }))}
-          autoHeight
-        />
-      ) : null}
-      <Box sx={{ minHeight: 110, flexGrow: 1 }}>
-        <TreeView
-          aria-label="referral tree"
-          defaultCollapseIcon={<ExpandMore />}
-          defaultExpanded={["root"]}
-          defaultExpandIcon={<ChevronRight />}
-        >
-          {treeData.map(renderTree)}
-        </TreeView>
-      </Box>
+      <ProgressOverlay isLoading={isLoading}>
+        {rows.length > 0 ? (
+          <Box sx={{ minHeight: 150, flexGrow: 1 }}>
+            <TreeView
+              aria-label="referral tree"
+              defaultCollapseIcon={<ExpandMore />}
+              defaultExpanded={["root"]}
+              defaultExpandIcon={<ChevronRight />}
+            >
+              {rows.map(renderTree)}
+            </TreeView>
+          </Box>
+        ) : null}
+      </ProgressOverlay>
+      <Grid container>
+        <Grid item xs={12}>
+          <StyledCopyRefLinkWrapper>
+            <StyledTextField
+              value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
+              variant="standard"
+              label={formatMessage({ id: "pages.referral.tree.refLink" })}
+              inputRef={clipboard.target}
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <Button onClick={handleCopy}>
+                    {!copied ? (
+                      <FormattedMessage id="form.buttons.copy" />
+                    ) : (
+                      <SvgIcon component={Done} width={32} height={32} />
+                    )}
+                  </Button>
+                ),
+              }}
+            />
+          </StyledCopyRefLinkWrapper>
+        </Grid>
+      </Grid>
+      <Alert severity="info">
+        <FormattedMessage id="pages.referral.tree.referrer" values={{ referrer }} />
+      </Alert>
     </Grid>
   );
 };

@@ -27,9 +27,10 @@ export class ReferralTreeEntity extends IdDateBaseEntity implements IReferralTre
   @Column({ type: "boolean" })
   public temp: boolean;
 
+  // TREE
   @TreeChildren()
   children: Array<ReferralTreeEntity>;
 
-  @TreeParent()
-  parent: ReferralTreeEntity;
+  @TreeParent({ onDelete: "SET NULL" })
+  parent?: ReferralTreeEntity | null;
 }

@@ -1196,6 +1196,8 @@
       },
       "tree": {
         "refLink": "Your referral link",
+        "current": "Your current referrer",
+        "referrer": "Your current referrer is {referrer}",
         "title": "Referral Tree"
       },
       "cabinet": {
