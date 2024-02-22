@@ -1,15 +1,17 @@
-import { FC } from "react";
-import { useIntl } from "react-intl";
-
-import { Grid } from "@mui/material";
-
+import { FC, useEffect } from "react";
+import { Button, Grid } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-
-import { AddressLink } from "@gemunion/mui-scanner";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useWeb3React } from "@web3-react/core";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useClipboard } from "use-clipboard-copy";
 
 import type { IReferralReportSearchDto } from "@framework/types";
+import { AddressLink } from "@gemunion/mui-scanner";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { useWallet } from "@gemunion/provider-wallet";
+import { useCollection } from "@gemunion/react-hooks";
+
+import { StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
@@ -40,6 +42,9 @@ export const ReferralTree: FC = () => {
     },
   });
 
+  const { isActive, account = "" } = useWeb3React();
+  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
+  const clipboard = useClipboard();
   const { formatMessage } = useIntl();
 
   // prettier-ignore
@@ -85,11 +90,30 @@ export const ReferralTree: FC = () => {
     },
   ];
 
+  useEffect(() => {
+    if (!isActive) {
+      void openConnectWalletDialog();
+    } else {
+      void closeConnectWalletDialog();
+    }
+  }, [isActive]);
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.tree"]} />
 
       <PageHeader message="pages.referral.tree.title"></PageHeader>
+
+      <StyledCopyRefLinkWrapper>
+        <StyledTextField
+          value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
+          variant="standard"
+          inputRef={clipboard.target}
+        />
+        <Button onClick={clipboard.copy}>
+          <FormattedMessage id="form.buttons.copy" />
+        </Button>
+      </StyledCopyRefLinkWrapper>
 
       {rows.length > 0 ? (
         <DataGrid
