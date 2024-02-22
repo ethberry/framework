@@ -1,10 +1,10 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Box, Grid, Typography } from "@mui/material";
+import { Button, Box, Grid, SvgIcon, Typography } from "@mui/material";
+import { Done, ExpandMore, ChevronRight } from "@mui/icons-material";
 
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { TreeView, TreeItem } from "@mui/x-tree-view";
-import { ExpandMore, ChevronRight } from "@mui/icons-material";
 // import { useUser } from "@gemunion/provider-user";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
@@ -55,10 +55,20 @@ export const ReferralTree: FC = () => {
     },
   });
 
-  const { isActive, account = "" } = useWeb3React();
-  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const clipboard = useClipboard();
   const { formatMessage } = useIntl();
+  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
+  const { isActive, account = "" } = useWeb3React();
+
+  const [copied, setCopied] = useState<boolean>(false);
+
+  const handleCopy = () => {
+    clipboard.copy();
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  };
 
   // prettier-ignore
   // TODO make it nice
@@ -162,37 +172,37 @@ export const ReferralTree: FC = () => {
     children: [
       {
         id: "1",
-        name: "Child - 1",
+        name: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
         level: 1,
         share: "5%",
       },
       {
         id: "2",
-        name: "Child - 2",
+        name: "0xebc4dda28eb070c7cab9b62a8c5d84da7fa9cefd",
         level: 1,
         share: "5%",
         children: [
           {
             id: "3",
-            name: "Child - 21",
+            name: "0xb53e364dd5d5f1da81e45be0f0b86cc99b57c96a",
             level: 2,
             share: "3%",
           },
           {
             id: "4",
-            name: "Child - 22",
+            name: "0xba9b259fb6da3d0adaf14cdd8dfe8e1eb3a2bff0",
             level: 2,
             share: "3%",
             children: [
               {
                 id: "5",
-                name: "Child - 221",
+                name: "0x6e2a836ae29bdd2d3baad1cbbaa3a3e3e7b5cbff",
                 level: 3,
                 share: "2%",
               },
               {
                 id: "6",
-                name: "Child - 222",
+                name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
                 level: 3,
                 share: "2%",
               },
@@ -213,6 +223,7 @@ export const ReferralTree: FC = () => {
       sx={{
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         p: 0.5,
         pr: 0,
       }}
@@ -222,7 +233,7 @@ export const ReferralTree: FC = () => {
         <AddressLink address={wallet} />
       </Typography>
       {share ? (
-        <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
+        <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit" }}>
           {`share: ${share} (level ${level})`}
         </Typography>
       ) : null}
@@ -254,11 +265,21 @@ export const ReferralTree: FC = () => {
         <StyledTextField
           value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
           variant="standard"
+          label={formatMessage({ id: "pages.referral.tree.refLink" })}
           inputRef={clipboard.target}
+          fullWidth
+          InputProps={{
+            endAdornment: (
+              <Button onClick={handleCopy}>
+                {!copied ? (
+                  <FormattedMessage id="form.buttons.copy" />
+                ) : (
+                  <SvgIcon component={Done} width={32} height={32} />
+                )}
+              </Button>
+            ),
+          }}
         />
-        <Button onClick={clipboard.copy}>
-          <FormattedMessage id="form.buttons.copy" />
-        </Button>
       </StyledCopyRefLinkWrapper>
 
       {rows.length > 0 ? (
@@ -283,9 +304,9 @@ export const ReferralTree: FC = () => {
       ) : null}
       {/* <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}> */}
       {/* </Box> */}
-      <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}>
+      <Box sx={{ minHeight: 110, flexGrow: 1 }}>
         <TreeView
-          aria-label="rich object"
+          aria-label="referral tree"
           defaultCollapseIcon={<ExpandMore />}
           defaultExpanded={["root"]}
           defaultExpandIcon={<ChevronRight />}

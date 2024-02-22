@@ -6,5 +6,5 @@ export const StyledCopyRefLinkWrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledTextField = styled(TextField)({
-  width: 650,
+  width: "100%",
 });
