@@ -163,94 +163,135 @@ export const ReferralTree: FC = () => {
   // console.log("allTrees", allTrees);
 
   // CREATE TREE DATA
-  const treeData: IRenderTree = {
-    id: "root",
-    name: "Referral Tree",
-    level: 0,
-    share: "",
-    merchant: "GEMUNION",
-    children: [
-      {
-        id: "1",
-        name: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-        level: 1,
-        share: "5%",
-      },
-      {
-        id: "2",
-        name: "0xebc4dda28eb070c7cab9b62a8c5d84da7fa9cefd",
-        level: 1,
-        share: "5%",
-        children: [
-          {
-            id: "3",
-            name: "0xb53e364dd5d5f1da81e45be0f0b86cc99b57c96a",
-            level: 2,
-            share: "3%",
-          },
-          {
-            id: "4",
-            name: "0xba9b259fb6da3d0adaf14cdd8dfe8e1eb3a2bff0",
-            level: 2,
-            share: "3%",
-            children: [
-              {
-                id: "5",
-                name: "0x6e2a836ae29bdd2d3baad1cbbaa3a3e3e7b5cbff",
-                level: 3,
-                share: "2%",
-              },
-              {
-                id: "6",
-                name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
-                level: 3,
-                share: "2%",
-              },
-            ],
-          },
-        ],
-      },
-    ],
+  const treeData: IRenderTree[] = [
+    {
+      id: "root",
+      name: "Referral Tree",
+      level: 0,
+      share: "",
+      merchant: "GEMUNION",
+      children: [
+        {
+          id: "1",
+          name: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+          level: 1,
+          share: "5%",
+        },
+        {
+          id: "2",
+          name: "0xebc4dda28eb070c7cab9b62a8c5d84da7fa9cefd",
+          level: 1,
+          share: "5%",
+          children: [
+            {
+              id: "3",
+              name: "0xb53e364dd5d5f1da81e45be0f0b86cc99b57c96a",
+              level: 2,
+              share: "3%",
+            },
+            {
+              id: "4",
+              name: "0xba9b259fb6da3d0adaf14cdd8dfe8e1eb3a2bff0",
+              level: 2,
+              share: "3%",
+              children: [
+                {
+                  id: "5",
+                  name: "0x6e2a836ae29bdd2d3baad1cbbaa3a3e3e7b5cbff",
+                  level: 3,
+                  share: "2%",
+                },
+                {
+                  id: "6",
+                  name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
+                  level: 3,
+                  share: "2%",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "root2",
+      name: "Merchant 2",
+      level: 0,
+      share: "",
+      merchant: "Meow Dao",
+      children: [
+        {
+          id: "21",
+          name: "0x2fbf0f4f0ccdaddfffd53b12031ffda39da29beb",
+          level: 1,
+          share: "5%",
+        },
+        {
+          id: "22",
+          name: "0x10d78de741ac636ddafd789acdc2244ca221d849",
+          level: 1,
+          share: "5%",
+          children: [
+            {
+              id: "23",
+              name: "0x7ed2e0afadeda9f288959af3ddcdcc8bd17be6aa",
+              level: 2,
+              share: "3%",
+            },
+            {
+              id: "24",
+              name: "0xfd827ddabfacd0322ba0277dad4bbd143719f5a2",
+              level: 2,
+              share: "3%",
+              children: [
+                {
+                  id: "25",
+                  name: "0x3a4ff49d7a6dba79a71834caddd1cbdbbdacc97a",
+                  level: 3,
+                  share: "2%",
+                },
+                {
+                  id: "26",
+                  name: "0x3faf80d7cc2fdc5dbefcecdec2b5cc34c78dbe5f",
+                  level: 3,
+                  share: "2%",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const renderTreeLabel = (node: IRenderTree) => {
+    const { name, merchant, level, share } = node;
+
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 0.5,
+          pr: 0,
+        }}
+      >
+        {/* <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} /> */}
+        <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
+          {merchant || <AddressLink address={name} />}
+        </Typography>
+        {share ? (
+          <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit" }}>
+            {`share: ${share} (level ${level})`}
+          </Typography>
+        ) : null}
+      </Box>
+    );
   };
 
-  const renderTreeLabel = (wallet: string, level: number, share?: string) => (
-    // <Grid container spacing={2}>
-    //   <Grid item lg={4} sm={6} xs={12} key={nodes.id}>
-    //     <Typography>{`${nodes.name}-${nodes.share || nodes.merchant}`}</Typography>
-    //   </Grid>
-    // </Grid>
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        p: 0.5,
-        pr: 0,
-      }}
-    >
-      {/* <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} /> */}
-      <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
-        <AddressLink address={wallet} />
-      </Typography>
-      {share ? (
-        <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit" }}>
-          {`share: ${share} (level ${level})`}
-        </Typography>
-      ) : null}
-      {/* <Typography variant="caption" color="inherit" sx={{ fontWeight: "inherit", flexGrow: 1 }}> */}
-      {/*  {`Level ${level}`} */}
-      {/* </Typography> */}
-    </Box>
-  );
-
   const renderTree = (nodes: IRenderTree) => (
-    // <TreeItem key={nodes.id} nodeId={nodes.id} label={`${nodes.name}-${nodes.share || nodes.merchant}`}>
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={renderTreeLabel(nodes.name, nodes.level, nodes.share)}>
-      {/* <Grid container spacing={2}> */}
-      {/*  <Grid item lg={4} sm={6} xs={12} key={1}> */}
-      {/*    <Typography>{nodes.share}</Typography> */}
-      {/*  </Grid> */}
-      {/* </Grid> */}
+    <TreeItem key={nodes.id} nodeId={nodes.id} label={renderTreeLabel(nodes)}>
       {Array.isArray(nodes.children) ? nodes.children.map(node => renderTree(node)) : null}
     </TreeItem>
   );
@@ -302,8 +343,6 @@ export const ReferralTree: FC = () => {
           autoHeight
         />
       ) : null}
-      {/* <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}> */}
-      {/* </Box> */}
       <Box sx={{ minHeight: 110, flexGrow: 1 }}>
         <TreeView
           aria-label="referral tree"
@@ -311,7 +350,7 @@ export const ReferralTree: FC = () => {
           defaultExpanded={["root"]}
           defaultExpandIcon={<ChevronRight />}
         >
-          {renderTree(treeData)}
+          {treeData.map(renderTree)}
         </TreeView>
       </Box>
     </Grid>
