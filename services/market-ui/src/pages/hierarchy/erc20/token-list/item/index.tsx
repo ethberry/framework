@@ -11,7 +11,7 @@ interface IErc20TokenListItemProps {
   token: IToken;
 }
 
-export const Erc20TokenListItem: FC<IErc20TokenListItemProps> = props => {
+export const Erc20CoinsListItem: FC<IErc20TokenListItemProps> = props => {
   const { token } = props;
 
   return (

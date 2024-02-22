@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <FirebaseLogin wallets={[MetamaskLoginButton, ParticleLoginButton]} />,
+        element: <FirebaseLogin withEmail={false} wallets={[MetamaskLoginButton, ParticleLoginButton]} />,
       },
       ...infrastructureRoutes,
       ...hierarchyRoutes,

@@ -13,16 +13,16 @@ export const Erc20Section: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.tokens" />
+            <FormattedMessage id="pages.dashboard.hierarchy.coins" />
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/erc20/tokens">
+        <ListItemButton component={RouterLink} to="/erc20/coins">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.erc20.tokens.title" />
+            <FormattedMessage id="pages.erc20.coins.title" />
           </ListItemText>
         </ListItemButton>
       </List>

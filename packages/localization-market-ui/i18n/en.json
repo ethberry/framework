@@ -688,7 +688,7 @@
         "erc20": "ERC20",
         "erc721": "ERC721",
         "erc998": "ERC998",
-        "tokens": "Tokens"
+        "coins": "Coins"
       },
       "infrastructure": {
         "feedback": {
@@ -846,16 +846,16 @@
       }
     },
     "erc20": {
-      "title": "Tokens",
+      "title": "Coins",
       "token": {
-        "title": "Token: {title}"
+        "title": "Coin: {title}"
       },
-      "tokens": {
+      "coins": {
         "sort": {
           "createdAt": "Date",
           "price": "Price"
         },
-        "title": "Tokens"
+        "title": "Coins"
       }
     },
     "erc721": {
