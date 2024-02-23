@@ -7,13 +7,12 @@ import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
 
+import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-
-import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
@@ -119,10 +118,11 @@ export const ReferralTree: FC = () => {
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>
+
       <ReferralTreeMerchantSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <Grid container spacing={4} alignItems="center">
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={6}>
           <StyledCopyRefLinkWrapper>
             <StyledTextField
               value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
@@ -144,7 +144,7 @@ export const ReferralTree: FC = () => {
             />
           </StyledCopyRefLinkWrapper>
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={6}>
           <StyledAlert severity="info">
             {referrer === "0x0000000000000000000000000000000000000000" ? (
               <FormattedMessage id="pages.referral.tree.noReferrer" />

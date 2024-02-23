@@ -1,10 +1,9 @@
 import { FC } from "react";
+import { Collapse } from "@mui/material";
 
-import { Collapse, Grid } from "@mui/material";
-
-import { AutoSave, /* FormWatcher, */ FormWrapper } from "@gemunion/mui-form";
-
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+
 import { IReferralTreeSearchDto } from "../index";
 
 export interface IReferralTreeMerchantSearchDto {
@@ -32,11 +31,7 @@ export const ReferralTreeMerchantSearchForm: FC<IReferralTreeMerchantSearchFormP
       testId="ReferralTreeMerchantSearchForm"
     >
       <Collapse in={open}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <EntityInput name="merchantIds" multiple controller="referral/tree" /* onChange={handleChange} */ />
-          </Grid>
-        </Grid>
+        <EntityInput name="merchantIds" multiple controller="referral/tree" />
       </Collapse>
       <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
