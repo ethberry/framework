@@ -4,6 +4,9 @@ import { ns } from "@framework/constants";
 
 export class CreateReferralProgramAt1660003709900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    // DROP OLD TABLE
+    await queryRunner.query(`DROP TABLE IF EXISTS ${ns}.referral_program CASCADE;`);
+
     const table = new Table({
       name: `${ns}.referral_program`,
       columns: [

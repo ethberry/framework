@@ -4,6 +4,8 @@ import { ns } from "@framework/constants";
 
 export class CreateReferralTreeAt1660004709900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    // DROP OLD TABLE
+    await queryRunner.query(`DROP TABLE IF EXISTS ${ns}.referral_tree CASCADE;`);
     const table = new Table({
       name: `${ns}.referral_tree`,
       columns: [
