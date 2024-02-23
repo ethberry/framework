@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Alert, Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
+import { Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
 import { ChevronRight, Done, ExpandMore } from "@mui/icons-material";
 
 import { TreeItem, TreeView } from "@mui/x-tree-view";
@@ -15,7 +15,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
-import { StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
+import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
@@ -134,13 +134,15 @@ export const ReferralTree: FC = () => {
           </StyledCopyRefLinkWrapper>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <Alert severity="info">
+          <StyledAlert severity="info">
             {referrer === "0x0000000000000000000000000000000000000000" ? (
               <FormattedMessage id="pages.referral.tree.noReferrer" />
             ) : (
-              <FormattedMessage id="pages.referral.tree.referrer" values={{ referrer }} />
+              <>
+                <FormattedMessage id="pages.referral.tree.current" />: <AddressLink address={referrer} />
+              </>
             )}
-          </Alert>
+          </StyledAlert>
         </Grid>
       </Grid>
 
