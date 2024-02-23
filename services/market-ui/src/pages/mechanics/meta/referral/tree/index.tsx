@@ -14,8 +14,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 
-import { StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
+import { StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
@@ -110,23 +110,8 @@ export const ReferralTree: FC = () => {
       <Breadcrumbs path={["dashboard", "referral", "referral.tree"]} />
 
       <PageHeader message="pages.referral.tree.title"></PageHeader>
-
-      <ProgressOverlay isLoading={isLoading}>
-        {rows.length > 0 ? (
-          <Box sx={{ minHeight: 150, flexGrow: 1 }}>
-            <TreeView
-              aria-label="referral tree"
-              defaultCollapseIcon={<ExpandMore />}
-              defaultExpanded={["root"]}
-              defaultExpandIcon={<ChevronRight />}
-            >
-              {rows.map(renderTree)}
-            </TreeView>
-          </Box>
-        ) : null}
-      </ProgressOverlay>
-      <Grid container>
-        <Grid item xs={12}>
+      <Grid container spacing={4} alignItems="center">
+        <Grid item xs={12} lg={6}>
           <StyledCopyRefLinkWrapper>
             <StyledTextField
               value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
@@ -148,10 +133,31 @@ export const ReferralTree: FC = () => {
             />
           </StyledCopyRefLinkWrapper>
         </Grid>
+        <Grid item xs={12} lg={6}>
+          <Alert severity="info">
+            {referrer === "0x0000000000000000000000000000000000000000" ? (
+              <FormattedMessage id="pages.referral.tree.noReferrer" />
+            ) : (
+              <FormattedMessage id="pages.referral.tree.referrer" values={{ referrer }} />
+            )}
+          </Alert>
+        </Grid>
       </Grid>
-      <Alert severity="info">
-        <FormattedMessage id="pages.referral.tree.referrer" values={{ referrer }} />
-      </Alert>
+
+      <ProgressOverlay isLoading={isLoading}>
+        {rows.length > 0 ? (
+          <Box sx={{ minHeight: 150, flexGrow: 1, mt: 3 }}>
+            <TreeView
+              aria-label="referral tree"
+              defaultCollapseIcon={<ExpandMore />}
+              defaultExpanded={["root"]}
+              defaultExpandIcon={<ChevronRight />}
+            >
+              {rows.map(renderTree)}
+            </TreeView>
+          </Box>
+        ) : null}
+      </ProgressOverlay>
     </Grid>
   );
 };

@@ -1195,9 +1195,10 @@
         "title": "Rewards"
       },
       "tree": {
-        "refLink": "Your referral link",
         "current": "Your current referrer",
+        "noReferrer": "You don't have any referrer yet",
         "referrer": "Your current referrer is {referrer}",
+        "refLink": "Your referral link",
         "title": "Referral Tree"
       },
       "cabinet": {
