@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-import { Share, Timeline } from "@mui/icons-material";
+import { AccountTreeOutlined, EmojiEventsOutlined } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -26,7 +26,7 @@ export const ReferralSection: FC = () => {
       >
         <ListItemButton component={RouterLink} to="/referral/reward">
           <ListItemIcon>
-            <Timeline />
+            <EmojiEventsOutlined />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.referral.reward.title" />
@@ -34,7 +34,7 @@ export const ReferralSection: FC = () => {
         </ListItemButton>
         <ListItemButton component={RouterLink} to="/referral/tree">
           <ListItemIcon>
-            <Share />
+            <AccountTreeOutlined />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.referral.tree.title" />
