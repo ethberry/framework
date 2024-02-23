@@ -31,6 +31,15 @@ export class CreateReferralTreeAt1660004709900 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "parent_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "mpath",
+          type: "varchar",
+        },
+        {
           name: "temp",
           type: "bool",
           default: false,
@@ -50,6 +59,12 @@ export class CreateReferralTreeAt1660004709900 implements MigrationInterface {
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["parent_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.referral_tree`,
+          onDelete: "SET NULL",
         },
       ],
     });
