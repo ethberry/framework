@@ -6,6 +6,11 @@ import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
 import { IReferralTreeSearchDto } from "./interfaces";
 
+export interface IRefTreeMerchantAutocomplete {
+  merchantId: number;
+  merchantTitle: string;
+}
+
 @Injectable()
 export class ReferralTreeService {
   constructor(
@@ -59,5 +64,16 @@ export class ReferralTreeService {
     } else {
       return [[], 0];
     }
+  }
+
+  public async autocomplete(userEntity: UserEntity): Promise<Array<IRefTreeMerchantAutocomplete>> {
+    const queryBuilder = this.referralTreeEntityRepository.createQueryBuilder("program");
+    queryBuilder.select(["merchant.id as id", "merchant.title as title"]);
+    queryBuilder.andWhere("program.referral = :referral", { referral: userEntity.wallet });
+    queryBuilder.leftJoin("program.merchant", "merchant");
+
+    queryBuilder.groupBy("merchant.id, merchant.title");
+
+    return await queryBuilder.getRawMany();
   }
 }

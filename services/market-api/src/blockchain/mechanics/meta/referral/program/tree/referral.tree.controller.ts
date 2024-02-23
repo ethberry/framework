@@ -3,7 +3,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { ReferralTreeService } from "./referral.tree.service";
+import { IRefTreeMerchantAutocomplete, ReferralTreeService } from "./referral.tree.service";
 import { ReferralTreeSearchDto } from "./dto";
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
@@ -20,5 +20,10 @@ export class ReferralTreeController {
     @User() userEntity: UserEntity,
   ): Promise<[Array<ReferralTreeEntity>, number]> {
     return this.referralTreeService.getReferralTree(dto, userEntity);
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(@User() userEntity: UserEntity): Promise<Array<IRefTreeMerchantAutocomplete>> {
+    return this.referralTreeService.autocomplete(userEntity);
   }
 }
