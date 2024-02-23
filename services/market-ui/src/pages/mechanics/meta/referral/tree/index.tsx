@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
 import { ChevronRight, Done, ExpandMore, FilterList } from "@mui/icons-material";
-
 import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";

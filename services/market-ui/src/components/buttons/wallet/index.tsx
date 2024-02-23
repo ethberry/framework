@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo } from "react";
-import { Badge, Box, IconButton, Tooltip } from "@mui/material";
+import { Badge, Box, Tooltip } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { useIntl } from "react-intl";
 
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector, walletActions } from "@gemunion/redux";
 import { WalletIcon } from "./icon";
 import { WalletMenuDialog } from "../../dialogs/wallet";
 import { ConnectWallet } from "../../dialogs/connect";
-import { StyledTooltipContent } from "./styled";
+import { StyledButton, StyledTooltipContent } from "./styled";
 
 export const WalletButton: FC = () => {
   const { isOpenPopup, openPopup, closePopup } = usePopup();
@@ -58,11 +58,16 @@ export const WalletButton: FC = () => {
   return (
     <Box>
       <Tooltip title={tooltipTitle} enterDelay={300}>
-        <IconButton color="inherit" onClick={handleOpenDialog} data-testid="OpenWalletOptionsDialog">
+        <StyledButton color="inherit" onClick={handleOpenDialog} data-testid="OpenWalletOptionsDialog">
           <Badge color="error" badgeContent="!" invisible={isChainValid && isAccountMatch}>
             <WalletIcon />
+            <Box sx={{ ml: 1 }}>
+              {account
+                ? `${account.slice(0, 6)}...${account.slice(-4)}`
+                : formatMessage({ id: "components.header.wallet.connect" })}
+            </Box>
           </Badge>
-        </IconButton>
+        </StyledButton>
       </Tooltip>
       <ConnectWallet onClose={closeConnectWalletDialog} open={isDialogOpen} />
       <WalletMenuDialog onClose={handleCloseWalletDialog} open={isOpenPopup(WALLET_MENU_POPUP_TYPE)} />

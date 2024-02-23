@@ -21,10 +21,10 @@ export const Header: FC = () => {
         </StyledLink>
         <StyledGrow />
         <Referrer />
-        <NetworkButton />
-        <WalletButton />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
+        <NetworkButton />
+        <WalletButton />
         <Sections />
       </StyledToolbar>
     </AppBar>

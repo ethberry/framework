@@ -2,9 +2,12 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
-import { MetaMaskButton, ParticleButton, WalletConnectButton } from "@gemunion/provider-wallet";
+import { FirebaseLogin } from "@gemunion/firebase-login";
+import { ParticleLoginButton } from "@gemunion/login-button-particle";
+import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 
 import { CloseButton } from "../../buttons";
+import { StyledLoginWrapper } from "./styled";
 
 interface IConnectWalletProps {
   open: boolean;
@@ -21,9 +24,9 @@ export const ConnectWallet: FC<IConnectWalletProps> = props => {
         <CloseButton onClick={onClose} />
       </DialogTitle>
       <DialogContent>
-        <MetaMaskButton onClick={onClose} data-testid="ConnectMetamaskButton" />
-        <WalletConnectButton onClick={onClose} data-testid="ConnectWalletConnectButton" />
-        <ParticleButton onClick={onClose} data-testid="ConnectParticleGoogleButton" />
+        <StyledLoginWrapper>
+          <FirebaseLogin withEmail={false} wallets={[MetamaskLoginButton, ParticleLoginButton]} />
+        </StyledLoginWrapper>
       </DialogContent>
     </Dialog>
   );
