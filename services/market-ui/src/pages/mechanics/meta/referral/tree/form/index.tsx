@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWatcher, FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, /* FormWatcher, */ FormWrapper } from "@gemunion/mui-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IReferralTreeSearchDto } from "../index";
@@ -31,7 +31,6 @@ export const ReferralTreeMerchantSearchForm: FC<IReferralTreeMerchantSearchFormP
       showPrompt={false}
       testId="ReferralTreeMerchantSearchForm"
     >
-      <FormWatcher />
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

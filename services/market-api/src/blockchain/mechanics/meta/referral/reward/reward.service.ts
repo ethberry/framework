@@ -147,10 +147,10 @@ export class ReferralRewardService {
     dto: Partial<IReferralClaimSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<ReferralRewardEntity>, number]> {
-    const { merchantIds = [] } = dto;
+    const { merchantIds = [], skip, take } = dto;
 
     const [allRefEvents, count] = await this.search(
-      { merchantIds: merchantIds.length > 0 ? merchantIds : undefined },
+      { merchantIds: merchantIds.length > 0 ? merchantIds : undefined, skip, take },
       userEntity,
     );
 

@@ -71,9 +71,9 @@ export const ReferralTree: FC = () => {
     }
   }, [rows]);
 
-  const renderTreeLabel = (node: IReferralTree) => {
+  const renderTreeLabel = (node: IReferralTree, idx: number) => {
     const { id, wallet, merchant, level /* share */ } = node;
-    const depth = calculateDepth(rows[0], id);
+    const depth = calculateDepth(rows[idx], id);
     const level0 = getRefLevelShare(programs, merchant.id, 0);
     const totalShares = level0.share / 100;
     const { share, totalCount } = getRefLevelShare(programs, merchant.id, depth || level);
@@ -104,9 +104,9 @@ export const ReferralTree: FC = () => {
     );
   };
 
-  const renderTree = (row: IReferralTree) => (
-    <TreeItem key={row.id} nodeId={row.id.toString()} label={renderTreeLabel(row)}>
-      {row.children.length > 0 ? row.children.map(items => renderTree(items)) : null}
+  const renderTree = (row: IReferralTree, idx: number) => (
+    <TreeItem key={row.id} nodeId={row.id.toString()} label={renderTreeLabel(row, idx)}>
+      {row.children.length > 0 ? row.children.map(items => renderTree(items, idx)) : null}
     </TreeItem>
   );
 
@@ -166,7 +166,7 @@ export const ReferralTree: FC = () => {
               defaultExpanded={["root"]}
               defaultExpandIcon={<ChevronRight />}
             >
-              {rows.map(renderTree)}
+              {rows.map((row, idx) => renderTree(row, idx))}
             </TreeView>
           </Box>
         ) : null}
