@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
-import { ChevronRight, Done, ExpandMore } from "@mui/icons-material";
+import { ChevronRight, Done, ExpandMore, FilterList } from "@mui/icons-material";
 
 import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
@@ -12,17 +12,22 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
+import { ReferralTreeMerchantSearchForm } from "./form";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
 }
 
 export const ReferralTree: FC = () => {
-  const { rows, isLoading } = useCollection<IReferralTree, IReferralTreeSearchDto>({
+  const { rows, isLoading, handleSearch, search /* */, isFiltersOpen, handleToggleFilters } = useCollection<
+    IReferralTree,
+    IReferralTreeSearchDto
+  >({
     baseUrl: "/referral/tree",
     search: {
       merchantIds: [], // search by all merchants
@@ -109,7 +114,13 @@ export const ReferralTree: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.tree"]} />
 
-      <PageHeader message="pages.referral.tree.title"></PageHeader>
+      <PageHeader message="pages.referral.tree.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+      </PageHeader>
+      <ReferralTreeMerchantSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+
       <Grid container spacing={4} alignItems="center">
         <Grid item xs={12} lg={6}>
           <StyledCopyRefLinkWrapper>
