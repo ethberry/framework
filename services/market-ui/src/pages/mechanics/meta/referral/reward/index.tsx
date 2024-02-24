@@ -193,7 +193,7 @@ export const ReferralReward: FC = () => {
           columns={columns}
           rows={rows.map((reward: IReferralEvents, idx) => ({
             id: idx,
-            merchant: reward.merchantId,
+            merchant: reward.merchant!.title,
             account: reward.account,
             item: formatItem(reward.item),
             price: formatItem(reward.price),

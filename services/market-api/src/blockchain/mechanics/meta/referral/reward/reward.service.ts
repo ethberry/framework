@@ -33,6 +33,7 @@ export class ReferralRewardService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("reward.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("reward.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
