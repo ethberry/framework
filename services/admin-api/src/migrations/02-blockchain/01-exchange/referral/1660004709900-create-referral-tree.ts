@@ -38,6 +38,7 @@ export class CreateReferralTreeAt1660004709900 implements MigrationInterface {
         {
           name: "mpath",
           type: "varchar",
+          isNullable: true,
         },
         {
           name: "temp",
