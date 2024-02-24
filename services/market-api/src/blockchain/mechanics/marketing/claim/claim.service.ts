@@ -162,14 +162,6 @@ export class ClaimService {
       throw new BadRequestException("claimRedeemed");
     }
 
-    // console.log("UPDATEASSET", claimEntity.item, item);
-    // await this.assetService.update(claimEntity.item, item);
-    //
-    // claimEntity = await this.findOneWithRelations(where);
-    // if (!claimEntity) {
-    //   throw new NotFoundException("claimNotFound");
-    // }
-
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(

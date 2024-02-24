@@ -132,6 +132,8 @@ export class ReferralRewardService {
             referral: ZeroAddress,
             level: 1,
             temp: false,
+            parent: undefined,
+            children: [],
           });
           // REGISTER ACCOUNT - REF PAIR
           await this.referralTreeService.create({

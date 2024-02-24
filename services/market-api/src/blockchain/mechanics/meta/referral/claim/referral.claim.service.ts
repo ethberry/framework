@@ -103,7 +103,7 @@ export class ReferralClaimService {
         // CREATE EMPTY CLAIM
         const claimEntity = await this.claimService.createEmpty(
           wallet,
-          userEntity.merchantId,
+          merchantId,
           rewardClaimAssetEntity.id,
           ClaimType.TOKEN,
         );
