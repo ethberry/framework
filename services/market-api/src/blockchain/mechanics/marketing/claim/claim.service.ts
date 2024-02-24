@@ -26,11 +26,12 @@ export class ClaimService {
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, account, claimStatus, claimType } = dto;
+    const { skip, take, /* account, */ claimStatus, claimType } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
-    queryBuilder.andWhere("claim.account = :account", { account });
+    // queryBuilder.andWhere("claim.account = :account", { account });
+    queryBuilder.andWhere("claim.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoinAndSelect("claim.merchant", "merchant");
 
@@ -153,10 +154,12 @@ export class ClaimService {
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
     }
+
     // check permissions
-    if (claimEntity.merchantId !== userEntity.merchantId) {
+    if (claimEntity.account !== userEntity.wallet) {
       throw new ForbiddenException("insufficientPermissions");
     }
+
     // Update only NEW Claims
     if (claimEntity.claimStatus !== ClaimStatus.NEW) {
       throw new BadRequestException("claimRedeemed");

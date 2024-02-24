@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { Button, List, ListItemText } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
-import { useWeb3React } from "@web3-react/core";
+// import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -16,7 +16,7 @@ import { ClaimRedeemButton } from "../../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
-  const { account } = useWeb3React();
+  // const { account } = useWeb3React();
 
   const {
     rows,
@@ -31,7 +31,7 @@ export const Claim: FC = () => {
   } = useCollection<IClaim, IClaimSearchDto>({
     baseUrl: `/claim`,
     search: {
-      account,
+      // account,
       claimStatus: [ClaimStatus.NEW],
       claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
     },
