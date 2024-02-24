@@ -25,6 +25,7 @@
     "@gemunion/firebase-login": "2.3.49",
     "@gemunion/history": "1.2.17",
     "@gemunion/login-button-particle": "1.2.7",
+    "@gemunion/login-button-metamask": "1.1.47",
     "@gemunion/mui-dialog-confirmation": "4.0.9",
     "@gemunion/mui-dialog-delete": "3.3.67",
     "@gemunion/mui-dialog-form": "8.2.76",
