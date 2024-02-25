@@ -36,6 +36,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);
+      form.trigger();
     };
 
   return (
