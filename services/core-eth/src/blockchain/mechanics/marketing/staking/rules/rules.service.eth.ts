@@ -7,13 +7,14 @@ import { Log } from "ethers";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IAssetDto, IStakingRuleCreateEvent, IStakingRuleUpdateEvent } from "@framework/types";
-import { DurationUnit, RmqProviderType, SignalEventType, StakingRuleStatus } from "@framework/types";
+import { RmqProviderType, SignalEventType, StakingRuleStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { getDurationUnit } from "../../../../../common/utils/time";
 import { StakingRulesService } from "./rules.service";
 
 @Injectable()
@@ -137,7 +138,7 @@ export class StakingRulesServiceEth {
       deposit: depositItem,
       reward: rewardItem,
       durationAmount: Number(period),
-      durationUnit: DurationUnit.DAY,
+      durationUnit: getDurationUnit(Number(period)),
       penalty: Number(penalty),
       maxStake: Number(maxStake),
       recurrent,

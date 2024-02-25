@@ -7,7 +7,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import type { IAssetDto, IPonziCreateEvent, IPonziUpdateEvent } from "@framework/types";
-import { DurationUnit, PonziRuleStatus, RmqProviderType, SignalEventType } from "@framework/types";
+import { PonziRuleStatus, RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { PonziRulesService } from "./rules.service";
@@ -15,6 +15,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
+import { getDurationUnit } from "../../../../../common/utils/time";
 
 @Injectable()
 export class PonziRulesServiceEth {
@@ -130,7 +131,7 @@ export class PonziRulesServiceEth {
       deposit: depositItem,
       reward: rewardItem,
       durationAmount: Number(period),
-      durationUnit: DurationUnit.DAY,
+      durationUnit: getDurationUnit(Number(period)),
       penalty: Number(penalty),
       maxCycles: Number(maxCycles),
       ponziRuleStatus,
