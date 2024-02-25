@@ -20,7 +20,7 @@ export const ReferralCabinet: FC = () => {
     ? process.env.MARKET_FE_URL
     : process.env.NODE_ENV === NodeEnv.production
       ? "https://market.gemunion.io"
-      : "https://st-marketb2b.gemunion.io";
+      : "https://st-market-b2b.gemunion.io";
 
   const refLink = `${marketUrl}}/?referrer=${account.toLowerCase()}`;
 
