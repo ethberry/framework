@@ -49,7 +49,7 @@ export const ReferralTree: FC = () => {
       ? "https://market.gemunion.io"
       : "https://st-market-b2b.gemunion.io";
 
-  const refLink = `${marketUrl}}/?referrer=${account.toLowerCase()}`;
+  const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
 
   const handleCopy = () => {
     clipboard.copy();

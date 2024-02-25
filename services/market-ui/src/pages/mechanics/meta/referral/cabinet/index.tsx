@@ -22,7 +22,7 @@ export const ReferralCabinet: FC = () => {
       ? "https://market.gemunion.io"
       : "https://st-market-b2b.gemunion.io";
 
-  const refLink = `${marketUrl}}/?referrer=${account.toLowerCase()}`;
+  const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
 
   useEffect(() => {
     if (!isActive) {
