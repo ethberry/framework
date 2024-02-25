@@ -13,6 +13,7 @@ import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
+import { NodeEnv } from "@framework/types";
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 import { ReferralTreeMerchantSearchForm } from "./form";
@@ -41,6 +42,14 @@ export const ReferralTree: FC = () => {
 
   const [copied, setCopied] = useState<boolean>(false);
   const [programs, setPrograms] = useState<Array<IRefProgramsLevels>>([emptyRefProgram]);
+
+  const marketUrl = process.env.MARKET_FE_URL
+    ? process.env.MARKET_FE_URL
+    : process.env.NODE_ENV === NodeEnv.production
+      ? "https://market.gemunion.io"
+      : "https://st-marketb2b.gemunion.io";
+
+  const refLink = `${marketUrl}}/?referrer=${account.toLowerCase()}`;
 
   const handleCopy = () => {
     clipboard.copy();
@@ -124,7 +133,7 @@ export const ReferralTree: FC = () => {
         <Grid item xs={12} md={6}>
           <StyledCopyRefLinkWrapper>
             <StyledTextField
-              value={`${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`}
+              value={`${refLink}`}
               variant="standard"
               label={formatMessage({ id: "pages.referral.tree.refLink" })}
               inputRef={clipboard.target}

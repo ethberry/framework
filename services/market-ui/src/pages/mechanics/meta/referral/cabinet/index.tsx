@@ -7,6 +7,7 @@ import { useClipboard } from "use-clipboard-copy";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 
+import { NodeEnv } from "@framework/types";
 import { ReferralRewardButton } from "../../../../../components/buttons";
 import { StyledTextField } from "./styled";
 
@@ -14,6 +15,14 @@ export const ReferralCabinet: FC = () => {
   const { isActive, account = "" } = useWeb3React();
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const clipboard = useClipboard();
+
+  const marketUrl = process.env.MARKET_FE_URL
+    ? process.env.MARKET_FE_URL
+    : process.env.NODE_ENV === NodeEnv.production
+      ? "https://market.gemunion.io"
+      : "https://st-marketb2b.gemunion.io";
+
+  const refLink = `${marketUrl}}/?referrer=${account.toLowerCase()}`;
 
   useEffect(() => {
     if (!isActive) {
@@ -31,11 +40,7 @@ export const ReferralCabinet: FC = () => {
         <ReferralRewardButton />
       </PageHeader>
 
-      <StyledTextField
-        value={`${process.env.MARKET_FE_URL}/?referrer=${account}`}
-        variant="standard"
-        inputRef={clipboard.target}
-      />
+      <StyledTextField value={`${refLink}`} variant="standard" inputRef={clipboard.target} />
       <Button onClick={clipboard.copy}>
         <FormattedMessage id="form.buttons.copy" />
       </Button>
