@@ -1,15 +1,16 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ConfigService } from "@nestjs/config";
+// import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { testChainId } from "@framework/constants";
+// import { testChainId } from "@framework/constants";
 import { ReferralRewardEntity } from "./referral.reward.entity";
 import { ReferralProgramService } from "../program/referral.program.service";
 import { ReferralTreeService } from "../program/tree/referral.tree.service";
-import { ContractService } from "../../../../hierarchy/contract/contract.service";
+// import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { IRefChainQuery, ReferralRewardShareService } from "./share/referral.reward.share.service";
+import { ReferralProgramStatus } from "@framework/types";
 
 export interface IRefEventCalc {
   merchantId: number;
@@ -24,8 +25,8 @@ export class ReferralRewardService {
     private readonly referralRewardShareService: ReferralRewardShareService,
     private readonly referralProgramService: ReferralProgramService,
     private readonly referralTreeService: ReferralTreeService,
-    private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
+    // private readonly contractService: ContractService,
+    // private readonly configService: ConfigService,
   ) {}
 
   public findOne(
@@ -45,7 +46,7 @@ export class ReferralRewardService {
   public async create(dto: DeepPartial<ReferralRewardEntity>): Promise<ReferralRewardEntity> {
     return this.referralRewardEntityRepository.create(dto).save();
   }
-
+  /*
   public async referral(wallet: string, contract: string): Promise<void> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractEntity = await this.contractService.findOne({ address: contract.toLowerCase(), chainId });
@@ -78,11 +79,16 @@ export class ReferralRewardService {
       }
     }
   }
+ */
 
   // TODO test it for edge cases
   public async referralEventLevel(merchantId: number, account: string, referrer: string): Promise<IRefEventCalc> {
-    // FIND MERCHANT'S REF PROGRAM
-    const refProgramLevelOne = await this.referralProgramService.findOne({ merchantId, level: 1 });
+    // FIND MERCHANT'S ACTIVE REF PROGRAM
+    const refProgramLevelOne = await this.referralProgramService.findOne({
+      merchantId,
+      level: 1,
+      referralProgramStatus: ReferralProgramStatus.ACTIVE,
+    });
     // IF THERE IS MERCHANT REF PROGRAM
     if (refProgramLevelOne) {
       // GET CURRENT REFERRER WALLET-to-MERCHANT CHAIN

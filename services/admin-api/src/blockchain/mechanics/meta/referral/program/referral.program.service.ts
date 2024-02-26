@@ -7,7 +7,7 @@ import { UserRole } from "@framework/types";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MerchantService } from "../../../../../infrastructure/merchant/merchant.service";
 import { ReferralProgramEntity } from "./referral.program.entity";
-import { IReferralProgramCreateDto } from "./interfaces";
+import { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
 import { ReferralProgramSearchDto } from "./dto";
 import { sorter } from "../../../../../common/utils/sorter";
 
@@ -59,6 +59,10 @@ export class ReferralProgramService {
           queryBuilder.andWhere("program.merchantId IN(:...merchantIds)", { merchantIds });
         }
       }
+      // GET USER's
+      queryBuilder.andWhere("program.merchantId = :merchantId", {
+        merchantId: userEntity.merchantId,
+      });
     } else {
       // GET USER's
       queryBuilder.andWhere("program.merchantId = :merchantId", {
@@ -114,16 +118,6 @@ export class ReferralProgramService {
         );
       }
       return levelsArr;
-      // return Promise.all(
-      //   levels.sort(sorter("level")).map(
-      //     async level =>
-      //       await this.create({
-      //         merchantId,
-      //         level: level.level,
-      //         share: level.share,
-      //       }),
-      //   ),
-      // );
     } else {
       throw new ForbiddenException("insufficientPermissions");
     }
@@ -150,6 +144,32 @@ export class ReferralProgramService {
       await this.deleteProgram(merchantId);
       // CREATE NEW
       return await this.createRefProgram(dto, userEntity);
+    }
+  }
+
+  public async updateRefProgramStatus(
+    merchantId: number,
+    dto: IReferralProgramUpdateDto,
+    userEntity: UserEntity,
+  ): Promise<void> {
+    if (merchantId !== userEntity.merchantId) {
+      if (userEntity.userRoles.includes(UserRole.SUPER)) {
+        // UPDATE STATUS ON ALL LEVELS
+        const refLeveles = await this.findAll({ merchantId });
+        for (const level of refLeveles) {
+          Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
+          await level.save();
+        }
+      } else {
+        throw new ForbiddenException("insufficientPermissions");
+      }
+    } else {
+      // UPDATE STATUS ON ALL LEVELS
+      const refLeveles = await this.findAll({ merchantId });
+      for (const level of refLeveles) {
+        Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
+        await level.save();
+      }
     }
   }
 

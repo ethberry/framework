@@ -5,6 +5,7 @@ import { DataSource, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repo
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
 import { IReferralTreeSearchDto } from "./interfaces";
+import { ReferralProgramStatus } from "@framework/types";
 
 export interface IRefTreeMerchantAutocomplete {
   merchantId: number;
@@ -44,8 +45,13 @@ export class ReferralTreeService {
     const userRefEntities = await this.findAll(merchantIds ? { wallet, merchantId: In(merchantIds) } : { wallet }, {
       relations: { merchant: { refLevels: true } },
     });
-    // Just in case - should never happen
-    const uniqueMerchants = [...new Set(userRefEntities)];
+    // FILTER ONLY ACTIVE REF PROGRAMS
+    const activeRefEntities = userRefEntities.filter(
+      ref =>
+        ref.merchant.refLevels.filter(lev => lev.referralProgramStatus === ReferralProgramStatus.ACTIVE).length > 1,
+    );
+    // Just in case - should never happen =)
+    const uniqueMerchants = [...new Set(activeRefEntities)];
     const treeArrResponse = [];
     for (const entity of uniqueMerchants) {
       const tree = await this.dataSource.manager
@@ -71,6 +77,11 @@ export class ReferralTreeService {
     queryBuilder.select(["merchant.id as id", "merchant.title as title"]);
     queryBuilder.andWhere("program.referral = :referral", { referral: userEntity.wallet });
     queryBuilder.leftJoin("program.merchant", "merchant");
+    queryBuilder.leftJoin("merchant.refLevels", "levels");
+    // LOOK ONLY FOR MERCHANTS WITH ACTIVE PROGRAM
+    queryBuilder.andWhere("levels.referralProgramStatus = :referralProgramStatus", {
+      referralProgramStatus: ReferralProgramStatus.ACTIVE,
+    });
 
     queryBuilder.groupBy("merchant.id, merchant.title");
 

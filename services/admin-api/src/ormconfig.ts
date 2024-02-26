@@ -361,6 +361,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { AlterReferralProgram9987519905550 } from "./migrations/06-alter-prod";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -771,6 +772,8 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
+    /* prod alter migrations */
+    AlterReferralProgram9987519905550,
   ],
 };
 

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IReferralProgram } from "@framework/types";
+import { IReferralProgram, ReferralProgramStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 
@@ -14,7 +14,13 @@ export class ReferralProgramEntity extends IdDateBaseEntity implements IReferral
   public share: number;
 
   @Column({ type: "boolean" })
-  public strict: number;
+  public strict: boolean;
+
+  @Column({
+    type: "enum",
+    enum: ReferralProgramStatus,
+  })
+  public referralProgramStatus: ReferralProgramStatus;
 
   @Column({ type: "int" })
   public merchantId: number;

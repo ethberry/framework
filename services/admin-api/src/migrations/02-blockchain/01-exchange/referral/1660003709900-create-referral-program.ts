@@ -7,6 +7,13 @@ export class CreateReferralProgramAt1660003709900 implements MigrationInterface 
     // DROP OLD TABLE
     await queryRunner.query(`DROP TABLE IF EXISTS ${ns}.referral_program CASCADE;`);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.referral_program_status_enum AS ENUM (
+        'ACTIVE',
+        'INACTIVE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.referral_program`,
       columns: [
@@ -33,6 +40,11 @@ export class CreateReferralProgramAt1660003709900 implements MigrationInterface 
           default: false,
         },
         {
+          name: "referral_program_status",
+          type: `${ns}.referral_program_status_enum`,
+          default: "'ACTIVE'",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -56,5 +68,6 @@ export class CreateReferralProgramAt1660003709900 implements MigrationInterface 
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.referral_program`);
+    await queryRunner.query(`DROP TYPE ${ns}.referral_program_status_enum;`);
   }
 }

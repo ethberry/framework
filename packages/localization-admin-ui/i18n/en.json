@@ -191,6 +191,10 @@
       "80001": "MUMBAI",
       "97": "BINANCE (testnet)"
     },
+    "referralProgramStatus": {
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE"
+    },
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
@@ -825,6 +829,7 @@
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "referralProgramStatus": "Program status",
       "referrer": "Referrer",
       "referral": "Referral",
       "rentStatus": "Status",

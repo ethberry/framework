@@ -1,10 +1,22 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+  HttpCode,
+  HttpStatus,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { ReferralProgramService } from "./referral.program.service";
-import { ReferralProgramCreateDto, ReferralProgramSearchDto } from "./dto";
+import { ReferralProgramCreateDto, ReferralProgramSearchDto, ReferralProgramUpdateDto } from "./dto";
 import { ReferralProgramEntity } from "./referral.program.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
@@ -40,12 +52,22 @@ export class ReferralProgramController {
   }
 
   // TODO TEST ALL
-  @Put("/:merchantId")
+  @Put("/:merchantId/levels")
   public update(
     @Param("merchantId", ParseIntPipe) merchantId: number,
     @Body() dto: ReferralProgramCreateDto,
     @User() userEntity: UserEntity,
   ): Promise<ReferralProgramEntity[]> {
     return this.referralProgramService.updateRefProgram(merchantId, dto, userEntity);
+  }
+
+  @Put("/:merchantId/status")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public updateStatus(
+    @Param("merchantId", ParseIntPipe) merchantId: number,
+    @Body() dto: ReferralProgramUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<void> {
+    return this.referralProgramService.updateRefProgramStatus(merchantId, dto, userEntity);
   }
 }
