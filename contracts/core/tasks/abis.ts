@@ -175,6 +175,7 @@ export const fwFunctionNames = [
   "safeTransferFrom",
   "safeTransferFromERC1155",
   "setApprovalForAll",
+  "setBaseURI",
   "setDefaultRoyalty",
   "setPregnancyLimits",
   "setReward",
