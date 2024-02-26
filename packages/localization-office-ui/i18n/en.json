@@ -424,7 +424,6 @@
       "displayName": "Display name",
       "duration": "Duration",
       "durationAmount": "Duration",
-      "durationInDays": "Duration (in days)",
       "durationUnit": "Duration unit",
       "email": "Email",
       "emptyReward": "Empty reward",
