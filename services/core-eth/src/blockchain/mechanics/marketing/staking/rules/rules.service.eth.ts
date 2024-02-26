@@ -133,7 +133,7 @@ export class StakingRulesServiceEth {
     // new ACTIVE rule is NEW to hide it from display in market
     const stakingRuleStatus = active === true ? StakingRuleStatus.NEW : StakingRuleStatus.INACTIVE;
     const stakingRuleEntity = await this.stakingRulesService.create({
-      title: "new STAKING rule",
+      title: "new STAKING rule", // TODO create new rule title based on rule's item\reward\period etc..?
       description: emptyStateString,
       deposit: depositItem,
       reward: rewardItem,
@@ -171,9 +171,16 @@ export class StakingRulesServiceEth {
       args: { ruleId, active },
     } = event;
     const { address, transactionHash } = context;
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
 
     const stakingRuleEntity = await this.stakingRulesService.findOne(
-      { externalId: ruleId },
+      { externalId: ruleId, contractId: contractEntity.id },
       { relations: { contract: { merchant: true } } },
     );
 
