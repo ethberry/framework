@@ -28,6 +28,7 @@ import { EthListenerAddButton } from "../../../../components/buttons/common/eth-
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc721ContractEditDialog } from "./edit";
 import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
+import { SetBaseTokenURIButton } from "../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 
 export const Erc721Contract: FC = () => {
   const {
@@ -135,6 +136,7 @@ export const Erc721Contract: FC = () => {
                   <AllowanceButton contract={contract} disabled={itemDisabled} />
                   <TransferButton contract={contract} disabled={itemDisabled} />
                   <RoyaltyButton contract={contract} disabled={itemDisabled} />
+                  <SetBaseTokenURIButton contract={contract} />
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
                   <ChainLinkSetSubscriptionButton

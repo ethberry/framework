@@ -30,6 +30,7 @@ import { EthListenerAddButton } from "../../../../../components/buttons/common/e
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { MysteryContractEditDialog } from "./edit";
 import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
+import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 
 export const MysteryContract: FC = () => {
   const {
@@ -117,6 +118,7 @@ export const MysteryContract: FC = () => {
                   <MysteryBoxMintButton contract={contract} disabled={itemDisabled} />
                   <AllowanceButton contract={contract} disabled={itemDisabled} />
                   <RoyaltyButton contract={contract} disabled={itemDisabled} />
+                  <SetBaseTokenURIButton contract={contract} />
                   <TransferButton contract={contract} disabled={itemDisabled} />
                   <EthListenerAddButton contract={contract} disabled={itemDisabled} />
                   <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />

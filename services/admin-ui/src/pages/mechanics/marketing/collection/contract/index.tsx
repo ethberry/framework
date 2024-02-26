@@ -24,6 +24,7 @@ import { CollectionUploadButton } from "../../../../../components/buttons/mechan
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { Erc721CollectionEditDialog } from "./edit";
+import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 
 export const CollectionContract: FC = () => {
   const {
@@ -109,6 +110,7 @@ export const CollectionContract: FC = () => {
                   <RenounceRoleButton contract={contract} disabled={itemDisabled} />
                   <AllowanceButton contract={contract} disabled={itemDisabled} />
                   <RoyaltyButton contract={contract} disabled={itemDisabled} />
+                  <SetBaseTokenURIButton contract={contract} />
                   <BlacklistButton contract={contract} disabled={itemDisabled} />
                   <UnBlacklistButton contract={contract} disabled={itemDisabled} />
                   <TransferButton contract={contract} disabled={itemDisabled} />
