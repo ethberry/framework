@@ -7,6 +7,7 @@ import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
+import { shouldDisableByContractType } from "../../utils";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 
 export interface IEthListenerAddButtonProps {
@@ -59,7 +60,7 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
         message="form.buttons.addListener"
         className={className}
         dataTestId="EthListenerAddButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <EthListenerAddDialog

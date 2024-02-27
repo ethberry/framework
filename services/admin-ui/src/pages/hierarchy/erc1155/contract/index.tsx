@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, Erc1155ContractFeatures } from "@framework/types";
+import { ContractStatus, Erc1155ContractFeatures } from "@framework/types";
 
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -102,38 +102,33 @@ export const Erc1155Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => {
-            const itemDisabled =
-              contract.contractStatus === ContractStatus.INACTIVE ||
-              contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText>{contract.title}</ListItemText>
-                <ListActions dataTestId="ContractActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <WhitelistButton contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <MintButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
+          {rows.map(contract => (
+            <StyledListItem key={contract.id}>
+              <ListItemText>{contract.title}</ListItemText>
+              <ListActions dataTestId="ContractActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <BlacklistButton contract={contract} />
+                <UnBlacklistButton contract={contract} />
+                <WhitelistButton contract={contract} />
+                <UnWhitelistButton contract={contract} />
+                <MintButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <TransferButton contract={contract} />
+                <RoyaltyButton contract={contract} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+              </ListActions>
+            </StyledListItem>
+          ))}
         </List>
       </ProgressOverlay>
 

@@ -5,6 +5,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../utils";
 import { AccessListUnBlacklistDialog } from "./dialog";
 
 export interface IUnBlacklistButtonProps {
@@ -48,7 +49,7 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
         message="form.buttons.unblacklist"
         className={className}
         dataTestId="UnBlacklistButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AccessListUnBlacklistDialog

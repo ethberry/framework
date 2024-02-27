@@ -23,8 +23,8 @@ import { TransferButton } from "../../../../../components/buttons/common/transfe
 import { CollectionUploadButton } from "../../../../../components/buttons/mechanics/collection/upload";
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { Erc721CollectionEditDialog } from "./edit";
 import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
+import { Erc721CollectionEditDialog } from "./edit";
 
 export const CollectionContract: FC = () => {
   const {
@@ -91,40 +91,33 @@ export const CollectionContract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                <ListItemText>{contract.parameters.batchSize}</ListItemText>
-                <ListActions dataTestId="CollectionActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    disabled={itemDisabled}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <SetBaseTokenURIButton contract={contract} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <CollectionUploadButton
-                    contract={contract}
-                    disabled={itemDisabled}
-                    onRefreshPage={handleRefreshPage}
-                  />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
+          {rows.map(contract => (
+            <StyledListItem key={contract.id}>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListItemText>{contract.parameters.batchSize}</ListItemText>
+              <ListActions dataTestId="CollectionActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <RoyaltyButton contract={contract} />
+                <SetBaseTokenURIButton contract={contract} />
+                <BlacklistButton contract={contract} />
+                <UnBlacklistButton contract={contract} />
+                <TransferButton contract={contract} />
+                <CollectionUploadButton contract={contract} onRefreshPage={handleRefreshPage} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+              </ListActions>
+            </StyledListItem>
+          ))}
         </List>
       </ProgressOverlay>
 

@@ -26,9 +26,9 @@ import { TransferButton } from "../../../../components/buttons/common/transfer";
 import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
 import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
-import { Erc721ContractEditDialog } from "./edit";
 import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
 import { SetBaseTokenURIButton } from "../../../../components/buttons/hierarchy/contract/set-base-token-uri";
+import { Erc721ContractEditDialog } from "./edit";
 
 export const Erc721Contract: FC = () => {
   const {
@@ -110,47 +110,43 @@ export const Erc721Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => {
-            const itemDisabled =
-              contract.contractStatus === ContractStatus.INACTIVE ||
-              contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText>{contract.title}</ListItemText>
-                <ListActions dataTestId="ContractActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <WhitelistButton contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <MintButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <SetBaseTokenURIButton contract={contract} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
-                  <ChainLinkSetSubscriptionButton
-                    contract={contract}
-                    disabled={
-                      itemDisabled ||
-                      (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
-                        !contract.contractFeatures.includes(ContractFeatures.GENES))
-                    }
-                  />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
+          {rows.map(contract => (
+            <StyledListItem key={contract.id}>
+              <ListItemText>{contract.title}</ListItemText>
+              <ListActions dataTestId="ContractActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <BlacklistButton contract={contract} />
+                <UnBlacklistButton contract={contract} />
+                <WhitelistButton contract={contract} />
+                <UnWhitelistButton contract={contract} />
+                <MintButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <TransferButton contract={contract} />
+                <RoyaltyButton contract={contract} />
+                <SetBaseTokenURIButton contract={contract} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+                <ChainLinkSetSubscriptionButton
+                  contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL) ||
+                    (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
+                      !contract.contractFeatures.includes(ContractFeatures.GENES))
+                  }
+                />
+              </ListActions>
+            </StyledListItem>
+          ))}
         </List>
       </ProgressOverlay>
 

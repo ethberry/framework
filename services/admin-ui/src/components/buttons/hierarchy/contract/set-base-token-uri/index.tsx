@@ -6,10 +6,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, ContractStatus, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
+import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 
 export interface ISetBaseTokenURIButtonProps {
@@ -22,7 +23,7 @@ export interface ISetBaseTokenURIButtonProps {
 export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const {
     className,
-    contract: { address, contractFeatures, baseTokenURI, contractStatus, contractType },
+    contract: { address, contractFeatures, baseTokenURI, contractType },
     disabled,
     variant,
   } = props;
@@ -62,8 +63,8 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
         dataTestId="SetTokenURIButton"
         disabled={
           disabled ||
-          contractFeatures.includes(ContractFeatures.SOULBOUND) ||
-          contractStatus === ContractStatus.INACTIVE
+          shouldDisableByContractType(props.contract) ||
+          contractFeatures.includes(ContractFeatures.SOULBOUND)
         }
         variant={variant}
       />

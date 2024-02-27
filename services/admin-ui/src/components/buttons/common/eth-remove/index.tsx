@@ -7,6 +7,7 @@ import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
+import { shouldDisableByContractType } from "../../utils";
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
 
 export interface IEthListenerRemoveButtonProps {
@@ -59,7 +60,7 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
         message="form.buttons.removeListener"
         className={className}
         dataTestId="EthListenerRemoveButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <EthListenerRemoveDialog

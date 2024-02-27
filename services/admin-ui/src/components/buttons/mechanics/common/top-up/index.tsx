@@ -11,6 +11,7 @@ import { TokenType } from "@framework/types";
 
 import topUpExchangeMockFacetABI from "@framework/abis/topUp/ExchangeMockFacet.json";
 
+import { shouldDisableByContractType } from "../../../utils";
 import { ITopUpDto, TopUpDialog } from "./dialog";
 
 export interface ITopUpButtonProps {
@@ -81,7 +82,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
         message="form.buttons.topUp"
         className={className}
         dataTestId="TopUpButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <TopUpDialog

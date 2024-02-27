@@ -28,9 +28,9 @@ import { RoyaltyButton } from "../../../../../components/buttons/common/royalty"
 import { TransferButton } from "../../../../../components/buttons/common/transfer";
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { MysteryContractEditDialog } from "./edit";
 import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
 import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
+import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
   const {
@@ -92,40 +92,37 @@ export const MysteryContract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText>{contract.title}</ListItemText>
-                <ListActions dataTestId="MysteryActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                    disabled={itemDisabled}
-                  />
-                  <TopUpButton contract={contract} disabled={itemDisabled} />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <WhitelistButton contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <PauseButton contract={contract} disabled={itemDisabled} />
-                  <UnPauseButton contract={contract} disabled={itemDisabled} />
-                  <MysteryBoxMintButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <SetBaseTokenURIButton contract={contract} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
+          {rows.map(contract => (
+            <StyledListItem key={contract.id}>
+              <ListItemText>{contract.title}</ListItemText>
+              <ListActions dataTestId="MysteryActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <TopUpButton contract={contract} />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <BlacklistButton contract={contract} />
+                <UnBlacklistButton contract={contract} />
+                <WhitelistButton contract={contract} />
+                <UnWhitelistButton contract={contract} />
+                <PauseButton contract={contract} />
+                <UnPauseButton contract={contract} />
+                <MysteryBoxMintButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <RoyaltyButton contract={contract} />
+                <SetBaseTokenURIButton contract={contract} />
+                <TransferButton contract={contract} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+              </ListActions>
+            </StyledListItem>
+          ))}
         </List>
       </ProgressOverlay>
 

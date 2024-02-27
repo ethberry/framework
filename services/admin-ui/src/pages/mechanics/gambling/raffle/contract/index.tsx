@@ -23,8 +23,8 @@ import { RaffleRoundEndButton } from "../../../../../components/buttons/mechanic
 import { RaffleScheduleButton } from "../../../../../components/buttons/mechanics/raffle/contract/schedule";
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { RaffleEditDialog } from "./edit";
 import { ChainLinkSetSubscriptionButton } from "../../../../../components/buttons/integrations/chain-link/set-subscription";
+import { RaffleEditDialog } from "./edit";
 
 export const RaffleContracts: FC = () => {
   const {
@@ -87,34 +87,31 @@ export const RaffleContracts: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                <ListActions dataTestId="RaffleActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                    disabled={itemDisabled}
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <PauseButton contract={contract} disabled={itemDisabled} />
-                  <UnPauseButton contract={contract} disabled={itemDisabled} />
-                  <RaffleRoundStartButton contract={contract} disabled={itemDisabled} />
-                  <RaffleRoundEndButton contract={contract} disabled={itemDisabled} />
-                  <RaffleScheduleButton contract={contract} disabled={itemDisabled} refreshPage={handleRefreshPage} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
-                  <ChainLinkSetSubscriptionButton contract={contract} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
+          {rows.map(contract => (
+            <StyledListItem key={contract.id}>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListActions dataTestId="RaffleActionsMenuButton">
+                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  icon={Delete}
+                  message="form.buttons.delete"
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <PauseButton contract={contract} />
+                <UnPauseButton contract={contract} />
+                <RaffleRoundStartButton contract={contract} />
+                <RaffleRoundEndButton contract={contract} />
+                <RaffleScheduleButton contract={contract} refreshPage={handleRefreshPage} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
+              </ListActions>
+            </StyledListItem>
+          ))}
         </List>
       </ProgressOverlay>
 

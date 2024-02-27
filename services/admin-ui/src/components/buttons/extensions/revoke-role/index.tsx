@@ -5,6 +5,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRevokeRoleDialog } from "./dialog";
 
 export interface IRevokeRoleButtonProps {
@@ -48,7 +49,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         message="form.buttons.revokeRole"
         className={className}
         dataTestId="RevokeRoleButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AccessControlRevokeRoleDialog

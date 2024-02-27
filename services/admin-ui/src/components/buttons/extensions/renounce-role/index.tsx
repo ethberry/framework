@@ -5,6 +5,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRenounceRoleDialog } from "./dialog";
 
 export interface IRenounceRoleButtonProps {
@@ -48,7 +49,7 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
         message="form.buttons.renounceRole"
         className={className}
         dataTestId="RenounceRoleButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AccessControlRenounceRoleDialog

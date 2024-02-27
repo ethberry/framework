@@ -8,8 +8,10 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
-import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessControlFacet.json";
+
+import { shouldDisableByContractType } from "../../utils";
+import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -59,7 +61,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         message="form.buttons.grantRole"
         className={className}
         dataTestId="GrantRoleButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AccessControlGrantRoleDialog

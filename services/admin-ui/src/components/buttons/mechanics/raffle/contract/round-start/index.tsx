@@ -3,15 +3,16 @@ import { Web3ContextType } from "@web3-react/core";
 import { PlayCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
+import { useMetamask } from "@gemunion/react-hooks-eth";
+import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
-import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
 import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
+
+import { shouldDisableByContractType } from "../../../../utils";
+import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;
@@ -75,7 +76,9 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
+        disabled={
+          disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
+        }
         variant={variant}
       />
       <RaffleStartRoundDialog

@@ -10,6 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.json";
 
+import { shouldDisableByContractType } from "../../../utils";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceButtonProps {
@@ -62,7 +63,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         message="form.buttons.allowance"
         className={className}
         dataTestId="AllowanceButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AllowanceDialog

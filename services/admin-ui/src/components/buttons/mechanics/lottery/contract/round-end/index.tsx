@@ -8,6 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import endRoundLotteryRandomABI from "@framework/abis/endRound/LotteryRandom.json";
+import { shouldDisableByContractType } from "../../../../utils";
 
 export interface ILotteryRoundEndButtonProps {
   className?: string;
@@ -45,7 +46,9 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       message="pages.lottery.rounds.end"
       className={className}
       dataTestId="LotteryRoundEndButton"
-      disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={
+        disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
+      }
       variant={variant}
     />
   );

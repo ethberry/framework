@@ -3,10 +3,13 @@ import { StopCircleOutlined } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
+import { useMetamask } from "@gemunion/react-hooks-eth";
+
 import endRoundLotteryRandomABI from "@framework/abis/endRound/LotteryRandom.json";
+
+import { shouldDisableByContractType } from "../../../../utils";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;
@@ -44,7 +47,9 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={
+        disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
+      }
       variant={variant}
     />
   );
