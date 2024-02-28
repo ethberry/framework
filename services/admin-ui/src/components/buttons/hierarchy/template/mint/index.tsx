@@ -28,7 +28,7 @@ export interface IMintButtonProps {
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
-    template: { contract, id: templateId, templateStatus, tokens },
+    template: { contract, contractId, id: templateId, templateStatus, tokens },
     disabled,
     variant,
   } = props;
@@ -37,7 +37,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
   const { checkAccessMint } = useCheckAccessMint();
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { address, contractType, id: contractId, decimals } = contract!;
+  const { address, contractType, decimals } = contract!;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
