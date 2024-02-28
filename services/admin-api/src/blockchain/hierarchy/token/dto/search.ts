@@ -73,6 +73,7 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @ApiPropertyOptional({
     type: TokenAttributesSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => TokenAttributesSearchDto)
   public metadata: TokenAttributesSearchDto;

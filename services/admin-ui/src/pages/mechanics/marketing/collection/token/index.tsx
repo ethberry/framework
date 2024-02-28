@@ -38,7 +38,6 @@ export const CollectionToken: FC = () => {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
-      tokenId: "",
       metadata: {},
     },
   });
