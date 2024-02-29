@@ -14,7 +14,7 @@ import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { TxHashLink } from "@gemunion/mui-scanner";
 import { useUser } from "@gemunion/provider-user";
 import { useCollection } from "@gemunion/react-hooks";
@@ -119,26 +119,28 @@ export const MyTransactions: FC = () => {
 
       <TransactionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
-      <StyledDataGridPremium
-        pagination
-        paginationMode="server"
-        sortingMode="server"
-        onSortModelChange={handleChangeSortModel as any}
-        rowCount={count}
-        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
-        onPaginationModelChange={handleChangePaginationModel}
-        pageSizeOptions={[5, 10, 25]}
-        loading={isLoading}
-        columns={columns}
-        rowThreshold={0}
-        getDetailPanelHeight={getDetailPanelHeight}
-        getDetailPanelContent={getDetailPanelContent}
-        rows={rows}
-        getRowHeight={() => "auto"}
-        autoHeight
-        disableAggregation
-        disableRowGrouping
-      />
+      <ProgressOverlay isLoading={isLoading}>
+        <StyledDataGridPremium
+          pagination
+          paginationMode="server"
+          sortingMode="server"
+          onSortModelChange={handleChangeSortModel as any}
+          rowCount={count}
+          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+          onPaginationModelChange={handleChangePaginationModel}
+          pageSizeOptions={[5, 10, 25]}
+          loading={isLoading}
+          columns={columns}
+          rowThreshold={0}
+          getDetailPanelHeight={getDetailPanelHeight}
+          getDetailPanelContent={getDetailPanelContent}
+          rows={rows}
+          getRowHeight={() => "auto"}
+          autoHeight
+          disableAggregation
+          disableRowGrouping
+        />
+      </ProgressOverlay>
     </Grid>
   );
 };

@@ -4,33 +4,25 @@ import { Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
-
 import { StyledPaper } from "../styled";
 
 export const Erc20Section: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-
-  // if (!isDevelopment) {
-  //   return null;
-  // }
-
   return (
     <StyledPaper>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc20" />
+            <FormattedMessage id="pages.dashboard.hierarchy.coins" />
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/erc20/tokens">
+        <ListItemButton component={RouterLink} to="/erc20/coins">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.erc20.tokens.title" />
+            <FormattedMessage id="pages.erc20.coins.title" />
           </ListItemText>
         </ListItemButton>
       </List>

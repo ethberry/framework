@@ -10,7 +10,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { StyledAvatar } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import { CraftContactPanel } from "../../../mechanics/recipes/craft/craft-contact-panel";
+import { CraftContactPanel } from "../../../mechanics/gaming/recipes/craft/craft-contact-panel";
 import { Erc998TemplateList } from "../template-list";
 
 export const Erc998Contract: FC = () => {

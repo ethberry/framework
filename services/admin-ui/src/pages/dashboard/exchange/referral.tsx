@@ -1,19 +1,19 @@
 import { FC } from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-import { BarChart } from "@mui/icons-material";
+import { BarChart, Groups, Share } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
+// import { NodeEnv } from "@framework/types";
 
 import { StyledPaper } from "../styled";
 
 export const ReferralSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-
-  if (!isDevelopment) {
-    return null;
-  }
+  // const isProd = process.env.NODE_ENV === NodeEnv.production;
+  //
+  // if (isProd) {
+  //   return null;
+  // }
 
   return (
     <StyledPaper>
@@ -39,6 +39,22 @@ export const ReferralSection: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.referral.report.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/referral/program">
+          <ListItemIcon>
+            <Groups />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.referral.program.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/referral/tree">
+          <ListItemIcon>
+            <Share />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.referral.tree.title" />
           </ListItemText>
         </ListItemButton>
         {/* <ListItemButton component={RouterLink} to="/referral/report/chart"> */}

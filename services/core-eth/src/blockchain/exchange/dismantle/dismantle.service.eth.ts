@@ -8,7 +8,7 @@ import type { IExchangeDismantleEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { DismantleService } from "../../mechanics/recipes/dismantle/dismantle.service";
+import { DismantleService } from "../../mechanics/gaming/recipes/dismantle/dismantle.service";
 import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 

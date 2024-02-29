@@ -1,62 +1,42 @@
 import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
-import { Button, Grid } from "@mui/material";
-import { FilterList } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 
+import { StyledPagination } from "@framework/styled";
+import type { IToken, ITokenSearchDto } from "@framework/types";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { Erc20TokenListItem } from "./item";
+import { Erc20CoinsListItem } from "./item";
 
-export interface IErc20TokenListProps {
+export interface IErc20CoinsListProps {
   embedded?: boolean;
 }
 
-export const Erc20TokenList: FC<IErc20TokenListProps> = props => {
+export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
   const { embedded } = props;
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc20/tokens",
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IToken, ITokenSearchDto>({
+    baseUrl: "/erc20/coins",
+    search: {
+      query: "",
+    },
     embedded,
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc20", "erc20.tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc20.coins"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc20.tokens.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-      </PageHeader>
+      <PageHeader message="pages.erc20.coins.title" />
 
-      <TokenSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        contractType={[TokenType.ERC20]}
-        contractModule={[ModuleType.HIERARCHY]}
-        onRefreshPage={handleRefreshPage}
-      />
+      <CommonSearchForm initialValues={search} onSubmit={handleSearch} testId="CoinsSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc20TokenListItem token={token} />
+              <Erc20CoinsListItem token={token} />
             </Grid>
           ))}
         </Grid>

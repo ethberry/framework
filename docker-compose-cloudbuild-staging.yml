@@ -118,6 +118,11 @@ services:
       LINK_BINANCE_ADDR: "${LINK_BINANCE_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
       VRF_BINANCE_ADDR: "${VRF_BINANCE_ADDR}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2B}:${PORT_ADMIN_API_B2B}"
@@ -223,6 +228,11 @@ services:
       # CHAINLINK
       LINK_ADDR: "${LINK_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2C}:${PORT_ADMIN_API_B2C}"
@@ -274,6 +284,11 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # market-api_B2B
       - "${PORT_MARKET_API_B2B}:${PORT_MARKET_API_B2B}"
@@ -325,6 +340,11 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # market-api_B2C
       - "${PORT_MARKET_API_B2C}:${PORT_MARKET_API_B2C}"
@@ -373,6 +393,11 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # office-api
       - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
@@ -414,6 +439,11 @@ services:
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
@@ -454,6 +484,11 @@ services:
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_BINANCE_TEST}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
 
@@ -486,6 +521,11 @@ services:
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
       GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
       PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # admin-api
       - "${PORT_JSON_API}:${PORT_JSON_API}"
@@ -517,6 +557,11 @@ services:
       # Contracts
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
@@ -546,6 +591,11 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # cron-api
       - "${PORT_CRON_API}:${PORT_CRON_API}"
@@ -585,6 +635,11 @@ services:
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     volumes:
       - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
     ports:
@@ -610,6 +665,11 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"

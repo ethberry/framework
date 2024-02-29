@@ -17,6 +17,9 @@
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
+  "buttons": {
+    "download-metamask": "Download Metamask"
+  },
   "components": {
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
@@ -187,6 +190,10 @@
       "56": "BINANCE",
       "80001": "MUMBAI",
       "97": "BINANCE (testnet)"
+    },
+    "referralProgramStatus": {
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE"
     },
     "claimStatus": {
       "EXPIRED": "Expired",
@@ -616,6 +623,7 @@
       "allowance": "Allowance",
       "approve": "Approve",
       "archive": "Archive",
+      "baseTokenURI": "Base Token URI",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -765,6 +773,7 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "level": "Level",
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
@@ -814,12 +823,16 @@
       "productId": "Product",
       "productItemId": "Item",
       "productStatus": "Status",
+      "programLevel": "Program level",
+      "programLevels": "Program levels",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "referralProgramStatus": "Program status",
       "referrer": "Referrer",
+      "referral": "Referral",
       "rentStatus": "Status",
       "reward": "Reward",
       "role": "Role",
@@ -920,6 +933,7 @@
       "growthRate": "2",
       "instagramUrl": "https://instagram.com/",
       "item": "Bottle of water",
+      "level": "1",
       "listId": "Default list",
       "listIds": "Default list",
       "maxCycles": "0",
@@ -952,6 +966,7 @@
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
+      "referral": "Referral",
       "rarityMultiplier": "0",
       "recipient": "Recipient",
       "roundIds": "Round",
@@ -1004,8 +1019,10 @@
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
       "stepMismatch": "{label} is invalid",
+      "refProgramTotal": "Total is invalid. Must be sum of all levels",
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
+      "totalMismatch": "Total is invalid. Must be sum of all levels",
       "typeMismatch": "{label} is invalid",
       "valid": "??",
       "valueMissing": "{label} is required",
@@ -1237,7 +1254,8 @@
       "signInWith": {
         "facebook": "Sign in with Facebook",
         "google": "Sign in with Google",
-        "metamask": "Sign in with Metamask"
+        "metamask": "Sign in with Metamask",
+        "particle": "Sign in with Particle"
       }
     },
     "kanban": {
@@ -1499,8 +1517,17 @@
       "chart": {
         "title": "Chart"
       },
+      "tree": {
+        "title": "Referral Tree"
+      },
       "leaderboard": {
         "title": "Leaderboard"
+      },
+      "program": {
+        "total": "Total",
+        "level": "Level {level}",
+        "levels": "Referral program levels",
+        "title": "Program"
       },
       "report": {
         "title": "Report"
@@ -1603,6 +1630,7 @@
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "saved": "Successfully saved",
+    "signatureDoesNotMatch": "Signature does not match",
     "success": "Success",
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",

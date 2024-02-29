@@ -8,7 +8,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
 import { AssetComponentHistoryEntity } from "../../exchange/asset/asset-component-history.entity";
-import { BreedEntity } from "../../mechanics/breed/breed.entity";
+import { BreedEntity } from "../../mechanics/gaming/breed/breed.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 
 @Entity({ schema: ns, name: "token" })

@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { NodeEnv } from "@framework/types";
 
 export const RecipesSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
 
   return (
     <Paper sx={{ mb: 2 }}>
@@ -35,7 +35,7 @@ export const RecipesSection: FC = () => {
             <FormattedMessage id="pages.recipes.dismantle.title" />
           </ListItemText>
         </ListItemButton>
-        {isDevelopment ? (
+        {!isProd ? (
           <ListItemButton component={RouterLink} to="/recipes/merge">
             <ListItemIcon>
               <Merge />

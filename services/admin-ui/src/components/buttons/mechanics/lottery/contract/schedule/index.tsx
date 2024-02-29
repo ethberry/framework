@@ -6,6 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 
 import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
+import { shouldDisableByContractType } from "../../../../utils";
 import { LotteryScheduleDialog } from "./dialog";
 
 export interface ILotteryScheduleFullButtonProps {
@@ -58,7 +59,7 @@ export const LotteryScheduleButton: FC<ILotteryScheduleFullButtonProps> = props 
         message="form.buttons.schedule"
         className={className}
         dataTestId="LotteryScheduleButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       {process.env.BUSINESS_TYPE === BusinessType.B2B ? (

@@ -9,7 +9,7 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenSearchDto } from "../../../hierarchy/token/dto";
 
 @ApiBearerAuth()
-@Controller("/erc20/tokens")
+@Controller("/erc20/coins")
 export class Erc20TokenController {
   constructor(private readonly erc20TokenService: Erc20TokenService) {}
 

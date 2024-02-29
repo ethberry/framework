@@ -51,9 +51,15 @@ export class AssetService {
           where: {
             contractId: component.contractId,
           },
-          relations: {
-            contract: true,
-          },
+          relations:
+            component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20
+              ? {
+                  contract: true,
+                  tokens: true,
+                }
+              : {
+                  contract: true,
+                },
         });
 
         if (!templateEntity) {
@@ -74,6 +80,7 @@ export class AssetService {
 
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
           component.templateId = templateEntity.id;
+          component.tokenId = templateEntity.tokens[0].id;
         }
       }
 

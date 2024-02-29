@@ -40,28 +40,29 @@ import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-lin
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 // mechanics
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
-import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
-import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
-import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
-import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { AssetPromoEntity } from "./blockchain/mechanics/promo/promo.entity";
+import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
+import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/penalty/penalty.entity";
+import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
+import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
+import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
 /* lottery */
-import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
-import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 /* raffle */
-import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/gambling/raffle/round/round.entity";
 /* ponzi */
-import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
-import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
-import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
-import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
+import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
+import { RentEntity } from "./blockchain/mechanics/gaming/rent/rent.entity";
 /* ecommerce */
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { CategoryEntity } from "./ecommerce/category/category.entity";
@@ -76,11 +77,18 @@ import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/p
 import { ProductPromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 /* achievements */
-import { AchievementItemEntity } from "./achievements/item/item.entity";
-import { AchievementLevelEntity } from "./achievements/level/level.entity";
-import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
-import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { AchievementItemEntity } from "./blockchain/mechanics/meta/achievements/item/item.entity";
+import { AchievementLevelEntity } from "./blockchain/mechanics/meta/achievements/level/level.entity";
+import { AchievementRuleEntity } from "./blockchain/mechanics/meta/achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./blockchain/mechanics/meta/achievements/redemption/redemption.entity";
+/* referral */
+import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/referral.reward.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/program/referral.program.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/meta/referral/program/tree/referral.tree.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 
+/* migrations */
 import {
   AlterMerchant1687519905550,
   CreateAccessControl1653616447200,
@@ -131,7 +139,11 @@ import {
   CreateProductToCategory1683724061700,
   CreateRaffleRoundAt1685961136110,
   CreateRatePlan1687519905500,
-  CreateReferralRewardAt1660103709900,
+  CreateReferralClaimAt1660006909900,
+  CreateReferralProgramAt1660003709900,
+  CreateReferralRewardAt1660005709900,
+  CreateReferralRewardSharesAt1660006919900,
+  CreateReferralTreeAt1660004709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
@@ -349,12 +361,8 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
-import { AlterClaimTypeEnum1900000000000 } from "./migrations/06-alter/1900000000000-alter-claim-type-enum";
+import { AlterReferralProgram9987519905550 } from "./migrations/06-alter-prod";
 
-// TEST DATA 100k topics
-// import { SeedTestDataAt9763804000120 } from "./migrations/9763804000120-seed-test-data";
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -405,7 +413,11 @@ const config: PostgresConnectionOptions = {
     StakingPenaltyEntity,
     WaitListItemEntity,
     WaitListListEntity,
-    ReferralEntity,
+    ReferralRewardEntity,
+    ReferralRewardShareEntity,
+    ReferralProgramEntity,
+    ReferralTreeEntity,
+    ReferralClaimEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -638,8 +650,13 @@ const config: PostgresConnectionOptions = {
     SeedAssetPromoErc1155At1658980521050,
     SeedAssetPromoMysteryBoxAt1658980521050,
 
-    CreateReferralRewardAt1660103709900,
+    // REFERRAl PROGRAM
+    CreateReferralProgramAt1660003709900,
+    CreateReferralTreeAt1660004709900,
+    CreateReferralRewardAt1660005709900,
     // SeedReferralRewardAt1660103709910,
+    CreateReferralRewardSharesAt1660006919900,
+    CreateReferralClaimAt1660006909900,
 
     // LOTTERY
     SeedContractLotteryTicketAt1563804000180,
@@ -756,10 +773,8 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
-
-    /* alter prod migrations */
-    // SeedTestDataAt9763804000120,
-    AlterClaimTypeEnum1900000000000,
+    /* prod alter migrations */
+    AlterReferralProgram9987519905550,
   ],
 };
 

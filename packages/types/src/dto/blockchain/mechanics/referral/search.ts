@@ -8,3 +8,7 @@ export interface IReferralReportSearchDto extends ISearchDto {
   startTimestamp: string;
   endTimestamp: string;
 }
+
+export interface IReferralProgramSearchDto extends IPaginationDto {
+  merchantIds: Array<number>;
+}

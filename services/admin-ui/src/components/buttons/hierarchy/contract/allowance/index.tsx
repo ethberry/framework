@@ -11,6 +11,7 @@ import { ContractFeatures, TokenType } from "@framework/types";
 import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.json";
 import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
+import { shouldDisableByContractType } from "../../../utils";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceButtonProps {
@@ -75,7 +76,11 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         message="form.buttons.allowance"
         className={className}
         dataTestId="AllowanceButton"
-        disabled={disabled || contractFeatures.includes(ContractFeatures.SOULBOUND)}
+        disabled={
+          disabled ||
+          shouldDisableByContractType(props.contract) ||
+          contractFeatures.includes(ContractFeatures.SOULBOUND)
+        }
         variant={variant}
       />
       <AllowanceDialog

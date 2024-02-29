@@ -5,6 +5,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICollectionUploadDto } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../../utils";
 import { CollectionUploadDialog } from "./dialog";
 
 export interface ICollectionUploadButtonProps {
@@ -60,7 +61,7 @@ export const CollectionUploadButton: FC<ICollectionUploadButtonProps> = props =>
         message="form.buttons.collectionUpload"
         className={className}
         dataTestId="CollectionUploadButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <CollectionUploadDialog

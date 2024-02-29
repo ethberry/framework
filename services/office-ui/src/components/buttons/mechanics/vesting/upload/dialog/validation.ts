@@ -2,7 +2,7 @@ import { array, object } from "yup";
 
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
-import { vestingValidationSchema } from "../../../../../../pages/mechanics/vesting/claim/edit/validation";
+import { vestingValidationSchema } from "../../../../../../pages/mechanics/marketing/vesting/claim/edit/validation";
 
 export const claimValidationSchema = object().concat(vestingValidationSchema).concat(templateAssetValidationSchema);
 

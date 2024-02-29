@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { initDB } from "react-indexed-db-hook";
 
 import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
 import { FirebaseLogin } from "@gemunion/firebase-login";
+import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 import { ParticleLoginButton } from "@gemunion/login-button-particle";
 
 import { Layout } from "../components/common/layout";
@@ -15,10 +17,7 @@ import { integrationsRoutes } from "./integrations/routes";
 import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
-import { achievementsRoutes } from "./achievements/routes";
-
 import { myDBConfig } from "../components/dbstorage/db.config";
-import { initDB } from "react-indexed-db-hook";
 
 initDB(myDBConfig);
 
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <FirebaseLogin wallets={[ParticleLoginButton]} />,
+        element: <FirebaseLogin withEmail={true} wallets={[MetamaskLoginButton, ParticleLoginButton]} />,
       },
       ...infrastructureRoutes,
       ...hierarchyRoutes,
@@ -47,7 +46,6 @@ const router = createBrowserRouter([
       ...integrationsRoutes,
       ...exchangeRoutes,
       ...ecommerceRoutes,
-      ...achievementsRoutes,
       {
         path: "/error/:error",
         element: <Error />,

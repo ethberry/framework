@@ -31,3 +31,6 @@ export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
 export * from "./mechanics/vesting/upload";
+
+export * from "./close-button";
+export * from "./wallet";

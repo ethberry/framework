@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
 
 import type { IToken } from "@framework/types";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
@@ -12,12 +11,12 @@ interface IErc20TokenListItemProps {
   token: IToken;
 }
 
-export const Erc20TokenListItem: FC<IErc20TokenListItemProps> = props => {
+export const Erc20CoinsListItem: FC<IErc20TokenListItemProps> = props => {
   const { token } = props;
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc20/tokens/${token.id}`}>
+      <CardActionArea>
         <CardHeader title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />
         <CardContent>

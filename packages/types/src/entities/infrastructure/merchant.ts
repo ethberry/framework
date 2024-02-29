@@ -3,7 +3,7 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 import type { IUser } from "./user";
 import type { IOrder, IProduct } from "../ecommerce";
 import { RatePlanType } from "./rate-plan";
-import type { IChainLinkSubscription } from "../blockchain";
+import type { IChainLinkSubscription, IReferralProgram } from "../blockchain";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",
@@ -31,4 +31,5 @@ export interface IMerchant extends IIdDateBase {
   products: Array<IProduct>;
   orders: Array<IOrder>;
   chainLinkSubscriptions?: Array<IChainLinkSubscription>;
+  refLevels?: Array<IReferralProgram>;
 }

@@ -39,16 +39,18 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         receiver: values.merchant!.wallet,
         referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
       };
-
-      const item = values.item?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract?.address,
-        tokenId:
-          values.claimType === ClaimType.TEMPLATE
-            ? (component.templateId || 0).toString()
-            : component.token!.tokenId.toString(), // suppression types check with 0
-        amount: component.amount,
-      }));
+      const item = values.item?.components
+        .slice()
+        .sort(sorter("id"))
+        .map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract?.address,
+          tokenId:
+            values.claimType === ClaimType.TEMPLATE
+              ? (component.templateId || 0).toString()
+              : component.token!.tokenId.toString(), // suppression types check with 0
+          amount: component.amount,
+        }));
 
       return values.claimType === ClaimType.TEMPLATE
         ? (contract.claim(params, item, values.signature) as Promise<void>)

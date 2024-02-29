@@ -7,9 +7,10 @@ import { AssetModule } from "../asset/asset.module";
 import { ExchangeCoreControllerEth } from "./core.controller.eth";
 import { ExchangeCoreServiceEth } from "./core.service.eth";
 import { signalServiceProvider } from "../../../common/providers";
+import { ReferralRewardModule } from "../../mechanics/meta/referral/reward/referral.reward.module";
 
 @Module({
-  imports: [ConfigModule, EventHistoryModule, NotificatorModule, AssetModule],
+  imports: [ConfigModule, EventHistoryModule, NotificatorModule, AssetModule, ReferralRewardModule],
   providers: [signalServiceProvider, ExchangeCoreServiceEth],
   controllers: [ExchangeCoreControllerEth],
   exports: [ExchangeCoreServiceEth],

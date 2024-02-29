@@ -73,13 +73,13 @@ export const Dashboard: FC = () => {
           <PaymentSplitterSection />
         </Grid>
         <Grid item xs={12} md={4}>
+          <ReferralSection />
           <ChainLinkSection />
           <CoinGeckoSection />
           <CoinMarketCapSection />
           <MarketplaceSection />
           <EcommerceSection />
           <AchievementsSection />
-          <ReferralSection />
         </Grid>
       </Grid>
     </Root>

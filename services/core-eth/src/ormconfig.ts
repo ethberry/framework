@@ -4,46 +4,50 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 // import { NodeEnv } from "@framework/types";
 
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
+import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
-import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
+import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
-import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
-import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/lottery/round/round.aggregation.entity";
-import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
+import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
+import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
+import { LotteryTicketEntity } from "./blockchain/mechanics/gambling/lottery/ticket/ticket.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
-import { PonziDepositEntity } from "./blockchain/mechanics/ponzi/deposit/deposit.entity";
-import { PonziRulesEntity } from "./blockchain/mechanics/ponzi/rules/rules.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
-import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
+import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
+import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
-import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
-import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
-import { AchievementLevelEntity } from "./achievements/level/level.entity";
-import { AchievementItemEntity } from "./achievements/item/item.entity";
-import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
-import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
+import { AchievementRuleEntity } from "./blockchain/mechanics/meta/achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./blockchain/mechanics/meta/achievements/redemption/redemption.entity";
+import { AchievementLevelEntity } from "./blockchain/mechanics/meta/achievements/level/level.entity";
+import { AchievementItemEntity } from "./blockchain/mechanics/meta/achievements/item/item.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/gambling/raffle/round/round.entity";
+import { RaffleTicketEntity } from "./blockchain/mechanics/gambling/raffle/ticket/ticket.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
-import { DismantleEntity } from "./blockchain/mechanics/recipes/dismantle/dismantle.entity";
-import { CraftEntity } from "./blockchain/mechanics/recipes/craft/craft.entity";
+import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
+import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
 import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
-import { MergeEntity } from "./blockchain/mechanics/recipes/merge/merge.entity";
-import { StakingPenaltyEntity } from "./blockchain/mechanics/staking/penalty/penalty.entity";
-import { ReferralEntity } from "./blockchain/mechanics/referral/referral.entity";
+import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
+import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/penalty/penalty.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/referral.reward.entity";
+import { ReferralTreeEntity } from "./blockchain/mechanics/meta/referral/program/tree/referral.tree.entity";
+import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/program/referral.program.entity";
+import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
+import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -90,7 +94,11 @@ const config: PostgresConnectionOptions = {
     PonziRulesEntity,
     WaitListListEntity,
     WaitListItemEntity,
-    ReferralEntity,
+    ReferralRewardEntity,
+    ReferralTreeEntity,
+    ReferralProgramEntity,
+    ReferralClaimEntity,
+    ReferralRewardShareEntity,
     /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,

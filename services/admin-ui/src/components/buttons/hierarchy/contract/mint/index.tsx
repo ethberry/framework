@@ -15,6 +15,7 @@ import mintCommonERC721BlacklistABI from "@framework/abis/mintCommon/ERC721Black
 import mintERC1155BlacklistABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
+import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
@@ -111,6 +112,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         dataTestId="ContractMintButton"
         disabled={
           disabled ||
+          shouldDisableByContractType(props.contract) ||
           contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasAccess

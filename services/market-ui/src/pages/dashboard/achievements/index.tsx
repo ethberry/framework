@@ -9,9 +9,9 @@ import { NodeEnv } from "@framework/types";
 import { StyledPaper } from "../styled";
 
 export const AchievementsSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
 
-  if (!isDevelopment) {
+  if (isProd) {
     return null;
   }
 

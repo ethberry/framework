@@ -10,7 +10,7 @@ import { NotificatorService } from "../../../game/notificator/notificator.servic
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { OpenSeaService } from "../../integrations/opensea/opensea.service";
-import { GradeService } from "../../mechanics/grade/grade.service";
+import { GradeService } from "../../mechanics/gaming/grade/grade.service";
 import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 

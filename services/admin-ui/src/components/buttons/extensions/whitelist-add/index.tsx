@@ -8,8 +8,10 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import whitelistERC20WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
+
+import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { shouldDisableByContractType } from "../../utils";
 
 export interface IWhitelistButtonProps {
   className?: string;
@@ -59,7 +61,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
         message="form.buttons.whitelist"
         className={className}
         dataTestId="WhitelistButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <AccountDialog

@@ -9,6 +9,7 @@ import { UserEntity } from "../user/user.entity";
 import { OrderEntity } from "../../ecommerce/order/order.entity";
 import { ProductEntity } from "../../ecommerce/product/product.entity";
 import { ChainLinkSubscriptionEntity } from "../../blockchain/integrations/chain-link/subscription/subscription.entity";
+import { ReferralProgramEntity } from "../../blockchain/mechanics/meta/referral/program/referral.program.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends SearchableEntity implements IMerchant {
@@ -60,4 +61,7 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
 
   @OneToMany(_type => ChainLinkSubscriptionEntity, sub => sub.merchant)
   public chainLinkSubscriptions: Array<ChainLinkSubscriptionEntity>;
+
+  @OneToMany(_type => ReferralProgramEntity, ref => ref.merchant)
+  public refLevels: Array<ReferralProgramEntity>;
 }

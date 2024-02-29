@@ -14,8 +14,8 @@ import {
 } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { MysteryBoxEntity } from "../../mechanics/mystery/box/box.entity";
-import { LotteryRoundEntity } from "../../mechanics/lottery/round/round.entity";
+import { MysteryBoxEntity } from "../../mechanics/marketing/mystery/box/box.entity";
+import { LotteryRoundEntity } from "../../mechanics/gambling/lottery/round/round.entity";
 import { TokenEntity } from "./token.entity";
 
 @Injectable()

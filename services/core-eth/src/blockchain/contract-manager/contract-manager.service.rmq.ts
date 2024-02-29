@@ -7,17 +7,17 @@ import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721LogService } from "../tokens/erc721/token/log/log.service";
 import { Erc998LogService } from "../tokens/erc998/token/log/log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
-import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
-import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
-import { PonziLogService } from "../mechanics/ponzi/log/log.service";
+import { VestingLogService } from "../mechanics/marketing/vesting/log/vesting.log.service";
+import { MysteryLogService } from "../mechanics/marketing/mystery/box/log/log.service";
+import { PonziLogService } from "../mechanics/gambling/ponzi/log/log.service";
 import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
 import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
-import { StakingLogService } from "../mechanics/staking/log/log.service";
-import { LotteryLogService } from "../mechanics/lottery/log/log.service";
-import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.service";
-import { RaffleLogService } from "../mechanics/raffle/log/log.service";
-import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
-import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
+import { StakingLogService } from "../mechanics/marketing/staking/log/log.service";
+import { LotteryLogService } from "../mechanics/gambling/lottery/log/log.service";
+import { LotteryTicketLogService } from "../mechanics/gambling/lottery/ticket/log/log.service";
+import { RaffleLogService } from "../mechanics/gambling/raffle/log/log.service";
+import { RaffleTicketLogService } from "../mechanics/gambling/raffle/ticket/log/log.service";
+import { WaitListLogService } from "../mechanics/marketing/wait-list/log/log.service";
 import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()

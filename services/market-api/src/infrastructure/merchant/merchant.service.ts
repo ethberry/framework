@@ -67,7 +67,7 @@ export class MerchantService {
   }
 
   public async create(dto: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
-    const { wallet } = dto;
+    const { wallet, email } = dto;
 
     if (userEntity.merchantId) {
       throw new ConflictException("merchantAlreadyExist");
@@ -78,6 +78,14 @@ export class MerchantService {
     });
 
     if (count) {
+      throw new ConflictException("duplicateAccount");
+    }
+
+    const countByEmail = await this.count({
+      email,
+    });
+
+    if (countByEmail) {
       throw new ConflictException("duplicateAccount");
     }
 

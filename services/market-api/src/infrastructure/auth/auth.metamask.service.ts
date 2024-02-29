@@ -26,8 +26,10 @@ export class AuthMetamaskService {
       throw new ForbiddenException("signatureDoesNotMatch");
     }
 
+    // LOOK FOR USER WALLET
     let userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
+    // IF NEW WALLET
     if (!userEntity) {
       let userFb;
 
@@ -39,7 +41,7 @@ export class AuthMetamaskService {
           console.error(err.errorInfo, "firebase.getUserByEmail");
         }
       }
-      // CREATE USER IN FIREBASE
+      // CREATE NEW USER IN FIREBASE
       if (!userFb) {
         userFb = await this.admin.auth().createUser({
           displayName,
@@ -49,19 +51,21 @@ export class AuthMetamaskService {
         });
       }
 
+      // IMPORT NEW USER TO OUR DB
       userEntity = await this.userService.import({
+        sub: userFb.uid,
         displayName: displayName || wallet.toLowerCase(),
         imageUrl: imageUrl || "",
         email: email || "",
         language: EnabledLanguages.EN,
         userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
-        sub: userFb.uid,
         wallet: wallet.toLowerCase(),
         chainId: Number(defaultChainId),
       });
     }
 
+    // LOGIN USER via firebase
     const token = await this.admin.auth().createCustomToken(userEntity.sub);
 
     return { token };

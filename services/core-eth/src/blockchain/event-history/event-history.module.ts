@@ -5,7 +5,7 @@ import { ConfigModule } from "@nestjs/config";
 import { EventHistoryEntity } from "./event-history.entity";
 import { EventHistoryService } from "./event-history.service";
 import { ContractModule } from "../hierarchy/contract/contract.module";
-import { AchievementRuleModule } from "../../achievements/rule/rule.module";
+import { AchievementRuleModule } from "../mechanics/meta/achievements/rule/rule.module";
 
 @Module({
   imports: [

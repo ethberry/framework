@@ -9,7 +9,7 @@ import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
 import ERC20TransferFromABI from "@framework/abis/transfer/ERC20.json";
-import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
+import { TransferDialog, ITransferDto } from "../../../../dialogs/transfer";
 
 interface IErc20TransferButtonProps {
   className?: string;
@@ -23,20 +23,20 @@ export const Erc20TransferButton: FC<IErc20TransferButtonProps> = props => {
 
   const [isTransferTokenDialogOpen, setIsTransferTokenDialogOpen] = useState(false);
 
-  const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((dto: ITransferDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
       token.template!.contract!.address,
       ERC20TransferFromABI,
       web3Context.provider?.getSigner(),
     );
-    return contract["transfer(address,uint256)"](dto.account, token.tokenId) as Promise<any>;
+    return contract["transfer(address,uint256)"](dto.account, dto.amount) as Promise<any>;
   });
 
   const handleTransfer = (): void => {
     setIsTransferTokenDialogOpen(true);
   };
 
-  const handleTransferConfirm = async (dto: IAccountDto) => {
+  const handleTransferConfirm = async (dto: ITransferDto) => {
     await metaFn(dto).finally(() => {
       setIsTransferTokenDialogOpen(false);
     });
@@ -61,7 +61,7 @@ export const Erc20TransferButton: FC<IErc20TransferButtonProps> = props => {
         disabled={disabled || token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />
-      <AccountDialog
+      <TransferDialog
         onConfirm={handleTransferConfirm}
         onCancel={handleTransferCancel}
         open={isTransferTokenDialogOpen}
@@ -69,6 +69,8 @@ export const Erc20TransferButton: FC<IErc20TransferButtonProps> = props => {
         testId="Erc20TransferDialogForm"
         initialValues={{
           account: "",
+          amount: "",
+          decimals: token.template!.contract!.decimals,
         }}
       />
     </Fragment>

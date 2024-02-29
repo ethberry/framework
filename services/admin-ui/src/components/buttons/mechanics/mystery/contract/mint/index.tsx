@@ -9,9 +9,11 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
+
+import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
-import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -70,7 +72,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(props.contract)}
         variant={variant}
       />
       <MintMysteryBoxDialog

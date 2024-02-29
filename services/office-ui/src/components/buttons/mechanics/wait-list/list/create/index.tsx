@@ -6,7 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { ContractStatus } from "@framework/types";
 import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@framework/types";
 
-import { WaitListItemEditDialog } from "../../../../../../pages/mechanics/wait-list/item/edit";
+import { WaitListItemEditDialog } from "../../../../../../pages/mechanics/marketing/wait-list/item/edit";
 
 export interface IWaitListListCreateButtonProps {
   className?: string;

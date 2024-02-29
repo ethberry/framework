@@ -2,12 +2,10 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { matchPath, useLocation } from "react-router";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
-import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
+import { NavLink as RouterNavLink } from "react-router-dom";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-
-import { StyledButton } from "./styled";
 
 export const Sections: FC = () => {
   const location = useLocation();
@@ -31,15 +29,7 @@ export const Sections: FC = () => {
   };
 
   if (!user.isAuthenticated()) {
-    if (matchPath(location.pathname, "/login")) {
-      return null;
-    }
-
-    return (
-      <StyledButton variant="outlined" size="large" component={RouterLink} to="/login">
-        <FormattedMessage id="components.header.menu.login" />
-      </StyledButton>
-    );
+    return null;
   }
 
   return (
@@ -56,15 +46,6 @@ export const Sections: FC = () => {
         </Avatar>
       </IconButton>
       <Menu id="material-appbar" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
-        <MenuItem
-          onClick={handleMenuClose}
-          component={RouterNavLink}
-          to="/dashboard"
-          color="inherit"
-          selected={!!matchPath(location.pathname, "/dashboard")}
-        >
-          <FormattedMessage id="components.header.menu.dashboard" />
-        </MenuItem>
         <MenuItem
           onClick={handleMenuClose}
           color="inherit"

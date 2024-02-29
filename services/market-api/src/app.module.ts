@@ -20,7 +20,6 @@ import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 import { EcommerceModule } from "./ecommerce/ecommecre.module";
-import { AchievementModule } from "./achievements/achievement.module";
 
 @Module({
   providers: [
@@ -100,7 +99,6 @@ import { AchievementModule } from "./achievements/achievement.module";
     BlockchainModule,
     InfrastructureModule,
     EcommerceModule,
-    AchievementModule,
   ],
   controllers: [AppController],
 })

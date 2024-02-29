@@ -7,6 +7,7 @@ import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
 import { WalletButton } from "../../buttons";
+import { DashboardButton } from "./dashboard";
 import { NetworkButton } from "./network";
 import { Referrer } from "./referrer";
 import { Sections } from "./sections";
@@ -21,10 +22,11 @@ export const Header: FC = () => {
         </StyledLink>
         <StyledGrow />
         <Referrer />
-        <NetworkButton />
-        <WalletButton />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
+        <NetworkButton />
+        <WalletButton />
+        <DashboardButton />
         <Sections />
       </StyledToolbar>
     </AppBar>

@@ -40,6 +40,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.allowance"
       testId="AllowanceForm"
+      showPrompt={false}
       {...rest}
     >
       <TokenAssetInput

@@ -10,6 +10,8 @@ import { ContractFeatures } from "@framework/types";
 
 import unpausePausableABI from "@framework/abis/unpause/Pausable.json";
 
+import { shouldDisableByContractType } from "../../../utils";
+
 export interface IUnPauseButtonProps {
   className?: string;
   contract: IContract;
@@ -45,7 +47,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
       message="form.buttons.unpause"
       className={className}
       dataTestId="UnPauseButton"
-      disabled={disabled}
+      disabled={disabled || shouldDisableByContractType(props.contract)}
       variant={variant}
     />
   );

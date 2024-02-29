@@ -7,6 +7,8 @@ import { NodeEnv } from "@framework/types";
 export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const wethImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2FWETHlogo.png?alt=media&token=db89a916-7ade-49ba-9a17-23dba10e2b79";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -25,7 +27,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 21 : 1021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         null,
         0,
         '0',
@@ -37,7 +39,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 22 : 2021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         null,
         0,
         '0',
@@ -49,7 +51,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 23 : 3021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         null,
         0,
         '0',
@@ -61,7 +63,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 24 : 4021601},
         'WETH',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
+        '${wethImgUrl}',
         null,
         0,
         '0',

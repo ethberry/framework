@@ -23,7 +23,7 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
+import { BreedServiceEth } from "../../../mechanics/gaming/breed/breed.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 

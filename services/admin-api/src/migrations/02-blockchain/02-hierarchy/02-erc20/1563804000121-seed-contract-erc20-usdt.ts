@@ -12,6 +12,9 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
     const chainId = process.env.CHAIN_ID || testChainId;
     const usdtAddr = process.env.USDT_ADDR || wallet;
 
+    const usdtImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692";
+
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -38,7 +41,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         '${chainId}',
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         'Tether USD',
         'USDT',
         6,
@@ -57,7 +60,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         56,
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         'Tether USD',
         'USDT',
         18,
@@ -76,7 +79,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         1,
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         'Tether USD',
         'USDT',
         6,
@@ -95,7 +98,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         137,
         'USDT',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
+        '${usdtImgUrl}',
         'Tether USD',
         'USDT',
         6,

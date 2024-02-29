@@ -127,5 +127,7 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.staking_rules`);
+    await queryRunner.query(`DROP TYPE ${ns}.staking_rule_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.staking_rule_duration_unit_enum;`);
   }
 }

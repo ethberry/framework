@@ -7,6 +7,9 @@
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
+  "buttons": {
+    "download-metamask": "Download Metamask"
+  },
   "components": {
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
@@ -833,7 +836,8 @@
       "signInWith": {
         "facebook": "Sign in with Facebook",
         "google": "Sign in with Google",
-        "metamask": "Sign in with Metamask"
+        "metamask": "Sign in with Metamask",
+        "particle": "Sign in with Particle"
       }
     },
     "marketplace": {
