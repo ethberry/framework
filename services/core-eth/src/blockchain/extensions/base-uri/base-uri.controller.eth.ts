@@ -35,6 +35,7 @@ export class BaseUriControllerEth {
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.BaseURIUpdate },
     { contractType: ContractType.WRAPPER, eventName: ContractEventType.BaseURIUpdate },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.BaseURIUpdate },
+    { contractType: ContractType.RAFFLE, eventName: ContractEventType.BaseURIUpdate },
   ])
   public updateBaseUri(@Payload() event: ILogEvent<IBaseURIUpdateEvent>, @Ctx() context: Log): Promise<void> {
     return this.baseUriServiceEth.updateBaseUri(event, context);

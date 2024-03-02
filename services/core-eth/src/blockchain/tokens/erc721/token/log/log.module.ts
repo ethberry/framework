@@ -61,7 +61,6 @@ import { getEventsTopics } from "../../../../../common/utils";
         ];
 
         const topics = getEventsTopics(eventNames);
-        console.log("topics", topics);
 
         return {
           contract: {

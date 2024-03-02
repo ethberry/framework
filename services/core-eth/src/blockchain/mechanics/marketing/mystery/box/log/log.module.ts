@@ -45,6 +45,7 @@ import { getEventsTopics } from "../../../../../../common/utils";
           ContractEventType.TokenRoyaltyInfo,
           ContractEventType.Transfer,
           ContractEventType.UnpackMysteryBox,
+          ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleAdminChanged,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,

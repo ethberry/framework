@@ -42,6 +42,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.TransferBatch,
           ContractEventType.URI,
           ContractEventType.ApprovalForAll,
+          ContractEventType.BaseURIUpdate,
           // MODULE:ACCESS_CONTROL
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
