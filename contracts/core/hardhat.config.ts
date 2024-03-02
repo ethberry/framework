@@ -73,6 +73,11 @@ export default {
       accounts: [process.env.PRIVATE_KEY],
       timeout: 142000,
     },
+    mumbai: {
+      url: process.env.JSON_RPC_ADDR_MUMBAI,
+      accounts: [process.env.GEMUNION_PRIVATE_KEY_STAGE],
+      timeout: 142000,
+    },
     sepolia: {
       url: process.env.JSON_RPC_ADDR_SEPOLIA,
       chainId: 11155111,
