@@ -10,6 +10,7 @@ import { Erc721TransferButton, TokenSellButton } from "../../../../../components
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { computeTokenAsset } from "../../../../../utils/token";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
+import { AllowanceForAllButton } from "../../../../../components/buttons/hierarchy/token/allowance-for-all";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -45,6 +46,9 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
           </Grid>
           <Grid item xs={12}>
             <AllowanceButton token={computeTokenAsset(token)} contract={token.template?.contract} />
+          </Grid>
+          <Grid item xs={12}>
+            <AllowanceForAllButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

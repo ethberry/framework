@@ -586,6 +586,7 @@
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
+      "allowanceForAll": "Allowance For All",
       "cancel": "Cancel",
       "claim": "Claim",
       "clear": "Clear",
