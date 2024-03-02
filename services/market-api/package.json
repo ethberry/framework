@@ -57,7 +57,7 @@
     "@openzeppelin/merkle-tree": "1.0.6",
     "amqp-connection-manager": "4.1.14",
     "amqplib": "0.10.3",
-    "archiver": "6.0.2",
+    "archiver": "7.0.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
     "dotenv": "16.4.5",

@@ -53,7 +53,7 @@
     "@openzeppelin/merkle-tree": "1.0.6",
     "amqp-connection-manager": "4.1.14",
     "amqplib": "0.10.3",
-    "archiver": "6.0.2",
+    "archiver": "7.0.0",
     "async": "3.2.5",
     "bee-queue": "1.7.1",
     "class-transformer": "0.5.1",
