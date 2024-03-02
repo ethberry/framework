@@ -11,7 +11,7 @@
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.3.12",
     "@gemunion/constants": "0.12.8",
-    "@gemunion/contracts-utils": "5.0.17",
+    "@gemunion/contracts-utils": "5.0.18",
     "@gemunion/draft-js-utils": "1.2.34",
     "@gemunion/nest-js-guards": "3.1.11",
     "@gemunion/nest-js-module-ethers-gcp": "6.1.2",
