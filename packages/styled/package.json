@@ -8,15 +8,15 @@
     "url": "https://github.com/gemunion/mui-packages/issues"
   },
   "dependencies": {
-    "@mui/icons-material": "5.15.10",
-    "@mui/material": "5.15.10",
+    "@mui/icons-material": "5.15.11",
+    "@mui/material": "5.15.11",
     "@mui/types": "7.2.13",
     "react": "18.2.0"
   },
   "description": "common styled components",
   "devDependencies": {
-    "@mui/icons-material": "5.15.10",
-    "@mui/material": "5.15.10",
+    "@mui/icons-material": "5.15.11",
+    "@mui/material": "5.15.11",
     "@types/node": "20.11.19",
     "@types/react": "18.2.56",
     "react": "18.2.0",
