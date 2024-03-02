@@ -303,7 +303,7 @@ export class ContractManagerServiceEth {
       templateStatus: TemplateStatus.HIDDEN,
     });
 
-    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "$url/collection");
+    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", `${baseTokenURI}`);
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({

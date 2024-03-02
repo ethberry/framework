@@ -50,6 +50,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.Unpaused,
           ContractEventType.ConsecutiveTransfer,
           ContractEventType.LevelUp,
+          ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,
@@ -60,6 +61,7 @@ import { getEventsTopics } from "../../../../../common/utils";
         ];
 
         const topics = getEventsTopics(eventNames);
+        console.log("topics", topics);
 
         return {
           contract: {

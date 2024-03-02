@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindManyOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { TokenEntity } from "./token.entity";
 import { testChainId } from "@framework/constants";
@@ -19,6 +19,13 @@ export class TokenService {
     options?: FindOneOptions<TokenEntity>,
   ): Promise<TokenEntity | null> {
     return this.tokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindManyOptions<TokenEntity>,
+  ): Promise<Array<TokenEntity>> {
+    return this.tokenEntityRepository.find({ where, ...options });
   }
 
   public async create(dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
@@ -42,6 +49,36 @@ export class TokenService {
 
     return tokenEntity.save();
   }
+
+  public async updateBatchURI(contractId: number, contract: string, baseURI: string): Promise<void> {
+    // TODO update array by batch
+    const tokenBatch = await this.findAll({ template: { contractId } }, { relations: { template: true } });
+    // $url/collection/0xdf2afd789115c4370ec9f78519411ac021da209f/102.jpg
+    // imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
+
+    for (const token of tokenBatch) {
+      // TODO case if not jpg?
+      const newImageUrl = `${baseURI}/${contract.toLowerCase()}/${token.tokenId}.jpg`;
+      Object.assign(token, { imageUrl: newImageUrl });
+    }
+
+    await this.createBatch(tokenBatch);
+  }
+
+  // public async updateBatch(where: FindOptionsWhere<TokenEntity>, dto: DeepPartial<TokenEntity>): Promise<void> {
+  //   const { ...rest } = dto;
+  //
+  //   const tokenBatch = await this.findAll(where);
+  //   // $url/collection/0xdf2afd789115c4370ec9f78519411ac021da209f/102.jpg
+  //   for (const token of tokenBatch) {
+  //     const tokenUrl = ba;
+  //     Object.assign(token, {});
+  //   }
+  //
+  //   Object.assign(tokenEntity, rest);
+  //
+  //   return tokenEntity.save();
+  // }
 
   public getToken(tokenId: string, address: string, chainId?: number, balance = false): Promise<TokenEntity | null> {
     const currentChainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));

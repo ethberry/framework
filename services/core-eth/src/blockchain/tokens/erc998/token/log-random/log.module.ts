@@ -59,6 +59,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.WhitelistedChild,
           ContractEventType.LevelUp,
           ContractEventType.VrfSubscriptionSet,
+          ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,
