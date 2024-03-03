@@ -5,7 +5,8 @@ import { Contract } from "ethers";
 
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { ContractFeatures, IContract, IToken, SystemModuleType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { SystemModuleType } from "@framework/types";
 
 import SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
@@ -14,12 +15,12 @@ import { AllowanceForAllDialog } from "./dialog";
 export interface IAllowanceForAllButtonProps {
   className?: string;
   disabled?: boolean;
-  token: IToken;
+  contract: IContract;
   variant?: ListActionVariant;
 }
 
 export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
-  const { className, disabled, token, variant } = props;
+  const { className, disabled, contract, variant } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
@@ -33,11 +34,7 @@ export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
 
   const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
     (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
-      const tokenContract = new Contract(
-        token.template!.contract!.address,
-        SetApprovalForAllABI,
-        web3Context.provider?.getSigner(),
-      );
+      const tokenContract = new Contract(contract.address, SetApprovalForAllABI, web3Context.provider?.getSigner());
 
       return tokenContract.setApprovalForAll(systemContract.address, true) as Promise<void>;
     },
@@ -53,11 +50,6 @@ export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
     });
   };
 
-  const isDisabled =
-    token.template && token.template.contract
-      ? token.template.contract.contractFeatures.includes(ContractFeatures.ALLOWANCE)
-      : true;
-
   return (
     <Fragment>
       <ListAction
@@ -66,14 +58,15 @@ export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
         message="form.tips.allowanceForAll"
         className={className}
         dataTestId="AllowanceForAllButton"
-        disabled={isDisabled || disabled}
+        // TODO checking for contractFeatures is disabled because
+        // TODO there is no Allowance in 721 contract for unknown reason
+        disabled={disabled /* || !contract.contractFeatures.includes(ContractFeatures.ALLOWANCE) */}
         variant={variant}
       />
       <AllowanceForAllDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
-        // initialValues={{}}
       />
     </Fragment>
   );

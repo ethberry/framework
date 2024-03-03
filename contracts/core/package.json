@@ -41,11 +41,11 @@
     "ethers": "6.11.1",
     "hardhat": "2.20.1",
     "hardhat-contract-sizer": "2.10.0",
-    "hardhat-gas-reporter": "1.0.10",
+    "hardhat-gas-reporter": "1.0.9",
     "hardhat-deploy": "0.12.1",
     "zksync-web3": "0.17.1",
     "@safe-global/safe-singleton-factory": "1.0.20",
-    "solidity-coverage": "0.8.7",
+    "solidity-coverage": "0.8.5",
     "web3": "1.10.4"
   },
   "devDependencies": {

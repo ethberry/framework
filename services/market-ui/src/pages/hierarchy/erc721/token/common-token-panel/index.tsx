@@ -47,9 +47,11 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
           <Grid item xs={12}>
             <AllowanceButton token={computeTokenAsset(token)} contract={token.template?.contract} />
           </Grid>
-          <Grid item xs={12}>
-            <AllowanceForAllButton token={token} />
-          </Grid>
+          {token.template?.contract ? (
+            <Grid item xs={12}>
+              <AllowanceForAllButton contract={token.template.contract} />
+            </Grid>
+          ) : null}
         </Grid>
       </CardActions>
     </StyledCard>
