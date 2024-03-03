@@ -4,7 +4,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
+import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
