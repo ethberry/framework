@@ -3,7 +3,6 @@ import { JoinFull } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract, utils } from "ethers";
 
-import { emptyToken } from "@gemunion/mui-inputs-asset";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -13,6 +12,7 @@ import type { IContract, IMerge } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import MergeABI from "@framework/abis/merge/ExchangeMergeFacet.json";
+
 import { sorter } from "../../../../../utils/sorter";
 import { MergeDialog, IMergeDto } from "./dialog";
 
@@ -122,7 +122,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         message="dialogs.merge"
         merge={merge}
         initialValues={{
-          tokens: new Array(parseInt(merge.price?.components[0].amount || "1")).fill(emptyToken.components[0]),
+          tokens: new Array(parseInt(merge.price?.components[0].amount || "1")).fill({ tokenId: 0 }),
           tokenEntities: [],
           tokenIds: [],
         }}

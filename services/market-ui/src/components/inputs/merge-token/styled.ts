@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Root = styled(Grid)(({ theme }) => ({
-  marginTop: theme.spacing(4),
+  marginTop: theme.spacing(2),
   width: "100%",
   display: "flex",
   alignItems: "flex-start",

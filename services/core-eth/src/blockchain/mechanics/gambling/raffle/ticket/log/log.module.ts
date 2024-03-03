@@ -39,6 +39,7 @@ import { getEventsTopics } from "../../../../../../common/utils";
           ContractEventType.Approval,
           ContractEventType.ApprovalForAll,
           ContractEventType.DefaultRoyaltyInfo,
+          ContractEventType.BaseURIUpdate,
         ];
 
         const topics = getEventsTopics(eventNames);

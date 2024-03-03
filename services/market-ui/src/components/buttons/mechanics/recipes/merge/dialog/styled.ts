@@ -1,4 +1,4 @@
-import { Box, Card, CardContent } from "@mui/material";
+import { Alert, Box, Card, CardContent } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Root = styled(Box)({
@@ -8,10 +8,11 @@ export const Root = styled(Box)({
   justifyContent: "center",
 });
 
-export const StyledCardWrapper = styled(Box)({
+export const StyledCardWrapper = styled(Box)(({ theme }) => ({
   width: 300,
   height: 300,
-});
+  margin: theme.spacing(2, 0, 4),
+}));
 
 export const StyledCard = styled(Card)({
   width: 300,
@@ -25,5 +26,14 @@ export const StyledCardContent = styled(CardContent)({
     width: 300,
     height: 300,
     objectFit: "contain",
+  },
+});
+
+export const StyledAlert = styled(Alert)({
+  "&.MuiAlert-root, & .MuiAlert-icon": {
+    alignItems: "center",
+  },
+  "& .MuiAlert-action": {
+    paddingTop: 0,
   },
 });

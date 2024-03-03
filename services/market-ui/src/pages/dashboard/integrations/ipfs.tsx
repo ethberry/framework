@@ -4,17 +4,9 @@ import { PushPin } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
-
 import { StyledPaper } from "../styled";
 
 export const IpfsSection: FC = () => {
-  const isProd = process.env.NODE_ENV === NodeEnv.production;
-
-  if (isProd) {
-    return null;
-  }
-
   return (
     <StyledPaper>
       <List

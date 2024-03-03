@@ -31,6 +31,7 @@ import type { TErc4907Events } from "./extensions/erc4907";
 import type { TUpgradeEvents } from "./mechanics/grade";
 import type { TRaffleEvents } from "./mechanics/raffle";
 import type { TWaitListEvents } from "./mechanics/waitlist";
+import { TBaseURIEvents } from "./extensions/base-uri";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -165,6 +166,8 @@ export enum ContractEventType {
   ReferralProgram = "ReferralProgram",
   ReferralReward = "ReferralReward",
   ReferralWithdraw = "ReferralWithdraw",
+  // BASE URI
+  BaseURIUpdate = "BaseURIUpdate",
 }
 
 export enum ContractEventSignature {
@@ -350,6 +353,9 @@ export enum ContractEventSignature {
 
   // MODULE:ERC1363
   TransferReceived = "TransferReceived(address,address,uint256,bytes)",
+
+  // BASE URI
+  BaseURIUpdate = "BaseURIUpdate(string)",
 }
 
 export type TContractEventData =
@@ -386,6 +392,8 @@ export type TContractEventData =
 
   // Upgrade
   | TUpgradeEvents
+  // BASE URI
+  | TBaseURIEvents
 
   // exchange
   | TExchangeEvents

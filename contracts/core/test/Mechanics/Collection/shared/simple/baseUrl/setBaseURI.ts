@@ -15,7 +15,10 @@ export function shouldSetBaseURI(factory: () => Promise<any>, options: IERC721Op
       const contractInstance = await factory();
 
       await mint(contractInstance, owner, owner.address, batchSize + defaultTokenId);
-      await contractInstance.setBaseURI(newURI);
+      const tx = contractInstance.setBaseURI(newURI);
+
+      await expect(tx).to.emit(contractInstance, "BaseURIUpdate").withArgs(newURI);
+
       const uri = await contractInstance.tokenURI(batchSize + defaultTokenId);
       expect(uri).to.equal(
         `${newURI}/${(await contractInstance.getAddress()).toLowerCase()}/${batchSize + defaultTokenId}`,

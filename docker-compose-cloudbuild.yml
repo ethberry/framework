@@ -71,6 +71,11 @@ services:
       # DEV
       LINK_ADDR: "${LINK_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
@@ -124,6 +129,11 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
@@ -177,6 +187,11 @@ services:
       JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
       JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # office-api
       - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
@@ -224,6 +239,11 @@ services:
       # Chain-Link
       CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
@@ -266,6 +286,11 @@ services:
       LATENCY: "${LATENCY}"
       CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE}"
       STARTING_BLOCK: "${STARTING_BLOCK_BINANCE}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
 
@@ -308,8 +333,58 @@ services:
       LATENCY: "${LATENCY}"
       CRON_SCHEDULE: "${CRON_SCHEDULE_BINANCE_TEST}"
       STARTING_BLOCK: "${STARTING_BLOCK_BINANCE_TEST}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API_BINANCE_TEST}:${PORT_RPC_API_BINANCE_TEST}"
+
+  core-eth-polygon:
+    container_name: core-eth-polygon
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API_POLYGON}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL_ADMIN}"
+      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_POLYGON}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID_POLYGON}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_POLYGON}"
+      LATENCY: "${LATENCY_POLYGON}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE_POLYGON}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_POLYGON}"
+      STARTING_BLOCK: "${STARTING_POLYGON_BLOCK}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_POLYGON}"
+      # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
+    ports:
+      - "${PORT_RPC_API_POLYGON}:${PORT_RPC_API_POLYGON}"
 
   json-api:
     container_name: json-api
@@ -337,6 +412,11 @@ services:
       PUBLIC_FE_URL: "${JSON_FE_URL}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # admin-api
       - "${PORT_JSON_API}:${PORT_JSON_API}"
@@ -366,6 +446,11 @@ services:
       GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
       PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
       # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
@@ -436,6 +521,11 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
     volumes:
       - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # signal-api
       - "${PORT_SIGNAL_API}:${PORT_SIGNAL_API}"
@@ -459,6 +549,11 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     ports:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
@@ -493,6 +588,11 @@ services:
       - "80:80"
       - "443:443"
       - "1337:1337"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
     depends_on:
       - admin-api
       - market-api

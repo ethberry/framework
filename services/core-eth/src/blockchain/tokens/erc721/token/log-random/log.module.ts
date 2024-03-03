@@ -55,6 +55,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.ConsecutiveTransfer,
           ContractEventType.LevelUp,
           ContractEventType.VrfSubscriptionSet,
+          ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,

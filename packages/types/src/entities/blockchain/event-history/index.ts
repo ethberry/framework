@@ -21,6 +21,7 @@ export * from "./extensions/access-list";
 export * from "./extensions/erc4907";
 export * from "./extensions/royalty";
 export * from "./extensions/pausable";
+export * from "./extensions/base-uri";
 
 export * from "./hierarchy/erc20";
 export * from "./hierarchy/erc721";

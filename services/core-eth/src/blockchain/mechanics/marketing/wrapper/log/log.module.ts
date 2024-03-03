@@ -38,6 +38,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.TokenRoyaltyInfo,
           ContractEventType.Transfer,
           ContractEventType.UnpackWrapper,
+          ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
           AccessControlEventType.RoleAdminChanged,

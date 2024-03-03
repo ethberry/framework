@@ -1,12 +1,14 @@
 import React, { FC } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { formatItem } from "@framework/exchange";
 import { IMerge, IMergeSignDto, IToken } from "@framework/types";
+import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { TokenMergeInput } from "../../../../../inputs/merge-token";
-import { MergeInfoPopover } from "./popover";
-import { Root, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";
+import { AllowanceForAllButton } from "../../../../hierarchy/token/allowance-for-all";
+import { Root, StyledAlert, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";
 import { validationSchema } from "./validation";
 
 export interface IMergeDto extends Pick<IMergeSignDto, "tokenIds"> {
@@ -33,10 +35,18 @@ export const MergeDialog: FC<IMergeDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId={testId}
-      action={<MergeInfoPopover merge={merge} />}
       {...rest}
     >
       <Root>
+        <Typography>
+          <FormattedMessage
+            id="pages.recipes.merge.popover"
+            values={{
+              price: formatItem(merge.price),
+              item: formatItem(merge.item),
+            }}
+          />
+        </Typography>
         <StyledCardWrapper>
           <StyledCard>
             {merge.item?.components.map(component => {
@@ -48,6 +58,16 @@ export const MergeDialog: FC<IMergeDialogProps> = props => {
             })}
           </StyledCard>
         </StyledCardWrapper>
+        <StyledAlert
+          severity="warning"
+          action={
+            merge.price?.components[0].contract ? (
+              <AllowanceForAllButton contract={merge.price.components[0].contract} />
+            ) : null
+          }
+        >
+          <FormattedMessage id="alert.approve" />
+        </StyledAlert>
         <TokenMergeInput merge={merge} />
       </Root>
     </FormDialog>
