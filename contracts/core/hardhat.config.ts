@@ -78,6 +78,11 @@ export default {
       accounts: [process.env.GEMUNION_PRIVATE_KEY_STAGE],
       timeout: 142000,
     },
+    polygon: {
+      url: process.env.JSON_RPC_ADDR_POLYGON,
+      accounts: [process.env.GEMUNION_PRIVATE_KEY_PROD],
+      timeout: 142000,
+    },
     sepolia: {
       url: process.env.JSON_RPC_ADDR_SEPOLIA,
       chainId: 11155111,

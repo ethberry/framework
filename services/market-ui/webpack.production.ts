@@ -2,9 +2,9 @@ import path from "path";
 import { Configuration, ProvidePlugin } from "webpack";
 import DotEnvPlugin from "dotenv-webpack";
 import CopyPlugin from "copy-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import WebpackBar from "webpackbar";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const config: Configuration = {
   mode: "production",
