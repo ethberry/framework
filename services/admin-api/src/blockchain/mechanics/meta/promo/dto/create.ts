@@ -5,22 +5,22 @@ import { Type } from "class-transformer";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 
 import { IAssetPromoCreateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
+import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
 
 export class AssetPromoCreateDto implements IAssetPromoCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => SemiCoinDto)
+  public item: InstanceType<typeof SemiCoinDto>;
 
   @ApiProperty({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

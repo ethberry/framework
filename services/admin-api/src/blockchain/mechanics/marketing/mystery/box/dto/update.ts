@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { MysteryBoxStatus } from "@framework/types";
 
 import type { IMysteryBoxUpdateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../../../../exchange/asset/dto";
+import { AllTypesDto, SemiCoinDto } from "../../../../../exchange/asset/dto/custom";
 
 export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @ApiPropertyOptional()
@@ -19,20 +19,20 @@ export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   public description: string;
 
   @ApiPropertyOptional({
-    type: ItemDto,
+    type: AllTypesDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => AllTypesDto)
+  public item: InstanceType<typeof AllTypesDto>;
 
   @ApiPropertyOptional({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
