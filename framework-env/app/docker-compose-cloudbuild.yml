@@ -345,7 +345,7 @@ services:
 
   core-eth-polygon:
     container_name: core-eth-polygon
-    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
