@@ -7,16 +7,16 @@ import { IsBigInt } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
 import type { ITemplateUpdateDto } from "../interfaces";
-import { PriceDto } from "../../../exchange/asset/dto";
+import { SemiCoinDto } from "../../../exchange/asset/dto/custom";
 
 export class TemplateUpdateDto extends SearchableDto implements ITemplateUpdateDto {
   @ApiPropertyOptional({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiPropertyOptional({
     minimum: 0,

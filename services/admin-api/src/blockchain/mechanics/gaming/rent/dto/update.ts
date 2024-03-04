@@ -5,8 +5,8 @@ import { Type } from "class-transformer";
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { RentRuleStatus } from "@framework/types";
 
-import { PriceDto } from "../../../../exchange/asset/dto";
 import { IRentUpdateDto } from "../interfaces";
+import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
 
 export class RentUpdateDto implements IRentUpdateDto {
   @ApiPropertyOptional()
@@ -23,12 +23,12 @@ export class RentUpdateDto implements IRentUpdateDto {
   public contractId: number;
 
   @ApiPropertyOptional({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
