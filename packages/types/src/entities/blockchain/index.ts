@@ -10,43 +10,7 @@ export * from "./exchange/asset-history";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
 
-export * from "./mechanics/breed/breed";
-export * from "./mechanics/claim/claim";
-export * from "./mechanics/recipes/craft";
-export * from "./mechanics/recipes/dismantle";
-export * from "./mechanics/recipes/merge";
-export * from "./mechanics/promo/promo";
-export * from "./mechanics/grade/grade";
-
-export * from "./mechanics/lottery/aggregation";
-export * from "./mechanics/lottery/round";
-export * from "./mechanics/lottery/ticket";
-export * from "./mechanics/lottery/token";
-
-export * from "./mechanics/mystery/box";
-export * from "./mechanics/ponzi/leaderboard";
-export * from "./mechanics/ponzi/rule";
-export * from "./mechanics/ponzi/deposit";
-
-export * from "./mechanics/raffle/round";
-export * from "./mechanics/raffle/token";
-export * from "./mechanics/raffle/ticket";
-
-export * from "./mechanics/rent/rent";
-export * from "./mechanics/staking/leaderboard";
-export * from "./mechanics/staking/penalty";
-export * from "./mechanics/staking/rule";
-export * from "./mechanics/staking/deposit";
-export * from "./mechanics/vesting/vesting";
-export * from "./mechanics/wait-list/list";
-export * from "./mechanics/wait-list/item";
-
-export * from "./mechanics/referral/leaderboard";
-export * from "./mechanics/referral/share";
-export * from "./mechanics/referral/claim";
-export * from "./mechanics/referral/reward";
-export * from "./mechanics/referral/program";
-export * from "./mechanics/referral/tree";
+export * from "./mechanics";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";
