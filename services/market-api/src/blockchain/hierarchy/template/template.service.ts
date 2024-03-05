@@ -75,12 +75,9 @@ export class TemplateService {
       contractStatus: ContractStatus.ACTIVE,
     });
 
-    // SHOW ALL WHEN NOT SIGNED
-    if (userEntity) {
-      queryBuilder.andWhere("contract.chainId = :chainId", {
-        chainId: userEntity?.chainId || Number(defaultChainId),
-      });
-    }
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity?.chainId || Number(defaultChainId),
+    });
 
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,

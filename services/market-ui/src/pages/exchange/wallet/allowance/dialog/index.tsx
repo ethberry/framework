@@ -23,7 +23,6 @@ export interface IAllowanceDialogProps {
 
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
-  const { contractId } = initialValues;
 
   const handleContractChange =
     (form: any) =>
@@ -55,7 +54,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       <CommonContractInput
         autoselect={true}
         name="contractId"
-        data={{ contractId, contractFeatures: [ContractFeatures.ALLOWANCE] }}
+        data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}
         onChange={handleContractChange}
         withTokenType
       />

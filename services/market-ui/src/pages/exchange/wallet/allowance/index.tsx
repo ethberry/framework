@@ -26,12 +26,7 @@ export interface IAllowanceButtonProps {
 }
 
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
-  const {
-    token = getEmptyToken(),
-    isSmall = false,
-    contract = undefined,
-    isExchange = false /*, isDisabled = false */,
-  } = props;
+  const { token = getEmptyToken(), isSmall = false, contract = undefined, isExchange = false } = props;
 
   const [exchange, setExchange] = useState<IContract | null>(null);
 
@@ -128,9 +123,8 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         open={isAllowanceDialogOpen}
         initialValues={{
           token,
-          address:
-            contract && contract.address ? contract.address : exchange && exchange.address ? exchange.address : "",
-          contractId: contract && contract.id ? contract.id : exchange && exchange.id ? exchange.id : undefined,
+          address: contract?.address || exchange?.address || "",
+          contractId: contract?.id || exchange?.id || undefined,
         }}
       />
     </Fragment>

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { testChainId } from "@framework/constants";
+import { defaultChainId } from "@framework/constants";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
@@ -65,7 +65,7 @@ export class MysteryBoxService {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity?.chainId || testChainId,
+      chainId: userEntity?.chainId || Number(defaultChainId),
     });
 
     queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {

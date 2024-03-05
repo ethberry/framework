@@ -155,8 +155,8 @@ export class ReferralProgramService {
     if (merchantId !== userEntity.merchantId) {
       if (userEntity.userRoles.includes(UserRole.SUPER)) {
         // UPDATE STATUS ON ALL LEVELS
-        const refLeveles = await this.findAll({ merchantId });
-        for (const level of refLeveles) {
+        const refLevels = await this.findAll({ merchantId });
+        for (const level of refLevels) {
           Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
           await level.save();
         }
@@ -165,8 +165,8 @@ export class ReferralProgramService {
       }
     } else {
       // UPDATE STATUS ON ALL LEVELS
-      const refLeveles = await this.findAll({ merchantId });
-      for (const level of refLeveles) {
+      const refLevels = await this.findAll({ merchantId });
+      for (const level of refLevels) {
         Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
         await level.save();
       }

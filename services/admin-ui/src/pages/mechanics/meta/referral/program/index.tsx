@@ -1,16 +1,17 @@
 import { FC, Fragment, useCallback, useEffect, useState } from "react";
 
 import type { IReferralProgram, IUser } from "@framework/types";
+import { ReferralProgramStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { useUser } from "@gemunion/provider-user";
 
+import { sorter } from "../../../../../utils/sorter";
 import { ReferralProgramForm } from "./form";
 import { getEmptyProgramLevel } from "./form/levels";
-import { sorter } from "../../../../../utils/sorter";
-import { ReferralProgramStatus } from "@framework/types";
-import { ReferralProgramStatusForm } from "./form/status";
+import { StatusSwitch } from "./status";
+import { StyledDisableOverlay } from "./styled";
 
 export interface IReferralProgramLevel {
   id?: number;
@@ -21,17 +22,17 @@ export interface IReferralProgramLevel {
 export interface IReferralProgramCreate {
   merchantId: number;
   levels: Array<IReferralProgramLevel>;
-  referralProgramStatus?: ReferralProgramStatus;
 }
 
 export interface IReferralProgramUpdateStatus {
-  merchantId: number;
   referralProgramStatus: ReferralProgramStatus;
 }
 
 export const ReferralProgram: FC = () => {
   const { profile } = useUser<IUser>();
   const merchantId = profile?.merchantId;
+  // const [levels, setLevels] = useState<IReferralProgramLevel[] | null>(null);
+  const [referralProgramStatus, setReferralProgramStatus] = useState<ReferralProgramStatus | null>(null);
   const [initialValues, setInitialValues] = useState<IReferralProgramCreate | null>(null);
 
   const { fn: getReferralProgramLevels, isLoading } = useApiCall(
@@ -61,15 +62,6 @@ export const ReferralProgram: FC = () => {
     { success: false, error: false },
   );
 
-  const { fn: updateReferralProgramStatus, isLoading: isUpdateStatusLoading } = useApiCall(
-    (api, data: IReferralProgramUpdateStatus) =>
-      api.fetchJson({
-        url: `/referral/program/${merchantId}/status`,
-        method: "PUT",
-        data,
-      }),
-  );
-
   const handleSubmit = useCallback(
     async (values: IReferralProgramCreate, form: any): Promise<void> => {
       const filteredLevels = values.levels
@@ -78,7 +70,7 @@ export const ReferralProgram: FC = () => {
       // CREATE OR UPDATE
       if (initialValues?.levels.length === 0) {
         await createReferralProgramLevels(form, { merchantId, levels: filteredLevels }).then(() => {
-          setInitialValues({ merchantId, levels: filteredLevels });
+          setInitialValues(value => ({ ...value, merchantId, levels: filteredLevels }));
         });
       } else {
         await updateReferralProgramLevels(form, { merchantId, levels: filteredLevels });
@@ -87,33 +79,47 @@ export const ReferralProgram: FC = () => {
     [initialValues],
   );
 
-  const handleSubmitStatus = useCallback(
-    async (values: IReferralProgramUpdateStatus, form: any): Promise<void> => {
-      // UPDATE status
-      if (initialValues?.levels && initialValues?.levels.length > 1) {
-        await updateReferralProgramStatus(form, { merchantId, referralProgramStatus: values.referralProgramStatus });
-      }
-    },
-    [initialValues],
+  const { fn: updateReferralProgramStatus, isLoading: isUpdateStatusLoading } = useApiCall(
+    (api, data: IReferralProgramUpdateStatus) =>
+      api.fetchJson({
+        url: `/referral/program/${merchantId}/status`,
+        method: "PUT",
+        data,
+      }),
+    { success: false, error: false },
   );
+
+  const handleChangeStatus = async (value: ReferralProgramStatus): Promise<void> => {
+    await updateReferralProgramStatus(void 0, { merchantId, referralProgramStatus: value }).then(() => {
+      setReferralProgramStatus(value);
+    });
+  };
 
   useEffect(() => {
     void getReferralProgramLevels().then((json: IPaginationResult<IReferralProgram>) => {
-      const referralProgramStatus = json?.rows?.length
-        ? json?.rows[0].referralProgramStatus
-        : ReferralProgramStatus.ACTIVE;
-      const levels = json?.rows?.length
-        ? json?.rows.map(row => ({ merchantId: row.merchantId, level: row.level, share: row.share }))
-        : [...getEmptyProgramLevel([], merchantId)];
+      if (!json?.rows?.length) {
+        setInitialValues({
+          merchantId,
+          levels: [...getEmptyProgramLevel([], merchantId)],
+        });
+        return;
+      }
 
+      const referralProgramStatus = json.rows[0].referralProgramStatus;
+      const levels = json.rows.map(({ merchantId, level, share }) => ({ merchantId, level, share }));
+
+      setReferralProgramStatus(referralProgramStatus);
       setInitialValues({
-        referralProgramStatus,
         merchantId,
         levels,
       });
     });
-    return () => setInitialValues(null);
-  }, []);
+
+    return () => {
+      setReferralProgramStatus(null);
+      setInitialValues(null);
+    };
+  }, [merchantId]);
 
   if (!merchantId) {
     return null;
@@ -123,16 +129,13 @@ export const ReferralProgram: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "referral", "referral.program"]} />
 
-      <PageHeader message="pages.referral.program.title" />
+      <PageHeader message="pages.referral.program.title">
+        <StatusSwitch isLoading={isUpdateStatusLoading} onChange={handleChangeStatus} status={referralProgramStatus} />
+      </PageHeader>
       <ProgressOverlay isLoading={isLoading || isCreateLoading || isUpdateLoading || isUpdateStatusLoading}>
-        <ReferralProgramStatusForm
-          onSubmit={handleSubmitStatus}
-          initialValues={{
-            merchantId: initialValues ? initialValues.merchantId : 0,
-            referralProgramStatus: initialValues?.referralProgramStatus || ReferralProgramStatus.ACTIVE,
-          }}
-        />
-        <ReferralProgramForm onSubmit={handleSubmit} initialValues={initialValues} />
+        <StyledDisableOverlay isDisabled={referralProgramStatus === ReferralProgramStatus.INACTIVE}>
+          <ReferralProgramForm onSubmit={handleSubmit} initialValues={initialValues} />
+        </StyledDisableOverlay>
       </ProgressOverlay>
     </Fragment>
   );

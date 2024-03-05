@@ -8,8 +8,6 @@ import type { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { getChainIconParams } from "../../../../../components/common/header/network/utils";
-import { StyledSvgIcon } from "../../../../../components/common/header/network/styled";
 
 interface IErc998TemplateListItemProps {
   template: ITemplate;
@@ -17,8 +15,6 @@ interface IErc998TemplateListItemProps {
 
 export const Erc998TemplateListItem: FC<IErc998TemplateListItemProps> = props => {
   const { template } = props;
-
-  const { chainIcon, viewBox } = getChainIconParams(template.contract?.chainId || 56);
 
   return (
     <StyledTemplateItemCard>
@@ -36,11 +32,8 @@ export const Erc998TemplateListItem: FC<IErc998TemplateListItemProps> = props =>
       </CardActionArea>
       <CardActions>
         <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
-          <Grid item xs={10} alignItems="center">
+          <Grid item xs={12} alignItems="center">
             <TemplatePurchaseButton template={template} />
-          </Grid>
-          <Grid item xs={2} alignItems="flex-end">
-            <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
           </Grid>
         </Grid>
       </CardActions>

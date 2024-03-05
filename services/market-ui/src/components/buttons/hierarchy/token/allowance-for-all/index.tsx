@@ -3,10 +3,11 @@ import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
+import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { InputType } from "@gemunion/types-collection";
 
 import SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
@@ -58,15 +59,17 @@ export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
         message="form.tips.allowanceForAll"
         className={className}
         dataTestId="AllowanceForAllButton"
-        // TODO checking for contractFeatures is disabled because
-        // TODO there is no Allowance in 721 contract for unknown reason
-        disabled={disabled /* || !contract.contractFeatures.includes(ContractFeatures.ALLOWANCE) */}
+        disabled={disabled}
         variant={variant}
       />
       <AllowanceForAllDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
+        initialValues={{
+          contractId: InputType.awaited,
+          contract: { address: "" },
+        }}
       />
     </Fragment>
   );
