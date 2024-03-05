@@ -34,3 +34,51 @@ export const coreEthServiceProviderBinance = {
     });
   },
 };
+
+export const coreEthServiceProviderBinanceTest = {
+  provide: RmqProviderType.CORE_ETH_SERVICE_BINANCE_TEST,
+  inject: [ConfigService],
+  useFactory: (configService: ConfigService): ClientProxy => {
+    const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
+    const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH_BINANCE_TEST", "core_eth_binance_test");
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueEth,
+      },
+    });
+  },
+};
+
+export const coreEthServiceProviderPolygon = {
+  provide: RmqProviderType.CORE_ETH_SERVICE_POLYGON,
+  inject: [ConfigService],
+  useFactory: (configService: ConfigService): ClientProxy => {
+    const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
+    const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH_POLYGON", "core_eth_polygon");
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueEth,
+      },
+    });
+  },
+};
+
+export const coreEthServiceProviderMumbai = {
+  provide: RmqProviderType.CORE_ETH_SERVICE_BINANCE,
+  inject: [ConfigService],
+  useFactory: (configService: ConfigService): ClientProxy => {
+    const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
+    const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH_MUMBAI", "core_eth_mumbai");
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueEth,
+      },
+    });
+  },
+};
