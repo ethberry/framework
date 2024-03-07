@@ -3,8 +3,9 @@ import { FormattedMessage } from "react-intl";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
-import type { ITemplate } from "@framework/types";
+import type { ITemplate, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { Erc1155TemplateListItem } from "../../hierarchy/erc1155/template-list/item";
@@ -12,6 +13,7 @@ import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
 import { StyledTitle } from "./styled";
 
 export const NewErc1155: FC = () => {
+  const user = useUser<IUser>();
   const [templates, setTemplates] = useState<Array<ITemplate>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -38,7 +40,7 @@ export const NewErc1155: FC = () => {
 
   useEffect(() => {
     void fetchTokens();
-  }, []);
+  }, [user?.profile?.chainId]);
 
   if (!templates || templates.length === 0) {
     return null;

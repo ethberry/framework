@@ -43,13 +43,13 @@ export const Erc721Token: FC = () => {
       <PageHeader message="pages.erc721.token.title" data={selected.template} />
 
       <Grid container>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} sm={8.5}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
           <StyledDescription>
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={3.5}>
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />

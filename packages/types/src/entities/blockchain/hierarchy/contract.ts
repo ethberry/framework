@@ -6,7 +6,7 @@ import type { IEventHistory } from "../event-history";
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
 import { ModuleType } from "../../common";
-import type { IRent } from "../mechanics/rent/rent";
+import type { IRent } from "../mechanics/gaming/rent/rent";
 import type { IMerchant } from "../../infrastructure";
 
 export enum ContractStatus {

@@ -1,14 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { ClaimModule } from "./claim/claim.module";
-import { GradeModule } from "./grade/grade.module";
-import { MysteryModule } from "./mystery/mystery.module";
-import { RaffleModule } from "./raffle/raffle.module";
-import { RecipesModule } from "./recipes/recipes.module";
-import { VestingModule } from "./vesting/vesting.module";
-import { WaitListModule } from "./wait-list/waitlist.module";
+import { GamblingMechanicsModule } from "./gambling/gambling.module";
+import { MarketingMechanicsModule } from "./marketing/marketing.module";
+import { GamingMechanicsModule } from "./gaming/gaming.module";
 
 @Module({
-  imports: [ClaimModule, GradeModule, MysteryModule, RaffleModule, RecipesModule, VestingModule, WaitListModule],
+  imports: [GamblingMechanicsModule, GamingMechanicsModule, MarketingMechanicsModule],
 })
 export class MechanicsModule {}

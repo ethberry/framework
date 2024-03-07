@@ -9,16 +9,26 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { FormRefresher } from "../../../../../../components/forms/form-refresher";
 import { MergeItem } from "./item";
 
 export const MergeList: FC = () => {
-  const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleChangePage, handleToggleFilters } =
-    useCollection<IMerge, IMergeSearchDto>({
-      baseUrl: "/recipes/merge",
-      search: {
-        query: "",
-      },
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+    handleToggleFilters,
+  } = useCollection<IMerge, IMergeSearchDto>({
+    baseUrl: "/recipes/merge",
+    search: {
+      query: "",
+    },
+  });
 
   return (
     <Fragment>
@@ -30,7 +40,9 @@ export const MergeList: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MergeSearchForm" />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="MergeSearchForm">
+        <FormRefresher onRefreshPage={handleRefreshPage} />
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

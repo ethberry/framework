@@ -3,11 +3,12 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { defaultChainId } from "@framework/constants";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
 import { MergeStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -15,6 +16,7 @@ import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MergeEntity } from "./merge.entity";
 
 @Injectable()
@@ -28,7 +30,7 @@ export class MergeService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: Partial<IMergeSearchDto>): Promise<[Array<MergeEntity>, number]> {
+  public search(dto: Partial<IMergeSearchDto>, userEntity: UserEntity): Promise<[Array<MergeEntity>, number]> {
     const { query, templateId, skip, take } = dto;
 
     const queryBuilder = this.mergeEntityRepository.createQueryBuilder("merge");
@@ -46,12 +48,16 @@ export class MergeService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
 
-    queryBuilder.where({
+    queryBuilder.andWhere({
       mergeStatus: MergeStatus.ACTIVE,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity?.chainId || defaultChainId,
+    });
+
     if (templateId) {
-      queryBuilder.where("price_template.id = :templateId", { templateId });
+      queryBuilder.andWhere("price_template.id = :templateId", { templateId });
     }
 
     if (query) {

@@ -3,13 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { defaultChainId } from "@framework/constants";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import type { IAssetPromoSignDto } from "./interfaces";
+import type { IAssetPromoSignDto, IPromoSearchDto } from "./interfaces";
 import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -30,8 +30,8 @@ export class AssetPromoService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async search(dto: Partial<IPaginationDto>): Promise<[Array<AssetPromoEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(dto: Partial<IPromoSearchDto>): Promise<[Array<AssetPromoEntity>, number]> {
+    const { chainId = Number(defaultChainId), skip, take } = dto;
     const now = new Date();
 
     const queryBuilder = this.assetPromoEntityRepository.createQueryBuilder("promo");
@@ -76,6 +76,7 @@ export class AssetPromoService {
 
     queryBuilder.select();
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", { chainId });
     queryBuilder.andWhere("promo.startTimestamp < :startTimestamp", { startTimestamp: now });
     queryBuilder.andWhere("promo.endTimestamp > :endTimestamp", { endTimestamp: now });
 

@@ -119,7 +119,6 @@ export class TransactionServiceCron {
         }
       }
     }
-
     // RELEASE CRON LOCK
     this.cronLock = false;
   }
