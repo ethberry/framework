@@ -44,29 +44,38 @@ export class TransactionServiceCron {
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const latency = ~~this.configService.get<number>("LATENCY", 32);
-    const blockNumber = await getBlockNumber(this.jsonRpcProvider);
 
-    // get all CONTRACT MANAGER transactions hashes with latency
-    const uniqueCMTxs = await this.transactionService.findAllTxHashes({
-      chainId,
-      blockNumber: LessThan(blockNumber - latency),
-      contractType: ContractType.CONTRACT_MANAGER,
-    });
+    let blockNumber;
+    try {
+      blockNumber = await getBlockNumber(this.jsonRpcProvider);
+    } catch (e) {
+      this.loggerService.error(e, TransactionServiceCron.name);
+    }
 
-    if (uniqueCMTxs && uniqueCMTxs.length > 0) {
-      await this.processTransactions(uniqueCMTxs);
-    } else {
-      // get all others transactions hashes with latency
-      const uniqueTxs = await this.transactionService.findAllTxHashes({
+    // CHECK ONLY IF GET BLOCK NUMBER
+    if (blockNumber) {
+      // get all CONTRACT MANAGER transactions hashes with latency
+      const uniqueCMTxs = await this.transactionService.findAllTxHashes({
         chainId,
         blockNumber: LessThan(blockNumber - latency),
+        contractType: ContractType.CONTRACT_MANAGER,
       });
 
-      if (uniqueTxs && uniqueTxs.length > 0) {
-        await this.processTransactions(uniqueTxs);
+      if (uniqueCMTxs && uniqueCMTxs.length > 0) {
+        await this.processTransactions(uniqueCMTxs);
       } else {
-        // RELEASE CRON LOCK
-        this.cronLock = false;
+        // get all others transactions hashes with latency
+        const uniqueTxs = await this.transactionService.findAllTxHashes({
+          chainId,
+          blockNumber: LessThan(blockNumber - latency),
+        });
+
+        if (uniqueTxs && uniqueTxs.length > 0) {
+          await this.processTransactions(uniqueTxs);
+        } else {
+          // RELEASE CRON LOCK
+          this.cronLock = false;
+        }
       }
     }
   }
