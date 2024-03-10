@@ -188,7 +188,7 @@
       "11155111": "SEPOLIA",
       "5": "GOERLI",
       "56": "BINANCE",
-      "80001": "MUMBAI",
+      "80001": "MUMBAI (testnet)",
       "97": "BINANCE (testnet)"
     },
     "referralProgramStatus": {

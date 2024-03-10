@@ -11,6 +11,7 @@ import {
   ContractEventType,
   ContractType,
   Erc4907EventType,
+  ModuleType,
   NodeEnv,
   TokenType,
 } from "@framework/types";
@@ -33,6 +34,9 @@ import { getEventsTopics } from "../../../../../common/utils";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
         const erc721Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC721);
+        const erc721Collections = await contractService.findAllByType([ModuleType.COLLECTION]);
+        const contractsAdresses = erc721Contracts.address.concat(erc721Collections.address);
+        const unique = [...new Set(contractsAdresses)];
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -65,7 +69,7 @@ import { getEventsTopics } from "../../../../../common/utils";
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN,
-            contractAddress: erc721Contracts.address,
+            contractAddress: unique,
             contractInterface: ABI,
             topics,
           },

@@ -7,7 +7,14 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, IDismantleSignDto } from "@framework/types";
-import { DismantleStatus, DismantleStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import {
+  DismantleStatus,
+  DismantleStrategy,
+  ModuleType,
+  SettingsKeys,
+  TemplateStatus,
+  TokenType,
+} from "@framework/types";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -56,6 +63,10 @@ export class DismantleService {
     queryBuilder.where({
       dismantleStatus: DismantleStatus.ACTIVE,
     });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (templateId) {
       queryBuilder.where("price_template.id = :templateId", { templateId });
@@ -210,12 +221,12 @@ export class DismantleService {
     const level = metadata.RARITY
       ? Number(metadata.RARITY)
       : metadata.LEVEL && !metadata.GRADE
-      ? Number(metadata.LEVEL)
-      : metadata.GRADE && !metadata.LEVEL
-      ? Number(metadata.GRADE)
-      : metadata.LEVEL && metadata.GRADE
-      ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
-      : 1;
+        ? Number(metadata.LEVEL)
+        : metadata.GRADE && !metadata.LEVEL
+          ? Number(metadata.GRADE)
+          : metadata.LEVEL && metadata.GRADE
+            ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
+            : 1;
 
     if (dismantleStrategy === DismantleStrategy.FLAT) {
       return BigInt(amount);

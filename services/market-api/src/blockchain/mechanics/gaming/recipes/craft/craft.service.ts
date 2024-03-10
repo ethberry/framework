@@ -7,7 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ICraftSearchDto, ICraftSignDto, ICraftCountDto, ICraftCountResult } from "@framework/types";
-import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { CraftStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -60,6 +60,10 @@ export class CraftService {
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
     });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractId) {
       queryBuilder.where("item_contract.id = :contractId", { contractId });
