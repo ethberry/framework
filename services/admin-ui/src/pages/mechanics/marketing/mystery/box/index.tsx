@@ -17,6 +17,7 @@ import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/ty
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { MintButton } from "../../../../../components/buttons/mechanics/mystery/box/mint";
+import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryboxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
@@ -39,6 +40,7 @@ export const MysteryBox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
+    handleRefreshPage,
   } = useCollection<IMysteryBox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery/boxes",
     empty: {
@@ -93,6 +95,7 @@ export const MysteryBox: FC = () => {
         open={isFiltersOpen}
         testId="MysteryboxSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput
