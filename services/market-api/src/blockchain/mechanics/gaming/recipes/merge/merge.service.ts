@@ -5,7 +5,7 @@ import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers
 
 import { defaultChainId } from "@framework/constants";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
-import { MergeStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { MergeStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -55,6 +55,10 @@ export class MergeService {
     queryBuilder.andWhere("item_contract.chainId = :chainId", {
       chainId: userEntity?.chainId || defaultChainId,
     });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (templateId) {
       queryBuilder.andWhere("price_template.id = :templateId", { templateId });

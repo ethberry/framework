@@ -72,6 +72,10 @@ export class MysteryBoxService {
       mysteryBoxStatus: TemplateStatus.ACTIVE,
     });
 
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+
     if (contractIds) {
       if (contractIds.length === 1) {
         queryBuilder.andWhere("template.contractId = :contractId", {
@@ -166,6 +170,10 @@ export class MysteryBoxService {
     queryBuilder.andWhere("box.id = :id", {
       id: where.id,
     });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     return queryBuilder.getOne();
   }
