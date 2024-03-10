@@ -4,16 +4,16 @@ import { Type } from "class-transformer";
 
 import type { IVestingClaimCreateDto } from "@framework/types";
 
-import { ItemDto } from "../../../../../exchange/asset/dto";
 import { VestingClaimContractDeployDto } from "./vesting";
+import { CoinDto } from "../../../../../exchange/asset/dto/custom";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: CoinDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => CoinDto)
+  public item: InstanceType<typeof CoinDto>;
 
   // @ApiProperty()
   // @IsString({ message: "typeMismatch" })

@@ -6,16 +6,16 @@ import { ClaimType } from "@framework/types";
 import type { IClaimUpdateDto } from "@framework/types";
 import { AccountOptionalDto } from "@gemunion/collection";
 
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
+import { NotNativeDto } from "../../../../../exchange/asset/dto/custom";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
-    type: AllTypesDto,
+    type: NotNativeDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AllTypesDto)
-  public item: InstanceType<typeof AllTypesDto>;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiPropertyOptional()
   @IsOptional()

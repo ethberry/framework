@@ -5,24 +5,24 @@ import { Type } from "class-transformer";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 
 import { IAssetPromoUpdateDto } from "../interfaces";
-import { SemiCoinDto, AllTypesDto } from "../../../../exchange/asset/dto/custom";
+import { CoinDto, SemiNftDto } from "../../../../exchange/asset/dto/custom";
 
 export class AssetPromoUpdateDto implements IAssetPromoUpdateDto {
   @ApiPropertyOptional({
-    type: AllTypesDto,
+    type: SemiNftDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AllTypesDto)
-  public item: InstanceType<typeof AllTypesDto>;
+  @Type(() => SemiNftDto)
+  public item: InstanceType<typeof SemiNftDto>;
 
   @ApiPropertyOptional({
-    type: SemiCoinDto,
+    type: CoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => SemiCoinDto)
-  public price: InstanceType<typeof SemiCoinDto>;
+  @Type(() => CoinDto)
+  public price: InstanceType<typeof CoinDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
