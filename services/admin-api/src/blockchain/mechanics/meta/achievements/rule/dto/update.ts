@@ -7,7 +7,7 @@ import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 
 import { IAchievementRuleUpdateDto } from "../interfaces";
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
+import { AllTypesDto } from "../../../../../exchange/asset/dto";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
   @ApiPropertyOptional()

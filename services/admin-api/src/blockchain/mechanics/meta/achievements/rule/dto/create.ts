@@ -7,7 +7,7 @@ import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementRuleCreateDto } from "../interfaces";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
+import { AllTypesDto } from "../../../../../exchange/asset/dto";
 
 export class AchievementRuleCreateDto extends SearchableDto implements IAchievementRuleCreateDto {
   @ApiPropertyOptional({

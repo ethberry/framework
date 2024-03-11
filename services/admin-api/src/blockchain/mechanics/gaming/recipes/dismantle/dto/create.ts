@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { DismantleStrategy } from "@framework/types";
 
-import { NotNativeDto, NftDto } from "../../../../../exchange/asset/dto/custom";
+import { NotNativeDto, NftDto } from "../../../../../exchange/asset/dto";
 import type { IDismantleCreateDto } from "../interfaces";
 
 export class DismantleCreateDto implements IDismantleCreateDto {

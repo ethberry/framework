@@ -4,8 +4,8 @@ import { Transform, Type } from "class-transformer";
 
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
-import { IGradeUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
+import type { IGradeUpdateDto } from "../interfaces";
+import { SemiCoinDto } from "../../../../exchange/asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({

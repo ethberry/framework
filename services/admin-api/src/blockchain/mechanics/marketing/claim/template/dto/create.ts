@@ -6,7 +6,7 @@ import { ClaimType } from "@framework/types";
 import type { IClaimCreateDto } from "@framework/types";
 import { AccountDto } from "@gemunion/collection";
 
-import { NotNativeDto } from "../../../../../exchange/asset/dto/custom";
+import { NotNativeDto } from "../../../../../exchange/asset/dto";
 
 export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @ApiProperty({

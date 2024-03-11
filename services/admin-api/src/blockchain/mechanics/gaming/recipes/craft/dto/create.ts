@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NotNativeDto, SemiCoinDto } from "../../../../../exchange/asset/dto/custom";
+import { NotNativeDto, SemiCoinDto } from "../../../../../exchange/asset/dto";
 import type { ICraftCreateDto } from "../interfaces";
 
 export class CraftCreateDto implements ICraftCreateDto {

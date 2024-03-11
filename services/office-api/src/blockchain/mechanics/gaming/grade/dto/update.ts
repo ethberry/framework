@@ -4,8 +4,8 @@ import { Transform, Type } from "class-transformer";
 
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
-import { PriceDto } from "../../../../exchange/asset/dto";
-import { IGradeUpdateDto } from "../interfaces";
+import type { IGradeUpdateDto } from "../interfaces";
+import { SemiCoinDto } from "../../../../exchange/asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({
@@ -30,10 +30,10 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   public growthRate: number;
 
   @ApiPropertyOptional({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 }

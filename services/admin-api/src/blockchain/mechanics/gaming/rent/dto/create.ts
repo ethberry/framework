@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, Min, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
+import { SemiCoinDto } from "../../../../exchange/asset/dto";
 import { IRentCreateDto } from "../interfaces";
 import { RentRuleStatus } from "@framework/types";
 

@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 
 import { IAssetPromoUpdateDto } from "../interfaces";
-import { CoinDto, SemiNftDto } from "../../../../exchange/asset/dto/custom";
+import { CoinDto, SemiNftDto } from "../../../../exchange/asset/dto";
 
 export class AssetPromoUpdateDto implements IAssetPromoUpdateDto {
   @ApiPropertyOptional({

@@ -4,7 +4,7 @@ import { IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import type { IMergeCreateDto } from "../interfaces";
-import { NftDto } from "../../../../../exchange/asset/dto/custom";
+import { NftDto } from "../../../../../exchange/asset/dto";
 import { MergeStatus } from "@framework/types";
 
 export class MergeCreateDto implements IMergeCreateDto {

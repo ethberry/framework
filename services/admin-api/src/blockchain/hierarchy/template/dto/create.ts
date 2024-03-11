@@ -6,7 +6,7 @@ import { IsBigInt } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
 import type { ITemplateCreateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../exchange/asset/dto/custom";
+import { SemiCoinDto } from "../../../exchange/asset/dto";
 
 export class TemplateCreateDto extends SearchableDto implements ITemplateCreateDto {
   @ApiProperty({

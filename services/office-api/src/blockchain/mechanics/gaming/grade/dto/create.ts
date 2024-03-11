@@ -15,8 +15,8 @@ import { Type } from "class-transformer";
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { GradeStrategy, ProtectedAttribute } from "@framework/types";
 
-import { PriceDto } from "../../../../exchange/asset/dto";
-import { IGradeCreateDto } from "../interfaces";
+import { SemiCoinDto } from "../../../../exchange/asset/dto";
+import type { IGradeCreateDto } from "../interfaces";
 
 export class GradeCreateDto implements IGradeCreateDto {
   @ApiProperty({
@@ -46,9 +46,9 @@ export class GradeCreateDto implements IGradeCreateDto {
   public growthRate: number;
 
   @ApiProperty({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 }

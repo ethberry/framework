@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementLevelUpdateDto } from "../interfaces";
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
+import { AllTypesDto } from "../../../../../exchange/asset/dto";
 
 export class AddressUpdateDto extends SearchableDto implements IAchievementLevelUpdateDto {
   @ApiPropertyOptional()
