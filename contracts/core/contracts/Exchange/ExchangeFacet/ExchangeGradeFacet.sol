@@ -30,7 +30,7 @@ contract ExchangeGradeFacet is SignatureValidator, DiamondOverride {
       revert SignerMissingRole();
     }
 
-    ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, true, true, false));
 
     uint256 level = IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
 

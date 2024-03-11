@@ -32,7 +32,7 @@ contract ExchangeCraftFacet is SignatureValidator, DiamondOverride {
 
     // burn or send price to receiver
     ExchangeUtils.burnFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
-    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(true, true, false, false, false));
 
     emit Craft(_msgSender(), params.externalId, items, price);
 

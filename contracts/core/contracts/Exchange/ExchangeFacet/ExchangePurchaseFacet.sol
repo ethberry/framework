@@ -40,7 +40,7 @@ contract ExchangePurchaseFacet is SignatureValidator, DiamondOverride {
       price,
       _msgSender(),
       params.receiver,
-      DisabledTokenTypes(false, false, false, false, false)
+      DisabledTokenTypes(false, false, true, true, false)
     );
 
     ExchangeUtils.acquireFrom(

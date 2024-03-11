@@ -33,7 +33,7 @@ contract ExchangeDismantleFacet is SignatureValidator, DiamondOverride {
     // burn price (721, 998, 1155) or send price to receiver
     ExchangeUtils.burnFrom(ExchangeUtils._toArray(price), _msgSender(), params.receiver, DisabledTokenTypes(true, true, false, false, false));
     // send items to sender from receiver
-    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(true, false, false, false, false));
+    ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(true, true, false, false, false));
 
     emit Dismantle(_msgSender(), params.externalId, items, ExchangeUtils._toArray(price));
 
