@@ -18,6 +18,7 @@ import { sorter } from "../../../../common/utils/sorter";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MysteryBoxEntity } from "../../marketing/mystery/box/box.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class AssetPromoService {
@@ -30,8 +31,11 @@ export class AssetPromoService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async search(dto: Partial<IPromoSearchDto>): Promise<[Array<AssetPromoEntity>, number]> {
-    const { chainId = Number(defaultChainId), skip, take } = dto;
+  public async search(
+    dto: Partial<IPromoSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<AssetPromoEntity>, number]> {
+    const { skip, take } = dto;
     const now = new Date();
 
     const queryBuilder = this.assetPromoEntityRepository.createQueryBuilder("promo");
@@ -76,7 +80,9 @@ export class AssetPromoService {
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("item_contract.chainId = :chainId", { chainId });
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity?.chainId || Number(defaultChainId),
+    });
     queryBuilder.andWhere("promo.startTimestamp < :startTimestamp", { startTimestamp: now });
     queryBuilder.andWhere("promo.endTimestamp > :endTimestamp", { endTimestamp: now });
 
