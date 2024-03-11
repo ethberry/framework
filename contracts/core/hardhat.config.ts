@@ -83,6 +83,11 @@ export default {
       accounts: [process.env.GEMUNION_PRIVATE_KEY_PROD],
       timeout: 142000,
     },
+    immutable_test: {
+      url: process.env.JSON_RPC_ADDR_IMMUTABLE_TEST,
+      accounts: [process.env.GEMUNION_PRIVATE_KEY_PROD],
+      timeout: 142000,
+    },
     sepolia: {
       url: process.env.JSON_RPC_ADDR_SEPOLIA,
       chainId: 11155111,
