@@ -10,7 +10,7 @@
     "@gemunion/nest-js-module-license": "4.0.24",
     "@gemunion/nest-js-module-mailjet": "4.0.27",
     "@gemunion/nest-js-module-request-logger": "3.0.21",
-    "@gemunion/nest-js-module-winston-logdna": "3.1.2",
+    "@gemunion/nest-js-module-winston-logdna": "3.1.3",
     "@nestjs/axios": "3.0.2",
     "@nestjs/common": "10.3.3",
     "@nestjs/config": "3.2.0",
