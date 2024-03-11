@@ -1,4 +1,4 @@
-import { Badge, SvgIcon } from "@mui/material";
+import { Badge, ListItemIcon, SvgIcon } from "@mui/material";
 import { SxProps, styled } from "@mui/material/styles";
 import { Circle } from "@mui/icons-material";
 
@@ -23,6 +23,10 @@ export const StyledCircle = styled(Circle)({
   width: 12,
   height: 12,
 });
+
+export const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  color: theme.palette.common.black,
+})) as typeof ListItemIcon;
 
 export const StyledSvgIcon = styled(SvgIcon)({
   width: 24,

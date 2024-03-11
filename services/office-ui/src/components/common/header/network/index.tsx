@@ -8,7 +8,7 @@ import { SANDBOX_CHAINS } from "@gemunion/provider-wallet";
 import type { IUser } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 
-import { spinnerMixin, StyledBadge, StyledCircle, StyledSvgIcon } from "./styled";
+import { spinnerMixin, StyledBadge, StyledCircle, StyledListItemIcon, StyledSvgIcon } from "./styled";
 import { getChainIconParams } from "./utils";
 
 export const NetworkButton: FC = () => {
@@ -72,9 +72,9 @@ export const NetworkButton: FC = () => {
                 onClick={handleSelectNetwork(network.chainId)}
                 color="inherit"
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
-                </ListItemIcon>
+                </StyledListItemIcon>
                 <ListItemText>
                   <FormattedMessage id={`enums.chainId.${network.chainId}`} />
                 </ListItemText>

@@ -183,6 +183,8 @@
       "13377": "GEMUNION",
       "13378": "BESU",
       "10001": "BESU",
+      "13371": "IMMUTABLE zkEVM",
+      "13473": "IMMUTABLE zkEVM (testnet)",
       "137": "POLYGON",
       "42161": "ARBITRUM",
       "11155111": "SEPOLIA",
