@@ -90,7 +90,6 @@ import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/
 
 /* migrations */
 import {
-  AlterMerchant1687519905550,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAchievementItem1681273013050,
@@ -361,7 +360,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { AlterReferralProgram9987519905550 } from "./migrations/06-alter-prod";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -442,8 +440,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
-  migrationsRun:
-    process.env.BUSINESS_TYPE === BusinessType.B2B.toString() || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
+  migrationsRun: process.env.BUSINESS_TYPE === BusinessType.B2B || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
   // migrationsRun: true,
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
@@ -477,7 +474,6 @@ const config: PostgresConnectionOptions = {
     SeedPage1563803000220,
     CreateRatePlan1687519905500,
     SeedRatePlan1687519905500,
-    AlterMerchant1687519905550,
 
     CreateAsset1563804000100,
 
@@ -773,8 +769,6 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
-    /* prod alter migrations */
-    AlterReferralProgram9987519905550,
   ],
 };
 
