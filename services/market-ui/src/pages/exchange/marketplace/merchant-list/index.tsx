@@ -8,11 +8,12 @@ import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
 import type { IMerchant } from "@framework/types";
 
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { MerchantListItem } from "./item";
 import { StyledGrid } from "./styled";
 
 export const MerchantList: FC = () => {
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IMerchant, ISearchDto>({
+  const { rows, count, search, isLoading, handleChangePage, handleRefreshPage } = useCollection<IMerchant, ISearchDto>({
     baseUrl: "/merchants",
     redirect: (_baseUrl, search) => `/marketplace/merchants?${stringify(search)}`,
   });
@@ -39,6 +40,8 @@ export const MerchantList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
+
+      <FormRefresher onRefreshPage={handleRefreshPage} />
     </Fragment>
   );
 };

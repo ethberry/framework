@@ -12,6 +12,7 @@ interface IMysteryboxSearchFormProps {
   initialValues: IMysteryBoxSearchDto;
   open: boolean;
   embedded?: boolean;
+  onRefreshPage: () => Promise<void>;
 }
 
 export const MysteryBoxSearchForm: FC<IMysteryboxSearchFormProps> = props => {

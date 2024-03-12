@@ -7,11 +7,12 @@ import { useCollection } from "@gemunion/react-hooks";
 import { StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc721ContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
 export const Erc721ContractList: FC = () => {
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
+  const { rows, count, search, isLoading, handleChangePage, handleRefreshPage } = useCollection<IContract, ISearchDto>({
     baseUrl: "/erc721/contracts",
   });
 
@@ -37,6 +38,8 @@ export const Erc721ContractList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
+
+      <FormRefresher onRefreshPage={handleRefreshPage} />
     </Fragment>
   );
 };
