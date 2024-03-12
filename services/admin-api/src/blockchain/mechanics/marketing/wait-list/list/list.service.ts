@@ -51,6 +51,10 @@ export class WaitListListService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {

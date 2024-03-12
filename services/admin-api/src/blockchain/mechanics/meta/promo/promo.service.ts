@@ -36,6 +36,10 @@ export class AssetPromoService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {

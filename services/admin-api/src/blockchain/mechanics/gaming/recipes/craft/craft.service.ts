@@ -40,6 +40,10 @@ export class CraftService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (query) {
       // support multiple items
       queryBuilder.leftJoin("craft.item", "item2");

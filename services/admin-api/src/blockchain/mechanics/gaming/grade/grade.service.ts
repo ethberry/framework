@@ -34,6 +34,10 @@ export class GradeService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (gradeStatus) {
       if (gradeStatus.length === 1) {
         queryBuilder.andWhere("grade.gradeStatus = :gradeStatus", { gradeStatus: gradeStatus[0] });
