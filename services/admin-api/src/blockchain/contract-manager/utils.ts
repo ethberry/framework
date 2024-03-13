@@ -11,7 +11,7 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
     case 137:
       return "Polygon";
     case 80001:
-      return "Mumbai";
+      return "PolygonTestnet";
     case 42161:
       return "Arbitrum";
     case 10000:
