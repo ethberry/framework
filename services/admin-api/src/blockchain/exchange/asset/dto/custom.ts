@@ -6,7 +6,7 @@ import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
 
 import { IAssetComponentDto, IAssetDto, TokenType } from "@framework/types";
 
-export const createCustomAssetComponentDto = (enabledTokenTypes: Array<TokenType>) => {
+export const createCustomAssetComponentDto = (disabledTokenTypes: Array<TokenType>) => {
   class CustomAssetComponentDto implements IAssetComponentDto {
     @ApiPropertyOptional()
     @IsOptional()
@@ -18,7 +18,7 @@ export const createCustomAssetComponentDto = (enabledTokenTypes: Array<TokenType
       enum: TokenType,
     })
     @Transform(({ value }) => value as TokenType)
-    @Validate(ForbidEnumValues, Object.values(TokenType).filter(x => enabledTokenTypes.includes(x)))
+    @Validate(ForbidEnumValues, Object.values(TokenType).filter(x => !disabledTokenTypes.includes(x)))
     @IsEnum(TokenType, { message: "badInput" })
     public tokenType: TokenType;
 
@@ -49,8 +49,8 @@ export const createCustomAssetComponentDto = (enabledTokenTypes: Array<TokenType
   return CustomAssetComponentDto;
 };
 
-export const createCustomAssetDto = (enabledTokenTypes: Array<TokenType>) => {
-  const CustomComponentDto = createCustomAssetComponentDto(enabledTokenTypes);
+export const createCustomAssetDto = (disabledTokenTypes: Array<TokenType>) => {
+  const CustomComponentDto = createCustomAssetComponentDto(disabledTokenTypes);
 
   class CustomAssertDto implements IAssetDto {
     @ApiProperty({
