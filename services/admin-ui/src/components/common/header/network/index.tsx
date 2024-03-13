@@ -43,11 +43,7 @@ export const NetworkButton: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading} spinnerSx={spinnerMixin}>
-      <Tooltip
-        title={`${formatMessage({ id: `enums.chainId.${chainId}` })}${
-          isSandbox ? ` (${formatMessage({ id: "components.header.wallet.test" })})` : ""
-        }`}
-      >
+      <Tooltip title={formatMessage({ id: `enums.chainId.${chainId}` })}>
         <StyledBadge color="primary" badgeContent={<StyledCircle />} invisible={!isSandbox}>
           <IconButton
             aria-owns={anchor ? "select-chainId" : undefined}
