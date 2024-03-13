@@ -11,6 +11,7 @@ import { TokenService } from "../token/token.service";
 import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
+import { MysteryBoxService } from "../../mechanics/marketing/mystery/box/box.service";
 
 @Injectable()
 export class TemplateService {
@@ -21,6 +22,7 @@ export class TemplateService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly contractService: ContractService,
+    protected readonly mysteryBoxService: MysteryBoxService,
   ) {}
 
   public async search(
@@ -293,12 +295,20 @@ export class TemplateService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const count = await this.tokenService.count({ templateId: where.id });
-    if (count) {
-      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
-      return templateEntity.save();
-    } else {
-      return templateEntity.remove();
-    }
+    // option 1  - delete if no tokens
+    // const count = await this.tokenService.count({ templateId: where.id });
+    // if (count) {
+    //   Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+    //   return templateEntity.save();
+    // } else {
+    //   return templateEntity.remove();
+    // }
+    console.log("templateEntity", templateEntity);
+    // option 2 - deactivate only
+    Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+
+    // deactivate mysteryboxes if any use this template
+    // await
+    return templateEntity.save();
   }
 }

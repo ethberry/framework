@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
@@ -10,7 +10,13 @@ import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
 
 @Module({
-  imports: [ContractModule, TemplateModule, TokenModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],
+  imports: [
+    ContractModule,
+    TokenModule,
+    forwardRef(() => AssetModule),
+    forwardRef(() => TemplateModule),
+    TypeOrmModule.forFeature([MysteryBoxEntity]),
+  ],
   providers: [MysteryBoxService],
   controllers: [MysteryBoxController],
   exports: [MysteryBoxService],

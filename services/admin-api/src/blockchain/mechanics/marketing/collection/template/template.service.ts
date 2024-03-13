@@ -11,6 +11,7 @@ import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { CollectionTokenService } from "../token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { MysteryBoxService } from "../../mystery/box/box.service";
 
 @Injectable()
 export class CollectionTemplateService extends TemplateService {
@@ -20,8 +21,9 @@ export class CollectionTemplateService extends TemplateService {
     protected readonly assetService: AssetService,
     protected readonly collectionTokenService: CollectionTokenService,
     protected readonly contractService: ContractService,
+    protected readonly mysteryBoxService: MysteryBoxService,
   ) {
-    super(templateEntityRepository, assetService, collectionTokenService, contractService);
+    super(templateEntityRepository, assetService, collectionTokenService, contractService, mysteryBoxService);
   }
 
   public search(dto: Partial<ITemplateSearchDto>, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

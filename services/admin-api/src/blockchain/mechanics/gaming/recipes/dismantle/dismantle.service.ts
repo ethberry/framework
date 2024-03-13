@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, DismantleStatus, IDismantleSearchDto } from "@framework/types";
+import { ContractEventType, DismantleStatus, IDismantleSearchDto, TemplateStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
@@ -43,6 +43,10 @@ export class DismantleService {
     queryBuilder.andWhere("item_contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (query) {
       queryBuilder.leftJoin(

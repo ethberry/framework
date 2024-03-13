@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException, forwardRef, Inject } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
 import { MysteryBoxStatus, TemplateStatus } from "@framework/types";
@@ -19,6 +19,7 @@ export class MysteryBoxService {
     @InjectRepository(MysteryBoxEntity)
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
     private readonly tokenService: TokenService,
+    @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
@@ -39,14 +40,18 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -131,10 +136,20 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    // item
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
+    // price
+    queryBuilder.leftJoinAndSelect("box.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -162,6 +177,13 @@ export class MysteryBoxService {
     options?: FindOneOptions<MysteryBoxEntity>,
   ): Promise<MysteryBoxEntity | null> {
     return this.mysteryBoxEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<MysteryBoxEntity>,
+    options?: FindManyOptions<MysteryBoxEntity>,
+  ): Promise<Array<MysteryBoxEntity>> {
+    return this.mysteryBoxEntityRepository.find({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity | null> {
@@ -234,6 +256,17 @@ export class MysteryBoxService {
     Object.assign(mysteryBoxEntity, rest);
 
     return mysteryBoxEntity.save();
+  }
+
+  public async deactivateBoxes(assetTemplateId: number): Promise<void> {
+    const boxesWithTemplateInItemOrPrice = await this.findAll(
+      { item: { components: { templateId: assetTemplateId } } },
+      { relations: { item: { components: { template: true } } } },
+    );
+
+    for (const box of boxesWithTemplateInItemOrPrice) {
+      await Object.assign(box, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE }).save();
+    }
   }
 
   public async create(dto: IMysteryBoxCreateDto, userEntity: UserEntity): Promise<MysteryBoxEntity> {
