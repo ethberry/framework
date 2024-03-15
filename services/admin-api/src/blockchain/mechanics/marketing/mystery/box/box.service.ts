@@ -23,6 +23,7 @@ import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ClaimTemplateService } from "../../claim/template/template.service";
+import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
 
 @Injectable()
 export class MysteryBoxService {
@@ -32,6 +33,8 @@ export class MysteryBoxService {
     private readonly tokenService: TokenService,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    @Inject(forwardRef(() => TemplateDeleteService))
+    private readonly templateDeleteService: TemplateDeleteService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
     private readonly claimTemplateService: ClaimTemplateService,
@@ -346,7 +349,7 @@ export class MysteryBoxService {
     );
 
     for (const mysteryBoxEntity of mysteryBoxEntities) {
-      await this.templateService.deactivateTemplate(mysteryBoxEntity.template);
+      await this.templateDeleteService.deactivateTemplate(mysteryBoxEntity.template);
     }
 
     await this.claimTemplateService.deactivateClaims(mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.item));

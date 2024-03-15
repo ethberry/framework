@@ -1,9 +1,9 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
@@ -11,8 +11,7 @@ import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { TokenService } from "../token/token.service";
-import { MysteryBoxService } from "../../mechanics/marketing/mystery/box/box.service";
-import { ClaimTemplateService } from "../../mechanics/marketing/claim/template/template.service";
+import { TemplateDeleteService } from "./template.delete.service";
 
 @Injectable()
 export class TemplateService {
@@ -22,8 +21,7 @@ export class TemplateService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly contractService: ContractService,
-    protected readonly mysteryBoxService: MysteryBoxService,
-    protected readonly claimTemplateService: ClaimTemplateService,
+    protected readonly templateDeleteService: TemplateDeleteService,
   ) {}
 
   public async search(
@@ -282,45 +280,6 @@ export class TemplateService {
   }
 
   public async delete(where: FindOptionsWhere<TemplateEntity>, userEntity: UserEntity): Promise<TemplateEntity> {
-    const templateEntity = await this.findOne(where, {
-      relations: {
-        contract: true,
-      },
-    });
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    if (templateEntity.contract.merchantId !== userEntity.merchantId) {
-      throw new ForbiddenException("insufficientPermissions");
-    }
-
-    await this.deactivateMechanics(templateEntity);
-
-    return this.deactivateTemplate(templateEntity);
-  }
-
-  public async deactivateTemplate(templateEntity: TemplateEntity): Promise<TemplateEntity> {
-    const count = await this.tokenService.count({ templateId: templateEntity.id });
-    if (count) {
-      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
-      return templateEntity.save();
-    } else {
-      return templateEntity.remove();
-    }
-  }
-
-  public async deactivateMechanics(templateEntity: TemplateEntity): Promise<Array<PromiseSettledResult<DeleteResult>>> {
-    const assets = await this.assetService.findAll({
-      components: {
-        templateId: templateEntity.id,
-      },
-    });
-
-    return Promise.allSettled([
-      this.mysteryBoxService.deactivateBoxes(assets),
-      this.claimTemplateService.deactivateClaims(assets),
-    ]);
+    return this.templateDeleteService.delete(where, userEntity);
   }
 }

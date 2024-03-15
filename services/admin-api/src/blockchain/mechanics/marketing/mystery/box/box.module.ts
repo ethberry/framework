@@ -9,6 +9,7 @@ import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
 import { ClaimTemplateModule } from "../../claim/template/template.module";
+import { TemplateDeleteModule } from "../../../../hierarchy/template/template.delete.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ClaimTemplateModule } from "../../claim/template/template.module";
     TokenModule,
     forwardRef(() => AssetModule),
     forwardRef(() => TemplateModule),
+    forwardRef(() => TemplateDeleteModule),
     TypeOrmModule.forFeature([MysteryBoxEntity]),
     ClaimTemplateModule,
   ],
