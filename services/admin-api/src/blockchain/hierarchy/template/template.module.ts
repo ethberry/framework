@@ -8,6 +8,7 @@ import { TokenModule } from "../token/token.module";
 import { AssetModule } from "../../exchange/asset/asset.module";
 import { ContractModule } from "../contract/contract.module";
 import { MysteryBoxModule } from "../../mechanics/marketing/mystery/box/box.module";
+import { ClaimTemplateModule } from "../../mechanics/marketing/claim/template/template.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MysteryBoxModule } from "../../mechanics/marketing/mystery/box/box.modu
     forwardRef(() => MysteryBoxModule),
     ContractModule,
     TypeOrmModule.forFeature([TemplateEntity]),
+    ClaimTemplateModule,
   ],
   providers: [TemplateService],
   controllers: [TemplateController],

@@ -1,28 +1,29 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { TokenService } from "../token/token.service";
 import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
+import { TokenService } from "../token/token.service";
 import { MysteryBoxService } from "../../mechanics/marketing/mystery/box/box.service";
+import { ClaimTemplateService } from "../../mechanics/marketing/claim/template/template.service";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
-    @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly contractService: ContractService,
     protected readonly mysteryBoxService: MysteryBoxService,
+    protected readonly claimTemplateService: ClaimTemplateService,
   ) {}
 
   public async search(
@@ -295,20 +296,31 @@ export class TemplateService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    // option 1  - delete if no tokens
-    // const count = await this.tokenService.count({ templateId: where.id });
-    // if (count) {
-    //   Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
-    //   return templateEntity.save();
-    // } else {
-    //   return templateEntity.remove();
-    // }
-    console.log("templateEntity", templateEntity);
-    // option 2 - deactivate only
-    Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+    await this.deactivateMechanics(templateEntity);
 
-    // deactivate mysteryboxes if any use this template
-    // await
-    return templateEntity.save();
+    return this.deactivateTemplate(templateEntity);
+  }
+
+  public async deactivateTemplate(templateEntity: TemplateEntity): Promise<TemplateEntity> {
+    const count = await this.tokenService.count({ templateId: templateEntity.id });
+    if (count) {
+      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.save();
+    } else {
+      return templateEntity.remove();
+    }
+  }
+
+  public async deactivateMechanics(templateEntity: TemplateEntity): Promise<Array<PromiseSettledResult<DeleteResult>>> {
+    const assets = await this.assetService.findAll({
+      components: {
+        templateId: templateEntity.id,
+      },
+    });
+
+    return Promise.allSettled([
+      this.mysteryBoxService.deactivateBoxes(assets),
+      this.claimTemplateService.deactivateClaims(assets),
+    ]);
   }
 }

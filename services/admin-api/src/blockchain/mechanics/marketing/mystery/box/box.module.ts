@@ -8,6 +8,7 @@ import { AssetModule } from "../../../../exchange/asset/asset.module";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
+import { ClaimTemplateModule } from "../../claim/template/template.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MysteryBoxController } from "./box.controller";
     forwardRef(() => AssetModule),
     forwardRef(() => TemplateModule),
     TypeOrmModule.forFeature([MysteryBoxEntity]),
+    ClaimTemplateModule,
   ],
   providers: [MysteryBoxService],
   controllers: [MysteryBoxController],

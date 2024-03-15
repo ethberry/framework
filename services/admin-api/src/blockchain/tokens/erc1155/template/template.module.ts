@@ -8,6 +8,7 @@ import { Erc1155TokenModule } from "../token/token.module";
 import { Erc1155TemplateService } from "./template.service";
 import { Erc1155TemplateController } from "./template.controller";
 import { MysteryBoxModule } from "../../../mechanics/marketing/mystery/box/box.module";
+import { ClaimTemplateModule } from "../../../mechanics/marketing/claim/template/template.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MysteryBoxModule } from "../../../mechanics/marketing/mystery/box/box.m
     ContractModule,
     TypeOrmModule.forFeature([TemplateEntity]),
     MysteryBoxModule,
+    ClaimTemplateModule,
   ],
   providers: [Erc1155TemplateService],
   controllers: [Erc1155TemplateController],

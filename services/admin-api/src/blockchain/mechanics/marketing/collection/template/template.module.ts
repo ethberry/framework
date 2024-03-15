@@ -8,6 +8,7 @@ import { CollectionTokenModule } from "../token/token.module";
 import { CollectionTemplateService } from "./template.service";
 import { Erc721CollectionController } from "./template.controller";
 import { MysteryBoxModule } from "../../mystery/box/box.module";
+import { ClaimTemplateModule } from "../../claim/template/template.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MysteryBoxModule } from "../../mystery/box/box.module";
     CollectionTokenModule,
     ContractModule,
     MysteryBoxModule,
+    ClaimTemplateModule,
   ],
   providers: [CollectionTemplateService],
   controllers: [Erc721CollectionController],

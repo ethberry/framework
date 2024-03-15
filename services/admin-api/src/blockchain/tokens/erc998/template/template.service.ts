@@ -12,6 +12,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc998TokenService } from "../token/token.service";
 import { MysteryBoxService } from "../../../mechanics/marketing/mystery/box/box.service";
+import { ClaimTemplateService } from "../../../mechanics/marketing/claim/template/template.service";
 
 @Injectable()
 export class Erc998TemplateService extends TemplateService {
@@ -22,8 +23,16 @@ export class Erc998TemplateService extends TemplateService {
     protected readonly tokenService: Erc998TokenService,
     protected readonly contractService: ContractService,
     protected readonly mysteryBoxService: MysteryBoxService,
+    protected readonly claimTemplateService: ClaimTemplateService,
   ) {
-    super(templateEntityRepository, assetService, tokenService, contractService, mysteryBoxService);
+    super(
+      templateEntityRepository,
+      assetService,
+      tokenService,
+      contractService,
+      mysteryBoxService,
+      claimTemplateService,
+    );
   }
 
   public async search(

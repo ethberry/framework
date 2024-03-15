@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
@@ -23,6 +23,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class ClaimTemplateService {
@@ -259,6 +260,12 @@ export class ClaimTemplateService {
           resolve(results?.filter(Boolean) as Array<ClaimEntity>);
         },
       );
+    });
+  }
+
+  public async deactivateClaims(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    return this.claimEntityRepository.delete({
+      item: In(assets.map(asset => asset.id)),
     });
   }
 }
