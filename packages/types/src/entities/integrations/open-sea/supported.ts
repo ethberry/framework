@@ -4,14 +4,23 @@
 
 export enum OpenSeaSupportedChains {
   ETHEREUM = 1,
+
   POLYGON = 137,
+
   KLAYTN = 8217,
-  // SOLANA = null, not EVM
+
   ARBITRUM = 42161,
   ARBITRUM_NOVA = 42170,
+
   OPTIMISM = 10,
+
   AVALANCHE = 43114,
+
   // BINANCE = 56, removed
+
   ZORA = 7777777,
+
   BASE = 8453,
+
+  // SOLANA = null, not EVM
 }
