@@ -1,2 +1,2 @@
-export * from "./meta-data";
-export * from "./supported";
+export * from "./open-sea/meta-data";
+export * from "./open-sea/supported";
