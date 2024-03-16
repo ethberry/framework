@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IToken } from "@framework/types";
 
-import { TokenSellButton } from "../../../../../components/buttons";
+import { TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
 
 interface IErc998TokenListItemProps {
@@ -31,7 +31,7 @@ export const Erc998TokenListItem: FC<IErc998TokenListItemProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <TokenSellButton token={token} />
+            <TokenSellOnOpenSeaButton token={token} />
           </Grid>
         </Grid>
       </CardActions>
