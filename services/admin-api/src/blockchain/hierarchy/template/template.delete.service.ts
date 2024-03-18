@@ -50,13 +50,8 @@ export class TemplateDeleteService {
   }
 
   public async deactivateTemplate(templateEntity: TemplateEntity): Promise<TemplateEntity> {
-    const count = await this.tokenService.count({ templateId: templateEntity.id });
-    if (count) {
-      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
-      return templateEntity.save();
-    } else {
-      return templateEntity.remove();
-    }
+    Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+    return templateEntity.save();
   }
 
   public async deactivateMechanics(templateEntity: TemplateEntity): Promise<Array<PromiseSettledResult<DeleteResult>>> {
