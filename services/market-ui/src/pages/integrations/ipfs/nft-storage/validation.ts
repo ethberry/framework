@@ -1,8 +1,0 @@
-import { object } from "yup";
-
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
-
-export const validationSchema = object().shape({
-  contractId: dbIdValidationSchema,
-  tokenId: dbIdValidationSchema,
-});

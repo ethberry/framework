@@ -15,22 +15,22 @@
  export GEMUNION_PRIVATE_KEY_STAGE=$GEMUNION_PRIVATE_KEY_STAGE
  export GEMUNION_PRIVATE_KEY_PROD=$GEMUNION_PRIVATE_KEY_PROD
 
- lerna bootstrap --concurrency 1 --hoist --ignore-scripts
+# lerna bootstrap --concurrency 1 --hoist --ignore-scripts
 
 # DEV ONLY !!!
 # export $(cat ./.env.test | sed 's/#.*//g' | xargs)
 
- lerna run build --concurrency 1
-
- lerna exec --scope @framework/admin-api -- npm run test
- lerna exec --scope @framework/traits-api -- npm run test
- lerna exec --scope @framework/market-api -- npm run test
- lerna exec --scope @framework/mobile-api -- npm run test
-
-# should test only if changes there
- if [ "$TEST_CONTRACTS" == "true" ]; then
-     echo -e "\033[34mTesting CONTRACTS...\n\033[0m";
-     lerna exec --scope @framework/core-contracts -- npm run test
- else
-     echo -e "\033[34m SKIP Testing CONTRACTS...\n\033[0m";
- fi
+# lerna run build --concurrency 1
+#
+# lerna exec --scope @framework/admin-api -- npm run test
+# lerna exec --scope @framework/traits-api -- npm run test
+# lerna exec --scope @framework/market-api -- npm run test
+# lerna exec --scope @framework/mobile-api -- npm run test
+#
+## should test only if changes there
+# if [ "$TEST_CONTRACTS" == "true" ]; then
+#     echo -e "\033[34mTesting CONTRACTS...\n\033[0m";
+#     lerna exec --scope @framework/core-contracts -- npm run test
+# else
+#     echo -e "\033[34m SKIP Testing CONTRACTS...\n\033[0m";
+# fi

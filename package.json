@@ -34,15 +34,15 @@
     "node": ">=18"
   },
   "license": "UNLICENSED",
-  "name": "@framework/root",
+  "name": "@framework-contracts/root",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/gemunion/framework-contracts"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
-    "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore \"@framework/office-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth --ignore @framework/eml --ignore @framework/game --ignore @framework/json --ignore @framework/core-contracts",
+    "build": "lerna run build --concurrency 1",
     "clean": "sh scripts/clean.sh",
     "docker:bootstrap": "lerna bootstrap --hoist --ignore-scripts",
     "docker:build": "lerna run build --concurrency 1",
@@ -56,14 +56,10 @@
     "prepare:env": "bash scripts/set-env.sh development",
     "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
     "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",
-    "prepare:framework:dev": "sh scripts/prepare-fw.sh development besu",
-    "prepare:framework:prod": "sh scripts/prepare-fw.sh production binance",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",
     "registry": "lerna publish",
     "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
-    "start": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/admin-ui --scope @framework/public-ui --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm start",
-    "start:prod": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm run start:prod",
     "test": "sh scripts/copy-env.sh && sh scripts/test.sh"
   },
   "version": "0.0.1"
