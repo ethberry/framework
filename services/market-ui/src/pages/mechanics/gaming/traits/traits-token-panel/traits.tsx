@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeTraits, DND } from "@framework/traits-ui";
+import { decodeTraits, DND } from "@gemunion/traits-v5";
 
 export interface ITokenMetadataViewProps {
   metadata: Record<string, any>;

@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 
 import { BreedService } from "./breed.service";
-import { decodeNumber, decodeTraits } from "@framework/traits-api";
+import { decodeNumber, decodeTraits } from "@gemunion/traits-v6";
 
 @Injectable()
 export class BreedServiceEth {

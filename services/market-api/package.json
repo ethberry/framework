@@ -10,7 +10,7 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/nest-js-module-exchange-signer": "0.0.1",
-    "@framework/traits-api": "0.0.1",
+    "@gemunion/traits-v6": "1.0.2",
     "@framework/types": "0.0.1",
     "@framework/exchange": "0.0.1",
     "@gemunion/collection": "3.3.13",

@@ -16,7 +16,7 @@
     "@framework/exchange": "0.0.1",
     "@framework/localization-market-ui": "0.0.1",
     "@framework/styled": "0.0.1",
-    "@framework/traits-ui": "0.0.1",
+    "@gemunion/traits-v5": "1.0.2",
     "@framework/types": "0.0.1",
     "@framework/uniswap-widget": "0.0.1",
     "@framework/1inch": "0.0.1",
