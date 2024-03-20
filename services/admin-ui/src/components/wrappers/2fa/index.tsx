@@ -2,16 +2,21 @@ import { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField } from "@mui/material";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { useUser } from "@gemunion/provider-user";
+import type { IUser } from "@framework/types";
 
 export const TwoFAProvider: FC<PropsWithChildren> = props => {
   const { children } = props;
 
+  const user = useUser<IUser>();
+  const isUserAuthenticated = user.isAuthenticated();
+
   const is2FAValid = localStorage.getItem("is2FAValid");
-  const [otp, setOtp] = useState<string>("");
+  const [code, setCode] = useState<string>("");
   const [is2FAActive, setIs2FAActive] = useState<boolean | null>(null);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setOtp(event.target.value);
+    setCode(event.target.value);
   };
 
   const { fn: get2FAStatus, isLoading } = useApiCall(
@@ -47,21 +52,25 @@ export const TwoFAProvider: FC<PropsWithChildren> = props => {
   );
 
   const handleClick = async () => {
-    await verify(void 0, { token: otp });
+    await verify(void 0, { token: code });
   };
 
   useEffect(() => {
     void get2FAStatus();
-  }, []);
+    if (!isUserAuthenticated) {
+      setIs2FAActive(false);
+      setCode("");
+    }
+  }, [isUserAuthenticated]);
 
   return (
     <>
-      {is2FAActive && !is2FAValid ? (
+      {isUserAuthenticated && is2FAActive && !is2FAValid ? (
         <Dialog maxWidth="lg" open>
           <FormControl disabled={isVerifying || isLoading}>
             <DialogTitle>Enter OTP</DialogTitle>
             <DialogContent>
-              <TextField value={otp} name="otpToken" label="Enter OTP" placeholder="OTP" onChange={handleChange} />
+              <TextField value={code} name="otpCode" label="Enter OTP code" placeholder="OTP" onChange={handleChange} />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClick}>Check</Button>
