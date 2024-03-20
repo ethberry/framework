@@ -20,8 +20,8 @@ export const TwoFAProvider: FC<PropsWithChildren> = props => {
         .fetchJson({
           url: "/2fa",
         })
-        .then((json: boolean) => {
-          setIs2FAActive(json || false);
+        .then((json: { isActive: boolean }) => {
+          setIs2FAActive(json?.isActive || false);
         });
     },
     { success: false, error: false },
@@ -56,7 +56,7 @@ export const TwoFAProvider: FC<PropsWithChildren> = props => {
 
   return (
     <>
-      {is2FAActive && !is2FAValid && (
+      {is2FAActive && !is2FAValid ? (
         <Dialog maxWidth="lg" open>
           <FormControl disabled={isVerifying || isLoading}>
             <DialogTitle>Enter OTP</DialogTitle>
@@ -68,7 +68,7 @@ export const TwoFAProvider: FC<PropsWithChildren> = props => {
             </DialogActions>
           </FormControl>
         </Dialog>
-      )}
+      ) : null}
       {children}
     </>
   );

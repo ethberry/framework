@@ -19,6 +19,7 @@ import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { NetworkEntity } from "./infrastructure/network/network.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { TwoFAEntity } from "./infrastructure/2fa/2fa.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 /* blockchain */
 // hierarchy
@@ -378,6 +379,7 @@ const config: PostgresConnectionOptions = {
     ChainLinkSubscriptionEntity,
     UserEntity,
     OtpEntity,
+    TwoFAEntity,
     SettingsEntity,
     NetworkEntity,
     RatePlanEntity,

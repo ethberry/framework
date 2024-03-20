@@ -18,8 +18,8 @@ export const SwitchTwoFA: FC = () => {
         .fetchJson({
           url: "/2fa",
         })
-        .then((json: boolean) => {
-          setIs2FAActive(Boolean(json));
+        .then((json: { isActive: boolean }) => {
+          setIs2FAActive(!!json?.isActive);
         });
     },
     { success: false, error: false },

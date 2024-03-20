@@ -21,7 +21,7 @@ export class TwoFAService {
 
     if (!twoFAEntity) {
       twoFAEntity = await this.twoFAEntityRepository
-        .create({ userId: userEntity.id, isActive: false, secret: "", endTimestamp: "" })
+        .create({ userId: userEntity.id, isActive: false, secret: "", endTimestamp: null })
         .save();
     }
 
@@ -37,7 +37,11 @@ export class TwoFAService {
       twoFAEntity = await this.twoFAEntityRepository.create({ userId: userEntity.id }).save();
     }
 
-    Object.assign(twoFAEntity, { isActive: true, secret, endTimestamp: Date.now() + 2 * 60 * 60 * 1000 });
+    Object.assign(twoFAEntity, {
+      isActive: true,
+      secret,
+      endTimestamp: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+    });
 
     return twoFAEntity.save().then(({ isActive }) => ({ isActive }));
   }
@@ -65,7 +69,7 @@ export class TwoFAService {
     }
 
     return speakeasy.totp.verify({
-      secret: twoFAEntity.secret,
+      secret: twoFAEntity.secret as string,
       encoding: "base32",
       token,
       window: 6,

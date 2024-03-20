@@ -9,17 +9,18 @@ import { UserEntity } from "../user/user.entity";
 @Entity({ schema: ns, name: "2fa" })
 export class TwoFAEntity extends IdDateBaseEntity implements I2FA {
   @Column({ type: "varchar", nullable: true })
-  public secret: string;
+  public secret: string | null;
 
   @Column({ type: "boolean" })
   public isActive: boolean;
 
   @Column({ type: "varchar", nullable: true })
-  public endTimestamp: string;
+  public endTimestamp: string | null;
 
   @JoinColumn()
   @OneToOne(_type => UserEntity)
   public user: UserEntity;
 
+  @Column({ type: "int" })
   public userId: number;
 }
