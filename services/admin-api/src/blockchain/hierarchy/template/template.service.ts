@@ -102,8 +102,8 @@ export class TemplateService {
           qb.getQuery = () => `LATERAL json_array_elements(template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -303,7 +303,7 @@ export class TemplateService {
     // } else {
     //   return templateEntity.remove();
     // }
-    console.log("templateEntity", templateEntity);
+    // console.log("templateEntity", templateEntity);
     // option 2 - deactivate only
     Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
 

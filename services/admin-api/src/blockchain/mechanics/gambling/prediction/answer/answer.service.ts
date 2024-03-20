@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import { IPredictionAnswerSearchDto } from "@framework/types";
 
 import { PredictionAnswerEntity } from "./answer.entity";
 
@@ -13,12 +13,24 @@ export class PredictionAnswerService {
     private readonly predictionAnswerEntityRepository: Repository<PredictionAnswerEntity>,
   ) {}
 
-  public async search(dto: Partial<IPaginationDto>): Promise<[Array<PredictionAnswerEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(dto: Partial<IPredictionAnswerSearchDto>): Promise<[Array<PredictionAnswerEntity>, number]> {
+    const { skip, take, questionIds } = dto;
 
     const queryBuilder = this.predictionAnswerEntityRepository.createQueryBuilder("answer");
 
+    queryBuilder.leftJoinAndSelect("answer.question", "question");
+
     queryBuilder.select();
+
+    if (questionIds) {
+      if (questionIds.length === 1) {
+        queryBuilder.andWhere("answer.questionId = :questionId", {
+          questionId: questionIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("answer.questionId IN(:...questionIds)", { questionIds });
+      }
+    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

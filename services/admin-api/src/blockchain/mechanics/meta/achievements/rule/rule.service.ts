@@ -74,8 +74,8 @@ export class AchievementRuleService {
           qb.getQuery = () => `LATERAL json_array_elements(achievement.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

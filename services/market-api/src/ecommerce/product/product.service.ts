@@ -54,8 +54,8 @@ export class ProductService {
           qb.getQuery = () => `LATERAL json_array_elements(product.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -72,7 +72,7 @@ export class ProductService {
           return qb;
         },
         `params`,
-        `TRUE`,
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

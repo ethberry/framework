@@ -52,8 +52,8 @@ export class StakingRulesService {
           qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

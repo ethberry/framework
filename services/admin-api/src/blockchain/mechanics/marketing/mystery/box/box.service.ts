@@ -59,8 +59,8 @@ export class MysteryBoxService {
           qb.getQuery = () => `LATERAL json_array_elements(box.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

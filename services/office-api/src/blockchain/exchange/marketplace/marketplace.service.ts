@@ -115,8 +115,8 @@ export class MarketplaceService {
           qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
