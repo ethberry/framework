@@ -2,11 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ClaimType } from "@framework/types";
+import { AccountDto, AllTypesDto } from "@gemunion/nest-js-validators";
 import type { IClaimCreateDto } from "@framework/types";
-import { AccountDto } from "@gemunion/collection";
-
-import { AllTypesDto } from "../../../../../exchange/asset/dto";
+import { ClaimType } from "@framework/types";
 
 export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @ApiProperty({

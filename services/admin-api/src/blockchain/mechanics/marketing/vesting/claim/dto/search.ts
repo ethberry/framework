@@ -3,7 +3,8 @@ import { IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
+import { AccountOptionalDto } from "@gemunion/nest-js-validators";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 

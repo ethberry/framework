@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsString, MaxLength, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { AccountDto } from "@gemunion/collection";
+import { AccountDto } from "@gemunion/nest-js-validators";
 
 import type { ISignalMessageDto } from "../interfaces";
 import { ContractEventSignature } from "@framework/types";

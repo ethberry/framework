@@ -14,7 +14,7 @@ export class PredictionQuestionEntity extends SearchableEntity implements IPredi
   public merchantId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => MerchantEntity, merchant => merchant.orders)
+  @ManyToOne(_type => MerchantEntity)
   public merchant: MerchantEntity;
 
   @Column({

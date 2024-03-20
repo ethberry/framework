@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IBreed } from "@framework/types";
-import { decodeTraits, DND } from "@framework/traits-ui";
+import { decodeTraits, DND } from "@gemunion/traits-v5";
 
 export interface IBreedItemViewDialogProps {
   open: boolean;

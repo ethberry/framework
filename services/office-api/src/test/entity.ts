@@ -3,9 +3,10 @@ import { ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { baseTokenURI } from "@gemunion/contracts-constants";
 import type { IContract, IUser } from "@framework/types";
 import { ContractStatus, TokenType, UserRole, UserStatus } from "@framework/types";
-import { baseTokenURI, EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
+import { EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 import { UserEntity } from "../infrastructure/user/user.entity";
 

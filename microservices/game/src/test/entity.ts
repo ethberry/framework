@@ -5,6 +5,7 @@ import { addDays } from "date-fns";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
+import { baseTokenURI } from "@gemunion/contracts-constants";
 import type { IAsset, IAssetComponent, IClaim, IContract, IMerchant, ITemplate, IUser } from "@framework/types";
 import {
   ClaimStatus,
@@ -18,7 +19,7 @@ import {
   UserRole,
   UserStatus,
 } from "@framework/types";
-import { baseTokenURI, EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
+import { EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 import { UserEntity } from "../infrastructure/user/user.entity";
 import { MerchantEntity } from "../infrastructure/merchant/merchant.entity";

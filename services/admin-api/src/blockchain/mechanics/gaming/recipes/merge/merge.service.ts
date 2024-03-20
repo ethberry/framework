@@ -54,8 +54,8 @@ export class MergeService {
           qb.getQuery = () => `LATERAL json_array_elements(price_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

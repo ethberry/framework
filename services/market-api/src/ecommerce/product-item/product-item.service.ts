@@ -28,8 +28,8 @@ export class ProductItemService {
           qb.getQuery = () => `LATERAL json_array_elements(product_item.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

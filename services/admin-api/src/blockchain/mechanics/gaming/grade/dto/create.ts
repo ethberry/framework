@@ -12,11 +12,10 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ForbidEnumValues } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { GradeStrategy, ProtectedAttribute } from "@framework/types";
 
 import type { IGradeCreateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../../exchange/asset/dto";
 
 export class GradeCreateDto implements IGradeCreateDto {
   @ApiProperty({

@@ -34,7 +34,7 @@ export class Erc998CompositionService {
           return qb;
         },
         `child_blocks`,
-        `TRUE`,
+        "TRUE",
       );
       queryBuilder.leftJoin(
         qb => {
@@ -42,7 +42,7 @@ export class Erc998CompositionService {
           return qb;
         },
         `parent_blocks`,
-        `TRUE`,
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

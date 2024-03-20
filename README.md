@@ -9,6 +9,11 @@ or, you can just use docker and docker compose :)
 
 In any case you have to fill up sensitive keys in docker files or .env files
 
+```shell script
+git clone git@github.com:Gemunion/framework.git
+git submodule update --init --recursive
+```
+
 ## DEV setup with Docker-compose and Besu blockchain
 
 0. Stop all containers (if any) and clean existing postgres and besu

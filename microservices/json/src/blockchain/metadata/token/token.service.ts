@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 
 import { getText } from "@gemunion/draft-js-utils";
 import { TokenMetadata, TokenRarity } from "@framework/types";
-import { decodeTraits } from "@framework/traits-api";
+import { decodeTraits } from "@gemunion/traits-v6";
 import type { IOpenSeaTokenMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
@@ -58,7 +58,7 @@ export class MetadataTokenService {
 
   public formatMetadata(metadata: Record<string, string>): Array<IOpenSeaMetadataAttribute> {
     return Object.entries(metadata).reduce((memo, [key, value]) => {
-      switch (key) {
+      switch (key as TokenMetadata) {
         case TokenMetadata.RARITY:
           memo.push({
             trait_type: key,

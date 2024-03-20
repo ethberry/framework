@@ -1177,6 +1177,7 @@
         "ponzi": "Ponzi",
         "promo": "Promo",
         "raffle": "Raffle",
+        "prediction": "Prediction",
         "recipes": "Recipes",
         "referral": "Referral",
         "rent": "Rent",
@@ -1444,6 +1445,18 @@
       "title": "Raffle",
       "tokens": {
         "title": "Tokens"
+      }
+    },
+    "prediction": {
+      "contracts": {
+        "title": "Contracts"
+      },
+      "questions": {
+        "title": "Questions"
+      },
+      "title": "Prediction",
+      "answers": {
+        "title": "Answers"
       }
     },
     "ratePlan": {

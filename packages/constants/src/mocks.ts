@@ -8,11 +8,6 @@ export const avatarWhiteUrl =
 
 export const baseTokenURI = "http://localhost:3011/metadata/";
 
-// full one: http://localhost:3011/metadata/{chainID}/address/tokenId/
-export const getBaseTokenURI = (chainId: number | undefined): string => {
-  return chainId ? `${baseTokenURI}${chainId.toString()}/` : baseTokenURI;
-};
-
 export const dummyContractAddrs = [
   "0xcc7d26d8ea6281bb363c8448515f2c61f7bc19f0",
   "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6",
