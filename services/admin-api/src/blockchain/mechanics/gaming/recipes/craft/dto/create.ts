@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SemiNftDto, AllTypesDto } from "../../../../../exchange/asset/dto";
+import { SemiNftDto, AllTypesDto } from "@gemunion/nest-js-validators";
+
 import type { ICraftCreateDto } from "../interfaces";
 
 export class CraftCreateDto implements ICraftCreateDto {

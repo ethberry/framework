@@ -3,8 +3,10 @@ import { IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AddressOptionalDto, SearchDto } from "@gemunion/collection";
-import { ContractType, IContractManagerSearchDto } from "@framework/types";
+import { SearchDto } from "@gemunion/collection";
+import { AddressOptionalDto } from "@gemunion/nest-js-validators";
+import type { IContractManagerSearchDto } from "@framework/types";
+import { ContractType } from "@framework/types";
 
 export class ContractManagerSearchDto
   extends Mixin(SearchDto, AddressOptionalDto)

@@ -2,9 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsISO8601, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
+import { IsBeforeDate, CoinDto, SemiNftDto } from "@gemunion/nest-js-validators";
 
-import { CoinDto, SemiNftDto } from "../../../../exchange/asset/dto";
 import type { IAssetPromoCreateDto } from "../interfaces";
 
 export class AssetPromoCreateDto implements IAssetPromoCreateDto {

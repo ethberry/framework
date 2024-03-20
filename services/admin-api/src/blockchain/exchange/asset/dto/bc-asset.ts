@@ -3,8 +3,7 @@ import { IsEnum, IsInt, Min, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
-import { IsBigInt } from "@gemunion/nest-js-validators";
-import { AddressDto } from "@gemunion/collection";
+import { AddressDto, IsBigInt } from "@gemunion/nest-js-validators";
 import type { IBCAssetTemplateDto, IBCAssetTokenDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 

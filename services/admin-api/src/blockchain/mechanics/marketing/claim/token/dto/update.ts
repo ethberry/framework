@@ -1,12 +1,10 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsISO8601, IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
-import { Type, Transform } from "class-transformer";
+import { IsEnum, IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
-import { ClaimType } from "@framework/types";
+import { AccountOptionalDto, NotNativeDto } from "@gemunion/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
-import { AccountOptionalDto } from "@gemunion/collection";
-
-import { NotNativeDto } from "../../../../../exchange/asset/dto";
+import { ClaimType } from "@framework/types";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({

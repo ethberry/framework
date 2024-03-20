@@ -1,12 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString, IsISO8601, Min, ValidateNested } from "class-validator";
+import { IsInt, IsISO8601, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
-import { IsBigInt } from "@gemunion/nest-js-validators";
-import { CoinDto } from "../../asset/dto";
+import { AccountDto, ChainIdDto, CoinDto, IsBigInt, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+
 import { ITokenSellDto } from "../interfaces";
 
 export class SellTokenDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ITokenSellDto {

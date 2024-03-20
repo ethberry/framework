@@ -3,8 +3,8 @@ import { IsArray, IsEnum, IsISO8601, IsString, ValidateNested } from "class-vali
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
+import { AccountDto } from "@gemunion/nest-js-validators";
 import { ClaimType } from "@framework/types";
-import { AccountDto } from "@gemunion/collection";
 
 import type { IClaimRowDto, IClaimUploadDto } from "../interfaces";
 import { BCAssetTokenDto } from "../../../../../exchange/asset/dto";

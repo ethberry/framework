@@ -2,10 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/collection";
+import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
 import type { ISignLotteryDto } from "../interfaces";
-
 import { LotteryTicketRule } from "./rule";
 
 export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignLotteryDto {

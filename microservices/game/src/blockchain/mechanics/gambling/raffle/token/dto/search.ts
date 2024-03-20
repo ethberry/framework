@@ -3,7 +3,8 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { PaginationDto, AccountDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
+import { AccountDto } from "@gemunion/nest-js-validators";
 
 import { IRaffleTokenSearchDto } from "@framework/types";
 
