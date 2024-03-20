@@ -8,6 +8,7 @@ export * from "./1563803000130-create-user";
 export * from "./1563803000140-seed-user";
 export * from "./1563803000150-create-auth";
 export * from "./1563803000160-create-otp";
+export * from "./1563803000180-create-2fa";
 export * from "./1563803000210-create-page";
 export * from "./1563803000220-seed-page";
 export * from "./1687519905500-create-rate-plan";

@@ -1,3 +1,4 @@
+export * from "./2fa";
 export * from "./auth";
 export * from "./business-type";
 export * from "./merchant";

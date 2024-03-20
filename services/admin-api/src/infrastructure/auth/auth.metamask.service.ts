@@ -3,13 +3,13 @@ import { app } from "firebase-admin";
 
 import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
 import { MetamaskService } from "@gemunion/nest-js-module-metamask";
+import { UserRole } from "@framework/types";
 // import { defaultChainId, EnabledLanguages } from "@framework/constants";
 // import { UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
 import type { ICustomToken } from "./interfaces";
-import { UserRole } from "@framework/types";
 
 @Injectable()
 export class AuthMetamaskService {
