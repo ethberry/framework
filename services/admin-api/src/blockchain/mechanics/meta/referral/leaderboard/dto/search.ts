@@ -1,6 +1,7 @@
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
+import { AccountOptionalDto } from "@gemunion/nest-js-validators";
 import { IReferralLeaderboardSearchDto } from "@framework/types";
 
 export class ReferralLeaderboardSearchDto

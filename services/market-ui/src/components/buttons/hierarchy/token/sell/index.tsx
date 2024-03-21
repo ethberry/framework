@@ -9,17 +9,18 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
-import { ContractFeatures, TokenStatus } from "@framework/types";
-import { ISellDto, SellDialog } from "./dialog";
+import { ContractFeatures, OpenSeaSupportedChains, TokenStatus } from "@framework/types";
+import type { ISellDto } from "./dialog";
+import { SellDialog } from "./dialog";
 
-interface ITokenSellButtonProps {
+interface ITokenSellOnOpenSeaButtonProps {
   className?: string;
   disabled?: boolean;
   token: IToken;
   variant?: ListActionVariant;
 }
 
-export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
+export const TokenSellOnOpenSeaButton: FC<ITokenSellOnOpenSeaButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
   const { referrer } = useAppSelector(state => state.settings);
   const { account, chainId } = useWeb3React();
@@ -86,10 +87,11 @@ export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
   const date = new Date();
   date.setDate(date.getDate() + 1);
 
-  // disable SELL for unsupported chains (BESU, GEMUNIONBESU, BSC, BSC_testnet etc)
-  if (chainId === 56 || chainId === 97 || chainId === 10000 || chainId === 10001) {
+  // disable SELL for unsupported chains
+  if (!chainId || !Object.values(OpenSeaSupportedChains).includes(chainId)) {
     return null;
   }
+
   if (token.tokenStatus === TokenStatus.BURNED) {
     return null;
   }

@@ -59,8 +59,8 @@ export class CraftService {
           qb.getQuery = () => `LATERAL json_array_elements(item2_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

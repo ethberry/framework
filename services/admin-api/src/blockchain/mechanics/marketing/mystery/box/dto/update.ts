@@ -2,10 +2,10 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { MysteryBoxStatus } from "@framework/types";
 
 import type { IMysteryBoxUpdateDto } from "../interfaces";
-import { NotNativeDto, SemiCoinDto } from "../../../../../exchange/asset/dto";
 
 export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @ApiPropertyOptional()

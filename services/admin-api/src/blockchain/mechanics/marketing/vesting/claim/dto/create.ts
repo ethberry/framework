@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { CoinDto } from "@gemunion/nest-js-validators";
 import type { IVestingClaimCreateDto } from "@framework/types";
 
 import { VestingClaimContractDeployDto } from "./vesting";
-import { CoinDto } from "../../../../../exchange/asset/dto";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   @ApiProperty({

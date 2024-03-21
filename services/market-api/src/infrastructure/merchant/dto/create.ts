@@ -4,7 +4,8 @@ import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { emailMaxLength } from "@gemunion/constants";
-import { SearchableDto, WalletDto } from "@gemunion/collection";
+import { SearchableDto } from "@gemunion/collection";
+import { WalletDto } from "@gemunion/nest-js-validators";
 
 import type { IMerchantCreateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";

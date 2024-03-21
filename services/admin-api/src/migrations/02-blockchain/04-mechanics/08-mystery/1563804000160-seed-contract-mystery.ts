@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
+import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
+import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractMysteryAt1563804000160 implements MigrationInterface {

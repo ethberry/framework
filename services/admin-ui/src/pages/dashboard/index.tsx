@@ -38,6 +38,7 @@ import { VestingSection } from "./mechanics/vesting";
 import { PaymentSplitterSection } from "./mechanics/payment-splitter";
 import { WaitListSection } from "./mechanics/wait-list";
 import { ReferralSection } from "./exchange/referral";
+import { PredictionSection } from "./mechanics/prediction";
 
 export const Dashboard: FC = () => {
   return (
@@ -70,7 +71,7 @@ export const Dashboard: FC = () => {
           <LotterySection />
           <StakingSection />
           <PonziSection />
-          <PaymentSplitterSection />
+          <PredictionSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <ReferralSection />
@@ -80,6 +81,7 @@ export const Dashboard: FC = () => {
           <MarketplaceSection />
           <EcommerceSection />
           <AchievementsSection />
+          <PaymentSplitterSection />
         </Grid>
       </Grid>
     </Root>

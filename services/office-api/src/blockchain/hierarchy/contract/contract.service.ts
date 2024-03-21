@@ -95,8 +95,8 @@ export class ContractService {
           qb.getQuery = () => `LATERAL json_array_elements(contract.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

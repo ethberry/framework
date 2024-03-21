@@ -8,7 +8,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { bool36ArrayToByte32 } from "@framework/traits-ui";
+import { bool36ArrayToByte32 } from "@gemunion/traits-v5";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 

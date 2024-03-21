@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
-import { Response } from "express";
+import type { Response } from "express";
 import archiver from "archiver";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -27,11 +27,11 @@ export class PonziDepositController {
   @ApiProduces("application/zip")
   @Get("/report/export")
   public async export(
-    @Query() query: PonziReportSearchDto,
+    @Query() dto: PonziReportSearchDto,
     @User() userEntity: UserEntity,
     @Res() res: Response,
   ): Promise<void> {
-    const csv = await this.ponziReportService.export(query, userEntity);
+    const csv = await this.ponziReportService.export(dto, userEntity);
 
     const archive = archiver("zip");
 

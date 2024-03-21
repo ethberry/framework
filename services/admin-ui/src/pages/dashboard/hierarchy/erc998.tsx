@@ -4,13 +4,7 @@ import { AutoAwesomeMotion, Collections, Extension, Storage } from "@mui/icons-m
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { BusinessType } from "@framework/types";
-
 export const Erc998Section: FC = () => {
-  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
-    return null;
-  }
-
   return (
     <Paper sx={{ mb: 2 }}>
       <List

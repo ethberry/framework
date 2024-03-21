@@ -3,8 +3,7 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
-
-import { ILotteryTokenSearchDto } from "@framework/types";
+import type { ILotteryTokenSearchDto } from "@framework/types";
 
 export class LotteryTokenSearchDto extends PaginationDto implements ILotteryTokenSearchDto {
   @ApiPropertyOptional({

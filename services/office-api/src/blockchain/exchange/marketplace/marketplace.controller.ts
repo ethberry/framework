@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { Response } from "express";
+import type { Response } from "express";
 import archiver from "archiver";
 
 import { PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
@@ -40,11 +40,11 @@ export class MarketplaceController {
 
   @Get("/export")
   public async export(
-    @Query() query: MarketplaceReportSearchDto,
+    @Query() dto: MarketplaceReportSearchDto,
     @User() userEntity: UserEntity,
     @Res() res: Response,
   ): Promise<void> {
-    const csv = await this.marketplaceService.export(query, userEntity);
+    const csv = await this.marketplaceService.export(dto, userEntity);
 
     const archive = archiver("zip");
 

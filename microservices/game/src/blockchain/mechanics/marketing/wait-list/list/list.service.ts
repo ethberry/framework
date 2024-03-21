@@ -37,8 +37,8 @@ export class WaitListListService {
           qb.getQuery = () => `LATERAL json_array_elements(waitlist.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

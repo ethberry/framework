@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { AddressOptionalDto } from "@gemunion/collection";
+import { AddressOptionalDto } from "@gemunion/nest-js-validators";
 import { ListenerType } from "@framework/types";
 
 import { IEthLoggerInOutDto } from "../interfaces";

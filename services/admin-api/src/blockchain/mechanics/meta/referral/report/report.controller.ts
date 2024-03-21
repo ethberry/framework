@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
-import { Response } from "express";
+import type { Response } from "express";
 import archiver from "archiver";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -29,8 +29,8 @@ export class ReferralReportController {
 
   @ApiProduces("application/zip")
   @Get("/export")
-  public async export(@Query() query: ReferralReportSearchDto, @Res() res: Response): Promise<void> {
-    const csv = await this.referralReportService.export(query);
+  public async export(@Query() dto: ReferralReportSearchDto, @Res() res: Response): Promise<void> {
+    const csv = await this.referralReportService.export(dto);
 
     const archive = archiver("zip");
 
