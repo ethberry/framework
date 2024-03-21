@@ -4,11 +4,12 @@ import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
 import { getText } from "@gemunion/draft-js-utils";
-import { TokenMetadata, TokenRarity } from "@framework/types";
+import type { IOpenSeaMetadataAttribute, IOpenSeaTokenMetadata } from "@framework/types";
+import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
 import { decodeTraits } from "@gemunion/traits-v6";
-import type { IOpenSeaTokenMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { URL } from "url";
 
 @Injectable()
 export class MetadataTokenService {
@@ -47,10 +48,27 @@ export class MetadataTokenService {
 
     const { metadata } = tokenEntity;
 
+    let imageUrl;
+    if (tokenEntity.imageUrl) {
+      imageUrl = tokenEntity.imageUrl;
+    } else {
+      const url = new URL(tokenEntity.template.imageUrl);
+
+      if (tokenEntity.template.contract.contractFeatures.includes(ContractFeatures.DISCRETE)) {
+        url.searchParams.append(TokenMetadata.LEVEL, metadata[TokenMetadata.LEVEL]);
+      }
+
+      if (tokenEntity.template.contract.contractFeatures.includes(ContractFeatures.RANDOM)) {
+        url.searchParams.append(TokenMetadata.RARITY, metadata[TokenMetadata.RARITY]);
+      }
+
+      imageUrl = url.toString();
+    }
+
     return {
       name: tokenEntity.template.title,
       description: getText(tokenEntity.template.description),
-      image: tokenEntity.imageUrl || tokenEntity.template.imageUrl,
+      image: imageUrl,
       external_url: `${baseUrl}/metadata/${chainId}/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       attributes: this.formatMetadata(metadata),
     };

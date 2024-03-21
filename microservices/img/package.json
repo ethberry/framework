@@ -1,0 +1,83 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "dependencies": {
+    "@framework/constants": "0.0.1",
+    "@gemunion/traits-v6": "1.0.2",
+    "@framework/types": "0.0.1",
+    "@gemunion/draft-js-utils": "1.2.35",
+    "@gemunion/nest-js-guards": "3.1.12",
+    "@gemunion/nest-js-module-cache": "3.0.28",
+    "@gemunion/nest-js-module-helmet": "4.0.35",
+    "@gemunion/nest-js-module-license": "4.0.25",
+    "@gemunion/nest-js-module-request-logger": "3.0.22",
+    "@gemunion/nest-js-module-throttler": "6.0.17",
+    "@gemunion/nest-js-module-winston-logdna": "3.1.4",
+    "@gemunion/nest-js-utils": "4.2.3",
+    "@liaoliaots/nestjs-redis": "9.0.5",
+    "@liaoliaots/nestjs-redis-health": "9.0.4",
+    "@nestjs/cache-manager": "2.2.1",
+    "@nestjs/common": "10.3.4",
+    "@nestjs/config": "3.2.0",
+    "@nestjs/core": "10.3.4",
+    "@nestjs/microservices": "10.3.4",
+    "@nestjs/passport": "10.0.3",
+    "@nestjs/platform-express": "10.3.4",
+    "@nestjs/swagger": "7.3.0",
+    "@nestjs/terminus": "10.2.3",
+    "amqp-connection-manager": "4.1.14",
+    "amqplib": "0.10.3",
+    "ethers": "6.11.1",
+    "express": "4.18.3",
+    "nest-winston": "1.9.4",
+    "passport-headerapikey": "1.2.2",
+    "reflect-metadata": "0.2.1",
+    "ts-mixer": "6.0.4"
+  },
+  "description": "IMG API",
+  "devDependencies": {
+    "@gemunion/cross-env": "0.0.4",
+    "@gemunion/eslint-config": "4.0.6",
+    "@nestjs/testing": "10.3.4",
+    "@types/node": "20.11.30",
+    "@typescript-eslint/eslint-plugin": "7.3.1",
+    "@typescript-eslint/parser": "7.3.1",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-n": "16.6.2",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-promise": "6.1.1",
+    "rimraf": "5.0.5",
+    "tsc-watch": "6.0.4",
+    "typescript": "5.4.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/img",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix --ext .ts,.tsx",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build",
+    "start": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+    "test": "exit 0"
+  },
+  "title": "IMG",
+  "version": "0.0.1"
+}
