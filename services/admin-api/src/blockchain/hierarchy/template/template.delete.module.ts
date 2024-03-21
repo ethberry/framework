@@ -8,6 +8,8 @@ import { MysteryBoxModule } from "../../mechanics/marketing/mystery/box/box.modu
 import { ClaimTemplateModule } from "../../mechanics/marketing/claim/template/template.module";
 import { TemplateDeleteService } from "./template.delete.service";
 import { CraftModule } from "../../mechanics/gaming/recipes/craft/craft.module";
+import { MergeModule } from "../../mechanics/gaming/recipes/merge/merge.module";
+import { DismantleModule } from "../../mechanics/gaming/recipes/dismantle/dismantle.module";
 
 @Module({
   imports: [
@@ -15,8 +17,8 @@ import { CraftModule } from "../../mechanics/gaming/recipes/craft/craft.module";
     forwardRef(() => AssetModule),
     forwardRef(() => MysteryBoxModule),
     forwardRef(() => CraftModule),
-    forwardRef(() => MysteryBoxModule),
-    forwardRef(() => MysteryBoxModule),
+    forwardRef(() => MergeModule),
+    forwardRef(() => DismantleModule),
     TypeOrmModule.forFeature([TemplateEntity]),
     ClaimTemplateModule,
   ],

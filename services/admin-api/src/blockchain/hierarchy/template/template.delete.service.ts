@@ -10,6 +10,9 @@ import { TemplateEntity } from "./template.entity";
 import { TokenService } from "../token/token.service";
 import { MysteryBoxService } from "../../mechanics/marketing/mystery/box/box.service";
 import { ClaimTemplateService } from "../../mechanics/marketing/claim/template/template.service";
+import { CraftService } from "../../mechanics/gaming/recipes/craft/craft.service";
+import { MergeService } from "../../mechanics/gaming/recipes/merge/merge.service";
+import { DismantleService } from "../../mechanics/gaming/recipes/dismantle/dismantle.service";
 
 @Injectable()
 export class TemplateDeleteService {
@@ -20,6 +23,9 @@ export class TemplateDeleteService {
     protected readonly tokenService: TokenService,
     protected readonly mysteryBoxService: MysteryBoxService,
     protected readonly claimTemplateService: ClaimTemplateService,
+    protected readonly craftService: CraftService,
+    protected readonly mergeService: MergeService,
+    protected readonly dismantleService: DismantleService,
   ) {}
 
   public findOne(
@@ -60,6 +66,10 @@ export class TemplateDeleteService {
         templateId: templateEntity.id,
       },
     });
+
+    await this.craftService.deactivateCrafts(assets);
+    await this.mergeService.deactivateMerge(assets);
+    await this.dismantleService.deactivateDismantle(assets);
 
     return Promise.allSettled([
       this.mysteryBoxService.deactivateBoxes(assets),

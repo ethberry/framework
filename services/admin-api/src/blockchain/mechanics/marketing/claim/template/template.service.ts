@@ -264,8 +264,8 @@ export class ClaimTemplateService {
   }
 
   public async deactivateClaims(assets: Array<AssetEntity>): Promise<DeleteResult> {
-    return this.claimEntityRepository.delete({
-      item: In(assets.map(asset => asset.id)),
+    return await this.claimEntityRepository.delete({
+      itemId: In(assets.map(asset => asset.id)),
     });
   }
 }

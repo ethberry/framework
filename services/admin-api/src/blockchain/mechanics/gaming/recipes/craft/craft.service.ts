@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
 import { ContractEventType, CraftStatus, ICraftSearchDto, TemplateStatus } from "@framework/types";
 
@@ -9,6 +9,7 @@ import { EventHistoryService } from "../../../../event-history/event-history.ser
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { CraftEntity } from "./craft.entity";
 import type { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class CraftService {
@@ -88,6 +89,13 @@ export class CraftService {
     options?: FindOneOptions<CraftEntity>,
   ): Promise<CraftEntity | null> {
     return this.craftEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<CraftEntity>,
+    options?: FindManyOptions<CraftEntity>,
+  ): Promise<Array<CraftEntity>> {
+    return this.craftEntityRepository.find({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
@@ -176,6 +184,25 @@ export class CraftService {
       await craftEntity.save();
     } else {
       await craftEntity.remove();
+    }
+  }
+
+  public async deactivateCrafts(assets: Array<AssetEntity>): Promise<void> {
+    const craftEntities = await this.craftEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          price: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    for (const craftEntity of craftEntities) {
+      await this.craftEntityRepository.delete({ id: craftEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(craftEntity);
     }
   }
 }
