@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
-import { Response } from "express";
+import type { Response } from "express";
 import archiver from "archiver";
 
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -22,8 +22,8 @@ export class AchievementReportController {
 
   @ApiProduces("application/zip")
   @Get("/export")
-  public async export(@Query() query: AchievementsReportSearchDto, @Res() res: Response): Promise<void> {
-    const csv = await this.achievementReportService.export(query);
+  public async export(@Query() dto: AchievementsReportSearchDto, @Res() res: Response): Promise<void> {
+    const csv = await this.achievementReportService.export(dto);
 
     const archive = archiver("zip");
 
