@@ -1,12 +1,19 @@
 import { FC, Fragment, useState } from "react";
-import { Hidden, List, ListItemText } from "@mui/material";
+import { Hidden, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { addMonths, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { ListAction, ListActions, StyledListItem, StyledListItemText, StyledPagination } from "@framework/styled";
+import {
+  ListAction,
+  ListActions,
+  StyledListItem,
+  StyledListItemText,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../../components/buttons/mechanics/vesting/transfer-ownership";
@@ -56,7 +63,7 @@ export const Vesting: FC = () => {
       <PageHeader message="pages.vesting.title" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(vesting => (
             <StyledListItem key={vesting.id}>
               <ListItemText sx={{ width: 0.6 }}>
@@ -88,7 +95,7 @@ export const Vesting: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

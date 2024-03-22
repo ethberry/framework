@@ -5,7 +5,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { LotteryListItem } from "./item";
@@ -27,11 +27,13 @@ export const LotteryList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(lottery => (
-            <Grid item lg={4} sm={6} xs={12} key={lottery.id}>
-              <LotteryListItem contract={lottery} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(lottery => (
+              <Grid item lg={4} sm={6} xs={12} key={lottery.id}>
+                <LotteryListItem contract={lottery} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

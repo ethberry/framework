@@ -17,7 +17,7 @@ import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { AchievementLevelEditDialog } from "./edit";
-//
+
 export const emptyAchievementRule = {
   achievementStatus: AchievementRuleStatus.ACTIVE,
 } as IAchievementRule;

@@ -5,7 +5,7 @@ import { stringify } from "qs";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IMerchant } from "@framework/types";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
@@ -26,11 +26,13 @@ export const MerchantList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(merchant => (
-            <StyledGrid item lg={4} sm={6} xs={12} key={merchant.id}>
-              <MerchantListItem merchant={merchant} />
-            </StyledGrid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(merchant => (
+              <StyledGrid item lg={4} sm={6} xs={12} key={merchant.id}>
+                <MerchantListItem merchant={merchant} />
+              </StyledGrid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

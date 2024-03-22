@@ -3,7 +3,7 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -62,11 +62,13 @@ export const CraftList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(recipe => (
-            <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
-              <CraftItem craft={recipe} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(recipe => (
+              <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
+                <CraftItem craft={recipe} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

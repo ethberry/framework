@@ -11,7 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { formatItemHtmlList, formatPenalty } from "@framework/exchange";
-import { ListAction, StyledPagination } from "@framework/styled";
+import { ListAction, StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IStakingRuleDepositSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import {
   DurationUnit,
@@ -139,80 +139,82 @@ export const StakingRules: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(rule => {
-            const deposit = formatItemHtmlList(rule.deposit);
-            const reward = formatItemHtmlList(rule.reward);
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(rule => {
+              const deposit = formatItemHtmlList(rule.deposit);
+              const reward = formatItemHtmlList(rule.reward);
 
-            return (
-              <Grid item xs={12} sm={6} md={4} key={rule.id}>
-                <StyledCard>
-                  <StyledCardContent>
-                    <StyledImage component="img" src={rule.imageUrl || ""} />
-                    <StyledTitle variant="h6">{rule.title}</StyledTitle>
-                    <Grid container spacing={2}>
-                      <StyledGrid item xs={12} sm={rule.reward ? 6 : 12}>
-                        <StyledExchangeTitle fontWeight={500}>
-                          <FormattedMessage id="form.labels.deposit" />
-                        </StyledExchangeTitle>
-                        <StyledList component="ul">{deposit}</StyledList>
-                      </StyledGrid>
-                      {rule.reward ? (
-                        <StyledGrid item xs={12} sm={6}>
+              return (
+                <Grid item xs={12} sm={6} md={4} key={rule.id}>
+                  <StyledCard>
+                    <StyledCardContent>
+                      <StyledImage component="img" src={rule.imageUrl || ""} />
+                      <StyledTitle variant="h6">{rule.title}</StyledTitle>
+                      <Grid container spacing={2}>
+                        <StyledGrid item xs={12} sm={rule.reward ? 6 : 12}>
                           <StyledExchangeTitle fontWeight={500}>
-                            <FormattedMessage id="form.labels.reward" />
+                            <FormattedMessage id="form.labels.deposit" />
                           </StyledExchangeTitle>
-                          <StyledList component="ul">{reward}</StyledList>
+                          <StyledList component="ul">{deposit}</StyledList>
                         </StyledGrid>
-                      ) : null}
-                    </Grid>
-                    <StyledTableContainer>
-                      <Table aria-label="staking rules table">
-                        <TableBody>
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              <FormattedMessage id="form.labels.durationAmount" />
-                            </TableCell>
-                            <TableCell align="right">
-                              {formatMessage(
-                                { id: `enums.durationUnit.${rule.durationUnit}` },
-                                {
-                                  count: normalizeDuration({
-                                    durationAmount: rule.durationAmount,
-                                    durationUnit: rule.durationUnit,
-                                  }),
-                                },
-                              )}
-                            </TableCell>
-                          </TableRow>
-                          {rule.penalty ? (
+                        {rule.reward ? (
+                          <StyledGrid item xs={12} sm={6}>
+                            <StyledExchangeTitle fontWeight={500}>
+                              <FormattedMessage id="form.labels.reward" />
+                            </StyledExchangeTitle>
+                            <StyledList component="ul">{reward}</StyledList>
+                          </StyledGrid>
+                        ) : null}
+                      </Grid>
+                      <StyledTableContainer>
+                        <Table aria-label="staking rules table">
+                          <TableBody>
                             <TableRow>
                               <TableCell component="th" scope="row">
-                                <FormattedMessage id="form.labels.penalty" />
+                                <FormattedMessage id="form.labels.durationAmount" />
                               </TableCell>
-                              <TableCell align="right">{formatPenalty(rule.penalty)}%</TableCell>
-                            </TableRow>
-                          ) : null}
-                          {rule.stakes.length > 0 ? (
-                            <TableRow>
-                              <TableCell component="th" scope="row">
-                                <FormattedMessage id="form.labels.stakesCount" />
+                              <TableCell align="right">
+                                {formatMessage(
+                                  { id: `enums.durationUnit.${rule.durationUnit}` },
+                                  {
+                                    count: normalizeDuration({
+                                      durationAmount: rule.durationAmount,
+                                      durationUnit: rule.durationUnit,
+                                    }),
+                                  },
+                                )}
                               </TableCell>
-                              <TableCell align="right">{rule.stakes.length}</TableCell>
                             </TableRow>
-                          ) : null}
-                        </TableBody>
-                      </Table>
-                    </StyledTableContainer>
-                  </StyledCardContent>
-                  <StyledCardActions>
-                    <StakingAllowanceButton rule={rule} />
-                    <StakingDepositButton rule={rule} />
-                    <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
-                  </StyledCardActions>
-                </StyledCard>
-              </Grid>
-            );
-          })}
+                            {rule.penalty ? (
+                              <TableRow>
+                                <TableCell component="th" scope="row">
+                                  <FormattedMessage id="form.labels.penalty" />
+                                </TableCell>
+                                <TableCell align="right">{formatPenalty(rule.penalty)}%</TableCell>
+                              </TableRow>
+                            ) : null}
+                            {rule.stakes.length > 0 ? (
+                              <TableRow>
+                                <TableCell component="th" scope="row">
+                                  <FormattedMessage id="form.labels.stakesCount" />
+                                </TableCell>
+                                <TableCell align="right">{rule.stakes.length}</TableCell>
+                              </TableRow>
+                            ) : null}
+                          </TableBody>
+                        </Table>
+                      </StyledTableContainer>
+                    </StyledCardContent>
+                    <StyledCardActions>
+                      <StakingAllowanceButton rule={rule} />
+                      <StakingDepositButton rule={rule} />
+                      <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
+                    </StyledCardActions>
+                  </StyledCard>
+                </Grid>
+              );
+            })}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

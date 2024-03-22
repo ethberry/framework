@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
 import { MysteryBoxListItem } from "./item";
@@ -63,11 +63,13 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(mysterybox => (
-            <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryBoxListItem mysteryBox={mysterybox} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(mysterybox => (
+              <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
+                <MysteryBoxListItem mysteryBox={mysterybox} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

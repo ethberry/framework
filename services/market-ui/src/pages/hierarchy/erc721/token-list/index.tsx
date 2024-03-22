@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
@@ -54,11 +54,13 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(token => (
-            <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc721TokenListItem token={token} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(token => (
+              <Grid item lg={4} sm={6} xs={12} key={token.id}>
+                <Erc721TokenListItem token={token} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

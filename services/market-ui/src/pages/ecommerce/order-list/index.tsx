@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -59,9 +59,11 @@ export const OrderList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(order => (
-            <OrderItem key={order.id} order={order} />
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(order => (
+              <OrderItem key={order.id} order={order} />
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

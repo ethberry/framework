@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { stringify } from "qs";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -31,11 +31,13 @@ export const Erc721: FC<ITabPanelProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(template => (
-            <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc721TemplateListItem template={template} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(template => (
+              <Grid item lg={4} sm={6} xs={12} key={template.id}>
+                <Erc721TemplateListItem template={template} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

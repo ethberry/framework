@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -55,7 +55,7 @@ export const RaffleTokenList: FC = () => {
       <RaffleTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "auto" }}>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(token => (
             <StyledListItem key={token.id} wrap>
               <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
@@ -71,7 +71,7 @@ export const RaffleTokenList: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

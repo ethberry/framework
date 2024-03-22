@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { List, ListItemText } from "@mui/material";
-import { TxHashLink } from "@gemunion/mui-scanner";
-// Hooks
+import { ListItemText } from "@mui/material";
 import { useIndexedDB } from "react-indexed-db-hook";
 
-import { StyledListItem } from "@framework/styled";
+import { StyledListItem, StyledListWrapper } from "@framework/styled";
+import { TxHashLink } from "@gemunion/mui-scanner";
 
 import { ITabPanelProps } from "../tabs";
 
@@ -29,7 +28,7 @@ export const ProfileNotifications: FC<ITabPanelProps> = props => {
   }
   // TODO links
   return (
-    <List disablePadding={true}>
+    <StyledListWrapper count={txs.length}>
       {txs.map(tx => (
         <StyledListItem key={tx.id}>
           <ListItemText sx={{ width: 0.3 }}>Type # {tx.txType}</ListItemText>
@@ -42,6 +41,6 @@ export const ProfileNotifications: FC<ITabPanelProps> = props => {
           {/* </ListActions> */}
         </StyledListItem>
       ))}
-    </List>
+    </StyledListWrapper>
   );
 };

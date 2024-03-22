@@ -4,7 +4,7 @@ import { Grid, Button } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
-import { StyledListWrapper } from "@framework/styled";
+import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralTree } from "@framework/types";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -91,7 +91,7 @@ export const ReferralTree: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
           <DataGrid
             pagination
             paginationMode="server"
@@ -109,7 +109,7 @@ export const ReferralTree: FC = () => {
             }))}
             autoHeight
           />
-        </StyledListWrapper>
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Grid>
   );

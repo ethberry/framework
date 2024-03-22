@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
@@ -56,11 +56,13 @@ export const MysteryContractList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(contract => (
-            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
-              <MysteryContractListItem contract={contract} />
-            </StyledGrid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => (
+              <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
+                <MysteryContractListItem contract={contract} />
+              </StyledGrid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

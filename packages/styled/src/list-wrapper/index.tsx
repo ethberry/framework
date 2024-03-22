@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Root, StyledEmptyMessage, StyledList } from "./styled";
+import { StyledEmptyWrapper } from "../empty-wrapper";
+import { StyledList } from "./styled";
 
 export interface IStyledListWrapperProps {
   count?: number;
@@ -11,17 +12,11 @@ export interface IStyledListWrapperProps {
 }
 
 export const StyledListWrapper: FC<PropsWithChildren<IStyledListWrapperProps>> = props => {
-  const { children, count = 0, isLoading = false, message = "messages.empty-list", subheader } = props;
-
-  if (count) {
-    return <StyledList subheader={subheader}>{children}</StyledList>;
-  }
+  const { children, subheader, ...rest } = props;
 
   return (
-    <Root>
-      <StyledEmptyMessage>
-        <FormattedMessage id={isLoading ? "messages.loading" : message} />
-      </StyledEmptyMessage>
-    </Root>
+    <StyledEmptyWrapper {...rest}>
+      <StyledList subheader={subheader}>{children}</StyledList>
+    </StyledEmptyWrapper>
   );
 };

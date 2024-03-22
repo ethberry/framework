@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IToken, ITokenSearchDto } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -40,11 +40,13 @@ export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(token => (
-            <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc20CoinsListItem token={token} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(token => (
+              <Grid item lg={4} sm={6} xs={12} key={token.id}>
+                <Erc20CoinsListItem token={token} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

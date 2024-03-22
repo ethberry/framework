@@ -1,13 +1,12 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItemText } from "@mui/material";
+import { Button, ListItemText } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
-// import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { formatItem } from "@framework/exchange";
-import { ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
@@ -16,8 +15,6 @@ import { ClaimRedeemButton } from "../../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
-  // const { account } = useWeb3React();
-
   const {
     rows,
     count,
@@ -31,7 +28,6 @@ export const Claim: FC = () => {
   } = useCollection<IClaim, IClaimSearchDto>({
     baseUrl: `/claim`,
     search: {
-      // account,
       claimStatus: [ClaimStatus.NEW],
       claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
     },
@@ -54,7 +50,7 @@ export const Claim: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(claim => (
             <StyledListItem key={claim.id} wrap>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
@@ -68,7 +64,7 @@ export const Claim: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
       <StyledPagination
         shape="rounded"

@@ -5,7 +5,7 @@ import { stringify } from "qs";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 
 import { Erc1155TemplateListItem } from "../../../hierarchy/erc1155/template-list/item";
@@ -40,11 +40,13 @@ export const Erc1155: FC<ITabPanelProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(template => (
-            <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc1155TemplateListItem template={template} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(template => (
+              <Grid item lg={4} sm={6} xs={12} key={template.id}>
+                <Erc1155TemplateListItem template={template} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

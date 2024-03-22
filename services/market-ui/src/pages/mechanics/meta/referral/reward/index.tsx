@@ -1,20 +1,19 @@
 import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useAppDispatch, collectionActions } from "@gemunion/redux";
-
 import { Button, Grid } from "@mui/material";
 import { Redeem } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
+import { formatItem } from "@framework/exchange";
+import { StyledListWrapper } from "@framework/styled";
+import type { IReferralEvents, IReferralRewardShare, IReferralReportSearchDto } from "@framework/types";
+import { ClaimStatus } from "@framework/types";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection, useApiCall } from "@gemunion/react-hooks";
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-
-import type { IReferralRewardShare, IReferralReportSearchDto } from "@framework/types";
-import { ClaimStatus, IReferralEvents } from "@framework/types";
-import { formatItem } from "@framework/exchange";
+import { useAppDispatch, collectionActions } from "@gemunion/redux";
 
 export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
@@ -27,16 +26,10 @@ export enum RefClaimStatus {
 }
 
 export const ReferralReward: FC = () => {
-  const {
-    count,
-    rows,
-    search,
-    isLoading,
-    // isFiltersOpen,
-    // handleToggleFilters,
-    // handleSearch,
-    handleChangePaginationModel,
-  } = useCollection<IReferralEvents, IReferralRewardSearchDto>({
+  const { count, rows, search, isLoading, handleChangePaginationModel } = useCollection<
+    IReferralEvents,
+    IReferralRewardSearchDto
+  >({
     baseUrl: "/referral/reward",
     search: {
       // merchantIds: [1, 4], // TODO get list from purchases?
@@ -170,18 +163,11 @@ export const ReferralReward: FC = () => {
       <Breadcrumbs path={["dashboard", "referral", "referral.reward"]} />
 
       <PageHeader message="pages.referral.reward.title">
-        {/* <Button */}
-        {/*  startIcon={<FilterList />} */}
-        {/*  onClick={handleToggleFilters} */}
-        {/*  data-testid="ToggleFilterButton" */}
-        {/* > */}
-        {/*  <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} /> */}
-        {/* </Button> */}
         <Button startIcon={<Redeem />} onClick={handleClaim} disabled={disabledClaim} data-testid="ClaimButton">
           <FormattedMessage id={"form.buttons.claim"} />
         </Button>
       </PageHeader>
-      {rows.length > 0 ? (
+      <StyledListWrapper count={rows.length} isLoading={isLoading}>
         <DataGrid
           pagination
           paginationMode="server"
@@ -204,7 +190,7 @@ export const ReferralReward: FC = () => {
           }))}
           autoHeight
         />
-      ) : null}
+      </StyledListWrapper>
     </Grid>
   );
 };

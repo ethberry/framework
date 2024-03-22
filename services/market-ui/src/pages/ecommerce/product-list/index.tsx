@@ -9,7 +9,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 
 import { ProductItem } from "./item";
@@ -51,11 +51,13 @@ export const ProductList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(product => (
-            <Grid item lg={4} sm={6} xs={12} key={product.id}>
-              <ProductItem product={product} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(product => (
+              <Grid item lg={4} sm={6} xs={12} key={product.id}>
+                <ProductItem product={product} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 
