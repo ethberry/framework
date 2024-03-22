@@ -341,14 +341,19 @@ export class MysteryBoxService {
   }
 
   public async deactivateBoxes(assets: Array<AssetEntity>): Promise<DeleteResult> {
-    const mbxs = await this.mysteryBoxEntityRepository.find;
-    const mysteryBoxEntities = await this.findAll(
-      {
-        itemId: In(assets.map(asset => asset.id)),
-      },
-      { relations: { item: { components: true }, template: true } },
-    );
-    console.log("mysteryBoxEntities", mysteryBoxEntities);
+    const mysteryBoxEntities = await this.mysteryBoxEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          template: {
+            price: In(assets.map(asset => asset.id)),
+          },
+        },
+      ],
+    });
+
     for (const mysteryBoxEntity of mysteryBoxEntities) {
       await this.templateDeleteService.deactivateTemplate(mysteryBoxEntity.template);
     }
@@ -356,7 +361,7 @@ export class MysteryBoxService {
     await this.claimTemplateService.deactivateClaims(mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.item));
 
     return await this.mysteryBoxEntityRepository.delete({
-      itemId: In(assets.map(asset => asset.id)),
+      id: In(mysteryBoxEntities.map(mb => mb.id)),
     });
   }
 }
