@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,7 +9,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { formatEther } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
 import PonziWithdrawTokenABI from "@framework/abis/withdrawToken/Ponzi.json";
@@ -81,33 +80,27 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
   return (
     <ConfirmationDialog message="dialogs.ponziBalance" data-testid="PonziBalanceDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(balance => (
-              <StyledListItem key={balance.id}>
-                <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
-                <ListItemText>
-                  {formatEther(
-                    balance.amount,
-                    balance.token!.template!.contract!.decimals,
-                    balance.token!.template!.contract!.symbol,
-                  )}
-                </ListItemText>
-                <ListActions>
-                  <ListAction
-                    onClick={handleSetAmount(balance)}
-                    icon={CurrencyExchange}
-                    message="form.buttons.setAmount"
-                  />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(balance => (
+            <StyledListItem key={balance.id}>
+              <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
+              <ListItemText>
+                {formatEther(
+                  balance.amount,
+                  balance.token!.template!.contract!.decimals,
+                  balance.token!.template!.contract!.symbol,
+                )}
+              </ListItemText>
+              <ListActions>
+                <ListAction
+                  onClick={handleSetAmount(balance)}
+                  icon={CurrencyExchange}
+                  message="form.buttons.setAmount"
+                />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
       <AmountDialog
         onCancel={handleSetAmountCancel}

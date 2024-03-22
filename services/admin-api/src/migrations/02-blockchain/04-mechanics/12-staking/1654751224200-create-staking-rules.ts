@@ -14,6 +14,9 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.staking_rule_duration_unit_enum AS ENUM (
+        'YEAR',
+        'MONTH',
+        'WEEK',
         'DAY',
         'HOUR',
         'MINUTE'

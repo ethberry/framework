@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListActions, ListAction, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListActions, ListAction, StyledListItem, StyledPagination, StyledListWrapper } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, Erc998ContractFeatures } from "@framework/types";
 
@@ -85,7 +85,7 @@ export const Erc998Contract: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
             const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
@@ -116,7 +116,7 @@ export const Erc998Contract: FC = () => {
               </StyledListItem>
             );
           })}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

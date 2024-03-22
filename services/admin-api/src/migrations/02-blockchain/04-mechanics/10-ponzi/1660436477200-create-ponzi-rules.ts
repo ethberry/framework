@@ -14,6 +14,9 @@ export class CreatePonziRules1660436477200 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.ponzi_rule_duration_unit_enum AS ENUM (
+        'YEAR',
+        'MONTH',
+        'WEEK',
         'DAY',
         'HOUR',
         'MINUTE'
