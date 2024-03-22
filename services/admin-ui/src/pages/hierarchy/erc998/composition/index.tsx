@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
@@ -10,16 +10,16 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
+
+import unWhitelistChildERC998BlacklistABI from "@framework/abis/unWhitelistChild/ERC998Blacklist.json";
+import whiteListChildERC998BlacklistABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
-
-import unWhitelistChildERC998BlacklistABI from "@framework/abis/unWhitelistChild/ERC998Blacklist.json";
-import whiteListChildERC998BlacklistABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
 export const Erc998Composition: FC = () => {
   const {
@@ -146,7 +146,7 @@ export const Erc998Composition: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(composition => (
             <StyledListItem key={composition.id}>
               <ListItemText>
@@ -158,7 +158,7 @@ export const Erc998Composition: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

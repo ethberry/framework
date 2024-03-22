@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
@@ -11,7 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { InputType } from "@gemunion/types-collection";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 import { AchievementRuleStatus, TokenType } from "@framework/types";
 
@@ -71,7 +71,7 @@ export const AchievementRules: FC = () => {
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(rule => (
             <StyledListItem key={rule.id}>
               <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
@@ -82,7 +82,7 @@ export const AchievementRules: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

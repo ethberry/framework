@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -7,7 +7,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -84,7 +84,7 @@ export const WaitListContracts: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => (
             <StyledListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
@@ -108,7 +108,7 @@ export const WaitListContracts: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

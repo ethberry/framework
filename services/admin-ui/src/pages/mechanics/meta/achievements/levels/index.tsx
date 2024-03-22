@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 import { AchievementRuleStatus, TokenType } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -123,7 +123,7 @@ export const AchievementLevels: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(level => (
             <StyledListItem key={level.id}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
@@ -134,7 +134,7 @@ export const AchievementLevels: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

@@ -6,4 +6,5 @@ export * from "./card-media";
 export * from "./card-template-item";
 export * from "./list-item";
 export * from "./list-item-text";
+export * from "./list-wrapper";
 export * from "./pagination";

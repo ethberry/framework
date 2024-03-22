@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { PriceChange } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,7 +9,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { formatEther } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -27,8 +26,6 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   const { data, open, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAssetComponent>>([]);
-
-  // const { profile } = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -82,25 +79,19 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(comp => (
-              <StyledListItem key={comp.id}>
-                <ListItemText sx={{ width: 0.6 }}>{`${comp.template!.title} ${
-                  comp.token ? ` #${comp.token.tokenId}` : ""
-                }`}</ListItemText>
-                <ListItemText>{formatEther(comp.amount, comp.contract!.decimals, comp.contract!.symbol)}</ListItemText>
-                <ListActions>
-                  <ListAction onClick={handleWithdraw(comp)} message="form.buttons.withdraw" icon={PriceChange} />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(comp => (
+            <StyledListItem key={comp.id}>
+              <ListItemText sx={{ width: 0.6 }}>{`${comp.template!.title} ${
+                comp.token ? ` #${comp.token.tokenId}` : ""
+              }`}</ListItemText>
+              <ListItemText>{formatEther(comp.amount, comp.contract!.decimals, comp.contract!.symbol)}</ListItemText>
+              <ListActions>
+                <ListAction onClick={handleWithdraw(comp)} message="form.buttons.withdraw" icon={PriceChange} />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

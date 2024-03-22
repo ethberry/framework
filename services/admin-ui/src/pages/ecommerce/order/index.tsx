@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
 
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -94,7 +94,7 @@ export const Order: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List disablePadding={true}>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(order => (
             <StyledListItem key={order.id}>
               <ListItemText>Order #{order.id}</ListItemText>
@@ -104,7 +104,7 @@ export const Order: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

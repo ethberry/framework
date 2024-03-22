@@ -1035,6 +1035,7 @@
   "messages": {
     "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
     "empty-list": "Nothing to display",
+    "loading": "Loading...",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },

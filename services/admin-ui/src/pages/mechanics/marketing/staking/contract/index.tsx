@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
@@ -22,9 +22,9 @@ import { AllowanceButton } from "../../../../../components/buttons/mechanics/sta
 import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { StakingEditDialog } from "./edit";
 import { StakingWithdrawPenaltyButton } from "../../../../../components/buttons/mechanics/staking/withdraw-penalty";
 import { StakingCheckBalanceButton } from "../../../../../components/buttons/mechanics/staking/check-balances";
+import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
   const {
@@ -86,7 +86,7 @@ export const StakingContracts: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => (
             <StyledListItem key={contract.id}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
@@ -112,7 +112,7 @@ export const StakingContracts: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

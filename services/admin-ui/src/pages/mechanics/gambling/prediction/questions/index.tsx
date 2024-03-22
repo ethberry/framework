@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -9,7 +9,7 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPredictionQuestion } from "@framework/types";
 import { IPredictionQuestionSearchDto, PredictionQuestionStatus } from "@framework/types";
 
@@ -76,7 +76,7 @@ export const PredictionQuestions: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(question => (
             <StyledListItem key={question.id}>
               <ListItemText sx={{ width: 0.6 }}>{question.title}</ListItemText>
@@ -91,7 +91,7 @@ export const PredictionQuestions: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

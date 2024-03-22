@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, List, ListItemText } from "@mui/material";
+import { Button, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -11,7 +11,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 
 import { WaitListListCreateButton } from "../../../../../components/buttons/mechanics/wait-list/list/create";
@@ -78,7 +78,7 @@ export const WaitListList: FC = () => {
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} testId="WaitListListSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(waitListList => (
             <StyledListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
@@ -91,7 +91,7 @@ export const WaitListList: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

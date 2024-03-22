@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPredictionAnswer, IPredictionAnswerSearchDto, IPredictionQuestion } from "@framework/types";
 
 import { PredictionAnswerViewDialog } from "./view";
@@ -51,7 +51,7 @@ export const PredictionAnswers: FC = () => {
       <PredictionAnswerSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(answer => (
             <StyledListItem key={answer.id}>
               <ListItemText sx={{ width: 0.2 }}>{answer.question.title}</ListItemText>
@@ -61,7 +61,7 @@ export const PredictionAnswers: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

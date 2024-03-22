@@ -719,6 +719,7 @@
   "messages": {
     "empty-list": "Nothing to display",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "loading": "Loading...",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",
     "uncaughtError": "Uncaught error happened"

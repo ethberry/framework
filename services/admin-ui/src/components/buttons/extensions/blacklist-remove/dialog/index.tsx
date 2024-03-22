@@ -9,7 +9,7 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
 import unBlacklistERC1155BlacklistABI from "@framework/abis/unBlacklist/ERC1155Blacklist.json";
 
@@ -54,22 +54,16 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
   return (
     <ConfirmationDialog message="dialogs.unBlacklist" data-testid="AccessListUnBlacklistDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(access => (
-              <StyledListItem key={access.id}>
-                <ListItemText>{access.account}</ListItemText>
-                <ListActions>
-                  <ListAction onClick={handleUnBlacklist(access)} message="form.buttons.delete" icon={Delete} />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(access => (
+            <StyledListItem key={access.id}>
+              <ListItemText>{access.account}</ListItemText>
+              <ListActions>
+                <ListAction onClick={handleUnBlacklist(access)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

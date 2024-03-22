@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { ListItemText, Typography } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
 import { useUser } from "@gemunion/provider-user";
@@ -11,7 +11,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { formatEther } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IBalance, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -73,44 +73,34 @@ export const PaymentSplitterBalanceDialog: FC<IPaymentSplitterBalanceDialogProps
   return (
     <ConfirmationDialog message="dialogs.paymentSplitterBalances" data-testid="PaymentSplitterBalanceDialog" {...rest}>
       {rows.length ? (
-        <Typography variant="body2">
-          <FormattedMessage id="dialogs.paymentSplitterWallet" values={{ wallet }} />
-        </Typography>
-      ) : null}
-      {rows.length ? (
-        <Typography variant="body2">
-          <FormattedMessage id="dialogs.paymentSplitterShares" values={{ currentShare, total }} />
-        </Typography>
+        <Fragment>
+          <Typography variant="body2">
+            <FormattedMessage id="dialogs.paymentSplitterWallet" values={{ wallet }} />
+          </Typography>
+          <Typography variant="body2">
+            <FormattedMessage id="dialogs.paymentSplitterShares" values={{ currentShare, total }} />
+          </Typography>
+        </Fragment>
       ) : null}
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(balance => (
-              <StyledListItem key={balance.id}>
-                <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
-                <ListItemText>
-                  {formatEther(
-                    balance.amount,
-                    // getReleasableBalance(balance),
-                    balance.token!.template!.contract!.decimals,
-                    balance.token!.template!.contract!.symbol,
-                  )}
-                </ListItemText>
-                <ListActions>
-                  <ListAction
-                    onClick={handleRelease(balance)}
-                    icon={CurrencyExchange}
-                    message="form.buttons.setAmount"
-                  />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(balance => (
+            <StyledListItem key={balance.id}>
+              <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
+              <ListItemText>
+                {formatEther(
+                  balance.amount,
+                  // getReleasableBalance(balance),
+                  balance.token!.template!.contract!.decimals,
+                  balance.token!.template!.contract!.symbol,
+                )}
+              </ListItemText>
+              <ListActions>
+                <ListAction onClick={handleRelease(balance)} icon={CurrencyExchange} message="form.buttons.setAmount" />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );
