@@ -1,12 +1,11 @@
 import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IUser } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
@@ -30,7 +29,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     variant,
   } = props;
 
-  const { profile } = useUser<IUser>();
+  const { account = "" } = useWeb3React();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -82,7 +81,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         initialValues={{
           contractId,
           mysteryId: 0,
-          account: profile.wallet,
+          account,
         }}
       />
     </Fragment>

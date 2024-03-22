@@ -3,10 +3,9 @@ import { Link } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
-import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IUser } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
@@ -31,7 +30,6 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   } = props;
 
   const { account } = useWeb3React();
-  const { profile } = useUser<IUser>();
 
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
@@ -58,9 +56,9 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   };
 
   useEffect(() => {
-    if (account || profile?.wallet) {
+    if (account) {
       void checkAccessDefaultAdmin(void 0, {
-        account: account || profile?.wallet,
+        account,
         address,
       })
         .then((json: { hasRole: boolean }) => {

@@ -1,13 +1,12 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
-import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { ITemplate, IUser } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import ERC20MintABI from "@framework/abis/mint/ERC20Blacklist.json";
@@ -33,7 +32,8 @@ export const MintButton: FC<IMintButtonProps> = props => {
     variant,
   } = props;
 
-  const { profile } = useUser<IUser>();
+  const { account = "" } = useWeb3React();
+
   const { checkAccessMint } = useCheckAccessMint();
   const [hasAccess, setHasAccess] = useState(false);
 
@@ -90,9 +90,9 @@ export const MintButton: FC<IMintButtonProps> = props => {
   };
 
   useEffect(() => {
-    if (profile?.wallet) {
+    if (account) {
       void checkAccessMint(void 0, {
-        account: profile.wallet,
+        account,
         address: contract?.address,
       })
         .then((json: { hasRole: boolean }) => {
@@ -100,7 +100,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         })
         .catch(console.error);
     }
-  }, [profile?.wallet]);
+  }, [account]);
 
   return (
     <Fragment>
@@ -143,7 +143,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
               } as unknown as ITemplateAssetComponent,
             ],
           } as ITemplateAsset,
-          account: profile.wallet,
+          account,
         }}
       />
     </Fragment>
