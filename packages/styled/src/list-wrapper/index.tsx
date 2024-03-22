@@ -1,8 +1,7 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { List } from "@mui/material";
 
-import { Root, StyledEmptyMessage } from "./styled";
+import { Root, StyledEmptyMessage, StyledList } from "./styled";
 
 export interface IStyledListWrapperProps {
   count?: number;
@@ -15,7 +14,7 @@ export const StyledListWrapper: FC<PropsWithChildren<IStyledListWrapperProps>> =
   const { children, count = 0, isLoading = false, message = "messages.empty-list", subheader } = props;
 
   if (count) {
-    return <List subheader={subheader}>{children}</List>;
+    return <StyledList subheader={subheader}>{children}</StyledList>;
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Root = styled(Box)({
@@ -9,6 +9,10 @@ export const Root = styled(Box)({
   minHeight: 100,
   height: "100%",
   width: "100%",
+});
+
+export const StyledList = styled(List)({
+  overflowX: "auto",
 });
 
 export const StyledEmptyMessage = styled(Typography)(({ theme }) => ({
