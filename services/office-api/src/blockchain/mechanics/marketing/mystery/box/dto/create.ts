@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import type { IMysteryBoxCreateDto } from "../interfaces";
-import { NotNativeDto, SemiCoinDto } from "../../../../../exchange/asset/dto";
+import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 
 export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCreateDto {
   @ApiProperty({

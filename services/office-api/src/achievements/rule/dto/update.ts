@@ -3,11 +3,10 @@ import { IsEnum, IsInt, IsOptional, Min, ValidateNested, IsISO8601, IsString } f
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 
 import { IAchievementRuleUpdateDto } from "../interfaces";
-import { AllTypesDto } from "../../../blockchain/exchange/asset/dto";
+import { AllTypesDto, IsBeforeDate } from "@gemunion/nest-js-validators";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
   @ApiPropertyOptional()

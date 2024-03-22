@@ -6,7 +6,7 @@ import { IPhoto } from "@framework/types";
 
 import type { IProductItemCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";
-import { CoinDto } from "../../../blockchain/exchange/asset/dto";
+import { CoinDto } from "@gemunion/nest-js-validators";
 
 export class ProductItemCreateDto implements IProductItemCreateDto {
   @ApiProperty({

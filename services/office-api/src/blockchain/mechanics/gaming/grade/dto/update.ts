@@ -3,9 +3,9 @@ import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "clas
 import { Transform, Type } from "class-transformer";
 
 import { GradeStatus, GradeStrategy } from "@framework/types";
+import { SemiCoinDto } from "@gemunion/nest-js-validators";
 
 import type { IGradeUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../../exchange/asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({

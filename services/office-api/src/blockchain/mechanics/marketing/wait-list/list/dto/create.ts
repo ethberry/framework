@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 import type { IWaitListListCreateDto } from "@framework/types";
 
-import { SemiCoinDto } from "../../../../../exchange/asset/dto";
+import { SemiCoinDto } from "@gemunion/nest-js-validators";
 
 export class WaitListListCreateDto extends SearchableDto implements IWaitListListCreateDto {
   @ApiProperty({

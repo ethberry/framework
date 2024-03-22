@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import type { IVestingClaimCreateDto } from "@framework/types";
 
 import { VestingContractDeployDto } from "../../../../../contract-manager/dto";
-import { CoinDto } from "../../../../../exchange/asset/dto";
+import { CoinDto } from "@gemunion/nest-js-validators";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   @ApiProperty({

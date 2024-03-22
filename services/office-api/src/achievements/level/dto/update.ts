@@ -4,8 +4,8 @@ import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 
-import { AllTypesDto } from "../../../blockchain/exchange/asset/dto";
 import { IAchievementLevelUpdateDto } from "../interfaces";
+import { AllTypesDto } from "@gemunion/nest-js-validators";
 
 export class AddressUpdateDto extends SearchableDto implements IAchievementLevelUpdateDto {
   @ApiPropertyOptional()

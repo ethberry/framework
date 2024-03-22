@@ -2,10 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBigInt } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
-import { SemiCoinDto } from "../../../exchange/asset/dto";
+import { IsBigInt, SemiCoinDto } from "@gemunion/nest-js-validators";
 import type { ITemplateCreateDto } from "../interfaces";
 
 export class TemplateCreateDto extends SearchableDto implements ITemplateCreateDto {
