@@ -1,6 +1,15 @@
-import { ForbiddenException, Injectable, NotFoundException, forwardRef, Inject } from "@nestjs/common";
+import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import {
+  Brackets,
+  DeleteResult,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  In,
+  Repository,
+  UpdateResult,
+} from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
 import { MysteryBoxStatus, TemplateStatus } from "@framework/types";
@@ -12,6 +21,9 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { ClaimTemplateService } from "../../claim/template/template.service";
+import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
 
 @Injectable()
 export class MysteryBoxService {
@@ -21,8 +33,11 @@ export class MysteryBoxService {
     private readonly tokenService: TokenService,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    @Inject(forwardRef(() => TemplateDeleteService))
+    private readonly templateDeleteService: TemplateDeleteService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
+    private readonly claimTemplateService: ClaimTemplateService,
   ) {}
 
   public async search(
@@ -208,7 +223,7 @@ export class MysteryBoxService {
     });
   }
 
-  public async update(
+  public async updateAll(
     where: FindOptionsWhere<MysteryBoxEntity>,
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
@@ -258,17 +273,6 @@ export class MysteryBoxService {
     return mysteryBoxEntity.save();
   }
 
-  public async deactivateBoxes(assetTemplateId: number): Promise<void> {
-    const boxesWithTemplateInItemOrPrice = await this.findAll(
-      { item: { components: { templateId: assetTemplateId } } },
-      { relations: { item: { components: { template: true } } } },
-    );
-
-    for (const box of boxesWithTemplateInItemOrPrice) {
-      await Object.assign(box, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE }).save();
-    }
-  }
-
   public async create(dto: IMysteryBoxCreateDto, userEntity: UserEntity): Promise<MysteryBoxEntity> {
     const { price, item, contractId } = dto;
 
@@ -302,6 +306,13 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
+  public async update(
+    where: FindOptionsWhere<MysteryBoxEntity>,
+    dto: Partial<IMysteryBoxUpdateDto>,
+  ): Promise<UpdateResult> {
+    return this.mysteryBoxEntityRepository.update(where, dto);
+  }
+
   public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<MysteryBoxEntity> {
     const mysteryBoxEntity = await this.findOne({ id: where.id }, { relations: { template: { contract: true } } });
 
@@ -327,5 +338,30 @@ export class MysteryBoxService {
       await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
       return mysteryBoxEntity.remove();
     }
+  }
+
+  public async deactivateBoxes(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const mysteryBoxEntities = await this.mysteryBoxEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          template: {
+            price: In(assets.map(asset => asset.id)),
+          },
+        },
+      ],
+    });
+
+    for (const mysteryBoxEntity of mysteryBoxEntities) {
+      await this.templateDeleteService.deactivateTemplate(mysteryBoxEntity.template);
+    }
+
+    await this.claimTemplateService.deactivateClaims(mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.item));
+
+    return await this.mysteryBoxEntityRepository.delete({
+      id: In(mysteryBoxEntities.map(mb => mb.id)),
+    });
   }
 }

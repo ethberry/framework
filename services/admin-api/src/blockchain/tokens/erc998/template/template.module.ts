@@ -3,11 +3,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
+import { TemplateDeleteModule } from "../../../hierarchy/template/template.delete.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { Erc998TokenModule } from "../token/token.module";
 import { Erc998TemplateService } from "./template.service";
 import { Erc998TemplateController } from "./template.controller";
-import { MysteryBoxModule } from "../../../mechanics/marketing/mystery/box/box.module";
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { MysteryBoxModule } from "../../../mechanics/marketing/mystery/box/box.m
     Erc998TokenModule,
     ContractModule,
     TypeOrmModule.forFeature([TemplateEntity]),
-    MysteryBoxModule,
+    TemplateDeleteModule,
   ],
   providers: [Erc998TemplateService],
   controllers: [Erc998TemplateController],

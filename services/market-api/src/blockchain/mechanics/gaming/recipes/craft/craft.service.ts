@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -14,6 +14,7 @@ import { SettingsService } from "../../../../../infrastructure/settings/settings
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { CraftEntity } from "./craft.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class CraftService {
@@ -137,6 +138,13 @@ export class CraftService {
     return queryBuilder.getOne();
   }
 
+  public findAll(
+    where: FindOptionsWhere<CraftEntity>,
+    options?: FindManyOptions<CraftEntity>,
+  ): Promise<Array<CraftEntity>> {
+    return this.craftEntityRepository.find({ where, ...options });
+  }
+
   public async sign(dto: ICraftSignDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, craftId, chainId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
@@ -212,5 +220,18 @@ export class CraftService {
     const count = await queryBuilder.getCount();
 
     return { count };
+  }
+
+  public async deactivateCrafts(assets: Array<AssetEntity>): Promise<void> {
+    const craftEntities = await this.findAll(
+      {
+        item: In(assets.map(asset => asset.id)),
+      },
+      { relations: { item: { components: true } } },
+    );
+
+    for (const craftEntity of craftEntities) {
+      await Object.assign(craftEntity, { craftStatus: CraftStatus.INACTIVE }).save();
+    }
   }
 }

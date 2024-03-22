@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
 import { ContractEventType, MergeStatus, IMergeSearchDto, TemplateStatus } from "@framework/types";
 
@@ -9,6 +9,7 @@ import { EventHistoryService } from "../../../../event-history/event-history.ser
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { MergeEntity } from "./merge.entity";
 import type { IMergeCreateDto, IMergeUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class MergeService {
@@ -176,6 +177,25 @@ export class MergeService {
       await mergeEntity.save();
     } else {
       await mergeEntity.remove();
+    }
+  }
+
+  public async deactivateMerge(assets: Array<AssetEntity>): Promise<void> {
+    const mergeEntities = await this.mergeEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          price: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    for (const mergeEntity of mergeEntities) {
+      await this.mergeEntityRepository.delete({ id: mergeEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(mergeEntity);
     }
   }
 }

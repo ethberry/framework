@@ -7,8 +7,7 @@ import { SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import type { IWaitListList } from "@framework/types";
-import { ContractStatus, ModuleType } from "@framework/types";
+import { IWaitListList, TokenType, ContractStatus, ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -46,6 +45,7 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
         prefix="item"
         readOnly={!!id}
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
       />
       <EntityInput
         name="contractId"

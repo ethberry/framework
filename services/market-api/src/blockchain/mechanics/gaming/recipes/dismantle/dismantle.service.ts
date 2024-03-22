@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, FindManyOptions, In } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -23,6 +23,7 @@ import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { DismantleEntity } from "./dismantle.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class DismantleService {
@@ -136,6 +137,13 @@ export class DismantleService {
     return queryBuilder.getOne();
   }
 
+  public findAll(
+    where: FindOptionsWhere<DismantleEntity>,
+    options?: FindManyOptions<DismantleEntity>,
+  ): Promise<Array<DismantleEntity>> {
+    return this.dismantleEntityRepository.find({ where, ...options });
+  }
+
   public async sign(dto: IDismantleSignDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
     const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
@@ -238,6 +246,19 @@ export class DismantleService {
       return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);
     } else {
       throw new BadRequestException("unknownStrategy");
+    }
+  }
+
+  public async deactivateDismantle(assets: Array<AssetEntity>): Promise<void> {
+    const dismantleEntities = await this.findAll(
+      {
+        item: In(assets.map(asset => asset.id)),
+      },
+      { relations: { item: { components: true } } },
+    );
+
+    for (const dismantleEntity of dismantleEntities) {
+      await Object.assign(dismantleEntity, { dismantleStatus: DismantleStatus.INACTIVE }).save();
     }
   }
 }

@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
 import { ContractEventType, DismantleStatus, IDismantleSearchDto, TemplateStatus } from "@framework/types";
 
@@ -9,6 +9,7 @@ import { EventHistoryService } from "../../../../event-history/event-history.ser
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { DismantleEntity } from "./dismantle.entity";
 import type { IDismantleCreateDto, IDismantleUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class DismantleService {
@@ -172,6 +173,25 @@ export class DismantleService {
       await dismantleEntity.save();
     } else {
       await dismantleEntity.remove();
+    }
+  }
+
+  public async deactivateDismantle(assets: Array<AssetEntity>): Promise<void> {
+    const dismantleEntities = await this.dismantleEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          price: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    for (const dismantleEntity of dismantleEntities) {
+      await this.dismantleEntityRepository.delete({ id: dismantleEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(dismantleEntity);
     }
   }
 }

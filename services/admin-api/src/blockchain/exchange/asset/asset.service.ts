@@ -151,4 +151,11 @@ export class AssetService {
   ): Promise<AssetEntity | null> {
     return this.assetEntityRepository.findOne({ where, ...options });
   }
+
+  public findAll(
+    where: FindOptionsWhere<AssetEntity>,
+    options?: FindOneOptions<AssetEntity>,
+  ): Promise<Array<AssetEntity>> {
+    return this.assetEntityRepository.find({ where, ...options });
+  }
 }
