@@ -341,13 +341,14 @@ export class MysteryBoxService {
   }
 
   public async deactivateBoxes(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const mbxs = await this.mysteryBoxEntityRepository.find;
     const mysteryBoxEntities = await this.findAll(
       {
         itemId: In(assets.map(asset => asset.id)),
       },
       { relations: { item: { components: true }, template: true } },
     );
-
+    console.log("mysteryBoxEntities", mysteryBoxEntities);
     for (const mysteryBoxEntity of mysteryBoxEntities) {
       await this.templateDeleteService.deactivateTemplate(mysteryBoxEntity.template);
     }

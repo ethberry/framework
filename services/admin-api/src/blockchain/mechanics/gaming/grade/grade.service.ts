@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
 import type { IGradeSearchDto } from "@framework/types";
 import { GradeStatus } from "@framework/types";
@@ -12,6 +12,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import type { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class GradeService {
@@ -163,5 +164,19 @@ export class GradeService {
 
   public delete(where: FindOptionsWhere<GradeEntity>, userEntity: UserEntity): Promise<GradeEntity> {
     return this.update(where, { gradeStatus: GradeStatus.INACTIVE }, userEntity);
+  }
+
+  public async deactivateGrades(assets: Array<AssetEntity>): Promise<void> {
+    const gradeEntities = await this.gradeEntityRepository.find({
+      where: {
+        priceId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    for (const gradeEntity of gradeEntities) {
+      await this.gradeEntityRepository.delete({ id: gradeEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(craftEntity);
+    }
   }
 }

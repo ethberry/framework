@@ -10,6 +10,10 @@ import { TemplateDeleteService } from "./template.delete.service";
 import { CraftModule } from "../../mechanics/gaming/recipes/craft/craft.module";
 import { MergeModule } from "../../mechanics/gaming/recipes/merge/merge.module";
 import { DismantleModule } from "../../mechanics/gaming/recipes/dismantle/dismantle.module";
+import { GradeModule } from "../../mechanics/gaming/grade/grade.module";
+import { WaitListListModule } from "../../mechanics/marketing/wait-list/list/list.module";
+import { RentModule } from "../../mechanics/gaming/rent/rent.module";
+import { StakingRulesModule } from "../../mechanics/marketing/staking/rules/rules.module";
 
 @Module({
   imports: [
@@ -19,6 +23,10 @@ import { DismantleModule } from "../../mechanics/gaming/recipes/dismantle/disman
     forwardRef(() => CraftModule),
     forwardRef(() => MergeModule),
     forwardRef(() => DismantleModule),
+    forwardRef(() => GradeModule),
+    forwardRef(() => WaitListListModule),
+    forwardRef(() => RentModule),
+    forwardRef(() => StakingRulesModule),
     TypeOrmModule.forFeature([TemplateEntity]),
     ClaimTemplateModule,
   ],

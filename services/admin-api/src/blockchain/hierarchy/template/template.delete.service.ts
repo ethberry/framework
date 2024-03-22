@@ -13,6 +13,10 @@ import { ClaimTemplateService } from "../../mechanics/marketing/claim/template/t
 import { CraftService } from "../../mechanics/gaming/recipes/craft/craft.service";
 import { MergeService } from "../../mechanics/gaming/recipes/merge/merge.service";
 import { DismantleService } from "../../mechanics/gaming/recipes/dismantle/dismantle.service";
+import { GradeService } from "../../mechanics/gaming/grade/grade.service";
+import { RentService } from "../../mechanics/gaming/rent/rent.service";
+import { WaitListListService } from "../../mechanics/marketing/wait-list/list/list.service";
+import { StakingRulesService } from "../../mechanics/marketing/staking/rules/rules.service";
 
 @Injectable()
 export class TemplateDeleteService {
@@ -26,6 +30,10 @@ export class TemplateDeleteService {
     protected readonly craftService: CraftService,
     protected readonly mergeService: MergeService,
     protected readonly dismantleService: DismantleService,
+    protected readonly gradeService: GradeService,
+    protected readonly rentService: RentService,
+    protected readonly waitListListService: WaitListListService,
+    protected readonly stakingRulesService: StakingRulesService,
   ) {}
 
   public findOne(
@@ -67,9 +75,15 @@ export class TemplateDeleteService {
       },
     });
 
+    // Delete use in mechanics
     await this.craftService.deactivateCrafts(assets);
     await this.mergeService.deactivateMerge(assets);
     await this.dismantleService.deactivateDismantle(assets);
+
+    await this.gradeService.deactivateGrades(assets);
+    await this.rentService.deactivateRent(assets);
+    await this.waitListListService.deactivateWaitlist(assets);
+    await this.stakingRulesService.deactivateStakingRules(assets);
 
     return Promise.allSettled([
       this.mysteryBoxService.deactivateBoxes(assets),

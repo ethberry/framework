@@ -23,6 +23,7 @@ import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class WaitListListService {
@@ -281,5 +282,19 @@ export class WaitListListService {
         },
       );
     });
+  }
+
+  public async deactivateWaitlist(assets: Array<AssetEntity>): Promise<void> {
+    const waitListEntities = await this.waitListListEntityRepository.find({
+      where: {
+        itemId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    for (const waitListEntity of waitListEntities) {
+      await this.waitListListEntityRepository.delete({ id: waitListEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(craftEntity);
+    }
   }
 }

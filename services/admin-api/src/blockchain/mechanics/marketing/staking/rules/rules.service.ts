@@ -9,6 +9,7 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { StakingRulesEntity } from "./rules.entity";
 import type { IStakingRuleAutocompleteDto, IStakingRuleUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class StakingRulesService {
@@ -210,5 +211,24 @@ export class StakingRulesService {
     Object.assign(stakingRuleEntity, dto);
 
     return stakingRuleEntity.save();
+  }
+
+  public async deactivateStakingRules(assets: Array<AssetEntity>): Promise<void> {
+    const craftEntities = await this.stakingRuleEntityRepository.find({
+      where: [
+        {
+          deposit: In(assets.map(asset => asset.id)),
+        },
+        {
+          reward: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    for (const craftEntity of craftEntities) {
+      await this.stakingRuleEntityRepository.delete({ id: craftEntity.id });
+      // TODO deactivate?
+      // await this.deactivateEntity(craftEntity);
+    }
   }
 }
