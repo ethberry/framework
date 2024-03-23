@@ -54,8 +54,7 @@ jobs:
 
       - name: Git submodule
         run: |
-          git config -f .gitmodules https://github.com/Gemunion/framework-contracts.git
-          git submodule update --init
+          git submodule update --remote --merge
 
       - name: Npm run test
         run: npm run test
