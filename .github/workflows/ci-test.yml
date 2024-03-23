@@ -53,6 +53,11 @@ jobs:
       - name: Install Packages
         run: npm i
 
+      - name: Git submodule
+        run: |
+          git config -f .gitmodules https://github.com/Gemunion/framework-contracts.git
+          git submodule update --init
+
       - name: Npm run test
         run: npm run test
         env:

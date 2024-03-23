@@ -1,5 +1,12 @@
 #cloudbuild.yaml
 steps:
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - -c
+      - |
+        git config -f .gitmodules https://github.com/Gemunion/framework-contracts.git
+        git submodule update --init
   # Download .env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/.env", ".env"]
