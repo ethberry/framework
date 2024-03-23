@@ -9,7 +9,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository, DeleteResult } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
@@ -284,17 +284,15 @@ export class WaitListListService {
     });
   }
 
-  public async deactivateWaitlist(assets: Array<AssetEntity>): Promise<void> {
+  public async deactivateWaitlist(assets: Array<AssetEntity>): Promise<DeleteResult> {
     const waitListEntities = await this.waitListListEntityRepository.find({
       where: {
         itemId: In(assets.map(asset => asset.id)),
       },
     });
 
-    for (const waitListEntity of waitListEntities) {
-      await this.waitListListEntityRepository.delete({ id: waitListEntity.id });
-      // TODO deactivate?
-      // await this.deactivateEntity(craftEntity);
-    }
+    return await this.waitListListEntityRepository.delete({
+      id: In(waitListEntities.map(w => w.id)),
+    });
   }
 }

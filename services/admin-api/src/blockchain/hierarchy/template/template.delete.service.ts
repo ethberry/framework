@@ -75,17 +75,15 @@ export class TemplateDeleteService {
       },
     });
 
-    // Delete use in mechanics
-    await this.craftService.deactivateCrafts(assets);
-    await this.mergeService.deactivateMerge(assets);
-    await this.dismantleService.deactivateDismantle(assets);
-
-    await this.gradeService.deactivateGrades(assets);
-    await this.rentService.deactivateRent(assets);
-    await this.waitListListService.deactivateWaitlist(assets);
-    await this.stakingRulesService.deactivateStakingRules(assets);
-
     return Promise.allSettled([
+      // Delete use in mechanics
+      this.craftService.deactivateCrafts(assets),
+      this.mergeService.deactivateMerge(assets),
+      this.dismantleService.deactivateDismantle(assets),
+      this.gradeService.deactivateGrades(assets),
+      this.rentService.deactivateRent(assets),
+      this.waitListListService.deactivateWaitlist(assets),
+      this.stakingRulesService.deactivateStakingRules(assets),
       this.mysteryBoxService.deactivateBoxes(assets),
       this.claimTemplateService.deactivateClaims(assets),
     ]);

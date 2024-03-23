@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
 import { ContractEventType, CraftStatus, ICraftSearchDto, TemplateStatus } from "@framework/types";
 
@@ -187,7 +187,7 @@ export class CraftService {
     }
   }
 
-  public async deactivateCrafts(assets: Array<AssetEntity>): Promise<void> {
+  public async deactivateCrafts(assets: Array<AssetEntity>): Promise<DeleteResult> {
     const craftEntities = await this.craftEntityRepository.find({
       where: [
         {
@@ -199,10 +199,8 @@ export class CraftService {
       ],
     });
 
-    for (const craftEntity of craftEntities) {
-      await this.craftEntityRepository.delete({ id: craftEntity.id });
-      // TODO deactivate?
-      // await this.deactivateEntity(craftEntity);
-    }
+    return await this.craftEntityRepository.delete({
+      id: In(craftEntities.map(cr => cr.id)),
+    });
   }
 }

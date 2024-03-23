@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
 import { ContractEventType, MergeStatus, IMergeSearchDto, TemplateStatus } from "@framework/types";
 
@@ -180,7 +180,7 @@ export class MergeService {
     }
   }
 
-  public async deactivateMerge(assets: Array<AssetEntity>): Promise<void> {
+  public async deactivateMerge(assets: Array<AssetEntity>): Promise<DeleteResult> {
     const mergeEntities = await this.mergeEntityRepository.find({
       where: [
         {
@@ -192,10 +192,8 @@ export class MergeService {
       ],
     });
 
-    for (const mergeEntity of mergeEntities) {
-      await this.mergeEntityRepository.delete({ id: mergeEntity.id });
-      // TODO deactivate?
-      // await this.deactivateEntity(mergeEntity);
-    }
+    return await this.mergeEntityRepository.delete({
+      id: In(mergeEntities.map(m => m.id)),
+    });
   }
 }

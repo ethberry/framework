@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
 import { ContractEventType, DismantleStatus, IDismantleSearchDto, TemplateStatus } from "@framework/types";
 
@@ -176,7 +176,7 @@ export class DismantleService {
     }
   }
 
-  public async deactivateDismantle(assets: Array<AssetEntity>): Promise<void> {
+  public async deactivateDismantle(assets: Array<AssetEntity>): Promise<DeleteResult> {
     const dismantleEntities = await this.dismantleEntityRepository.find({
       where: [
         {
@@ -188,10 +188,8 @@ export class DismantleService {
       ],
     });
 
-    for (const dismantleEntity of dismantleEntities) {
-      await this.dismantleEntityRepository.delete({ id: dismantleEntity.id });
-      // TODO deactivate?
-      // await this.deactivateEntity(dismantleEntity);
-    }
+    return await this.dismantleEntityRepository.delete({
+      id: In(dismantleEntities.map(m => m.id)),
+    });
   }
 }

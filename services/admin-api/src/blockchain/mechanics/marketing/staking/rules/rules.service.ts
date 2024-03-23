@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeleteResult } from "typeorm";
 
 import type { IStakingRuleSearchDto } from "@framework/types";
 import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
@@ -213,8 +213,8 @@ export class StakingRulesService {
     return stakingRuleEntity.save();
   }
 
-  public async deactivateStakingRules(assets: Array<AssetEntity>): Promise<void> {
-    const craftEntities = await this.stakingRuleEntityRepository.find({
+  public async deactivateStakingRules(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const rulesEntities = await this.stakingRuleEntityRepository.find({
       where: [
         {
           deposit: In(assets.map(asset => asset.id)),
@@ -225,10 +225,8 @@ export class StakingRulesService {
       ],
     });
 
-    for (const craftEntity of craftEntities) {
-      await this.stakingRuleEntityRepository.delete({ id: craftEntity.id });
-      // TODO deactivate?
-      // await this.deactivateEntity(craftEntity);
-    }
+    return await this.stakingRuleEntityRepository.delete({
+      id: In(rulesEntities.map(r => r.id)),
+    });
   }
 }
