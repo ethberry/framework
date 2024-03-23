@@ -1,11 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsOptional, ValidateNested } from "class-validator";
-
 import { Type } from "class-transformer";
 
-import type { IMergeCreateDto } from "../interfaces";
-import { NftDto } from "../../../../../exchange/asset/dto/custom";
+import { NftDto } from "@gemunion/nest-js-validators";
 import { MergeStatus } from "@framework/types";
+
+import type { IMergeCreateDto } from "../interfaces";
 
 export class MergeCreateDto implements IMergeCreateDto {
   @ApiProperty({

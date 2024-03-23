@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +12,7 @@ import { useUser } from "@gemunion/provider-user";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
@@ -104,7 +104,7 @@ export const VestingClaim: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "auto" }}>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(vesting => (
             <StyledListItem key={vesting.id} wrap>
               <ListItemText sx={{ width: 0.5 }}>
@@ -126,7 +126,7 @@ export const VestingClaim: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

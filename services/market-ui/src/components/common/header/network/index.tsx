@@ -1,5 +1,5 @@
 import { FC, MouseEvent, useState } from "react";
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
+import { IconButton, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -8,7 +8,7 @@ import { SANDBOX_CHAINS } from "@gemunion/provider-wallet";
 import type { IUser } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 
-import { spinnerMixin, StyledBadge, StyledCircle, StyledSvgIcon } from "./styled";
+import { spinnerMixin, StyledBadge, StyledCircle, StyledListItemIcon, StyledSvgIcon } from "./styled";
 import { getChainIconParams } from "./utils";
 
 export const NetworkButton: FC = () => {
@@ -43,11 +43,7 @@ export const NetworkButton: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading} spinnerSx={spinnerMixin}>
-      <Tooltip
-        title={`${formatMessage({ id: `enums.chainId.${chainId}` })}${
-          isSandbox ? ` (${formatMessage({ id: "components.header.wallet.test" })})` : ""
-        }`}
-      >
+      <Tooltip title={formatMessage({ id: `enums.chainId.${chainId}` })}>
         <StyledBadge color="primary" badgeContent={<StyledCircle />} invisible={!isSandbox}>
           <IconButton
             aria-owns={anchor ? "select-chainId" : undefined}
@@ -72,9 +68,9 @@ export const NetworkButton: FC = () => {
                 onClick={handleSelectNetwork(network.chainId)}
                 color="inherit"
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
-                </ListItemIcon>
+                </StyledListItemIcon>
                 <ListItemText>
                   <FormattedMessage id={`enums.chainId.${network.chainId}`} />
                 </ListItemText>

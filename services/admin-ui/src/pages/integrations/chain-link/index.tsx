@@ -58,7 +58,7 @@ export const ChainLink: FC = () => {
   const { fn, isLoading } = useApiCall(
     api => {
       return api.fetchJson({
-        url: `/chain-link/subscriptions/${profile.wallet}`,
+        url: `/chain-link/subscriptions/${account}`,
         method: "GET",
       });
     },
@@ -122,7 +122,7 @@ export const ChainLink: FC = () => {
   useEffect(() => {
     if (!merchantSubscriptions && !isLoading) {
       void fn().then((rows: Array<IChainLinkSubscription>) => {
-        const filtered = rows.filter(sub => sub.merchant.wallet === profile.wallet && sub.chainId === profile.chainId);
+        const filtered = rows.filter(sub => sub.merchant.wallet === account && sub.chainId === profile.chainId);
         setMerchantSubscriptions(filtered);
         setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
       });
@@ -132,7 +132,7 @@ export const ChainLink: FC = () => {
     }
     void metaFnSubData(currentSubscription).then(setSubData);
     void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
-  }, [currentSubscription]);
+  }, [account, currentSubscription]);
 
   const columns = [
     {

@@ -18,3 +18,5 @@ export * from "./17-dismantle";
 export * from "./18-payment-splitter";
 export * from "./19-merge";
 export * from "./20-achievements";
+export * from "./21-referral";
+export * from "./22-prediction";

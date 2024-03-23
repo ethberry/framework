@@ -2,19 +2,17 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { AccountOptionalDto } from "@gemunion/collection";
+import { AccountOptionalDto, NotNativeDto } from "@gemunion/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
-
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
-    type: AllTypesDto,
+    type: NotNativeDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AllTypesDto)
-  public item: InstanceType<typeof AllTypesDto>;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiPropertyOptional()
   @IsOptional()

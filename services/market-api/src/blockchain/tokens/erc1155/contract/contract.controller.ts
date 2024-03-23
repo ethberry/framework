@@ -16,10 +16,10 @@ export class Erc1155ContractController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() query: ContractSearchDto,
+    @Query() dto: ContractSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ContractEntity>, number]> {
-    return this.erc1155ContractService.search(query, userEntity);
+    return this.erc1155ContractService.search(dto, userEntity);
   }
 
   @Get("/:id")

@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
-import { Box, Button, Chip, List, ListItemText } from "@mui/material";
+import { Box, Button, Chip, ListItemText } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -78,45 +78,39 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
       </Box>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List disablePadding={true}>
-          {rows.length ? (
-            rows.map((address: IAddress, i: number) => (
-              <StyledListItem key={address.id || i}>
-                <ListItemText
-                  primary={
-                    <Fragment>
-                      {formatAddress(address)}
-                      &nbsp;
-                      {address.isDefault ? (
-                        <Chip
-                          size="small"
-                          color="primary"
-                          label={formatMessage({ id: "pages.profile.addresses.default" })}
-                        />
-                      ) : null}
-                      {address.addressStatus === AddressStatus.INACTIVE ? (
-                        <Chip
-                          size="small"
-                          color="secondary"
-                          label={formatMessage({ id: "pages.profile.addresses.inactive" })}
-                        />
-                      ) : null}
-                    </Fragment>
-                  }
-                  sx={{ pr: 7 }}
-                />
-                <ListActions>
-                  <ListAction onClick={handleEdit(address)} message="form.buttons.edit" icon={Edit} />
-                  <ListAction onClick={handleDelete(address)} message="form.buttons.delete" icon={Delete} />
-                </ListActions>
-              </StyledListItem>
-            ))
-          ) : (
-            <StyledListItem>
-              <FormattedMessage id="pages.profile.addresses.empty" />
+        <StyledListWrapper count={rows.length} isLoading={isLoading} message="pages.profile.addresses.empty">
+          {rows.map((address: IAddress, i: number) => (
+            <StyledListItem key={address.id || i}>
+              <ListItemText
+                primary={
+                  <Fragment>
+                    {formatAddress(address)}
+                    &nbsp;
+                    {address.isDefault ? (
+                      <Chip
+                        size="small"
+                        color="primary"
+                        label={formatMessage({ id: "pages.profile.addresses.default" })}
+                      />
+                    ) : null}
+                    {address.addressStatus === AddressStatus.INACTIVE ? (
+                      <Chip
+                        size="small"
+                        color="secondary"
+                        label={formatMessage({ id: "pages.profile.addresses.inactive" })}
+                      />
+                    ) : null}
+                  </Fragment>
+                }
+                sx={{ pr: 7 }}
+              />
+              <ListActions>
+                <ListAction onClick={handleEdit(address)} message="form.buttons.edit" icon={Edit} />
+                <ListAction onClick={handleDelete(address)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
             </StyledListItem>
-          )}
-        </List>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <UserAddressForm

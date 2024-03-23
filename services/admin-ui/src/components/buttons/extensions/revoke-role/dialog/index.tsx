@@ -1,17 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
-import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
-import type { IAccessControl, IContract, IUser } from "@framework/types";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
+import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 import revokeRoleAccessControlFacetABI from "@framework/abis/revokeRole/AccessControlFacet.json";
 
@@ -32,7 +30,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
-  const { profile } = useUser<IUser>();
+  const { account } = useWeb3React();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -60,38 +58,30 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   };
 
   useEffect(() => {
-    if (open) {
+    if (account && open) {
       void fn().then((rows: Array<IAccessControlWithRelations>) => {
-        setRows(rows.filter(row => row.account !== profile.wallet));
+        setRows(rows.filter(row => row.account !== account));
       });
     }
-  }, [open]);
+  }, [account, open]);
 
   return (
     <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" open={open} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(access => (
-              <StyledListItem key={access.id}>
-                <ListItemText>
-                  {access.account_contract?.title || access.account}
-                  {/* <br /> */}
-                  {/* {access.account} */}
-                  <br />
-                  {access.role}
-                </ListItemText>
-                <ListActions>
-                  <ListAction onClick={handleRevoke(access)} message="dialogs.revokeRole" icon={Delete} />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(access => (
+            <StyledListItem key={access.id}>
+              <ListItemText>
+                {access.account_contract?.title || access.account}
+                <br />
+                {access.role}
+              </ListItemText>
+              <ListActions>
+                <ListAction onClick={handleRevoke(access)} message="dialogs.revokeRole" icon={Delete} />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

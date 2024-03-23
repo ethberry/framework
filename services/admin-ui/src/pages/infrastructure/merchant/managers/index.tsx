@@ -1,13 +1,12 @@
 import { FC, Fragment } from "react";
-import { List, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IUser } from "@framework/types";
 
 import { ITabPanelProps } from "../tabs";
@@ -34,27 +33,21 @@ export const MerchantManagers: FC<ITabPanelProps> = props => {
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List disablePadding={true}>
-          {rows.length ? (
-            rows.map((user: IUser) => (
-              <StyledListItem key={user.id}>
-                <ListItemText>{user.displayName}</ListItemText>
-                <ListActions>
-                  <ListAction
-                    icon={Delete}
-                    message="form.tips.delete"
-                    onClick={handleDelete(user)}
-                    disabled={user.id === profile.id}
-                  />
-                </ListActions>
-              </StyledListItem>
-            ))
-          ) : (
-            <StyledListItem>
-              <FormattedMessage id="pages.merchant.managers.empty" />
+        <StyledListWrapper count={rows.length} isLoading={isLoading} message="pages.merchant.managers.empty">
+          {rows.map(user => (
+            <StyledListItem key={user.id}>
+              <ListItemText>{user.displayName}</ListItemText>
+              <ListActions>
+                <ListAction
+                  icon={Delete}
+                  message="form.tips.delete"
+                  onClick={handleDelete(user)}
+                  disabled={user.id === profile.id}
+                />
+              </ListActions>
             </StyledListItem>
-          )}
-        </List>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <DeleteDialog

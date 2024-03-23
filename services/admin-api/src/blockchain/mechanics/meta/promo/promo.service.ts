@@ -36,14 +36,18 @@ export class AssetPromoService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {
           qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

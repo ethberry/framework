@@ -38,6 +38,8 @@ import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/i
 import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
 import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
+import { PredictionAnswerEntity } from "./blockchain/mechanics/gambling/prediction/answer/answer.entity";
+import { PredictionQuestionEntity } from "./blockchain/mechanics/gambling/prediction/question/question.entity";
 // extensions
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 // integrations
@@ -118,6 +120,8 @@ const config: PostgresConnectionOptions = {
     PonziDepositEntity,
     BreedEntity,
     RentEntity,
+    PredictionAnswerEntity,
+    PredictionQuestionEntity,
     // extensions
     AccessControlEntity,
     // integrations

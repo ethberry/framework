@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Grid, List, ListItemText } from "@mui/material";
+import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IBreed } from "@framework/types";
 
 import { BreedLimitButton } from "../../../../../components/buttons";
@@ -37,7 +37,7 @@ export const BreedBreeds: FC = () => {
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(breed => (
             <StyledListItem key={breed.id}>
               {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
@@ -47,7 +47,7 @@ export const BreedBreeds: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

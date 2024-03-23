@@ -5,22 +5,22 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import type { IMysteryBoxCreateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../../../../exchange/asset/dto";
+import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 
 export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCreateDto {
   @ApiProperty({
-    type: ItemDto,
+    type: NotNativeDto,
   })
   @ValidateNested()
-  @Type(() => ItemDto)
-  public item: ItemDto;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

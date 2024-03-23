@@ -33,8 +33,8 @@ export class MerchantService {
           qb.getQuery = () => `LATERAL json_array_elements(merchant.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

@@ -1,16 +1,15 @@
 import { FC } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
-
 import { Grid, Button } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
-
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
+import { StyledEmptyWrapper } from "@framework/styled";
+import type { IReferralTree } from "@framework/types";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import type { IReferralTree } from "@framework/types";
 import { IReferralTreeSearchDto, ReferralTreeSearchForm } from "./form";
 
 export const ReferralTree: FC = () => {
@@ -91,25 +90,27 @@ export const ReferralTree: FC = () => {
         onRefreshPage={handleRefreshPage}
       />
 
-      {rows.length > 0 ? (
-        <DataGrid
-          pagination
-          paginationMode="server"
-          rowCount={count}
-          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
-          onPaginationModelChange={handleChangePaginationModel}
-          pageSizeOptions={[5, 10, 25, 100]}
-          loading={isLoading}
-          columns={columns}
-          rows={rows.map((tree: IReferralTree, idx) => ({
-            id: idx,
-            wallet: tree.wallet,
-            referral: tree.referral,
-            level: tree.level,
-          }))}
-          autoHeight
-        />
-      ) : null}
+      <ProgressOverlay isLoading={isLoading}>
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+          <DataGrid
+            pagination
+            paginationMode="server"
+            rowCount={count}
+            paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+            onPaginationModelChange={handleChangePaginationModel}
+            pageSizeOptions={[5, 10, 25, 100]}
+            loading={isLoading}
+            columns={columns}
+            rows={rows.map((tree: IReferralTree, idx) => ({
+              id: idx,
+              wallet: tree.wallet,
+              referral: tree.referral,
+              level: tree.level,
+            }))}
+            autoHeight
+          />
+        </StyledEmptyWrapper>
+      </ProgressOverlay>
     </Grid>
   );
 };

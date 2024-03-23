@@ -25,7 +25,8 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { contract, penalty, recurrent, advance, deposit, reward, maxStake, durationAmount, durationUnit } = initialValues;
+  const { contract, penalty, recurrent, advance, deposit, reward, maxStake, durationAmount, durationUnit } =
+    initialValues;
   const fixedValues = {
     deposit,
     reward,

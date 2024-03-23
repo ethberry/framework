@@ -6,10 +6,11 @@ import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
 import { utils } from "ethers";
 
+import { StyledEmptyWrapper } from "@framework/styled";
+import type { IMarketplaceReportSearchDto, IToken, IUser } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import type { IMarketplaceReportSearchDto, IToken, IUser } from "@framework/types";
 
 import { MarketplaceChartSearchForm } from "./form";
 
@@ -143,7 +144,9 @@ export const MarketplaceChart: FC = () => {
       <MarketplaceChartSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <Box mt={4} width="100%" ref={chartRef} />
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+          <Box mt={4} width="100%" ref={chartRef} />
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Fragment>
   );

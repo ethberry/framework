@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Grid, List, ListItemText } from "@mui/material";
+import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
@@ -48,7 +48,7 @@ export const VestingContracts: FC = () => {
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} name="account" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(vesting => (
             <StyledListItem key={vesting.id} wrap>
               <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
@@ -62,7 +62,7 @@ export const VestingContracts: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

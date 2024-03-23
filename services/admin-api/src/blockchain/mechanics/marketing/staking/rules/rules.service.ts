@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeleteResult } from "typeorm";
 
 import type { IStakingRuleSearchDto } from "@framework/types";
 import { StakingRewardTokenType, StakingRuleStatus } from "@framework/types";
@@ -9,6 +9,7 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { StakingRulesEntity } from "./rules.entity";
 import type { IStakingRuleAutocompleteDto, IStakingRuleUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class StakingRulesService {
@@ -52,8 +53,8 @@ export class StakingRulesService {
           qb.getQuery = () => `LATERAL json_array_elements(rule.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -210,5 +211,22 @@ export class StakingRulesService {
     Object.assign(stakingRuleEntity, dto);
 
     return stakingRuleEntity.save();
+  }
+
+  public async deactivateStakingRules(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const rulesEntities = await this.stakingRuleEntityRepository.find({
+      where: [
+        {
+          deposit: In(assets.map(asset => asset.id)),
+        },
+        {
+          reward: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    return await this.stakingRuleEntityRepository.delete({
+      id: In(rulesEntities.map(r => r.id)),
+    });
   }
 }

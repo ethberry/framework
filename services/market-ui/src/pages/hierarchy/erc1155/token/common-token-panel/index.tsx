@@ -5,7 +5,7 @@ import { CardActions, CardContent, Grid } from "@mui/material";
 import { formatItemHtmlList } from "@framework/exchange";
 import type { IBalance, IToken } from "@framework/types";
 
-import { Erc1155TransferButton, TokenSellButton } from "../../../../../components/buttons";
+import { Erc1155TransferButton, TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { computeTokenAsset } from "../../../../../utils/token";
 import { StyledCard, StyledList, StyledTitle, StyledToolbar } from "./styled";
@@ -38,7 +38,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12} sm={2}>
-            <TokenSellButton token={token} />
+            <TokenSellOnOpenSeaButton token={token} />
             <Erc1155TransferButton token={token} />
           </Grid>
           <Grid item xs={12}>

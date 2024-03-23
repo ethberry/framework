@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
 import type { IRentSearchDto } from "@framework/types";
 import { RentRuleStatus } from "@framework/types";
@@ -10,6 +10,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import type { IRentCreateDto, IRentUpdateDto } from "./interfaces";
 import { RentEntity } from "./rent.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class RentService {
@@ -134,6 +135,18 @@ export class RentService {
           price_template: "price_components.template",
         },
       },
+    });
+  }
+
+  public async deactivateRent(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const rentEntities = await this.rentEntityRepository.find({
+      where: {
+        priceId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    return await this.rentEntityRepository.delete({
+      id: In(rentEntities.map(r => r.id)),
     });
   }
 }

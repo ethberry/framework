@@ -3,9 +3,9 @@ import { IsInt, IsOptional, Max, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
+import { AllTypesDto } from "@gemunion/nest-js-validators";
 
 import { IAchievementLevelUpdateDto } from "../interfaces";
-import { AllTypesDto } from "../../../../../exchange/asset/dto/custom";
 
 export class AddressUpdateDto extends SearchableDto implements IAchievementLevelUpdateDto {
   @ApiPropertyOptional()

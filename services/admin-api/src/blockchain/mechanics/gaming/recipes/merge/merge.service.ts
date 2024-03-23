@@ -1,14 +1,15 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
-import { ContractEventType, MergeStatus, IMergeSearchDto } from "@framework/types";
+import { ContractEventType, MergeStatus, IMergeSearchDto, TemplateStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { MergeEntity } from "./merge.entity";
 import type { IMergeCreateDto, IMergeUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class MergeService {
@@ -40,14 +41,22 @@ export class MergeService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {
           qb.getQuery = () => `LATERAL json_array_elements(price_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -169,5 +178,22 @@ export class MergeService {
     } else {
       await mergeEntity.remove();
     }
+  }
+
+  public async deactivateMerge(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const mergeEntities = await this.mergeEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          price: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    return await this.mergeEntityRepository.delete({
+      id: In(mergeEntities.map(m => m.id)),
+    });
   }
 }

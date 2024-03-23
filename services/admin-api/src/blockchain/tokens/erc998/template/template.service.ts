@@ -11,6 +11,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc998TokenService } from "../token/token.service";
+import { TemplateDeleteService } from "../../../hierarchy/template/template.delete.service";
 
 @Injectable()
 export class Erc998TemplateService extends TemplateService {
@@ -20,8 +21,9 @@ export class Erc998TemplateService extends TemplateService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc998TokenService,
     protected readonly contractService: ContractService,
+    protected readonly templateDeleteService: TemplateDeleteService,
   ) {
-    super(templateEntityRepository, assetService, tokenService, contractService);
+    super(templateEntityRepository, assetService, tokenService, contractService, templateDeleteService);
   }
 
   public async search(

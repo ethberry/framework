@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
 import type { IGradeSearchDto } from "@framework/types";
 import { GradeStatus } from "@framework/types";
@@ -12,6 +12,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import type { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class GradeService {
@@ -34,6 +35,10 @@ export class GradeService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (gradeStatus) {
       if (gradeStatus.length === 1) {
         queryBuilder.andWhere("grade.gradeStatus = :gradeStatus", { gradeStatus: gradeStatus[0] });
@@ -48,8 +53,8 @@ export class GradeService {
           qb.getQuery = () => `LATERAL json_array_elements(contract.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -159,5 +164,17 @@ export class GradeService {
 
   public delete(where: FindOptionsWhere<GradeEntity>, userEntity: UserEntity): Promise<GradeEntity> {
     return this.update(where, { gradeStatus: GradeStatus.INACTIVE }, userEntity);
+  }
+
+  public async deactivateGrades(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const gradeEntities = await this.gradeEntityRepository.find({
+      where: {
+        priceId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    return await this.gradeEntityRepository.delete({
+      id: In(gradeEntities.map(g => g.id)),
+    });
   }
 }

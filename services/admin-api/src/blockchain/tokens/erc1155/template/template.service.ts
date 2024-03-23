@@ -10,6 +10,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
+import { TemplateDeleteService } from "../../../hierarchy/template/template.delete.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc1155TokenService } from "../token/token.service";
@@ -22,8 +23,9 @@ export class Erc1155TemplateService extends TemplateService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc1155TokenService,
     protected readonly contractService: ContractService,
+    protected readonly templateDeleteService: TemplateDeleteService,
   ) {
-    super(templateEntityRepository, assetService, tokenService, contractService);
+    super(templateEntityRepository, assetService, tokenService, contractService, templateDeleteService);
   }
 
   public async search(

@@ -12,4 +12,3 @@ export * from "./1563803000210-create-page";
 export * from "./1563803000220-seed-page";
 export * from "./1687519905500-create-rate-plan";
 export * from "./1687519905510-seed-rate-plan";
-export * from "./1687519905550-alter-merchant";

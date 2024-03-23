@@ -2,19 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBigInt } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
-import { PriceDto } from "../../../exchange/asset/dto";
+import { IsBigInt, SemiCoinDto } from "@gemunion/nest-js-validators";
 import type { ITemplateCreateDto } from "../interfaces";
 
 export class TemplateCreateDto extends SearchableDto implements ITemplateCreateDto {
   @ApiProperty({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiProperty({
     minimum: 0,

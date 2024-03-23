@@ -7,7 +7,7 @@ import { ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { Erc721TransferButton, TokenSellButton } from "../../../../../components/buttons";
+import { Erc721TransferButton, TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { AllowanceForAllButton } from "../../../../../components/buttons/hierarchy/token/allowance-for-all";
 import { computeTokenAsset } from "../../../../../utils/token";
@@ -40,7 +40,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
       <CardActions>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>
-            <TokenSellButton token={token} />
+            <TokenSellOnOpenSeaButton token={token} />
           </Grid>
           <Grid item xs={12}>
             <Erc721TransferButton token={token} />

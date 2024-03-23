@@ -4,14 +4,15 @@ import { Grid } from "@mui/material";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998ContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
 export const Erc998ContractList: FC = () => {
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
+  const { rows, count, search, isLoading, handleChangePage, handleRefreshPage } = useCollection<IContract, ISearchDto>({
     baseUrl: "/erc998/contracts",
   });
 
@@ -23,11 +24,13 @@ export const Erc998ContractList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(contract => (
-            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
-              <Erc998ContractListItem contract={contract} />
-            </StyledGrid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => (
+              <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
+                <Erc998ContractListItem contract={contract} />
+              </StyledGrid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 
@@ -37,6 +40,8 @@ export const Erc998ContractList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
+
+      <FormRefresher onRefreshPage={handleRefreshPage} />
     </Fragment>
   );
 };

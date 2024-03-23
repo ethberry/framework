@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { List, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { formatEther } from "@framework/exchange";
-import { StyledListItem } from "@framework/styled";
+import { StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IBalance, IToken } from "@framework/types";
 
 export interface IBalanceWithdrawDialogProps {
@@ -48,7 +48,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
   return (
     <ConfirmationDialog message={"dialogs.withdraw"} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(row => (
             <StyledListItem key={row.id}>
               <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.title}</ListItemText>
@@ -61,7 +61,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
               </ListItemText>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

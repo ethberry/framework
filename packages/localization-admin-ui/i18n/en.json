@@ -57,12 +57,12 @@
         "title": "Enterprise"
       },
       "saas": {
-        "linkTitle": "See pricing",
+        "linkTitle": "See details",
         "text": "Perfect for startups on a budget, this plan is your gateway to the market. With our blockchain ecosystem at your fingertips, you can affordably bring your innovative ideas to life and make your mark in the gaming industry",
         "title": "SaaS"
       },
       "selfHosted": {
-        "linkTitle": "See pricing",
+        "linkTitle": "See details",
         "text": "Transform your proven ideas into a unique gaming brand with our Whitelabel game solution. Offering customized design and adjusted mechanics, this plan empowers you to stand out in the gaming industry with a truly bespoke experience",
         "title": "Self-hosted"
       }
@@ -183,6 +183,8 @@
       "13377": "GEMUNION",
       "13378": "BESU",
       "10001": "BESU",
+      "13371": "IMMUTABLE zkEVM",
+      "13473": "IMMUTABLE zkEVM (testnet)",
       "137": "POLYGON",
       "42161": "ARBITRUM",
       "11155111": "SEPOLIA",
@@ -1033,6 +1035,7 @@
   "messages": {
     "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
     "empty-list": "Nothing to display",
+    "loading": "Loading...",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },
@@ -1175,6 +1178,7 @@
         "ponzi": "Ponzi",
         "promo": "Promo",
         "raffle": "Raffle",
+        "prediction": "Prediction",
         "recipes": "Recipes",
         "referral": "Referral",
         "rent": "Rent",
@@ -1436,6 +1440,18 @@
       "title": "Raffle",
       "tokens": {
         "title": "Tokens"
+      }
+    },
+    "prediction": {
+      "contracts": {
+        "title": "Contracts"
+      },
+      "questions": {
+        "title": "Questions"
+      },
+      "title": "Prediction",
+      "answers": {
+        "title": "Answers"
       }
     },
     "ratePlan": {

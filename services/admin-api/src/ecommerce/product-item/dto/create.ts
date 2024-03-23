@@ -2,19 +2,19 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, IsString, MaxLength, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IPhoto } from "@framework/types";
+import { CoinDto } from "@gemunion/nest-js-validators";
+import type { IPhoto } from "@framework/types";
 
-import { IProductItemCreateDto } from "../interfaces";
+import type { IProductItemCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";
-import { PriceDto } from "../../../blockchain/exchange/asset/dto";
 
 export class ProductItemCreateDto implements IProductItemCreateDto {
   @ApiProperty({
-    type: PriceDto,
+    type: CoinDto,
   })
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => CoinDto)
+  public price: InstanceType<typeof CoinDto>;
 
   @ApiProperty({
     minimum: 0,

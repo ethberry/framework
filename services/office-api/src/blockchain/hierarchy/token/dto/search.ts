@@ -3,9 +3,9 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-v
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@gemunion/collection";
+import { AccountOptionalDto, IsBigInt } from "@gemunion/nest-js-validators";
 import { ITokenMetadataSearchDto, ITokenSearchDto, TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
-import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({

@@ -50,6 +50,9 @@ import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
 import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
+import { PredictionAnswerEntity } from "./blockchain/mechanics/gambling/prediction/answer/answer.entity";
+import { PredictionQuestionEntity } from "./blockchain/mechanics/gambling/prediction/question/question.entity";
+
 /* lottery */
 import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
@@ -90,7 +93,6 @@ import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/
 
 /* migrations */
 import {
-  AlterMerchant1687519905550,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAchievementItem1681273013050,
@@ -132,6 +134,8 @@ import {
   CreatePhoto1683724061800,
   CreatePonziDeposit1660436477300,
   CreatePonziRules1660436477200,
+  CreatePredictionAnswer1681273013050,
+  CreatePredictionQuestion1681273013010,
   CreateProduct1683724061400,
   CreateProductItem1683724061500,
   CreateProductItemParameter1683724062600,
@@ -307,6 +311,8 @@ import {
   SeedPonziPayees1663047650520,
   SeedPonziRulesErc20At1660436477220,
   SeedPonziRulesNativeAt1660436477210,
+  SeedPredictionAnswer1681273013060,
+  SeedPredictionQuestion1681273013020,
   SeedProduct1683724061410,
   SeedProductItem1683724061510,
   SeedProductItemParameter1683724062610,
@@ -314,7 +320,6 @@ import {
   SeedProductToCategory1683724061710,
   SeedRaffleRoundAt1685961136120,
   SeedRatePlan1687519905500,
-  // SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
   SeedStakingDepositErc20Erc20At1654751224322,
@@ -361,7 +366,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { AlterReferralProgram9987519905550 } from "./migrations/06-alter-prod";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -418,6 +422,8 @@ const config: PostgresConnectionOptions = {
     ReferralProgramEntity,
     ReferralTreeEntity,
     ReferralClaimEntity,
+    PredictionAnswerEntity,
+    PredictionQuestionEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -442,8 +448,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
-  migrationsRun:
-    process.env.BUSINESS_TYPE === BusinessType.B2B.toString() || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
+  migrationsRun: process.env.BUSINESS_TYPE === BusinessType.B2B || process.env.NODE_ENV === NodeEnv.development, // run only at B2B instance
   // migrationsRun: true,
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
@@ -477,7 +482,6 @@ const config: PostgresConnectionOptions = {
     SeedPage1563803000220,
     CreateRatePlan1687519905500,
     SeedRatePlan1687519905500,
-    AlterMerchant1687519905550,
 
     CreateAsset1563804000100,
 
@@ -773,8 +777,12 @@ const config: PostgresConnectionOptions = {
     /* game */
     CreateGameBalance1686896594700,
     SeedGameBalance1686896594710,
-    /* prod alter migrations */
-    AlterReferralProgram9987519905550,
+
+    /* prediction */
+    CreatePredictionQuestion1681273013010,
+    SeedPredictionQuestion1681273013020,
+    CreatePredictionAnswer1681273013050,
+    SeedPredictionAnswer1681273013060,
   ],
 };
 

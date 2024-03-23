@@ -1,18 +1,17 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
-import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
-import type { IAccessControl, IUser } from "@framework/types";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
+import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
+
 import renounceRoleAccessControlFacetABI from "@framework/abis/renounceRole/AccessControlFacet.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
@@ -27,7 +26,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const { profile } = useUser<IUser>();
+  const { account } = useWeb3React();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -57,10 +56,10 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   useEffect(() => {
     if (open) {
       void fn().then((rows: Array<IAccessControl>) => {
-        setRows(rows.filter(row => row.account === profile.wallet));
+        setRows(rows.filter(row => row.account === account));
       });
     }
-  }, [open]);
+  }, [account, open]);
 
   return (
     <ConfirmationDialog
@@ -70,26 +69,20 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List>
-            {rows.map(access => (
-              <StyledListItem key={access.id}>
-                <ListItemText>
-                  {access.account}
-                  <br />
-                  {access.role}
-                </ListItemText>
-                <ListActions>
-                  <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
-                </ListActions>
-              </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(access => (
+            <StyledListItem key={access.id}>
+              <ListItemText>
+                {access.account}
+                <br />
+                {access.role}
+              </ListItemText>
+              <ListActions>
+                <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

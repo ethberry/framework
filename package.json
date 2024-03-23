@@ -7,12 +7,12 @@
   "dependencies": {
     "@lerna/legacy-package-management": "8.1.2",
     "lerna": "8.1.2",
-    "nx": "18.0.6"
+    "nx": "18.1.2"
   },
   "devDependencies": {
     "@gemunion/eslint-config": "4.0.6",
-    "@types/node": "20.11.24",
-    "@types/react": "18.2.61",
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.67",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
@@ -22,13 +22,13 @@
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-prettier": "5.1.3",
     "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-testing-library": "6.2.0",
     "husky": "4.3.8",
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   },
   "engines": {
     "node": ">=18"
@@ -41,10 +41,11 @@
     "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
+    "bootstrap": "git submodule update --remote --merge && lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
     "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore \"@framework/office-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth --ignore @framework/eml --ignore @framework/game --ignore @framework/json --ignore @framework/core-contracts",
+    "build:full": "lerna run build --concurrency 1",
     "clean": "sh scripts/clean.sh",
-    "docker:bootstrap": "lerna bootstrap --hoist --ignore-scripts",
+    "docker:bootstrap": "git submodule update --remote --merge && lerna bootstrap --hoist --ignore-scripts",
     "docker:build": "lerna run build --concurrency 1",
     "docker:up": "docker compose up -d",
     "docker:up:besu": "docker compose up -d besu explorer",
@@ -64,7 +65,7 @@
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
     "start": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/admin-ui --scope @framework/public-ui --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm start",
     "start:prod": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm run start:prod",
-    "test": "sh scripts/copy-env.sh && sh scripts/test.sh"
+    "test": "git submodule update --remote --merge && sh scripts/copy-env.sh && sh scripts/test.sh"
   },
   "version": "0.0.1"
 }

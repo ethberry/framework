@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Avatar, Grid, List, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
-import { ListAction, ListActions, StyledListItem } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IPhoto } from "@framework/types";
 import { PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -47,7 +47,7 @@ export const Photo: FC = () => {
       <PageHeader message="pages.photos.title" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(photo => (
             <StyledListItem key={photo.id}>
               <ListItemAvatar>
@@ -68,7 +68,7 @@ export const Photo: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
     </Grid>
   );

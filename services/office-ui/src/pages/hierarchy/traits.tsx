@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeTraits, DND } from "@framework/traits-ui";
+import { decodeTraits, DND } from "@gemunion/traits-v5";
 
 export interface ITokenMetadataView {
   metadata: Record<string, any>;
@@ -14,7 +14,7 @@ export const TokenTraitsView: FC<ITokenMetadataView> = props => {
 
   const result = Object.entries(metadata).reduce(
     (memo, [key, value]) => {
-      switch (key) {
+      switch (key as TokenMetadata) {
         // MODULE:DND
         // MODULE:BREEDING
         // MODULE:COLLECTION

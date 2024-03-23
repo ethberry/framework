@@ -1,6 +1,15 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import {
+  Brackets,
+  DeleteResult,
+  FindManyOptions,
+  FindOneOptions,
+  FindOptionsWhere,
+  In,
+  Repository,
+  UpdateResult,
+} from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
 import { MysteryBoxStatus, TemplateStatus } from "@framework/types";
@@ -12,6 +21,9 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { ClaimTemplateService } from "../../claim/template/template.service";
+import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
 
 @Injectable()
 export class MysteryBoxService {
@@ -19,9 +31,13 @@ export class MysteryBoxService {
     @InjectRepository(MysteryBoxEntity)
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
     private readonly tokenService: TokenService,
+    @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    @Inject(forwardRef(() => TemplateDeleteService))
+    private readonly templateDeleteService: TemplateDeleteService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
+    private readonly claimTemplateService: ClaimTemplateService,
   ) {}
 
   public async search(
@@ -39,8 +55,8 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -48,14 +64,18 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {
           qb.getQuery = () => `LATERAL json_array_elements(box.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -131,10 +151,20 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    // item
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
+    // price
+    queryBuilder.leftJoinAndSelect("box.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -164,6 +194,13 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<MysteryBoxEntity>,
+    options?: FindManyOptions<MysteryBoxEntity>,
+  ): Promise<Array<MysteryBoxEntity>> {
+    return this.mysteryBoxEntityRepository.find({ where, ...options });
+  }
+
   public findOneWithRelations(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity | null> {
     return this.findOne(where, {
       join: {
@@ -186,7 +223,7 @@ export class MysteryBoxService {
     });
   }
 
-  public async update(
+  public async updateAll(
     where: FindOptionsWhere<MysteryBoxEntity>,
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
@@ -269,6 +306,13 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
+  public async update(
+    where: FindOptionsWhere<MysteryBoxEntity>,
+    dto: Partial<IMysteryBoxUpdateDto>,
+  ): Promise<UpdateResult> {
+    return this.mysteryBoxEntityRepository.update(where, dto);
+  }
+
   public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<MysteryBoxEntity> {
     const mysteryBoxEntity = await this.findOne({ id: where.id }, { relations: { template: { contract: true } } });
 
@@ -294,5 +338,30 @@ export class MysteryBoxService {
       await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
       return mysteryBoxEntity.remove();
     }
+  }
+
+  public async deactivateBoxes(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const mysteryBoxEntities = await this.mysteryBoxEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          template: {
+            price: In(assets.map(asset => asset.id)),
+          },
+        },
+      ],
+    });
+
+    for (const mysteryBoxEntity of mysteryBoxEntities) {
+      await this.templateDeleteService.deactivateTemplate(mysteryBoxEntity.template);
+    }
+
+    await this.claimTemplateService.deactivateClaims(mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.item));
+
+    return await this.mysteryBoxEntityRepository.delete({
+      id: In(mysteryBoxEntities.map(mb => mb.id)),
+    });
   }
 }

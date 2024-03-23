@@ -4,7 +4,7 @@ import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto } from "@framework/types";
 
 import { MysteryBoxListItem } from "../../../mechanics/marketing/mystery/box-list/item";
@@ -28,11 +28,13 @@ export const Mystery: FC<ITabPanelProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(mysterybox => (
-            <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryBoxListItem mysteryBox={mysterybox} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(mysterybox => (
+              <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
+                <MysteryBoxListItem mysteryBox={mysterybox} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

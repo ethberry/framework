@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested, IsInt, IsEnum, Min } from "class-validator";
 import { Type } from "class-transformer";
 
+import { NotNativeDto, NftDto } from "@gemunion/nest-js-validators";
 import { DismantleStrategy } from "@framework/types";
 
-import { NotNativeDto, SemiNftDto } from "../../../../../exchange/asset/dto/custom";
 import type { IDismantleCreateDto } from "../interfaces";
 
 export class DismantleCreateDto implements IDismantleCreateDto {
@@ -16,11 +16,11 @@ export class DismantleCreateDto implements IDismantleCreateDto {
   public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty({
-    type: SemiNftDto,
+    type: NftDto,
   })
   @ValidateNested()
-  @Type(() => SemiNftDto)
-  public price: InstanceType<typeof SemiNftDto>;
+  @Type(() => NftDto)
+  public price: InstanceType<typeof NftDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

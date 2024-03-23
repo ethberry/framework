@@ -3,9 +3,9 @@ import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "clas
 import { Transform, Type } from "class-transformer";
 
 import { GradeStatus, GradeStrategy } from "@framework/types";
+import { SemiCoinDto } from "@gemunion/nest-js-validators";
 
-import { PriceDto } from "../../../../exchange/asset/dto";
-import { IGradeUpdateDto } from "../interfaces";
+import type { IGradeUpdateDto } from "../interfaces";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({
@@ -30,10 +30,10 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   public growthRate: number;
 
   @ApiPropertyOptional({
-    type: PriceDto,
+    type: SemiCoinDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
+  @Type(() => SemiCoinDto)
+  public price: InstanceType<typeof SemiCoinDto>;
 }

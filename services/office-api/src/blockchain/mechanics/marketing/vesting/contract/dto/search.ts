@@ -3,7 +3,8 @@ import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
+import { AccountOptionalDto } from "@gemunion/nest-js-validators";
 import { IVestingSearchDto } from "@framework/types";
 
 export class VestingContractSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IVestingSearchDto {

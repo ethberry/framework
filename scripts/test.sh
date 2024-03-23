@@ -12,6 +12,9 @@
  export JSON_RPC_ADDR_GOERLY=$JSON_RPC_ADDR_GOERLY
 
  export PRIVATE_KEY=$PRIVATE_KEY
+ export PRIVATE_KEY1=$PRIVATE_KEY
+ export PRIVATE_KEY2=$PRIVATE_KEY
+ export PRIVATE_KEY3=$PRIVATE_KEY
  export GEMUNION_PRIVATE_KEY_STAGE=$GEMUNION_PRIVATE_KEY_STAGE
  export GEMUNION_PRIVATE_KEY_PROD=$GEMUNION_PRIVATE_KEY_PROD
 
@@ -23,7 +26,6 @@
  lerna run build --concurrency 1
 
  lerna exec --scope @framework/admin-api -- npm run test
- lerna exec --scope @framework/traits-api -- npm run test
  lerna exec --scope @framework/market-api -- npm run test
  lerna exec --scope @framework/mobile-api -- npm run test
 

@@ -3,7 +3,7 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -12,17 +12,27 @@ import { useCollection } from "@gemunion/react-hooks";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TokenType } from "@gemunion/types-blockchain";
 
+import { FormRefresher } from "../../../../../../components/forms/form-refresher";
 import { CraftItem } from "./item";
 
 export const CraftList: FC = () => {
-  const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleChangePage, handleToggleFilters } =
-    useCollection<ICraft, ICraftSearchDto>({
-      baseUrl: "/recipes/craft",
-      search: {
-        query: "",
-        contractId: void 0,
-      },
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleSearch,
+    handleChangePage,
+    handleRefreshPage,
+    handleToggleFilters,
+  } = useCollection<ICraft, ICraftSearchDto>({
+    baseUrl: "/recipes/craft",
+    search: {
+      query: "",
+      contractId: void 0,
+    },
+  });
 
   return (
     <Fragment>
@@ -35,6 +45,7 @@ export const CraftList: FC = () => {
       </PageHeader>
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="CraftSearchForm">
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <EntityInput
@@ -51,11 +62,13 @@ export const CraftList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(recipe => (
-            <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
-              <CraftItem craft={recipe} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(recipe => (
+              <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
+                <CraftItem craft={recipe} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

@@ -1,15 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
 import { Card, CardContent, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
+import { Web3ContextType } from "@web3-react/core";
+import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { formatItem, getEthPrice } from "@framework/exchange";
+import { StyledListWrapper } from "@framework/styled";
 import type { IContract, ICraft, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -127,7 +128,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
           </StyledTitle>
           <AllowanceInfoPopover />
         </StyledToolbar>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(craft => {
             return (
               <ListItemButton key={craft.id} onClick={handleCraft(craft)}>
@@ -138,7 +139,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
               </ListItemButton>
             );
           })}
-        </List>
+        </StyledListWrapper>
       </CardContent>
     </Card>
   );

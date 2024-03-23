@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
@@ -66,11 +66,13 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(template => (
-            <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc721TemplateListItem template={template} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(template => (
+              <Grid item lg={4} sm={6} xs={12} key={template.id}>
+                <Erc721TemplateListItem template={template} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

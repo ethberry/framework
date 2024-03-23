@@ -3,7 +3,7 @@ import { IsEnum } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, AddressDto } from "@gemunion/collection";
+import { AccountDto, AddressDto } from "@gemunion/nest-js-validators";
 import { AccessControlRoleType } from "@framework/types";
 
 import { IAccessControlCheckDto } from "../interfaces";

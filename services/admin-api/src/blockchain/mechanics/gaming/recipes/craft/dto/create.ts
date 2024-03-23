@@ -2,21 +2,22 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NotNativeDto, SemiCoinDto } from "../../../../../exchange/asset/dto/custom";
+import { SemiNftDto, AllTypesDto } from "@gemunion/nest-js-validators";
+
 import type { ICraftCreateDto } from "../interfaces";
 
 export class CraftCreateDto implements ICraftCreateDto {
   @ApiProperty({
-    type: NotNativeDto,
+    type: SemiNftDto,
   })
   @ValidateNested()
-  @Type(() => NotNativeDto)
-  public item: InstanceType<typeof NotNativeDto>;
+  @Type(() => SemiNftDto)
+  public item: InstanceType<typeof SemiNftDto>;
 
   @ApiProperty({
-    type: SemiCoinDto,
+    type: AllTypesDto,
   })
   @ValidateNested()
-  @Type(() => SemiCoinDto)
-  public price: InstanceType<typeof SemiCoinDto>;
+  @Type(() => AllTypesDto)
+  public price: InstanceType<typeof AllTypesDto>;
 }

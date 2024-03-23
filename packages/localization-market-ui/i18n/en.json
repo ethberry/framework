@@ -112,6 +112,8 @@
       "13377": "GEMUNION",
       "13378": "BESU",
       "10001": "BESU",
+      "13371": "IMMUTABLE zkEVM",
+      "13473": "IMMUTABLE zkEVM (testnet)",
       "137": "POLYGON",
       "11155111": "SEPOLIA",
       "42161": "ARBITRUM",
@@ -622,7 +624,9 @@
     }
   },
   "messages": {
+    "empty-list": "Nothing to display",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "loading": "Loading...",
     "merchant-created": "Congratulations on creating your merchant account! It's currently undergoing the validation process. We appreciate your patience during this time.",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",

@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 import { ContractStatus, IUser } from "@framework/types";
 
@@ -81,7 +81,7 @@ export const WaitListItem: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "auto" }}>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(waitListItem => (
             <StyledListItem key={waitListItem.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{waitListItem.account}</ListItemText>
@@ -98,7 +98,7 @@ export const WaitListItem: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

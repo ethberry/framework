@@ -14,7 +14,7 @@ steps:
     args: ["cp", "-r", "gs://framework-env/app/services/*", "services/"]
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://framework-env/app/contracts/*", "contracts/"]
+    args: ["cp", "-r", "gs://framework-env/app/framework-contracts/*", "framework-contracts/contracts/"]
   # Download firebase file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/gemunion-framework-production-firebase-admin.json", "gemunion-framework-production-firebase-admin.json"]

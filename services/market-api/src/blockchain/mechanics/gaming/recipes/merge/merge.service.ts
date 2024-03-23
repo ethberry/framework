@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, NotAcceptableException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, FindManyOptions, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import { defaultChainId } from "@framework/constants";
@@ -18,6 +18,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MergeEntity } from "./merge.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class MergeService {
@@ -70,8 +71,8 @@ export class MergeService {
           qb.getQuery = () => `LATERAL json_array_elements(price_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -111,6 +112,13 @@ export class MergeService {
         },
       },
     });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<MergeEntity>,
+    options?: FindManyOptions<MergeEntity>,
+  ): Promise<Array<MergeEntity>> {
+    return this.mergeEntityRepository.find({ where, ...options });
   }
 
   public async sign(dto: IMergeSignDto): Promise<IServerSignature> {
@@ -221,5 +229,18 @@ export class MergeService {
         amount: "1",
       })),
     );
+  }
+
+  public async deactivateMerge(assets: Array<AssetEntity>): Promise<void> {
+    const mergeEntities = await this.findAll(
+      {
+        item: In(assets.map(asset => asset.id)),
+      },
+      { relations: { item: { components: true } } },
+    );
+
+    for (const mergeEntity of mergeEntities) {
+      await Object.assign(mergeEntity, { mergeStatus: MergeStatus.INACTIVE }).save();
+    }
   }
 }

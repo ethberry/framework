@@ -1,12 +1,13 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
 
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IToken, ITokenSearchDto } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc20CoinsListItem } from "./item";
 
 export interface IErc20CoinsListProps {
@@ -16,7 +17,10 @@ export interface IErc20CoinsListProps {
 export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IToken, ITokenSearchDto>({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage, handleRefreshPage } = useCollection<
+    IToken,
+    ITokenSearchDto
+  >({
     baseUrl: "/erc20/coins",
     search: {
       query: "",
@@ -30,15 +34,19 @@ export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
 
       <PageHeader message="pages.erc20.coins.title" />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSearch} testId="CoinsSearchForm" />
+      <CommonSearchForm initialValues={search} onSubmit={handleSearch} testId="CoinsSearchForm">
+        <FormRefresher onRefreshPage={handleRefreshPage} />
+      </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(token => (
-            <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc20CoinsListItem token={token} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(token => (
+              <Grid item lg={4} sm={6} xs={12} key={token.id}>
+                <Erc20CoinsListItem token={token} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

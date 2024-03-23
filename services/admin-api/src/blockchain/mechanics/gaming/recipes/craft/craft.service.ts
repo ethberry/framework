@@ -1,14 +1,15 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
-import { ContractEventType, CraftStatus, ICraftSearchDto } from "@framework/types";
+import { ContractEventType, CraftStatus, ICraftSearchDto, TemplateStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { CraftEntity } from "./craft.entity";
 import type { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class CraftService {
@@ -40,6 +41,14 @@ export class CraftService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    // item or price template must be active
+    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+
     if (query) {
       // support multiple items
       queryBuilder.leftJoin("craft.item", "item2");
@@ -50,8 +59,8 @@ export class CraftService {
           qb.getQuery = () => `LATERAL json_array_elements(item2_template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -80,6 +89,13 @@ export class CraftService {
     options?: FindOneOptions<CraftEntity>,
   ): Promise<CraftEntity | null> {
     return this.craftEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<CraftEntity>,
+    options?: FindManyOptions<CraftEntity>,
+  ): Promise<Array<CraftEntity>> {
+    return this.craftEntityRepository.find({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
@@ -169,5 +185,22 @@ export class CraftService {
     } else {
       await craftEntity.remove();
     }
+  }
+
+  public async deactivateCrafts(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const craftEntities = await this.craftEntityRepository.find({
+      where: [
+        {
+          item: In(assets.map(asset => asset.id)),
+        },
+        {
+          price: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    return await this.craftEntityRepository.delete({
+      id: In(craftEntities.map(cr => cr.id)),
+    });
   }
 }

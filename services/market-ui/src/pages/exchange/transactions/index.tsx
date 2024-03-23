@@ -10,15 +10,15 @@ import {
   GridTreeNodeWithRender,
   GridValidRowModel,
 } from "@mui/x-data-grid-premium";
+import { useWeb3React } from "@web3-react/core";
 import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { TxHashLink } from "@gemunion/mui-scanner";
-import { useUser } from "@gemunion/provider-user";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
+import type { IEventHistory, IExchangeLendEvent } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 
 import { EventDataView } from "./event-data-view";
@@ -46,7 +46,7 @@ export const MyTransactions: FC = () => {
   });
 
   const { formatMessage } = useIntl();
-  const { profile } = useUser<IUser>();
+  const { account } = useWeb3React();
 
   const columns: GridColDef<GridValidRowModel>[] = [
     {
@@ -63,8 +63,7 @@ export const MyTransactions: FC = () => {
       flex: 2,
       renderCell: (params: GridRenderCellParams<GridValidRowModel, any, IEventHistory, any>) => {
         const { eventData, eventType } = params.row;
-        const isBorrow =
-          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).account;
+        const isBorrow = eventType === ContractEventType.Lend && account !== (eventData as IExchangeLendEvent).account;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
       minWidth: 140,

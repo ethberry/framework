@@ -11,6 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IReferralReportSearchDto, IToken } from "@framework/types";
 
 import { ReferralReportSearchForm } from "./form";
+import { StyledEmptyWrapper } from "@framework/styled";
 
 export const ReferralChart: FC = () => {
   const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
@@ -132,7 +133,9 @@ export const ReferralChart: FC = () => {
       <ReferralReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+          <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Fragment>
   );

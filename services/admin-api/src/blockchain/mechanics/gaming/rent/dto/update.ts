@@ -2,11 +2,10 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, IsString, Min, Validate, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ForbidEnumValues } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { RentRuleStatus } from "@framework/types";
 
 import { IRentUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
 
 export class RentUpdateDto implements IRentUpdateDto {
   @ApiPropertyOptional()

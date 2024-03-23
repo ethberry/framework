@@ -1,8 +1,9 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { StyledEmptyWrapper } from "@framework/styled";
 import { IAssetPromo } from "@framework/types";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { AssetPromoItem } from "./item";
@@ -20,11 +21,13 @@ export const AssetPromoList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(promo => (
-            <Grid item lg={4} sm={6} xs={12} key={promo.id}>
-              <AssetPromoItem promo={promo} />
-            </Grid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(promo => (
+              <Grid item lg={4} sm={6} xs={12} key={promo.id}>
+                <AssetPromoItem promo={promo} />
+              </Grid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
     </Fragment>

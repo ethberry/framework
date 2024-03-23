@@ -6,12 +6,13 @@ import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
 import { utils } from "ethers";
 
+import { StyledEmptyWrapper } from "@framework/styled";
+import type { IStakingChartSearchDto, IToken, IUser } from "@framework/types";
+import { TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { InputType } from "@gemunion/types-collection";
-import type { IStakingChartSearchDto, IToken, IUser } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import { StakingChartSearchForm } from "./form";
 
@@ -168,7 +169,9 @@ export const StakingChart: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+          <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Fragment>
   );

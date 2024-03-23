@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { List, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { ListItemText, ListSubheader } from "@mui/material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { formatEther } from "@framework/exchange";
-import { ListActions, StyledListItem } from "@framework/styled";
+import { ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 
 import { TopUpButton } from "../../../common/top-up";
@@ -57,59 +57,55 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length ? (
-          <List
-            subheader={
-              <ListSubheader disableGutters>
-                <StyledListItem>
-                  <ListItemText sx={{ width: 0.27 }}>
-                    <FormattedMessage id="dialogs.checkBalance.token" />
-                  </ListItemText>
-                  <ListItemText sx={{ width: 0.27 }}>
-                    <FormattedMessage id="dialogs.checkBalance.stakeBalance" />
-                  </ListItemText>
-                  <ListItemText sx={{ width: 0.24 }}>
-                    <FormattedMessage id="dialogs.checkBalance.depAmount" />
-                  </ListItemText>
-                </StyledListItem>
-              </ListSubheader>
-            }
-          >
-            {rows.map((bal, idx) => (
-              <StyledListItem key={idx}>
-                <ListItemText sx={{ width: 0.3 }}>{bal && bal.token ? bal.token.template?.title : ""}</ListItemText>
-                <ListItemText sx={{ width: 0.2 }}>
-                  {bal && bal.token
-                    ? formatEther(
-                        bal.stakingBalance.toString(),
-                        bal.token?.template?.contract!.decimals,
-                        bal.token?.template?.contract!.symbol,
-                      )
-                    : ""}
+        <StyledListWrapper
+          count={rows.length}
+          isLoading={isLoading}
+          subheader={
+            <ListSubheader disableGutters>
+              <StyledListItem>
+                <ListItemText sx={{ width: 0.27 }}>
+                  <FormattedMessage id="dialogs.checkBalance.token" />
                 </ListItemText>
-                <ListItemText sx={{ width: 0.06 }}>
-                  {bal && BigInt(bal.stakingBalance) > BigInt(bal.depositAmount) ? ">" : "<"}
+                <ListItemText sx={{ width: 0.27 }}>
+                  <FormattedMessage id="dialogs.checkBalance.stakeBalance" />
                 </ListItemText>
-                <ListItemText sx={{ width: 0.2 }}>
-                  {bal && bal.token
-                    ? formatEther(
-                        bal.depositAmount.toString(),
-                        bal.token?.template?.contract!.decimals,
-                        bal.token?.template?.contract!.symbol,
-                      )
-                    : ""}
+                <ListItemText sx={{ width: 0.24 }}>
+                  <FormattedMessage id="dialogs.checkBalance.depAmount" />
                 </ListItemText>
-                <ListActions>
-                  <TopUpButton contract={data.contract} disabled={bal ? !bal.topUp : true} />
-                </ListActions>
               </StyledListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>
-            <FormattedMessage id="messages.empty-list" />
-          </Typography>
-        )}
+            </ListSubheader>
+          }
+        >
+          {rows.map((bal, idx) => (
+            <StyledListItem key={idx}>
+              <ListItemText sx={{ width: 0.3 }}>{bal && bal.token ? bal.token.template?.title : ""}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {bal && bal.token
+                  ? formatEther(
+                      bal.stakingBalance.toString(),
+                      bal.token?.template?.contract!.decimals,
+                      bal.token?.template?.contract!.symbol,
+                    )
+                  : ""}
+              </ListItemText>
+              <ListItemText sx={{ width: 0.06 }}>
+                {bal && BigInt(bal.stakingBalance) > BigInt(bal.depositAmount) ? ">" : "<"}
+              </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {bal && bal.token
+                  ? formatEther(
+                      bal.depositAmount.toString(),
+                      bal.token?.template?.contract!.decimals,
+                      bal.token?.template?.contract!.symbol,
+                    )
+                  : ""}
+              </ListItemText>
+              <ListActions>
+                <TopUpButton contract={data.contract} disabled={bal ? !bal.topUp : true} />
+              </ListActions>
+            </StyledListItem>
+          ))}
+        </StyledListWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

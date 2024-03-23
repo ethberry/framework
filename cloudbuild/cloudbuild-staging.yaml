@@ -1,5 +1,12 @@
 #cloudbuild.yaml
 steps:
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - -c
+      - |
+        git config -f .gitmodules https://github.com/Gemunion/framework-contracts.git
+        git submodule update --init
   # Download .env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/staging/app/.env", ".env"]
@@ -14,7 +21,7 @@ steps:
     args: ["cp", "-r", "gs://framework-env/staging/app/halogen-framing-key.json", "halogen-framing-key.json"]
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://framework-env/staging/app/contracts/*", "contracts/"]
+    args: ["cp", "-r", "gs://framework-env/staging/app/framework-contracts/*", "framework-contracts/contracts/"]
 
   # Upload docker-compose script to bucket
   - name: "gcr.io/cloud-builders/gsutil"

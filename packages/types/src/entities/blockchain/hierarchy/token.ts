@@ -21,15 +21,6 @@ export enum TokenMetadata {
   PRIZE = "PRIZE",
 }
 
-export enum TokenGenes {
-  STRENGTH = "STRENGTH",
-  DEXTERITY = "DEXTERITY",
-  CONSTITUTION = "CONSTITUTION",
-  INTELLIGENCE = "INTELLIGENCE",
-  WISDOM = "WISDOM",
-  CHARISMA = "CHARISMA",
-}
-
 export enum TokenTraits {
   CLOTHES = "CLOTHES",
   EYES = "EYES",

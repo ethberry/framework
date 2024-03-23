@@ -32,14 +32,9 @@ export const WalletButton: FC = () => {
   };
 
   const isChainValid = !profile || !chainId || profile?.chainId === chainId;
-  const isAccountMatch = !profile || !account || profile?.wallet === account.toLowerCase();
 
   const tooltipTitle = useMemo(() => {
     switch (true) {
-      case !isAccountMatch:
-        return (
-          <StyledTooltipContent>{formatMessage({ id: "components.header.wallet.notMatch" })}</StyledTooltipContent>
-        );
       case !isChainValid:
         return (
           <StyledTooltipContent>{formatMessage({ id: "components.header.wallet.notValid" })}</StyledTooltipContent>
@@ -59,7 +54,7 @@ export const WalletButton: FC = () => {
     <Box>
       <Tooltip title={tooltipTitle} enterDelay={300}>
         <StyledButton color="inherit" onClick={handleOpenDialog} data-testid="OpenWalletOptionsDialog">
-          <Badge color="error" badgeContent="!" invisible={isChainValid && isAccountMatch}>
+          <Badge color="error" badgeContent="!" invisible={isChainValid}>
             <WalletIcon />
             <Box sx={{ ml: 1 }}>
               {account

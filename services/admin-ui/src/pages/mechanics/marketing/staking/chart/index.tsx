@@ -9,6 +9,7 @@ import { utils } from "ethers";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { InputType } from "@gemunion/types-collection";
+import { StyledEmptyWrapper } from "@framework/styled";
 import type { IStakingChartSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -165,7 +166,9 @@ export const StakingChart: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+          <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Fragment>
   );

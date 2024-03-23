@@ -8,17 +8,27 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
+import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
 export const MysteryContractList: FC = () => {
-  const { rows, count, search, isLoading, isFiltersOpen, handleChangePage, handleSearch, handleToggleFilters } =
-    useCollection<IContract, ISearchDto>({
-      baseUrl: "/mystery/contracts",
-    });
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleChangePage,
+    handleRefreshPage,
+    handleSearch,
+    handleToggleFilters,
+  } = useCollection<IContract, ISearchDto>({
+    baseUrl: "/mystery/contracts",
+  });
 
   return (
     <Fragment>
@@ -36,6 +46,7 @@ export const MysteryContractList: FC = () => {
         open={isFiltersOpen}
         testId="WaitListListSearchForm"
       >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <EntityInput name="merchantId" controller="merchants" />
@@ -45,11 +56,13 @@ export const MysteryContractList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(contract => (
-            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
-              <MysteryContractListItem contract={contract} />
-            </StyledGrid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => (
+              <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
+                <MysteryContractListItem contract={contract} />
+              </StyledGrid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 

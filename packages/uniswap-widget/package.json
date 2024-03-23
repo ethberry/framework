@@ -9,13 +9,13 @@
   },
   "description": "react uniswap-widget",
   "dependencies": {
-    "@gemunion/provider-wallet": "3.7.8",
-    "@mui/material": "5.15.11",
+    "@gemunion/provider-wallet": "3.7.11",
+    "@mui/material": "5.15.14",
     "@uniswap/widgets": "2.59.0",
     "@web3-react/core": "8.2.3"
   },
   "devDependencies": {
-    "@types/react": "18.2.61",
+    "@types/react": "18.2.67",
     "react": "18.2.0"
   },
   "engines": {

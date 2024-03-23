@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetPromoService } from "./promo.service";
 import { AssetPromoEntity } from "./promo.entity";
 import { AssetPromoSignDto, PromoSearchDto } from "./dto";
@@ -14,14 +15,20 @@ export class AssetPromoController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PromoSearchDto): Promise<[Array<AssetPromoEntity>, number]> {
-    return this.assetPromoService.search(dto);
+  public search(
+    @Query() dto: PromoSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<AssetPromoEntity>, number]> {
+    return this.assetPromoService.search(dto, userEntity);
   }
 
   @Get("/new")
   @UseInterceptors(PaginationInterceptor)
-  public getNewTemplates(@Query() dto: PromoSearchDto): Promise<[Array<AssetPromoEntity>, number]> {
-    return this.assetPromoService.search({ ...dto, take: 10 });
+  public getNewTemplates(
+    @Query() dto: PromoSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<AssetPromoEntity>, number]> {
+    return this.assetPromoService.search({ ...dto, take: 10 }, userEntity);
   }
 
   @Post("/sign")

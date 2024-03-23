@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledPagination, StyledListWrapper } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 import { ProductStatus } from "@framework/types";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -83,7 +83,7 @@ export const Product: FC = () => {
       </CommonSearchForm>
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(product => (
             <StyledListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
@@ -98,7 +98,7 @@ export const Product: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

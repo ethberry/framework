@@ -6,24 +6,25 @@ import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
 
+import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
+import { NodeEnv } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
-import { NodeEnv } from "@framework/types";
 import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
-import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 import { ReferralTreeMerchantSearchForm } from "./form";
+import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
 export interface IReferralTreeSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;
 }
 
 export const ReferralTree: FC = () => {
-  const { rows, isLoading, handleSearch, search /* */, isFiltersOpen, handleToggleFilters } = useCollection<
+  const { rows, isLoading, handleSearch, search, isFiltersOpen, handleToggleFilters } = useCollection<
     IReferralTree,
     IReferralTreeSearchDto
   >({
@@ -166,7 +167,7 @@ export const ReferralTree: FC = () => {
       </Grid>
 
       <ProgressOverlay isLoading={isLoading}>
-        {rows.length > 0 ? (
+        <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
           <Box sx={{ minHeight: 150, flexGrow: 1, mt: 3 }}>
             <TreeView
               aria-label="referral tree"
@@ -177,7 +178,7 @@ export const ReferralTree: FC = () => {
               {rows.map((row, idx) => renderTree(row, idx))}
             </TreeView>
           </Box>
-        ) : null}
+        </StyledEmptyWrapper>
       </ProgressOverlay>
     </Grid>
   );

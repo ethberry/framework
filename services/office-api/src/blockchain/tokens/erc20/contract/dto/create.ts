@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, Max, MaxLength, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AddressDto, SearchableDto } from "@gemunion/collection";
+import { SearchableDto } from "@gemunion/collection";
+import { AddressDto } from "@gemunion/nest-js-validators";
 import type { IErc20ContractCreateDto } from "@framework/types";
 
 export class Erc20ContractCreateDto extends Mixin(AddressDto, SearchableDto) implements IErc20ContractCreateDto {

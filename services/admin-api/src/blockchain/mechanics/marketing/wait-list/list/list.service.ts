@@ -9,7 +9,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository, DeleteResult } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
@@ -23,6 +23,7 @@ import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class WaitListListService {
@@ -51,14 +52,18 @@ export class WaitListListService {
       merchantId: userEntity.merchantId,
     });
 
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (query) {
       queryBuilder.leftJoin(
         qb => {
           qb.getQuery = () => `LATERAL json_array_elements(waitlist.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -276,6 +281,18 @@ export class WaitListListService {
           resolve(results as Array<WaitListItemEntity>);
         },
       );
+    });
+  }
+
+  public async deactivateWaitlist(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const waitListEntities = await this.waitListListEntityRepository.find({
+      where: {
+        itemId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    return await this.waitListListEntityRepository.delete({
+      id: In(waitListEntities.map(w => w.id)),
     });
   }
 }

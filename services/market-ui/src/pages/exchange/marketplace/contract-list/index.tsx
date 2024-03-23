@@ -5,9 +5,10 @@ import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { StyledPagination } from "@framework/styled";
+import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { ContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
@@ -20,7 +21,10 @@ export const ContractList: FC<IContractListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, IContractSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage, handleRefreshPage } = useCollection<
+    IContract,
+    IContractSearchDto
+  >({
     baseUrl: "/contracts",
     embedded,
     search: {
@@ -38,11 +42,13 @@ export const ContractList: FC<IContractListProps> = props => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(contract => (
-            <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
-              <ContractListItem contract={contract} />
-            </StyledGrid>
-          ))}
+          <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => (
+              <StyledGrid item lg={4} sm={6} xs={12} key={contract.id}>
+                <ContractListItem contract={contract} />
+              </StyledGrid>
+            ))}
+          </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
 
@@ -52,6 +58,8 @@ export const ContractList: FC<IContractListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
+
+      <FormRefresher onRefreshPage={handleRefreshPage} />
     </Fragment>
   );
 };

@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { AddressDto } from "@gemunion/collection";
+import { AddressDto } from "@gemunion/nest-js-validators";
 import { ContractType } from "@framework/types";
 
 import type { IContractManagerCreateDto } from "../interfaces";

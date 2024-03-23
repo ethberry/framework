@@ -1,15 +1,15 @@
 import { FC } from "react";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
 
-import { LotteryTokenViewDialog } from "./view";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "../utils";
+import { LotteryTokenViewDialog } from "./view";
 import { LotteryTokenSearchForm } from "./form";
 
 export const LotteryTokens: FC = () => {
@@ -52,7 +52,7 @@ export const LotteryTokens: FC = () => {
       <LotteryTokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(token => (
             <StyledListItem key={token.id}>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
@@ -71,7 +71,7 @@ export const LotteryTokens: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

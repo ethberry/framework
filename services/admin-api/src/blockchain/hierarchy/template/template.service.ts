@@ -1,26 +1,27 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { TokenService } from "../token/token.service";
 import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
+import { TokenService } from "../token/token.service";
+import { TemplateDeleteService } from "./template.delete.service";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
-    @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly contractService: ContractService,
+    protected readonly templateDeleteService: TemplateDeleteService,
   ) {}
 
   public async search(
@@ -100,8 +101,8 @@ export class TemplateService {
           qb.getQuery = () => `LATERAL json_array_elements(template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -279,26 +280,6 @@ export class TemplateService {
   }
 
   public async delete(where: FindOptionsWhere<TemplateEntity>, userEntity: UserEntity): Promise<TemplateEntity> {
-    const templateEntity = await this.findOne(where, {
-      relations: {
-        contract: true,
-      },
-    });
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    if (templateEntity.contract.merchantId !== userEntity.merchantId) {
-      throw new ForbiddenException("insufficientPermissions");
-    }
-
-    const count = await this.tokenService.count({ templateId: where.id });
-    if (count) {
-      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
-      return templateEntity.save();
-    } else {
-      return templateEntity.remove();
-    }
+    return this.templateDeleteService.delete(where, userEntity);
   }
 }

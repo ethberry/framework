@@ -2,10 +2,10 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
+import { SemiCoinDto } from "@gemunion/nest-js-validators";
 import { GradeStatus, GradeStrategy } from "@framework/types";
 
-import { IGradeUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../../exchange/asset/dto/custom";
+import type { IGradeUpdateDto } from "../interfaces";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({

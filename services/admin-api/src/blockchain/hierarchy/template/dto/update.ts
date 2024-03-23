@@ -3,11 +3,10 @@ import { IsEnum, IsOptional, IsString, IsUrl, ValidateNested } from "class-valid
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { IsBigInt, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
 import type { ITemplateUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "../../../exchange/asset/dto/custom";
 
 export class TemplateUpdateDto extends SearchableDto implements ITemplateUpdateDto {
   @ApiPropertyOptional({

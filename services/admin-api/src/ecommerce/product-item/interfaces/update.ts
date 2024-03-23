@@ -1,3 +1,3 @@
-import { IProductItemCreateDto } from "./create";
+import type { IProductItemCreateDto } from "./create";
 
 export interface IProductItemUpdateDto extends IProductItemCreateDto {}

@@ -13,17 +13,16 @@ export const NewAssetPromo: FC = () => {
   const [promos, setPromos] = useState<Array<IAssetPromo>>([]);
 
   const { fn, isLoading } = useApiCall(
-    async (api, data: { chainId: number }) => {
+    async api => {
       return api.fetchJson({
         url: "/promos/new",
-        data,
       });
     },
     { success: false, error: false },
   );
 
-  const fetchTokens = async (data: { chainId: number }): Promise<void> => {
-    return fn(void 0, data)
+  const fetchTokens = async (): Promise<void> => {
+    return fn()
       .then((json: IPaginationResult<IAssetPromo>) => {
         setPromos(json.rows);
       })
@@ -33,7 +32,7 @@ export const NewAssetPromo: FC = () => {
   };
 
   useEffect(() => {
-    void fetchTokens({ chainId: user.profile?.chainId });
+    void fetchTokens();
   }, [user.profile?.chainId]);
 
   return (

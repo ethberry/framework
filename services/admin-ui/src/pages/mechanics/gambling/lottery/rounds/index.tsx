@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Grid, List, ListItemText } from "@mui/material";
+import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -40,7 +40,7 @@ export const LotteryRounds: FC = () => {
       <PageHeader message="pages.lottery.rounds.title" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(round => (
             <StyledListItem key={round.id}>
               <ListItemText sx={{ width: 0.2 }}>
@@ -59,7 +59,7 @@ export const LotteryRounds: FC = () => {
               </ListActions>
             </StyledListItem>
           ))}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

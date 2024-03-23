@@ -8,7 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IUser, IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, MysteryContractFeatures } from "@framework/types";
 
@@ -91,7 +91,7 @@ export const MysteryContract: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
             const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
@@ -124,7 +124,7 @@ export const MysteryContract: FC = () => {
               </StyledListItem>
             );
           })}
-        </List>
+        </StyledListWrapper>
       </ProgressOverlay>
 
       <StyledPagination

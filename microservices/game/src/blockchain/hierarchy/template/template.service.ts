@@ -107,8 +107,8 @@ export class TemplateService {
           qb.getQuery = () => `LATERAL json_array_elements(template.description->'blocks')`;
           return qb;
         },
-        `blocks`,
-        `TRUE`,
+        "blocks",
+        "TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
