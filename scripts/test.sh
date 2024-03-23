@@ -18,7 +18,7 @@
  export GEMUNION_PRIVATE_KEY_STAGE=$GEMUNION_PRIVATE_KEY_STAGE
  export GEMUNION_PRIVATE_KEY_PROD=$GEMUNION_PRIVATE_KEY_PROD
 
- lerna bootstrap --concurrency 1 --hoist --ignore-scripts
+ git submodule update --remote --merge && lerna bootstrap --concurrency 1 --hoist --ignore-scripts
 
 # DEV ONLY !!!
 # export $(cat ./.env.test | sed 's/#.*//g' | xargs)
