@@ -55,7 +55,6 @@ jobs:
       - name: Git submodule
         run: |
           git submodule update --remote --merge
-          ls -la
 
       - name: Npm run test
         run: npm run test
