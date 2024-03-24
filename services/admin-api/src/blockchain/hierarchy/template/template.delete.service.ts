@@ -17,6 +17,7 @@ import { GradeService } from "../../mechanics/gaming/grade/grade.service";
 import { RentService } from "../../mechanics/gaming/rent/rent.service";
 import { WaitListListService } from "../../mechanics/marketing/wait-list/list/list.service";
 import { StakingRulesService } from "../../mechanics/marketing/staking/rules/rules.service";
+import { PonziRulesService } from "../../mechanics/gambling/ponzi/rules/rules.service";
 
 @Injectable()
 export class TemplateDeleteService {
@@ -34,6 +35,7 @@ export class TemplateDeleteService {
     protected readonly rentService: RentService,
     protected readonly waitListListService: WaitListListService,
     protected readonly stakingRulesService: StakingRulesService,
+    protected readonly ponziRulesService: PonziRulesService,
   ) {}
 
   public findOne(
@@ -84,6 +86,7 @@ export class TemplateDeleteService {
       this.rentService.deactivateRent(assets),
       this.waitListListService.deactivateWaitlist(assets),
       this.stakingRulesService.deactivateStakingRules(assets),
+      this.ponziRulesService.deactivatePonziRules(assets),
       this.mysteryBoxService.deactivateBoxes(assets),
       this.claimTemplateService.deactivateClaims(assets),
     ]);

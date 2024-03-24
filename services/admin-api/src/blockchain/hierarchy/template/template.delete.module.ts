@@ -14,6 +14,7 @@ import { GradeModule } from "../../mechanics/gaming/grade/grade.module";
 import { WaitListListModule } from "../../mechanics/marketing/wait-list/list/list.module";
 import { RentModule } from "../../mechanics/gaming/rent/rent.module";
 import { StakingRulesModule } from "../../mechanics/marketing/staking/rules/rules.module";
+import { PonziRulesModule } from "../../mechanics/gambling/ponzi/rules/rules.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { StakingRulesModule } from "../../mechanics/marketing/staking/rules/rule
     forwardRef(() => WaitListListModule),
     forwardRef(() => RentModule),
     forwardRef(() => StakingRulesModule),
+    forwardRef(() => PonziRulesModule),
     TypeOrmModule.forFeature([TemplateEntity]),
     ClaimTemplateModule,
   ],
