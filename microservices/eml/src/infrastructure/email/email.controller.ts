@@ -56,6 +56,7 @@ export class EmailController {
       to: [payload.merchant.email],
       data: {
         vrfSubId: payload.merchant.chainLinkSubscriptions![0].vrfSubId.toString(),
+        chainId: payload.chainId.toString(),
       },
     });
   }
@@ -76,6 +77,8 @@ export class EmailController {
         // BALANCES
         tokenBalance: formatUnits(payload.balance, payload.token.template!.contract!.decimals),
         depositAmount: formatUnits(payload.deposit, payload.token.template!.contract!.decimals),
+        // CHAIN_ID
+        chainId: payload.contract.chainId.toString(),
       },
     });
   }
