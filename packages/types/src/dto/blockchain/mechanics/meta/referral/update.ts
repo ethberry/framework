@@ -1,4 +1,4 @@
-import { IReferralProgramLevelDto } from "./create";
+import type { IReferralProgramLevelDto } from "./create";
 
 export interface IReferralProgramUpdateDto {
   merchantId: number;

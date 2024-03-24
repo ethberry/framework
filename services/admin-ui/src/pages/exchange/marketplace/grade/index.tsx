@@ -40,7 +40,7 @@ export const MarketplaceLevel: FC = () => {
   const { fn, isLoading } = useApiCall(
     (api, values) => {
       return api.fetchJson({
-        url: `/marketplace/report/supply`,
+        url: "/marketplace/report/supply",
         data: values,
       });
     },

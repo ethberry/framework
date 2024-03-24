@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";

@@ -2,10 +2,10 @@ import { ConflictException, Injectable, NotFoundException } from "@nestjs/common
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPageSearchDto } from "@framework/types";
+import type { IPageSearchDto } from "@framework/types";
 
 import { PageEntity } from "./page.entity";
-import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
+import type { IPageCreateDto, IPageUpdateDto } from "./interfaces";
 
 @Injectable()
 export class PageService {

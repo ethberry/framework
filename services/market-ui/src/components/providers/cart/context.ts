@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 
 export interface ICartItem {
   product: IProduct;

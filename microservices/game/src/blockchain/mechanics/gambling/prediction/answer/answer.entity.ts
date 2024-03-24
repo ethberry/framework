@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IPredictionAnswer } from "@framework/types";
-import { PredictionAnswerAnswer } from "@framework/types";
+import { PredictionAnswer } from "@framework/types";
 
 import { PredictionQuestionEntity } from "../question/question.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -26,7 +26,7 @@ export class PredictionAnswerEntity extends IdDateBaseEntity implements IPredict
 
   @Column({
     type: "enum",
-    enum: PredictionAnswerAnswer,
+    enum: PredictionAnswer,
   })
-  public answer: PredictionAnswerAnswer;
+  public answer: PredictionAnswer;
 }

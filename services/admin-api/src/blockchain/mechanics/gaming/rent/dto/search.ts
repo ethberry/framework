@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IRentSearchDto, RentRuleStatus } from "@framework/types";
+import type { IRentSearchDto } from "@framework/types";
+import { RentRuleStatus } from "@framework/types";
 
 export class RentSearchDto extends SearchDto implements IRentSearchDto {
   @ApiPropertyOptional({

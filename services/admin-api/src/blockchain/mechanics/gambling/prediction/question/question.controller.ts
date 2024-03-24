@@ -1,11 +1,12 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { PredictionQuestionCreateDto, PredictionQuestionSearchDto, PredictionQuestionUpdateDto } from "./dto";
 import { PredictionQuestionService } from "./question.service";
 import { PredictionQuestionEntity } from "./question.entity";
-import { PredictionQuestionSearchDto } from "./dto";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/prediction/questions")
@@ -18,6 +19,14 @@ export class PredictionQuestionController {
     return this.predictionQuestionService.search(dto);
   }
 
+  @Post("/")
+  public create(
+    @Body() dto: PredictionQuestionCreateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<PredictionQuestionEntity> {
+    return this.predictionQuestionService.create(dto, userEntity);
+  }
+
   @Get("/autocomplete")
   public autocomplete(): Promise<Array<PredictionQuestionEntity>> {
     return this.predictionQuestionService.autocomplete();
@@ -26,6 +35,15 @@ export class PredictionQuestionController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<PredictionQuestionEntity | null> {
-    return this.predictionQuestionService.findOne({ id });
+    return this.predictionQuestionService.findOneWithRelations({ id });
+  }
+
+  @Put("/:id")
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: PredictionQuestionUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<PredictionQuestionEntity> {
+    return this.predictionQuestionService.update({ id }, dto, userEntity);
   }
 }

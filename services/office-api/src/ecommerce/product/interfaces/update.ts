@@ -1,5 +1,5 @@
 import { ProductStatus } from "@framework/types";
-import { IProductCreateDto } from "./create";
+import type { IProductCreateDto } from "./create";
 
 export interface IProductUpdateDto extends IProductCreateDto {
   categoryIds: Array<number>;

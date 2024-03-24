@@ -4,7 +4,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { IPonziDeposit, PonziDepositStatus } from "@framework/types";
+import type { IPonziDeposit } from "@framework/types";
+import { PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ReceiveRewardABI from "@framework/abis/receiveReward/ReentrancyStakingReward.json";

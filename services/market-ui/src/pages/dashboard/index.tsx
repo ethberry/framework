@@ -32,6 +32,7 @@ import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
 import { DexSection } from "./integrations/dex";
 import { ReferralSection } from "./exchange/referral";
+import { PredictionSection } from "./mechanics/prediction";
 
 export const Dashboard: FC = () => {
   return (
@@ -60,6 +61,7 @@ export const Dashboard: FC = () => {
           <StyledDivider />
           <LotterySection />
           <RaffleSection />
+          <PredictionSection />
           <StakingSection />
           <PonziSection />
         </Grid>

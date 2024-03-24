@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { InputType } from "@gemunion/types-collection";
 

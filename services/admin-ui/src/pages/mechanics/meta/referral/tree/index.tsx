@@ -10,7 +10,8 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IReferralTreeSearchDto, ReferralTreeSearchForm } from "./form";
+import type { IReferralTreeSearchDto } from "./form";
+import { ReferralTreeSearchForm } from "./form";
 
 export const ReferralTree: FC = () => {
   const {

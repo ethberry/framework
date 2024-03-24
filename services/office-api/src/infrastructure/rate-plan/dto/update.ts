@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IRatePlanRowUpdateDto, IRatePlanUpdateDto } from "../interfaces";
+import type { IRatePlanRowUpdateDto, IRatePlanUpdateDto } from "../interfaces";
 
 export class RatePlanRowUpdateDto implements IRatePlanRowUpdateDto {
   @ApiProperty()

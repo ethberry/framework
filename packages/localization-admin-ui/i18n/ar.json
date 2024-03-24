@@ -460,11 +460,11 @@
       "STRENGTH": "قوة",
       "WISDOM": "حكمة"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "أُسي",
       "FLAT": "ثابت",
       "LINEAR": "خطي"
@@ -751,8 +751,8 @@
       "from": "من",
       "fromBlock": "استمع لسجل البلوك من الرقم №",
       "gender": "الجنس",
-      "gradeStatus": "الحالة",
-      "gradeStrategy": "استراتيجية الدرجة",
+      "discreteStatus": "الحالة",
+      "discreteStrategy": "استراتيجية الدرجة",
       "growthRate": "معدل النمو",
       "id": "الهوية",
       "imageUrl": "الصورة الرمزية",

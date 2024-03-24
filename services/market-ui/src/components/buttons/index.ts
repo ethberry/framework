@@ -28,7 +28,7 @@ export * from "./mechanics/staking/allowance";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/staking/reward";
 export * from "./mechanics/staking/reward-complex";
-export * from "./mechanics/grade";
+export * from "./mechanics/discrete";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
 export * from "./mechanics/wait-list/claim";

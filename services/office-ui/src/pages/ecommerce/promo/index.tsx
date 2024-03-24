@@ -4,7 +4,7 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { IProductPromo } from "@framework/types";
+import type { IProductPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";

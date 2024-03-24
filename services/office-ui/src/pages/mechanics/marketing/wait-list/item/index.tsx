@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";

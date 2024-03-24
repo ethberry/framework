@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleTokenSearchDto } from "@framework/types";
 
 interface IRaffleTokenSearchFormProps {
   onSubmit: (values: IRaffleTokenSearchDto) => Promise<void>;

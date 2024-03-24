@@ -11,8 +11,8 @@ import type {
   IClaimData,
   IConsecutiveTransferData,
   ICraftData,
+  IDiscreteData,
   IDismantleData,
-  IGradeData,
   ILotteryFinalizeData,
   ILotteryPrizeData,
   ILotteryPurchaseData,
@@ -29,6 +29,7 @@ import type {
   IRafflePurchaseData,
   IRaffleRoundEndData,
   IRaffleRoundStartData,
+  IReferralEventData,
   IRentUserUpdateData,
   IStakingBalanceCheck,
   IStakingDepositFinishData,
@@ -40,7 +41,6 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
-import { IReferralEventData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -172,8 +172,8 @@ export class NotificatorService {
   }
 
   // MODULE:GRADE
-  public grade(data: IGradeData): Promise<any> {
-    return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
+  public grade(data: IDiscreteData): Promise<any> {
+    return this.sendMessage(data.discrete.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LEVEL_UP, data).toPromise();
     });
   }

@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, Min } from "class-validator";
 
-import { IProfileUpdateDto } from "../interfaces";
+import type { IProfileUpdateDto } from "../interfaces";
 import { UserCommonDto } from "../../../common/dto";
 
 export class ProfileUpdateDto extends UserCommonDto implements IProfileUpdateDto {

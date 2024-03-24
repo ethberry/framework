@@ -193,7 +193,7 @@
       "FEMALE": "Женский",
       "MALE": "Мужской"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
@@ -445,8 +445,8 @@
       "from": "От",
       "fromBlock": "Слушать лог с блока №",
       "gender": "Пол",
-      "gradeStatus": "Статус",
-      "gradeStrategy": "Стратегия оценки",
+      "discreteStatus": "Статус",
+      "discreteStrategy": "Стратегия оценки",
       "growthRate": "Темп роста",
       "id": "ID",
       "imageUrl": "Аватар",

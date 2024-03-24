@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import type { IProductPromo } from "@framework/types";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IPaginationResult } from "@gemunion/types-collection";
+import type { IPaginationResult } from "@gemunion/types-collection";
 
 import { Root, StyledImage, StyledMobileStepper } from "./styled";
 

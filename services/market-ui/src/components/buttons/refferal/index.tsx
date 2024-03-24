@@ -5,7 +5,8 @@ import { enqueueSnackbar } from "notistack";
 import { useClipboard } from "use-clipboard-copy";
 import { useWeb3React } from "@web3-react/core";
 import { useIntl } from "react-intl";
-import { IMerchant } from "@framework/types";
+
+import type { IMerchant } from "@framework/types";
 
 interface IReferralButtonProps {
   endpoint?: string;

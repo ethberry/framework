@@ -3,7 +3,7 @@ import { IsEnum } from "class-validator";
 
 import { PhotoStatus } from "@framework/types";
 
-import { IPhotoUpdateDto } from "../interfaces";
+import type { IPhotoUpdateDto } from "../interfaces";
 
 export class PhotoUpdateDto implements IPhotoUpdateDto {
   @ApiProperty({
