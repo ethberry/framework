@@ -41,8 +41,10 @@ export class CartService {
         }),
     ).then(values =>
       values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<CartItemEntity>>c)
+        .filter(
+          <T extends CartItemEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+            c.status === "fulfilled",
+        )
         .map(c => c.value),
     );
 
@@ -53,8 +55,10 @@ export class CartService {
         .map(newItem => this.cartItemService.create(newItem, cartEntity)),
     ).then(values =>
       values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<CartItemEntity>>c)
+        .filter(
+          <T extends CartItemEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+            c.status === "fulfilled",
+        )
         .map(c => c.value),
     );
 

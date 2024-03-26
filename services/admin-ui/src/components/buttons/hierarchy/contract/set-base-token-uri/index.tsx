@@ -1,16 +1,16 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { Link } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
-import { useCheckAccess } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 
@@ -24,7 +24,6 @@ export interface ISetBaseTokenURIButtonProps {
 export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const {
     className,
-    contract,
     contract: { address, contractFeatures, baseTokenURI, contractType },
     disabled,
     variant,
@@ -35,8 +34,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
   const [hasAccess, setHasAccess] = useState(false);
-
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkPermissions } = useCheckPermissions();
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -59,14 +57,13 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkPermissions(void 0, {
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 
@@ -84,7 +81,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
         dataTestId="SetTokenURIButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(contract) ||
+          shouldDisableByContractType(props.contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
           !hasAccess
         }

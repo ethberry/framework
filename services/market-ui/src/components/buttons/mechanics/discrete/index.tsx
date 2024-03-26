@@ -83,7 +83,6 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/grade/sign",
@@ -91,8 +90,6 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         data: {
           tokenId: token.id,
           attribute: values.attribute,
-          account,
-          chainId,
         },
       },
       values,

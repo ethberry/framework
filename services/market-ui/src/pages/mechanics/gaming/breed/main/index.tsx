@@ -77,15 +77,11 @@ export const Breed: FC = () => {
   );
 
   const metaFn = useMetamask((values: IBreedDto, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/breed/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           momId: values.mom.tokenId,
           dadId: values.dad.tokenId,

@@ -133,8 +133,8 @@ export class MarketplaceService {
     return response;
   }
 
-  public async sign(dto: ITemplateSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, templateId, amount, chainId } = dto;
+  public async sign(dto: ITemplateSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, templateId, amount } = dto;
 
     const templateEntity = await this.templateService.findOneWithRelations({ id: templateId });
 
@@ -156,8 +156,8 @@ export class MarketplaceService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       amount,
       {
         externalId: templateEntity.id,

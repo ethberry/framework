@@ -24,6 +24,7 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { DismantleEntity } from "./dismantle.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class DismantleService {
@@ -144,8 +145,8 @@ export class DismantleService {
     return this.dismantleEntityRepository.find({ where, ...options });
   }
 
-  public async sign(dto: IDismantleSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
+  public async sign(dto: IDismantleSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, dismantleId, tokenId } = dto;
     const dismantleEntity = await this.findOneWithRelations({ id: dismantleId });
 
     if (!dismantleEntity) {
@@ -165,8 +166,8 @@ export class DismantleService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: dismantleEntity.id,
         expiresAt,

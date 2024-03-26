@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
+import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min, MinLength } from "class-validator";
 import { Transform } from "class-transformer";
 
 import type { ICollectionContractDeployDto } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
+import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@gemunion/constants";
 
 export class Erc721CollectionDeployDto implements ICollectionContractDeployDto {
   @ApiProperty({
@@ -15,12 +16,14 @@ export class Erc721CollectionDeployDto implements ICollectionContractDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
+  @MinLength(titleMinLength, { message: "tooShort" })
+  @MaxLength(titleMaxLength, { message: "tooLong" })
   public name: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
+  @MinLength(symbolMinLength, { message: "tooShort" })
+  @MaxLength(symbolMaxLength, { message: "tooLong" })
   public symbol: string;
 
   @ApiProperty()

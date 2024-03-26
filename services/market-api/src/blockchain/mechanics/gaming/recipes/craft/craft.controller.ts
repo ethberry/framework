@@ -1,12 +1,13 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { ICraftCountResult } from "@framework/types";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
 import { CraftCountDto, CraftSearchDto, CraftSignDto } from "./dto";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Public()
 @Controller("/recipes/craft")
@@ -25,8 +26,8 @@ export class CraftController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: CraftSignDto): Promise<IServerSignature> {
-    return this.craftService.sign(dto);
+  public sign(@Body() dto: CraftSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.craftService.sign(dto, userEntity);
   }
 
   @Get("/:id")

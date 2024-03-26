@@ -19,7 +19,7 @@ export const Erc721TemplateListItem: FC<IErc721TemplateListItemProps> = props =>
 
   return (
     <StyledTemplateItemCard>
-      <CardActionArea component={RouterLink} to={`/erc721/templates/${template.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc721/templates/${template.id}/view`}>
         <CardHeader title={template.title} />
         <StyledCardMedia image={template.imageUrl} />
         <CardContent>

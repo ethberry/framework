@@ -19,7 +19,7 @@ export const Erc998TemplateListItem: FC<IErc998TemplateListItemProps> = props =>
 
   return (
     <StyledTemplateItemCard>
-      <CardActionArea component={RouterLink} to={`/erc998/templates/${template.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc998/templates/${template.id}/view`}>
         <CardHeader title={template.title} />
         <StyledCardMedia image={template.imageUrl} />
         <CardContent>

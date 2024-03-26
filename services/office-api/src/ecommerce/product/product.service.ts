@@ -138,8 +138,10 @@ export class ProductService {
       photos.map((newPhoto, i) => this.photoService.create({ ...newPhoto, priority: i }, productEntity)),
     ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
       values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+        .filter(
+          <T extends PhotoEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+            c.status === "fulfilled",
+        )
         .map(c => c.value),
     );
 
@@ -190,8 +192,10 @@ export class ProductService {
           }),
       ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
         values
-          .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .filter(
+            <T extends PhotoEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+              c.status === "fulfilled",
+          )
           .map(c => c.value),
       );
 
@@ -205,8 +209,10 @@ export class ProductService {
           }),
       ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
         values
-          .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .filter(
+            <T extends PhotoEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+              c.status === "fulfilled",
+          )
           .map(c => c.value),
       );
 

@@ -46,7 +46,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'EXTERNAL',
         'BLACKLIST',
         'WHITELIST',
-        'STABLE_COIN',
         
         -- ERC721
         'RANDOM',

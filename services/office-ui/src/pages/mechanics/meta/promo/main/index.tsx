@@ -12,7 +12,7 @@ import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IAssetPromo, IAssetPromoSearchDto, IUser } from "@framework/types";
+import type { IAssetPromo, IPromoSearchDto, IUser } from "@framework/types";
 
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { AssetPromoEditDialog } from "./edit";
@@ -39,7 +39,7 @@ export const AssetPromo: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IAssetPromo, IAssetPromoSearchDto>({
+  } = useCollection<IAssetPromo, IPromoSearchDto>({
     baseUrl: "/promos",
     empty: {
       item: emptyItem,

@@ -1,11 +1,12 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { DiscreteService } from "./discrete.service";
 import { DiscreteEntity } from "./discrete.entity";
 import { DiscreteAutocompleteDto, DiscreteSearchDto, DiscreteSignDto } from "./dto";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Public()
 @Controller("/grade")
@@ -19,8 +20,8 @@ export class DiscreteController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: DiscreteSignDto): Promise<IServerSignature> {
-    return this.discreteService.sign(dto);
+  public sign(@Body() dto: DiscreteSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.discreteService.sign(dto, userEntity);
   }
 
   @Get("/autocomplete")

@@ -60,14 +60,11 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/loot/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           lootBoxId: lootBox.id,
         },

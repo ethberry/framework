@@ -3,9 +3,9 @@ import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import type { IAssetPromoSearchDto } from "@framework/types";
+import type { IPromoSearchDto } from "@framework/types";
 
-export class AssetPromoSearchDto extends SearchDto implements IAssetPromoSearchDto {
+export class PromoSearchDto extends SearchDto implements IPromoSearchDto {
   @ApiProperty({
     minimum: 1,
   })

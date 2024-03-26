@@ -13,22 +13,21 @@ import mintERC20BlacklistABI from "@framework/abis/mint/ERC20Blacklist.json";
 import mintCommonERC721BlacklistABI from "@framework/abis/mintCommon/ERC721Blacklist.json";
 import mintERC1155BlacklistABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
-import { useCheckAccess } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
-export interface IContractMintButtonProps {
+export interface IMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const ContractMintButton: FC<IContractMintButtonProps> = props => {
+export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
-    contract,
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
@@ -39,7 +38,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const [hasAccess, setHasAccess] = useState(false);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
-  const { checkAccess } = useCheckAccess(AccessControlRoleType.MINTER_ROLE);
+  const { fn: checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -91,14 +90,13 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkPermissions(void 0, {
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+        role: AccessControlRoleType.MINTER_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

@@ -1,6 +1,7 @@
 export * from "./lottery/deploy";
 export * from "./lottery/schedule";
 export * from "./lottery/search";
+export * from "./lottery/sign";
 
 export * from "./ponzi/chart";
 export * from "./ponzi/deploy";

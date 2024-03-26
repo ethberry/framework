@@ -121,8 +121,8 @@ export class MergeService {
     return this.mergeEntityRepository.find({ where, ...options });
   }
 
-  public async sign(dto: IMergeSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, mergeId, chainId, tokenIds } = dto;
+  public async sign(dto: IMergeSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, mergeId, tokenIds } = dto;
     const mergeEntity = await this.findOneWithRelations({ id: mergeId });
 
     if (!mergeEntity) {
@@ -183,8 +183,8 @@ export class MergeService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: mergeEntity.id,
         expiresAt,
