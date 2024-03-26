@@ -27,6 +27,9 @@ export class RentServiceEth {
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
+    // SAVE USER TO METADATA
+    Object.assign(erc721TokenEntity.metadata, { USER: user.toLowerCase() });
+    await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
