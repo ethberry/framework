@@ -460,11 +460,11 @@
       "STRENGTH": "Сила",
       "WISDOM": "Мудрость"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "Экспоненциальный",
       "FLAT": "Фиксированный",
       "LINEAR": "Линейный"
@@ -751,8 +751,8 @@
       "from": "От",
       "fromBlock": "Слушать лог с блока №",
       "gender": "Пол",
-      "gradeStatus": "Статус",
-      "gradeStrategy": "Стратегия Грейда",
+      "discreteStatus": "Статус",
+      "discreteStrategy": "Стратегия Грейда",
       "growthRate": "Темп роста",
       "id": "ID",
       "imageUrl": "Аватар",

@@ -3,7 +3,9 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { IPredictionQuestion, PredictionQuestionStatus } from "@framework/types";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import type { IPredictionQuestion } from "@framework/types";
+import { PredictionQuestionStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -17,13 +19,14 @@ export interface IRaffleEditDialogProps {
 export const PredictionQuestionEditDialog: FC<IRaffleEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, questionStatus } = initialValues;
+  const { id, title, description, questionStatus, price } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
     questionStatus,
+    price,
   };
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -37,6 +40,11 @@ export const PredictionQuestionEditDialog: FC<IRaffleEditDialogProps> = props =>
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <TemplateAssetInput
+        autoSelect
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+      />
       {id ? <SelectInput name="questionStatus" options={PredictionQuestionStatus} /> : null}
     </FormDialog>
   );

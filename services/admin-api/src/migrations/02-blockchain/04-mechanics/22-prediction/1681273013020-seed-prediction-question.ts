@@ -13,11 +13,20 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
+      INSERT INTO ${ns}.asset (
+        id
+      ) VALUES (
+        102220101
+      );
+    `);
+
+    await queryRunner.query(`
       INSERT INTO ${ns}.prediction_question (
         id,
         title,
         description,
         merchant_id,
+        price_id,
         question_status,
         created_at,
         updated_at
@@ -26,6 +35,7 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
         'Yes/No?',
         '${simpleFormatting}',
          1,
+         102220101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

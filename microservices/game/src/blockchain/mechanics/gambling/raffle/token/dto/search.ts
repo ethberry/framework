@@ -5,8 +5,7 @@ import { Mixin } from "ts-mixer";
 
 import { PaginationDto } from "@gemunion/collection";
 import { AccountDto } from "@gemunion/nest-js-validators";
-
-import { IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleTokenSearchDto } from "@framework/types";
 
 export class RaffleTicketSearchDto extends Mixin(AccountDto, PaginationDto) implements IRaffleTokenSearchDto {
   @ApiPropertyOptional({

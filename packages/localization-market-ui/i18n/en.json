@@ -4,8 +4,8 @@
     "approve": "Please approve spend tokens to Exchange before using this mechanic",
     "deposit": "You're about to deposit tokens according to the chosen rule",
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
-    "redirect": "You will be redirected in a moment",
     "openseaFee": "OpenSea will take 2.5% as a fee",
+    "redirect": "You will be redirected in a moment",
     "uncaughtError": "Uncaught error happened"
   },
   "buttons": {
@@ -388,8 +388,8 @@
       "withdrawReferral": "Withdraw {symbol} {amount}"
     },
     "hints": {
-      "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "compositionInactive": "Composition INACTIVE on Contract",
+      "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
@@ -413,8 +413,8 @@
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Claim",
-      "claimed": "Claimed",
       "claimType": "Type",
+      "claimed": "Claimed",
       "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
       "confirm": "Confirm",
@@ -464,9 +464,9 @@
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
       "maxStake": "Max Stakes",
+      "merchant": "Merchant",
       "merchantId": "MerchantID",
       "merchantIds": "Merchants",
-      "merchant": "Merchant",
       "minPrice": "Min. price",
       "mom": "Mom",
       "network": "Network",
@@ -479,6 +479,7 @@
       "ponziRuleStatus": "Status",
       "price": "Price",
       "quantity": "Quantity",
+      "question": "Question",
       "raffle": "Raffle",
       "rank": "Rank",
       "rarity": "Rarity",
@@ -493,8 +494,8 @@
       "share": "Share",
       "sort": "Sort by",
       "stakeStat": "Staking statistics",
-      "stakesTotal": "Total stakes",
       "stakesCount": "Active stakes",
+      "stakesTotal": "Total stakes",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startDate": "Start date",
@@ -512,14 +513,14 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Token status",
       "tokenType": "Type",
-      "twitterUrl": "Twitter",
       "tvl": "TVL",
+      "twitterUrl": "Twitter",
       "tx": "Tx hash",
       "type": "Type",
       "updatedAt": "Updated",
       "wallet": "Wallet",
-      "winNumbers": "Win numbers",
       "winNumber": "Win number",
+      "winNumbers": "Win numbers",
       "winner": "WINNER",
       "withdrawDeposit": "Withdraw deposit",
       "youtubeUrl": "Youtube",
@@ -678,11 +679,11 @@
         "referral": "Referral program"
       },
       "hierarchy": {
+        "coins": "Coins",
         "erc1155": "ERC1155",
         "erc20": "ERC20",
         "erc721": "ERC721",
-        "erc998": "ERC998",
-        "coins": "Coins"
+        "erc998": "ERC998"
       },
       "infrastructure": {
         "feedback": {
@@ -711,6 +712,7 @@
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "ponzi": "Ponzi",
+        "prediction": "Prediction",
         "promo": "Promo",
         "raffle": "Raffle",
         "recipes": "Recipes",
@@ -759,19 +761,19 @@
       }
     },
     "erc20": {
-      "title": "Coins",
-      "token": {
-        "contract": "Contract address",
-        "decimals": "Contract decimals",
-        "symbol": "Contract symbol",
-        "title": "Coin: {title}"
-      },
       "coins": {
         "sort": {
           "createdAt": "Date",
           "price": "Price"
         },
         "title": "Coins"
+      },
+      "title": "Coins",
+      "token": {
+        "contract": "Contract address",
+        "decimals": "Contract decimals",
+        "symbol": "Contract symbol",
+        "title": "Coin: {title}"
       }
     },
     "erc721": {
@@ -888,8 +890,8 @@
           "empty": "No finished rounds yet...",
           "matches": {
             "match": {
-              "title": "Match {amount}",
               "loose": "{amount} ticket{many}",
+              "title": "Match {amount}",
               "win": "{amount} Winning ticket{many}"
             },
             "title": "Match the unique winning numbers to share prizes"
@@ -1022,6 +1024,12 @@
       },
       "title": "Ponzi"
     },
+    "prediction": {
+      "question": {
+        "title": "Questions"
+      },
+      "title": "Prediction"
+    },
     "product": {
       "price": "Price: {amount}",
       "title": "{title}"
@@ -1107,29 +1115,30 @@
       "title": "Recipes"
     },
     "referral": {
-      "reward": {
-        "title": "Rewards"
-      },
-      "tree": {
-        "current": "Your current referrer",
-        "noReferrer": "You don't have any referrer yet",
-        "referrer": "Your current referrer is {referrer}",
-        "refLink": "Your referral link",
-        "title": "Referral Tree"
-      },
       "cabinet": {
         "title": "Cabinet"
       },
       "chart": {
         "title": "Chart"
       },
+      "clipboard": "Copied referral link",
       "leaderboard": {
         "title": "Leaderboard"
       },
       "report": {
         "title": "Report"
       },
-      "title": "Referral program"
+      "reward": {
+        "title": "Rewards"
+      },
+      "title": "Referral program",
+      "tree": {
+        "current": "Your current referrer",
+        "noReferrer": "You don't have any referrer yet",
+        "refLink": "Your referral link",
+        "referrer": "Your current referrer is {referrer}",
+        "title": "Referral Tree"
+      }
     },
     "rent": {
       "title": "Rent"

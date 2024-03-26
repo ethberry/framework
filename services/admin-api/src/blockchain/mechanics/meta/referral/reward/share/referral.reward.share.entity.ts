@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IReferralRewardShare } from "@framework/types";
+import type { IReferralRewardShare } from "@framework/types";
 import { ns } from "@framework/constants";
 import { ReferralRewardEntity } from "../referral.reward.entity";
 import { ReferralTreeEntity } from "../../program/tree/referral.tree.entity";

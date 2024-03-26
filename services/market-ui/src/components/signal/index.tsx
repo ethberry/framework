@@ -70,7 +70,7 @@ export const Signal: FC = () => {
             );
 
           if (isRouteMatchToEvent) {
-            dispatch(setNeedRefresh(true));
+            void dispatch(setNeedRefresh(true));
           }
         } else {
           enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {

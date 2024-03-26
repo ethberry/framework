@@ -4,6 +4,6 @@ export * from "./recipes/craft";
 export * from "./recipes/dismantle";
 export * from "./recipes/merge";
 
-export * from "./grade/grade";
+export * from "./discrete/discrete";
 
 export * from "./rent/rent";

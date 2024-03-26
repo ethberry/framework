@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOptionsWhere, Repository } from "typeorm";
 
-import { IRaffleTokenSearchDto, ModuleType, TokenMetadata } from "@framework/types";
+import type { IRaffleTokenSearchDto } from "@framework/types";
+import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";

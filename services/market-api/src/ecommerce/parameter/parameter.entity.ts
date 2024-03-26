@@ -1,7 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IParameter, ParameterType } from "@framework/types";
+import type { IParameter } from "@framework/types";
+import { ParameterType } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ProductItemEntity } from "../product-item/product-item.entity";

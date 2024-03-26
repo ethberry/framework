@@ -1,4 +1,4 @@
-import { IReferralTree } from "@framework/types";
+import type { IReferralTree } from "@framework/types";
 
 export interface IRefProgramsLevels {
   merchantId: number;

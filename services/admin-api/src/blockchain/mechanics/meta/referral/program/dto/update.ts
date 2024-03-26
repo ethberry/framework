@@ -1,8 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform } from "class-transformer";
-import { IReferralProgramUpdateDto } from "../interfaces";
+
 import { ReferralProgramStatus } from "@framework/types";
+
+import type { IReferralProgramUpdateDto } from "../interfaces";
 
 export class ReferralProgramUpdateDto implements IReferralProgramUpdateDto {
   @ApiProperty({

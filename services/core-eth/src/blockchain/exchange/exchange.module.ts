@@ -5,7 +5,7 @@ import { ExchangeCraftModule } from "./craft/craft.module";
 import { ExchangeClaimModule } from "./claim/claim.module";
 import { ExchangeCoreModule } from "./core/core.module";
 import { ExchangeDismantleModule } from "./dismantle/dismantle.module";
-import { ExchangeGradeModule } from "./grade/grade.module";
+import { ExchangeGradeModule } from "./discrete/discrete.module";
 import { ExchangeLogModule } from "./log/log.module";
 import { ExchangeLotteryModule } from "./lottery/lottery.module";
 import { ExchangeMysteryModule } from "./mystery/mystery.module";

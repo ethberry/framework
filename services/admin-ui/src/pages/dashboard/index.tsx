@@ -5,11 +5,11 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { Root } from "./styled";
 
-import { AchievementsSection } from "./achievements";
+import { AchievementsSection } from "./mechanics/achievements";
 
 import { EcommerceSection } from "./ecommerce";
 
-import { MarketplaceSection } from "./exchange/marketplace";
+import { MarketplaceSection } from "./mechanics/marketplace";
 
 import { ChainLinkSection } from "./integrations/chain-link";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
@@ -27,7 +27,7 @@ import { CollectionSection } from "./mechanics/collection";
 import { RecipesSection } from "./mechanics/recipes";
 import { DispenserSection } from "./mechanics/dispenser";
 import { AssetPromoSection } from "./mechanics/promo";
-import { GradeSection } from "./mechanics/grade";
+import { DiscreteSection } from "./mechanics/discrete";
 import { LotterySection } from "./mechanics/lottery";
 import { RaffleSection } from "./mechanics/raffle";
 import { MysterySection } from "./mechanics/mystery";
@@ -37,7 +37,7 @@ import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
 import { PaymentSplitterSection } from "./mechanics/payment-splitter";
 import { WaitListSection } from "./mechanics/wait-list";
-import { ReferralSection } from "./exchange/referral";
+import { ReferralSection } from "./mechanics/referral";
 import { PredictionSection } from "./mechanics/prediction";
 
 export const Dashboard: FC = () => {
@@ -61,7 +61,7 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <VestingSection />
-          <GradeSection />
+          <DiscreteSection />
           <RecipesSection />
           <AssetPromoSection />
           <RentSection />

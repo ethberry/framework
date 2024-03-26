@@ -193,7 +193,7 @@
       "FEMALE": "أنثى",
       "MALE": "ذكر"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط"
     },
@@ -445,8 +445,8 @@
       "from": "من",
       "fromBlock": "الاستماع لسجل الكتل من الرقم",
       "gender": "الجنس",
-      "gradeStatus": "الحالة",
-      "gradeStrategy": "استراتيجية الدرجة",
+      "discreteStatus": "الحالة",
+      "discreteStrategy": "استراتيجية الدرجة",
       "growthRate": "معدل النمو",
       "id": "الهوية",
       "imageUrl": "الصورة الرمزية",

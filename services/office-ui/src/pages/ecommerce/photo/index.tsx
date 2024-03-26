@@ -3,7 +3,8 @@ import { Avatar, Grid, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
-import { IPhoto, PhotoStatus } from "@framework/types";
+import type { IPhoto } from "@framework/types";
+import { PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 

@@ -101,6 +101,7 @@
     "raffleRoundEnd": "End Raffle Round",
     "raffleRoundStart": "Start Raffle Round",
     "renounceRole": "Renounce role",
+    "resolve": "Resolve",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
@@ -244,6 +245,15 @@
     "craftStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
+    },
+    "discreteStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "discreteStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
     },
     "dismantleStatus": {
       "ACTIVE": "Active",
@@ -460,15 +470,6 @@
       "STRENGTH": "Strength",
       "WISDOM": "Wisdom"
     },
-    "gradeStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
-    "gradeStrategy": {
-      "EXPONENTIAL": "Exponential",
-      "FLAT": "Flat",
-      "LINEAR": "Linear"
-    },
     "language": {
       "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
@@ -528,6 +529,16 @@
       "NEW": "NEW"
     },
     "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "questionResult": {
+      "DRAW": "Draw",
+      "NO": "No",
+      "TECH": "Cancelled",
+      "YES": "Yes"
+    },
+    "questionStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -649,6 +660,7 @@
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
       "reset": "Reset",
+      "resolve": "Resolve",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
@@ -736,6 +748,8 @@
       "decimals": "Decimals",
       "deposit": "Deposit",
       "description": "Description",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "dismantleStatus": "Status",
       "dismantleStrategy": "Strategy",
       "displayName": "Display name",
@@ -751,8 +765,6 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -814,6 +826,8 @@
       "productStatus": "Status",
       "programLevel": "Program level",
       "programLevels": "Program levels",
+      "questionResult": "Result",
+      "questionStatus": "Status",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",

@@ -3,7 +3,7 @@ import { IsString, Matches } from "class-validator";
 
 import { SearchableDto } from "@gemunion/collection";
 
-import { IPageCreateDto } from "../interfaces";
+import type { IPageCreateDto } from "../interfaces";
 
 export class PageCreateDto extends SearchableDto implements IPageCreateDto {
   @ApiProperty()

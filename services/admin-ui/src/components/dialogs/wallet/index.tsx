@@ -31,7 +31,7 @@ export const WalletMenuDialog: FC<IWalletDialogProps> = props => {
 
     void user.logOut("/");
     localStorage.clear();
-    dispatch(setActiveConnector(null));
+    void dispatch(setActiveConnector(null));
     onClose();
   };
 

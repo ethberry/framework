@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { PonziRulesEntity } from "./rules.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
-import { IPonziCreateDto } from "./interfaces";
+import type { IPonziCreateDto } from "./interfaces";
 
 @Injectable()
 export class PonziRulesService {

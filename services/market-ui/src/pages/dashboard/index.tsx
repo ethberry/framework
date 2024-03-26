@@ -9,8 +9,8 @@ import { Erc20Section } from "./hierarchy/erc20";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
-import { PersonalSection } from "./exchange/personal";
-import { MarketplaceSection } from "./exchange/marketplace";
+import { PersonalSection } from "./mechanics/personal";
+import { MarketplaceSection } from "./mechanics/marketplace";
 import { MysterySection } from "./mechanics/mystery";
 import { PagesSection } from "./infrastructure/pages";
 import { StakingSection } from "./mechanics/staking";
@@ -29,9 +29,10 @@ import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
-import { AchievementsSection } from "./achievements";
+import { AchievementsSection } from "./mechanics/achievements";
 import { DexSection } from "./integrations/dex";
-import { ReferralSection } from "./exchange/referral";
+import { ReferralSection } from "./mechanics/referral";
+import { PredictionSection } from "./mechanics/prediction";
 
 export const Dashboard: FC = () => {
   return (
@@ -60,6 +61,7 @@ export const Dashboard: FC = () => {
           <StyledDivider />
           <LotterySection />
           <RaffleSection />
+          <PredictionSection />
           <StakingSection />
           <PonziSection />
         </Grid>

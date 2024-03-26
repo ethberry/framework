@@ -27,7 +27,7 @@ import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/d
 import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
@@ -108,7 +108,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     DismantleEntity,
     AssetPromoEntity,
-    GradeEntity,
+    DiscreteEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     MergeEntity,

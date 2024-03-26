@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IPredictionQuestionSearchDto, PredictionQuestionStatus } from "@framework/types";
+import type { IPredictionQuestionSearchDto } from "@framework/types";
+import { PredictionQuestionStatus } from "@framework/types";
 
 export class PredictionQuestionSearchDto extends SearchDto implements IPredictionQuestionSearchDto {
   @ApiPropertyOptional({

@@ -1,14 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import {
-  ContractFeatures,
-  ContractStatus,
-  IContractAutocompleteDto,
-  IContractSearchDto,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";

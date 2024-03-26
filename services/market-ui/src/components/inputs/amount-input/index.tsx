@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 
 import { CartContext } from "../../providers/cart";
 import { StyledGrid } from "./styled";

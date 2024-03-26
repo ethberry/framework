@@ -193,7 +193,7 @@
       "FEMALE": "Female",
       "MALE": "Male"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -445,8 +445,8 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Grade strategy",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",

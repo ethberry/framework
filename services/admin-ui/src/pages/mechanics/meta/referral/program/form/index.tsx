@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormWrapper } from "@gemunion/mui-form";
 
 import { ReferralProgramLevelsInput } from "./levels";
-import { IReferralProgramCreate } from "../index";
+import type { IReferralProgramCreate } from "../index";
 import { validationSchema } from "./validation";
 
 export interface IReferralProgramFormProps {

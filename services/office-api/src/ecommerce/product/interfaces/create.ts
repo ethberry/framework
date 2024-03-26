@@ -1,4 +1,4 @@
-import { IPhoto } from "@framework/types";
+import type { IPhoto } from "@framework/types";
 
 export interface IProductCreateDto {
   title: string;

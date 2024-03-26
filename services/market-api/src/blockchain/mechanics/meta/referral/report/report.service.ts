@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { IReferralReportSearchDto } from "@framework/types";
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 import { formatItem } from "@framework/exchange";
+import type { IReferralReportSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "../reward/reward.entity";

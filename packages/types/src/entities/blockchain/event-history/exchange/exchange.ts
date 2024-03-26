@@ -7,7 +7,7 @@ import type { IExchangeDismantleEvent } from "./dismantle";
 import type { IExchangeBreedEvent } from "./breeding";
 import type { IExchangePurchaseLotteryEvent } from "./lottery";
 import type { IExchangePurchaseRaffleEvent } from "./raffle";
-import type { IExchangeGradeEvent } from "./grade";
+import type { IExchangeDiscreteEvent } from "./discrete";
 
 export enum ExchangeEventType {
   // MODULE:CORE
@@ -19,7 +19,7 @@ export enum ExchangeEventType {
   Dismantle = "Dismantle",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   Upgrade = "Upgrade",
   // MODULE:LOTTERY
   PurchaseLottery = "PurchaseLottery",
@@ -71,7 +71,7 @@ export type TExchangeEvents =
   | IExchangeClaimEvent
   | IExchangeCraftEvent
   | IExchangeDismantleEvent
-  | IExchangeGradeEvent
+  | IExchangeDiscreteEvent
   | IExchangePurchaseMysteryBoxEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent

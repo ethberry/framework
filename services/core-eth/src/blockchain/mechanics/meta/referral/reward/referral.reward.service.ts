@@ -9,7 +9,8 @@ import { ReferralRewardEntity } from "./referral.reward.entity";
 import { ReferralProgramService } from "../program/referral.program.service";
 import { ReferralTreeService } from "../program/tree/referral.tree.service";
 // import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { IRefChainQuery, ReferralRewardShareService } from "./share/referral.reward.share.service";
+import type { IRefChainQuery } from "./share/referral.reward.share.service";
+import { ReferralRewardShareService } from "./share/referral.reward.share.service";
 import { ReferralProgramStatus } from "@framework/types";
 
 export interface IRefEventCalc {

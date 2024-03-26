@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
-import { FormattedMessage } from "react-intl";
 
 import { StyledEmptyWrapper } from "../empty-wrapper";
 import { StyledList } from "./styled";

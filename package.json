@@ -5,14 +5,14 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@lerna/legacy-package-management": "8.1.2",
-    "lerna": "8.1.2",
-    "nx": "18.3.4"
+    "@lerna/legacy-package-management": "8.1.3",
+    "lerna": "8.1.3",
+    "nx": "19.0.3"
   },
   "devDependencies": {
     "@gemunion/eslint-config": "4.0.6",
-    "@types/node": "20.12.8",
-    "@types/react": "18.3.1",
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.2",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",

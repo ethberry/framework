@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { PonziRuleStatus } from "@framework/types";
-import { IPonziRuleAutocompleteDto } from "../interfaces";
+import type { IPonziRuleAutocompleteDto } from "../interfaces";
 
 export class PonziRuleAutocompleteDto implements IPonziRuleAutocompleteDto {
   @ApiPropertyOptional({

@@ -24,7 +24,7 @@ export const WalletButton: FC = () => {
   const { setIsDialogOpen } = walletActions;
 
   const handleOpenDialog = useCallback(() => {
-    isActive ? openPopup(WALLET_MENU_POPUP_TYPE) : dispatch(setIsDialogOpen(true));
+    return isActive ? openPopup(WALLET_MENU_POPUP_TYPE) : dispatch(setIsDialogOpen(true));
   }, [isActive]);
 
   const handleCloseWalletDialog = () => {

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IReferralClaim } from "@framework/types";
+import type { IReferralClaim } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { ClaimEntity } from "../../../marketing/claim/claim.entity";
