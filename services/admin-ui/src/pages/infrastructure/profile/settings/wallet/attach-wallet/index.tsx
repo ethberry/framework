@@ -58,33 +58,11 @@ export const AttachWalletButton: FC = () => {
     await metaAttachFn();
   };
 
-  const detachCall = useApiCall(async api => {
-    return api.fetchJson({
-      url: "/profile/wallet",
-      method: "DELETE",
-    });
-  });
-
-  const handleDetach = () => {
-    return detachCall.fn().then(() => {
-      return user.getProfile();
-    });
-  };
-
   useEffect(() => {
     setData({ nonce: v4(), signature: "", wallet: account || "" });
   }, [account]);
 
-  return user.profile.wallet ? (
-    <Button
-      variant="outlined"
-      startIcon={<AccountBalanceWallet />}
-      onClick={handleDetach}
-      data-testid="DetachWalletButton"
-    >
-      <FormattedMessage id="pages.profile.settings.wallet.detach" />
-    </Button>
-  ) : (
+  return !user.profile.wallet ? (
     <Button
       variant="outlined"
       startIcon={<AccountBalanceWallet />}
@@ -93,5 +71,5 @@ export const AttachWalletButton: FC = () => {
     >
       <FormattedMessage id="pages.profile.settings.wallet.attach" />
     </Button>
-  );
+  ) : null;
 };
