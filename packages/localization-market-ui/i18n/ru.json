@@ -1,3 +1,1332 @@
 {
-  "enums": {}
+  "alert": {
+    "allowanceWarning": "Вы собираетесь разрешить использование всех токенов контракта",
+    "approve": "Пожалуйста, подтвердите разрешение на использование токенов для обмена перед использованием этого механизма",
+    "deposit": "Вы собираетесь внести токены в соответствии с выбранным правилом",
+    "knownError": "Ой! Мы знаем об этой проблеме и активно работаем над её исправлением. Спасибо за ваше терпение!",
+    "redirect": "Вы будете перенаправлены через момент",
+    "openseaFee": "OpenSea возьмет комиссию 2.5%",
+    "uncaughtError": "Произошла непредвиденная ошибка"
+  },
+  "buttons": {
+    "download-metamask": "Скачать Metamask"
+  },
+  "components": {
+    "header": {
+      "checkout": "Оформить заказ",
+      "language": {
+        "switch": "Сменить язык"
+      },
+      "menu": {
+        "dashboard": "Панель управления",
+        "login": "Войти",
+        "logout": "Выйти",
+        "profile": "Профиль"
+      },
+      "theme": {
+        "switch": "Сменить тему"
+      },
+      "wallet": {
+        "connect": "Подключить кошелек",
+        "menu": "Аккаунт",
+        "notMatch": "Текущий кошелек не совпадает с кошельком профиля",
+        "notValid": "Неверная сеть. Пожалуйста, переключитесь на правильную сеть в соответствии с вашим профилем",
+        "test": "Тест"
+      }
+    }
+  },
+  "dialogs": {
+    "add": "Добавить",
+    "allowance": "Разрешение",
+    "amount": "Установить количество токенов",
+    "auction": "Продать `{title}` на аукционе",
+    "bulk-cancel-order": "Вы собираетесь отменить все ваши заказы. Хотите продолжить?",
+    "confirmation": "Пожалуйста, подтвердите",
+    "create": "Создать",
+    "delete": "Удалить `{title}`?",
+    "deposit": "Внести",
+    "deposit-allowance": "Установить разрешение на внесение",
+    "edit": "Редактировать",
+    "fund": "Финансировать",
+    "get-reward": "Получить награду",
+    "grade": "Улучшить атрибут",
+    "join": "Присоединиться",
+    "lend": "Одолжить токен",
+    "merge": "Объединить",
+    "penalty": "Штраф: {item}% от депозита {description}",
+    "reward": "Награда",
+    "reward-item": "{item} за каждый {period} период",
+    "sell": "Продать",
+    "sellOpensea": "Создать листинг на OpenSea",
+    "staking-duration": "Первый период заканчивается через {duration}",
+    "transfer": "Передать",
+    "transferOwnership": "Передать право собственности",
+    "upgrade": "Улучшить",
+    "view": "Просмотреть",
+    "withdraw": "Вывести баланс"
+  },
+  "enums": {
+    "LEVEL": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10"
+    },
+    "RARITY": {
+      "COMMON": "Обычный",
+      "EPIC": "Эпический",
+      "LEGENDARY": "Легендарный",
+      "RARE": "Редкий",
+      "UNCOMMON": "Необычный"
+    },
+    "blockchainError": {
+      "BalanceExceed": "Баланс превышает лимит",
+      "CountExceed": "Количество превышает лимит",
+      "Expired": "Предмет истек",
+      "ExpiredSignature": "Подпись истекла",
+      "LimitExceed": "Лимит превышен",
+      "MethodNotSupported": "Метод не поддерживается",
+      "NotActive": "Предмет не активен",
+      "NotAnOwner": "Пользователь не является владельцем",
+      "NotComplete": "Операция не завершена",
+      "NotExist": "Предмет не существует",
+      "RefProgramSet": "Реферальная программа установлена",
+      "SignerMissingRole": "Подписывающему не хватает роли",
+      "TemplateZero": "Шаблон нулевой",
+      "UnsupportedTokenType": "Тип токена не поддерживается",
+      "WrongAmount": "Сумма неверная",
+      "WrongRule": "Правило неверное",
+      "WrongStake": "Ставка неверная",
+      "WrongToken": "Токен неверный",
+      "ZeroBalance": "Баланс нулевой"
+    },
+    "chainId": {
+      "1": "ETHEREUM",
+      "5": "GOERLI",
+      "56": "BINANCE",
+      "97": "BINANCE (тестнет)",
+      "137": "POLYGON",
+      "10000": "GEMUNION",
+      "10001": "BESU",
+      "13371": "IMMUTABLE zkEVM",
+      "13377": "GEMUNION",
+      "13378": "BESU",
+      "13473": "IMMUTABLE zkEVM (тестнет)",
+      "42161": "ARBITRUM",
+      "80001": "MUMBAI (тестнет)",
+      "11155111": "SEPOLIA"
+    },
+    "claimStatus": {
+      "EXPIRED": "Истек",
+      "NEW": "Новый",
+      "REDEEMED": "Использован"
+    },
+    "claimType": {
+      "TEMPLATE": "Шаблон",
+      "TOKEN": "Токен",
+      "VESTING": "Вестинг"
+    },
+    "durationUnit": {
+      "DAY": "{count} {count, plural, =0 {дней} one {день} other {дней}}",
+      "HOUR": "{count} {count, plural, =0 {часов} one {час} other {часов}}",
+      "MINUTE": "{count} {count, plural, =0 {минут} one {минута} other {минут}}",
+      "MONTH": "{count} {count, plural, =0 {месяцев} one {месяц} other {месяцев}}",
+      "WEEK": "{count} {count, plural, =0 {недель} one {неделя} other {недель}}",
+      "YEAR": "{count} {count, plural, =0 {лет} one {год} other {лет}}"
+    },
+    "eventDataLabel": {
+      "_requestID": "Идентификатор запроса",
+      "_sender": "Отправитель",
+      "account": "Аккаунт",
+      "active": "Активный",
+      "addr": "Адрес",
+      "amount": "Сумма",
+      "amounts": "Суммы",
+      "approved": "Одобрено",
+      "args": "Аргументы",
+      "attribute": "Атрибут",
+      "attributes": "Атрибуты",
+      "borrow": "Заем",
+      "callbackGasLimit": "Лимит газа для обратного вызова",
+      "childContract": "Дочерний контракт",
+      "childTokenId": "Идентификатор дочернего токена",
+      "childTokenIds": "Идентификаторы дочерних токенов",
+      "claimId": "Идентификатор заявки",
+      "collection": "Коллекция",
+      "contract": "Контракт",
+      "contractModule": "Модуль контракта",
+      "data": "Данные",
+      "endTimestamp": "Дата окончания",
+      "expires": "Срок займа истекает",
+      "externalId": "Внешний идентификатор",
+      "from": "От",
+      "fromAddress": "Адрес отправителя",
+      "fromTokenId": "Идентификатор отправляемого токена",
+      "id": "Идентификатор",
+      "ids": "Идентификаторы",
+      "item": "Предмет",
+      "items": "Предметы",
+      "keyHash": "Хеш ключа",
+      "level": "Уровень",
+      "matron": "Матрона",
+      "maxCount": "Максимальное количество",
+      "minimumRequestConfirmations": "Минимальное количество подтверждений запроса",
+      "multiplier": "Множитель",
+      "newAdminRole": "Новая административная роль",
+      "newOwner": "Новый владелец",
+      "noData": "Нет данных",
+      "numWords": "Количество слов",
+      "numbers": "Числа",
+      "operator": "Оператор",
+      "owner": "Владелец",
+      "preSeed": "Предварительное семя",
+      "previousAdminRole": "Предыдущая административная роль",
+      "previousOwner": "Предыдущий владелец",
+      "price": "Цена",
+      "randomness": "Случайность",
+      "refProgram": "Реферальная программа",
+      "referrer": "Реферер",
+      "requestId": "Идентификатор запроса",
+      "role": "Роль",
+      "round": "Раунд",
+      "royaltyNumerator": "Числитель роялти",
+      "royaltyReceiver": "Получатель роялти",
+      "rule": "Правило",
+      "ruleId": "Идентификатор правила",
+      "seed": "Семя",
+      "sender": "Отправитель",
+      "shares": "Доли",
+      "sire": "Сайр",
+      "spender": "Расходник",
+      "stakingId": "Идентификатор стейкинга",
+      "startTimestamp": "Дата начала",
+      "subId": "Подидентификатор",
+      "templateId": "Идентификатор шаблона",
+      "ticketId": "Идентификатор билета",
+      "to": "К",
+      "toAddress": "Адрес получателя",
+      "toTokenId": "Идентификатор получаемого токена",
+      "token": "Токен",
+      "tokenId": "Идентификатор токена",
+      "value": "Значение",
+      "values": "Значения",
+      "winValues": "Выигрышные значения",
+      "withdrawTimestamp": "Дата вывода"
+    },
+    "eventTypes": {
+      "Approval": "Одобрение",
+      "ApprovalForAll": "Одобрение для всех",
+      "BatchReceivedChild": "Пакетно полученный дочерний",
+      "BatchTransferChild": "Пакетная передача дочернего",
+      "Blacklisted": "В черном списке",
+      "Breed": "Разведение",
+      "Claim": "Заявка",
+      "ConsecutiveTransfer": "Последовательная передача",
+      "Craft": "Создание",
+      "DefaultRoyaltyInfo": "Информация о стандартном роялти",
+      "Dismantle": "Разборка",
+      "ERC20PaymentReleased": "Выпущенный платеж ERC20",
+      "ERC20Released": "Выпущен ERC20",
+      "EtherReceived": "Получен ETH",
+      "EtherReleased": "Выпущен ETH",
+      "Lend": "Одолжить",
+      "LevelUp": "Повысить уровень",
+      "Merge": "Объединить",
+      "MintRandom": "Рандомный минт",
+      "Mysterybox": "Мистерибокс",
+      "OwnershipTransferred": "Передача Владения",
+      "Paused": "Приостановлено",
+      "PayeeAdded": "Получатель Добавлен",
+      "PaymentEthReceived": "Платеж ETH Получен",
+      "PaymentEthSent": "Платеж ETH Отправлен",
+      "PaymentReceived": "Платеж Получен",
+      "PaymentReleased": "Платеж Выпущен",
+      "Purchase": "Покупка",
+      "PurchaseLottery": "Покупка Лотереи",
+      "PurchaseMysteryBox": "Покупка Мистерибокса",
+      "PurchaseRaffle": "Покупка Розыгрыша",
+      "RandomWordsRequested": "Запрос Случайных Слов",
+      "RandomnessRequest": "Запрос Случайности",
+      "RandomnessRequestId": "Идентификатор Запроса Случайности",
+      "ReceivedChild": "Получено (Потомок)",
+      "RoleAdminChanged": "Изменена Админ Роль",
+      "RoleGranted": "Роль Предоставлена",
+      "RoleRevoked": "Роль Отозвана",
+      "RuleCreated": "Правило Создано",
+      "RuleUpdated": "Правило Обновлено",
+      "SetMaxChild": "Установить Макс (Потомок)",
+      "StakingFinish": "Стейкинг Завершен",
+      "StakingStart": "Стейкинг Начат",
+      "StakingWithdraw": "Стейкинг Выведен",
+      "TokenRoyaltyInfo": "Информация О Роялти Токена",
+      "Transfer": "Перевод",
+      "TransferBatch": "Пакетная передача",
+      "TransferChild": "Передача (Потомок)",
+      "TransferSingle": "Перевод Одиночный",
+      "URI": "URI",
+      "UnBlacklisted": "Снят С Черного Списка",
+      "UnWhitelisted": "Снят С Белого Списка",
+      "UnWhitelistedChild": "Снят С Белого Списка (Потомок)",
+      "UnpackMysteryBox": "Распаковать Мистерибокс",
+      "UnpackWrapper": "Распаковать Обертку",
+      "Unpaused": "Снято С Паузы",
+      "UpdateUser": "Обновить Пользователя",
+      "Upgrade": "Обновление",
+      "WaitListRewardClaimed": "Клейм На Вознаграждение В Листе Ожидания Получен",
+      "WaitListRewardSet": "Клейм На Вознаграждение В Листе Ожидания Установлен",
+      "Whitelisted": "В Белом Списке",
+      "WhitelistedChild": "В Белом Списке (Потомок)",
+      "WithdrawBalance": "Вывести Баланс"
+    },
+    "gender": {
+      "FEMALE": "Женский",
+      "MALE": "Мужской"
+    },
+    "language": {
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA Арабский",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Английский",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Индонезийский",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Украинский"
+    },
+    "lendType": {
+      "SHARE25": "Доля 25/75",
+      "SHARE50": "Доля 50/50",
+      "SHARE75": "Доля 75/25"
+    },
+    "merchantStatus": {
+      "ACTIVE": "Активный",
+      "INACTIVE": "Неактивный"
+    },
+    "orderStatus": {
+      "CANCELED": "Отменено",
+      "CLOSED": "Закрыто",
+      "DELIVERED": "Доставлено",
+      "NEW": "Новый",
+      "NOW_IN_DELIVERY": "Сейчас в доставке",
+      "SCHEDULED": "Запланировано"
+    },
+    "ponziDepositStatus": {
+      "ACTIVE": "Активный",
+      "CANCELED": "Отменено",
+      "COMPLETE": "Завершено"
+    },
+    "sort": {
+      "createdAt": "Дата",
+      "price": "Цена"
+    },
+    "stakingDepositStatus": {
+      "ACTIVE": "Активный",
+      "CANCELED": "Отменено",
+      "COMPLETE": "Завершено"
+    },
+    "stakingRuleStatus": {
+      "ACTIVE": "Активный",
+      "INACTIVE": "Неактивный",
+      "NEW": "Новый"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERY": "Мистери",
+      "NATIVE": "Нативный",
+      "NONE": "Нет"
+    },
+    "userRoles": {
+      "ADMIN": "Админ",
+      "CUSTOMER": "Клиент",
+      "MERCHANT": "Продавец",
+      "OWNER": "Владелец",
+      "SUPER": "СуперАдмин"
+    },
+    "userStatus": {
+      "ACTIVE": "Активный",
+      "INACTIVE": "Неактивный"
+    }
+  },
+  "form": {
+    "buttons": {
+      "GRADE": "Класс",
+      "add": "Добавить",
+      "addToMetamask": "Добавить в MetaMask",
+      "allowance": "Разрешение",
+      "approve": "Одобрить",
+      "back": "Назад",
+      "buy": "Купить сейчас!",
+      "cancel": "Отменить",
+      "checkout": "Оформить заказ",
+      "claim": "Клейм",
+      "copy": "Копировать",
+      "craft": "Крафт",
+      "create": "Создать",
+      "delete": "Удалить",
+      "disconnect": "Отключить",
+      "edit": "Редактировать",
+      "empty": "\uFEFF",
+      "export": "Экспортировать",
+      "forgot": "Забыли пароль?",
+      "hideFilter": "Скрыть фильтры",
+      "hideFilters": "Скрыть фильтры",
+      "join": "Присоединиться",
+      "lend": "Одолжить токен",
+      "login": "Войти",
+      "logout": "Выйти",
+      "mainPage": "Главная страница",
+      "merge": "Объединить",
+      "next": "Далее",
+      "nonce": "Увеличить nonce",
+      "ok": "Ок",
+      "redeem": "Восстановить",
+      "redeemLvl": "Восстановить {level}",
+      "referralWithdraw": "Вывести {symbol}{amount}",
+      "release": "Выпустить",
+      "remove": "Удалить",
+      "save": "Сохранить",
+      "search": "Поиск",
+      "sell": "Продать",
+      "showFilters": "Показать фильтры",
+      "signup": "Зарегистрироваться",
+      "submit": "Отправить",
+      "transfer": "Передать",
+      "unpack": "Распаковать",
+      "upgrade": "Обновить",
+      "upload": "Загрузить",
+      "withdraw": "Вывести",
+      "withdrawReferral": "Вывести {symbol} {amount}"
+    },
+    "hints": {
+      "emailWarning": "Внимание! Вы не сможете использовать этот сайт, пока не подтвердите свой новый адрес электронной почты.",
+      "markdown": "Это поле поддерживает <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
+      "prompt": "У вас есть несохраненная информация, вы уверены, что хотите покинуть эту страницу?"
+    },
+    "labels": {
+      "DUMMY": "Заглушка",
+      "EXCHANGE": "Обмен",
+      "GRADE": "Оценка",
+      "LEVEL": "Уровень",
+      "RARITY": "Редкость",
+      "SIGNATURE_TTL": "Время жизни подписи",
+      "account": "Аккаунт",
+      "achievementLevel": "Достигнуть уровня",
+      "address": "Адрес",
+      "addressLine1": "Адрес (строка 1)",
+      "addressLine2": "Адрес (строка 2)",
+      "amount": "Сумма",
+      "attribute": "Атрибут",
+      "breakLastPeriod": "Прервать последний период",
+      "categoryId": "Категория",
+      "categoryIds": "Категории",
+      "chainId": "Цепочка",
+      "city": "Город",
+      "claimStatus": "Заявить",
+      "claimed": "Заявлено",
+      "claimType": "Тип",
+      "cliffInMonth": "Клифф в месяц",
+      "collectionId": "Коллекция",
+      "confirm": "Подтвердить",
+      "contract": "Контракт",
+      "contractId": "Контракт",
+      "contractIds": "Контракты",
+      "contractTemplate": "Шаблон",
+      "count": "Количество",
+      "country": "Страна",
+      "createdAt": "Создано",
+      "customContractId": "Контракт на разрешение",
+      "dad": "Отец",
+      "date": "Дата",
+      "dateRangeEnd": "Кому",
+      "dateRangeStart": "От",
+      "deposit": "Депозит",
+      "description": "Описание",
+      "displayName": "Отображаемое имя",
+      "duration": "Продолжительность",
+      "durationAmount": "Продолжительность",
+      "durationUnit": "Единица продолжительности",
+      "email": "Электронная почта",
+      "emptyReward": "Пустое вознаграждение",
+      "endDate": "Дата окончания",
+      "endTimestamp": "Дата окончания",
+      "event": "Событие",
+      "eventData": "Данные события",
+      "eventType": "Тип события",
+      "eventTypes": "Тип события",
+      "expires": "Срок действия займа истекает",
+      "externalId": "Внешний ID",
+      "facebookUrl": "Facebook",
+      "from": "От",
+      "gender": "Пол",
+      "gradeId": "Оценка",
+      "id": "ID",
+      "imageUrl": "Аватар",
+      "instagramUrl": "Instagram",
+      "inverse": "Обратный",
+      "isDefault": "Сделать по умолчанию",
+      "item": "Предмет",
+      "language": "Язык",
+      "lendType": "Тип займа",
+      "level": "Уровень",
+      "listId": "Список",
+      "lottery": "Лотерея",
+      "mainContractId": "Контракт",
+      "maxPrice": "Макс. цена",
+      "maxStake": "Макс. ставки",
+      "merchantId": "Продавец",
+      "merchantIds": "Продавцы",
+      "merchant": "Продавец",
+      "minPrice": "Мин. цена",
+      "mom": "Мама",
+      "network": "Сеть",
+      "numbers": "Числа",
+      "order": "Направление заказа",
+      "orderStatus": "Статус",
+      "password": "Пароль",
+      "penalty": "Штраф",
+      "ponziDepositStatus": "Статус",
+      "ponziRuleStatus": "Статус",
+      "price": "Цена",
+      "quantity": "Количество",
+      "raffle": "Розыгрыш",
+      "rank": "Ранг",
+      "rarity": "Редкость",
+      "recurrent": "Повторяющееся?",
+      "referrer": "Реферер",
+      "rentRule": "Правило аренды",
+      "reward": "Награда",
+      "roles": "Роли",
+      "roundId": "Раунд",
+      "roundIds": "Раунды",
+      "score": "Счет",
+      "share": "Доля",
+      "sort": "Сортировать по",
+      "stakeStat": "Статистика стейкинга",
+      "stakesTotal": "Всего ставок",
+      "stakesCount": "Активные ставки",
+      "stakingDepositStatus": "Статус",
+      "stakingRuleStatus": "Статус",
+      "startDate": "Дата начала",
+      "startTimestamp": "Дата начала",
+      "state": "Состояние",
+      "status": "Статус",
+      "template": "Шаблон",
+      "templateId": "Шаблон",
+      "templateIds": "Шаблоны",
+      "text": "Текст",
+      "title": "Заголовок",
+      "to": "К",
+      "token": "Токен",
+      "tokenId": "Токен",
+      "tokenIds": "Токены",
+      "tokenStatus": "Статус токена",
+      "tokenType": "Тип",
+      "twitterUrl": "Twitter",
+      "tvl": "TVL",
+      "tx": "Хеш транзакции",
+      "type": "Тип",
+      "updatedAt": "Обновлено",
+      "wallet": "Кошелек",
+      "winNumbers": "Выигрышные номера",
+      "winNumber": "Выигрышный номер",
+      "winner": "Победитель",
+      "withdrawDeposit": "Вывести депозит",
+      "youtubeUrl": "Youtube",
+      "zip": "Почтовый индекс"
+    },
+    "placeholders": {
+      "account": "0x...",
+      "address": "0x...",
+      "addressLine1": "ул. Мельбурн, д. 24",
+      "addressLine2": "Дополнительная информация об адресе",
+      "amount": "100",
+      "attribute": "УРОВЕНЬ",
+      "categoryId": "categoryId",
+      "categoryIds": "Корень",
+      "city": "Гамбург",
+      "confirm": "******",
+      "contractId": "Контракт",
+      "contractIds": "Контракты",
+      "country": "Германия",
+      "createdAt": "Зарегистрирован",
+      "customContractId": "Контракт на разрешение",
+      "description": "Описание",
+      "displayName": "Гордон Фримен",
+      "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
+      "gradeId": "УРОВЕНЬ",
+      "instagramUrl": "https://instagram.com/",
+      "listId": "1",
+      "mainContractId": "Контракт",
+      "maxPrice": "1",
+      "merchantId": "Продавец",
+      "merchantIds": "Продавцы",
+      "minAmount": "0.01",
+      "minPrice": "1",
+      "password": "******",
+      "query": "Поиск...",
+      "rentRule": "Правило займа",
+      "roundIds": "Раунд",
+      "search": "Поиск...",
+      "state": "Гамбург",
+      "templateId": "Шаблон",
+      "templateIds": "Шаблоны",
+      "text": "Введите что-нибудь",
+      "title": "Заголовок",
+      "token": "Токен",
+      "tokenId": "Токен",
+      "tokenIds": "Токены",
+      "twitterUrl": "https://twitter.com/",
+      "wallet": "Кошелек",
+      "youtubeUrl": "https://youtube.com/",
+      "zip": "80576"
+    },
+    "tips": {
+      "add": "Добавить",
+      "allowance": "Разрешение",
+      "allowanceForAll": "Разрешение для всех",
+      "cancel": "Отмена",
+      "claim": "Заявить",
+      "clear": "Очистить",
+      "create": "Создать",
+      "delete": "Удалить",
+      "deploy": "Развернуть",
+      "deposit": "Депозит",
+      "edit": "Редактировать",
+      "lend": "Одолжить",
+      "redeem": "Изъять",
+      "releasable": "Проверить доступную сумму",
+      "release": "Освободить",
+      "reward": "Награда",
+      "transfer": "Перевод",
+      "transferOwnership": "Передача прав собственности",
+      "view": "Просмотр"
+    },
+    "validations": {
+      "badInput": "{label} недействителен",
+      "customError": "???",
+      "duplicate": "{label} уже используется",
+      "patternMismatch": "{label} не соответствует ожидаемому паттерну",
+      "rangeOverflow": "{label} слишком большой",
+      "rangeUnderflow": "{label} слишком маленький",
+      "stepMismatch": "{label} недействителен",
+      "tooLong": "{label} слишком длинный",
+      "tooShort": "{label} слишком короткий",
+      "typeMismatch": "{label} недействителен",
+      "valid": "??",
+      "valueMissing": "{label} требуется",
+      "weak": "{label} слишком слабый",
+      "whitelistValidation": "Свойство не должно существовать"
+    }
+  },
+  "messages": {
+    "empty-list": "Нечего показать",
+    "knownError": "Ой! Мы знаем об этой проблеме и активно работаем над ее исправлением. Спасибо за ваше терпение!",
+    "loading": "Загрузка...",
+    "merchant-created": "Поздравляем с созданием вашего торгового аккаунта! В настоящее время он проходит процесс проверки. Мы ценим ваше терпение в это время.",
+    "noAddress": "Нет адреса",
+    "page-not-found": "Страница не найдена",
+    "uncaughtError": "Произошла непредвиденная ошибка"
+  },
+  "pages": {
+    "achievements": {
+      "info": {
+        "contract": "Контракт",
+        "description": "Описание",
+        "event": "Событие",
+        "items": "Предметы",
+        "level": "Уровень {level} {achieved} {redeemed}",
+        "levels": "Уровни"
+      },
+      "report": {
+        "title": "Отчет о достижениях"
+      },
+      "title": "Достижения"
+    },
+    "breed": {
+      "matron": "Матрона",
+      "sire": "Производитель",
+      "title": "Разведение (Breed)"
+    },
+    "checkout": {
+      "address": "Адрес доставки",
+      "address-hint": "Выберите из списка ниже или добавьте новый адрес",
+      "addresses": {
+        "empty": "У вас еще нет адресов"
+      },
+      "empty": "У вас нет выбранных продуктов",
+      "pieces": "{amount} шт.",
+      "products": "Выбранные продукты",
+      "products-hint": "Проверьте количество еще раз",
+      "title": "Оформление заказа",
+      "total": "Итого: {amount}"
+    },
+    "claim": {
+      "connect": "Пожалуйста, сначала подключите ваш кошелек",
+      "sorry": "Извините, может быть, вам повезет в следующий раз",
+      "title": "Заявить"
+    },
+    "coin-gecko": {
+      "rates": "Курс",
+      "title": "CoinGecko"
+    },
+    "dashboard": {
+      "achievements": {
+        "report": "Отчет",
+        "title": "Достижения"
+      },
+      "ecommerce": {
+        "checkout": "Оформление заказа",
+        "orders": "Заказы",
+        "products": "Продукты",
+        "title": "Электронная коммерция"
+      },
+      "exchange": {
+        "marketplace": "Маркетплейс",
+        "personal": "Мой запас",
+        "referral": "Реферальная программа"
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "coins": "Монеты"
+      },
+      "infrastructure": {
+        "feedback": {
+          "form": "Обратная связь",
+          "title": "Обратная связь"
+        },
+        "pages": {
+          "about-us": "О нас",
+          "faq": "FAQ",
+          "privacy-policy": "Политика конфиденциальности",
+          "terms-of-services": "Условия обслуживания",
+          "title": "Страницы"
+        }
+      },
+      "integrations": {
+        "coin-gecko": "CoinGecko",
+        "dex": {
+          "1inch": "1inch",
+          "title": "Dex",
+          "uniswap": "Uniswap"
+        },
+        "ipfs": "IPFS"
+      },
+      "mechanics": {
+        "breed": "Разведение",
+        "claim": "Клейм",
+        "lottery": "Лотерея",
+        "mysterybox": "Мистерибокс",
+        "ponzi": "Понци",
+        "promo": "Промо",
+        "raffle": "Розыгрыш",
+        "recipes": "Рецепты",
+        "rent": "Аренда",
+        "staking": "Стейкинг",
+        "vesting": "Вестинг",
+        "wait-list": "Список ожидания",
+        "wrapper": "Обертка токена"
+      },
+      "title": "Панель управления"
+    },
+    "dex": {
+      "1inch": {
+        "advanced-settings": {
+          "gas": "Газ",
+          "slippage": "Допуск скольжения",
+          "title": "Расширенные настройки"
+        },
+        "buttons": {
+          "buy-crypto": "Купить криптовалюту",
+          "cancel": "Отмена",
+          "confirm": "Подтвердить",
+          "connect-wallet": "Подключить кошелек",
+          "download-metamask": "Скачать Metamask",
+          "learn-more": "Узнать больше",
+          "swap-tokens": "Обмен токенов",
+          "swapAgain": "Обменять снова"
+        },
+        "enums": {
+          "gasPrice": {
+            "HIGH": "Высокий",
+            "LOW": "Низкий",
+            "MEDIUM": "СРЕДНИЙ"
+          },
+          "networks": {
+            "ARBITRUM": "Arbitrum",
+            "BINANCE": "Binance",
+            "ETHEREUM": "Ethereum",
+            "OPTIMISM": "Optimism",
+            "POLYGON": "Polygon"
+          },
+          "slippage": {
+            "HIGH": "1%",
+            "LOW": "0.1%",
+            "MEDIUM": "0.5%",
+            "VERY_HIGH": "3%"
+          },
+          "text": "Сеть приложения {appNetwork} не соответствует выбранной в кошельке сети {walletNetwork}"
+        },
+        "header": {
+          "bridge": "Мост",
+          "network": "Сеть"
+        },
+        "snackbar": {
+          "accountNotFound": "Учетная запись не найдена в списке",
+          "approve-1inch": "Пожалуйста, разрешите 1inch использовать ваши {symbol}",
+          "web3-not-detected": "Провайдер Web3 не обнаружен"
+        },
+        "swap": {
+          "ETH": "ETH",
+          "approve": "Разрешить",
+          "approving": "Разрешение...",
+          "balanceOf": "Баланс",
+          "buyPrice": "цена покупки",
+          "complete": "Завершено",
+          "confirm": "Подтвердить обмен",
+          "cost": "Стоимость",
+          "fee": "Плата",
+          "gas": "Газ",
+          "gasPrice": "Цена газа",
+          "gwei": "GWEI",
+          "maxPriceSlippage": "Максимальное скольжение цены",
+          "preparing": "Подготовка к обмену",
+          "product": "Продукт",
+          "quantity": "Количество",
+          "rate": "Курс",
+          "selected": "Выбрано",
+          "spread": "Распределено по DEX",
+          "swapping": "Обмен токенов",
+          "title": "ОБМЕН",
+          "total": "Всего",
+          "txCost": "Стоимость транзакции"
+        },
+        "title": "1inch",
+        "token-search": {
+          "title": "Поиск {amount} токенов"
+        },
+        "warning": {
+          "cannotBeSame": "Токены не могут быть одинаковыми",
+          "insufficient": "Недостаточно {symbol} баланса"
+        }
+      },
+      "title": "Dex",
+      "uniswap": {
+        "title": "Uniswap"
+      }
+    },
+    "dragons": {
+      "description": "Здесь живут драконы",
+      "title": "Не реализовано :)"
+    },
+    "ecommerce": {
+      "title": "Электронная коммерция"
+    },
+    "erc1155": {
+      "contract": {
+        "title": "Контракт ERC1155: {title}"
+      },
+      "contracts": {
+        "title": "Контракты ERC1155"
+      },
+      "template": {
+        "price": "Цена: {amount}",
+        "title": "Шаблон ERC1155: {title}"
+      },
+      "templates": {
+        "title": "Шаблоны ERC1155"
+      },
+      "title": "ERC1155",
+      "token": {
+        "price": "Базовая цена: {amount}",
+        "title": "Токен ERC1155: {title}"
+      },
+      "tokens": {
+        "title": "Токены ERC1155"
+      }
+    },
+    "erc20": {
+      "title": "Монеты",
+      "token": {
+        "title": "Монета: {title}"
+      },
+      "coins": {
+        "sort": {
+          "createdAt": "Дата",
+          "price": "Цена"
+        },
+        "title": "Монеты"
+      }
+    },
+    "erc721": {
+      "contract": {
+        "title": "Контракт ERC721: {title}"
+      },
+      "contracts": {
+        "title": "Контракты ERC721"
+      },
+      "template": {
+        "price": "Цена",
+        "title": "Шаблон ERC721: {title}"
+      },
+      "templates": {
+        "title": "Шаблоны ERC721"
+      },
+      "title": "ERC721",
+      "token": {
+        "title": "Токен ERC721: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Дата",
+          "price": "Цена"
+        },
+        "title": "Токены ERC721"
+      }
+    },
+    "erc998": {
+      "contract": {
+        "title": "Контракт ERC998: {title}"
+      },
+      "contracts": {
+        "title": "Контракты ERC998"
+      },
+      "template": {
+        "price": "Цена",
+        "title": "Шаблон ERC998: {title}"
+      },
+      "templates": {
+        "title": "Шаблоны ERC998"
+      },
+      "title": "ERC998",
+      "token": {
+        "title": "Токен ERC998: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Дата",
+          "price": "Цена"
+        },
+        "title": "Токены ERC998"
+      }
+    },
+    "exchanges": {
+      "title": "Биржи"
+    },
+    "feedback": {
+      "title": "Обратная связь"
+    },
+    "guest": {
+      "confirmation": "Пожалуйста, проверьте ваш почтовый ящик для подтверждения вашего адреса электронной почты.",
+      "login": "Вход",
+      "particleWallet": "Кошелек Particle",
+      "signInWith": {
+        "facebook": "Войти через Facebook",
+        "google": "Войти через Google",
+        "metamask": "Войти через Metamask",
+        "particle": "Войти через Particle"
+      }
+    },
+    "history": {
+      "token": {
+        "title": "История токенов"
+      }
+    },
+    "ipfs": {
+      "infura": {
+        "title": "Infura"
+      },
+      "nftStorage": {
+        "title": "Хранилище NFT"
+      },
+      "pinata": {
+        "title": "Pinata"
+      },
+      "title": "IPFS",
+      "web3Storage": {
+        "title": "Хранилище Web3"
+      }
+    },
+    "landing": {
+      "erc1155-new": "Новые шаблоны ERC1155",
+      "erc721-new": "Новые шаблоны ERC721",
+      "erc998-new": "Новые шаблоны ERC998",
+      "mysterybox-new": "Новые Мистерибоксы",
+      "popular": "Популярные товары"
+    },
+    "lottery": {
+      "contract": {
+        "statistics": {
+          "collapse": {
+            "close": "Скрыть",
+            "open": "Детали"
+          },
+          "controls": {
+            "drawn": "Разыграно: {datetime}",
+            "last": "Последний раунд",
+            "next": "Следующий раунд",
+            "previous": "Предыдущий раунд",
+            "round": "Раунд: #{roundId}",
+            "start": "Начало: {datetime}"
+          },
+          "empty": "Пока нет завершенных раундов...",
+          "matches": {
+            "match": {
+              "title": "Совпадение {amount}",
+              "loose": "Билетов: {amount}",
+              "win": "Выиграло билетов: {amount}"
+            },
+            "title": "Совпадение уникальных выигрышных номеров для разделения призов"
+          },
+          "prizePot": "Призовой фонд",
+          "title": "Завершенные раунды",
+          "totalTickets": "Проданные билеты",
+          "winNumbers": "Выигрышные номера"
+        },
+        "title": "Контракт: {title}"
+      },
+      "purchase": {
+        "count": "{current} из {max} продано",
+        "notStarted": "Раунд еще не начался",
+        "price": "Цена билета: {price}",
+        "rules": "Выберите 6 из 36 номеров. {commission}% собранных средств будут пропорционально распределены между игроками.",
+        "selected": "Выбрано {selected}/6.",
+        "title": "Купить билет",
+        "titleRound": "Купить билет на раунд #{roundId}"
+      },
+      "title": "Лотерея",
+      "tokens": {
+        "title": "Мои билеты"
+      }
+    },
+    "lottery-list": {
+      "title": "Лотерейные контракты"
+    },
+    "marketplace": {
+      "contract": {
+        "title": "Контракт: {title}"
+      },
+      "contracts": {
+        "title": "Контракт"
+      },
+      "merchant": {
+        "title": "Продавец: {title}"
+      },
+      "merchants": {
+        "title": "Продавцы"
+      },
+      "template": {
+        "price": "Базовая цена: {amount}",
+        "title": "Шаблоны: {title}"
+      },
+      "templates": {
+        "title": "Шаблоны"
+      },
+      "title": "Маркетплейс"
+    },
+    "marketplace-old": {
+      "erc1155": {
+        "title": "ERC1155"
+      },
+      "erc721": {
+        "title": "ERC721"
+      },
+      "erc998": {
+        "title": "ERC998"
+      },
+      "mysterybox": {
+        "title": "Мистерибокс"
+      },
+      "tabs": {
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "mysterybox": "Мистерибокс"
+      },
+      "title": "Маркетплейс (старый)"
+    },
+    "merchant": {
+      "title": "Создать продавца"
+    },
+    "merchants": {
+      "title": "Продавцы"
+    },
+    "mystery": {
+      "box": {
+        "content": "Содержимое Мистерибокса",
+        "price": "Цена",
+        "title": "Мистерибокс: {title}"
+      },
+      "boxes": {
+        "title": "Мистерибоксы"
+      },
+      "contract": {
+        "title": "Мистери Контракт: {title}"
+      },
+      "contracts": {
+        "title": "Мистери Контракты"
+      },
+      "title": "Мистери",
+      "token": {
+        "content": "Содержимое Мистери Токена",
+        "level": "Уровень: {GRADE}",
+        "price": "Базовая цена: {amount}",
+        "title": "Мистери Токен: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Дата",
+          "price": "Цена"
+        },
+        "title": "Мистери Токены"
+      }
+    },
+    "orders": {
+      "date": "Дата",
+      "price": "Цена",
+      "product": "Продукт",
+      "products": "Продукты",
+      "status": "Статус",
+      "title": "Заказы"
+    },
+    "page": {
+      "title": "{title}"
+    },
+    "ponzi": {
+      "deposit": {
+        "title": "Мои депозиты"
+      },
+      "leaderboard": {
+        "title": "Лидерборд"
+      },
+      "reward": "Награда",
+      "rules": {
+        "deposit": "Депозит",
+        "title": "Правила депозита"
+      },
+      "title": "Понци"
+    },
+    "product": {
+      "price": "Цена: {amount}",
+      "title": "{title}"
+    },
+    "products": {
+      "sort": {
+        "createdAt": "Дата",
+        "price": "Цена"
+      },
+      "title": "Продукты"
+    },
+    "profile": {
+      "addresses": {
+        "default": "По умолчанию",
+        "empty": "У вас еще нет адресов"
+      },
+      "tabs": {
+        "addresses": "Адреса",
+        "general": "Общее",
+        "subscriptions": "Подписки"
+      },
+      "title": "Профиль"
+    },
+    "promo-list": {
+      "title": "Промо"
+    },
+    "raffle": {
+      "contract": {
+        "statistics": {
+          "controls": {
+            "drawn": "Разыграно: {datetime}",
+            "last": "Последний раунд",
+            "next": "Следующий раунд",
+            "previous": "Предыдущий раунд",
+            "round": "Раунд: #{roundId}",
+            "start": "Начало: {datetime}"
+          },
+          "empty": "Завершенных раундов пока нет...",
+          "noTickets": "В этом раунде билетов нет",
+          "title": "Завершенные раунды",
+          "totalTickets": "Всего билетов в этом раунде: {count}",
+          "winNumber": "Выигрышный номер"
+        },
+        "title": "Контракт: {title}"
+      },
+      "purchase": {
+        "commission": "Комиссия {commission}%",
+        "count": "{current} из {max} продано",
+        "notStarted": "Раунд еще не начался",
+        "price": "Цена билета: {price}",
+        "rules": "Просто купите билет. Победитель будет выбран случайно",
+        "sold": "Продано {count}",
+        "title": "Купить билет",
+        "titleRound": "Купить билет на раунд #{roundId}"
+      },
+      "title": "Розыгрыш",
+      "tokens": {
+        "title": "Мои билеты"
+      }
+    },
+    "raffle-list": {
+      "title": "Контракты розыгрыша"
+    },
+    "recipes": {
+      "craft": {
+        "approve": "Пожалуйста, одобрите ингредиенты для обмена заранее",
+        "price": "Цена",
+        "title": "Рецепт Крафта: {title}"
+      },
+      "craft-list": {
+        "title": "Рецепты Крафта"
+      },
+      "ingredients": "Ингредиенты",
+      "merge": {
+        "approve": "Пожалуйста, одобрите ингредиенты для обмена заранее",
+        "popover": "Объединить {price} в {item}",
+        "price": "Цена",
+        "title": "Рецепт объединения: {title}"
+      },
+      "merge-list": {
+        "title": "Рецепты объединения"
+      },
+      "title": "Рецепты"
+    },
+    "referral": {
+      "reward": {
+        "title": "Награды"
+      },
+      "tree": {
+        "current": "Ваш текущий реферер",
+        "noReferrer": "У вас еще нет реферера",
+        "referrer": "Ваш текущий реферер {referrer}",
+        "refLink": "Ваша реферальная ссылка",
+        "title": "Реферальное дерево"
+      },
+      "cabinet": {
+        "title": "Кабинет"
+      },
+      "chart": {
+        "title": "График"
+      },
+      "leaderboard": {
+        "title": "Лидерборд"
+      },
+      "report": {
+        "title": "Отчет"
+      },
+      "title": "Реферальная программа"
+    },
+    "rent": {
+      "title": "Аренда"
+    },
+    "staking": {
+      "deposit": {
+        "title": "Мои депозиты"
+      },
+      "leaderboard": {
+        "title": "Лидерборд"
+      },
+      "reward": "Награда",
+      "rules": {
+        "deposit": "Депозит",
+        "title": "Правила депозита"
+      },
+      "title": "Стейкинг"
+    },
+    "token": {
+      "balanceTitle": "Баланс:",
+      "craft": "Крафт",
+      "discrete": "Уровни",
+      "dismantle": "Разборка",
+      "genesis": "Генезис",
+      "mystery": "Мистерибокс",
+      "price": "Базовая цена",
+      "priceTitle": "Базовая цена:",
+      "rarity": "Редкость",
+      "rarityMultiplier": "x {multiplier}",
+      "tokenUser": "Пользователь",
+      "traits": "Характеристики"
+    },
+    "tokens": {
+      "title": "Мои токены"
+    },
+    "transactions": {
+      "emptyText": "",
+      "title": "Мои транзакции"
+    },
+    "vesting": {
+      "sorry": "Извините, с этим кошельком не связано никакого вестинга.",
+      "title": "Вестинг"
+    },
+    "wait-list": {
+      "item": {
+        "title": "Список ожидания"
+      },
+      "title": "Список ожидания"
+    },
+    "wallet": {
+      "attach": "Прикрепить",
+      "connectedWallet": "Подключенный кошелек",
+      "detach": "Отсоединить",
+      "title": "Мой кошелек"
+    },
+    "wrapper": {
+      "token": {
+        "content": "Содержимое токена-обертки",
+        "title": "Обернутый токен: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Дата",
+          "price": "Цена"
+        },
+        "title": "Обертка токена"
+      }
+    }
+  },
+  "snackbar": {
+    "addedToCart": "Добавлено в корзину",
+    "blockchainError": "Ошибка блокчейна",
+    "blockchainErrorReason": "Ошибка блокчейна {reason}",
+    "created": "Успешно сохранено",
+    "deleted": "Успешно удалено",
+    "duplicateAccount": "Дубликат аккаунта",
+    "error": "Неизвестная ошибка",
+    "featureIsNotSupported": "Функция не поддерживается",
+    "gradeNotActive": "Атрибут не активен",
+    "gradeNotFound": "Грейд не найден",
+    "internalServerError": "Внутренняя ошибка сервера.",
+    "merchantAlreadyExist": "Продавец уже существует",
+    "pageNotFound": "Страница не найдена",
+    "paymentRequired": "Требуется оплата",
+    "registered": "Регистрация успешна, пожалуйста, подтвердите вашу электронную почту для продолжения",
+    "rejectedByUser": "Отклонено пользователем",
+    "removedFromCart": "Удалено из корзины",
+    "signatureDoesNotMatch": "Подпись не совпадает",
+    "success": "Успешно",
+    "templateNotFound": "Шаблон не найден",
+    "tokenNotFound": "Токен не найден",
+    "tooManyRequests": "Слишком много запросов.",
+    "transactionExecuted": "Транзакция выполнена: {txHash}",
+    "transactionSent": "Транзакция отправлена: {txHash}",
+    "transactionTypeExecuted": "Транзакция выполнена: {txType} {txHash}",
+    "unauthorized": "Неверный логин или пароль",
+    "updated": "Успешно обновлено",
+    "userHasWrongRole": "Недостаточно прав",
+    "walletAlreadyInUse": "Кошелек уже используется",
+    "walletIsNotConnected": "Кошелек не подключен",
+    "web3NotDetected": "Web3 не обнаружен"
+  },
+  "socket": {
+    "connect_failed": "Соединение WebSocket не удалось",
+    "connected": "Соединение WebSocket включено",
+    "error": "Ошибка соединения WebSocket"
+  }
 }
