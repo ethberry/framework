@@ -1,9 +1,6 @@
 import { FC, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-import { useUser } from "@gemunion/provider-user";
-import type { IUser } from "@framework/types";
-
 export interface IRefresherProps {
   onRefreshPage: () => Promise<void>;
 }
@@ -11,12 +8,11 @@ export interface IRefresherProps {
 export const FormRefresher: FC<IRefresherProps> = props => {
   const { onRefreshPage } = props;
 
-  const { account } = useWeb3React();
-  const { profile } = useUser<IUser>();
+  const { account, chainId } = useWeb3React();
 
   useEffect(() => {
     void onRefreshPage();
-  }, [profile?.chainId, account]);
+  }, [account, chainId]);
 
   return null;
 };
