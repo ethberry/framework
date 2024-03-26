@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
 
-import type { IAssetPromo, IUser } from "@framework/types";
+import type { IAssetPromo } from "@framework/types";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { MultiCarouselAssetPromo } from "../multi-carousel-asset-promo";
 
 export const NewAssetPromo: FC = () => {
-  const user = useUser<IUser>();
+  const { chainId } = useWeb3React();
   const [promos, setPromos] = useState<Array<IAssetPromo>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -33,7 +33,7 @@ export const NewAssetPromo: FC = () => {
 
   useEffect(() => {
     void fetchTokens();
-  }, [user.profile?.chainId]);
+  }, [chainId]);
 
   return (
     <ProgressOverlay isLoading={isLoading}>

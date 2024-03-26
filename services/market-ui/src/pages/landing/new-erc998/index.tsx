@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
-import type { ITemplate, IUser } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { Erc998TemplateListItem } from "../../hierarchy/erc998/template-list/item";
@@ -13,7 +13,7 @@ import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
 import { StyledTitle } from "./styled";
 
 export const NewErc998: FC = () => {
-  const user = useUser<IUser>();
+  const { chainId } = useWeb3React();
   const [templates, setTemplates] = useState<Array<ITemplate>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -40,7 +40,7 @@ export const NewErc998: FC = () => {
 
   useEffect(() => {
     void fetchTokens();
-  }, [user?.profile?.chainId]);
+  }, [chainId]);
 
   if (!templates || templates.length === 0) {
     return null;

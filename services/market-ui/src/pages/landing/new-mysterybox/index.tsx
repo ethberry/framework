@@ -1,18 +1,18 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
-import type { IMysteryBox, IUser } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
 import { MysteryBoxListItem } from "../../mechanics/marketing/mystery/box-list/item";
 import { StyledTitle } from "./styled";
 
 export const NewMysterybox: FC = () => {
-  const user = useUser<IUser>();
+  const { chainId } = useWeb3React();
   const [mysteryboxes, setMysteryboxes] = useState<Array<IMysteryBox>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -36,7 +36,7 @@ export const NewMysterybox: FC = () => {
 
   useEffect(() => {
     void fetchTokens();
-  }, [user?.profile?.chainId]);
+  }, [chainId]);
 
   if (!mysteryboxes || mysteryboxes.length === 0) {
     return null;
