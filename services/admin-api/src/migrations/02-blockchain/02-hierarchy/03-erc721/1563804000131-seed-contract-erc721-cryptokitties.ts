@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { ns, imagePath } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc721CryptoKittiesAt1563804000131 implements MigrationInterface {
@@ -38,7 +38,7 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
         1,
         'CryptoKitties (external)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fcrypto_kitties.png?alt=media&token=df69f93c-8892-4456-92f8-34dc3703b64b',
+        '${imagePath}/crypto_kitties.png',
         'CK',
         'CK',
         0,

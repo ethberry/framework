@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { ns, imagePath } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc1155DumbWayToDieAt1563804000151 implements MigrationInterface {
@@ -37,7 +37,7 @@ export class SeedContractErc1155DumbWayToDieAt1563804000151 implements Migration
         1,
         'Dumb Ways To Die (external)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fdumb_way_to_die.png?alt=media&token=c2a14ec3-434e-4d03-894b-db851bef9c93',
+        '${imagePath}/dumb_way_to_die.png',
         'DWTD',
         'DWTD',
         0,

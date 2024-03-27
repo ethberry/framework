@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, imagePath, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20WethAt1563804000122 implements MigrationInterface {
@@ -11,8 +11,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
-    const wethImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2FWETHlogo.png?alt=media&token=db89a916-7ade-49ba-9a17-23dba10e2b79";
+    const wethImgUrl = `${imagePath}/WETHlogo.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

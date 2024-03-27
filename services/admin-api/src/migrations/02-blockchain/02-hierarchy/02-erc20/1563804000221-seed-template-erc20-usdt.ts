@@ -1,14 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns } from "@framework/constants";
+import { ns, imagePath } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const usdtImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692";
+    const usdtImgUrl = `${imagePath}/usdt.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (

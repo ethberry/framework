@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, imagePath, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface {
@@ -12,8 +12,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
     const chainId = process.env.CHAIN_ID || testChainId;
     const usdtAddr = process.env.USDT_ADDR || wallet;
 
-    const usdtImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692";
+    const usdtImgUrl = `${imagePath}/usdt.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

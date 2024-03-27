@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { imageUrl, imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
@@ -52,7 +52,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Runes (simple)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Frunes.png?alt=media&token=aaabff2e-b8d1-493f-a81e-38456959e6b4',
+        '${imagePath}/runes.png',
         'RUNE',
         'RUNE998',
         100,
@@ -106,7 +106,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Scrolls (blacklist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fscrolls.png?alt=media&token=4771aaf1-0de2-441d-9d4e-06ab8dcafb6f',
+        '${imagePath}/scrolls.png',
         'ERC998 BLACKLIST',
         'BL998',
         100,
@@ -124,7 +124,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Spell books (discrete)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fspell_books.png?alt=media&token=72784284-77e2-45d5-9b73-d44e202ee4a6',
+        '${imagePath}/spell_books.png',
         'ERC998 DISCRETE',
         'LVL998',
         100,
@@ -142,7 +142,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Heroes (random)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=899da038-3709-4665-9e2b-9b7154e9adfa',
+        '${imagePath}/heroes.png',
         'ERC998 RANDOM',
         'RNG998',
         100,
@@ -178,7 +178,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Buildings (rentable)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbuildings.png?alt=media&token=762c8248-b947-4ddf-9df3-e4278c95ba77',
+        '${imagePath}/buildings.png',
         'RENTABLE',
         'REN998',
         100,
@@ -250,7 +250,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Anti-Heros (lvl)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=899da038-3709-4665-9e2b-9b7154e9adfa',
+        '${imagePath}/heroes.png',
         'AH',
         'AH998',
         100,
@@ -268,7 +268,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         56,
         'BEP',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${imagePath}/binance.png',
         'BEP',
         'BEP998',
         100,
