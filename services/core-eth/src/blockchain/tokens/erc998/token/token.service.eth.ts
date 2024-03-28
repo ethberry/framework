@@ -163,8 +163,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(
       event,
       context,
-      erc998TokenEntity.template.contractId,
       erc998TokenEntity.id,
+      erc998TokenEntity.template.contractId,
     );
 
     const tokenEntity = await this.tokenService.getToken(
