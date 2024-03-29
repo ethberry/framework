@@ -5,6 +5,8 @@ export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature
   ERC20TokenDeployed: "/erc20/contracts",
   ERC721TokenDeployed: "/erc721/contracts",
   ERC998TokenDeployed: "/erc998/contracts",
+  WhitelistedChild: "/erc998/composition",
+  UnWhitelistedChild: "/erc998/composition",
   ERC1155TokenDeployed: "/erc1155/contracts",
   MysteryBoxDeployed: "/mystery/contracts",
   CollectionDeployed: "/collection/contracts",
