@@ -70,6 +70,30 @@ export class SeedTemplateErc20UsdtAt1563804000221 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 14 : 40215},
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 5021501},
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 50215},
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 6021501},
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 60215},
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

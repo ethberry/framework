@@ -54,6 +54,24 @@ export class SeedTokenErc20UsdtAt1563804000321 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 14 : 4021501},
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 502150101},
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 5021501},
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 602150101},
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 6021501},
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

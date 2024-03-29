@@ -110,6 +110,44 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 50215},
+        '0x337610d27c682e347c9cd60bd4b3b107c9d34ddd',
+        97,
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        'Tether USD',
+        'USDT',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL,STABLE_COIN}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 60215},
+        '0xa02f6adc7926efebbd59fd43a84f4e0c0c91e832',
+        80001,
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        'Tether USD',
+        'USDT',
+        6,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL,STABLE_COIN}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

@@ -36,7 +36,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 22 : 2021601},
-        'WETH',
+        'WBNB',
         '${simpleFormatting}',
         '${wethImgUrl}',
         null,
@@ -60,7 +60,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 24 : 4021601},
-        'WETH',
+        'WMATIC',
         '${simpleFormatting}',
         '${wethImgUrl}',
         null,

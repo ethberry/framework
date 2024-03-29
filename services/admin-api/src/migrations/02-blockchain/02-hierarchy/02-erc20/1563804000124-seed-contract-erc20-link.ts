@@ -128,6 +128,25 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 60218},
+        '0x326c977e6efc84e512bb9c30f76e30c160ed06fb',
+        80001,
+        'LINK',
+        '${simpleFormatting}',
+        '${linkImgUrl}',
+        'ChainLink LINK',
+        'LINK',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

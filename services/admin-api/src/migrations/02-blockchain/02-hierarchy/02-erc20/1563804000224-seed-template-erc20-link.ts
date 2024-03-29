@@ -83,6 +83,18 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 6021801},
+        'LINK',
+        '${simpleFormatting}',
+        '${linkImgUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 60218},
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }
