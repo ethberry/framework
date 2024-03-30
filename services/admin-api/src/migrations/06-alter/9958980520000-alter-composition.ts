@@ -5,10 +5,11 @@ import { NodeEnv } from "@framework/types";
 
 export class AlterCompositionAt9958980520000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+
     if (process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
-
+    
     await queryRunner.query(`
     DO $$ BEGIN
         CREATE TYPE ${ns}.composition_status_enum AS ENUM (
