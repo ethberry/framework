@@ -11,8 +11,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { CompositionStatus, IComposition, ICompositionSearchDto, IUser } from "@framework/types";
-import { ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import type { IComposition, ICompositionSearchDto, IUser } from "@framework/types";
 
 import ERC998WhitelistChildABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
 
