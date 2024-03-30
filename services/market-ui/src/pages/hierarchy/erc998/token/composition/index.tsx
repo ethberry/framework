@@ -152,7 +152,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
 
   const handleAlert = (_event: ChangeEvent<unknown>, _option: any): void => {
     // TODO show lLert composition inactive
-    enqueueSnackbar(formatMessage({ id: "form.hints.compositionInactive" }), { variant: "warning" });
+    enqueueSnackbar(formatMessage({ id: "form.hints.compositionInactive" }), { variant: "error" });
   };
 
   const handleClear = (balance: IBalance) => () => {
