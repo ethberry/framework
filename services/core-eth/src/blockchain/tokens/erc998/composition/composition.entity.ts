@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import type { IComposition } from "@framework/types";
+import { CompositionStatus, IComposition } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
@@ -24,4 +24,11 @@ export class CompositionEntity extends IdDateBaseEntity implements IComposition 
 
   @Column({ type: "int" })
   public amount: number;
+
+  @Column({
+    type: "enum",
+    enum: CompositionStatus,
+    default: CompositionStatus.ACTIVE,
+  })
+  public compositionStatus: CompositionStatus;
 }

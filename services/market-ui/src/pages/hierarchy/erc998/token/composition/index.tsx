@@ -1,7 +1,9 @@
 import { ChangeEvent, FC, Fragment, useState } from "react";
+import { useIntl } from "react-intl";
 import { IconButton, Typography } from "@mui/material";
 import { Clear } from "@mui/icons-material";
-import { useIntl } from "react-intl";
+import { enqueueSnackbar } from "notistack";
+
 import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -9,7 +11,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { StaticInput } from "@gemunion/mui-inputs-core";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IBalance, IToken, TokenType } from "@framework/types";
+import { CompositionStatus, IBalance, IToken, TokenType } from "@framework/types";
 
 import safeTransferChildABI from "@framework/abis/safeTransferChild/ERC998Blacklist.json";
 import safeTransferFrom1155ABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
@@ -148,6 +150,11 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
     postponeAction(option, metaComposeFn);
   };
 
+  const handleAlert = (_event: ChangeEvent<unknown>, _option: any): void => {
+    // TODO show lLert composition inactive
+    enqueueSnackbar(formatMessage({ id: "form.hints.compositionInactive" }), { variant: "warning" });
+  };
+
   const handleClear = (balance: IBalance) => () => {
     postponeAction(balance.token!, metaDecomposeFn);
   };
@@ -161,6 +168,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
       <Typography variant="h4">Composed tokens</Typography>
 
       {token.template?.contract?.children?.map(child => {
+        const active = child.compositionStatus === CompositionStatus.ACTIVE;
         const filtered = token.balance!.filter(balance => balance.token?.template?.contractId === child.childId); // token.children!.filter(ownership => ownership.child?.template?.contractId === child.childId);
 
         return (
@@ -208,7 +216,8 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 label={formatMessage({ id: "form.labels.tokenId" })}
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
                 getTitle={(token: IToken) => formatTokenTitle(token)}
-                onChange={handleChange}
+                onChange={active ? handleChange : handleAlert}
+                readOnly={child.compositionStatus === CompositionStatus.ACTIVE}
               />
             ))}
           </FormWrapper>

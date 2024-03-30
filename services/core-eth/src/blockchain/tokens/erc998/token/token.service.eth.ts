@@ -389,7 +389,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("contractChildNotFound");
     }
 
-    await this.erc998CompositionService.delete({
+    // DEACTIVATE
+    await this.erc998CompositionService.deactivate({
       parentId: parentContractEntity.id,
       childId: childContractEntity.id,
     });

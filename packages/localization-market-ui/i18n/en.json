@@ -404,6 +404,7 @@
     },
     "hints": {
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
+      "compositionInactive": "Composition INACTIVE on Contract",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
