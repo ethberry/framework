@@ -54,10 +54,6 @@ jobs:
       - name: Install Packages
         run: npm i
 
-      - name: Git submodule
-        run: |
-          git submodule update --remote --merge
-
       - name: Npm run test
         run: npm run test
         env:
