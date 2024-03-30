@@ -10,7 +10,7 @@ import { ContractFeatures, ModuleType } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
 import { TokenTraitsView } from "../../../traits";
-import { TokenUserView } from "../../../user";
+import { TokenUserMetadataView } from "../../../user-metadata";
 import { MysteryboxContent } from "../../../mysterybox-content";
 
 export interface IErc721ViewDialogProps {
@@ -96,7 +96,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
               </TableCell>
             </TableRow>
             {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
-              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
+              <TokenUserMetadataView metadata={metadata} />
             ) : null}
             <TableRow>
               <TableCell component="th" scope="row">

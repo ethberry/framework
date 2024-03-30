@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, imagePath, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface {
@@ -12,8 +12,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
     const chainId = process.env.CHAIN_ID || testChainId;
     const usdtAddr = process.env.USDT_ADDR || wallet;
 
-    const usdtImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692";
+    const usdtImgUrl = `${imagePath}/usdt.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -96,6 +95,44 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 14 : 40215},
         '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
         137,
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        'Tether USD',
+        'USDT',
+        6,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL,STABLE_COIN}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 15 : 50215},
+        '0x337610d27c682e347c9cd60bd4b3b107c9d34ddd',
+        97,
+        'USDT',
+        '${simpleFormatting}',
+        '${usdtImgUrl}',
+        'Tether USD',
+        'USDT',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL,STABLE_COIN}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 16 : 60215},
+        '0xa02f6adc7926efebbd59fd43a84f4e0c0c91e832',
+        80001,
         'USDT',
         '${simpleFormatting}',
         '${usdtImgUrl}',

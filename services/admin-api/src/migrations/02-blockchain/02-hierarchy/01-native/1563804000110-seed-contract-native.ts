@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, testChainId, imagePath } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
@@ -35,7 +35,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${chainId}',
         'Native token (BESU)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        '${imagePath}/besu.png',
         'Besu',
         'BESU',
         18,
@@ -53,7 +53,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${chainId}',
         'Inactive token (BESU)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        '${imagePath}/besu.png',
         'Ethereum',
         'ETH',
         18,
@@ -71,7 +71,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         56,
         'Native token (BNB)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbnb.png?alt=media&token=f9eca8af-77b1-4092-8d4e-91fb897efa18',
+        '${imagePath}/bnb.png',
         'Binance',
         'BNB',
         18,
@@ -89,7 +89,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         1,
         'Native token (ETH)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fethereum.png?alt=media&token=fc22334a-6cc4-4f1e-b41c-4ef3a059f6ff',
+        '${imagePath}/ethereum.png',
         'Ethereum',
         'ETH',
         18,
@@ -107,7 +107,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         137,
         'Native token (MATIC)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fpolygon.png?alt=media&token=5eabc13d-8759-4b49-96be-86a0ddf3921f',
+        '${imagePath}/polygon.png',
         'Matic',
         'MATIC',
         18,
@@ -151,7 +151,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${chainId}',
         'Fake token (BESU)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        '${imagePath}/besu.png',
         'Ethereum',
         'ETH',
         18,

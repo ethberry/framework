@@ -10,7 +10,7 @@ import { ContractFeatures } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
 import { TokenTraitsView } from "../../../traits";
-import { TokenUserView } from "../../../user";
+import { TokenUserMetadataView } from "../../../user-metadata";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -84,7 +84,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
               </TableCell>
             </TableRow>
             {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
-              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
+              <TokenUserMetadataView metadata={metadata} />
             ) : null}
             <TableRow>
               <TableCell component="th" scope="row">

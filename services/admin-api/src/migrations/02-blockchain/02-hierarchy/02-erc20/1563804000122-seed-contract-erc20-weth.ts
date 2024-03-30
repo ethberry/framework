@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, imagePath, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20WethAt1563804000122 implements MigrationInterface {
@@ -11,8 +11,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
-    const wethImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2FWETHlogo.png?alt=media&token=db89a916-7ade-49ba-9a17-23dba10e2b79";
+    const wethImgUrl = `${imagePath}/WETHlogo.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -57,11 +56,11 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 22 : 20216},
         '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
         56,
-        'WETH',
+        'WBNB',
         '${simpleFormatting}',
         '${wethImgUrl}',
-        'Wrapped ETH',
-        'WETH',
+        'Wrapped BNB',
+        'WBNB',
         18,
         0,
         '',
@@ -93,13 +92,13 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 24 : 40216},
-        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+        '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
         137,
-        'WETH',
+        'WMATIC',
         '${simpleFormatting}',
         '${wethImgUrl}',
-        'Wrapped ETH',
-        'WETH',
+        'Wrapped MATIC',
+        'WMATIC',
         18,
         0,
         '',

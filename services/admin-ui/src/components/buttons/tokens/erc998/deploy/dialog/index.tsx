@@ -25,7 +25,16 @@ export const Erc998ContractDeployDialog: FC<IErc998ContractDeployDialogProps> = 
       testId="Erc998ContractDeployForm"
       {...rest}
     >
-      <SelectInput name="contractTemplate" options={Erc998ContractTemplates} />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc998ContractTemplates}
+        disabledOptions={[
+          // these templates are too big to deploy
+          Erc998ContractTemplates.ERC1155OWNER_ERC20OWNER,
+          Erc998ContractTemplates.ERC20OWNER,
+          Erc998ContractTemplates.ERC1155OWNER,
+        ]}
+      />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

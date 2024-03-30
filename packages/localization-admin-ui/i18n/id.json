@@ -1,0 +1,1673 @@
+{
+  "alert": {
+    "allowanceErc20": "Anda harus mengizinkan token ERC20 sebelum Isi Ulang",
+    "allowanceClaim": "Anda harus mengizinkan token untuk kontrak Contract Manager",
+    "allowanceWarning": "Anda akan mengizinkan semua token dari kontrak",
+    "craftItem": "Item yang akan dibuat",
+    "craftPrice": "Bahan pembuatan",
+    "dismantleItem": "Item yang didapat setelah pembongkaran",
+    "dismantlePrice": "Token yang akan dibongkar dan dibakar",
+    "editNotAllowed": "Pengeditan aturan ini tidak diizinkan",
+    "knownError": "Ups! Kami sadar akan masalah ini dan sedang aktif memperbaikinya. Terima kasih atas kesabaran Anda!",
+    "mergeItem": "Item yang didapat setelah penggabungan",
+    "mergePrice": "Token yang akan digabungkan dan dibakar",
+    "minterRole": "Setelah penyebaran Anda perlu secara manual memberikan peran MINTER_ROLE pada kontrak tiket",
+    "onlyIfUserExists": "Kami akan mengirim undangan hanya jika pengguna dengan email tersebut ada dalam sistem",
+    "randomChainlink": "Random Chain-Link VRF: Harus Menetapkan Langganan dan Menambahkan ke daftar Konsumen!",
+    "risk": "Anda melakukan ini dengan risiko Anda sendiri!",
+    "uncaughtError": "Terjadi kesalahan yang tidak tertangkap"
+  },
+  "buttons": {
+    "download-metamask": "Unduh Metamask"
+  },
+  "components": {
+    "dropzone": {
+      "file-invalid-type": "Anda tidak dapat mengunggah {type} hanya {accept} yang diizinkan",
+      "file-too-large": "Ukuran file adalah {size}, ukuran file maksimum adalah {maxSize}",
+      "file-too-small": "Ukuran file adalah {size}, ukuran file minimum adalah {minSize}",
+      "too-many-files": "Terlalu banyak file"
+    },
+    "header": {
+      "language": {
+        "switch": "Ganti Bahasa"
+      },
+      "menu": {
+        "dashboard": "Dasbor",
+        "login": "Masuk",
+        "logout": "Keluar",
+        "merchant": "Pedagang",
+        "profile": "Profil",
+        "settings": "Pengaturan"
+      },
+      "theme": {
+        "switch": "Ganti tema"
+      },
+      "wallet": {
+        "connect": "Hubungkan dompet",
+        "menu": "Akun",
+        "notMatch": "Dompet saat ini tidak cocok dengan dompet profil",
+        "notValid": "Jaringan tidak valid. Silakan beralih ke jaringan yang benar sesuai dengan profil Anda",
+        "test": "Tes"
+      }
+    },
+    "productTypes": {
+      "enterprise": {
+        "linkTitle": "Hubungi Kami",
+        "text": "Untuk proyek dengan ambisi besar, solusi Enterprise kami adalah kunci untuk membuka potensi penuh Anda. Paket komprehensif ini mencakup tim pengembangan khusus dan fitur B2B eksklusif, dirancang untuk mendorong ekosistem game Anda ke tingkat kesuksesan baru",
+        "title": "Enterprise"
+      },
+      "saas": {
+        "linkTitle": "Lihat detail",
+        "text": "Sempurna untuk startup dengan anggaran terbatas, rencana ini adalah gerbang Anda ke pasar. Dengan ekosistem blockchain kami di ujung jari Anda, Anda dapat dengan terjangkau membawa ide inovatif Anda ke dalam kehidupan dan membuat tanda Anda di industri game",
+        "title": "SaaS"
+      },
+      "selfHosted": {
+        "linkTitle": "Lihat detail",
+        "text": "Ubah ide terbukti Anda menjadi merek game unik dengan solusi game Whitelabel kami. Menawarkan desain khusus dan mekanik yang disesuaikan, rencana ini memberdayakan Anda untuk menonjol di industri game dengan pengalaman yang benar-benar khusus",
+        "title": "Self-hosted"
+      }
+    }
+  },
+  "dialogs": {
+    "allowance": "Izin",
+    "blacklist": "Tambahkan ke daftar hitam",
+    "breedLimit": "Tetapkan batas pembiakan",
+    "claim": "Klaim",
+    "confirmation": "Mohon konfirmasi",
+    "create": "Buat",
+    "checkBalance": {
+      "title": "Saldo Staking",
+      "token": "Token",
+      "depAmount": "Jumlah setoran",
+      "stakeBalance": "Saldo Staking"
+    },
+    "currentBalance": "Saldo: {value}",
+    "delete": "Hapus `{title}`?",
+    "deploy": "Sebar",
+    "edit": "Edit",
+    "fund": "Dana",
+    "grantRole": "Berikan peran",
+    "invite": "Undang",
+    "listenerAdd": "Tambahkan ETH Listener",
+    "listenerRemove": "Hapus ETH Listener",
+    "lotteryRoundEnd": "Akhiri Putaran Lotre",
+    "lotteryRoundStart": "Mulai Putaran Lotre",
+    "mintBox": "Cetak Mysterybox",
+    "mintToken": "Cetak token",
+    "ponziBalance": "Tarik Saldo Ponzi",
+    "paymentSplitterBalances": "Lepaskan Saldo",
+    "paymentSplitterWallet": "Dompet Saat Ini {wallet}",
+    "paymentSplitterShares": "memiliki {currentShare} dari {total} saham",
+    "raffleRoundEnd": "Akhiri Putaran Raffle",
+    "raffleRoundStart": "Mulai Putaran Raffle",
+    "renounceRole": "Lepaskan peran",
+    "revokeRole": "Cabut peran",
+    "schedule": "Tetapkan jadwal Putaran Lotre",
+    "setAmount": "Tetapkan Jumlah Penarikan",
+    "stakingInfo": "Info Staking",
+    "subBalance": "Saldo langganan: {value}",
+    "topUp": "Isi Ulang",
+    "transfer": "Transfer",
+    "transferOwnership": "Transfer Kepemilikan",
+    "unBlacklist": "Hapus dari daftar hitam",
+    "unWhitelist": "Hapus dari daftar putih",
+    "unsupported": "Tidak didukung",
+    "upload": "Unggah",
+    "view": "Lihat",
+    "vrfConsumer": "Tambahkan Konsumen Chain-Link VRF",
+    "vrfSetSub": "Tetapkan Langganan Chain-Link VRF",
+    "whitelist": "Tambahkan ke daftar putih",
+    "withdraw": "Tarik saldo",
+    "withdrawPenalty": "Tarik denda"
+  },
+  "enums": {
+    "LEVEL": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10"
+    },
+    "RARITY": {
+      "COMMON": "Umum",
+      "EPIC": "Epik",
+      "LEGENDARY": "Legendaris",
+      "RARE": "Langka",
+      "UNCOMMON": "Tidak umum"
+    },
+    "achievementStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak aktif",
+      "NEW": "Baru"
+    },
+    "achievementType": {
+      "COLLECTION": "Koleksi",
+      "CRAFT": "Kerajinan",
+      "ECOMMERCE": "E-commerce",
+      "MARKETPLACE": "Pasar"
+    },
+    "attributeName": {
+      "LEVEL": "Level",
+      "RARITY": "Keunikan",
+      "TEMPLATE_ID": "Templat"
+    },
+    "blockchainError": {
+      "BalanceExceed": "Saldo melebihi batas",
+      "CountExceed": "Jumlah melebihi batas",
+      "Expired": "Item telah kedaluwarsa",
+      "ExpiredSignature": "Tanda tangan telah kedaluwarsa",
+      "LimitExceed": "Batas telah terlampaui",
+      "MethodNotSupported": "Metode tidak didukung",
+      "NotActive": "Item tidak aktif",
+      "NotAnOwner": "Pengguna bukan pemilik",
+      "NotComplete": "Operasi tidak lengkap",
+      "NotExist": "Item tidak ada",
+      "RefProgramSet": "Program rujukan telah ditetapkan",
+      "SignerMissingRole": "Penandatangan kehilangan peran",
+      "TemplateZero": "Templat adalah nol",
+      "UnsupportedTokenType": "Jenis token tidak didukung",
+      "WrongAmount": "Jumlah salah",
+      "WrongRule": "Aturan salah",
+      "WrongStake": "Taruhan salah",
+      "WrongToken": "Token salah",
+      "ZeroBalance": "Saldo nol"
+    },
+    "chainId": {
+      "1": "ETHEREUM",
+      "5": "GOERLI",
+      "56": "BINANCE",
+      "97": "BINANCE (testnet)",
+      "137": "POLYGON",
+      "10000": "GEMUNION",
+      "10001": "BESU",
+      "13371": "IMMUTABLE zkEVM",
+      "13377": "GEMUNION",
+      "13378": "BESU",
+      "13473": "IMMUTABLE zkEVM (testnet)",
+      "42161": "ARBITRUM",
+      "80001": "MUMBAI (testnet)",
+      "11155111": "SEPOLIA"
+    },
+    "referralProgramStatus": {
+      "ACTIVE": "AKTIF",
+      "INACTIVE": "TIDAK AKTIF"
+    },
+    "claimStatus": {
+      "EXPIRED": "Kedaluwarsa",
+      "NEW": "Baru",
+      "REDEEMED": "Ditebus"
+    },
+    "contractFeatures": {
+      "ALLOWANCE": "Izin",
+      "BLACKLIST": "Daftar Hitam",
+      "DISCRETE": "Diskrit",
+      "ERC1155OWNER": "Pemilik ERC1155",
+      "ERC20OWNER": "Pemilik ERC20",
+      "EXTERNAL": "Eksternal",
+      "GENES": "Gen",
+      "MYSTERYBOX": "MysteryBox",
+      "NATIVE": "Asli",
+      "PAUSABLE": "Dapat Dijeda",
+      "RANDOM": "Acak",
+      "REFERRAL": "Rujukan Linear",
+      "RENTABLE": "Dapat Disewa",
+      "SOULBOUND": "Terikat Jiwa",
+      "SPLITTER": "Pembagi Pembayaran",
+      "STABLE_COIN": "Koin Stabil",
+      "STATEHASH": "Hash Negara",
+      "VOTES": "Suara",
+      "WHITELIST": "Daftar Putih"
+    },
+    "contractStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak aktif",
+      "NEW": "Baru"
+    },
+    "contractTemplate": {
+      "BLACKLIST": "Daftar Hitam",
+      "BLACKLIST_DISCRETE": "Daftar Hitam + Diskrit",
+      "BLACKLIST_DISCRETE_RANDOM": "Daftar Hitam + Diskrit + Acak",
+      "BLACKLIST_DISCRETE_RENTABLE": "Daftar Hitam + Diskrit + Dapat Disewa",
+      "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Daftar Hitam + Diskrit + Dapat Disewa + Acak",
+      "BLACKLIST_PAUSABLE": "Daftar Hitam + Dapat Dijeda",
+      "BLACKLIST_RANDOM": "Daftar Hitam + Acak",
+      "CLIFF": "Tebing",
+      "DISCRETE": "Diskrit",
+      "DISCRETE_RANDOM": "Diskrit + Acak",
+      "ERC1155OWNER": "Pemilik ERC1155",
+      "ERC1155OWNER_ERC20OWNER": "Pemilik ERC1155 + Pemilik ERC20",
+      "ERC20OWNER": "Pemilik ERC20",
+      "EXTERNAL": "Eksternal",
+      "GENES": "Gen",
+      "GRADED": "Bergradasi",
+      "LINEAR": "Linear",
+      "LOTTERY": "Tiket lotre",
+      "PAUSABLE": "Dapat Dijeda",
+      "RAFFLE": "Tiket raffle",
+      "RANDOM": "Acak",
+      "REFERRAL": "Rujukan",
+      "LINEAR_REFERRAL": "Rujukan Linear",
+      "RENTABLE": "Dapat Disewa",
+      "SIMPLE": "Sederhana",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Staking Sederhana",
+      "SOULBOUND": "Terikat Jiwa",
+      "SOULBOUND_VOTES": "Terikat Jiwa + Suara",
+      "SPLITTER": "Pemisah",
+      "STATEHASH": "Hash Negara",
+      "WHITELIST": "Daftar Putih"
+    },
+    "craftStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "dismantleStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "dismantleStrategy": {
+      "EXPONENTIAL": "Eksponensial",
+      "FLAT": "Datar",
+      "LINEAR": "Linier"
+    },
+    "durationUnit": {
+      "DAY": "Hari",
+      "HOUR": "Jam",
+      "MINUTE": "Menit",
+      "MONTH": "Bulan",
+      "WEEK": "Minggu",
+      "YEAR": "Tahun"
+    },
+    "emailType": {
+      "CONTACT": "Formulir Kontak",
+      "DUMMY": "Tes Email",
+      "FEEDBACK": "Umpan Balik",
+      "INVITE": "Undang",
+      "LINK_TOKEN": "Notifikasi LINK"
+    },
+    "eventDataLabel": {
+      "_requestID": "ID Permintaan",
+      "_sender": "Pengirim",
+      "account": "Akun",
+      "active": "Aktif",
+      "addr": "Alamat",
+      "amount": "Jumlah",
+      "amounts": "Jumlah-Jumlah",
+      "approved": "Disetujui",
+      "args": "Argumen",
+      "callbackGasLimit": "Batas Gas Panggilan Balik",
+      "childContract": "Kontrak Anak",
+      "childTokenId": "ID Token Anak",
+      "childTokenIds": "ID Token Anak-Anak",
+      "claimId": "ID Klaim",
+      "collection": "Koleksi",
+      "contract": "Kontrak",
+      "data": "Data",
+      "endTimestamp": "Waktu Berakhir",
+      "eventType": "Tipe Acara",
+      "externalId": "ID Eksternal",
+      "from": "Dari",
+      "fromAddress": "Alamat Dari",
+      "fromTokenId": "ID Token Dari",
+      "id": "ID",
+      "ids": "ID-ID",
+      "item": "Barang",
+      "items": "Barang-Barang",
+      "keyHash": "Hash Kunci",
+      "level": "Level",
+      "matron": "Induk",
+      "maxCount": "Jumlah Maks",
+      "minimumRequestConfirmations": "Konfirmasi Permintaan Minimum",
+      "multiplier": "Pengganda",
+      "newAdminRole": "Peran Admin Baru",
+      "newOwner": "Pemilik Baru",
+      "numWords": "Jumlah Kata",
+      "numbers": "Angka-Angka",
+      "operator": "Operator",
+      "owner": "Pemilik",
+      "preSeed": "Pra Benih",
+      "previousAdminRole": "Peran Admin Sebelumnya",
+      "previousOwner": "Pemilik Sebelumnya",
+      "price": "Harga",
+      "randomness": "Acak",
+      "refProgram": "Program Rujukan",
+      "referrer": "Pengarah",
+      "requestId": "ID Permintaan",
+      "role": "Peran",
+      "round": "Putaran",
+      "royaltyNumerator": "Pembilang Royalti",
+      "royaltyReceiver": "Penerima Royalti",
+      "rule": "Aturan",
+      "ruleId": "ID Aturan",
+      "seed": "Benih",
+      "sender": "Pengirim",
+      "shares": "Saham",
+      "sire": "Pejantan",
+      "spender": "Pengeluar",
+      "stakingId": "ID Staking",
+      "startTimestamp": "Tanggal Mulai",
+      "subId": "ID Sub",
+      "templateId": "ID Templat",
+      "ticketId": "ID Tiket",
+      "to": "Ke",
+      "toAddress": "Alamat Ke",
+      "toTokenId": "ID Token Ke",
+      "token": "Token",
+      "tokenId": "ID Token",
+      "value": "Nilai",
+      "values": "Nilai-Nilai",
+      "winValues": "Nilai Menang",
+      "withdrawTimestamp": "Tanggal Penarikan"
+    },
+    "eventType": {
+      "Approval": "Persetujuan",
+      "ApprovalForAll": "PersetujuanUntukSemua",
+      "BatchMetadataUpdate": "PembaruanMetadataBatch",
+      "BatchReceivedChild": "BatchReceivedChild",
+      "BatchTransferChild": "BatchTransferChild",
+      "Blacklisted": "Diblacklist",
+      "Breed": "Berkembang Biak",
+      "Claim": "Klaim",
+      "CollectionDeployed": "KoleksiDikerahkan",
+      "ConsecutiveTransfer": "TransferBerturut-turut",
+      "Craft": "Kerajinan",
+      "DefaultAdminDelayChangeCanceled": "PembatalanPerubahanAdminDefault",
+      "DefaultAdminDelayChangeScheduled": "PenjadwalanPerubahanAdminDefault",
+      "DefaultAdminTransferCanceled": "PembatalanTransferAdminDefault",
+      "DefaultAdminTransferScheduled": "PenjadwalanTransferAdminDefault",
+      "DefaultRoyaltyInfo": "InfoRoyaltiDefault",
+      "DepositPenalty": "DendaPenyetoran",
+      "DepositStart": "MulaiPenyetoran",
+      "DepositWithdraw": "PenarikanPenyetoran",
+      "DepositFinish": "SelesaiPenyetoran",
+      "DepositReturn": "PengembalianPenyetoran",
+      "Dismantle": "Pembongkaran",
+      "ERC1155TokenDeployed": "ERC1155TokenDikerahkan",
+      "ERC20PaymentReleased": "ERC20PaymentReleased",
+      "ERC20Released": "ERC20Released",
+      "ERC20TokenDeployed": "ERC20TokenDikerahkan",
+      "ERC721TokenDeployed": "ERC721TokenDikerahkan",
+      "ERC998TokenDeployed": "ERC998TokenDikerahkan",
+      "EcommercePurchase": "PembelianEcommerce",
+      "EtherReceived": "EtherDiterima",
+      "EtherReleased": "EtherDilepaskan",
+      "Lend": "Meminjam",
+      "LevelUp": "NaikLevel",
+      "LotteryDeployed": "LotteryDikerahkan",
+      "Merge": "Penggabungan",
+      "MetadataUpdate": "PembaruanMetadata",
+      "MintRandom": "MintAcak",
+      "MysteryBoxDeployed": "MysteryBoxDikerahkan",
+      "OwnershipTransferStarted": "MulaiTransferKepemilikan",
+      "OwnershipTransferred": "KepemilikanDitransfer",
+      "Paused": "Dijeda",
+      "PayeeAdded": "PayeeDitambahkan",
+      "PaymentEthReceived": "PembayaranEthDiterima",
+      "PaymentEthSent": "PembayaranEthDikirim",
+      "PaymentReceived": "PembayaranDiterima",
+      "PaymentReleased": "PembayaranDilepaskan",
+      "PaymentSplitterDeployed": "PaymentSplitterDikerahkan",
+      "PonziDeployed": "PonziDikerahkan",
+      "Prize": "Hadiah",
+      "Purchase": "Pembelian",
+      "PurchaseLottery": "PembelianLotere",
+      "PurchaseMysteryBox": "PembelianMysteryBox",
+      "PurchaseRaffle": "PembelianRaffle",
+      "RaffleDeployed": "RaffleDikerahkan",
+      "RandomWordsRequested": "KataAcakDiminta",
+      "RandomnessRequest": "PermintaanAcak",
+      "RandomnessRequestId": "IDPermintaanAcak",
+      "ReceivedChild": "ReceivedChild",
+      "RedeemClaim": "KlaimPenebusan",
+      "ReferralEvent": "AcaraRujukan",
+      "ReferralProgram": "ProgramRujukan",
+      "ReferralReward": "HadiahRujukan",
+      "ReferralWithdraw": "PenarikanRujukan",
+      "Released": "Dilepaskan",
+      "ReturnDeposit": "PengembalianPenyetoran",
+      "RoleAdminChanged": "PerubahanAdminPeran",
+      "RoleGranted": "PeranDiberikan",
+      "RoleRevoked": "PeranDicabut",
+      "RoundEnded": "PutaranBerakhir",
+      "RoundFinalized": "PutaranFinalisasi",
+      "RoundStarted": "PutaranDimulai",
+      "RuleCreated": "AturanDibuat",
+      "RuleCreatedP": "AturanDibuatP",
+      "RuleUpdated": "AturanDiperbarui",
+      "SetMaxChild": "SetMaxChild",
+      "StakingDeployed": "StakingDikerahkan",
+      "StakingFinish": "SelesaiStaking",
+      "StakingStart": "MulaiStaking",
+      "StakingWithdraw": "PenarikanStaking",
+      "SubscriptionConsumerAdded": "SubscriptionConsumerDitambahkan",
+      "SubscriptionCreated": "SubscriptionDibuat",
+      "TokenRoyaltyInfo": "InfoRoyaltiToken",
+      "Transfer": "Transfer",
+      "TransferBatch": "TransferBatch",
+      "TransferChild": "TransferChild",
+      "TransferSingle": "TransferSingle",
+      "URI": "URI",
+      "UnBlacklisted": "UnBlacklisted",
+      "UnWhitelisted": "UnWhitelisted",
+      "UnWhitelistedChild": "UnWhitelistedChild",
+      "UnpackMysteryBox": "UnpackMysteryBox",
+      "UnpackWrapper": "UnpackWrapper",
+      "Unpaused": "Dilanjutkan",
+      "UpdateUser": "PerbaruiPengguna",
+      "Upgrade": "Peningkatan",
+      "VestingDeployed": "VestingDikerahkan",
+      "VrfSubscriptionSet": "VrfSubscriptionSet",
+      "WaitListDeployed": "WaitListDikerahkan",
+      "WaitListRewardClaimed": "KlaimHadiahWaitList",
+      "WaitListRewardSet": "SetHadiahWaitList",
+      "Whitelisted": "Whitelisted",
+      "WhitelistedChild": "WhitelistedChild",
+      "WithdrawBalance": "PenarikanSaldo"
+    },
+    "gender": {
+      "FEMALE": "Perempuan",
+      "MALE": "Laki-laki"
+    },
+    "geneName": {
+      "CHARISMA": "Karisma",
+      "CONSTITUTION": "Konstitusi",
+      "DEXTERITY": "Ketangkasan",
+      "INTELLIGENCE": "Kecerdasan",
+      "STRENGTH": "Kekuatan",
+      "WISDOM": "Kebijaksanaan"
+    },
+    "gradeStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "gradeStrategy": {
+      "EXPONENTIAL": "Eksponensial",
+      "FLAT": "Datar",
+      "LINEAR": "Linier"
+    },
+    "language": {
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arab",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Inggris",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Indonesia",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Rusia",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Ukraina"
+    },
+    "listenerType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERYBOX": "MYSTERYBOX",
+      "NATIVE": "Asli",
+      "PONZI": "PONZI",
+      "STAKING": "STAKING",
+      "VESTING": "VESTING"
+    },
+    "merchantStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif",
+      "PENDING": "Tertunda"
+    },
+    "mergeStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "mysteryBoxStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "orderStatus": {
+      "CANCELED": "Dibatalkan",
+      "CLOSED": "Ditutup",
+      "DELIVERED": "Dikirim",
+      "NEW": "Baru",
+      "NOW_IN_DELIVERY": "Sedang Dikirim",
+      "SCHEDULED": "Dijadwalkan"
+    },
+    "pageStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "parameterType": {
+      "DATE": "Tanggal",
+      "ENUM": "Enum",
+      "NUMBER": "Nomor",
+      "STRING": "String"
+    },
+    "ponziDepositStatus": {
+      "ACTIVE": "Aktif",
+      "CANCELED": "Dibatalkan",
+      "COMPLETE": "Selesai"
+    },
+    "ponziRuleStatus": {
+      "ACTIVE": "AKTIF",
+      "NEW": "BARU"
+    },
+    "productStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "rentStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif",
+      "NEW": "Baru"
+    },
+    "role": {
+      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
+      "METADATA_ROLE": "METADATA_ROLE",
+      "MINTER_ROLE": "MINTER_ROLE",
+      "PAUSER_ROLE": "PAUSER_ROLE",
+      "PREDICATE_ROLE": "PREDICATE_ROLE"
+    },
+    "stakingDepositStatus": {
+      "ACTIVE": "Aktif",
+      "CANCELED": "Dibatalkan",
+      "COMPLETE": "Selesai"
+    },
+    "stakingRuleStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif",
+      "NEW": "Baru"
+    },
+    "templateStatus": {
+      "ACTIVE": "Aktif",
+      "HIDDEN": "Tersembunyi",
+      "INACTIVE": "Tidak Aktif"
+    },
+    "tokenStatus": {
+      "ACTIVE": "Aktif",
+      "BURNED": "Terbakar",
+      "INACTIVE": "Tidak Aktif",
+      "MINTED": "Dicetak",
+      "NEW": "Baru",
+      "PENDING": "Tertunda"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERY": "Misteri",
+      "NATIVE": "Asli",
+      "NONE": "Tidak Ada"
+    },
+    "traitName": {
+      "CLOTHES": "Pakaian",
+      "EYES": "Mata",
+      "MOUTH": "Mulut"
+    },
+    "userRoles": {
+      "ADMIN": "Admin",
+      "CUSTOMER": "Pelanggan",
+      "MANAGER": "Manajer",
+      "OWNER": "Pemilik",
+      "SUPER": "Super Admin"
+    },
+    "userStatus": {
+      "ACTIVE": "Aktif",
+      "INACTIVE": "Tidak Aktif"
+    }
+  },
+  "form": {
+    "adornment": {
+      "days": "hari",
+      "percent": "%"
+    },
+    "buttons": {
+      "accept": "Terima",
+      "activate": "Aktifkan",
+      "add": "Tambah",
+      "addConsumer": "Tambah VRF Consumer",
+      "addListener": "Tambah ETH Listener",
+      "allowance": "Allowance",
+      "approve": "Setujui",
+      "archive": "Arsip",
+      "baseTokenURI": "Base Token URI",
+      "blacklist": "Blacklist",
+      "cancel": "Batalkan",
+      "claim": "Klaim",
+      "checkBalance": "Periksa Saldo",
+      "collectionUpload": "Unggah koleksi",
+      "create": "Buat",
+      "deactivate": "Menonaktifkan",
+      "delete": "Hapus",
+      "deploy": "Deploy",
+      "disconnect": "Putuskan",
+      "edit": "Edit",
+      "empty": "\uFEFF",
+      "export": "Ekspor",
+      "finishRound": "Selesaikan ronde",
+      "forgot": "Lupa kata sandi?",
+      "fund": "Dana",
+      "fundEth": "Dana ETH",
+      "grantRole": "Berikan Peran",
+      "hideFilters": "Sembunyikan filter",
+      "invite": "Undang",
+      "load": "Muat",
+      "loaded": "Selesai",
+      "login": "Masuk",
+      "logout": "Keluar",
+      "mainPage": "Halaman Utama",
+      "maxStakes": "Jumlah maksimal stakes",
+      "mint": "Cetak",
+      "mintBox": "Cetak Mystery Box",
+      "mintToken": "Cetak Token",
+      "ok": "Ok",
+      "pause": "Jeda",
+      "paymentSplitterBalance": "Lepaskan Saldo",
+      "ponziBalance": "Saldo Ponzi",
+      "reject": "Tolak",
+      "removeListener": "Hapus ETH Listener",
+      "renounceRole": "Lepaskan Peran",
+      "reset": "Atur Ulang",
+      "revokeRole": "Cabut Peran",
+      "royalty": "Royalti",
+      "save": "Simpan",
+      "schedule": "Jadwalkan",
+      "search": "Cari",
+      "setAmount": "Tetapkan jumlah",
+      "showFilters": "Tampilkan filter",
+      "signup": "Daftar",
+      "stakingInfo": "Info Staking",
+      "startRound": "Mulai ronde",
+      "submit": "Kirim",
+      "topUp": "Isi ulang",
+      "transfer": "Transfer",
+      "transferOwnership": "Transfer Kepemilikan",
+      "unblacklist": "Hapus blacklist",
+      "unpause": "Lanjutkan",
+      "unwhitelist": "Hapus whitelist",
+      "upload": "Unggah",
+      "whitelist": "Whitelist",
+      "withdraw": "Tarik",
+      "withdrawPenalty": "Tarik Denda"
+    },
+    "hints": {
+      "emailWarning": "Peringatan! Pengguna ini tidak akan dapat menggunakan situs ini sampai dia mengonfirmasi alamat email barunya.",
+      "markdown": "Bidang ini mendukung <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
+      "maxValue": "Maks {label}: {value}",
+      "prompt": "Anda memiliki informasi yang belum disimpan, apakah Anda yakin ingin meninggalkan halaman ini?"
+    },
+    "labels": {
+      "DUMMY": "Dummy",
+      "EXCHANGE": "PERTUKARAN",
+      "LEVEL": "Level",
+      "RARITY": "Keunikan",
+      "SIGNATURE_TTL": "TTL Tanda Tangan",
+      "account": "Akun",
+      "achievementItem": "Item Prestasi",
+      "achievementLevel": "Level Prestasi",
+      "achievementLevelItem": "Hadiah Level Prestasi",
+      "achievementRuleId": "Prestasi",
+      "achievementRuleIds": "Prestasi",
+      "achievementStatus": "Status prestasi",
+      "achievementType": "Tipe prestasi",
+      "active": "Aktif",
+      "address": "Alamat",
+      "addressId": "Alamat",
+      "addressLine1": "Alamat (baris 1)",
+      "addressLine2": "Alamat (baris 2)",
+      "addresses": "Alamat",
+      "advance": "Pembayaran hadiah lanjutan",
+      "allDeposits": "Semua deposit",
+      "allStakes": "Semua Stakes",
+      "allUsers": "Semua Pengguna",
+      "amount": "Jumlah",
+      "attribute": "Atribut",
+      "baseTokenURI": "Base token URI",
+      "batchSize": "Ukuran koleksi",
+      "beneficiary": "Penerima manfaat",
+      "breeder": "Peternak",
+      "cap": "Cap",
+      "categoryIds": "Kategori",
+      "chainId": "Rantai",
+      "child": "Anak",
+      "childId": "Anak",
+      "childIds": "Anak",
+      "city": "Kota",
+      "claimStatus": "Status",
+      "cliffInMonth": "Tebing dalam bulan",
+      "comment": "Komentar",
+      "commission": "Komisi",
+      "confirm": "Konfirmasi",
+      "content": "Konten",
+      "contract": "Kontrak",
+      "contractFeatures": "Fitur",
+      "contractId": "Kontrak",
+      "contractIds": "Kontrak",
+      "contractStatus": "Status",
+      "contractTemplate": "Template",
+      "count": "Jumlah maksimal perkawinan",
+      "country": "Negara",
+      "craftStatus": "Status",
+      "createdAt": "Dibuat",
+      "dateRangeEnd": "Ke",
+      "dateRangeStart": "Dari",
+      "dateTime": "Tanggal waktu",
+      "decimals": "Desimal",
+      "deposit": "Deposit",
+      "description": "Deskripsi",
+      "dismantleStatus": "Status",
+      "dismantleStrategy": "Strategi",
+      "displayName": "Nama tampilan",
+      "duration": "Durasi",
+      "durationAmount": "Durasi",
+      "durationUnit": "Satuan durasi",
+      "email": "Email",
+      "emptyReward": "Hadiah kosong",
+      "endTimestamp": "Tanggal berakhir",
+      "eventType": "Jenis acara",
+      "facebookUrl": "Facebook",
+      "files": "Berkas",
+      "from": "Dari",
+      "fromBlock": "Mendengarkan log dari blok №",
+      "gender": "Jenis kelamin",
+      "gradeStatus": "Status",
+      "gradeStrategy": "Strategi nilai",
+      "growthRate": "Tingkat pertumbuhan",
+      "id": "ID",
+      "imageUrl": "Avatar",
+      "instagramUrl": "Instagram",
+      "isDefault": "Default",
+      "isPrivate": "Pribadi",
+      "item": "Barang",
+      "items": "Barang",
+      "language": "Bahasa",
+      "level": "Level",
+      "listId": "ID daftar",
+      "listIds": "ID daftar",
+      "listenerType": "Jenis pendengar",
+      "lottery": "Lotere",
+      "matron": "Induk betina",
+      "maxCycles": "Jumlah siklus maksimal (0 - tanpa batas)",
+      "maxStake": "Taruhan Maks",
+      "maxStakes": "Taruhan Maks",
+      "maxTicket": "Tiket maksimal",
+      "maxTime": "Pendinginan maksimal",
+      "merchantId": "Pedagang",
+      "merchantStatus": "Status",
+      "mergeStatus": "Status",
+      "metadata": "Atribut",
+      "monthlyRelease": "Rilis bulanan",
+      "mysteryBoxStatus": "Status",
+      "mysteryId": "Kotak misteri",
+      "name": "Nama",
+      "number": "Nomor",
+      "numbers": "Nomor",
+      "orderItems": "Barang",
+      "orderStatus": "Status",
+      "orderType": "Tipe",
+      "owner": "Pemilik",
+      "pageStatus": "Status",
+      "parameterMaxValue": "Nilai Maks",
+      "parameterMinValue": "Nilai Min",
+      "parameterName": "Nama",
+      "parameterType": "Tipe",
+      "parameterValue": "Nilai",
+      "parameterWithLabel": "Parameter{br}\"{label}\"",
+      "parameters": "Parameter",
+      "parent": "Induk",
+      "parentCategoryId": "Akar",
+      "parentId": "Induk",
+      "parentIds": "Induk",
+      "parents": "Induk",
+      "password": "Kata sandi",
+      "payee": "Penerima pembayaran",
+      "payees": "Penerima pembayaran",
+      "penalty": "Denda",
+      "photos": "Foto",
+      "ponziDepositStatus": "Status",
+      "ponziRule": "Aturan Ponzi",
+      "ponziRuleStatus": "Status",
+      "price": "Harga",
+      "productId": "Produk",
+      "productItemId": "Barang",
+      "productStatus": "Status",
+      "programLevel": "Level program",
+      "programLevels": "Level program",
+      "random": "Acak",
+      "rarityMultiplier": "Pengganda keunikan X.YY%",
+      "recentDeposits": "Deposit terbaru",
+      "recipient": "Penerima",
+      "recurrent": "Berulang?",
+      "referralProgramStatus": "Status program",
+      "referrer": "Pengarah",
+      "referral": "Rujukan",
+      "rentStatus": "Status",
+      "reward": "Hadiah",
+      "role": "Peran",
+      "roundId": "Ronde",
+      "roundIds": "Ronde",
+      "royalty": "Royalti",
+      "ruleCounter": "Penghitung Aturan",
+      "schedule": "Jadwal Ronde",
+      "share": "Bagi",
+      "shares": "Saham",
+      "sire": "Induk jantan",
+      "slug": "Slug",
+      "stakingDepositStatus": "Status",
+      "stakingRule": "Aturan staking",
+      "stakingRuleStatus": "Status",
+      "startTimestamp": "Tanggal mulai",
+      "state": "Negara",
+      "subId": "Id Langganan VRF",
+      "subscriptionId": "Id Langganan",
+      "symbol": "Simbol",
+      "template": "Template",
+      "templateId": "Template",
+      "templateIds": "Template",
+      "templateStatus": "Status",
+      "ticket": "Tiket",
+      "ticketNumber": "Nomor Tiket",
+      "time": "Waktu pendinginan",
+      "timeLagBeforeRelease": "Jeda waktu sebelum rilis",
+      "title": "Judul",
+      "token": "Token",
+      "tokenId": "Token",
+      "tokenIds": "Token",
+      "tokenStatus": "Status",
+      "tokenType": "Tipe",
+      "traits": "Ciri",
+      "twitterUrl": "Twitter",
+      "txHash": "txHash",
+      "type": "Tipe",
+      "updatedAt": "Diperbarui",
+      "url": "Url",
+      "user": "Pengguna",
+      "userId": "Pengguna",
+      "userIds": "Pengguna",
+      "userRoles": "Peran",
+      "userStakes": "Taruhan Pengguna",
+      "userStatus": "Status",
+      "vrfConsumer": "Status Konsumen Chain-Link",
+      "vrfSubscription": "ID Langganan Chain-Link",
+      "wallet": "Dompet",
+      "winNumber": "Nomor menang",
+      "winNumbers": "Nomor menang",
+      "year": "Tahun",
+      "youtubeUrl": "Youtube",
+      "zip": "Kode ZIP"
+    },
+    "placeholders": {
+      "DUMMY": "Palsu",
+      "SIGNATURE_TTL": "0",
+      "account": "0x...",
+      "achievementLevel": "1",
+      "achievementRuleId": "Prestasi",
+      "achievementRuleIds": "Prestasi",
+      "address": "0x...",
+      "addressId": "Alamat",
+      "addressLine1": "Melburb st. 24",
+      "addressLine2": "Info tambahan tentang alamat",
+      "amount": "10",
+      "attribute": "LEVEL",
+      "baseTokenURI": "https://gemunion.io/",
+      "batchSize": "1000",
+      "beneficiary": "0x...",
+      "cap": "10",
+      "categoryIds": "Akar",
+      "chainId": "ChainId",
+      "childId": "Kontrak",
+      "childIds": "Kontrak",
+      "city": "Hamburg",
+      "cliffInMonth": "12",
+      "comment": "Penipuan",
+      "commission": "30",
+      "confirm": "******",
+      "contract": "Kontrak",
+      "contractId": "Kontrak",
+      "contractIds": "Kontrak",
+      "count": "0",
+      "country": "Jerman",
+      "createdAt": "sekarang",
+      "decimals": "18",
+      "definition": "10",
+      "description": "Deskripsi",
+      "displayName": "Gordon Freeman",
+      "duration": "30",
+      "durationAmount": "30",
+      "durationUnit": "Hari",
+      "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
+      "fromBlock": "1",
+      "growthRate": "2",
+      "instagramUrl": "https://instagram.com/",
+      "item": "Botol air",
+      "level": "1",
+      "listId": "Daftar default",
+      "listIds": "Daftar default",
+      "maxCycles": "0",
+      "maxStake": "10",
+      "maxStakes": "0",
+      "maxTicket": "0",
+      "maxTime": "0",
+      "merchantId": "Gordon Freeman",
+      "metadata": "{}",
+      "monthlyRelease": "10%",
+      "mysteryId": "Kotak Misteri",
+      "name": "Debu merah muda",
+      "number": "100500",
+      "owner": "0x...",
+      "parameterMaxValue": "10000",
+      "parameterMinValue": "0",
+      "parameterName": "Warna",
+      "parameterValue": "Apapun",
+      "parameters": "Parameter",
+      "parentCategoryId": "Akar",
+      "parentId": "Kontrak",
+      "parentIds": "Kontrak",
+      "password": "******",
+      "payee": "0x...",
+      "payees": "0x...",
+      "penalty": "1",
+      "price": "1000",
+      "productId": "Botol air",
+      "productItemId": "Barang",
+      "productStatus": "Status",
+      "query": "Cari...",
+      "rarity": "Legendaris",
+      "referral": "Referal",
+      "rarityMultiplier": "0",
+      "recipient": "Penerima",
+      "roundIds": "Ronde",
+      "royalty": "1",
+      "search": "Cari...",
+      "share": "0",
+      "shares": "0",
+      "slug": "syarat-layanan",
+      "stakingRule": "Aturan staking",
+      "stakingRuleStatus": "Status",
+      "state": "Hamburg",
+      "subId": "0",
+      "subscriptionId": "2",
+      "symbol": "XXX",
+      "templateId": "Template",
+      "templateIds": "Template",
+      "text": "qwerty",
+      "time": "0",
+      "timeLagBeforeRelease": "100",
+      "title": "Judul",
+      "token": "Botol air",
+      "tokenId": "Token",
+      "tokenIds": "Token",
+      "tokenStatus": "Status",
+      "twitterUrl": "https://twitter.com/",
+      "url": "https://youtube.com",
+      "userId": "Gordon Freeman",
+      "userIds": "Gordon Freeman",
+      "wallet": "Dompet",
+      "youtubeUrl": "https://youtube.com/",
+      "zip": "80576"
+    },
+    "tips": {
+      "add": "Tambah",
+      "cancel": "Batal",
+      "create": "Buat",
+      "delete": "Hapus",
+      "edit": "Edit",
+      "fund": "Dana",
+      "releasable": "Periksa jumlah yang dapat dikeluarkan",
+      "release": "Lepaskan",
+      "view": "Lihat"
+    },
+    "validations": {
+      "badInput": "{label} tidak valid",
+      "customError": "???",
+      "duplicate": "{label} sudah digunakan",
+      "invalidJSON": "JSON tidak valid",
+      "patternMismatch": "{label} tidak sesuai dengan pola yang diharapkan",
+      "rangeOverflow": "{label} terlalu tinggi",
+      "rangeUnderflow": "{label} terlalu rendah",
+      "stepMismatch": "{label} tidak valid",
+      "refProgramTotal": "Total tidak valid. Harus merupakan jumlah dari semua level",
+      "tooLong": "{label} terlalu panjang",
+      "tooShort": "{label} terlalu pendek",
+      "totalMismatch": "Total tidak valid. Harus merupakan jumlah dari semua level",
+      "typeMismatch": "{label} tidak valid",
+      "valid": "??",
+      "valueMissing": "{label} diperlukan",
+      "weak": "{label} terlalu lemah",
+      "whitelistValidation": "Properti tidak seharusnya ada"
+    }
+  },
+  "messages": {
+    "allowanceUSDTWarning": "USDT: Anda harus mencabut izin yang ada terlebih dahulu (setel ke 0)",
+    "empty-list": "Tidak ada yang ditampilkan",
+    "loading": "Memuat...",
+    "noAddress": "Tidak ada alamat",
+    "page-not-found": "Halaman Tidak Ditemukan"
+  },
+  "pages": {
+    "achievements": {
+      "levels": {
+        "title": "Tingkatan prestasi"
+      },
+      "report": {
+        "title": "Laporan"
+      },
+      "rules": {
+        "title": "Aturan prestasi"
+      },
+      "title": "Prestasi"
+    },
+    "blockchain": {
+      "title": "Pengaturan Blockchain"
+    },
+    "breed": {
+      "breeds": {
+        "end": "Akhiri Ronde",
+        "start": "Tetapkan batas",
+        "title": "Ras",
+        "wait": "Menunggu ronde berakhir"
+      },
+      "history": {
+        "title": "Riwayat ras"
+      },
+      "limit": "Tetapkan batas",
+      "title": "Ras"
+    },
+    "category": {
+      "title": "Kategori"
+    },
+    "chain-link": {
+      "balance": "Saldo: {balance}",
+      "consumers": "Daftar konsumen",
+      "create": "Buat Langganan",
+      "fund": "Dana",
+      "id": "Langganan # {value}",
+      "manage": "Langganan",
+      "noSubscription": "Tidak ada langganan",
+      "select": "Pilih ID langganan",
+      "set": "Tetapkan ID langganan Vrf",
+      "subscription": "Langganan",
+      "title": "Langganan Chain-Link",
+      "wallet": "Saldo dompet: {value}"
+    },
+    "claims": {
+      "defaultItemTitle": "{akun}",
+      "template": {
+        "title": "Template Klaim"
+      },
+      "token": {
+        "title": "Token Klaim"
+      },
+      "title": "Klaim"
+    },
+    "coin-gecko": {
+      "ohlc": "OHLC",
+      "rates": "Tarif",
+      "title": "CoinGecko"
+    },
+    "coin-market-cap": {
+      "rates": "Tarif",
+      "title": "CoinMarketCap"
+    },
+    "collection": {
+      "contract": {
+        "title": "Kontrak Koleksi"
+      },
+      "contracts": "Kontrak Koleksi",
+      "template": {
+        "title": "Template Koleksi"
+      },
+      "templates": "Template Koleksi",
+      "title": "Koleksi",
+      "token": {
+        "title": "Token Koleksi"
+      },
+      "tokens": "Token Koleksi"
+    },
+    "dashboard": {
+      "achievements": {
+        "levels": "Tingkatan",
+        "report": "Laporan",
+        "rules": "Aturan",
+        "title": "Prestasi"
+      },
+      "ecommerce": {
+        "store": {
+          "categories": "Kategori",
+          "kanban": "Pesanan",
+          "orders": "Arsip Pesanan",
+          "parameters": "Parameter",
+          "photos": "Foto",
+          "products": "Produk",
+          "promos": "Promo",
+          "statistics": "Statistik",
+          "title": "E-commerce"
+        }
+      },
+      "exchange": {
+        "marketplace": {
+          "chart": "Grafik",
+          "grade": "Grade",
+          "rarity": "Keunikan",
+          "report": "Laporan",
+          "title": "Pasar"
+        }
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "NATIVE"
+      },
+      "infrastructure": {
+        "admin": {
+          "merchant": "Pedagang",
+          "title": "Admin"
+        }
+      },
+      "integrations": {
+        "chain-link": "Chain-Link",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap"
+      },
+      "mechanics": {
+        "breed": "Ras",
+        "claim": "Klaim",
+        "collection": "Koleksi",
+        "dispenser": "Dispenser",
+        "grade": "Grade",
+        "lottery": "Lotere",
+        "mystery": "Misteri",
+        "payment-splitter": "Pembagi Pembayaran",
+        "ponzi": "Ponzi",
+        "promo": "Promo",
+        "raffle": "Undian",
+        "prediction": "Prediksi",
+        "recipes": "Resep",
+        "referral": "Referal",
+        "rent": "Sewa",
+        "staking": "Staking",
+        "title": "Mekanik",
+        "vesting": "Vesting",
+        "wait-list": "Daftar Tunggu"
+      },
+      "title": "Dasbor"
+    },
+    "dispenser": {
+      "description": "Mekanik ini memungkinkan untuk melakukan transaksi massal token ke daftar alamat",
+      "title": "Dispenser"
+    },
+    "dragons": {
+      "description": "Di sini ada naga",
+      "title": "Belum diimplementasikan :)"
+    },
+    "ecommerce": {
+      "title": "E-commerce"
+    },
+    "emails": {
+      "title": "Email"
+    },
+    "erc1155": {
+      "contracts": {
+        "title": "Kontrak ERC1155"
+      },
+      "templates": {
+        "title": "Template ERC1155"
+      },
+      "title": "ERC1155"
+    },
+    "erc20": {
+      "contracts": {
+        "title": "Kontrak ERC20"
+      },
+      "title": "ERC20"
+    },
+    "erc721": {
+      "contracts": {
+        "royalty": "Royalti",
+        "title": "Kontrak ERC721"
+      },
+      "templates": {
+        "title": "Template ERC721"
+      },
+      "title": "ERC721",
+      "tokens": {
+        "title": "Token ERC721"
+      }
+    },
+    "erc998": {
+      "composition": {
+        "title": "Komposisi ERC998"
+      },
+      "contracts": {
+        "royalty": "Royalti",
+        "title": "Kontrak ERC998"
+      },
+      "templates": {
+        "title": "Template ERC998"
+      },
+      "title": "ERC998",
+      "tokens": {
+        "title": "Token ERC998"
+      }
+    },
+    "grade": {
+      "title": "Aturan Grade"
+    },
+    "guest": {
+      "confirmation": "Silakan periksa kotak masuk Anda untuk memverifikasi email Anda.",
+      "forgotPassword": "Lupa kata sandi",
+      "login": "Masuk",
+      "particleWallet": "Dompet Partikel",
+      "signInWith": {
+        "facebook": "Masuk dengan Facebook",
+        "google": "Masuk dengan Google",
+        "metamask": "Masuk dengan Metamask",
+        "particle": "Masuk dengan Partikel"
+      }
+    },
+    "kanban": {
+      "title": "Pesanan"
+    },
+    "lottery": {
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "rounds": {
+        "end": "Akhiri Ronde",
+        "start": "Mulai Ronde",
+        "title": "Ronde",
+        "wait": "Menunggu ronde berakhir"
+      },
+      "tickets": {
+        "title": "Tiket"
+      },
+      "title": "Lotere",
+      "tokens": {
+        "title": "Token"
+      }
+    },
+    "marketplace": {
+      "chart": {
+        "title": "Grafik"
+      },
+      "grade": {
+        "amount": "Jumlah",
+        "attribute": "Grade",
+        "title": "Grade"
+      },
+      "rarity": {
+        "amount": "Jumlah",
+        "attribute": "Keunikan",
+        "title": "Keunikan"
+      },
+      "report": {
+        "title": "Laporan"
+      },
+      "title": "Pasar"
+    },
+    "merchant": {
+      "invitations": {
+        "empty": "Anda belum memiliki undangan"
+      },
+      "managers": {
+        "empty": "Anda belum memiliki manajer"
+      },
+      "tabs": {
+        "general": "Umum",
+        "invitations": "Undangan",
+        "managers": "Manajer"
+      },
+      "title": "Pedagang"
+    },
+    "mystery": {
+      "boxContent": {
+        "title": "Isi Kotak Misteri"
+      },
+      "boxes": {
+        "title": "Kotak Misteri"
+      },
+      "contracts": {
+        "title": "Kontrak Misteri"
+      },
+      "title": "Misteri",
+      "tokens": {
+        "title": "Token Misteri"
+      }
+    },
+    "native": {
+      "contracts": {
+        "title": "Token Asli"
+      },
+      "title": "Asli"
+    },
+    "orders": {
+      "title": "Arsip Pesanan"
+    },
+    "pages": {
+      "title": "Halaman"
+    },
+    "parameters": {
+      "title": "Parameter"
+    },
+    "payees": {
+      "attach": "Lampirkan",
+      "balances": {
+        "title": "Saldo Sistem"
+      },
+      "detach": "Lepaskan",
+      "title": "Penerima Pembayaran Sistem",
+      "withdraw": "Tarik"
+    },
+    "payment-splitter": {
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "title": "Pembagi Pembayaran"
+    },
+    "photos": {
+      "title": "Foto"
+    },
+    "ponzi": {
+      "chart": {
+        "title": "Grafik"
+      },
+      "contracts": {
+        "title": "Kontrak Ponzi"
+      },
+      "report": {
+        "title": "Laporan"
+      },
+      "rules": {
+        "activate": "Aktifkan aturan",
+        "deactivate": "Nonaktifkan aturan",
+        "finalizeByRule": "Finalisasi aturan",
+        "finalizeByToken": "Finalisasi token deposit",
+        "title": "Aturan Ponzi",
+        "upload": "Unggah aturan"
+      },
+      "title": "Ponzi"
+    },
+    "productType": {
+      "description": "Rencana Tarif",
+      "dialog": {
+        "text": "Tidak semua fitur kami tersedia untuk peluncuran. Jika Anda melihat dialog ini, mungkin saatnya untuk meningkatkan ke versi mandiri.",
+        "title": "Saatnya meningkatkan!"
+      },
+      "title": "Jenis Produk"
+    },
+    "products": {
+      "title": "Produk"
+    },
+    "profile": {
+      "addresses": {
+        "default": "default",
+        "empty": "Anda belum memiliki alamat",
+        "inactive": "tidak aktif"
+      },
+      "tabs": {
+        "addresses": "Alamat",
+        "general": "Umum",
+        "notifications": "Notifikasi",
+        "subscriptions": "Langganan",
+        "settings": "Pengaturan"
+      },
+      "settings": {
+        "wallet": {
+          "attach": "Lampirkan",
+          "connectedWallet": "Dompet Terhubung",
+          "detach": "Lepaskan",
+          "title": "Dompet Saya"
+        }
+      },
+      "title": "Profil"
+    },
+    "promo": {
+      "title": "Promo"
+    },
+    "promos": {
+      "title": "Promosi"
+    },
+    "raffle": {
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "rounds": {
+        "end": "Akhiri Ronde",
+        "start": "Mulai Ronde",
+        "title": "Ronde",
+        "wait": "Menunggu ronde berakhir"
+      },
+      "tickets": {
+        "title": "Tiket"
+      },
+      "title": "Undian",
+      "tokens": {
+        "title": "Token"
+      }
+    },
+    "prediction": {
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "questions": {
+        "title": "Pertanyaan"
+      },
+      "title": "Prediksi",
+      "answers": {
+        "title": "Jawaban"
+      }
+    },
+    "ratePlan": {
+      "alwaysIncluded": {
+        "dispenser": "Transfer token Massal",
+        "history": "Riwayat Transaksi",
+        "insights": "Wawasan Pemasaran",
+        "openSea": "Integrasi OpenSea",
+        "title": "Selalu termasuk"
+      },
+      "bronze": {
+        "claim": "Klaim",
+        "craft": "Buat",
+        "disperse": "Transaksi Massal",
+        "erc1155": "5 kontrak ERC1155",
+        "erc20": "1 kontrak ERC20",
+        "erc721": "5 kontrak ERC721",
+        "grade": "Grade",
+        "mystery": "Kotak Misteri",
+        "title": "Perunggu",
+        "vesting": "1000 kontrak vesting"
+      },
+      "contactViaTelegram": "Hubungi via Telegram",
+      "gold": {
+        "claim": "Klaim",
+        "craft": "Buat",
+        "disperse": "Transaksi Massal",
+        "erc1155": "25 kontrak ERC1155",
+        "erc20": "5 kontrak ERC20",
+        "erc721": "25 kontrak ERC721",
+        "grade": "Grade",
+        "mystery": "Kotak Misteri",
+        "title": "Emas",
+        "vesting": "5000 kontrak vesting"
+      },
+      "month": "bulan",
+      "onDemand": {
+        "raffle": "Undian",
+        "staking": "Staking",
+        "title": "Sesuai Permintaan",
+        "waitList": "Daftar Tunggu"
+      },
+      "silver": {
+        "claim": "Klaim",
+        "craft": "Buat",
+        "disperse": "Transaksi Massal",
+        "erc1155": "10 kontrak ERC1155",
+        "erc20": "1 kontrak ERC20",
+        "erc721": "10 kontrak ERC721",
+        "grade": "Grade",
+        "mystery": "Kotak Misteri",
+        "title": "Perak",
+        "vesting": "3000 kontrak vesting"
+      },
+      "title": "Rencana Tarif"
+    },
+    "recipes": {
+      "craft": {
+        "activate": "Aktifkan aturan",
+        "deactivate": "Nonaktifkan aturan",
+        "title": "Resep Kerajinan"
+      },
+      "dismantle": {
+        "activate": "Aktifkan aturan",
+        "deactivate": "Nonaktifkan aturan",
+        "title": "Resep Pembongkaran"
+      },
+      "merge": {
+        "activate": "Aktifkan aturan",
+        "deactivate": "Nonaktifkan aturan",
+        "title": "Resep Penggabungan"
+      },
+      "title": "Resep"
+    },
+    "referral": {
+      "cabinet": {
+        "title": "Lemari"
+      },
+      "chart": {
+        "title": "Grafik"
+      },
+      "tree": {
+        "title": "Pohon Rujukan"
+      },
+      "leaderboard": {
+        "title": "Papan Pemimpin"
+      },
+      "program": {
+        "total": "Total",
+        "level": "Level {level}",
+        "levels": "Tingkatan Program Rujukan",
+        "title": "Program"
+      },
+      "report": {
+        "title": "Laporan"
+      },
+      "title": "Program Rujukan"
+    },
+    "rent": {
+      "title": "Sewa"
+    },
+    "settings": {
+      "title": "Pengaturan"
+    },
+    "staking": {
+      "chart": {
+        "title": "Grafik"
+      },
+      "contracts": {
+        "title": "Kontrak Staking"
+      },
+      "report": {
+        "title": "Laporan"
+      },
+      "rules": {
+        "activate": "Aktifkan aturan",
+        "deactivate": "Nonaktifkan aturan",
+        "title": "Aturan Staking",
+        "upload": "Unggah aturan"
+      },
+      "title": "Staking"
+    },
+    "statistics": {
+      "title": "Statistik"
+    },
+    "users": {
+      "addresses": {
+        "default": "default"
+      },
+      "title": "Pengguna"
+    },
+    "vesting": {
+      "claims": {
+        "title": "Klaim Vesting"
+      },
+      "contracts": {
+        "title": "Kontrak Vesting"
+      },
+      "title": "Vesting"
+    },
+    "wait-list": {
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "item": {
+        "defaultItemTitle": "{account}",
+        "title": "Akun"
+      },
+      "list": {
+        "title": "Daftar"
+      },
+      "title": "Daftar Tunggu"
+    }
+  },
+  "snackbar": {
+    "accountNotFound": "Akun tidak ditemukan",
+    "active": "Berhasil diaktifkan",
+    "addressNotFound": "Alamat tidak ditemukan",
+    "approved": "Berhasil disetujui",
+    "blockchainError": "Kesalahan Blockchain",
+    "blockchainErrorReason": "Kesalahan Blockchain {reason}",
+    "cantDeleteNotEmptyCategory": "Anda harus menghapus semua kategori anak terlebih dahulu",
+    "cantDeleteRootCategory": "Tidak dapat menghapus kategori akar",
+    "cartNotFound": "Keranjang tidak ditemukan",
+    "categoryNotFound": "Kategori tidak ditemukan",
+    "claimNotFound": "Klaim tidak ditemukan",
+    "claimsNotUploaded": "Tidak ada klaim yang diunggah",
+    "claimsUploaded": "Berhasil mengunggah {amount} dari {total}",
+    "contractNotFound": "Kontrak tidak ditemukan",
+    "created": "Berhasil dibuat",
+    "declined": "Ditolak!",
+    "deleted": "Berhasil dihapus",
+    "deployed": "Berhasil dikerahkan",
+    "duplicateAccount": "Akun duplikat",
+    "duplicateEmail": "Pengguna dengan email ini sudah terdaftar",
+    "email": "Email berhasil dikirim.",
+    "error": "Kesalahan Tidak Diketahui",
+    "inactive": "Berhasil dinonaktifkan",
+    "insufficientPermissions": "Izin tidak cukup",
+    "internalServerError": "Kesalahan Server Internal",
+    "invite": "Berhasil diundang",
+    "listNotFound": "Daftar tunggu tidak ditemukan",
+    "loaded": "Berhasil dimuat",
+    "merchantAlreadyExist": "Pedagang sudah ada",
+    "merchantIsNotActive": "Pedagang tidak aktif",
+    "merchantNotFound": "Pedagang tidak ditemukan",
+    "orderNotFound": "Pesanan tidak ditemukan",
+    "pageNotFound": "Kesalahan API",
+    "passwordChanged": "Kata sandi berhasil diubah. Sekarang Anda dapat masuk menggunakan kata sandi baru Anda.",
+    "paymentRequired": "Pembayaran diperlukan",
+    "productNotFound": "Produk tidak ditemukan",
+    "registered": "Pendaftaran berhasil, silakan verifikasi email Anda untuk melanjutkan",
+    "rejectedByUser": "Ditolak oleh pengguna",
+    "saved": "Berhasil disimpan",
+    "signatureDoesNotMatch": "Tanda tangan tidak cocok",
+    "success": "Sukses",
+    "templateNotFound": "Template tidak ditemukan",
+    "tokenNotFound": "Produk tidak ditemukan",
+    "tooManyRequests": "Terlalu Banyak Permintaan.",
+    "transactionExecuted": "Transaksi dieksekusi: {txHash}",
+    "transactionSent": "Transaksi dikirim: {txHash}",
+    "transactionTypeExecuted": "Transaksi dieksekusi: {txType} {txHash}",
+    "unauthorized": "Login atau kata sandi salah",
+    "updated": "Berhasil diperbarui",
+    "userHasWrongRole": "Izin tidak cukup",
+    "userIsNotActive": "Pengguna tidak aktif",
+    "userNotFound": "Pengguna tidak ditemukan",
+    "walletIsNotConnected": "Dompet tidak terhubung",
+    "web3NotDetected": "Web3 tidak terdeteksi"
+  },
+  "socket": {
+    "connect_failed": "Koneksi WebSocket gagal",
+    "connected": "Koneksi WebSocket AKTIF",
+    "error": "Kesalahan Koneksi WebSocket"
+  }
+}

@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { ns, imagePath, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface {
@@ -11,8 +11,7 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const linkAddr = process.env.LINK_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
-    const linkImgUrl =
-      "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fchainlink-coin-icon.png?alt=media&token=a36a5dca-b194-4ba2-b775-8562a722b0d6";
+    const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -114,6 +113,25 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
         '0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06',
         97,
+        'LINK',
+        '${simpleFormatting}',
+        '${linkImgUrl}',
+        'ChainLink LINK',
+        'LINK',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 60218},
+        '0x326c977e6efc84e512bb9c30f76e30c160ed06fb',
+        80001,
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',

@@ -4,6 +4,13 @@ import { ns } from "@framework/constants";
 
 export class CreateCompositionAt1658980520000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.composition_status_enum AS ENUM (
+        'ACTIVE',
+        'INACTIVE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.composition`,
       columns: [
@@ -23,6 +30,11 @@ export class CreateCompositionAt1658980520000 implements MigrationInterface {
         {
           name: "amount",
           type: "int",
+        },
+        {
+          name: "composition_status",
+          type: `${ns}.composition_status_enum`,
+          default: "'ACTIVE'",
         },
         {
           name: "created_at",

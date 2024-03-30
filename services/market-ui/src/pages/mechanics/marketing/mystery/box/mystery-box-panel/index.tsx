@@ -7,6 +7,7 @@ import type { IMysteryBox } from "@framework/types";
 
 import { MysteryBoxPurchaseButton } from "../../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
+import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IMysteryBoxPanelProps {
@@ -29,6 +30,7 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
       </CardContent>
       <CardActions>
         <MysteryBoxPurchaseButton mysteryBox={box} />
+        <AllowanceButton token={box.template?.price} isSmall isExchange />
       </CardActions>
     </StyledCard>
   );

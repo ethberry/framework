@@ -5,6 +5,7 @@ import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { CompositionStatus } from "@framework/types";
 
 @Entity({ schema: ns, name: "composition" })
 export class CompositionEntity extends IdDateBaseEntity implements IComposition {
@@ -24,4 +25,11 @@ export class CompositionEntity extends IdDateBaseEntity implements IComposition 
 
   @Column({ type: "int" })
   public amount: number;
+
+  @Column({
+    type: "enum",
+    enum: CompositionStatus,
+    default: CompositionStatus.ACTIVE,
+  })
+  public compositionStatus: CompositionStatus;
 }

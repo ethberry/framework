@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CompositionEntity } from "./composition.entity";
+import { CompositionStatus } from "@framework/types";
 
 @Injectable()
 export class Erc998CompositionService {
@@ -44,8 +45,11 @@ export class Erc998CompositionService {
     if (compositionEntity) {
       if (compositionEntity.amount !== amount) {
         Object.assign(compositionEntity, { amount });
-        await compositionEntity.save();
       }
+      if (compositionEntity.compositionStatus !== CompositionStatus.ACTIVE) {
+        Object.assign(compositionEntity, { compositionStatus: CompositionStatus.ACTIVE });
+      }
+      await compositionEntity.save();
     } else {
       await this.create(dto);
     }
@@ -53,5 +57,9 @@ export class Erc998CompositionService {
 
   public async delete(where: FindOptionsWhere<CompositionEntity>): Promise<DeleteResult> {
     return this.compositionEntityRepository.delete(where);
+  }
+
+  public async deactivate(where: FindOptionsWhere<CompositionEntity>): Promise<CompositionEntity> {
+    return this.update(where, { compositionStatus: CompositionStatus.INACTIVE });
   }
 }

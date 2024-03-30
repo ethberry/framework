@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { imagePath, ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
@@ -26,7 +26,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 1 : 1010101},
         'Native token (BESU)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/besu.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',
@@ -38,7 +38,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 2 : 1010201},
         'Inactive token (BESU)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/besu.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',
@@ -50,7 +50,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 3 : 2010101},
         'Native token (BNB)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/bnb.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',
@@ -62,7 +62,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 4 : 3010101},
         'Native token (ETH)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/ethereum.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',
@@ -74,7 +74,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         ${process.env.NODE_ENV === NodeEnv.production ? 5 : 4010101},
         'Native token (MATIC)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/polygon.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',
@@ -106,7 +106,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         1010801,
         'Fake token (BESU)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        '${imagePath}/besu.png',
         null,
         0,
         '${(1000n * WeiPerEther).toString()}',

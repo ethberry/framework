@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useNavigate } from "react-router";
+import { useWeb3React } from "@web3-react/core";
 
 import type { IProductPromo } from "@framework/types";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -12,6 +13,7 @@ import { IPaginationResult } from "@gemunion/types-collection";
 import { Root, StyledImage, StyledMobileStepper } from "./styled";
 
 export const PromoCarousel: FC = () => {
+  const { chainId } = useWeb3React();
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -49,7 +51,7 @@ export const PromoCarousel: FC = () => {
 
   useEffect(() => {
     void fetchPromos();
-  }, []);
+  }, [chainId]);
 
   return (
     <ProgressOverlay isLoading={isLoading}>

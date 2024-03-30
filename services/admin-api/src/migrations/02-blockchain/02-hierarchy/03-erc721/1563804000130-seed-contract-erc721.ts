@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { imageUrl, imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
@@ -50,7 +50,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Gems (simple)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fgems.png?alt=media&token=ce8c4ae7-c3df-407d-976b-805a3bb4e819',
+        '${imagePath}/gems.png',
         'GEMS',
         'GEMS721',
         100,
@@ -104,7 +104,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Jewelry (blacklist)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fjewelry.png?alt=media&token=1b64ed02-de2b-4474-b7fc-e1d9e0352dd8',
+        '${imagePath}/jewelry.png',
         'ERC721 BLACKLIST',
         'BL721',
         100,
@@ -122,7 +122,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Armour (lvl)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Farmour.png?alt=media&token=cd830dc3-8e98-4315-8b93-7f13e8f9dcf3',
+        '${imagePath}/armour.png',
         'ARMOUR',
         'LVL721',
         100,
@@ -140,7 +140,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Weapon (random)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fweapon.png?alt=media&token=42d72749-ba72-4d0d-b412-df3d08ee7783',
+        '${imagePath}/weapon.png',
         'WEAPON',
         'RNG721',
         100,
@@ -176,7 +176,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Awards (soulbound)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fawards.png?alt=media&token=5e913abf-f903-4d7e-ad13-5a2a27356de0',
+        '${imagePath}/awards.png',
         'SOULBOUND',
         'SB721',
         100,
@@ -194,7 +194,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Transport (rentable)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Ftransport.png?alt=media&token=2270c175-37d9-40dc-a14d-bfa57c402b1e',
+        '${imagePath}/transport.png',
         'RENTABLE',
         'REN721',
         100,
@@ -212,7 +212,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Under Armour (lvl)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Ftransport.png?alt=media&token=2270c175-37d9-40dc-a14d-bfa57c402b1e',
+        '${imagePath}/transport.png',
         'UA',
         'UA721',
         100,
@@ -230,7 +230,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         56,
         'BEP',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-framework-production.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${imagePath}/binance.png',
         'BEP',
         'BEP721',
         100,
