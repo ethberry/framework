@@ -96,7 +96,7 @@
     "@gemunion/eslint-config": "4.0.6",
     "@gemunion/types-coin-market-cap": "0.1.8",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
-    "@types/copy-webpack-plugin": "8.0.1",
+    "@types/copy-webpack-plugin": "10.1.0",
     "@types/dotenv-webpack": "7.0.7",
     "@types/mini-css-extract-plugin": "2.5.1",
     "@types/node": "20.11.30",
