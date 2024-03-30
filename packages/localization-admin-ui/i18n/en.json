@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceErc20": "You have to allow ERC20 tokens before Top up",
     "allowanceClaim": "You have to allow tokens for Contract Manager contract",
+    "allowanceErc20": "You have to allow ERC20 tokens before Top up",
     "allowanceWarning": "You are going to allow all tokens of the contract",
     "craftItem": "Items to be crafted",
     "craftPrice": "Craft ingredients",
@@ -72,15 +72,15 @@
     "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
+    "checkBalance": {
+      "depAmount": "Deposit amount",
+      "stakeBalance": "Staking Balance",
+      "title": "Staking Balances",
+      "token": "Token"
+    },
     "claim": "Claim",
     "confirmation": "Please confirm",
     "create": "Create",
-    "checkBalance": {
-      "title": "Staking Balances",
-      "token": "Token",
-      "depAmount": "Deposit amount",
-      "stakeBalance": "Staking Balance"
-    },
     "currentBalance": "Balance: {value}",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -94,10 +94,10 @@
     "lotteryRoundStart": "Start Lottery Round",
     "mintBox": "Mint Mysterybox",
     "mintToken": "Mint tokens",
-    "ponziBalance": "Ponzi Balances Withdraw",
     "paymentSplitterBalances": "Release Balance",
-    "paymentSplitterWallet": "Current Wallet {wallet}",
     "paymentSplitterShares": "has {currentShare} of {total} shares",
+    "paymentSplitterWallet": "Current Wallet {wallet}",
+    "ponziBalance": "Ponzi Balances Withdraw",
     "raffleRoundEnd": "End Raffle Round",
     "raffleRoundStart": "Start Raffle Round",
     "renounceRole": "Renounce role",
@@ -180,22 +180,18 @@
     "chainId": {
       "1": "ETHEREUM",
       "10000": "GEMUNION",
+      "10001": "BESU",
+      "11155111": "SEPOLIA",
+      "13371": "IMMUTABLE zkEVM",
       "13377": "GEMUNION",
       "13378": "BESU",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
       "13473": "IMMUTABLE zkEVM (testnet)",
       "137": "POLYGON",
       "42161": "ARBITRUM",
-      "11155111": "SEPOLIA",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI (testnet)",
       "97": "BINANCE (testnet)"
-    },
-    "referralProgramStatus": {
-      "ACTIVE": "ACTIVE",
-      "INACTIVE": "INACTIVE"
     },
     "claimStatus": {
       "EXPIRED": "Expired",
@@ -246,20 +242,20 @@
       "GENES": "Genes",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "LINEAR_REFERRAL": "Linear Referral",
       "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
       "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
-      "LINEAR_REFERRAL": "Linear Referral",
       "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
-      "WHITELIST": "Whitelist"
+      "WHITELIST": "Whitelist",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -380,11 +376,11 @@
       "DefaultAdminTransferCanceled": "DefaultAdminTransferCanceled",
       "DefaultAdminTransferScheduled": "DefaultAdminTransferScheduled",
       "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "DepositFinish": "DepositFinish",
       "DepositPenalty": "DepositPenalty",
+      "DepositReturn": "DepositReturn",
       "DepositStart": "DepositStart",
       "DepositWithdraw": "DepositWithdraw",
-      "DepositFinish": "DepositFinish",
-      "DepositReturn": "DepositReturn",
       "Dismantle": "Dismantle",
       "ERC1155TokenDeployed": "ERC1155TokenDeployed",
       "ERC20PaymentReleased": "ERC20PaymentReleased",
@@ -551,6 +547,10 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "referralProgramStatus": {
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE"
+    },
     "rentStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -629,8 +629,8 @@
       "baseTokenURI": "Base Token URI",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
-      "claim": "Claim",
       "checkBalance": "Check Balances",
+      "claim": "Claim",
       "collectionUpload": "Upload collection",
       "create": "Create",
       "delete": "Delete",
@@ -833,9 +833,9 @@
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "referral": "Referral",
       "referralProgramStatus": "Program status",
       "referrer": "Referrer",
-      "referral": "Referral",
       "rentStatus": "Status",
       "reward": "Reward",
       "role": "Role",
@@ -969,9 +969,9 @@
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
-      "referral": "Referral",
       "rarityMultiplier": "0",
       "recipient": "Recipient",
+      "referral": "Referral",
       "roundIds": "Round",
       "royalty": "1",
       "search": "Search...",
@@ -1021,8 +1021,8 @@
       "patternMismatch": "{label} does not match expected pattern",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
-      "stepMismatch": "{label} is invalid",
       "refProgramTotal": "Total is invalid. Must be sum of all levels",
+      "stepMismatch": "{label} is invalid",
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
       "totalMismatch": "Total is invalid. Must be sum of all levels",
@@ -1091,10 +1091,10 @@
       "template": {
         "title": "Claim Templates"
       },
+      "title": "Claim",
       "token": {
         "title": "Claim Tokens"
-      },
-      "title": "Claim"
+      }
     },
     "coin-gecko": {
       "ohlc": "OHLC",
@@ -1177,9 +1177,9 @@
         "mystery": "Mystery",
         "payment-splitter": "Payment Splitter",
         "ponzi": "Ponzi",
+        "prediction": "Prediction",
         "promo": "Promo",
         "raffle": "Raffle",
-        "prediction": "Prediction",
         "recipes": "Recipes",
         "referral": "Referral",
         "rent": "Rent",
@@ -1385,6 +1385,18 @@
       },
       "title": "Ponzi"
     },
+    "prediction": {
+      "answers": {
+        "title": "Answers"
+      },
+      "contracts": {
+        "title": "Contracts"
+      },
+      "questions": {
+        "title": "Questions"
+      },
+      "title": "Prediction"
+    },
     "productType": {
       "description": "Rate plans",
       "dialog": {
@@ -1402,13 +1414,6 @@
         "empty": "You don't have any addresses yet",
         "inactive": "inactive"
       },
-      "tabs": {
-        "addresses": "Addresses",
-        "general": "General",
-        "notifications": "Notifications",
-        "subscriptions": "Subscriptions",
-        "settings": "Settings"
-      },
       "settings": {
         "wallet": {
           "attach": "Attach",
@@ -1416,6 +1421,13 @@
           "detach": "Detach",
           "title": "My wallet"
         }
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "notifications": "Notifications",
+        "settings": "Settings",
+        "subscriptions": "Subscriptions"
       },
       "title": "Profile"
     },
@@ -1443,18 +1455,6 @@
         "title": "Tokens"
       }
     },
-    "prediction": {
-      "contracts": {
-        "title": "Contracts"
-      },
-      "questions": {
-        "title": "Questions"
-      },
-      "title": "Prediction",
-      "answers": {
-        "title": "Answers"
-      }
-    },
     "ratePlan": {
       "alwaysIncluded": {
         "dispenser": "Mass. token transfer",
@@ -1467,9 +1467,10 @@
         "claim": "Claim",
         "craft": "Craft",
         "disperse": "Mass transact",
-        "erc1155": "5 ERC1155 \n contracts",
+        "erc1155": "5 ERC1155 contracts",
         "erc20": "1 ERC20 contract",
         "erc721": "5 ERC721 contracts",
+        "erc998": "0 ERC998 contracts",
         "grade": "Grade",
         "mystery": "Mystery box",
         "title": "Bronze",
@@ -1480,9 +1481,10 @@
         "claim": "Claim",
         "craft": "Craft",
         "disperse": "Mass transact",
-        "erc1155": "25 ERC1155 \n contracts",
+        "erc1155": "25 ERC1155 contracts",
         "erc20": "5 ERC20 contract",
         "erc721": "25 ERC721 contracts",
+        "erc998": "1 ERC998 contract",
         "grade": "Grade",
         "mystery": "Mystery box",
         "title": "Gold",
@@ -1499,9 +1501,10 @@
         "claim": "Claim",
         "craft": "Craft",
         "disperse": "Mass transact",
-        "erc1155": "10 ERC1155 \n contracts",
+        "erc1155": "10 ERC1155 contracts",
         "erc20": "1 ERC20 contract",
         "erc721": "10 ERC721 contracts",
+        "erc998": "0 ERC998 contracts",
         "grade": "Grade",
         "mystery": "Mystery box",
         "title": "Silver",
@@ -1534,22 +1537,22 @@
       "chart": {
         "title": "Chart"
       },
-      "tree": {
-        "title": "Referral Tree"
-      },
       "leaderboard": {
         "title": "Leaderboard"
       },
       "program": {
-        "total": "Total",
         "level": "Level {level}",
         "levels": "Referral program levels",
-        "title": "Program"
+        "title": "Program",
+        "total": "Total"
       },
       "report": {
         "title": "Report"
       },
-      "title": "Referral program"
+      "title": "Referral program",
+      "tree": {
+        "title": "Referral Tree"
+      }
     },
     "rent": {
       "title": "Rent"
