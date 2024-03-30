@@ -620,6 +620,7 @@
     },
     "buttons": {
       "accept": "Accept",
+      "activate": "Activate",
       "add": "Add",
       "addConsumer": "Add VRF Consumer",
       "addListener": "Add ETH Listener",
@@ -633,6 +634,7 @@
       "claim": "Claim",
       "collectionUpload": "Upload collection",
       "create": "Create",
+      "deactivate": "Deactivate",
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",

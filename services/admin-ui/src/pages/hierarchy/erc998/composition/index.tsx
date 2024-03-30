@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Button, Grid, ListItemText } from "@mui/material";
-import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
+import { Add, FilterList, PauseCircleOutline, PlayCircleOutline, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -11,8 +11,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import unWhitelistChildERC998BlacklistABI from "@framework/abis/unWhitelistChild/ERC998Blacklist.json";
 import whiteListChildERC998BlacklistABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
@@ -61,7 +61,7 @@ export const Erc998Composition: FC = () => {
     return contract.unWhitelistChild(composition.child!.address) as Promise<void>;
   });
 
-  const handleDelete = (composition: IComposition) => {
+  const handleDeactivate = (composition: IComposition) => {
     return () => {
       return metaFn1(composition);
     };
@@ -84,6 +84,24 @@ export const Erc998Composition: FC = () => {
     return metaFn2(values).finally(() => {
       setIsCreateDialogOpen(false);
     });
+  };
+
+  const handleActivate = (composition: IComposition) => {
+    const values = {
+      contract: {
+        parent: {
+          contract: composition.parent!.address,
+        },
+        child: {
+          contract: composition.child!.address,
+        },
+      },
+      amount: `${composition.amount}`,
+    };
+
+    return () => {
+      return handleCreateConfirm(values);
+    };
   };
 
   const handleCreateCancel = () => {
@@ -154,7 +172,19 @@ export const Erc998Composition: FC = () => {
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(composition)} message="form.tips.view" icon={Visibility} />
-                <ListAction onClick={handleDelete(composition)} message="form.tips.delete" icon={Delete} />
+                {composition.compositionStatus === CompositionStatus.ACTIVE ? (
+                  <ListAction
+                    onClick={handleDeactivate(composition)}
+                    message="form.buttons.deactivate"
+                    icon={PauseCircleOutline}
+                  />
+                ) : (
+                  <ListAction
+                    onClick={handleActivate(composition)}
+                    message="form.buttons.activate"
+                    icon={PlayCircleOutline}
+                  />
+                )}
               </ListActions>
             </StyledListItem>
           ))}

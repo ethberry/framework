@@ -45,8 +45,11 @@ export class Erc998CompositionService {
     if (compositionEntity) {
       if (compositionEntity.amount !== amount) {
         Object.assign(compositionEntity, { amount });
-        await compositionEntity.save();
       }
+      if (compositionEntity.compositionStatus !== CompositionStatus.ACTIVE) {
+        Object.assign(compositionEntity, { compositionStatus: CompositionStatus.ACTIVE });
+      }
+      await compositionEntity.save();
     } else {
       await this.create(dto);
     }

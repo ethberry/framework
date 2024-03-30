@@ -620,6 +620,7 @@
     },
     "buttons": {
       "accept": "Принять",
+      "activate": "Активировать",
       "add": "Добавить",
       "addConsumer": "Добавить VRF Consumer",
       "addListener": "Добавить ETH Listener",
@@ -633,6 +634,7 @@
       "checkBalance": "Проверить Балансы",
       "collectionUpload": "Загрузить коллекцию",
       "create": "Создать",
+      "deactivate": "Деактивировать",
       "delete": "Удалить",
       "deploy": "Развернуть",
       "disconnect": "Отключить",

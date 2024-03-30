@@ -24,7 +24,7 @@ export interface IListActionProps {
   icon?: ElementType;
   message: string;
   messageValues?: Record<string, any>;
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
   variant?: ListActionVariant;
 }
 
