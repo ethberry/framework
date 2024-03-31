@@ -289,9 +289,9 @@
       "MALE": "ذكر"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA عربي",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 إنجليزي",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Indonesian",
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
