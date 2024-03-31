@@ -217,7 +217,6 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
                 getTitle={(token: IToken) => formatTokenTitle(token)}
                 onChange={active ? handleChange : handleAlert}
-                readOnly={child.compositionStatus === CompositionStatus.ACTIVE}
               />
             ))}
           </FormWrapper>
