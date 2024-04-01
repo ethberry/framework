@@ -1,13 +1,14 @@
 import { FC, Fragment, useState } from "react";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { BigNumber, Contract, utils, constants } from "ethers";
 
-import { useAppSelector } from "@gemunion/redux";
+import { useUser } from "@gemunion/provider-user";
+import { useAppDispatch, useAppSelector, walletActions } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, ITemplate } from "@framework/types";
+import type { IContract, ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
@@ -24,9 +25,15 @@ interface ITemplatePurchaseButtonProps {
 
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { className, disabled, template, variant = ListActionVariant.button } = props;
-  const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
 
+  const { isActive } = useWeb3React();
+  const user = useUser<IUser>();
+  const isUserAuthenticated = user.isAuthenticated();
+
+  const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
   const { referrer } = useAppSelector(state => state.settings);
+  const dispatch = useAppDispatch();
+  const { setIsDialogOpen } = walletActions;
 
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
@@ -81,6 +88,10 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     ) as Promise<void>;
   });
 
+  const handleConnect = () => {
+    dispatch(setIsDialogOpen(true));
+  };
+
   const handleBuy = async () => {
     if (template.contract!.contractType === TokenType.ERC1155) {
       setIsAmountDialogOpen(true);
@@ -123,8 +134,8 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   return (
     <Fragment>
       <ListAction
-        onClick={handleBuy}
-        message="form.buttons.buy"
+        onClick={isActive && isUserAuthenticated ? handleBuy : handleConnect}
+        message={isActive && isUserAuthenticated ? "form.buttons.buy" : "components.header.wallet.connect"}
         className={className}
         dataTestId="TemplatePurchaseButton"
         disabled={
