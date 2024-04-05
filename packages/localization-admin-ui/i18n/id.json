@@ -1477,7 +1477,7 @@
         "raffle": "Undian",
         "staking": "Staking",
         "title": "Perunggu",
-        "vesting": "1000 kontrak vesting",
+        "vesting": "100 kontrak vesting",
         "waitList": "Daftar Tunggu"
       },
       "contactViaTelegram": "Hubungi via Telegram",
@@ -1493,7 +1493,7 @@
         "raffle": "Undian",
         "staking": "Staking",
         "title": "Emas",
-        "vesting": "5000 kontrak vesting",
+        "vesting": "500 kontrak vesting",
         "waitList": "Daftar Tunggu"
       },
       "month": "bulan",
@@ -1515,7 +1515,7 @@
         "raffle": "Undian",
         "staking": "Staking",
         "title": "Perak",
-        "vesting": "3000 kontrak vesting",
+        "vesting": "300 kontrak vesting",
         "waitList": "Daftar Tunggu"
       },
       "title": "Rencana Tarif"

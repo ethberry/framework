@@ -1478,7 +1478,7 @@
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Bronze",
-        "vesting": "1000 vesting contracts",
+        "vesting": "100 vesting contracts",
         "waitList": "Wait list"
       },
       "contactViaTelegram": "Contact via Telegram",
@@ -1495,7 +1495,7 @@
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Gold",
-        "vesting": "5000 vesting contracts",
+        "vesting": "500 vesting contracts",
         "waitList": "Wait list"
       },
       "month": "month",
@@ -1518,7 +1518,7 @@
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Silver",
-        "vesting": "3000 vesting contracts",
+        "vesting": "300 vesting contracts",
         "waitList": "Wait list"
       },
       "title": "Rate plans"

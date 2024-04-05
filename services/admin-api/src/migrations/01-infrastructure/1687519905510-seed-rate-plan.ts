@@ -44,7 +44,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'VESTING',
         null,
-        1000
+        100
       ), (
         'BRONZE',
         'MYSTERY',
@@ -119,7 +119,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'SILVER',
         'VESTING',
         null,
-        1000
+        300
       ), (
         'SILVER',
         'MYSTERY',
@@ -194,7 +194,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'GOLD',
         'VESTING',
         null,
-        1000
+        500
       ), (
         'GOLD',
         'MYSTERY',
