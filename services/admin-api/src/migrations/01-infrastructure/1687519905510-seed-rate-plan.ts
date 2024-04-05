@@ -64,12 +64,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'RAFFLE',
         null,
-        1
+        0
       ), (
         'BRONZE',
         'RAFFLE',
         'ERC721',
-        1
+        0
       ), (
         'BRONZE',
         'COLLECTION',
@@ -79,7 +79,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'STAKING',
         null,
-        1
+        0
       ), (
         'BRONZE',
         'PAYMENT_SPLITTER',
@@ -139,12 +139,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'SILVER',
         'RAFFLE',
         null,
-        1
+        0
       ), (
         'SILVER',
         'RAFFLE',
         'ERC721',
-        1
+        0
       ), (
         'SILVER',
         'COLLECTION',
@@ -179,7 +179,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'GOLD',
         'HIERARCHY',
         'ERC998',
-        0
+        1
       ), (
         'GOLD',
         'HIERARCHY',

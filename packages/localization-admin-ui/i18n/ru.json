@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceErc20": "Вам необходимо разрешить токены ERC20 перед пополнением",
     "allowanceClaim": "Вам необходимо разрешить токены для контракта Contract Manager",
+    "allowanceErc20": "Вам необходимо разрешить токены ERC20 перед пополнением",
     "allowanceWarning": "Вы собираетесь разрешить все токены контракта",
     "craftItem": "Предметы для создания",
     "craftPrice": "Ингредиенты для создания",
@@ -72,15 +72,15 @@
     "allowance": "Разрешение",
     "blacklist": "Добавить в черный список",
     "breedLimit": "Установить лимиты размножения",
+    "checkBalance": {
+      "depAmount": "Сумма депозита",
+      "stakeBalance": "Баланс стейкинга",
+      "title": "Балансы стейкинга",
+      "token": "Токен"
+    },
     "claim": "Клейм",
     "confirmation": "Пожалуйста, подтвердите",
     "create": "Создать",
-    "checkBalance": {
-      "title": "Балансы стейкинга",
-      "token": "Токен",
-      "depAmount": "Сумма депозита",
-      "stakeBalance": "Баланс стейкинга"
-    },
     "currentBalance": "Баланс: {value}",
     "delete": "Удалить `{title}`?",
     "deploy": "Развернуть",
@@ -94,10 +94,10 @@
     "lotteryRoundStart": "Начать раунд лотереи",
     "mintBox": "Минт Мистерибокса",
     "mintToken": "Минт токена",
-    "ponziBalance": "Снять балансы Понци",
     "paymentSplitterBalances": "Снять с баланса",
-    "paymentSplitterWallet": "Текущий кошелек {wallet}",
     "paymentSplitterShares": "имеет {currentShare} из {total} долей",
+    "paymentSplitterWallet": "Текущий кошелек {wallet}",
+    "ponziBalance": "Снять балансы Понци",
     "raffleRoundEnd": "Завершить раунд розыгрыша",
     "raffleRoundStart": "Начать раунд розыгрыша",
     "renounceRole": "Отказаться от роли",
@@ -123,6 +123,7 @@
   "enums": {
     "LEVEL": {
       "1": "1",
+      "10": "10",
       "2": "2",
       "3": "3",
       "4": "4",
@@ -130,8 +131,7 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9",
-      "10": "10"
+      "9": "9"
     },
     "RARITY": {
       "COMMON": "Обычный",
@@ -179,23 +179,19 @@
     },
     "chainId": {
       "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (тестнет)",
-      "137": "POLYGON",
       "10000": "GEMUNION",
       "10001": "BESU",
+      "11155111": "SEPOLIA",
       "13371": "IMMUTABLE zkEVM",
       "13377": "GEMUNION",
       "13378": "BESU",
       "13473": "IMMUTABLE zkEVM (тестнет)",
+      "137": "POLYGON",
       "42161": "ARBITRUM",
+      "5": "GOERLI",
+      "56": "BINANCE",
       "80001": "MUMBAI (тестнет)",
-      "11155111": "SEPOLIA"
-    },
-    "referralProgramStatus": {
-      "ACTIVE": "Активный",
-      "INACTIVE": "Неактивный"
+      "97": "BINANCE (тестнет)"
     },
     "claimStatus": {
       "EXPIRED": "Истекший",
@@ -246,20 +242,20 @@
       "GENES": "Гены",
       "GRADED": "Грейд",
       "LINEAR": "Линейный",
+      "LINEAR_REFERRAL": "Линейная реферальная программа",
       "LOTTERY": "Лотерейный билет",
       "PAUSABLE": "Приостановленный",
       "RAFFLE": "Билет розыгрыша",
       "RANDOM": "Случайный",
       "REFERRAL": "Реферальный",
-      "LINEAR_REFERRAL": "Линейная реферальная программа",
       "RENTABLE": "Арендуемый",
       "SIMPLE": "Простой",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Простой Стейкинг",
       "SOULBOUND": "Привязанный к Душе",
       "SOULBOUND_VOTES": "Привязанный к Душе + Голосование",
       "SPLITTER": "Разделитель",
       "STATEHASH": "Хеш Состояния",
-      "WHITELIST": "Белый Список"
+      "WHITELIST": "Белый Список",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Простой Стейкинг"
     },
     "craftStatus": {
       "ACTIVE": "Активный",
@@ -380,11 +376,11 @@
       "DefaultAdminTransferCanceled": "Отмена Передачи Администратора по Умолчанию",
       "DefaultAdminTransferScheduled": "Запланирована Передача Администратора по Умолчанию",
       "DefaultRoyaltyInfo": "Информация о Роялти по Умолчанию",
+      "DepositFinish": "Завершение Депозита",
       "DepositPenalty": "Штраф Депозита",
+      "DepositReturn": "Возврат Депозита",
       "DepositStart": "Начало Депозита",
       "DepositWithdraw": "Снятие Депозита",
-      "DepositFinish": "Завершение Депозита",
-      "DepositReturn": "Возврат Депозита",
       "Dismantle": "Разборка (Dismantle)",
       "ERC1155TokenDeployed": "Развертывание Токена ERC1155",
       "ERC20PaymentReleased": "Выпущен Платеж ERC20",
@@ -551,6 +547,10 @@
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
+    "referralProgramStatus": {
+      "ACTIVE": "Активный",
+      "INACTIVE": "Неактивный"
+    },
     "rentStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный",
@@ -630,8 +630,8 @@
       "baseTokenURI": "Базовый URI Токена",
       "blacklist": "Черный список",
       "cancel": "Отменить",
-      "claim": "Клейм",
       "checkBalance": "Проверить Балансы",
+      "claim": "Клейм",
       "collectionUpload": "Загрузить коллекцию",
       "create": "Создать",
       "deactivate": "Деактивировать",
@@ -835,9 +835,9 @@
       "recentDeposits": "Недавние депозиты",
       "recipient": "Получатель",
       "recurrent": "Повторяющееся?",
+      "referral": "Реферал",
       "referralProgramStatus": "Статус программы",
       "referrer": "Реферер",
-      "referral": "Реферал",
       "rentStatus": "Статус",
       "reward": "Награда",
       "role": "Роль",
@@ -971,9 +971,9 @@
       "productStatus": "Статус",
       "query": "Поиск...",
       "rarity": "Легендарный",
-      "referral": "Реферал",
       "rarityMultiplier": "0",
       "recipient": "Получатель",
+      "referral": "Реферал",
       "roundIds": "Раунд",
       "royalty": "1",
       "search": "Поиск...",
@@ -1023,8 +1023,8 @@
       "patternMismatch": "{label} не соответствует ожидаемому паттерну",
       "rangeOverflow": "{label} слишком большой",
       "rangeUnderflow": "{label} слишком маленький",
-      "stepMismatch": "{label} недействителен",
       "refProgramTotal": "Общая сумма недействительна. Должна быть суммой всех уровней",
+      "stepMismatch": "{label} недействителен",
       "tooLong": "{label} слишком длинный",
       "tooShort": "{label} слишком короткий",
       "totalMismatch": "Общая сумма недействительна. Должна быть суммой всех уровней",
@@ -1093,10 +1093,10 @@
       "template": {
         "title": "Шаблоны Клеймов"
       },
+      "title": "Клейм",
       "token": {
         "title": "Токены Клеймов"
-      },
-      "title": "Клейм"
+      }
     },
     "coin-gecko": {
       "ohlc": "OHLC",
@@ -1179,9 +1179,9 @@
         "mystery": "Мистерибокс",
         "payment-splitter": "Разделение платежей",
         "ponzi": "Понци",
+        "prediction": "Прогноз",
         "promo": "Промо",
         "raffle": "Розыгрыш",
-        "prediction": "Прогноз",
         "recipes": "Рецепты",
         "referral": "Реферальная система",
         "rent": "Аренда",
@@ -1387,6 +1387,18 @@
       },
       "title": "Понци"
     },
+    "prediction": {
+      "answers": {
+        "title": "Ответы"
+      },
+      "contracts": {
+        "title": "Контракты"
+      },
+      "questions": {
+        "title": "Вопросы"
+      },
+      "title": "Прогноз"
+    },
     "productType": {
       "description": "Тарифные Планы",
       "dialog": {
@@ -1404,13 +1416,6 @@
         "empty": "У вас пока нет адресов",
         "inactive": "неактивный"
       },
-      "tabs": {
-        "addresses": "Адреса",
-        "general": "Общее",
-        "notifications": "Уведомления",
-        "subscriptions": "Подписки",
-        "settings": "Настройки"
-      },
       "settings": {
         "wallet": {
           "attach": "Прикрепить",
@@ -1418,6 +1423,13 @@
           "detach": "Открепить",
           "title": "Мой кошелек"
         }
+      },
+      "tabs": {
+        "addresses": "Адреса",
+        "general": "Общее",
+        "notifications": "Уведомления",
+        "settings": "Настройки",
+        "subscriptions": "Подписки"
       },
       "title": "Профиль"
     },
@@ -1445,18 +1457,6 @@
         "title": "Токены"
       }
     },
-    "prediction": {
-      "contracts": {
-        "title": "Контракты"
-      },
-      "questions": {
-        "title": "Вопросы"
-      },
-      "title": "Прогноз",
-      "answers": {
-        "title": "Ответы"
-      }
-    },
     "ratePlan": {
       "alwaysIncluded": {
         "dispenser": "Массовая передача токенов",
@@ -1474,8 +1474,11 @@
         "erc721": "5 контрактов ERC721",
         "grade": "Грейд (Grade)",
         "mystery": "Мистерибокс",
+        "raffle": "Розыгрыш (Raffle)",
+        "staking": "Стейкинг",
         "title": "Бронза",
-        "vesting": "1000 контрактов на вестинг"
+        "vesting": "1000 контрактов на вестинг",
+        "waitList": "Список ожидания (Wait list)"
       },
       "contactViaTelegram": "Связаться через Telegram",
       "gold": {
@@ -1487,8 +1490,11 @@
         "erc721": "25 контрактов ERC721",
         "grade": "Грейд (Grade)",
         "mystery": "Мистерибокс",
+        "raffle": "Розыгрыш (Raffle)",
+        "staking": "Стейкинг",
         "title": "Золото",
-        "vesting": "5000 контрактов на вестинг"
+        "vesting": "5000 контрактов на вестинг",
+        "waitList": "Список ожидания (Wait list)"
       },
       "month": "месяц",
       "onDemand": {
@@ -1506,8 +1512,11 @@
         "erc721": "10 контрактов ERC721",
         "grade": "Грейд (Grade)",
         "mystery": "Мистерибокс",
+        "raffle": "Розыгрыш (Raffle)",
+        "staking": "Стейкинг",
         "title": "Серебро",
-        "vesting": "3000 контрактов на Вестинг"
+        "vesting": "3000 контрактов на Вестинг",
+        "waitList": "Список ожидания (Wait list)"
       },
       "title": "Тарифные Планы"
     },
@@ -1536,22 +1545,22 @@
       "chart": {
         "title": "График"
       },
-      "tree": {
-        "title": "Дерево Рефералов"
-      },
       "leaderboard": {
         "title": "Таблица Лидеров"
       },
       "program": {
-        "total": "Всего",
         "level": "Уровень {level}",
         "levels": "Уровни Реферальной Программы",
-        "title": "Программа"
+        "title": "Программа",
+        "total": "Всего"
       },
       "report": {
         "title": "Отчет"
       },
-      "title": "Реферальная Программа"
+      "title": "Реферальная Программа",
+      "tree": {
+        "title": "Дерево Рефералов"
+      }
     },
     "rent": {
       "title": "Аренда"

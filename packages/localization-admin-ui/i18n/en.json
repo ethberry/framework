@@ -1475,8 +1475,11 @@
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
         "mystery": "Mystery box",
+        "raffle": "Raffle",
+        "staking": "Staking",
         "title": "Bronze",
-        "vesting": "1000 vesting contracts"
+        "vesting": "1000 vesting contracts",
+        "waitList": "Wait list"
       },
       "contactViaTelegram": "Contact via Telegram",
       "gold": {
@@ -1489,8 +1492,11 @@
         "erc998": "1 ERC998 contract",
         "grade": "Grade",
         "mystery": "Mystery box",
+        "raffle": "Raffle",
+        "staking": "Staking",
         "title": "Gold",
-        "vesting": "5000 vesting contracts"
+        "vesting": "5000 vesting contracts",
+        "waitList": "Wait list"
       },
       "month": "month",
       "onDemand": {
@@ -1509,8 +1515,11 @@
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
         "mystery": "Mystery box",
+        "raffle": "Raffle",
+        "staking": "Staking",
         "title": "Silver",
-        "vesting": "3000 vesting contracts"
+        "vesting": "3000 vesting contracts",
+        "waitList": "Wait list"
       },
       "title": "Rate plans"
     },

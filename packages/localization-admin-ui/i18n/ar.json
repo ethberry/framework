@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceErc20": "يجب عليك السماح برموز ERC20 قبل الشحن",
     "allowanceClaim": "يجب عليك السماح بالرموز لعقد مدير العقد",
+    "allowanceErc20": "يجب عليك السماح برموز ERC20 قبل الشحن",
     "allowanceWarning": "أنت ذاهب للسماح بجميع رموز العقد",
     "craftItem": "العناصر التي سيتم صنعها",
     "craftPrice": "مكونات الصنع",
@@ -72,15 +72,15 @@
     "allowance": "السماحية",
     "blacklist": "إضافة إلى القائمة السوداء",
     "breedLimit": "تحديد حدود التكاثر",
+    "checkBalance": {
+      "depAmount": "مبلغ الإيداع",
+      "stakeBalance": "رصيد الإيداع",
+      "title": "أرصدة الإيداع",
+      "token": "الرمز"
+    },
     "claim": "المطالبة",
     "confirmation": "يرجى التأكيد",
     "create": "إنشاء",
-    "checkBalance": {
-      "title": "أرصدة الإيداع",
-      "token": "الرمز",
-      "depAmount": "مبلغ الإيداع",
-      "stakeBalance": "رصيد الإيداع"
-    },
     "currentBalance": "الرصيد: {value}",
     "delete": "حذف `{title}`؟",
     "deploy": "نشر",
@@ -94,10 +94,10 @@
     "lotteryRoundStart": "بدء جولة اليانصيب",
     "mintBox": "سك صندوق الألغاز",
     "mintToken": "سك الرموز",
-    "ponziBalance": "سحب أرصدة Ponzi",
     "paymentSplitterBalances": "إطلاق الرصيد",
-    "paymentSplitterWallet": "المحفظة الحالية {wallet}",
     "paymentSplitterShares": "لديه {currentShare} من {total} حصص",
+    "paymentSplitterWallet": "المحفظة الحالية {wallet}",
+    "ponziBalance": "سحب أرصدة Ponzi",
     "raffleRoundEnd": "إنهاء جولة الرافل",
     "raffleRoundStart": "بدء جولة الرافل",
     "renounceRole": "التخلي عن دور",
@@ -123,6 +123,7 @@
   "enums": {
     "LEVEL": {
       "1": "1",
+      "10": "10",
       "2": "2",
       "3": "3",
       "4": "4",
@@ -130,8 +131,7 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9",
-      "10": "10"
+      "9": "9"
     },
     "RARITY": {
       "COMMON": "عادي",
@@ -179,23 +179,19 @@
     },
     "chainId": {
       "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (testnet)",
-      "137": "POLYGON",
       "10000": "GEMUNION",
       "10001": "BESU",
+      "11155111": "SEPOLIA",
       "13371": "IMMUTABLE zkEVM",
       "13377": "GEMUNION",
       "13378": "BESU",
       "13473": "IMMUTABLE zkEVM (testnet)",
+      "137": "POLYGON",
       "42161": "ARBITRUM",
+      "5": "GOERLI",
+      "56": "BINANCE",
       "80001": "MUMBAI (testnet)",
-      "11155111": "SEPOLIA"
-    },
-    "referralProgramStatus": {
-      "ACTIVE": "نشط",
-      "INACTIVE": "غير نشط"
+      "97": "BINANCE (testnet)"
     },
     "claimStatus": {
       "EXPIRED": "منتهي الصلاحية",
@@ -246,20 +242,20 @@
       "GENES": "الجينات",
       "GRADED": "مصنف",
       "LINEAR": "خطي",
+      "LINEAR_REFERRAL": "الإحالة الخطية",
       "LOTTERY": "تذكرة يانصيب",
       "PAUSABLE": "قابل للإيقاف",
       "RAFFLE": "تذكرة رافل",
       "RANDOM": "عشوائي",
       "REFERRAL": "إحالة",
-      "LINEAR_REFERRAL": "الإحالة الخطية",
       "RENTABLE": "قابل للإيجار",
       "SIMPLE": "بسيط",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "التكديس البسيط",
       "SOULBOUND": "مرتبط بالروح",
       "SOULBOUND_VOTES": "مرتبط بالروح + أصوات",
       "SPLITTER": "موزع",
       "STATEHASH": "هاش الحالة",
-      "WHITELIST": "القائمة البيضاء"
+      "WHITELIST": "القائمة البيضاء",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "التكديس البسيط"
     },
     "craftStatus": {
       "ACTIVE": "نشط",
@@ -380,11 +376,11 @@
       "DefaultAdminTransferCanceled": "إلغاء نقل المسؤول الافتراضي",
       "DefaultAdminTransferScheduled": "جدولة نقل المسؤول الافتراضي",
       "DefaultRoyaltyInfo": "معلومات الرسوم الافتراضية",
+      "DepositFinish": "انتهاء الإيداع",
       "DepositPenalty": "عقوبة الإيداع",
+      "DepositReturn": "إرجاع الإيداع",
       "DepositStart": "بداية الإيداع",
       "DepositWithdraw": "سحب الإيداع",
-      "DepositFinish": "انتهاء الإيداع",
-      "DepositReturn": "إرجاع الإيداع",
       "Dismantle": "التفكيك",
       "ERC1155TokenDeployed": "نشر رمز ERC1155",
       "ERC20PaymentReleased": "إطلاق دفعة ERC20",
@@ -551,6 +547,10 @@
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط"
     },
+    "referralProgramStatus": {
+      "ACTIVE": "نشط",
+      "INACTIVE": "غير نشط"
+    },
     "rentStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط",
@@ -630,8 +630,8 @@
       "baseTokenURI": "URI الرمز الأساسي",
       "blacklist": "القائمة السوداء",
       "cancel": "إلغاء",
-      "claim": "المطالبة",
       "checkBalance": "التحقق من الرصيد",
+      "claim": "المطالبة",
       "collectionUpload": "تحميل المجموعة",
       "create": "إنشاء",
       "deactivate": "إلغاء التنشيط",
@@ -835,9 +835,9 @@
       "recentDeposits": "الإيداعات الأخيرة",
       "recipient": "المستلم",
       "recurrent": "هل متكرر؟",
+      "referral": "الإحالة",
       "referralProgramStatus": "حالة البرنامج",
       "referrer": "المُحيل",
-      "referral": "الإحالة",
       "rentStatus": "الحالة",
       "reward": "المكافأة",
       "role": "الدور",
@@ -971,9 +971,9 @@
       "productStatus": "الحالة",
       "query": "بحث...",
       "rarity": "أسطوري",
-      "referral": "الإحالة",
       "rarityMultiplier": "0",
       "recipient": "المستلم",
+      "referral": "الإحالة",
       "roundIds": "جولة",
       "royalty": "1",
       "search": "بحث...",
@@ -1023,8 +1023,8 @@
       "patternMismatch": "{label} لا يطابق النمط المتوقع",
       "rangeOverflow": "{label} مرتفع جداً",
       "rangeUnderflow": "{label} منخفض جداً",
-      "stepMismatch": "{label} غير صالح",
       "refProgramTotal": "الإجمالي غير صالح. يجب أن يكون مجموع جميع المستويات",
+      "stepMismatch": "{label} غير صالح",
       "tooLong": "{label} طويل جداً",
       "tooShort": "{label} قصير جداً",
       "totalMismatch": "الإجمالي غير صالح. يجب أن يكون مجموع جميع المستويات",
@@ -1093,10 +1093,10 @@
       "template": {
         "title": "قوالب المطالبة"
       },
+      "title": "المطالبة",
       "token": {
         "title": "رموز المطالبة"
-      },
-      "title": "المطالبة"
+      }
     },
     "coin-gecko": {
       "ohlc": "OHLC",
@@ -1179,9 +1179,9 @@
         "mystery": "الغموض",
         "payment-splitter": "موزع الدفع",
         "ponzi": "بونزي",
+        "prediction": "التنبؤ",
         "promo": "الترويج",
         "raffle": "اليانصيب",
-        "prediction": "التنبؤ",
         "recipes": "الوصفات",
         "referral": "الإحالة",
         "rent": "الإيجار",
@@ -1387,6 +1387,18 @@
       },
       "title": "بونزي"
     },
+    "prediction": {
+      "answers": {
+        "title": "الإجابات"
+      },
+      "contracts": {
+        "title": "العقود"
+      },
+      "questions": {
+        "title": "الأسئلة"
+      },
+      "title": "التنبؤ"
+    },
     "productType": {
       "description": "خطط الأسعار",
       "dialog": {
@@ -1404,13 +1416,6 @@
         "empty": "ليس لديك أي عناوين بعد",
         "inactive": "غير نشط"
       },
-      "tabs": {
-        "addresses": "العناوين",
-        "general": "عام",
-        "notifications": "الإشعارات",
-        "subscriptions": "الاشتراكات",
-        "settings": "الإعدادات"
-      },
       "settings": {
         "wallet": {
           "attach": "إرفاق",
@@ -1418,6 +1423,13 @@
           "detach": "فصل",
           "title": "محفظتي"
         }
+      },
+      "tabs": {
+        "addresses": "العناوين",
+        "general": "عام",
+        "notifications": "الإشعارات",
+        "settings": "الإعدادات",
+        "subscriptions": "الاشتراكات"
       },
       "title": "الملف الشخصي"
     },
@@ -1445,18 +1457,6 @@
         "title": "الرموز"
       }
     },
-    "prediction": {
-      "contracts": {
-        "title": "العقود"
-      },
-      "questions": {
-        "title": "الأسئلة"
-      },
-      "title": "التنبؤ",
-      "answers": {
-        "title": "الإجابات"
-      }
-    },
     "ratePlan": {
       "alwaysIncluded": {
         "dispenser": "نقل الرموز الجماعي",
@@ -1474,8 +1474,11 @@
         "erc721": "5 عقود ERC721",
         "grade": "التصنيف",
         "mystery": "صندوق الغموض",
+        "raffle": "اليانصيب",
+        "staking": "الاستثمار",
         "title": "برونز",
-        "vesting": "1000 عقد استحقاق"
+        "vesting": "1000 عقد استحقاق",
+        "waitList": "قائمة الانتظار"
       },
       "contactViaTelegram": "التواصل عبر تليجرام",
       "gold": {
@@ -1487,8 +1490,11 @@
         "erc721": "25 عقود ERC721",
         "grade": "التصنيف",
         "mystery": "صندوق الغموض",
+        "raffle": "اليانصيب",
+        "staking": "الاستثمار",
         "title": "ذهب",
-        "vesting": "5000 عقد استحقاق"
+        "vesting": "5000 عقد استحقاق",
+        "waitList": "قائمة الانتظار"
       },
       "month": "شهر",
       "onDemand": {
@@ -1506,8 +1512,11 @@
         "erc721": "10 عقود ERC721",
         "grade": "التصنيف",
         "mystery": "صندوق الغموض",
+        "raffle": "اليانصيب",
+        "staking": "الاستثمار",
         "title": "فضة",
-        "vesting": "3000 عقد استحقاق"
+        "vesting": "3000 عقد استحقاق",
+        "waitList": "قائمة الانتظار"
       },
       "title": "خطط الأسعار"
     },
@@ -1536,22 +1545,22 @@
       "chart": {
         "title": "الرسم البياني"
       },
-      "tree": {
-        "title": "شجرة الإحالة"
-      },
       "leaderboard": {
         "title": "لوحة القادة"
       },
       "program": {
-        "total": "الإجمالي",
         "level": "المستوى {level}",
         "levels": "مستويات برنامج الإحالة",
-        "title": "البرنامج"
+        "title": "البرنامج",
+        "total": "الإجمالي"
       },
       "report": {
         "title": "التقرير"
       },
-      "title": "برنامج الإحالة"
+      "title": "برنامج الإحالة",
+      "tree": {
+        "title": "شجرة الإحالة"
+      }
     },
     "rent": {
       "title": "الإيجار"
