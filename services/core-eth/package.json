@@ -24,7 +24,7 @@
     "@gemunion/nest-js-utils": "4.2.3",
     "@gemunion/nest-js-validators": "4.0.29",
     "@gemunion/types-collection": "1.5.14",
-    "@golevelup/nestjs-discovery": "4.0.0",
+    "@golevelup/nestjs-discovery": "4.0.1",
     "@golevelup/nestjs-modules": "0.7.1",
     "@nestjs/axios": "3.0.2",
     "@nestjs/common": "10.3.7",
@@ -44,7 +44,7 @@
     "ethers": "6.11.1",
     "express": "4.19.2",
     "nest-winston": "1.9.4",
-    "pg": "8.11.3",
+    "pg": "8.11.5",
     "redis": "4.6.13",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
@@ -61,9 +61,9 @@
     "@nestjs/testing": "10.3.7",
     "@types/async": "3.2.24",
     "@types/express": "4.17.21",
-    "@types/node": "20.11.30",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
-    "@typescript-eslint/parser": "7.4.0",
+    "@types/node": "20.12.7",
+    "@typescript-eslint/eslint-plugin": "7.6.0",
+    "@typescript-eslint/parser": "7.6.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
@@ -76,7 +76,7 @@
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsc-watch": "6.2.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   },
   "engines": {
     "node": ">=18"
