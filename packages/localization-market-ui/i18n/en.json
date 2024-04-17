@@ -857,6 +857,9 @@
     "erc20": {
       "title": "Coins",
       "token": {
+        "contract": "Contract address",
+        "decimals": "Contract decimals",
+        "symbol": "Contract symbol",
         "title": "Coin: {title}"
       },
       "coins": {

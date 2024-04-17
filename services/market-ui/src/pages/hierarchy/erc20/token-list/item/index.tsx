@@ -6,6 +6,7 @@ import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { Erc20AddToMetamaskButton } from "../../../../../components/buttons";
+import { CoinInfo } from "./popover";
 
 interface IErc20TokenListItemProps {
   token: IToken;
@@ -17,7 +18,7 @@ export const Erc20CoinsListItem: FC<IErc20TokenListItemProps> = props => {
   return (
     <Card>
       <CardActionArea>
-        <CardHeader title={token.template!.title} />
+        <CardHeader action={<CoinInfo token={token} />} title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />
         <CardContent>
           <StyledCardContentDescription>

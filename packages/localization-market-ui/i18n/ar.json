@@ -856,6 +856,9 @@
     "erc20": {
       "title": "عملات",
       "token": {
+        "contract": "عنوان العقد",
+        "decimals": "العقود العشرية",
+        "symbol": "رمز العقد",
         "title": "عملة: {title}"
       },
       "coins": {

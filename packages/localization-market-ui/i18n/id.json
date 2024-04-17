@@ -856,6 +856,9 @@
     "erc20": {
       "title": "Koin",
       "token": {
+        "contract": "Kontrak alamat",
+        "decimals": "Kontrak desimal",
+        "symbol": "Kontrak simbol",
         "title": "Koin: {title}"
       },
       "coins": {
