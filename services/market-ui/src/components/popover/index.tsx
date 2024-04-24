@@ -13,10 +13,15 @@ export const InfoPopover: FC<PropsWithChildren<IInfoPopoverProps>> = props => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
+    return false;
   };
 
-  const handleClose = () => {
+  const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
     setAnchorEl(null);
   };
 

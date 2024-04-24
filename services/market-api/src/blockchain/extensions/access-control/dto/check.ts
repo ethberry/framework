@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsEnum, IsInt, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, AddressDto } from "@gemunion/nest-js-validators";
 import { AccessControlRoleType } from "@framework/types";
 
-import { IAccessControlCheckDto } from "../interfaces";
+import { IAccessControlCheckDto, IAccessControlCheckTokenOwnershipDto } from "../interfaces";
 
 export class AccessControlCheckDto extends Mixin(AccountDto, AddressDto) implements IAccessControlCheckDto {
   @ApiProperty({
@@ -15,4 +15,17 @@ export class AccessControlCheckDto extends Mixin(AccountDto, AddressDto) impleme
   @Transform(({ value }) => value as AccessControlRoleType)
   @IsEnum(AccessControlRoleType, { message: "badInput" })
   public role: AccessControlRoleType;
+}
+
+export class AccessControlCheckTokenOwnershipDto
+  extends Mixin(AccountDto)
+  implements IAccessControlCheckTokenOwnershipDto
+{
+  @ApiProperty({
+    type: Number,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public tokenId: number;
 }

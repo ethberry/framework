@@ -5,3 +5,8 @@ export interface IAccessControlCheckDto {
   account: string;
   role: AccessControlRoleType;
 }
+
+export interface IAccessControlCheckTokenOwnershipDto {
+  account: string;
+  tokenId: number;
+}

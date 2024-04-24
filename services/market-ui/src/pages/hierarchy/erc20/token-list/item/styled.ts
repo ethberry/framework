@@ -9,10 +9,8 @@ export const Root = styled(Box)({
 });
 
 export const StyledWrapper = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(1, 2),
+  padding: theme.spacing(0),
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
 }));
-
-export const StyledItem = styled(Box)(({ theme }) => ({}));
