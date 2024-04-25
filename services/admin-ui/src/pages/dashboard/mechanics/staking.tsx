@@ -4,15 +4,7 @@ import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
-
 export const StakingSection: FC = () => {
-  const isProd = process.env.NODE_ENV === NodeEnv.production;
-
-  if (isProd) {
-    return null;
-  }
-
   return (
     <Paper sx={{ mb: 2 }}>
       <List

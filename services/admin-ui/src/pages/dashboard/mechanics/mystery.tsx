@@ -11,7 +11,7 @@ import { RatePlanType } from "@framework/types";
 export const MysterySection: FC = () => {
   const { profile } = useUser<IUser>();
 
-  if (profile.merchant.ratePlan === RatePlanType.BRONZE) {
+  if (profile?.merchant?.ratePlan === RatePlanType.BRONZE) {
     return null;
   }
 
