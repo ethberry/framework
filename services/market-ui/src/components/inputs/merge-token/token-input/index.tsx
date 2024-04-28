@@ -24,9 +24,10 @@ export interface ITokenInputProps {
 }
 
 export const TokenInput: FC<ITokenInputProps> = props => {
-  const { prefix, tokenType, index, name = "tokenId", data, readOnly, disableClear = true } = props;
+  const { prefix, tokenType, index, name = "tokenId", data, readOnly, disableClear = false } = props;
   const form = useFormContext<any>();
 
+  const assets: IAssetComponent[] = useWatch({ name: "tokenEntities" });
   const asset: IAssetComponent = useWatch({ name: `tokenEntities[${index}]` });
 
   const { formatMessage } = useIntl();
@@ -55,6 +56,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
               name={`${prefix}.${name}`}
               controller="tokens"
               data={data}
+              disabledOptions={assets}
               label={formatMessage({ id: "form.labels.tokenIds" })}
               placeholder={formatMessage({ id: "form.placeholders.tokenIds" })}
               getTitle={(token: IToken) => formatTokenTitle(token)}

@@ -39,7 +39,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const { fn: getContractExchangeFn } = useApiCall(
     api =>
       api.fetchJson({
-        url: `/contracts/system`,
+        url: "/contracts/system",
         method: "POST",
         data: {
           contractModule: SystemModuleType.EXCHANGE,
