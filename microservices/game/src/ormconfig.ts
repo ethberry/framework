@@ -14,6 +14,7 @@ import { UserEntity } from "./infrastructure/user/user.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 import { PredictionAnswerEntity } from "./blockchain/mechanics/gambling/prediction/answer/answer.entity";
 import { PredictionQuestionEntity } from "./blockchain/mechanics/gambling/prediction/question/question.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/gambling/raffle/round/round.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -31,6 +32,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     UserEntity,
     ChainLinkSubscriptionEntity,
+    RaffleRoundEntity,
 
     PredictionAnswerEntity,
     PredictionQuestionEntity,

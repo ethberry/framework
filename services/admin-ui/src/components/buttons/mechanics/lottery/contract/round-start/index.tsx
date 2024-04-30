@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
+import LotteryStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
@@ -32,7 +32,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),
