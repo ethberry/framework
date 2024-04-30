@@ -366,7 +366,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { AlterCompositionAt9958980520000 } from "./migrations/06-alter/9958980520000-alter-composition";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -784,9 +783,6 @@ const config: PostgresConnectionOptions = {
     SeedPredictionQuestion1681273013020,
     CreatePredictionAnswer1681273013050,
     SeedPredictionAnswer1681273013060,
-
-    /* alter */
-    AlterCompositionAt9958980520000,
   ],
 };
 
