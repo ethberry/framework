@@ -1255,6 +1255,7 @@
     "featureIsNotSupported": "Feature is not supported",
     "discreteNotActive": "Attribute is not active",
     "discreteNotFound": "Grade not found",
+    "insufficientAllowance": "Insufficient allowance",
     "internalServerError": "Internal server error.",
     "merchantAlreadyExist": "Merchant already exist",
     "pageNotFound": "Page not found",
