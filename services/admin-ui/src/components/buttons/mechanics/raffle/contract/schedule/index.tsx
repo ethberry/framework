@@ -5,7 +5,6 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 
-import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 import { shouldDisableByContractType } from "../../../../utils";
 import { RaffleScheduleDialog } from "./dialog";
 
@@ -60,21 +59,17 @@ export const RaffleScheduleButton: FC<IRaffleScheduleFullButtonProps> = props =>
         message="form.buttons.schedule"
         className={className}
         dataTestId="RaffleScheduleButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || process.env.BUSINESS_TYPE === BusinessType.B2B}
         variant={variant}
       />
-      {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-        <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
-      ) : (
-        <RaffleScheduleDialog
-          onConfirm={handleScheduleConfirm}
-          onCancel={handleScheduleCancel}
-          open={isScheduleDialogOpen}
-          initialValues={{
-            schedule: parameters.schedule as CronExpression,
-          }}
-        />
-      )}
+      <RaffleScheduleDialog
+        onConfirm={handleScheduleConfirm}
+        onCancel={handleScheduleCancel}
+        open={isScheduleDialogOpen}
+        initialValues={{
+          schedule: parameters.schedule as CronExpression,
+        }}
+      />
     </Fragment>
   );
 };
