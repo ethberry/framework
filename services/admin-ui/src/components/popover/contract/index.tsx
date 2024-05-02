@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, Fragment, MouseEvent, useState } from "react";
 import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Help } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -38,14 +38,20 @@ export const BlockchainInfoPopover: FC<Record<string, any>> = props => {
       >
         <Table sx={{ minWidth: 650 }} aria-label="contract parameters">
           <TableBody>
-            {Object.keys(props).map(key => (
-              <TableRow key={key}>
-                <TableCell>
-                  <FormattedMessage id={`form.labels.${key}`} />
-                </TableCell>
-                <TableCell>{Array.isArray(props[key]) ? props[key].join(", ") || "—" : props[key]}</TableCell>
-              </TableRow>
-            ))}
+            {Object.keys(props).map(key => {
+              if (props[key]) {
+                return (
+                  <TableRow key={key}>
+                    <TableCell>
+                      <FormattedMessage id={`form.labels.${key}`} />
+                    </TableCell>
+                    <TableCell>{Array.isArray(props[key]) ? props[key].join(", ") || "—" : props[key]}</TableCell>
+                  </TableRow>
+                );
+              } else {
+                return <Fragment key={key} />;
+              }
+            })}
           </TableBody>
         </Table>
       </Popover>
