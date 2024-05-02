@@ -1,6 +1,5 @@
 import { FC, MouseEvent, useState } from "react";
 import { IconButton, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
-import { useIntl } from "react-intl";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
@@ -13,7 +12,6 @@ import { getChainIconParams } from "./utils";
 
 export const NetworkButton: FC = () => {
   const user = useUser<IUser>();
-  const { formatMessage } = useIntl();
   const [anchor, setAnchor] = useState<Element | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { networks } = useAppSelector(state => state.wallet);
@@ -43,7 +41,7 @@ export const NetworkButton: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading} spinnerSx={spinnerMixin}>
-      <Tooltip title={formatMessage({ id: `enums.chainId.${chainId}` })}>
+      <Tooltip title={networks[chainId].chainName}>
         <StyledBadge color="primary" badgeContent={<StyledCircle />} invisible={!isSandbox}>
           <IconButton
             aria-owns={anchor ? "select-chainId" : undefined}
