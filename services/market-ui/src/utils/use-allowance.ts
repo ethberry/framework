@@ -48,25 +48,16 @@ export const useAllowance = (
         const allowanceAmount = (await contractErc20.allowance(token, contract)) as number;
         hasAllowance = BigNumber.from(allowanceAmount) >= amount;
       } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
-        console.log("token", token);
-        console.log("tokenId", tokenId);
-        console.log("contract", contract);
         try {
           const contractErc721 = new Contract(contract, ERC721GetApprovedABI, web3Context.provider?.getSigner());
           const approvedAddress = (await contractErc721.getApproved(tokenId)) as string;
-          console.log("approvedAddress", approvedAddress);
-
           hasAllowance = approvedAddress === contract;
         } catch (error) {
-          console.log("error", error);
+          console.error("error", error);
         }
       } else if (tokenType === TokenType.ERC1155) {
-        console.log("token", token);
-        console.log("tokenId", tokenId);
-        console.log("contract", contract);
         const contractErc1155 = new Contract(token, ERC1155IsApprovedForAllABI, web3Context.provider?.getSigner());
         hasAllowance = (await contractErc1155.isApprovedForAll(token, contract)) as boolean;
-        console.log("hasAllowance", hasAllowance);
       } else {
         throw new Error("unsupported token type");
       }
