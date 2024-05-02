@@ -106,22 +106,6 @@
       "WrongToken": "Токен неверен",
       "ZeroBalance": "Баланс равен нулю"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (тестнет)",
-      "137": "POLYGON",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (тестнет)",
-      "42161": "ARBITRUM",
-      "80001": "MUMBAI (тестнет)",
-      "11155111": "SEPOLIA"
-    },
     "claimStatus": {
       "EXPIRED": "Истек",
       "NEW": "Новый",

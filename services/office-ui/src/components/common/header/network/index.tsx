@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
 import { IconButton, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
@@ -71,9 +71,7 @@ export const NetworkButton: FC = () => {
                 <StyledListItemIcon>
                   <StyledSvgIcon component={chainIcon} viewBox={viewBox} />
                 </StyledListItemIcon>
-                <ListItemText>
-                  <FormattedMessage id={`enums.chainId.${network.chainId}`} />
-                </ListItemText>
+                <ListItemText>{network.chainName}</ListItemText>
               </MenuItem>
             );
           })}

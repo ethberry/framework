@@ -177,22 +177,6 @@
       "WrongToken": "Token salah",
       "ZeroBalance": "Saldo nol"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "11155111": "SEPOLIA",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (testnet)",
-      "137": "POLYGON",
-      "42161": "ARBITRUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "80001": "MUMBAI (testnet)",
-      "97": "BINANCE (testnet)"
-    },
     "claimStatus": {
       "EXPIRED": "Kedaluwarsa",
       "NEW": "Baru",

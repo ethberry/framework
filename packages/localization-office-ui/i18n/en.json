@@ -106,22 +106,6 @@
       "WrongToken": "The token is wrong",
       "ZeroBalance": "The balance is zero"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "10000": "GEMUNION",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13473": "IMMUTABLE zkEVM (testnet)",
-      "137": "POLYGON",
-      "42161": "ARBITRUM",
-      "11155111": "SEPOLIA",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "80001": "MUMBAI (testnet)",
-      "97": "BINANCE (testnet)"
-    },
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
