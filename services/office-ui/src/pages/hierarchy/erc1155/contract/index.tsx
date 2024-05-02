@@ -9,8 +9,14 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IContract, IContractSearchDto, IUser } from "@framework/types";
-import { ContractStatus, Erc1155ContractFeatures } from "@framework/types";
+import {
+  BusinessType,
+  IContract,
+  IContractSearchDto,
+  IUser,
+  ContractStatus,
+  Erc1155ContractFeatures,
+} from "@framework/types";
 
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -91,9 +97,13 @@ export const Erc1155Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TokenCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <></>
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
+          </Button>
+        )}
         <Erc1155ContractDeployButton />
       </PageHeader>
 
