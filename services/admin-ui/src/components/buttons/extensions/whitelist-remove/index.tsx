@@ -18,6 +18,7 @@ export interface IUnWhitelistButtonProps {
 export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -49,7 +50,7 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
         message="form.buttons.unwhitelist"
         className={className}
         dataTestId="UnWhitelistButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccessListUnWhitelistDialog

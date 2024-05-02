@@ -88,26 +88,20 @@ export const PonziContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
               <StyledListItem key={contract.id}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListActions dataTestId="PonziActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                    disabled={itemDisabled}
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <TopUpButton contract={contract} disabled={itemDisabled} />
-                  <PonziBalanceButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <ListAction onClick={handleDelete(contract)} icon={Delete} message="form.buttons.delete" />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <AllowanceButton contract={contract} />
+                  <TopUpButton contract={contract} />
+                  <PonziBalanceButton contract={contract} />
+                  <EthListenerAddButton contract={contract} />
+                  <EthListenerRemoveButton contract={contract} />
                 </ListActions>
               </StyledListItem>
             );

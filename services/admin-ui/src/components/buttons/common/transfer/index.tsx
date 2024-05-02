@@ -26,6 +26,7 @@ export interface ITransferButtonProps {
 export const TransferButton: FC<ITransferButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, contractType, id },
     disabled,
     variant,
@@ -86,9 +87,7 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         className={className}
         dataTestId="TransferButton"
         disabled={
-          disabled ||
-          shouldDisableByContractType(props.contract) ||
-          contractFeatures.includes(ContractFeatures.SOULBOUND)
+          disabled || shouldDisableByContractType(contract) || contractFeatures.includes(ContractFeatures.SOULBOUND)
         }
         variant={variant}
       />

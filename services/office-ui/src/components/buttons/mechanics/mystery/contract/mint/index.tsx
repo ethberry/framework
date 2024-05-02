@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -12,6 +12,7 @@ import MysteryMintBoxABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
+import { shouldDisableByContractType } from "../../../../../utils";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -23,6 +24,7 @@ export interface IMysteryBoxMintButtonProps {
 export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId },
     disabled,
     variant,
@@ -66,7 +68,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <MysteryBoxMintDialog

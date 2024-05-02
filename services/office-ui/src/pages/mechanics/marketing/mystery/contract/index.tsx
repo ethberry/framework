@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IUser, IContract, IContractSearchDto } from "@framework/types";
+import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, MysteryContractFeatures } from "@framework/types";
 
 import { MysteryContractDeployButton } from "../../../../../components/buttons";
@@ -93,33 +93,27 @@ export const MysteryContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
               <StyledListItem key={contract.id}>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="MysteryActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                    disabled={itemDisabled}
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <WhitelistButton contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <PauseButton contract={contract} disabled={itemDisabled} />
-                  <UnPauseButton contract={contract} disabled={itemDisabled} />
-                  <MysteryBoxMintButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <ListAction onClick={handleDelete(contract)} icon={Delete} message="form.buttons.delete" />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <BlacklistButton contract={contract} />
+                  <UnBlacklistButton contract={contract} />
+                  <WhitelistButton contract={contract} />
+                  <UnWhitelistButton contract={contract} />
+                  <PauseButton contract={contract} />
+                  <UnPauseButton contract={contract} />
+                  <MysteryBoxMintButton contract={contract} />
+                  <AllowanceButton contract={contract} />
+                  <RoyaltyButton contract={contract} />
+                  <TransferButton contract={contract} />
+                  <EthListenerAddButton contract={contract} />
+                  <EthListenerRemoveButton contract={contract} />
                 </ListActions>
               </StyledListItem>
             );

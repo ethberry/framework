@@ -22,6 +22,7 @@ export interface IUnPauseButtonProps {
 export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, isPaused, contractFeatures },
     disabled,
     variant,
@@ -47,7 +48,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
       message="form.buttons.unpause"
       className={className}
       dataTestId="UnPauseButton"
-      disabled={disabled || shouldDisableByContractType(props.contract)}
+      disabled={disabled || shouldDisableByContractType(contract)}
       variant={variant}
     />
   );

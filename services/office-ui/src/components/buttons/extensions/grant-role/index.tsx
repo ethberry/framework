@@ -11,6 +11,7 @@ import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "
 import GrantRoleABI from "@framework/abis/grantRole/AccessControlFacet.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
+import { shouldDisableByContractType } from "../../../utils";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -22,6 +23,7 @@ export interface IGrantRoleButtonProps {
 export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -60,7 +62,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         message="form.buttons.grantRole"
         className={className}
         dataTestId="GrantRoleButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccessControlGrantRoleDialog

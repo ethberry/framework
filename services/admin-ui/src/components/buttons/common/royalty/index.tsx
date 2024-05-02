@@ -23,6 +23,7 @@ export interface IRoyaltyButtonProps {
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, royalty, contractType },
     disabled,
     variant,
@@ -62,9 +63,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         className={className}
         dataTestId="RoyaltyButton"
         disabled={
-          disabled ||
-          shouldDisableByContractType(props.contract) ||
-          contractFeatures.includes(ContractFeatures.SOULBOUND)
+          disabled || shouldDisableByContractType(contract) || contractFeatures.includes(ContractFeatures.SOULBOUND)
         }
         variant={variant}
       />

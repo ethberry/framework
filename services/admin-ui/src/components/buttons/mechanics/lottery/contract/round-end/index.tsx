@@ -20,6 +20,7 @@ export interface ILotteryRoundEndButtonProps {
 export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, parameters },
     disabled,
     variant,
@@ -46,9 +47,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       message="pages.lottery.rounds.end"
       className={className}
       dataTestId="LotteryRoundEndButton"
-      disabled={
-        disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
-      }
+      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
       variant={variant}
     />
   );

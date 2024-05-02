@@ -60,7 +60,7 @@ export const EthListenerAddButton: FC<IEthListenerAddButtonProps> = props => {
         message="form.buttons.addListener"
         className={className}
         dataTestId="EthListenerAddButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <EthListenerAddDialog

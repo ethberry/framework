@@ -18,6 +18,7 @@ export interface IRevokeRoleButtonProps {
 export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -49,7 +50,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         message="form.buttons.revokeRole"
         className={className}
         dataTestId="RevokeRoleButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccessControlRevokeRoleDialog

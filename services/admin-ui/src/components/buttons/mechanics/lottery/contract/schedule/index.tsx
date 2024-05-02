@@ -20,6 +20,7 @@ export interface ILotteryScheduleFullButtonProps {
 export const LotteryScheduleButton: FC<ILotteryScheduleFullButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { id, parameters },
     disabled,
     refreshPage,
@@ -59,7 +60,7 @@ export const LotteryScheduleButton: FC<ILotteryScheduleFullButtonProps> = props 
         message="form.buttons.schedule"
         className={className}
         dataTestId="LotteryScheduleButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       {process.env.BUSINESS_TYPE === BusinessType.B2B ? (

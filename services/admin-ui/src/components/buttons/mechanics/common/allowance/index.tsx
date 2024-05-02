@@ -23,6 +23,7 @@ export interface IAllowanceButtonProps {
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -63,7 +64,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         message="form.buttons.allowance"
         className={className}
         dataTestId="AllowanceButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AllowanceDialog

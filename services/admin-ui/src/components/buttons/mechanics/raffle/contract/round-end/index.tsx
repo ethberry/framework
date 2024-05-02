@@ -21,6 +21,7 @@ export interface IRaffleRoundEndButtonProps {
 export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, parameters },
     disabled,
     variant,
@@ -47,9 +48,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={
-        disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
-      }
+      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
       variant={variant}
     />
   );

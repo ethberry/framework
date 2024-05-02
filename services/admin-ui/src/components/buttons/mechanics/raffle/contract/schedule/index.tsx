@@ -20,6 +20,7 @@ export interface IRaffleScheduleFullButtonProps {
 export const RaffleScheduleButton: FC<IRaffleScheduleFullButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { id, parameters },
     disabled,
     refreshPage,
@@ -59,7 +60,7 @@ export const RaffleScheduleButton: FC<IRaffleScheduleFullButtonProps> = props =>
         message="form.buttons.schedule"
         className={className}
         dataTestId="RaffleScheduleButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       {process.env.BUSINESS_TYPE === BusinessType.B2B ? (

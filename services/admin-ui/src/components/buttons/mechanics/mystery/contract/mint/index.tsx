@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -24,6 +24,7 @@ export interface IMysteryBoxMintButtonProps {
 export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId },
     disabled,
     variant,
@@ -71,7 +72,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <MintMysteryBoxDialog

@@ -1,7 +1,7 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
@@ -28,6 +28,7 @@ export interface IMintButtonProps {
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
@@ -111,7 +112,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         dataTestId="ContractMintButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(props.contract) ||
+          shouldDisableByContractType(contract) ||
           contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasAccess

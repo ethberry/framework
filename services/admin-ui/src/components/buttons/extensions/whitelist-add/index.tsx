@@ -23,6 +23,7 @@ export interface IWhitelistButtonProps {
 export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -61,7 +62,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
         message="form.buttons.whitelist"
         className={className}
         dataTestId="WhitelistButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccountDialog

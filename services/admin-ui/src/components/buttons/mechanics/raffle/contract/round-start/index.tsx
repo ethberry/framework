@@ -24,6 +24,7 @@ export interface IRaffleRoundStartButtonProps {
 export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id, parameters },
     disabled,
     variant,
@@ -76,9 +77,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={
-          disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
-        }
+        disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
         variant={variant}
       />
       <RaffleStartRoundDialog

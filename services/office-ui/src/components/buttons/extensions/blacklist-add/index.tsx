@@ -11,6 +11,7 @@ import { ContractFeatures } from "@framework/types";
 import BlacklistABI from "@framework/abis/blacklist/ERC1155Blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { shouldDisableByContractType } from "../../../utils";
 
 export interface IBlacklistButtonProps {
   className?: string;
@@ -22,6 +23,7 @@ export interface IBlacklistButtonProps {
 export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -60,7 +62,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
         message="form.buttons.blacklist"
         className={className}
         dataTestId="BlacklistButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccountDialog

@@ -22,6 +22,7 @@ export interface IPausableButtonProps {
 export const PauseButton: FC<IPausableButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, isPaused, contractFeatures },
     disabled,
     variant,
@@ -47,7 +48,7 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
       message="form.buttons.pause"
       className={className}
       dataTestId="PauseButton"
-      disabled={disabled || shouldDisableByContractType(props.contract)}
+      disabled={disabled || shouldDisableByContractType(contract)}
       variant={variant}
     />
   );
