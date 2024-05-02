@@ -1290,6 +1290,7 @@
     "featureIsNotSupported": "Feature is not supported",
     "gradeNotActive": "Attribute is not active",
     "gradeNotFound": "Grade not found",
+    "insufficientAllowance": "Insufficient allowance",
     "internalServerError": "Internal server error.",
     "merchantAlreadyExist": "Merchant already exist",
     "pageNotFound": "Page not found",

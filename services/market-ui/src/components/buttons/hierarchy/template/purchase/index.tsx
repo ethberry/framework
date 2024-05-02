@@ -14,6 +14,7 @@ import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 import TemplatePurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
 
 import { sorter } from "../../../../../utils/sorter";
+import { useAllowance } from "../../../../../utils/use-allowance";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
@@ -35,9 +36,13 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const dispatch = useAppDispatch();
   const { setIsDialogOpen } = walletActions;
 
-  const metaFnWithSign = useServerSignature(
+  const metaFnWithAllowance = useAllowance(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
+      console.log("values", values);
+      console.log("sign", sign);
+      console.log("systemContract", systemContract);
+      console.log("template", template);
 
       return contract.purchase(
         {
@@ -50,7 +55,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
-          token: template.contract?.address,
+          token: template.contract!.address,
           tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
           amount: values.amount || 1,
         },
@@ -65,6 +70,24 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           value: getEthPrice(template.price).mul(values.amount),
         },
       ) as Promise<void>;
+    },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      return metaFnWithAllowance(
+        {
+          amount: getEthPrice(template.price).mul(values.amount),
+          contract: systemContract.address,
+          token: template.price!.components[0].contract!.address,
+          tokenType: template.price!.components[0].contract!.contractType!,
+          tokenId: template.price!.components[0].id,
+        },
+        values,
+        web3Context,
+        sign,
+        systemContract,
+      );
     },
   );
 
@@ -89,7 +112,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   });
 
   const handleConnect = () => {
-    dispatch(setIsDialogOpen(true));
+    void dispatch(setIsDialogOpen(true));
   };
 
   const handleBuy = async () => {

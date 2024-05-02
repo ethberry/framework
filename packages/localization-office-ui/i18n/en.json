@@ -1016,6 +1016,7 @@
     "email": "Email successfully sent.",
     "error": "Unknown Error",
     "inactive": "Successfully inactivated",
+    "insufficientAllowance": "Insufficient allowance",
     "insufficientPermissions": "Insufficient permissions",
     "internalServerError": "Internal Server Error",
     "invite": "Successfully invited",
