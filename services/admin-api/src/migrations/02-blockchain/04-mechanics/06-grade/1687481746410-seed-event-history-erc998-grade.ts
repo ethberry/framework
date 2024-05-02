@@ -36,6 +36,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           account: wallets[0],
           externalId: 10401,
           attribute: LEVEL,
+          level: "10",
           items: {
             tokenType: 2,
             token: erc998ContractDiscreteAddress,
@@ -90,6 +91,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           account: wallets[0],
           externalId: 10402,
           attribute: LEVEL,
+          level: "10",
           items: {
             tokenType: 2,
             token: erc998ContractDiscreteAddress,
@@ -144,6 +146,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           account: wallets[0],
           externalId: 10408,
           attribute: LEVEL,
+          level: "8",
           items: {
             tokenType: 2,
             token: erc998ContractDiscreteAddress,
