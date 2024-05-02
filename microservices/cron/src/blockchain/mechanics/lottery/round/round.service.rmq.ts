@@ -8,6 +8,7 @@ import type { ILotteryScheduleUpdateRmq } from "@framework/types";
 import { ContractStatus, CoreEthType, CronExpression, ModuleType, RmqProviderType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { isValidCronExpression } from "../../../../utils/isValidCronExpression";
 
 @Injectable()
 export class LotteryRoundServiceRmq {
@@ -32,7 +33,7 @@ export class LotteryRoundServiceRmq {
     });
 
     lotteryEntities.map(lottery => {
-      return Object.values(CronExpression).includes(lottery.parameters.schedule as unknown as CronExpression)
+      return isValidCronExpression(lottery.parameters.schedule)
         ? this.updateOrCreateRoundCronJob(
             {
               address: lottery.address,
@@ -52,7 +53,7 @@ export class LotteryRoundServiceRmq {
     }
 
     // TODO do we need to test it?
-    if (!Object.values(CronExpression).includes(dto.schedule as unknown as CronExpression)) {
+    if (!isValidCronExpression(dto.schedule)) {
       throw new NotAcceptableException("notAcceptableSchedule");
     }
 
