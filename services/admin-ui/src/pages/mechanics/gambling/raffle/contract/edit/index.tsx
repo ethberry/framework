@@ -10,6 +10,7 @@ import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
+import { StyledLink } from "./styled";
 
 export interface IRaffleEditDialogProps {
   open: boolean;
@@ -62,9 +63,9 @@ export const RaffleEditDialog: FC<IRaffleEditDialogProps> = props => {
       <Fragment>
         <Alert severity="warning">
           <Typography>
-            <a id="anchor" href={"/chain-link"}>
+            <StyledLink id="anchor" href={"/chain-link"}>
               <FormattedMessage id="alert.randomChainlink" />
-            </a>
+            </StyledLink>
           </Typography>
         </Alert>
       </Fragment>
