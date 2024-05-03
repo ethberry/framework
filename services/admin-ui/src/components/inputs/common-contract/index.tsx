@@ -42,7 +42,11 @@ export const CommonContractInput: FC<ICommonContractInputProps> = props => {
     <EntityInput
       name={name}
       controller={controller}
-      data={{ ...data, ...(withTokenType ? { contractType: [tokenType] } : {}) }}
+      data={{
+        ...data,
+        ...(withTokenType ? { contractType: [tokenType] } : {}),
+        includeExternalContracts: true,
+      }}
       onChange={onChange ? onChange(form) : undefined}
       autoselect={autoselect}
       readOnly={readOnly}
