@@ -220,6 +220,17 @@ export class ContractManagerServiceEth {
       });
     }
 
+    if (contractEntity.contractModule === ModuleType.LOTTERY || contractEntity.contractModule === ModuleType.RAFFLE) {
+      // CREATE TEMPLATE TICKET
+      await this.templateService.create({
+        title: name,
+        description: emptyStateString,
+        imageUrl,
+        contractId: contractEntity.id,
+        templateStatus: TemplateStatus.ACTIVE,
+      });
+    }
+
     if (
       contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
@@ -234,6 +245,7 @@ export class ContractManagerServiceEth {
         fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
+      // ADD LISTENER
       this.raffleTicketLogService.addListener({
         address: [account.toLowerCase()],
         fromBlock: parseInt(context.blockNumber.toString(), 16),
