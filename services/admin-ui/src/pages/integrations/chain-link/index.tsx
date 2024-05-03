@@ -12,12 +12,13 @@ import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
 
+import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
+import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
+
 import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
 import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperMixin } from "./styled";
-import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
-import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
 
 export interface IVrfSubscriptionData {
   owner: string;
@@ -56,9 +57,9 @@ export const ChainLink: FC = () => {
   });
 
   const { fn, isLoading } = useApiCall(
-    api => {
+    (api, values: { account: string }) => {
       return api.fetchJson({
-        url: `/chain-link/subscriptions/${account}`,
+        url: `/chain-link/subscriptions/${values.account}`,
         method: "GET",
       });
     },
@@ -120,18 +121,21 @@ export const ChainLink: FC = () => {
   );
 
   useEffect(() => {
+    if (!account) {
+      return;
+    }
     if (!merchantSubscriptions && !isLoading) {
-      void fn().then((rows: Array<IChainLinkSubscription>) => {
-        const filtered = rows.filter(sub => sub.merchant.wallet === account && sub.chainId === profile.chainId);
+      void fn(void 0, { account }).then((rows: Array<IChainLinkSubscription>) => {
+        const filtered = rows.filter(
+          sub => sub.merchant.wallet.toLowerCase() === account.toLowerCase() && sub.chainId === profile.chainId,
+        );
         setMerchantSubscriptions(filtered);
         setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
       });
+    } else {
+      void metaFnSubData(currentSubscription).then(setSubData);
+      void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
     }
-    if (!merchantSubscriptions || !account) {
-      return;
-    }
-    void metaFnSubData(currentSubscription).then(setSubData);
-    void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
   }, [account, currentSubscription]);
 
   const columns = [
