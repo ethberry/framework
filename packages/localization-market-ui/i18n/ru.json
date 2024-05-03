@@ -338,7 +338,7 @@
   },
   "form": {
     "buttons": {
-      "GRADE": "Класс",
+      "GRADE": "Грейд",
       "add": "Добавить",
       "addToMetamask": "Добавить в MetaMask",
       "allowance": "Разрешение",
@@ -394,7 +394,7 @@
     "labels": {
       "DUMMY": "Заглушка",
       "EXCHANGE": "Обмен",
-      "GRADE": "Оценка",
+      "GRADE": "Грейд",
       "LEVEL": "Уровень",
       "RARITY": "Редкость",
       "SIGNATURE_TTL": "Время жизни подписи",
@@ -447,7 +447,7 @@
       "facebookUrl": "Facebook",
       "from": "От",
       "gender": "Пол",
-      "gradeId": "Оценка",
+      "gradeId": "Грейд",
       "id": "ID",
       "imageUrl": "Аватар",
       "instagramUrl": "Instagram",
@@ -543,7 +543,7 @@
       "displayName": "Гордон Фримен",
       "email": "me@google.com",
       "facebookUrl": "https://facebook.com/",
-      "gradeId": "УРОВЕНЬ",
+      "gradeId": "Грейд",
       "instagramUrl": "https://instagram.com/",
       "listId": "1",
       "mainContractId": "Контракт",

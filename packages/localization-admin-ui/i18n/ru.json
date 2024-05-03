@@ -365,7 +365,7 @@
       "DepositReturn": "Возврат Депозита",
       "DepositStart": "Начало Депозита",
       "DepositWithdraw": "Снятие Депозита",
-      "Dismantle": "Разборка (Dismantle)",
+      "Dismantle": "Разборка",
       "ERC1155TokenDeployed": "Деплой Токена ERC1155",
       "ERC20PaymentReleased": "Выпущен Платеж ERC20",
       "ERC20Released": "Выпущен ERC20",
@@ -378,7 +378,7 @@
       "Lend": "Займ",
       "LevelUp": "Повышение Уровня",
       "LotteryDeployed": "Деплой Лотереи",
-      "Merge": "Объединение (Merge)",
+      "Merge": "Объединение",
       "MetadataUpdate": "Обновление Метаданных",
       "MintRandom": "Случайный Минт",
       "MysteryBoxDeployed": "Деплой Мистической коробки",
@@ -1235,7 +1235,7 @@
       }
     },
     "grade": {
-      "title": "Правила Грейда (Grade)"
+      "title": "Правила Грейда"
     },
     "guest": {
       "confirmation": "Пожалуйста, проверьте ваш почтовый ящик, чтобы подтвердить вашу электронную почту.",
@@ -1450,57 +1450,57 @@
         "title": "Всегда включено"
       },
       "bronze": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "5 контрактов ERC1155",
         "erc20": "1 контракт ERC20",
         "erc721": "5 контрактов ERC721",
-        "grade": "Грейд (Grade)",
+        "grade": "Грейд",
         "mystery": "Мистические коробки",
-        "raffle": "Розыгрыш (Raffle)",
+        "raffle": "Розыгрыш",
         "staking": "Стейкинг",
         "title": "Бронза",
         "vesting": "100 контрактов на вестинг",
-        "waitList": "Список ожидания (Wait list)"
+        "waitList": "Список ожидания"
       },
       "contactViaTelegram": "Связаться через Telegram",
       "gold": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "25 контрактов ERC1155",
         "erc20": "5 контрактов ERC20",
         "erc721": "25 контрактов ERC721",
-        "grade": "Грейд (Grade)",
+        "grade": "Грейд",
         "mystery": "Мистические коробки",
-        "raffle": "Розыгрыш (Raffle)",
+        "raffle": "Розыгрыш",
         "staking": "Стейкинг",
         "title": "Золото",
         "vesting": "500 контрактов на вестинг",
-        "waitList": "Список ожидания (Wait list)"
+        "waitList": "Список ожидания"
       },
       "month": "месяц",
       "onDemand": {
-        "raffle": "Розыгрыш (Raffle)",
+        "raffle": "Розыгрыш",
         "staking": "Стейкинг",
         "title": "По требованию",
-        "waitList": "Список ожидания (Wait list)"
+        "waitList": "Список ожидания"
       },
       "silver": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "10 контрактов ERC1155",
         "erc20": "1 контракт ERC20",
         "erc721": "10 контрактов ERC721",
-        "grade": "Грейд (Grade)",
+        "grade": "Грейд",
         "mystery": "Мистические коробки",
-        "raffle": "Розыгрыш (Raffle)",
+        "raffle": "Розыгрыш",
         "staking": "Стейкинг",
         "title": "Серебро",
         "vesting": "300 контрактов на Вестинг",
-        "waitList": "Список ожидания (Wait list)"
+        "waitList": "Список ожидания"
       },
       "title": "Тарифные Планы"
     },
@@ -1508,17 +1508,17 @@
       "craft": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Крафта (Craft)"
+        "title": "Рецепты Крафта"
       },
       "dismantle": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Разборки (Dismantle)"
+        "title": "Рецепты Разборки"
       },
       "merge": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Объединения (Merge)"
+        "title": "Рецепты Объединения"
       },
       "title": "Рецепты"
     },
