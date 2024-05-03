@@ -1,3 +1,7 @@
+import { NotFoundException } from "@nestjs/common";
+
+import { ChainLinkSupportedChains } from "@framework/types/dist/entities/integrations/chain-link/supported";
+
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {
     case 1:
@@ -31,6 +35,10 @@ export const getContractABI = (path: string, chainId: bigint | number) => {
   let fixedPath = path;
   const isRandom = path.includes("Random") || path.includes("Genes");
   if (isRandom) {
+    const isSupported = Object.values(ChainLinkSupportedChains).includes(Number(chainId));
+    if (!isSupported) {
+      throw new NotFoundException("randomNotSupportedChain", chainId.toString());
+    }
     const suffix = chainIdToSuffix(chainId);
     fixedPath = path.replace(".sol", `${suffix}.sol`).replace(".json", `${suffix}.json`);
   }
