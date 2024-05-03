@@ -698,7 +698,6 @@
       "integrations": {
         "coin-gecko": "CoinGecko",
         "dex": {
-          "1inch": "1inch",
           "title": "Dex",
           "uniswap": "Uniswap"
         },
@@ -722,86 +721,6 @@
       "title": "Dasbor"
     },
     "dex": {
-      "1inch": {
-        "advanced-settings": {
-          "gas": "Gas",
-          "slippage": "Toleransi Slippage",
-          "title": "Pengaturan Lanjutan"
-        },
-        "buttons": {
-          "buy-crypto": "Beli Kripto",
-          "cancel": "Batalkan",
-          "confirm": "Konfirmasi",
-          "connect-wallet": "Sambungkan dompet",
-          "download-metamask": "Unduh Metamask",
-          "learn-more": "Pelajari lebih lanjut",
-          "swap-tokens": "Tukar Token",
-          "swapAgain": "Tukar Lagi"
-        },
-        "enums": {
-          "gasPrice": {
-            "HIGH": "Tinggi",
-            "LOW": "Rendah",
-            "MEDIUM": "SEDANG"
-          },
-          "networks": {
-            "ARBITRUM": "Arbitrum",
-            "BINANCE": "Binance",
-            "ETHEREUM": "Ethereum",
-            "OPTIMISM": "Optimisme",
-            "POLYGON": "Polygon"
-          },
-          "slippage": {
-            "HIGH": "1%",
-            "LOW": "0.1%",
-            "MEDIUM": "0.5%",
-            "VERY_HIGH": "3%"
-          },
-          "text": "Jaringan aplikasi {appNetwork} tidak cocok dengan jaringan yang dipilih di dompet {walletNetwork}"
-        },
-        "header": {
-          "bridge": "Jembatan",
-          "network": "Jaringan"
-        },
-        "snackbar": {
-          "accountNotFound": "Akun tidak ditemukan dalam daftar",
-          "approve-1inch": "Harap setujui 1inch untuk menggunakan {symbol} Anda",
-          "web3-not-detected": "Penyedia Web3 tidak terdeteksi"
-        },
-        "swap": {
-          "ETH": "ETH",
-          "approve": "Setujui",
-          "approving": "Menyetujui...",
-          "balanceOf": "Saldo dari",
-          "buyPrice": "harga beli",
-          "complete": "Lengkap",
-          "confirm": "Konfirmasi Tukar",
-          "cost": "Biaya",
-          "fee": "Biaya",
-          "gas": "Gas",
-          "gasPrice": "Harga Gas",
-          "gwei": "GWEI",
-          "maxPriceSlippage": "Slippage harga maks",
-          "preparing": "Menyiapkan Tukar",
-          "product": "Produk",
-          "quantity": "Kuantitas",
-          "rate": "Tarif",
-          "selected": "Terpilih",
-          "spread": "Menyebar di DEXes",
-          "swapping": "Menukar Token",
-          "title": "TUKAR",
-          "total": "Total",
-          "txCost": "Biaya Tx"
-        },
-        "title": "1inch",
-        "token-search": {
-          "title": "Cari {amount} token"
-        },
-        "warning": {
-          "cannotBeSame": "Token tidak bisa sama",
-          "insufficient": "Saldo {symbol} tidak cukup"
-        }
-      },
       "title": "Dex",
       "uniswap": {
         "title": "Uniswap"

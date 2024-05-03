@@ -698,7 +698,6 @@
       "integrations": {
         "coin-gecko": "CoinGecko",
         "dex": {
-          "1inch": "1inch",
           "title": "Dex",
           "uniswap": "Uniswap"
         },
@@ -722,86 +721,6 @@
       "title": "Панель управления"
     },
     "dex": {
-      "1inch": {
-        "advanced-settings": {
-          "gas": "Газ",
-          "slippage": "Допуск скольжения",
-          "title": "Расширенные настройки"
-        },
-        "buttons": {
-          "buy-crypto": "Купить криптовалюту",
-          "cancel": "Отмена",
-          "confirm": "Подтвердить",
-          "connect-wallet": "Подключить кошелек",
-          "download-metamask": "Скачать Metamask",
-          "learn-more": "Узнать больше",
-          "swap-tokens": "Обмен токенов",
-          "swapAgain": "Обменять снова"
-        },
-        "enums": {
-          "gasPrice": {
-            "HIGH": "Высокий",
-            "LOW": "Низкий",
-            "MEDIUM": "СРЕДНИЙ"
-          },
-          "networks": {
-            "ARBITRUM": "Arbitrum",
-            "BINANCE": "Binance",
-            "ETHEREUM": "Ethereum",
-            "OPTIMISM": "Optimism",
-            "POLYGON": "Polygon"
-          },
-          "slippage": {
-            "HIGH": "1%",
-            "LOW": "0.1%",
-            "MEDIUM": "0.5%",
-            "VERY_HIGH": "3%"
-          },
-          "text": "Сеть приложения {appNetwork} не соответствует выбранной в кошельке сети {walletNetwork}"
-        },
-        "header": {
-          "bridge": "Мост",
-          "network": "Сеть"
-        },
-        "snackbar": {
-          "accountNotFound": "Учетная запись не найдена в списке",
-          "approve-1inch": "Пожалуйста, разрешите 1inch использовать ваши {symbol}",
-          "web3-not-detected": "Провайдер Web3 не обнаружен"
-        },
-        "swap": {
-          "ETH": "ETH",
-          "approve": "Разрешить",
-          "approving": "Разрешение...",
-          "balanceOf": "Баланс",
-          "buyPrice": "цена покупки",
-          "complete": "Завершено",
-          "confirm": "Подтвердить обмен",
-          "cost": "Стоимость",
-          "fee": "Плата",
-          "gas": "Газ",
-          "gasPrice": "Цена газа",
-          "gwei": "GWEI",
-          "maxPriceSlippage": "Максимальное скольжение цены",
-          "preparing": "Подготовка к обмену",
-          "product": "Продукт",
-          "quantity": "Количество",
-          "rate": "Курс",
-          "selected": "Выбрано",
-          "spread": "Распределено по DEX",
-          "swapping": "Обмен токенов",
-          "title": "ОБМЕН",
-          "total": "Всего",
-          "txCost": "Стоимость транзакции"
-        },
-        "title": "1inch",
-        "token-search": {
-          "title": "Поиск {amount} токенов"
-        },
-        "warning": {
-          "cannotBeSame": "Токены не могут быть одинаковыми",
-          "insufficient": "Недостаточно {symbol} баланса"
-        }
-      },
       "title": "Dex",
       "uniswap": {
         "title": "Uniswap"

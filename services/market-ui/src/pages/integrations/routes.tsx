@@ -2,7 +2,6 @@ import type { RouteObject } from "react-router-dom";
 
 import { DexSection } from "../dashboard/integrations/dex";
 import { IndexWrapper } from "../index-wrapper";
-import { OneInch } from "./dex/1inch";
 import { Uniswap } from "./dex/uniswap";
 import { CoinGecko } from "./coin-gecko";
 import { ipfsRoutes } from "./ipfs/routes";
@@ -18,10 +17,6 @@ export const integrationsRoutes: Array<RouteObject> = [
             <DexSection />
           </IndexWrapper>
         ),
-      },
-      {
-        path: "/dex/1inch",
-        children: [{ index: true, element: <OneInch /> }],
       },
       {
         path: "/dex/uniswap",
