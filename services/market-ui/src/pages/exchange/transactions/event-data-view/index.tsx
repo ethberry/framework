@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { IEventHistory } from "@framework/types";
+import type { IEventHistory } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 
-import { ContractEventType } from "../form";
 import { ClaimDataView } from "./claim";
 import { CraftDataView } from "./craft";
 import { DismantleDataView } from "./dismantle";
@@ -18,7 +18,6 @@ import { TransferSingleDataView } from "./transfer-single";
 import { UnpackMysteryBoxDataView } from "./unpack-mystery-box";
 import { UpgradeDataView } from "./upgrade";
 import { WaitListRewardClaimedDataView } from "./wait-list-reward-claimed";
-import { LevelUpDataView } from "./levelUp";
 
 export interface IEventDataViewProps {
   row: IEventHistory;
@@ -27,7 +26,7 @@ export interface IEventDataViewProps {
 export const EventDataView: FC<IEventDataViewProps> = props => {
   const { row } = props;
 
-  const { assets, contract, eventData, eventType, token } = row as unknown as Required<IEventHistory>;
+  const { assets, contract, eventData, eventType } = row as unknown as Required<IEventHistory>;
 
   switch (eventType) {
     case ContractEventType.Claim:
@@ -50,8 +49,6 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
       return <UnpackMysteryBoxDataView assets={assets} contract={contract} />;
     case ContractEventType.Upgrade:
       return <UpgradeDataView assets={assets} contract={contract} eventData={eventData} />;
-    case ContractEventType.LevelUp:
-      return <LevelUpDataView token={token} contract={contract} eventData={eventData} />;
     case ContractEventType.Transfer:
       return <TransferDataView eventData={eventData} contract={contract} />;
     case ContractEventType.TransferSingle:

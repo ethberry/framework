@@ -70,14 +70,6 @@ export const MyTransactions: FC = () => {
       minWidth: 140,
     },
     {
-      field: "chainId",
-      headerName: formatMessage({ id: "form.labels.network" }),
-      sortable: false,
-      valueFormatter: ({ value }: { value: number }) => formatMessage({ id: `enums.chainId.${value}` }),
-      flex: 1,
-      minWidth: 120,
-    },
-    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: true,
