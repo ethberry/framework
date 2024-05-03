@@ -895,7 +895,7 @@
       "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Корень",
-      "chainId": "ChainId",
+      "chainId": "Сеть",
       "childId": "Контракт",
       "childIds": "Контракт",
       "city": "Гамбург",
