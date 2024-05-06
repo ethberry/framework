@@ -5,8 +5,7 @@ import { formatUnits } from "ethers";
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import type { IDummyPayload, IPayload, IStakingBalancePayload, IVrfPayload } from "./interfaces";
-import { IRafflePrizePayload } from "./interfaces/rafflePrize";
+import type { IDummyPayload, IPayload, IStakingBalancePayload, IVrfPayload, IRafflePrizePayload } from "./interfaces";
 
 @Controller()
 export class EmailController {

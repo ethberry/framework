@@ -6,7 +6,6 @@ import { Log, Wallet } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import {
-  EmailType,
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
@@ -15,6 +14,7 @@ import {
   RmqProviderType,
   SignalEventType,
   TokenType,
+  EmailType,
 } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
