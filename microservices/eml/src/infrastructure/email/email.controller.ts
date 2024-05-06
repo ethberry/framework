@@ -6,6 +6,7 @@ import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
 import type { IDummyPayload, IPayload, IStakingBalancePayload, IVrfPayload } from "./interfaces";
+import { IRafflePrizePayload } from "./interfaces/rafflePrize";
 
 @Controller()
 export class EmailController {
@@ -79,6 +80,19 @@ export class EmailController {
         depositAmount: formatUnits(payload.deposit, payload.token.template!.contract!.decimals),
         // CHAIN_ID
         chainId: payload.contract.chainId.toString(),
+      },
+    });
+  }
+
+  // RAFFLE-PRIZE
+  @EventPattern(EmailType.RAFFLE_PRIZE)
+  async rafflePrize(@Payload() payload: IRafflePrizePayload): Promise<IEmailResult> {
+    return this.mailjetService.sendTemplate({
+      template: 5930807,
+      to: [payload.merchant.email],
+      data: {
+        roundId: payload.round.roundId,
+        tokenId: payload.token.tokenId,
       },
     });
   }

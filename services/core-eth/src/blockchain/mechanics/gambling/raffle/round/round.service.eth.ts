@@ -6,6 +6,7 @@ import { Log, Wallet } from "ethers";
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  EmailType,
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
@@ -33,7 +34,7 @@ export class RaffleRoundServiceEth {
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
-    protected readonly signalClientProxy: ClientProxy,
+    protected readonly сlientProxy: ClientProxy,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
@@ -123,7 +124,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.signalClientProxy
+    await this.сlientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleContractEntity.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -158,7 +159,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.signalClientProxy
+    await this.сlientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleRoundEntity.contract.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -207,7 +208,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.signalClientProxy
+    await this.сlientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleRoundEntity.contract.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -263,11 +264,21 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.signalClientProxy
+    // NOTIFY SIGNAL SERVICE
+    await this.сlientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: account.toLowerCase(),
         transactionHash,
         transactionType: name,
+      })
+      .toPromise();
+
+    // NOTIFY EMAIL SERVICE
+    await this.сlientProxy
+      .emit(EmailType.RAFFLE_PRIZE, {
+        merchant: raffleRoundEntity.contract.merchant,
+        round: raffleRoundEntity,
+        ticket: ticketContractEntity,
       })
       .toPromise();
   }
