@@ -1,4 +1,5 @@
-import { IReferralTree } from "@framework/types";
+import { NodeEnv } from "@framework/types";
+import type { IReferralTree } from "@framework/types";
 
 export interface IRefProgramsLevels {
   merchantId: number;
@@ -6,6 +7,14 @@ export interface IRefProgramsLevels {
 }
 
 export const emptyRefProgram = { merchantId: 0, levels: [{ level: 0, share: 0 }] };
+
+export const getMarketUrl = () => {
+  return process.env.MARKET_FE_URL
+    ? process.env.MARKET_FE_URL
+    : process.env.NODE_ENV === NodeEnv.production
+      ? "https://market.gemunion.io"
+      : "https://st-market-b2b.gemunion.io";
+};
 
 export const getRefLevelShare = (
   programs: Array<IRefProgramsLevels>,

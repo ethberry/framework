@@ -8,14 +8,19 @@ import { useClipboard } from "use-clipboard-copy";
 
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
-import { NodeEnv } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
-import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
+import {
+  calculateDepth,
+  emptyRefProgram,
+  getMarketUrl,
+  getRefLevelShare,
+  IRefProgramsLevels,
+} from "../../../../../utils/referral";
 import { ReferralTreeMerchantSearchForm } from "./form";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
@@ -44,11 +49,7 @@ export const ReferralTree: FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const [programs, setPrograms] = useState<Array<IRefProgramsLevels>>([emptyRefProgram]);
 
-  const marketUrl = process.env.MARKET_FE_URL
-    ? process.env.MARKET_FE_URL
-    : process.env.NODE_ENV === NodeEnv.production
-      ? "https://market.gemunion.io"
-      : "https://st-market-b2b.gemunion.io";
+  const marketUrl = getMarketUrl();
 
   const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
 
