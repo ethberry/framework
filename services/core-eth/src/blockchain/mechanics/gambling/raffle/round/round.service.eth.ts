@@ -280,7 +280,7 @@ export class RaffleRoundServiceEth {
       .emit(EmailType.RAFFLE_PRIZE, {
         merchant: raffleRoundEntity.contract.merchant,
         round: raffleRoundEntity,
-        ticket: ticketContractEntity,
+        token: ticketContractEntity,
       })
       .toPromise();
   }
