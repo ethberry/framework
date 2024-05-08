@@ -34,7 +34,9 @@ export class RaffleRoundServiceEth {
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
-    protected readonly сlientProxy: ClientProxy,
+    protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emailClientProxy: ClientProxy,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
@@ -124,7 +126,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.сlientProxy
+    await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleContractEntity.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -159,7 +161,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.сlientProxy
+    await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleRoundEntity.contract.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -208,7 +210,7 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
-    await this.сlientProxy
+    await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: raffleRoundEntity.contract.merchant.wallet.toLowerCase(),
         transactionHash,
@@ -265,7 +267,7 @@ export class RaffleRoundServiceEth {
     });
 
     // NOTIFY SIGNAL SERVICE
-    await this.сlientProxy
+    await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: account.toLowerCase(),
         transactionHash,
@@ -274,7 +276,7 @@ export class RaffleRoundServiceEth {
       .toPromise();
 
     // NOTIFY EMAIL SERVICE
-    await this.сlientProxy
+    await this.emailClientProxy
       .emit(EmailType.RAFFLE_PRIZE, {
         merchant: raffleRoundEntity.contract.merchant,
         round: raffleRoundEntity,
