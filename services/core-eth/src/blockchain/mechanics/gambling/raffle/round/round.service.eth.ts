@@ -14,6 +14,7 @@ import {
   RmqProviderType,
   SignalEventType,
   TokenType,
+  EmailType,
 } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
@@ -34,6 +35,8 @@ export class RaffleRoundServiceEth {
     private readonly ethersSignerProvider: Wallet,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emailClientProxy: ClientProxy,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
@@ -263,11 +266,21 @@ export class RaffleRoundServiceEth {
       transactionHash,
     });
 
+    // NOTIFY SIGNAL SERVICE
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: account.toLowerCase(),
         transactionHash,
         transactionType: name,
+      })
+      .toPromise();
+
+    // NOTIFY EMAIL SERVICE
+    await this.emailClientProxy
+      .emit(EmailType.RAFFLE_PRIZE, {
+        merchant: raffleRoundEntity.contract.merchant,
+        round: raffleRoundEntity,
+        token: ticketContractEntity,
       })
       .toPromise();
   }
