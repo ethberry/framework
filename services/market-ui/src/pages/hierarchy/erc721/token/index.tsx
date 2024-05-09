@@ -17,6 +17,7 @@ import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/my
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
+import { ReferralButton } from "../../../../components/buttons/refferal";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -45,6 +46,7 @@ export const Erc721Token: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={8.5}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <ReferralButton endpoint={`/erc721/tokens/${selected.id}`} merchant={selected.template?.contract?.merchant} />
           <StyledDescription>
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
