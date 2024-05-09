@@ -4,7 +4,6 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import { enqueueSnackbar } from "notistack";
 import { useClipboard } from "use-clipboard-copy";
 import { useWeb3React } from "@web3-react/core";
-import { getMarketUrl } from "../../../utils/referral";
 import { useIntl } from "react-intl";
 import { IMerchant } from "@framework/types";
 
@@ -19,7 +18,7 @@ export function ReferralButton(props: IReferralButtonProps) {
   const { formatMessage } = useIntl();
   const { account = "" } = useWeb3React();
 
-  const marketUrl = getMarketUrl();
+  const marketUrl = process.env.MARKET_FE_URL;
 
   const referalLink = useMemo<string>(() => {
     const endpointUrl = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;

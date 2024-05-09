@@ -5,6 +5,7 @@ import { ChevronRight, Done, ExpandMore, FilterList } from "@mui/icons-material"
 import { TreeItem, TreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
+import { enqueueSnackbar } from "notistack";
 
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
@@ -14,13 +15,8 @@ import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
-import {
-  calculateDepth,
-  emptyRefProgram,
-  getMarketUrl,
-  getRefLevelShare,
-  IRefProgramsLevels,
-} from "../../../../../utils/referral";
+import { calculateDepth, emptyRefProgram, getRefLevelShare } from "../../../../../utils/referral";
+import type { IRefProgramsLevels } from "../../../../../utils/referral";
 import { ReferralTreeMerchantSearchForm } from "./form";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
@@ -49,12 +45,13 @@ export const ReferralTree: FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const [programs, setPrograms] = useState<Array<IRefProgramsLevels>>([emptyRefProgram]);
 
-  const marketUrl = getMarketUrl();
+  const marketUrl = process.env.MARKET_FE_URL;
 
   const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
 
   const handleCopy = () => {
     clipboard.copy();
+    enqueueSnackbar(formatMessage({ id: "pages.referral.clipboard" }));
     setCopied(true);
     setTimeout(() => {
       setCopied(false);

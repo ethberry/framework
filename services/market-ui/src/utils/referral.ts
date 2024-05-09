@@ -7,10 +7,6 @@ export interface IRefProgramsLevels {
 
 export const emptyRefProgram = { merchantId: 0, levels: [{ level: 0, share: 0 }] };
 
-export const getMarketUrl = () => {
-  return process.env.MARKET_FE_URL;
-};
-
 export const getRefLevelShare = (
   programs: Array<IRefProgramsLevels>,
   merchantId: number,
