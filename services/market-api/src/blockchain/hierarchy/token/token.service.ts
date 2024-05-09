@@ -249,7 +249,8 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
-    // queryBuilder.leftJoinAndSelect("merchant.refLevels", "ref_program");
+
+    // MODULE:REFERRAL PROGRAM
     queryBuilder.leftJoinAndSelect(
       "merchant.refLevels",
       "ref_program",
