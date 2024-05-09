@@ -1,5 +1,5 @@
 import { IconButton, Tooltip } from "@mui/material";
-import RocketIcon from "@mui/icons-material/Rocket";
+import ViewInArIcon from "@mui/icons-material/ViewInAr";
 import { useApiCall } from "@gemunion/react-hooks";
 
 interface IInfuraButtonProps {
@@ -24,7 +24,7 @@ export const InfuraButton = (props: IInfuraButtonProps) => {
   return (
     <Tooltip title="IPFS Infura">
       <IconButton aria-label="referral" onClick={() => void handleClick()}>
-        <RocketIcon />
+        <ViewInArIcon />
       </IconButton>
     </Tooltip>
   );
