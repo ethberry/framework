@@ -1,5 +1,5 @@
 import { IconButton, Tooltip } from "@mui/material";
-import ViewInArIcon from "@mui/icons-material/ViewInAr";
+import ShareIcon from "@mui/icons-material/Share";
 import { useApiCall } from "@gemunion/react-hooks";
 
 interface IInfuraButtonProps {
@@ -10,8 +10,7 @@ export const InfuraButton = (props: IInfuraButtonProps) => {
   const { tokenId } = props;
 
   const { fn: fnPinToken } = useApiCall(async api => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await api.fetchJson({
+    return api.fetchJson({
       url: `/infura/pin/${tokenId}`,
       method: "GET",
     });
@@ -24,7 +23,7 @@ export const InfuraButton = (props: IInfuraButtonProps) => {
   return (
     <Tooltip title="IPFS Infura">
       <IconButton aria-label="referral" onClick={() => void handleClick()}>
-        <ViewInArIcon />
+        <ShareIcon />
       </IconButton>
     </Tooltip>
   );
