@@ -5,6 +5,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  EmailType,
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
@@ -33,6 +34,8 @@ export class LotteryRoundServiceEth {
   constructor(
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emlClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryTokenService: LotteryTokenService,
@@ -66,9 +69,9 @@ export class LotteryRoundServiceEth {
 
     // TICKET CONTRACT
     const { token } = ticket;
-    const ticketContractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+    const ticketTokenEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
-    if (!ticketContractEntity) {
+    if (!ticketTokenEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
@@ -101,7 +104,7 @@ export class LotteryRoundServiceEth {
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContractEntity.id,
-      ticketContractId: ticketContractEntity.id,
+      ticketContractId: ticketTokenEntity.id,
       priceId: assetEntity.id,
       maxTickets: Number(maxTicket),
     });
@@ -117,7 +120,7 @@ export class LotteryRoundServiceEth {
     await this.notificatorService.lotteryRoundStart({
       round: Object.assign(lotteryRoundEntity, {
         contract: lotteryContractEntity,
-        ticketContract: ticketContractEntity,
+        ticketContract: ticketTokenEntity,
         price: assetEntity,
       }),
       address,
@@ -264,6 +267,14 @@ export class LotteryRoundServiceEth {
         transactionType: name,
       })
       .toPromise();
+
+    await this.emlClientProxy
+      .emit(EmailType.LOTTERY_PRIZE, {
+        merchant: lotteryRoundEntity.contract.merchant,
+        token: ticketEntity,
+        round: lotteryRoundEntity,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
@@ -290,7 +301,7 @@ export class LotteryRoundServiceEth {
         }
       });
 
-      Object.keys(aggregation).map(async aggr => {
+      void Object.keys(aggregation).map(async aggr => {
         // create new asset
         const newAssetEntity = await this.assetService.create();
         const roundPrice = roundEntity.price.components;

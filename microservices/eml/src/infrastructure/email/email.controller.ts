@@ -5,7 +5,14 @@ import { formatUnits } from "ethers";
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import type { IDummyPayload, IPayload, IStakingBalancePayload, IVrfPayload, IRafflePrizePayload } from "./interfaces";
+import type {
+  IDummyPayload,
+  IPayload,
+  IStakingBalancePayload,
+  IVrfPayload,
+  IRafflePrizePayload,
+  ILotteryPrizePayload,
+} from "./interfaces";
 
 @Controller()
 export class EmailController {
@@ -86,6 +93,19 @@ export class EmailController {
   // RAFFLE-PRIZE
   @EventPattern(EmailType.RAFFLE_PRIZE)
   async rafflePrize(@Payload() payload: IRafflePrizePayload): Promise<IEmailResult> {
+    return this.mailjetService.sendTemplate({
+      template: 5930807,
+      to: [payload.merchant.email],
+      data: {
+        roundId: payload.round.roundId,
+        tokenId: payload.token.tokenId,
+      },
+    });
+  }
+
+  // RAFFLE-PRIZE
+  @EventPattern(EmailType.LOTTERY_PRIZE)
+  async lotteryPrize(@Payload() payload: ILotteryPrizePayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
       template: 5930807,
       to: [payload.merchant.email],
