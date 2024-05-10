@@ -42,26 +42,26 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
             attribute: values.attribute,
           },
         })
-        .then((grade: IDiscrete) => {
+        .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
 
           const price =
-            grade.price?.components.sort(sorter("id")).map(component => ({
+            discrete.price?.components.sort(sorter("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
               // tokenId: component.templateId || 0,
               tokenId: component.template!.tokens![0].tokenId,
-              amount: getMultiplier(level, component.amount, grade),
+              amount: getMultiplier(level, component.amount, discrete),
             })) || [];
 
           const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
           return contract.upgrade(
             {
-              externalId: grade.id,
+              externalId: discrete.id,
               expiresAt: sign.expiresAt,
               nonce: utils.arrayify(sign.nonce),
               extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
-              receiver: grade.contract!.merchant!.wallet,
+              receiver: discrete.contract!.merchant!.wallet,
               referrer: constants.AddressZero,
             },
             // ITEM

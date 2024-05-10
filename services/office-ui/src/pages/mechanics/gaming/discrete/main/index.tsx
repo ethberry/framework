@@ -129,7 +129,7 @@ export const Discrete: FC = () => {
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
         initialValues={selected}
-        getTitle={(grade: IDiscrete) => `Attribute ${grade.attribute}`}
+        getTitle={({ attribute }: IDiscrete) => `Attribute ${attribute}`}
       />
 
       <GradeEditDialog

@@ -27,7 +27,7 @@ export const AttributeInput: FC<IAttributeInputProps> = props => {
       autoselect
       name={name}
       controller="grade"
-      getTitle={(grade: IDiscrete) => grade.attribute}
+      getTitle={({ attribute }: IDiscrete) => attribute}
       onChange={handleChange}
       data={data}
     />

@@ -173,7 +173,7 @@ export class NotificatorService {
 
   // MODULE:GRADE
   public grade(data: IDiscreteData): Promise<any> {
-    return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
+    return this.sendMessage(data.discrete.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LEVEL_UP, data).toPromise();
     });
   }

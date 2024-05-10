@@ -63,7 +63,7 @@ export class ExchangeGradeServiceEth {
     }
 
     await this.notificatorService.grade({
-      grade: discreteEntity,
+      discrete: discreteEntity,
       token: tokenEntity,
       price: assets.price,
       address,
