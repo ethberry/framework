@@ -69,9 +69,9 @@ export class LotteryRoundServiceEth {
 
     // TICKET CONTRACT
     const { token } = ticket;
-    const ticketTokenEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+    const ticketContractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
-    if (!ticketTokenEntity) {
+    if (!ticketContractEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
@@ -104,7 +104,7 @@ export class LotteryRoundServiceEth {
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContractEntity.id,
-      ticketContractId: ticketTokenEntity.id,
+      ticketContractId: ticketContractEntity.id,
       priceId: assetEntity.id,
       maxTickets: Number(maxTicket),
     });
@@ -120,7 +120,7 @@ export class LotteryRoundServiceEth {
     await this.notificatorService.lotteryRoundStart({
       round: Object.assign(lotteryRoundEntity, {
         contract: lotteryContractEntity,
-        ticketContract: ticketTokenEntity,
+        ticketContract: ticketContractEntity,
         price: assetEntity,
       }),
       address,
@@ -301,29 +301,31 @@ export class LotteryRoundServiceEth {
         }
       });
 
-      void Object.keys(aggregation).map(async aggr => {
-        // create new asset
-        const newAssetEntity = await this.assetService.create();
-        const roundPrice = roundEntity.price.components;
-        const multipliedPrice = roundPrice.map(price => {
-          return {
-            tokenType: price.tokenType,
-            contractId: price.contractId,
-            templateId: price.templateId,
-            tokenId: price.tokenId,
-            amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
-          };
-        });
+      await Promise.all(
+        Object.keys(aggregation).map(async aggr => {
+          // create new asset
+          const newAssetEntity = await this.assetService.create();
+          const roundPrice = roundEntity.price.components;
+          const multipliedPrice = roundPrice.map(price => {
+            return {
+              tokenType: price.tokenType,
+              contractId: price.contractId,
+              templateId: price.templateId,
+              tokenId: price.tokenId,
+              amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
+            };
+          });
 
-        await this.assetService.update(newAssetEntity, { components: multipliedPrice });
+          await this.assetService.update(newAssetEntity, { components: multipliedPrice });
 
-        await this.lotteryRoundAggregationService.create({
-          round: roundEntity,
-          match: Number(aggr),
-          tickets: aggregation[aggr],
-          priceId: newAssetEntity.id,
-        });
-      });
+          await this.lotteryRoundAggregationService.create({
+            round: roundEntity,
+            match: Number(aggr),
+            tickets: aggregation[aggr],
+            priceId: newAssetEntity.id,
+          });
+        }),
+      );
     }
   }
 }

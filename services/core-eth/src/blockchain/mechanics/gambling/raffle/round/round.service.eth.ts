@@ -68,9 +68,9 @@ export class RaffleRoundServiceEth {
 
     // TICKET CONTRACT
     const { token } = ticket;
-    const ticketTokenEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+    const ticketContractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
-    if (!ticketTokenEntity) {
+    if (!ticketContractEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
@@ -103,7 +103,7 @@ export class RaffleRoundServiceEth {
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: raffleContractEntity.id,
-      ticketContractId: ticketTokenEntity.id,
+      ticketContractId: ticketContractEntity.id,
       priceId: assetEntity.id,
       maxTickets: Number(maxTicket),
     });
@@ -119,7 +119,7 @@ export class RaffleRoundServiceEth {
     await this.notificatorService.raffleRoundStart({
       round: Object.assign(raffleRoundEntity, {
         contract: raffleContractEntity,
-        ticketContract: ticketTokenEntity,
+        ticketContract: ticketContractEntity,
         price: assetEntity,
       }),
       address,
