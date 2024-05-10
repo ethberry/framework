@@ -48,7 +48,7 @@ import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/p
 import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
 import { PredictionAnswerEntity } from "./blockchain/mechanics/gambling/prediction/answer/answer.entity";
 import { PredictionQuestionEntity } from "./blockchain/mechanics/gambling/prediction/question/question.entity";
@@ -119,7 +119,7 @@ import {
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
   CreateGameBalance1686896594700,
-  CreateGrade1657846587000,
+  CreateDiscrete1657846587000,
   CreateLotteryRoundAggregationAt1660436476130,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
@@ -176,8 +176,9 @@ import {
   SeedAchievementRedemption1681273013080,
   SeedAchievementRule1681273013020,
   SeedAddress1683724061910,
-  SeedAssetComponentGrade1657846587020,
+  SeedAssetComponentDiscrete1657846587020,
   SeedAssetComponentProductItemAt1683724061520,
+  SeedAssetComponentQuestion1681273013040,
   SeedAssetComponentRent1678931845520,
   SeedAssetComponentsAchievementAt1681273013045,
   SeedAssetComponentsAchievementRule1681273013025,
@@ -262,8 +263,8 @@ import {
   SeedEventHistoryErc721ClaimComponentsAt1653616447935,
   SeedEventHistoryErc721Erc1155CraftAt1687760533510,
   SeedEventHistoryErc721Erc1155CraftComponentsAt1687760533520,
-  SeedEventHistoryErc721GradeAt1687481746310,
-  SeedEventHistoryErc721GradeComponentsAt1687481746320,
+  SeedEventHistoryErc721DiscreteAt1687481746310,
+  SeedEventHistoryErc721DiscreteComponentsAt1687481746320,
   SeedEventHistoryErc721LendAt1678931845530,
   SeedEventHistoryErc721LendComponentsAt1678931845540,
   SeedEventHistoryErc721PurchaseAt1563804040230,
@@ -271,8 +272,8 @@ import {
   SeedEventHistoryErc721TransferAt1563804040130,
   SeedEventHistoryErc998ClaimAt1653616447940,
   SeedEventHistoryErc998ClaimComponentsAt1653616447945,
-  SeedEventHistoryErc998GradeAt1687481746410,
-  SeedEventHistoryErc998GradeComponentsAt1687481746420,
+  SeedEventHistoryErc998DiscreteAt1687481746410,
+  SeedEventHistoryErc998DiscreteComponentsAt1687481746420,
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc998TransferAt1563804040130,
@@ -292,7 +293,7 @@ import {
   SeedEventHistoryWaitListAt1663047650350,
   SeedEventHistoryWaitListComponentsAt1663047650360,
   SeedGameBalance1686896594710,
-  SeedGrade1657846587010,
+  SeedDiscrete1657846587010,
   SeedLotteryRoundAggregationAt1660436476140,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
@@ -404,7 +405,7 @@ const config: PostgresConnectionOptions = {
     DismantleEntity,
     MergeEntity,
     AssetPromoEntity,
-    GradeEntity,
+    DiscreteEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     RaffleRoundEntity,
@@ -622,13 +623,13 @@ const config: PostgresConnectionOptions = {
     SeedBalanceStakingAt1654751224530,
     CreateStakingPenalty1654751224535,
 
-    CreateGrade1657846587000,
-    SeedGrade1657846587010,
-    SeedAssetComponentGrade1657846587020,
-    SeedEventHistoryErc721GradeAt1687481746310,
-    SeedEventHistoryErc721GradeComponentsAt1687481746320,
-    SeedEventHistoryErc998GradeAt1687481746410,
-    SeedEventHistoryErc998GradeComponentsAt1687481746420,
+    CreateDiscrete1657846587000,
+    SeedDiscrete1657846587010,
+    SeedAssetComponentDiscrete1657846587020,
+    SeedEventHistoryErc721DiscreteAt1687481746310,
+    SeedEventHistoryErc721DiscreteComponentsAt1687481746320,
+    SeedEventHistoryErc998DiscreteAt1687481746410,
+    SeedEventHistoryErc998DiscreteComponentsAt1687481746420,
 
     CreateTransactionHistory1563804040009,
     CreateEventHistory1563804040010,
@@ -781,6 +782,7 @@ const config: PostgresConnectionOptions = {
     /* prediction */
     CreatePredictionQuestion1681273013010,
     SeedPredictionQuestion1681273013020,
+    SeedAssetComponentQuestion1681273013040,
     CreatePredictionAnswer1681273013050,
     SeedPredictionAnswer1681273013060,
   ],

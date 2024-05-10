@@ -460,11 +460,11 @@
       "STRENGTH": "Kekuatan",
       "WISDOM": "Kebijaksanaan"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Aktif",
       "INACTIVE": "Tidak Aktif"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "Eksponensial",
       "FLAT": "Datar",
       "LINEAR": "Linier"
@@ -751,8 +751,8 @@
       "from": "Dari",
       "fromBlock": "Mendengarkan log dari blok №",
       "gender": "Jenis kelamin",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Strategi nilai",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Strategi nilai",
       "growthRate": "Tingkat pertumbuhan",
       "id": "ID",
       "imageUrl": "Avatar",

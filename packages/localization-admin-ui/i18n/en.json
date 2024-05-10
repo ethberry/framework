@@ -460,11 +460,11 @@
       "STRENGTH": "Strength",
       "WISDOM": "Wisdom"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "Exponential",
       "FLAT": "Flat",
       "LINEAR": "Linear"
@@ -528,6 +528,10 @@
       "NEW": "NEW"
     },
     "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "questionStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -751,8 +755,8 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Grade strategy",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -814,6 +818,7 @@
       "productStatus": "Status",
       "programLevel": "Program level",
       "programLevels": "Program levels",
+      "questionStatus": "Status",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",

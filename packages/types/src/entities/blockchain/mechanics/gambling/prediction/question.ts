@@ -1,6 +1,8 @@
 import type { ISearchable } from "@gemunion/types-collection";
-import { IMerchant } from "../../../../infrastructure";
-import { IPredictionAnswer } from "./answer";
+
+import type { IMerchant } from "../../../../infrastructure";
+import type { IAsset } from "../../../exchange/asset";
+import type { IPredictionAnswer } from "./answer";
 
 export enum PredictionQuestionStatus {
   ACTIVE = "ACTIVE",
@@ -17,6 +19,7 @@ export enum PredictionQuestionAnswer {
 export interface IPredictionQuestion extends ISearchable {
   merchantId: number;
   merchant?: IMerchant;
+  price?: IAsset;
   questionStatus: PredictionQuestionStatus;
   answer: PredictionQuestionAnswer;
   answers: Array<IPredictionAnswer>;

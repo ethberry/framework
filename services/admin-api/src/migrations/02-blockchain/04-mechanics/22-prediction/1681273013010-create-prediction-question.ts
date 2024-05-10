@@ -41,6 +41,11 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
           isNullable: true,
         },
         {
+          name: "price_id",
+          type: "bigint",
+          isNullable: true,
+        },
+        {
           name: "question_status",
           type: `${ns}.prediction_question_status_enum`,
           default: "'ACTIVE'",
@@ -64,6 +69,12 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

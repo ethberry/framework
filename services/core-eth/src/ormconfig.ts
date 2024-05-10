@@ -15,7 +15,7 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/gambling/lottery/ticket/ticket.entity";
@@ -80,7 +80,7 @@ const config: PostgresConnectionOptions = {
     CraftEntity,
     MergeEntity,
     DismantleEntity,
-    GradeEntity,
+    DiscreteEntity,
     MysteryBoxEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,

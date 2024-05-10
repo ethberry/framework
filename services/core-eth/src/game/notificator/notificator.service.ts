@@ -12,7 +12,7 @@ import type {
   IConsecutiveTransferData,
   ICraftData,
   IDismantleData,
-  IGradeData,
+  IDiscreteData,
   ILotteryFinalizeData,
   ILotteryPrizeData,
   ILotteryPurchaseData,
@@ -172,7 +172,7 @@ export class NotificatorService {
   }
 
   // MODULE:GRADE
-  public grade(data: IGradeData): Promise<any> {
+  public grade(data: IDiscreteData): Promise<any> {
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LEVEL_UP, data).toPromise();
     });

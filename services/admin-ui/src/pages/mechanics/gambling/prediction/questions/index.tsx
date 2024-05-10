@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -9,9 +9,11 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IPredictionQuestion } from "@framework/types";
-import { IPredictionQuestionSearchDto, PredictionQuestionStatus } from "@framework/types";
+import type { IPredictionQuestion, IPredictionQuestionSearchDto } from "@framework/types";
+import { PredictionQuestionStatus } from "@framework/types";
+import { cleanUpAsset } from "@framework/exchange";
 
 import { PredictionQuestionEditDialog } from "./edit";
 
@@ -26,6 +28,7 @@ export const PredictionQuestions: FC = () => {
     isEditDialogOpen,
     isDeleteDialogOpen,
     handleToggleFilters,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -39,21 +42,24 @@ export const PredictionQuestions: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      price: emptyPrice,
     },
     search: {
       query: "",
       questionStatus: [],
     },
-    filter: ({ id, title, description, questionStatus }) =>
+    filter: ({ id, title, description, questionStatus, price }) =>
       id
         ? {
             title,
             description,
             questionStatus,
+            price: cleanUpAsset(price),
           }
         : {
             title,
             description,
+            price: cleanUpAsset(price),
           },
   });
 
@@ -64,6 +70,9 @@ export const PredictionQuestions: FC = () => {
       <PageHeader message="pages.prediction.questions.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="QuestionCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
@@ -80,7 +89,7 @@ export const PredictionQuestions: FC = () => {
           {rows.map(question => (
             <StyledListItem key={question.id}>
               <ListItemText sx={{ width: 0.6 }}>{question.title}</ListItemText>
-              <ListActions dataTestId="ContractActionsMenuButton">
+              <ListActions dataTestId="QuestionMenuButton">
                 <ListAction onClick={handleEdit(question)} message="form.buttons.edit" icon={Create} />
                 <ListAction
                   onClick={handleDelete(question)}

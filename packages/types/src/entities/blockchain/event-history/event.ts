@@ -28,7 +28,7 @@ import type { TPonziEvents } from "./mechanics/ponzi";
 import type { TMysteryEvents } from "./mechanics/mystery";
 import type { TWrapperEvents } from "./mechanics/wrapper";
 import type { TErc4907Events } from "./extensions/erc4907";
-import type { TUpgradeEvents } from "./mechanics/grade";
+import type { TDiscreteEvents } from "./mechanics/discrete";
 import type { TRaffleEvents } from "./mechanics/raffle";
 import type { TWaitListEvents } from "./mechanics/waitlist";
 import { TBaseURIEvents } from "./extensions/base-uri";
@@ -129,14 +129,14 @@ export enum ContractEventType {
   Lend = "Lend",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   Upgrade = "Upgrade",
   // MODULE:WAITLIST
   WaitListRewardSet = "WaitListRewardSet",
   WaitListRewardClaimed = "WaitListRewardClaimed",
   // MODULE:BREEDING
   Breed = "Breed",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   LevelUp = "LevelUp",
   MetadataUpdate = "MetadataUpdate",
   BatchMetadataUpdate = "BatchMetadataUpdate",
@@ -285,7 +285,7 @@ export enum ContractEventSignature {
   // MODULE:MYSTERY
   // event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
   PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
   Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",
   // MODULE:WAITLIST
@@ -296,7 +296,7 @@ export enum ContractEventSignature {
   // MODULE:BREEDING
   // event Breed(address from, uint256 externalId, Asset matron, Asset sire);
   Breed = "Breed(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   // event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
   LevelUp = "LevelUp(address,uint256,bytes32,uint256)",
   // MODULE:DISMANTLE
@@ -390,8 +390,8 @@ export type TContractEventData =
   // erc4907
   | TErc4907Events
 
-  // Upgrade
-  | TUpgradeEvents
+  // Discrete
+  | TDiscreteEvents
   // BASE URI
   | TBaseURIEvents
 
