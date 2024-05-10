@@ -11,8 +11,9 @@ import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import RaffleStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
 
-import { shouldDisableByContractType } from "../../../../utils";
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
+import { shouldDisableByContractType } from "../../../../utils";
+import { haveChainlinkIntegration } from "../../../../../../utils/chain-link";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;
@@ -77,7 +78,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+        disabled={disabled || shouldDisableByContractType(contract) || !haveChainlinkIntegration(contract)}
         variant={variant}
       />
       <RaffleStartRoundDialog

@@ -11,8 +11,9 @@ import { TokenType } from "@framework/types";
 
 import LotteryStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
 
-import { shouldDisableByContractType } from "../../../../utils";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
+import { shouldDisableByContractType } from "../../../../utils";
+import { haveChainlinkCompatibility } from "../../../../../../utils/chain-link";
 
 export interface ILotteryRoundStartButtonProps {
   className?: string;
@@ -77,7 +78,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         message="pages.lottery.rounds.start"
         className={className}
         dataTestId="LotteryRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+        disabled={disabled || shouldDisableByContractType(contract) || !haveChainlinkCompatibility(contract)}
         variant={variant}
       />
       <LotteryStartRoundDialog
