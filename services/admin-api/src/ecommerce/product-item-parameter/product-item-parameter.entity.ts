@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import type { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IProductItemParameter } from "@framework/types";
 import { ns } from "@framework/constants";
 
