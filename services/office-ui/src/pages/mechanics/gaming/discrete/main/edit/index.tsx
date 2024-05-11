@@ -31,8 +31,8 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
     id,
     contractId,
     attribute,
-    discreteStatus: discreteStatus,
-    discreteStrategy: discreteStrategy,
+    discreteStatus,
+    discreteStrategy,
     growthRate,
     price,
   };

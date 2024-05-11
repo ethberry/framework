@@ -127,9 +127,8 @@ export const ReferralReward: FC = () => {
   );
 
   const handleClaim = () => {
-    return handleClaimApi(void 0).then((json: any) => {
-      console.info(json);
-      dispatch(setNeedRefresh(true));
+    return handleClaimApi(void 0).then(() => {
+      void dispatch(setNeedRefresh(true));
     });
   };
 

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
-import { Card, CardContent, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Card, CardContent, Grid, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Construction } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";

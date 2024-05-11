@@ -36,7 +36,7 @@ export const WalletReLogin: FC<PropsWithChildren> = props => {
     await user.logIn(void 0, location.pathname).catch(e => {
       console.error("login error", e);
     });
-    dispatch(setNeedRefresh(true));
+    await dispatch(setNeedRefresh(true));
   };
 
   const { fn: getVerifiedToken } = useApiCall(

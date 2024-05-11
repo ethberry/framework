@@ -44,7 +44,7 @@ export class DiscreteService {
       if (discreteStatus.length === 1) {
         queryBuilder.andWhere("grade.discreteStatus = :discreteStatus", { discreteStatus: discreteStatus[0] });
       } else {
-        queryBuilder.andWhere("grade.discreteStatus IN(:...discreteStatus)", { discreteStatus: discreteStatus });
+        queryBuilder.andWhere("grade.discreteStatus IN(:...discreteStatus)", { discreteStatus });
       }
     }
 

@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import { FormattedMessage } from "react-intl";
-import { List, ListItemText, Typography } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";

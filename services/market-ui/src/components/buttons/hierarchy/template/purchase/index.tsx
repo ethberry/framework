@@ -89,7 +89,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   });
 
   const handleConnect = () => {
-    dispatch(setIsDialogOpen(true));
+    void dispatch(setIsDialogOpen(true));
   };
 
   const handleBuy = async () => {
