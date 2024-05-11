@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IProductPromo } from "@framework/types";
+import type { IProductPromo } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { ProductEntity } from "../product/product.entity";

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, Done, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -15,6 +15,7 @@ import type { IPredictionQuestion, IPredictionQuestionSearchDto } from "@framewo
 import { PredictionQuestionStatus } from "@framework/types";
 import { cleanUpAsset } from "@framework/exchange";
 
+import { PredictionResultDialog } from "./result";
 import { PredictionQuestionEditDialog } from "./edit";
 
 export const PredictionQuestions: FC = () => {
@@ -25,8 +26,9 @@ export const PredictionQuestions: FC = () => {
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
     isDeleteDialogOpen,
+    isEditDialogOpen,
+    isViewDialogOpen,
     handleToggleFilters,
     handleCreate,
     handleEdit,
@@ -34,6 +36,9 @@ export const PredictionQuestions: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
+    handleView,
+    handleViewConfirm,
+    handleViewCancel,
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
@@ -92,6 +97,12 @@ export const PredictionQuestions: FC = () => {
               <ListActions dataTestId="QuestionMenuButton">
                 <ListAction onClick={handleEdit(question)} message="form.buttons.edit" icon={Create} />
                 <ListAction
+                  onClick={handleView(question)}
+                  disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}
+                  icon={Done}
+                  message="form.buttons.resolve"
+                />
+                <ListAction
                   onClick={handleDelete(question)}
                   disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}
                   icon={Delete}
@@ -121,6 +132,13 @@ export const PredictionQuestions: FC = () => {
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
+        initialValues={selected}
+      />
+
+      <PredictionResultDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={isViewDialogOpen}
         initialValues={selected}
       />
     </Grid>

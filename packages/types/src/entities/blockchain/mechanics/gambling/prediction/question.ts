@@ -9,7 +9,7 @@ export enum PredictionQuestionStatus {
   INACTIVE = "INACTIVE",
 }
 
-export enum PredictionQuestionAnswer {
+export enum PredictionQuestionResult {
   YES = "YES",
   NO = "NO",
   DRAW = "DRAW",
@@ -21,6 +21,6 @@ export interface IPredictionQuestion extends ISearchable {
   merchant?: IMerchant;
   price?: IAsset;
   questionStatus: PredictionQuestionStatus;
-  answer: PredictionQuestionAnswer;
+  questionResult: PredictionQuestionResult;
   answers: Array<IPredictionAnswer>;
 }

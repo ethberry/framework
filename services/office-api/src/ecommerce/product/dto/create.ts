@@ -2,9 +2,9 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Allow, IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IPhoto } from "@framework/types";
+import type { IPhoto } from "@framework/types";
 
-import { IProductCreateDto } from "../interfaces";
+import type { IProductCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";
 
 export class ProductCreateDto implements IProductCreateDto {

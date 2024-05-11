@@ -1,3 +1,3 @@
-import { IPredictionQuestionCreateDto } from "./create";
+import type { IPredictionQuestionCreateDto } from "./create";
 
 export interface IPredictionQuestionUpdateDto extends IPredictionQuestionCreateDto {}

@@ -7,7 +7,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { IPonziRule, PonziRuleStatus } from "@framework/types";
+import type { IPonziRule } from "@framework/types";
+import { PonziRuleStatus } from "@framework/types";
 
 import PonziDepositABI from "@framework/abis/deposit/Ponzi.json";
 

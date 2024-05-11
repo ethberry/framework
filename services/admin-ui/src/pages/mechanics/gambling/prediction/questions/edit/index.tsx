@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IPredictionQuestion, PredictionQuestionStatus, TokenType } from "@framework/types";
+import type { IPredictionQuestion } from "@framework/types";
+import { PredictionQuestionStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

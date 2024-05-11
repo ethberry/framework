@@ -4,7 +4,7 @@ import { Exclude } from "class-transformer";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IPredictionQuestion } from "@framework/types";
-import { PredictionQuestionAnswer, PredictionQuestionStatus } from "@framework/types";
+import { PredictionQuestionResult, PredictionQuestionStatus } from "@framework/types";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { PredictionAnswerEntity } from "../answer/answer.entity";
@@ -25,14 +25,14 @@ export class PredictionQuestionEntity extends SearchableEntity implements IPredi
   })
   public questionStatus: PredictionQuestionStatus;
 
-  @OneToMany(_type => PredictionAnswerEntity, assets => assets.question)
-  public answers: Array<PredictionAnswerEntity>;
-
   @Column({
     type: "enum",
-    enum: PredictionQuestionAnswer,
+    enum: PredictionQuestionResult,
   })
-  public answer: PredictionQuestionAnswer;
+  public questionResult: PredictionQuestionResult;
+
+  @OneToMany(_type => PredictionAnswerEntity, assets => assets.question)
+  public answers: Array<PredictionAnswerEntity>;
 
   @Exclude()
   @Column({ type: "int" })

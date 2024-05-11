@@ -4,7 +4,7 @@ import { Button, MobileStepper, Typography } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 import { Spinner } from "@gemunion/mui-page-layout";
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 
 import { Root, StyledHeader, StyledImage } from "./styled";
 

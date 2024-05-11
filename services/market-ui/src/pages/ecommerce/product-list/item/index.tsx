@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { AmountInput } from "../../../../components/inputs/amount-input";

@@ -4,7 +4,7 @@ import type { IReferralProgram, IUser } from "@framework/types";
 import { ReferralProgramStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IPaginationResult } from "@gemunion/types-collection";
+import type { IPaginationResult } from "@gemunion/types-collection";
 import { useUser } from "@gemunion/provider-user";
 
 import { sorter } from "../../../../../utils/sorter";

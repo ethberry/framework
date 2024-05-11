@@ -7,7 +7,7 @@ import type { IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
 
 import { PonziRulesEntity } from "./rules.entity";
-import { IPonziRuleAutocompleteDto } from "./interfaces";
+import type { IPonziRuleAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class PonziRulesService {

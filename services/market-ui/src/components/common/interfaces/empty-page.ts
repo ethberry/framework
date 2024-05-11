@@ -1,5 +1,5 @@
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IPage } from "@framework/types";
+import type { IPage } from "@framework/types";
 
 export const emptyPage = {
   title: "",

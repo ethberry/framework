@@ -4,9 +4,9 @@ import { IsInt, IsOptional, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { SearchDto, SortDto } from "@gemunion/collection";
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 
-import { IProductSearchDto } from "../interfaces";
+import type { IProductSearchDto } from "../interfaces";
 import { ParamsDto } from "./params";
 
 // TODO typescript?
