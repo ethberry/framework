@@ -3,7 +3,8 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IReferralProgramSearchDto } from "../interfaces";
+
+import type { IReferralProgramSearchDto } from "../interfaces";
 
 export class ReferralProgramSearchDto extends SearchDto implements IReferralProgramSearchDto {
   @ApiPropertyOptional({

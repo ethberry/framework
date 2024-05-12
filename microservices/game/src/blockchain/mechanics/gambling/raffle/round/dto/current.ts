@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IRaffleCurrentDto } from "../interfaces";
+import type { IRaffleCurrentDto } from "../interfaces";
 
 export class RaffleCurrentDto implements IRaffleCurrentDto {
   @ApiProperty()

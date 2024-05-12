@@ -2,7 +2,8 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { IRent, RentRuleStatus } from "@framework/types";
+import { RentRuleStatus } from "@framework/types";
+import type { IRent } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";

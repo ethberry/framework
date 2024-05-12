@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { ForbidEnumValues, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { RentRuleStatus } from "@framework/types";
 
-import { IRentUpdateDto } from "../interfaces";
+import type { IRentUpdateDto } from "../interfaces";
 
 export class RentUpdateDto implements IRentUpdateDto {
   @ApiPropertyOptional()

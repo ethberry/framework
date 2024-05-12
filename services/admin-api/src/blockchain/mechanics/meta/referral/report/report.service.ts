@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { IReferralReportSearchDto } from "@framework/types";
+import type { IReferralReportSearchDto } from "@framework/types";
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { parse } from "json2csv";

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IRaffleRound } from "@framework/types";
+import type { IRaffleRound } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";

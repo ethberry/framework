@@ -8,7 +8,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatEther } from "@framework/exchange";
-import { IReferralLeaderboard } from "@framework/types";
+import type { IReferralLeaderboard } from "@framework/types";
 
 export const ReferralLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangePaginationModel } =

@@ -4,7 +4,7 @@ import { DataSource, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repo
 
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
-import { IReferralTreeSearchDto } from "./interfaces";
+import type { IReferralTreeSearchDto } from "./interfaces";
 import { ReferralProgramStatus } from "@framework/types";
 
 export interface IRefTreeMerchantAutocomplete {

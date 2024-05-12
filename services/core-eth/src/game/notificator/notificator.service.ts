@@ -11,8 +11,8 @@ import type {
   IClaimData,
   IConsecutiveTransferData,
   ICraftData,
-  IDismantleData,
   IDiscreteData,
+  IDismantleData,
   ILotteryFinalizeData,
   ILotteryPrizeData,
   ILotteryPurchaseData,
@@ -29,6 +29,7 @@ import type {
   IRafflePurchaseData,
   IRaffleRoundEndData,
   IRaffleRoundStartData,
+  IReferralEventData,
   IRentUserUpdateData,
   IStakingBalanceCheck,
   IStakingDepositFinishData,
@@ -40,7 +41,6 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
-import { IReferralEventData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {

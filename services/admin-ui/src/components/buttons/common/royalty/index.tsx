@@ -11,7 +11,8 @@ import { ContractFeatures, TokenType } from "@framework/types";
 import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
 
 import { shouldDisableByContractType } from "../../utils";
-import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
+import type { IRoyaltyDto } from "./dialog";
+import { RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyButtonProps {
   className?: string;

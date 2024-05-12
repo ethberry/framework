@@ -12,7 +12,8 @@ import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import RaffleStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
-import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
+import { RaffleStartRoundDialog } from "./round-dialog";
+import type { IRaffleRound } from "./round-dialog";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;

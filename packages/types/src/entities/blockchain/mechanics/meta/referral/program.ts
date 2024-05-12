@@ -1,5 +1,5 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IMerchant } from "../../../../infrastructure";
+import type { IMerchant } from "../../../../infrastructure";
 
 export enum ReferralProgramStatus {
   ACTIVE = "ACTIVE",
