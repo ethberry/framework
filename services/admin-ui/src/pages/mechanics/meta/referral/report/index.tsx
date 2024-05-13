@@ -72,6 +72,18 @@ export const ReferralReport: FC = () => {
       minWidth: 360
     },
     {
+      field: "referral",
+      headerName: formatMessage({ id: "form.labels.referral" }),
+      sortable: false,
+      renderCell: (params: GridCellParams<any, string>) => {
+        return (
+          <AddressLink address={params.value} length={42} />
+        );
+      },
+      flex: 3,
+      minWidth: 360
+    },
+    {
       field: "item",
       headerName: formatMessage({ id: "form.labels.item" }),
       sortable: true,
@@ -150,9 +162,10 @@ export const ReferralReport: FC = () => {
         rows={rows.map((reward: IReferralEvents) => ({
           id: reward.id,
           referrer: reward.referrer,
+          referral: reward.account,
           item: formatItem(reward.item),
           price: formatItem(reward.price),
-          event: reward.history?.parent?.eventType,
+          event: reward.history?.eventType,
           contract: reward.contract!.title,
           createdAt: reward.createdAt,
         }))}

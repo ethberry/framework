@@ -10,7 +10,6 @@ import { formatItem } from "@framework/exchange";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "../reward/referral.reward.entity";
 import { ReferralRewardService } from "../reward/referral.reward.service";
-// import { formatEther } from "../reward/reward.utils";
 
 @Injectable()
 export class ReferralReportService {

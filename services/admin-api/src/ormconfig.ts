@@ -366,6 +366,7 @@ import {
   SeedWaitListItemAt1663047650310,
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
+  SeedReferralRewardAt1660005709910,
 } from "./migrations";
 
 // Check typeORM documentation for more information.
@@ -659,7 +660,7 @@ const config: PostgresConnectionOptions = {
     CreateReferralProgramAt1660003709900,
     CreateReferralTreeAt1660004709900,
     CreateReferralRewardAt1660005709900,
-    // SeedReferralRewardAt1660103709910,
+    SeedReferralRewardAt1660005709910,
     CreateReferralRewardSharesAt1660006919900,
     CreateReferralClaimAt1660006909900,
 
