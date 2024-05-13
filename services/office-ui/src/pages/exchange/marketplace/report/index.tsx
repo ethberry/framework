@@ -17,10 +17,10 @@ import { useUser } from "@gemunion/provider-user";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatItem } from "@framework/exchange";
-import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto, IUser } from "@framework/types";
+import type { IAssetComponent, IMarketplaceReport, IMarketplaceReportSearchDto, IUser } from "@framework/types";
 
-import { ReportDataView } from "./report-data-view";
-import { ReportSearchForm } from "./form";
+import { MarketplaceReportDataView } from "./report-data-view";
+import { MarketplaceReportSearchForm } from "./form";
 
 export const MarketplaceReport: FC = () => {
   const { profile } = useUser<IUser>();
@@ -35,7 +35,7 @@ export const MarketplaceReport: FC = () => {
     handleSearch,
     handleChangePaginationModel,
     handleRefreshPage,
-  } = useCollection<IEventHistoryReport, IMarketplaceReportSearchDto>({
+  } = useCollection<IMarketplaceReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
       query: "",
@@ -60,7 +60,7 @@ export const MarketplaceReport: FC = () => {
   };
 
   const getDetailPanelContent = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelContent"]>>(
-    ({ row }: GridRowParams<IEventHistoryReport>) => <ReportDataView row={row} />,
+    ({ row }: GridRowParams<IMarketplaceReport>) => <MarketplaceReportDataView row={row} />,
     [],
   );
 
@@ -127,7 +127,7 @@ export const MarketplaceReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <ReportSearchForm
+      <MarketplaceReportSearchForm
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
@@ -147,7 +147,7 @@ export const MarketplaceReport: FC = () => {
         rowThreshold={0}
         getDetailPanelHeight={getDetailPanelHeight}
         getDetailPanelContent={getDetailPanelContent}
-        rows={rows.map((event: IEventHistoryReport) => {
+        rows={rows.map((event: IMarketplaceReport) => {
           return {
             id: event.id,
             tokenId: event.items[0]?.token?.id,

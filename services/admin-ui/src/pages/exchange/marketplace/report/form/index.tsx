@@ -17,7 +17,7 @@ interface IContractSearchFormProps {
   onRefreshPage: () => Promise<void>;
 }
 
-export const ReportSearchForm: FC<IContractSearchFormProps> = props => {
+export const MarketplaceReportSearchForm: FC<IContractSearchFormProps> = props => {
   const { onSubmit, onRefreshPage, initialValues, open } = props;
 
   return (

@@ -3,14 +3,14 @@ import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 
 import { formatPriceHistory } from "@framework/exchange";
-import { ContractEventType, IEventHistoryReport, IExchangePurchaseEvent } from "@framework/types";
+import { ContractEventType, IMarketplaceReport, IExchangePurchaseEvent } from "@framework/types";
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
 
-export interface IEventDataViewProps {
-  row: IEventHistoryReport;
+export interface IMarketplaceReportDataViewProps {
+  row: IMarketplaceReport;
 }
 
-export const ReportDataView: FC<IEventDataViewProps> = props => {
+export const MarketplaceReportDataView: FC<IMarketplaceReportDataViewProps> = props => {
   const {
     row: { eventData, eventType, items, price, transactionHash },
   } = props;
