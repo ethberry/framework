@@ -1,5 +1,5 @@
 import { FC, Fragment, useCallback } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
 import {
   DataGridPremium,
@@ -11,8 +11,6 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
@@ -20,12 +18,9 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatItem } from "@framework/exchange";
 import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto, IUser } from "@framework/types";
-import { TokenType } from "@framework/types";
 
-import { TemplateInput } from "../../../../components/inputs/template";
-import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
-import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
 import { ReportDataView } from "./report-data-view";
+import { ReportSearchForm } from "./form";
 
 export const MarketplaceReport: FC = () => {
   const { profile } = useUser<IUser>();
@@ -39,6 +34,7 @@ export const MarketplaceReport: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePaginationModel,
+    handleRefreshPage,
   } = useCollection<IEventHistoryReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
@@ -131,34 +127,13 @@ export const MarketplaceReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm
+      <ReportSearchForm
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        testId="MarketplaceReportSearchForm"
-      >
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
-            <SearchMerchantInput />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <DateTimeInput name="startTimestamp" />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <DateTimeInput name="endTimestamp" />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <SearchMerchantContractsInput
-              name="contractIds"
-              multiple
-              data={{ contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TemplateInput />
-          </Grid>
-        </Grid>
-      </CommonSearchForm>
+        contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
+      />
 
       <DataGridPremium
         pagination

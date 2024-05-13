@@ -12,10 +12,9 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 
-import { DiscreteStrategy, ProtectedAttribute } from "@framework/types";
-
 import { ForbidEnumValues, SemiCoinDto } from "@gemunion/nest-js-validators";
-import type { IDiscreteCreateDto } from "../interfaces";
+import { DiscreteStrategy, ProtectedAttribute } from "@framework/types";
+import type { IDiscreteCreateDto } from "@framework/types";
 
 export class DiscreteCreateDto implements IDiscreteCreateDto {
   @ApiProperty({
