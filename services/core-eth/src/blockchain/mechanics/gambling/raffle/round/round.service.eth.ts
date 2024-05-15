@@ -235,12 +235,12 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketContractEntity = await this.tokenService.getToken(
+    const ticketTokenEntity = await this.tokenService.getToken(
       ticketId,
       raffleRoundEntity.ticketContract.address.toLowerCase(),
     );
 
-    if (!ticketContractEntity) {
+    if (!ticketTokenEntity) {
       throw new NotFoundException("ticketNotFound");
     }
 
@@ -252,15 +252,15 @@ export class RaffleRoundServiceEth {
     }
 
     // UPDATE PRIZE METADATA
-    Object.assign(ticketContractEntity.metadata, { PRIZE: amount });
-    await ticketContractEntity.save();
+    Object.assign(ticketTokenEntity.metadata, { PRIZE: amount });
+    await ticketTokenEntity.save();
 
-    await this.eventHistoryService.updateHistory(event, context, ticketContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, ticketTokenEntity.id);
 
     // NOTIFY
     await this.notificatorService.rafflePrize({
       round: raffleRoundEntity,
-      ticket: ticketContractEntity,
+      ticket: ticketTokenEntity,
       multiplier: amount,
       address,
       transactionHash,
@@ -280,7 +280,7 @@ export class RaffleRoundServiceEth {
       .emit(EmailType.RAFFLE_PRIZE, {
         merchant: raffleRoundEntity.contract.merchant,
         round: raffleRoundEntity,
-        token: ticketContractEntity,
+        token: ticketTokenEntity,
       })
       .toPromise();
   }

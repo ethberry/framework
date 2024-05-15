@@ -5,6 +5,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  EmailType,
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
@@ -33,6 +34,8 @@ export class LotteryRoundServiceEth {
   constructor(
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emlClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryTokenService: LotteryTokenService,
@@ -264,6 +267,14 @@ export class LotteryRoundServiceEth {
         transactionType: name,
       })
       .toPromise();
+
+    await this.emlClientProxy
+      .emit(EmailType.LOTTERY_PRIZE, {
+        merchant: lotteryRoundEntity.contract.merchant,
+        token: ticketEntity,
+        round: lotteryRoundEntity,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
@@ -290,29 +301,31 @@ export class LotteryRoundServiceEth {
         }
       });
 
-      Object.keys(aggregation).map(async aggr => {
-        // create new asset
-        const newAssetEntity = await this.assetService.create();
-        const roundPrice = roundEntity.price.components;
-        const multipliedPrice = roundPrice.map(price => {
-          return {
-            tokenType: price.tokenType,
-            contractId: price.contractId,
-            templateId: price.templateId,
-            tokenId: price.tokenId,
-            amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
-          };
-        });
+      await Promise.all(
+        Object.keys(aggregation).map(async aggr => {
+          // create new asset
+          const newAssetEntity = await this.assetService.create();
+          const roundPrice = roundEntity.price.components;
+          const multipliedPrice = roundPrice.map(price => {
+            return {
+              tokenType: price.tokenType,
+              contractId: price.contractId,
+              templateId: price.templateId,
+              tokenId: price.tokenId,
+              amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
+            };
+          });
 
-        await this.assetService.update(newAssetEntity, { components: multipliedPrice });
+          await this.assetService.update(newAssetEntity, { components: multipliedPrice });
 
-        await this.lotteryRoundAggregationService.create({
-          round: roundEntity,
-          match: Number(aggr),
-          tickets: aggregation[aggr],
-          priceId: newAssetEntity.id,
-        });
-      });
+          await this.lotteryRoundAggregationService.create({
+            round: roundEntity,
+            match: Number(aggr),
+            tickets: aggregation[aggr],
+            priceId: newAssetEntity.id,
+          });
+        }),
+      );
     }
   }
 }
