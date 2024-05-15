@@ -10,6 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import RafflesEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
+import { haveChainlinkCompatibility } from "../../../../../../utils/chain-link";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;
@@ -48,7 +49,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={disabled || shouldDisableByContractType(contract) || !haveChainlinkCompatibility(contract)}
       variant={variant}
     />
   );

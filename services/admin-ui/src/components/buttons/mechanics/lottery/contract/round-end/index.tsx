@@ -9,6 +9,7 @@ import type { IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
 import { shouldDisableByContractType } from "../../../../utils";
+import { haveChainlinkCompatibility } from "../../../../../../utils/chain-link";
 
 export interface ILotteryRoundEndButtonProps {
   className?: string;
@@ -47,7 +48,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       message="pages.lottery.rounds.end"
       className={className}
       dataTestId="LotteryRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={disabled || shouldDisableByContractType(contract) || !haveChainlinkCompatibility(contract)}
       variant={variant}
     />
   );
