@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 import { IndexWrapper } from "../../../index-wrapper";
-import { ReferralSection } from "../../../dashboard/exchange/referral";
+import { ReferralSection } from "../../../dashboard/mechanics/referral";
 import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
 import { ReferralChart } from "./chart";

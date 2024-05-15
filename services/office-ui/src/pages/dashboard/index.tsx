@@ -5,7 +5,7 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { Root } from "./styled";
 
-import { MarketplaceSection } from "./exchange/marketplace";
+import { MarketplaceSection } from "./mechanics/marketplace";
 
 import { NativeSection } from "./hierarchy/native";
 import { Erc20Section } from "./hierarchy/erc20";
