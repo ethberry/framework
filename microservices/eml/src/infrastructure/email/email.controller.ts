@@ -103,15 +103,16 @@ export class EmailController {
     });
   }
 
-  // RAFFLE-PRIZE
+  // LOTTERY-PRIZE
   @EventPattern(EmailType.LOTTERY_PRIZE)
   async lotteryPrize(@Payload() payload: ILotteryPrizePayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 5930807,
+      template: 5956899,
       to: [payload.merchant.email],
       data: {
         roundId: payload.round.roundId,
         tokenId: payload.token.tokenId,
+        sequence: payload.round.numbers.join(", "),
       },
     });
   }
