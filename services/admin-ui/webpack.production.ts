@@ -22,7 +22,7 @@ const config: Configuration = {
   },
   resolve: {
     alias: {
-      "@mui/x-license-pro": path.join(__dirname, "node_modules/@mui/x-license-pro"),
+      "@mui/x-license": path.join(__dirname, "node_modules/@mui/x-license"),
       ethers: path.join(__dirname, "node_modules/ethers"),
     },
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
