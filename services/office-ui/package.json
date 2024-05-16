@@ -69,7 +69,7 @@
     "@mui/x-data-grid": "7.4.0",
     "@mui/x-data-grid-premium": "7.4.0",
     "@mui/x-date-pickers-pro": "7.4.0",
-    "@mui/x-license-pro": "6.10.2",
+    "@mui/x-license": "7.2.0",
     "@observablehq/plot": "0.6.14",
     "@web3-react/core": "8.2.3",
     "clsx": "2.1.1",

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
 import { ChevronRight, Done, ExpandMore, FilterList } from "@mui/icons-material";
-import { TreeItem, TreeView } from "@mui/x-tree-view";
+import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
 import { enqueueSnackbar } from "notistack";
@@ -111,7 +111,7 @@ export const ReferralTree: FC = () => {
   };
 
   const renderTree = (row: IReferralTree, idx: number) => (
-    <TreeItem key={row.id} nodeId={row.id.toString()} label={renderTreeLabel(row, idx)}>
+    <TreeItem key={row.id} itemId={row.id.toString()} label={renderTreeLabel(row, idx)}>
       {row.children.length > 0 ? row.children.map(items => renderTree(items, idx)) : null}
     </TreeItem>
   );
@@ -167,14 +167,13 @@ export const ReferralTree: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
           <Box sx={{ minHeight: 150, flexGrow: 1, mt: 3 }}>
-            <TreeView
+            <SimpleTreeView
               aria-label="referral tree"
-              defaultCollapseIcon={<ExpandMore />}
-              defaultExpanded={["root"]}
-              defaultExpandIcon={<ChevronRight />}
+              defaultExpandedItems={["root"]}
+              slots={{ expandIcon: ChevronRight, collapseIcon: ExpandMore }}
             >
               {rows.map((row, idx) => renderTree(row, idx))}
-            </TreeView>
+            </SimpleTreeView>
           </Box>
         </StyledEmptyWrapper>
       </ProgressOverlay>
