@@ -243,12 +243,14 @@ export class EventHistoryService {
     });
 
     if (nestedEvents) {
-      nestedEvents.map(async nested => {
-        if (nested.id !== parentId) {
-          Object.assign(nested, { parentId });
-          await nested.save();
-        }
-      });
+      await Promise.allSettled(
+        nestedEvents.map(async nested => {
+          if (nested.id !== parentId) {
+            Object.assign(nested, { parentId });
+            await nested.save();
+          }
+        }),
+      );
     }
   }
 }
