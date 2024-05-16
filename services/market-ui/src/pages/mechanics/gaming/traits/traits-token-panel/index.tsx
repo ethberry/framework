@@ -1,12 +1,13 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 import { CardContent } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { TokenTraitsView } from "./traits";
-import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
+import { StyledCard } from "./styled";
+import { StyledCardHeader } from "../../../../hierarchy/shared/styledCardHeader";
 
 export interface ITraitTokenPanelProps {
   token: IToken;
@@ -14,6 +15,7 @@ export interface ITraitTokenPanelProps {
 
 export const TraitTokenPanel: FC<ITraitTokenPanelProps> = props => {
   const { token } = props;
+  const { formatMessage } = useIntl();
 
   if (!token.template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS)) {
     return null;
@@ -21,12 +23,9 @@ export const TraitTokenPanel: FC<ITraitTokenPanelProps> = props => {
 
   return (
     <StyledCard>
+      <StyledCardHeader title={formatMessage({ id: "pages.token.traits" })} />
+
       <CardContent>
-        <StyledToolbar disableGutters>
-          <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.traits" />
-          </StyledTypography>
-        </StyledToolbar>
         <TokenTraitsView metadata={token.metadata} />
       </CardContent>
     </StyledCard>

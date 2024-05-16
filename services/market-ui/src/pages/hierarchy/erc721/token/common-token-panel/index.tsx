@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
 import { formatItemHtmlList } from "@framework/exchange";
@@ -11,7 +11,8 @@ import { Erc721TransferButton, TokenSellOnOpenSeaButton } from "../../../../../c
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { AllowanceForAllButton } from "../../../../../components/buttons/hierarchy/token/allowance-for-all";
 import { computeTokenAsset } from "../../../../../utils/token";
-import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
+import { StyledCardHeader } from "../../../shared/styledCardHeader";
+import { StyledCard, StyledList } from "./styled";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -19,6 +20,7 @@ export interface ICommonTokenPanelProps {
 
 export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   const { token } = props;
+  const { formatMessage } = useIntl();
 
   const { price } =
     token.template?.contract?.contractModule === ModuleType.LOTTERY ||
@@ -29,14 +31,12 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
 
   return (
     <StyledCard>
+      <StyledCardHeader title={formatMessage({ id: "pages.token.priceTitle" })} />
+
       <CardContent>
-        <StyledToolbar disableGutters>
-          <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.priceTitle" />
-          </StyledTypography>
-        </StyledToolbar>
         <StyledList component="ul">{formatItemHtmlList(price)}</StyledList>
       </CardContent>
+
       <CardActions>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>

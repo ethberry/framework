@@ -1,13 +1,16 @@
-import { IconButton, Tooltip } from "@mui/material";
-import ShareIcon from "@mui/icons-material/Share";
+import { Share } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
+import { ListAction, ListActionVariant } from "@framework/styled";
 
 interface IInfuraButtonProps {
   tokenId: number;
+  className?: string;
+  disabled?: boolean;
+  variant?: ListActionVariant;
 }
 
 export const InfuraButton = (props: IInfuraButtonProps) => {
-  const { tokenId } = props;
+  const { tokenId, className, disabled, variant = ListActionVariant.button } = props;
 
   const { fn: fnPinToken } = useApiCall(async api => {
     return api.fetchJson({
@@ -21,10 +24,14 @@ export const InfuraButton = (props: IInfuraButtonProps) => {
     console.info("PIN: ", pin);
   };
   return (
-    <Tooltip title="IPFS Infura">
-      <IconButton aria-label="referral" onClick={() => void handleClick()}>
-        <ShareIcon />
-      </IconButton>
-    </Tooltip>
+    <ListAction
+      icon={Share}
+      onClick={handleClick}
+      message="form.buttons.ipfsInfuraSave"
+      className={className}
+      dataTestId="ipfsInfura"
+      disabled={disabled}
+      variant={variant}
+    />
   );
 };
