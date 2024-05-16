@@ -6,11 +6,11 @@ import { formatEther } from "@framework/exchange";
 import type { IMysteryBox } from "@framework/types";
 
 export interface IMysteryboxContentProps {
-  mysterybox: IMysteryBox;
+  mysteryBox: IMysteryBox;
 }
 
 export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
-  const { mysterybox } = props;
+  const { mysteryBox } = props;
 
   return (
     <Paper elevation={1} sx={{ mt: 1, p: 2 }}>
@@ -31,7 +31,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
           </Typography>
         </Grid>
       </Grid>
-      {mysterybox.item!.components.map(component => (
+      {mysteryBox.item!.components.map(component => (
         <Grid key={component.id} container>
           <Grid xs={4} item>
             {component.tokenType}

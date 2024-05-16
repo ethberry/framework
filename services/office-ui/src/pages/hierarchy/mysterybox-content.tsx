@@ -7,19 +7,19 @@ import type { IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 export interface IMysteryboxContentProps {
-  mysterybox?: IMysteryBox;
+  mysteryBox?: IMysteryBox;
 }
 
 export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
-  const { mysterybox } = props;
+  const { mysteryBox } = props;
 
-  if (!mysterybox) {
+  if (!mysteryBox) {
     return null;
   }
 
   return (
     <Grid container>
-      {mysterybox.item?.components.map(component => (
+      {mysteryBox.item?.components.map(component => (
         <Grid key={component.id} container>
           <Grid xs={4} item>
             {component.tokenType}
