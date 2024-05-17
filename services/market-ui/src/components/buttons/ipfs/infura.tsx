@@ -2,14 +2,14 @@ import { Share } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 
-interface IInfuraButtonProps {
+interface IIpfsInfuraButtonProps {
   tokenId: number;
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const InfuraButton = (props: IInfuraButtonProps) => {
+export const IpfsInfuraButton = (props: IIpfsInfuraButtonProps) => {
   const { tokenId, className, disabled, variant = ListActionVariant.button } = props;
 
   const { fn: fnPinToken } = useApiCall(async api => {

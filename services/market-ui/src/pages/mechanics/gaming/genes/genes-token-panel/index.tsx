@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { CardContent } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { TokenGenesisView } from "./genesis";
-import { StyledCard } from "./styled";
-import { StyledCardHeader } from "../../../../hierarchy/shared/styledCardHeader";
+import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IGenesTokenPanelProps {
   token: IToken;
@@ -15,7 +14,6 @@ export interface IGenesTokenPanelProps {
 
 export const GenesTokenPanel: FC<IGenesTokenPanelProps> = props => {
   const { token } = props;
-  const { formatMessage } = useIntl();
 
   if (!token.template?.contract?.contractFeatures.includes(ContractFeatures.GENES)) {
     return null;
@@ -23,8 +21,12 @@ export const GenesTokenPanel: FC<IGenesTokenPanelProps> = props => {
 
   return (
     <StyledCard>
-      <StyledCardHeader title={formatMessage({ id: "pages.token.genesis" })} />
       <CardContent>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
+            <FormattedMessage id="pages.token.genesis" />
+          </StyledTypography>
+        </StyledToolbar>
         <TokenGenesisView metadata={token.metadata} />
       </CardContent>
     </StyledCard>

@@ -1,18 +1,16 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
 import { formatItemHtmlList } from "@framework/exchange";
 import { ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
-
 import { Erc721TransferButton, TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { AllowanceForAllButton } from "../../../../../components/buttons/hierarchy/token/allowance-for-all";
 import { computeTokenAsset } from "../../../../../utils/token";
-import { StyledCardHeader } from "../../../shared/styledCardHeader";
-import { StyledCard, StyledList } from "./styled";
+import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTokenPanelProps {
   token: IToken;
@@ -20,7 +18,6 @@ export interface ICommonTokenPanelProps {
 
 export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
   const { token } = props;
-  const { formatMessage } = useIntl();
 
   const { price } =
     token.template?.contract?.contractModule === ModuleType.LOTTERY ||
@@ -31,9 +28,12 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
 
   return (
     <StyledCard>
-      <StyledCardHeader title={formatMessage({ id: "pages.token.priceTitle" })} />
-
       <CardContent>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
+            <FormattedMessage id="pages.token.priceTitle" />
+          </StyledTypography>
+        </StyledToolbar>
         <StyledList component="ul">{formatItemHtmlList(price)}</StyledList>
       </CardContent>
 

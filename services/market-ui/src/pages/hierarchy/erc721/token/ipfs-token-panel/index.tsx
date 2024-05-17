@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { CardActions, Grid } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 
-import { StyledCard } from "../common-token-panel/styled";
-import { InfuraButton } from "../../../../../components/buttons/ipfs/infura";
-import { StyledCardHeader } from "../../../shared/styledCardHeader";
+import { StyledCard, StyledToolbar, StyledTypography } from "../common-token-panel/styled";
+import { IpfsInfuraButton } from "../../../../../components/buttons/ipfs/infura";
 
 export interface IIpfsPanelProps {
   token: IToken;
@@ -14,16 +13,21 @@ export interface IIpfsPanelProps {
 
 export const IpfsTokenPanel: FC<IIpfsPanelProps> = props => {
   const { token } = props;
-  const { formatMessage } = useIntl();
 
   return (
     <StyledCard>
-      <StyledCardHeader title={formatMessage({ id: "pages.ipfs.title" })} />
+      <CardContent>
+        <StyledToolbar disableGutters>
+          <StyledTypography gutterBottom variant="h5" component="p">
+            <FormattedMessage id="pages.ipfs.title" />
+          </StyledTypography>
+        </StyledToolbar>
+      </CardContent>
 
       <CardActions>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>
-            <InfuraButton tokenId={token.id} />
+            <IpfsInfuraButton tokenId={token.id} />
           </Grid>
         </Grid>
       </CardActions>
