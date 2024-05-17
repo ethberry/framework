@@ -9,13 +9,13 @@ export const MysteryboxInput: FC = () => {
   const form = useFormContext();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("mysterybox", option);
+    form.setValue("mysteryBox", option);
     form.setValue("mysteryId", option?.id ?? 0);
   };
 
   useEffect(() => {
     if (!mysteryId) {
-      form.setValue("mysterybox", null);
+      form.setValue("mysteryBox", null);
     }
   }, [mysteryId]);
 
