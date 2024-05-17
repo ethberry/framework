@@ -78,7 +78,7 @@ export const PonziLeaderboard: FC = () => {
       field: "amount",
       headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: false,
-      valueFormatter: ({ value }: { value: string }) => formatEther(value),
+      valueFormatter: (value: string) => formatEther(value),
       flex: 1,
       minWidth: 100
     },

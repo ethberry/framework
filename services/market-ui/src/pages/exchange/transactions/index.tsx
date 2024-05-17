@@ -73,7 +73,7 @@ export const MyTransactions: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1.2,
       minWidth: 160,
     },

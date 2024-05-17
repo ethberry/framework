@@ -45,7 +45,7 @@ export const ReferralLeaderboard: FC = () => {
       field: "amount",
       headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => formatEther(value),
+      valueFormatter: (value: string) => formatEther(value),
       flex: 1,
       minWidth: 100
     }

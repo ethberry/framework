@@ -100,7 +100,7 @@ export const MarketplaceReport: FC = () => {
       field: "price",
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatItem({ id: 0, components: value }),
+      valueFormatter: (value: Array<IAssetComponent>) => formatItem({ id: 0, components: value }),
       flex: 1,
       minWidth: 100
     },
@@ -108,7 +108,7 @@ export const MarketplaceReport: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
     },
