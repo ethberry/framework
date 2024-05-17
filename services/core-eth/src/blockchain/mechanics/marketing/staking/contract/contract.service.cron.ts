@@ -29,9 +29,11 @@ export class StakingContractServiceCron {
 
     const allStakingContracts = await this.contractService.findAll({ contractModule: ModuleType.STAKING });
 
-    allStakingContracts.map(async staking => {
-      return await this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
-    });
+    await Promise.allSettled(
+      allStakingContracts.map(async staking => {
+        return await this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
+      }),
+    );
 
     // RELEASE CRON LOCK
     this.cronLock = false;
