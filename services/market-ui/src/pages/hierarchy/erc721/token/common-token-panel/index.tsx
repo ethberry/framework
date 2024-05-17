@@ -6,7 +6,6 @@ import { formatItemHtmlList } from "@framework/exchange";
 import { ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
-
 import { Erc721TransferButton, TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 import { AllowanceForAllButton } from "../../../../../components/buttons/hierarchy/token/allowance-for-all";
@@ -37,6 +36,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         </StyledToolbar>
         <StyledList component="ul">{formatItemHtmlList(price)}</StyledList>
       </CardContent>
+
       <CardActions>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>

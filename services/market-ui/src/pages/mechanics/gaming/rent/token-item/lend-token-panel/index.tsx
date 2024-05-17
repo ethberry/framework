@@ -32,6 +32,7 @@ export const LendTokenPanel: FC<ILendTokenPanelProps> = props => {
           {!token.metadata.user || token.metadata.user === constants.AddressZero ? "N/A" : token.metadata.user}
         </StyledList>
       </CardContent>
+
       <CardActions>
         <TokenLendButton token={token} />
       </CardActions>

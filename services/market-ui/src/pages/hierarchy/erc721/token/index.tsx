@@ -7,6 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IToken } from "@framework/types";
 
+import { ReferralButton } from "../../../../components/buttons/refferal";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { DismantleTokenPanel } from "../../../mechanics/gaming/recipes/dismantle/dismantle-token-panel";
 import { GenesTokenPanel } from "../../../mechanics/gaming/genes/genes-token-panel";
@@ -17,7 +18,7 @@ import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/my
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
-import { ReferralButton } from "../../../../components/buttons/refferal";
+import { IpfsTokenPanel } from "./ipfs-token-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -55,6 +56,7 @@ export const Erc721Token: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
+              <IpfsTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
               <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
