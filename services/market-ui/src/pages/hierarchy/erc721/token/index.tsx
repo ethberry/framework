@@ -7,6 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate, IToken } from "@framework/types";
 
+import { ReferralButton } from "../../../../components/buttons/refferal";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { DismantleTokenPanel } from "../../../mechanics/gaming/recipes/dismantle/dismantle-token-panel";
 import { GenesTokenPanel } from "../../../mechanics/gaming/genes/genes-token-panel";
@@ -46,6 +47,7 @@ export const Erc721Token: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={8.5}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <ReferralButton endpoint={`/erc721/tokens/${selected.id}`} merchant={selected.template?.contract?.merchant} />
           <StyledDescription>
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
