@@ -121,7 +121,6 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       pageSizeOptions={[5, 10, 25]}
       loading={isLoading}
       columns={columns}
-      rowThreshold={0}
       getDetailPanelHeight={getDetailPanelHeight}
       getDetailPanelContent={getDetailPanelContent}
       rows={rows}

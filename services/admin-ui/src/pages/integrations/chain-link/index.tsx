@@ -216,7 +216,6 @@ export const ChainLink: FC = () => {
                 onPaginationModelChange={setPaginationModel}
                 loading={isLoading}
                 columns={columns}
-                rowThreshold={0}
                 rowHeight={40}
                 rows={subData.consumers.map(contract => ({
                   contract,
