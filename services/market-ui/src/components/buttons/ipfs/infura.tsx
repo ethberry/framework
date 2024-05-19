@@ -27,9 +27,9 @@ export const IpfsInfuraButton = (props: IIpfsInfuraButtonProps) => {
     <ListAction
       icon={Backup}
       onClick={handleClick}
-      message="form.buttons.ipfsInfuraSave"
+      message="form.buttons.saveToIpfs"
       className={className}
-      dataTestId="ipfsInfura"
+      dataTestId="saveToIpfsButton"
       disabled={disabled}
       variant={variant}
     />

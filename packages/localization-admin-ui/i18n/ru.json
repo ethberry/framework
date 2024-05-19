@@ -632,7 +632,7 @@
       "grantRole": "Предоставить Роль",
       "hideFilters": "Скрыть фильтры",
       "invite": "Пригласить",
-      "ipfsInfuraSave": "Сохранить в IPFS Infura",
+      "saveToIpfs": "Сохранить в IPFS",
       "load": "Загрузить",
       "loaded": "Готово",
       "login": "Войти",

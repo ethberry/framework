@@ -632,7 +632,7 @@
       "grantRole": "منح دور",
       "hideFilters": "إخفاء الفلاتر",
       "invite": "دعوة",
-      "ipfsInfuraSave": "احفظه في IPFS Infura",
+      "saveToIpfs": "احفظه في IPFS",
       "load": "تحميل",
       "loaded": "تم",
       "login": "تسجيل الدخول",
