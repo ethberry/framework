@@ -32,7 +32,9 @@ export const Erc1155TokenListItem: FC<IErc1155TokenListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <TokenSellOnOpenSeaButton token={token} />
+          <Grid item xs={12}>
+            <TokenSellOnOpenSeaButton token={token} />
+          </Grid>
         </Grid>
       </CardActions>
     </Card>

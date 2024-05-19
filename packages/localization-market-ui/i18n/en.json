@@ -359,7 +359,7 @@
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
-      "ipfsInfuraSave": "Save To IPFS Infura",
+      "ipfsInfuraSave": "Save To IPFS",
       "join": "Join",
       "lend": "Lend token",
       "login": "Login",
@@ -377,6 +377,7 @@
       "save": "Save",
       "search": "Search",
       "sell": "Sell",
+      "share": "Share",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
@@ -576,7 +577,7 @@
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
-      "allowanceForAll": "Allowance For All",
+      "allowanceForAll": "Allowance",
       "cancel": "Cancel",
       "claim": "Claim",
       "clear": "Clear",
@@ -1121,7 +1122,6 @@
       "chart": {
         "title": "Chart"
       },
-      "clipboard": "Copied referral link",
       "leaderboard": {
         "title": "Leaderboard"
       },
@@ -1160,7 +1160,7 @@
     "token": {
       "balanceTitle": "Balance:",
       "craft": "Craft",
-      "discrete": "Levels",
+      "attributes": "Attributes",
       "dismantle": "Dismantle",
       "genesis": "Genesis",
       "mystery": "Mystery box",
@@ -1209,6 +1209,7 @@
     }
   },
   "snackbar": {
+    "clipboard": "Copied to clipboard",
     "addedToCart": "Added to cart",
     "blockchainError": "Blockchain error",
     "blockchainErrorReason": "Blockchain error {reason}",

@@ -33,6 +33,8 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <TokenSellOnOpenSeaButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
             <WrapperUnpackButton token={token} />
           </Grid>
         </Grid>

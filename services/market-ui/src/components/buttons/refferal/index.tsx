@@ -1,19 +1,20 @@
 import { useMemo } from "react";
-import { IconButton } from "@mui/material";
-import IosShareIcon from "@mui/icons-material/IosShare";
 import { enqueueSnackbar } from "notistack";
 import { useClipboard } from "use-clipboard-copy";
 import { useWeb3React } from "@web3-react/core";
 import { useIntl } from "react-intl";
+import { Share } from "@mui/icons-material";
 
-import type { IMerchant } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/styled";
 
 interface IReferralButtonProps {
+  className?: string;
+  disabled?: boolean;
   endpoint?: string;
-  merchant?: IMerchant;
+  variant?: ListActionVariant;
 }
 export function ReferralButton(props: IReferralButtonProps) {
-  const { endpoint = "/", merchant } = props;
+  const { endpoint = "/", className, disabled, variant } = props;
 
   const clipboard = useClipboard();
   const { formatMessage } = useIntl();
@@ -26,18 +27,20 @@ export function ReferralButton(props: IReferralButtonProps) {
     return `${marketUrl}${endpointUrl}?referrer=${account.toLocaleLowerCase()}`;
   }, [endpoint, account]);
 
-  const handleClip = () => {
+  const handleClick = () => {
     clipboard.copy(referalLink);
-    enqueueSnackbar(formatMessage({ id: "pages.referral.clipboard" }));
+    enqueueSnackbar(formatMessage({ id: "snackbar.clipboard" }));
   };
 
-  if (!merchant?.refLevels?.length) {
-    return null;
-  }
-
   return (
-    <IconButton aria-label="referral" onClick={handleClip}>
-      <IosShareIcon />
-    </IconButton>
+    <ListAction
+      icon={Share}
+      onClick={handleClick}
+      message="form.buttons.share"
+      className={className}
+      dataTestId="TokenShareButton"
+      disabled={disabled}
+      variant={variant || ListActionVariant.button}
+    />
   );
 }

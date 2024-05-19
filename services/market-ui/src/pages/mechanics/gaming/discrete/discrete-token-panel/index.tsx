@@ -46,7 +46,7 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
       <CardContent>
         <StyledToolbar disableGutters>
           <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.discrete" />
+            <FormattedMessage id="pages.token.attributes" />
           </StyledTypography>
           <AllowanceInfoPopover />
         </StyledToolbar>

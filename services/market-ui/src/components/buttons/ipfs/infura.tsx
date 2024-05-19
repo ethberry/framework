@@ -1,4 +1,4 @@
-import { Share } from "@mui/icons-material";
+import { Backup } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 
@@ -25,7 +25,7 @@ export const IpfsInfuraButton = (props: IIpfsInfuraButtonProps) => {
   };
   return (
     <ListAction
-      icon={Share}
+      icon={Backup}
       onClick={handleClick}
       message="form.buttons.ipfsInfuraSave"
       className={className}

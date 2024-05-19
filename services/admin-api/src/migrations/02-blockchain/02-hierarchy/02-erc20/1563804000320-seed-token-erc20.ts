@@ -76,6 +76,15 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         1028001,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        202010101, -- BEP Credits
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        2020101,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

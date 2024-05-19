@@ -51,7 +51,7 @@ export const ReferralTree: FC = () => {
 
   const handleCopy = () => {
     clipboard.copy();
-    enqueueSnackbar(formatMessage({ id: "pages.referral.clipboard" }));
+    enqueueSnackbar(formatMessage({ id: "snackbar.clipboard" }));
     setCopied(true);
     setTimeout(() => {
       setCopied(false);

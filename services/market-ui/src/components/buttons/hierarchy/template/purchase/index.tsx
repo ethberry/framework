@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { BigNumber, Contract, utils, constants } from "ethers";
+import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@gemunion/provider-user";
 import { useAppDispatch, useAppSelector, walletActions } from "@gemunion/redux";
@@ -134,6 +135,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   return (
     <Fragment>
       <ListAction
+        icon={ShoppingCart}
         onClick={isActive && isUserAuthenticated ? handleBuy : handleConnect}
         message={isActive && isUserAuthenticated ? "form.buttons.buy" : "components.header.wallet.connect"}
         className={className}

@@ -6,7 +6,6 @@ import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
 import {
   ContractFeatures,
   ModuleType,
-  ReferralProgramStatus,
   TemplateStatus,
   TokenMetadata,
   TokenRarity,
@@ -249,17 +248,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
-
-    // MODULE:REFERRAL PROGRAM
-    queryBuilder.leftJoinAndSelect(
-      "merchant.refLevels",
-      "ref_program",
-      "ref_program.level = :level AND ref_program.referralProgramStatus = :status",
-      {
-        level: 0,
-        status: ReferralProgramStatus.ACTIVE,
-      },
-    );
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
