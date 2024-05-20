@@ -115,6 +115,7 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
   return (
     <StyledDataGridPremium
       pagination
+      paginationMode="server"
       rowCount={count}
       paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
       onPaginationModelChange={handleChangePaginationModel}

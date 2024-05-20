@@ -110,6 +110,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
         </StyledTitle>
         <StyledDataGridPremium
           pagination
+          paginationMode="server"
           rowCount={count || 0}
           paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
           onPaginationModelChange={handleChangePaginationModel}

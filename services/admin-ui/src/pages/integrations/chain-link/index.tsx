@@ -210,6 +210,7 @@ export const ChainLink: FC = () => {
             <Grid item xs={12}>
               <StyledDataGridPremium
                 pagination
+                paginationMode="server"
                 rowCount={subData.consumers.length}
                 pageSizeOptions={[5, 10, 25]}
                 paginationModel={paginationModel}
