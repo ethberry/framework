@@ -71,9 +71,9 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
             symbol={symbol}
             address={address}
             baseTokenURI={baseTokenURI}
-            royalty={`${royalty / 100}%`}
             chainId={chainId}
             contractFeatures={contractFeatures}
+            {...(!contractFeatures.includes(ContractFeatures.SOULBOUND) && { royalty: `${royalty / 100}%` })}
           />
         ) : null
       }
