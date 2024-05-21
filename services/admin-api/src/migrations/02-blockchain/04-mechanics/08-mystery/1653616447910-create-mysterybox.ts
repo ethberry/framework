@@ -12,7 +12,7 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.mysterybox`,
+      name: `${ns}.mystery_box`,
       columns: [
         {
           name: "id",
@@ -73,7 +73,7 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.mysterybox`);
+    await queryRunner.dropTable(`${ns}.mystery_box`);
     await queryRunner.query(`DROP TYPE ${ns}.mystery_box_status_enum;`);
   }
 }

@@ -1176,6 +1176,7 @@
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
+        "loot": "Loot",
         "payment-splitter": "Payment Splitter",
         "ponzi": "Ponzi",
         "prediction": "Prediction",
@@ -1331,6 +1332,21 @@
       "title": "Mystery",
       "tokens": {
         "title": "Mystery Tokens"
+      }
+    },
+    "loot": {
+      "boxContent": {
+        "title": "Lootbox content"
+      },
+      "boxes": {
+        "title": "Loot Boxes"
+      },
+      "contracts": {
+        "title": "Loot Contracts"
+      },
+      "title": "Loot",
+      "tokens": {
+        "title": "Loot Tokens"
       }
     },
     "native": {

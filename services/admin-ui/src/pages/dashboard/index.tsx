@@ -21,24 +21,25 @@ import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
 
+import { AssetPromoSection } from "./mechanics/promo";
 import { BreedSection } from "./mechanics/breed";
 import { ClaimSection } from "./mechanics/claim";
 import { CollectionSection } from "./mechanics/collection";
-import { RecipesSection } from "./mechanics/recipes";
 import { DispenserSection } from "./mechanics/dispenser";
-import { AssetPromoSection } from "./mechanics/promo";
 import { DiscreteSection } from "./mechanics/discrete";
+import { LootSection } from "./mechanics/loot";
 import { LotterySection } from "./mechanics/lottery";
-import { RaffleSection } from "./mechanics/raffle";
 import { MysterySection } from "./mechanics/mystery";
-import { PonziSection } from "./mechanics/ponzi";
+import { RaffleSection } from "./mechanics/raffle";
 import { RentSection } from "./mechanics/rent";
+import { PonziSection } from "./mechanics/ponzi";
+import { PaymentSplitterSection } from "./mechanics/payment-splitter";
+import { PredictionSection } from "./mechanics/prediction";
+import { RecipesSection } from "./mechanics/recipes";
+import { ReferralSection } from "./mechanics/referral";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
-import { PaymentSplitterSection } from "./mechanics/payment-splitter";
 import { WaitListSection } from "./mechanics/wait-list";
-import { ReferralSection } from "./mechanics/referral";
-import { PredictionSection } from "./mechanics/prediction";
 
 export const Dashboard: FC = () => {
   return (
@@ -54,6 +55,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
           <MysterySection />
+          <LootSection />
           <CollectionSection />
         </Grid>
         <Grid item xs={12} md={4}>

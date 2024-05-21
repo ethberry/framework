@@ -10,7 +10,7 @@ import type { IMysteryContractDeployDto, IUser, IContract } from "@framework/typ
 import { MysteryContractTemplates } from "@framework/types";
 
 import { MysteryContractDeployDialog } from "./dialog";
-import deployMysteryboxMysteryBoxFactoryFacetABI from "@framework/abis/deployMysterybox/MysteryBoxFactoryFacet.json";
+import deployMysteryboxMysteryBoxFactoryFacetABI from "@framework/abis/deployMysteryBox/MysteryBoxFactoryFacet.json";
 
 export interface IMysteryContractDeployButtonProps {
   className?: string;

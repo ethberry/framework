@@ -16,7 +16,7 @@ export class SeedMysteryBoxErc1155At1653616447950 implements MigrationInterface 
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102120301
+        102085301
       );
     `);
 
@@ -32,12 +32,12 @@ export class SeedMysteryBoxErc1155At1653616447950 implements MigrationInterface 
         10501,
         1050101, -- Gold
         '1000',
-        102120301
+        102085301
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.mysterybox (
+      INSERT INTO ${ns}.mystery_box (
         title,
         description,
         image_url,
@@ -50,7 +50,7 @@ export class SeedMysteryBoxErc1155At1653616447950 implements MigrationInterface 
         'Gold Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102120301,
+        102085301,
         1110501,
         'ACTIVE',
         '${currentDateTime}',
@@ -60,6 +60,6 @@ export class SeedMysteryBoxErc1155At1653616447950 implements MigrationInterface 
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.mysterybox RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.mystery_box RESTART IDENTITY CASCADE;`);
   }
 }

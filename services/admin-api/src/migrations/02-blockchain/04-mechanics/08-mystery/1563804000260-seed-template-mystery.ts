@@ -16,19 +16,19 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102110101
+        102080101
       ), (
-        102110102
+        102080102
       ), (
-        102110401
+        102080401
       ), (
-        102110501
+        102080501
       ), (
-        102110601
+        102080601
       ), (
-        102118001
+        102080801
       ), (
-        201110101
+        201080101
       );
     `);
 
@@ -50,7 +50,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Sword Mysterybox',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102110101,
+        102080101,
         0,
         4,
         'ACTIVE',
@@ -62,7 +62,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Sword Mysterybox Inactive',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102110102,
+        102080102,
         0,
         1,
         'INACTIVE',
@@ -74,7 +74,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Warrior Mysterybox',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102110401,
+        102080401,
         0,
         1,
         'ACTIVE',
@@ -86,7 +86,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Gold Mysterybox',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102110501,
+        102080501,
         0,
         1,
         'ACTIVE',
@@ -98,7 +98,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Mixed Mysterybox',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102110601,
+        102080601,
         0,
         1,
         'ACTIVE',
@@ -110,7 +110,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Loot box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        102118001,
+        102080801,
         0,
         1,
         'ACTIVE',
@@ -122,7 +122,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Mysterybox (BEP)',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
-        201110101,
+        201080101,
         0,
         1,
         'ACTIVE',

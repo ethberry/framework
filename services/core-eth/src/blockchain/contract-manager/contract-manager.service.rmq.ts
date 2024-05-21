@@ -104,7 +104,7 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.MYSTERYBOX) {
+    if (listenerType === ListenerType.MYSTERY) {
       const contracts = await this.contractService.findAllByType([ModuleType.MYSTERY]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
@@ -259,7 +259,7 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
-    if (listenerType === ListenerType.MYSTERYBOX) {
+    if (listenerType === ListenerType.MYSTERY) {
       const contracts = await this.contractService.findAllByType([ModuleType.MYSTERY]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];

@@ -20,3 +20,4 @@ export * from "./19-merge";
 export * from "./20-achievements";
 export * from "./21-referral";
 export * from "./22-prediction";
+export * from "./23-loot";

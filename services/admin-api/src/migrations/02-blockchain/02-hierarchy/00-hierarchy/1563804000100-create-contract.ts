@@ -15,23 +15,23 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
-        'EXCHANGE',
         'CONTRACT_MANAGER',
+        'COLLECTION',
         'CHAIN_LINK',
         'DISPENSER',
+        'EXCHANGE',
         'HIERARCHY',
-        'TEST',
-        'MYSTERY',
-        'WRAPPER',
+        'LOOT',
         'LOTTERY',
+        'MYSTERY',
+        'PAYMENT_SPLITTER',
+        'PONZI',
         'RAFFLE',
         'STAKING',
-        'PONZI',
-        'WAIT_LIST',
+        'TEST',
         'VESTING',
-        'POLYGON',
-        'COLLECTION',
-        'PAYMENT_SPLITTER'
+        'WAIT_LIST',
+        'WRAPPER'
       );
     `);
 
@@ -91,6 +91,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 04x - erc998
     // 05x - erc1155
     // 11x - mystery
+    // 12x - loot
     // 13x - wrapper
     // 21x - raffle
     // 22x - raffle

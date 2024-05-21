@@ -28,7 +28,7 @@ export class SeedEventHistoryMysteryErc721UnpackAt1687580606330 implements Migra
         created_at,
         updated_at
       ) VALUES (
-        102120110,        
+        102083210,        
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'UnpackMysteryBox',
@@ -40,7 +40,7 @@ export class SeedEventHistoryMysteryErc721UnpackAt1687580606330 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120111,
+        102083211,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -49,11 +49,11 @@ export class SeedEventHistoryMysteryErc721UnpackAt1687580606330 implements Migra
           to: ZeroAddress,
           tokenId: "111010101",
         })}',
-        102120110,
+        102083210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120112,
+        102083212,
         '${erc721ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -62,7 +62,7 @@ export class SeedEventHistoryMysteryErc721UnpackAt1687580606330 implements Migra
           to: wallets[0],
           tokenId: "103060101",
         })}',
-        102120110,
+        102083210,
         '${currentDateTime}',
         '${currentDateTime}'
       );

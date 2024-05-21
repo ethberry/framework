@@ -16,13 +16,13 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102120101
+        102083101
       ), (
-        102120102
+        102083102
       ), (
-        102128002
+        102083802
       ), (
-        202120101
+        202083101
       );
     `);
 
@@ -38,30 +38,30 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         10306,
         1030601, -- Sword
         '1',
-        102120101
+        102083101
       ), (
         'ERC721',
         10306,
         1030601, -- Sword
         '1',
-        102120102
+        102083102
       ), (
         'ERC721',
         10380,
         1038001, -- Trousers
         '1',
-        102128002
+        102083802
       ), (
         'ERC721',
         20301,
         2030101, -- bep
         '1',
-        202120101
+        202083101
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.mysterybox (
+      INSERT INTO ${ns}.mystery_box (
         title,
         description,
         image_url,
@@ -74,7 +74,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         'Sword Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102120101,
+        102083101,
         1110101,
         'ACTIVE',
         '${currentDateTime}',
@@ -83,7 +83,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         'Sword Mystery Box (inactive)',
         '${simpleFormatting}',
         '${imageUrl}',
-        102120102,
+        102083102,
         1110102,
         'INACTIVE',
         '${currentDateTime}',
@@ -92,7 +92,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         'Trousers Loot Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102128002,
+        102083802,
         1118001,
         'ACTIVE',
         '${currentDateTime}',
@@ -101,7 +101,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         'Mystery Box (BEP)',
         '${simpleFormatting}',
         '${imageUrl}',
-        202120101,
+        202083101,
         2110101,
         'ACTIVE',
         '${currentDateTime}',
@@ -111,6 +111,6 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.mysterybox RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.mystery_box RESTART IDENTITY CASCADE;`);
   }
 }

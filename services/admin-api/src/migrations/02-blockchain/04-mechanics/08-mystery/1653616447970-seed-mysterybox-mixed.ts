@@ -17,7 +17,7 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102120401
+        102088401
       );
     `);
 
@@ -33,30 +33,30 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102120401
+        102088401
       ), (
         'ERC721',
         10306,
         1030601, -- sword
         '1',
-        102120401
+        102088401
       ), (
         'ERC998',
         10406,
         1040601, -- warrior
         '1',
-        102120401
+        102088401
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         '1000',
-        102120401
+        102088401
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.mysterybox (
+      INSERT INTO ${ns}.mystery_box (
         title,
         description,
         image_url,
@@ -69,7 +69,7 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
         'Mixed Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102120401,
+        102088401,
         1110601,
         'ACTIVE',
         '${currentDateTime}',
@@ -79,6 +79,6 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.mysterybox RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.mystery_box RESTART IDENTITY CASCADE;`);
   }
 }

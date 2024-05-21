@@ -16,7 +16,7 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102120201
+        102084201
       );
     `);
 
@@ -32,12 +32,12 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
         10406,
         1040601, -- warrior
         '1',
-        102120201
+        102084201
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.mysterybox (
+      INSERT INTO ${ns}.mystery_box (
         title,
         description,
         image_url,
@@ -50,7 +50,7 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
         'Warrior Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102120201,
+        102084201,
         1110401,
         'ACTIVE',
         '${currentDateTime}',
@@ -60,6 +60,6 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.mysterybox RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.mystery_box RESTART IDENTITY CASCADE;`);
   }
 }

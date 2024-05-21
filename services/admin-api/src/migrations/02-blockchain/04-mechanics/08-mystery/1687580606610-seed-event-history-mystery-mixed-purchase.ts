@@ -34,7 +34,7 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
         created_at,
         updated_at
       ) VALUES (
-        102110210,
+        102088110,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -86,7 +86,7 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110211,
+        102088111,
         '${erc721ContractMysteryBlacklistPausableAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -95,11 +95,11 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
           to: wallets[0],
           tokenId: "111060101",
         })}',
-        102110210,
+        102088110,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110212,
+        102088112,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -108,7 +108,7 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110210,
+        102088110,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       );
