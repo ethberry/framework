@@ -6,12 +6,16 @@ import { FormattedMessage } from "react-intl";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-import { RatePlanType } from "@framework/types";
+import { BusinessType, RatePlanType } from "@framework/types";
 
 export const LootSection: FC = () => {
   const { profile } = useUser<IUser>();
 
   if (profile?.merchant?.ratePlan === RatePlanType.BRONZE) {
+    return null;
+  }
+
+  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return null;
   }
 
