@@ -3,16 +3,17 @@ import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { SemiCoinDto, AllTypesDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto, AllTypesDto, createCustomAssetDto } from "@gemunion/nest-js-validators";
 
 import type { IMysteryBoxCreateDto } from "../interfaces";
+import { TokenType } from "@gemunion/types-blockchain";
 
 export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCreateDto {
   @ApiProperty({
-    type: AllTypesDto,
+    type: createCustomAssetDto([TokenType.ERC721, TokenType.ERC998]),
   })
   @ValidateNested()
-  @Type(() => AllTypesDto)
+  @Type(() => createCustomAssetDto([TokenType.ERC721, TokenType.ERC998]))
   public item: InstanceType<typeof AllTypesDto>;
 
   @ApiProperty({

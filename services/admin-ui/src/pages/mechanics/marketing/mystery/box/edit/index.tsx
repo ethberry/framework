@@ -9,6 +9,7 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { ContractFeatures } from "@gemunion/mui-inputs-asset/dist/interfaces";
 
 export interface IMysteryboxEditDialogProps {
   open: boolean;
@@ -57,10 +58,12 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         autoSelect
         multiple
         prefix="item"
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
         contract={{
           data: {
             contractModule: [ModuleType.HIERARCHY],
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+            contractFeatures: [ContractFeatures.RANDOM]
           },
         }}
         forceAmount
