@@ -11,5 +11,6 @@ export interface IMysteryUnpackData {
   address: string;
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
+  merchantId: number;
   transactionHash: string;
 }
