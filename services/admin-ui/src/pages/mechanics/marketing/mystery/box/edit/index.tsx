@@ -6,10 +6,9 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType, ContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ContractFeatures } from "@gemunion/mui-inputs-asset/dist/interfaces";
 
 export interface IMysteryboxEditDialogProps {
   open: boolean;
