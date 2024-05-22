@@ -6,7 +6,6 @@ import { SearchableDto } from "@gemunion/collection";
 import { SemiCoinDto, NftDto } from "@gemunion/nest-js-validators";
 
 import type { IMysteryBoxCreateDto } from "../interfaces";
-import { TokenType } from "@gemunion/types-blockchain";
 
 export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCreateDto {
   @ApiProperty({
