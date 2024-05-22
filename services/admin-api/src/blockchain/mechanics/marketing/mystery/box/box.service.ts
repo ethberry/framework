@@ -228,7 +228,7 @@ export class MysteryBoxService {
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, item: _, ...rest } = dto;
 
     const mysteryBoxEntity = await this.findOne(where, {
       join: {
@@ -256,9 +256,11 @@ export class MysteryBoxService {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
     }
 
-    if (item) {
-      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
-    }
+    // Each Item is fixed with template and not changable.
+    // Each Box can have different items, and we track them by template.
+    // if (item) {
+    // await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
+    // }
 
     // SYNC UPDATE TEMPLATE
     const { title, description, imageUrl } = rest;
