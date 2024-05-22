@@ -257,7 +257,7 @@ export class MysteryBoxService {
     }
 
     // Each Item is fixed with template and not changable.
-    // Each Box can have different items, and we track them by template.
+    // Each Token can have different items, and we track them by template.
     // if (item) {
     // await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     // }
