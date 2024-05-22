@@ -5,7 +5,14 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ContractStatus,
+  IMysteryBox,
+  ModuleType,
+  MysteryBoxStatus,
+  TokenType,
+} from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../../../components/forms/template-search/contract-input";
@@ -71,10 +78,12 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         autoSelect
         multiple
         prefix="item"
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
         contract={{
           data: {
             contractModule: [ModuleType.HIERARCHY],
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+            contractFeatures: [ContractFeatures.RANDOM],
           },
         }}
       />
