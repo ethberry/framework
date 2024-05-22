@@ -8,11 +8,11 @@ import type { IProduct } from "@framework/types";
 import { CartContext } from "../../providers/cart";
 import { StyledGrid } from "./styled";
 
-interface IPriceInputProps {
+interface IAmountInputProps {
   product: IProduct;
 }
 
-export const AmountInput: FC<IPriceInputProps> = props => {
+export const AmountInput: FC<IAmountInputProps> = props => {
   const { product } = props;
 
   const cart = useContext(CartContext);

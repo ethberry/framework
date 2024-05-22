@@ -1,12 +1,13 @@
 import type { IExchangePurchaseEvent } from "./core";
-import type { IExchangeClaimEvent } from "./claim";
+import type { IExchangePurchaseLootBoxEvent } from "./loot";
+import type { IExchangePurchaseLotteryEvent } from "./lottery";
 import type { IExchangePurchaseMysteryBoxEvent } from "./mystery";
+import type { IExchangePurchaseRaffleEvent } from "./raffle";
+import type { IExchangeClaimEvent } from "./claim";
 import type { IExchangeLendEvent } from "./rentable";
 import type { IExchangeCraftEvent } from "./craft";
 import type { IExchangeDismantleEvent } from "./dismantle";
 import type { IExchangeBreedEvent } from "./breeding";
-import type { IExchangePurchaseLotteryEvent } from "./lottery";
-import type { IExchangePurchaseRaffleEvent } from "./raffle";
 import type { IExchangeDiscreteEvent } from "./discrete";
 
 export enum ExchangeEventType {
@@ -17,6 +18,8 @@ export enum ExchangeEventType {
   // MODULE:CRAFT
   Craft = "Craft",
   Dismantle = "Dismantle",
+  // MODULE:LOOT
+  PurchaseLootBox = "PurchaseLootBox",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:DISCRETE
@@ -68,16 +71,17 @@ export interface IExchangeErc20PaymentReleasedEvent {
 
 export type TExchangeEvents =
   | IExchangePurchaseEvent
+  | IExchangePurchaseLootBoxEvent
+  | IExchangePurchaseMysteryBoxEvent
+  | IExchangePurchaseLotteryEvent
+  | IExchangePurchaseRaffleEvent
   | IExchangeClaimEvent
   | IExchangeCraftEvent
   | IExchangeDismantleEvent
   | IExchangeDiscreteEvent
-  | IExchangePurchaseMysteryBoxEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent
   | IExchangePaymentReleasedEvent
   | IExchangeErc20PaymentReleasedEvent
-  | IExchangeLendEvent
-  | IExchangePurchaseLotteryEvent
-  | IExchangePurchaseRaffleEvent;
+  | IExchangeLendEvent;

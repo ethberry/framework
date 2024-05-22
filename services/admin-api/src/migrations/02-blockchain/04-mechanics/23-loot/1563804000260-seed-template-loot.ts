@@ -47,7 +47,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         updated_at
       ) VALUES (
         1120101,
-        'Sword Lootbox',
+        'Weapon Loot Box',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230101,
@@ -59,7 +59,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1120102,
-        'Sword Lootbox Inactive',
+        'Weapon Loot Box (inactive)',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230102,
@@ -71,7 +71,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1120401,
-        'Warrior Lootbox',
+        'Character Loot Box',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230401,
@@ -83,7 +83,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1120501,
-        'Gold Lootbox',
+        'Resources Loot Box',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230501,
@@ -95,7 +95,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1120601,
-        'Mixed Lootbox',
+        'Mixed Loot Box',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230601,
@@ -106,8 +106,20 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        1120701,
+        'Coin Loot Box',
+        '${simpleFormatting}',
+        '${imagePath}/lootbox.png',
+        102230101,
+        0,
+        4,
+        'ACTIVE',
+        11201,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         1128001,
-        'Loot box',
+        'Loot Box',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         102230801,
@@ -119,7 +131,7 @@ export class SeedTemplateLootAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         2120101,
-        'Lootbox (BEP)',
+        'Loot Box (BEP)',
         '${simpleFormatting}',
         '${imagePath}/lootbox.png',
         202230101,

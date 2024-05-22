@@ -56,7 +56,7 @@ export const LootBox: FC = () => {
       lootBoxStatus: [LootBoxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, template, title, description, imageUrl, item, lootBoxStatus }) =>
+    filter: ({ id, template, title, description, imageUrl, item, lootBoxStatus, min, max }) =>
       id
         ? {
             title,
@@ -65,6 +65,8 @@ export const LootBox: FC = () => {
             item: cleanUpAsset(item),
             price: cleanUpAsset(template?.price),
             lootBoxStatus,
+            min,
+            max,
           }
         : {
             contractId: template?.contractId,
@@ -73,6 +75,8 @@ export const LootBox: FC = () => {
             imageUrl,
             item: cleanUpAsset(item),
             price: cleanUpAsset(template?.price),
+            min,
+            max,
           },
   });
 

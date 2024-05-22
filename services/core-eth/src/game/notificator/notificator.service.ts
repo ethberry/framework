@@ -13,6 +13,8 @@ import type {
   ICraftData,
   IDiscreteData,
   IDismantleData,
+  ILootPurchaseData,
+  ILootUnpackData,
   ILotteryFinalizeData,
   ILotteryPrizeData,
   ILotteryPurchaseData,
@@ -114,6 +116,19 @@ export class NotificatorService {
   public purchaseRandom(data: IPurchaseRandomData): Promise<any> {
     return this.sendMessage(data.item.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_RANDOM, data).toPromise();
+    });
+  }
+
+  // MODULE:LOOT
+  public purchaseLoot(data: ILootPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOOT_PURCHASE, data).toPromise();
+    });
+  }
+
+  public unpackLoot(data: ILootUnpackData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOOT_UNPACK, data).toPromise();
     });
   }
 

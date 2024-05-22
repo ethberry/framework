@@ -33,6 +33,18 @@ export class SeedLootBoxErc998At1653616447940 implements MigrationInterface {
         1040601, -- warrior
         '1',
         102124201
+      ), (
+        'ERC998',
+        10406,
+        1040602, -- rouge
+        '1',
+        102124201
+      ), (
+        'ERC998',
+        10406,
+        1040603, -- mage
+        '1',
+        102124201
       );
     `);
 
@@ -44,15 +56,19 @@ export class SeedLootBoxErc998At1653616447940 implements MigrationInterface {
         item_id,
         template_id,
         loot_box_status,
+        min,
+        max,
         created_at,
         updated_at
       ) VALUES (
-        'Warrior Loot Box',
+        'Character Loot Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102124201,
         1120401,
         'ACTIVE',
+        1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

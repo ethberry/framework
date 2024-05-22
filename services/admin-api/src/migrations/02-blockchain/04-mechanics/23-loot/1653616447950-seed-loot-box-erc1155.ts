@@ -33,6 +33,18 @@ export class SeedLootBoxErc1155At1653616447950 implements MigrationInterface {
         1050101, -- Gold
         '1000',
         102124301
+      ), (
+        'ERC1155',
+        10501,
+        1050102, -- Wood
+        '1000',
+        102124301
+      ), (
+        'ERC1155',
+        10501,
+        1050103, -- Iron ore
+        '1000',
+        102124301
       );
     `);
 
@@ -44,15 +56,19 @@ export class SeedLootBoxErc1155At1653616447950 implements MigrationInterface {
         item_id,
         template_id,
         loot_box_status,
+        min,
+        max,
         created_at,
         updated_at
       ) VALUES (
-        'Gold Loot Box',
+        'Resource Loot Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102124301,
         1120501,
         'ACTIVE',
+        1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

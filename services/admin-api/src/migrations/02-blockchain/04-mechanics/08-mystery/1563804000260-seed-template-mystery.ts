@@ -47,7 +47,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         updated_at
       ) VALUES (
         1110101,
-        'Sword Mysterybox',
+        'Sword Mystery Box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080101,
@@ -59,7 +59,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1110102,
-        'Sword Mysterybox Inactive',
+        'Sword Mystery Box Inactive',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080102,
@@ -71,7 +71,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1110401,
-        'Warrior Mysterybox',
+        'Warrior Mystery Box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080401,
@@ -83,7 +83,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1110501,
-        'Gold Mysterybox',
+        'Gold Mystery Box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080501,
@@ -95,7 +95,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1110601,
-        'Mixed Mysterybox',
+        'Mixed Mystery Box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080601,
@@ -107,7 +107,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1118001,
-        'Loot box',
+        'Mystery Box',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         102080801,
@@ -119,7 +119,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         2110101,
-        'Mysterybox (BEP)',
+        'Mystery Box (BEP)',
         '${simpleFormatting}',
         '${imagePath}/mysterybox.png',
         201080101,

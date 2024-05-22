@@ -9,6 +9,8 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ContractStatus, ILootBox, ModuleType, LootBoxStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { MaxInput } from "./max-input";
+import { MinInput } from "./min-input";
 
 export interface ILootboxEditDialogProps {
   open: boolean;
@@ -20,7 +22,7 @@ export interface ILootboxEditDialogProps {
 export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, imageUrl, lootBoxStatus, template } = initialValues;
+  const { id, title, description, item, imageUrl, lootBoxStatus, template, min, max } = initialValues;
 
   const fixedValues = {
     id,
@@ -30,6 +32,8 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
     imageUrl,
     lootBoxStatus,
     template,
+    min: min || 1,
+    max: max || item?.components.length || 1,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -53,6 +57,8 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <MinInput />
+      <MaxInput />
       <TemplateAssetInput
         autoSelect
         multiple

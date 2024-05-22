@@ -9,4 +9,5 @@ export const validationSchema = object().shape({
   item: templateAssetValidationSchema,
   price: templateAssetValidationSchema,
   imageUrl: urlValidationSchema,
+  // TODO add validation for min, max
 });

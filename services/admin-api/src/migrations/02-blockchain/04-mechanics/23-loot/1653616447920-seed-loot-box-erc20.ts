@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedLootBoxErc721At1653616447930 implements MigrationInterface {
+export class SeedLootBoxErc20At1653616447920 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -16,13 +17,7 @@ export class SeedLootBoxErc721At1653616447930 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102233101
-      ), (
-        102233102
-      ), (
-        102233802
-      ), (
-        202233101
+        102232101
       );
     `);
 
@@ -34,29 +29,23 @@ export class SeedLootBoxErc721At1653616447930 implements MigrationInterface {
         amount,
         asset_id
       ) VALUES (
-        'ERC721',
-        10306,
-        1030601, -- Sword
-        '1',
-        102233101
+       'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102232101
       ), (
-        'ERC721',
-        10306,
-        1030601, -- Sword
-        '1',
-        102233102
+       'ERC20',
+        10204,
+        1020401, -- Black list token
+        '${WeiPerEther.toString()}',
+        102232101
       ), (
-        'ERC721',
-        10380,
-        1038001, -- Trousers
-        '1',
-        102233802
-      ), (
-        'ERC721',
-        20301,
-        2030101, -- bep
-        '1',
-        202233101
+       'ERC20',
+        10205,
+        1020501, -- White list token
+        '${WeiPerEther.toString()}',
+        102232101
       );
     `);
 
@@ -68,42 +57,19 @@ export class SeedLootBoxErc721At1653616447930 implements MigrationInterface {
         item_id,
         template_id,
         loot_box_status,
+        min,
+        max,
         created_at,
         updated_at
       ) VALUES (
-        'Sword Loot Box',
+        'Coin Loot Box',
         '${simpleFormatting}',
         '${imageUrl}',
-        102233101,
-        1120101,
+        102232101,
+        1120701,
         'ACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Sword Loot Box (inactive)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        102233102,
-        1120102,
-        'INACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Trousers Loot Box',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        102233802,
-        1128001,
-        'ACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Loot Box (BEP)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        202233101,
-        2120101,
-        'ACTIVE',
+        1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

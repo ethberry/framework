@@ -37,13 +37,13 @@ export class SeedLootBoxMixedAt1653616447970 implements MigrationInterface {
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
         102128401
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         '1',
         102128401
       ), (
@@ -63,6 +63,8 @@ export class SeedLootBoxMixedAt1653616447970 implements MigrationInterface {
         item_id,
         template_id,
         loot_box_status,
+        min,
+        max,
         created_at,
         updated_at
       ) VALUES (
@@ -72,6 +74,8 @@ export class SeedLootBoxMixedAt1653616447970 implements MigrationInterface {
         102128401,
         1120601,
         'ACTIVE',
+        1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

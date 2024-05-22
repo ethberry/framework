@@ -16,4 +16,6 @@ export interface ILootBox extends ISearchable {
   template?: ITemplate;
   tokens?: Array<IToken>;
   lootBoxStatus: LootBoxStatus;
+  min: number;
+  max: number;
 }

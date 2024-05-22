@@ -45,6 +45,14 @@ export class CreateLootbox1653616447910 implements MigrationInterface {
           default: "'ACTIVE'",
         },
         {
+          name: "min",
+          type: "int",
+        },
+        {
+          name: "max",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
