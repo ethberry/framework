@@ -92,7 +92,7 @@
     "listenerRemove": "Remove ETH Listener",
     "lotteryRoundEnd": "End Lottery Round",
     "lotteryRoundStart": "Start Lottery Round",
-    "mintBox": "Mint Mysterybox",
+    "mintBox": "Mint box",
     "mintToken": "Mint tokens",
     "paymentSplitterBalances": "Release Balance",
     "paymentSplitterShares": "has {currentShare} of {total} shares",
@@ -191,6 +191,7 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
+      "LOOTBOX": "LootBox",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
@@ -387,6 +388,7 @@
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
       "LevelUp": "LevelUp",
+      "LootBoxDeployed": "LootBoxDeployed",
       "LotteryDeployed": "LotteryDeployed",
       "Merge": "Merge",
       "MetadataUpdate": "MetadataUpdate",
@@ -404,6 +406,7 @@
       "PonziDeployed": "PonziDeployed",
       "Prize": "Prize",
       "Purchase": "Purchase",
+      "PurchaseLootBox": "PurchaseLootBox",
       "PurchaseLottery": "PurchaseLottery",
       "PurchaseMysteryBox": "PurchaseMysteryBox",
       "PurchaseRaffle": "PurchaseRaffle",
@@ -487,6 +490,10 @@
       "PONZI": "PONZI",
       "STAKING": "STAKING",
       "VESTING": "VESTING"
+    },
+    "lootBoxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "merchantStatus": {
       "ACTIVE": "Active",
@@ -643,7 +650,6 @@
       "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
       "invite": "Invite",
-      "saveToIpfs": "Save To IPFS",
       "load": "Load",
       "loaded": "Done",
       "login": "Login",
@@ -665,6 +671,7 @@
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
+      "saveToIpfs": "Save To IPFS",
       "schedule": "Schedule",
       "search": "Search",
       "setAmount": "Set amount",
@@ -779,8 +786,10 @@
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
+      "lootBoxStatus": "Status",
       "lottery": "Lottery",
       "matron": "Matron",
+      "max": "Maximum",
       "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
@@ -790,6 +799,7 @@
       "merchantStatus": "Status",
       "mergeStatus": "Status",
       "metadata": "Attributes",
+      "min": "Minimum",
       "monthlyRelease": "Monthly release",
       "mysteryBoxStatus": "Status",
       "mysteryId": "Mysterybox",
@@ -940,6 +950,7 @@
       "level": "1",
       "listId": "Default list",
       "listIds": "Default list",
+      "max": "10",
       "maxCycles": "0",
       "maxStake": "10",
       "maxStakes": "0",
@@ -947,6 +958,7 @@
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
       "metadata": "{}",
+      "min": "1",
       "monthlyRelease": "10%",
       "mysteryId": "Mysterybox",
       "name": "Pink dust",
@@ -1174,6 +1186,7 @@
         "collection": "Collections",
         "dispenser": "Dispenser",
         "grade": "Grade",
+        "loot": "Loot",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "payment-splitter": "Payment Splitter",
@@ -1266,6 +1279,21 @@
     },
     "kanban": {
       "title": "Orders"
+    },
+    "loot": {
+      "boxContent": {
+        "title": "Lootbox content"
+      },
+      "boxes": {
+        "title": "Loot Boxes"
+      },
+      "contracts": {
+        "title": "Loot Contracts"
+      },
+      "title": "Loot",
+      "tokens": {
+        "title": "Loot Tokens"
+      }
     },
     "lottery": {
       "contracts": {
@@ -1473,7 +1501,8 @@
         "erc721": "5 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "0 Loot boxes",
+        "mystery": "0 Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Bronze",
@@ -1490,7 +1519,8 @@
         "erc721": "25 ERC721 contracts",
         "erc998": "5 ERC998 contract",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "10 Loot boxes",
+        "mystery": "10 Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Gold",
@@ -1513,7 +1543,8 @@
         "erc721": "10 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "Loot boxes",
+        "mystery": "Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Silver",

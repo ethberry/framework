@@ -3,11 +3,11 @@ import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
 import type { IEventHistory } from "../event-history";
 
+import { ModuleType } from "../../common";
+import type { IRent } from "../mechanics";
+import type { IMerchant } from "../../infrastructure";
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
-import { ModuleType } from "../../common";
-import type { IRent } from "../mechanics/gaming/rent/rent";
-import type { IMerchant } from "../../infrastructure";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -111,6 +111,18 @@ export enum MysteryContractFeatures {
 }
 
 export enum MysteryContractTemplates {
+  "SIMPLE" = "SIMPLE",
+  "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
+  "PAUSABLE" = "PAUSABLE",
+  "BLACKLIST" = "BLACKLIST",
+}
+
+export enum LootContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "PAUSABLE" = "PAUSABLE",
+}
+
+export enum LootContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
   "PAUSABLE" = "PAUSABLE",

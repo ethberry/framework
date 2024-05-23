@@ -62,7 +62,6 @@ export const MysteryBox: FC = () => {
             title,
             description,
             imageUrl,
-            item: cleanUpAsset(item),
             price: cleanUpAsset(template?.price),
             mysteryBoxStatus,
           }

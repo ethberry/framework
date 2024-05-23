@@ -8,7 +8,7 @@ import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
-@Entity({ schema: ns, name: "mysterybox" })
+@Entity({ schema: ns, name: "mystery_box" })
 export class MysteryBoxEntity extends SearchableEntity implements IMysteryBox {
   @Column({ type: "varchar" })
   public imageUrl: string;

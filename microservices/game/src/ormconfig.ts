@@ -5,6 +5,8 @@ import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-componen
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
+import { LootBoxEntity } from "./blockchain/mechanics/marketing/loot/box/box.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
@@ -33,6 +35,8 @@ const config: PostgresConnectionOptions = {
     UserEntity,
     ChainLinkSubscriptionEntity,
     RaffleRoundEntity,
+    LootBoxEntity,
+    MysteryBoxEntity,
 
     PredictionAnswerEntity,
     PredictionQuestionEntity,

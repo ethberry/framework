@@ -712,6 +712,7 @@
         "claim": "Claim",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
+        "lootbox": "Lootbox",
         "ponzi": "Ponzi",
         "prediction": "Prediction",
         "promo": "Promo",
@@ -998,6 +999,36 @@
           "price": "Price"
         },
         "title": "Mystery Tokens"
+      }
+    },
+    "loot": {
+      "box": {
+        "content": "Loot Box Content",
+        "price": "Price",
+        "title": "Loot Box: {title}"
+      },
+      "boxes": {
+        "title": "Loot Boxes"
+      },
+      "contract": {
+        "title": "Loot Contract: {title}"
+      },
+      "contracts": {
+        "title": "Loot Contracts"
+      },
+      "title": "Loot",
+      "token": {
+        "content": "Loot Token Content",
+        "level": "Level: {GRADE}",
+        "price": "Base price: {amount}",
+        "title": "Loot Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "Loot Tokens"
       }
     },
     "orders": {

@@ -4,7 +4,7 @@ export * from "./erc721";
 export * from "./erc998";
 export * from "./erc1155";
 export * from "./lottery";
-export * from "./mysterybox";
+export * from "./mystery";
 export * from "./ponzi";
 // export * from "./raffle";
 export * from "./staking";

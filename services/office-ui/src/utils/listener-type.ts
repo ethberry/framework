@@ -13,7 +13,7 @@ export const getListenerType = (contract: IContract) => {
   const { contractType, contractModule, contractFeatures } = contract;
   switch (contractModule) {
     case ModuleType.MYSTERY:
-      return ListenerType.MYSTERYBOX;
+      return ListenerType.MYSTERY;
     case ModuleType.VESTING:
       return ListenerType.VESTING;
     case ModuleType.STAKING:

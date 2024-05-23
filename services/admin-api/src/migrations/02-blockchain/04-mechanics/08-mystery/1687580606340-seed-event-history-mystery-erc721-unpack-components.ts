@@ -17,7 +17,7 @@ export class SeedEventHistoryMysteryErc721UnpackComponentsAt1687580606340 implem
         token_id,
         amount
       ) VALUES (
-        102120110,
+        102083210,
         'ITEM',
         10306,
         103060101,

@@ -49,7 +49,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'MYSTERY',
         'ERC721',
-        1
+        0
+      ), (
+        'BRONZE',
+        'LOOT',
+        'ERC721',
+        0
       ), (
         'BRONZE',
         'LOTTERY',
@@ -124,7 +129,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'SILVER',
         'MYSTERY',
         'ERC721',
-        1
+        5
+      ), (
+        'SILVER',
+        'LOOT',
+        'ERC721',
+        5
       ), (
         'SILVER',
         'LOTTERY',
@@ -199,7 +209,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'GOLD',
         'MYSTERY',
         'ERC721',
-        1
+        10
+      ), (
+        'GOLD',
+        'MYSTERY',
+        'ERC721',
+        10
       ), (
         'GOLD',
         'LOTTERY',

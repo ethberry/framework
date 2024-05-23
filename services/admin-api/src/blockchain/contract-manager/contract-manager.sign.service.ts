@@ -10,6 +10,7 @@ import type {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   ILotteryContractDeployDto,
+  ILootContractDeployDto,
   IMysteryContractDeployDto,
   IPonziContractDeployDto,
   IStakingContractDeployDto,
@@ -23,6 +24,7 @@ import {
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  LootContractTemplates,
   ModuleType,
   MysteryContractTemplates,
   PonziContractTemplates,
@@ -268,6 +270,64 @@ export class ContractManagerSignService {
         },
       },
     );
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:LOOT
+  public async loot(dto: ILootContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const { bytecode } = await this.getBytecodeByLootContractTemplates(dto, userEntity.chainId);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOOT, TokenType.ERC721);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: ModuleType.CONTRACT_MANAGER,
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "LootArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        LootArgs: [
+          { name: "name", type: "string" },
+          { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
+          { name: "contractTemplate", type: "string" },
+        ],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          contractTemplate: Object.values(LootContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
+      },
+    );
+
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
@@ -973,6 +1033,36 @@ export class ContractManagerSignService {
       "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json",
       chainId,
     );
+  }
+
+  // MODULE:Loot
+  public getBytecodeByLootContractTemplates(dto: ILootContractDeployDto, chainId: number) {
+    const { contractTemplate } = dto;
+
+    switch (contractTemplate) {
+      case LootContractTemplates.SIMPLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxSimple.sol/ERC721LootBoxSimple.json",
+          chainId,
+        );
+      case LootContractTemplates.PAUSABLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxPausable.sol/ERC721LootBoxPausable.json",
+          chainId,
+        );
+      case LootContractTemplates.BLACKLIST:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxBlacklist.sol/ERC721LootBoxBlacklist.json",
+          chainId,
+        );
+      case LootContractTemplates.BLACKLIST_PAUSABLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxBlacklistPausable.sol/ERC721LootBoxBlacklistPausable.json",
+          chainId,
+        );
+      default:
+        throw new NotFoundException("templateNotFound");
+    }
   }
 
   // MODULE:MYSTERY

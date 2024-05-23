@@ -31,7 +31,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         created_at,
         updated_at
       ) VALUES (
-        102110110,
+        102083110,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -65,7 +65,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110111,
+        102083111,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -74,11 +74,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: wallets[0],
           tokenId: "111010101",
         })}',
-        102110110,
+        102083110,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110112,
+        102083112,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -87,11 +87,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110110,
+        102083110,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110120,
+        102083120,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -125,7 +125,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110121,
+        102083121,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -134,11 +134,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: wallets[0],
           tokenId: "111010102",
         })}',
-        102110120,
+        102083120,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110122,
+        102083122,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -147,11 +147,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110120,
+        102083120,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110130,
+        102083130,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -185,7 +185,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110131,
+        102083131,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -194,11 +194,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: wallets[0],
           tokenId: "111010103",
         })}',
-        102110130,
+        102083130,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110132,
+        102083132,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -207,11 +207,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110130,
+        102083130,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110140,
+        102083140,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -245,7 +245,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110141,
+        102083141,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -254,11 +254,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: wallets[1],
           tokenId: "111010104",
         })}',
-        102110140,
+        102083140,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110142,
+        102083142,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -267,11 +267,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110140,
+        102083140,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110150,
+        102083150,
         '${exchangeAddress}',
         '${ZeroHash}',
         'PurchaseMysteryBox',
@@ -305,7 +305,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110151,
+        102083151,
         '${erc721ContractMysterySimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -314,11 +314,11 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: wallets[2],
           tokenId: "111010105",
         })}',
-        102110150,
+        102083150,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        102110152,
+        102083152,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -327,7 +327,7 @@ export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements Mig
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        102110150,
+        102083150,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );

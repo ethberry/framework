@@ -24,10 +24,11 @@ export interface ITemplateInputProps {
       [k: string]: any;
     };
   };
+  readOnly?: boolean;
 }
 
 export const TemplateInput: FC<ITemplateInputProps> = props => {
-  const { autoSelect, multiple, prefix, tokenType, contract, template } = props;
+  const { autoSelect, multiple, prefix, tokenType, contract, template, readOnly } = props;
   const merchantId = useWatch({ name: "merchantId" });
 
   return (
@@ -48,6 +49,7 @@ export const TemplateInput: FC<ITemplateInputProps> = props => {
           merchantId,
         },
       }}
+      readOnly={readOnly}
     />
   );
 };

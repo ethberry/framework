@@ -12,6 +12,7 @@ import { Erc1155Section } from "./hierarchy/erc1155";
 import { PersonalSection } from "./mechanics/personal";
 import { MarketplaceSection } from "./mechanics/marketplace";
 import { MysterySection } from "./mechanics/mystery";
+import { LootSection } from "./mechanics/loot";
 import { PagesSection } from "./infrastructure/pages";
 import { StakingSection } from "./mechanics/staking";
 import { RaffleSection } from "./mechanics/raffle";
@@ -48,6 +49,7 @@ export const Dashboard: FC = () => {
           <Erc998Section />
           <Erc1155Section />
           <MysterySection />
+          <LootSection />
           <WrapperSection />
         </Grid>
         <Grid item xs={12} sm={4}>
