@@ -146,12 +146,9 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
 
-    // ? Do we need it?
-    // const assets = await this.assetService.saveAssetHistory(history, [], []);
-    
     await this.notificatorService.unpackMystery({
       items: [], // todo put assets from mysteryBox.
-      price: [], // todo put assets from mysteryBox.
+      price: [],
       merchantId: tokenEntity.template.contract.merchantId,
       address,
       transactionHash,
