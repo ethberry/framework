@@ -140,7 +140,7 @@ export class NotificatorService {
   }
 
   public unpackMystery(data: IMysteryUnpackData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+    return this.sendMessage(data.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.MYSTERY_UNPACK, data).toPromise();
     });
   }
