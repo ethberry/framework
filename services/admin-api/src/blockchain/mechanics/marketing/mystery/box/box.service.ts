@@ -228,7 +228,7 @@ export class MysteryBoxService {
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, ...rest } = dto;
 
     const mysteryBoxEntity = await this.findOne(where, {
       join: {
@@ -254,10 +254,6 @@ export class MysteryBoxService {
 
     if (price) {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
-    }
-
-    if (item) {
-      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
     // SYNC UPDATE TEMPLATE

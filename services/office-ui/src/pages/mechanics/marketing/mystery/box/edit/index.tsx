@@ -77,6 +77,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           },
         }}
+        readOnly={!!id}
       />
       <TemplateInput
         autoSelect
