@@ -24,6 +24,8 @@ import { MysteryBoxEntity } from "./box.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ClaimTemplateService } from "../../claim/template/template.service";
 import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
+import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
 
 @Injectable()
 export class MysteryBoxService {
@@ -285,21 +287,27 @@ export class MysteryBoxService {
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
-    
+
     // Check contract of each item for Random feature,
+    const validationErrors: Array<INestedProperty> = [];
     for (const [index, component] of item.components.entries()) {
-      const tokenContract = await this.contractService.findOneOrFail({id: component.contractId})
-      if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM) || true) {
-        throw new BadRequestException([
-          {
-            target: dto,
-            value: dto.item,
-            property: `item.components[${index}].contractId`,
-            children: [],
-            constraints: { isCustom: "randomFeature" },
-          },
-        ]);
+      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId })
+
+      if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM)) {
+        validationErrors.push({
+          property: index, 
+          children: [
+            { 
+              property: "contractId", 
+              constraints: { isCustom: "randomFeature" },
+            }
+          ]
+        })
       }
+    }
+
+    if(validationErrors.length) {
+      throw new BadRequestException(createNestedValidationError(dto, ["item", "components"], validationErrors))
     }
 
     const priceEntity = await this.assetService.create();
@@ -310,13 +318,14 @@ export class MysteryBoxService {
 
     Object.assign(dto, { price: priceEntity, item: itemEntity });
 
+
     const templateEntity = await this.templateService.create({
       title: dto.title,
       description: dto.description,
       price: priceEntity,
       amount: "0",
-      imageUrl: dto.imageUrl,
-      contractId: contractEntity.id,
+      imageUrl: dto.imageUrl,// @ts-ignore
+      contractId: contractEntity.id, // @ts-ignore
     });
 
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
