@@ -1,4 +1,4 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import {
   Brackets,
@@ -12,7 +12,7 @@ import {
 } from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
-import { MysteryBoxStatus, TemplateStatus } from "@framework/types";
+import { ContractFeatures, MysteryBoxStatus, TemplateStatus } from "@framework/types";
 
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -284,6 +284,22 @@ export class MysteryBoxService {
 
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+    
+    // Check contract of each item for Random feature,
+    for (const [index, component] of item.components.entries()) {
+      const tokenContract = await this.contractService.findOneOrFail({id: component.contractId})
+      if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM) || true) {
+        throw new BadRequestException([
+          {
+            target: dto,
+            value: dto.item,
+            property: `item.components[${index}].contractId`,
+            children: [],
+            constraints: { isCustom: "randomFeature" },
+          },
+        ]);
+      }
     }
 
     const priceEntity = await this.assetService.create();

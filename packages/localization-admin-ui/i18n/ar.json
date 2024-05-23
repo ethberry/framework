@@ -1006,6 +1006,7 @@
       "duplicate": "{label} مستخدم بالفعل",
       "invalidJSON": "JSON غير صالح",
       "patternMismatch": "{label} لا يطابق النمط المتوقع",
+      "randomFeature": "{label} تتطلب ميزة عشوائية",
       "rangeOverflow": "{label} مرتفع جداً",
       "rangeUnderflow": "{label} منخفض جداً",
       "refProgramTotal": "الإجمالي غير صالح. يجب أن يكون مجموع جميع المستويات",
