@@ -157,12 +157,9 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
 
-    queryBuilder.leftJoinAndSelect(
-      "item_template.tokens",
-      "token",
-      "token.templateId = item_template.id AND item_contract.contractType = :contractType",
-      { contractType: TokenType.ERC1155 }
-    );
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
+      contractType: TokenType.ERC1155,
+    });
     // price
     // queryBuilder.leftJoinAndSelect("box.price", "price");
     // queryBuilder.leftJoinAndSelect("price.components", "price_components");
