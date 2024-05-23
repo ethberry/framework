@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
@@ -32,6 +32,8 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     @Inject(RmqProviderType.EML_SERVICE)
@@ -327,7 +329,12 @@ export class LotteryRoundServiceEth {
         });
       });
 
-      await Promise.allSettled(promises);
+      const responses = await Promise.allSettled(promises);
+      responses.forEach(value => {
+        if (value.status === "rejected") {
+          this.loggerService.error(value.reason);
+        }
+      });
     }
   }
 }

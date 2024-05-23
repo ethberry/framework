@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { Cron } from "@nestjs/schedule";
 
@@ -11,6 +11,8 @@ export class StakingContractServiceCron {
   private cronLock;
 
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     private readonly stakingDepositServiceEth: StakingDepositServiceEth,
@@ -29,11 +31,16 @@ export class StakingContractServiceCron {
 
     const allStakingContracts = await this.contractService.findAll({ contractModule: ModuleType.STAKING });
 
-    await Promise.allSettled(
+    const responses = await Promise.allSettled(
       allStakingContracts.map(async staking => {
         return await this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
       }),
     );
+    responses.forEach(value => {
+      if (value.status === "rejected") {
+        this.loggerService.error(value.reason);
+      }
+    });
 
     // RELEASE CRON LOCK
     this.cronLock = false;

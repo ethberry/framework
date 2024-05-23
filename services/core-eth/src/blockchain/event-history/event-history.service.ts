@@ -243,7 +243,7 @@ export class EventHistoryService {
     });
 
     if (nestedEvents) {
-      await Promise.allSettled(
+      const responses = await Promise.allSettled(
         nestedEvents.map(async nested => {
           if (nested.id !== parentId) {
             Object.assign(nested, { parentId });
@@ -251,6 +251,11 @@ export class EventHistoryService {
           }
         }),
       );
+      responses.forEach(value => {
+        if (value.status === "rejected") {
+          this.loggerService.error(value.reason);
+        }
+      });
     }
   }
 }

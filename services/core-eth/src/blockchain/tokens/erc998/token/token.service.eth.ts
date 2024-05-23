@@ -236,7 +236,12 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       });
     });
 
-    await Promise.allSettled(promises);
+    const responses = await Promise.allSettled(promises);
+    responses.forEach(value => {
+      if (value.status === "rejected") {
+        this.loggerService.error(value.reason);
+      }
+    });
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -318,7 +323,12 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       }
     });
 
-    await Promise.allSettled(promises);
+    const responses = await Promise.allSettled(promises);
+    responses.forEach(value => {
+      if (value.status === "rejected") {
+        this.loggerService.error(value.reason);
+      }
+    });
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

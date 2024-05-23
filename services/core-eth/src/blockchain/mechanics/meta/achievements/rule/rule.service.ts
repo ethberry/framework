@@ -169,7 +169,12 @@ export class AchievementsRuleService {
               }
             });
 
-            await Promise.allSettled(promises);
+            const responses = await Promise.allSettled(promises);
+            responses.forEach(value => {
+              if (value.status === "rejected") {
+                this.loggerService.error(value.reason);
+              }
+            });
           }
         }
       }
