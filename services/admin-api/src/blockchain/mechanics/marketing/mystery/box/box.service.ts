@@ -1,4 +1,11 @@
-import { BadRequestException, ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ForbiddenException,
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import {
   Brackets,
@@ -291,23 +298,23 @@ export class MysteryBoxService {
     // Check contract of each item for Random feature,
     const validationErrors: Array<INestedProperty> = [];
     for (const [index, component] of item.components.entries()) {
-      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId })
+      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId });
 
       if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM)) {
         validationErrors.push({
-          property: index, 
+          property: index,
           children: [
-            { 
-              property: "contractId", 
+            {
+              property: "contractId",
               constraints: { isCustom: "randomFeature" },
-            }
-          ]
-        })
+            },
+          ],
+        });
       }
     }
 
-    if(validationErrors.length) {
-      throw new BadRequestException(createNestedValidationError(dto, ["item", "components"], validationErrors))
+    if (validationErrors.length) {
+      throw new BadRequestException(createNestedValidationError(dto, ["item", "components"], validationErrors));
     }
 
     const priceEntity = await this.assetService.create();
@@ -318,14 +325,13 @@ export class MysteryBoxService {
 
     Object.assign(dto, { price: priceEntity, item: itemEntity });
 
-
     const templateEntity = await this.templateService.create({
       title: dto.title,
       description: dto.description,
       price: priceEntity,
       amount: "0",
-      imageUrl: dto.imageUrl,// @ts-ignore
-      contractId: contractEntity.id, // @ts-ignore
+      imageUrl: dto.imageUrl,
+      contractId: contractEntity.id,
     });
 
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();

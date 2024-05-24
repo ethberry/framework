@@ -1006,7 +1006,6 @@
       "duplicate": "{label} sudah digunakan",
       "invalidJSON": "JSON tidak valid",
       "patternMismatch": "{label} tidak sesuai dengan pola yang diharapkan",
-      "randomFeature": "{label} memerlukan fitur acak",
       "rangeOverflow": "{label} terlalu tinggi",
       "rangeUnderflow": "{label} terlalu rendah",
       "refProgramTotal": "Total tidak valid. Harus merupakan jumlah dari semua level",

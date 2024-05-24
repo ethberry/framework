@@ -5,14 +5,8 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import {
-  ContractFeatures,
-  ContractStatus,
-  IMysteryBox,
-  ModuleType,
-  MysteryBoxStatus,
-  TokenType,
-} from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../../../components/forms/template-search/contract-input";

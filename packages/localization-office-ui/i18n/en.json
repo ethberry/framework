@@ -691,6 +691,7 @@
       "duplicate": "{label} already in use",
       "invalidJSON": "Invalid JSON",
       "patternMismatch": "{label} does not match expected pattern",
+      "randomFeature": "{label} requires random feature",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
       "stepMismatch": "{label} is invalid",

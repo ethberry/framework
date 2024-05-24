@@ -1006,7 +1006,6 @@
       "duplicate": "{label} уже используется",
       "invalidJSON": "Неверный JSON",
       "patternMismatch": "{label} не соответствует ожидаемому паттерну",
-      "randomFeature": "{label} требует функцию рандома",
       "rangeOverflow": "{label} слишком большой",
       "rangeUnderflow": "{label} слишком маленький",
       "refProgramTotal": "Общая сумма недействительна. Должна быть суммой всех уровней",

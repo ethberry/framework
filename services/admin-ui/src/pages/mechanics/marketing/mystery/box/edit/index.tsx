@@ -6,7 +6,8 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, IMysteryBox, ModuleType, MysteryBoxStatus, TokenType, ContractFeatures } from "@framework/types";
+import { ContractStatus, ModuleType, MysteryBoxStatus, TokenType, ContractFeatures } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -62,7 +63,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
           data: {
             contractModule: [ModuleType.HIERARCHY],
             contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-            contractFeatures: [ContractFeatures.RANDOM]
+            contractFeatures: [ContractFeatures.RANDOM],
           },
         }}
         forceAmount
