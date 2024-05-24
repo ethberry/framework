@@ -35,7 +35,7 @@ export const LootContractDeployButton: FC<ILootContractDeployButtonProps> = prop
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployLootbox(
+      return contract.deployLootBox(
         {
           nonce,
           bytecode: sign.bytecode,
