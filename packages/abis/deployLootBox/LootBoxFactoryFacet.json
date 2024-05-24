@@ -19,13 +19,13 @@
           { "internalType": "string", "name": "baseTokenURI", "type": "string" },
           { "internalType": "string", "name": "contractTemplate", "type": "string" }
         ],
-        "internalType": "struct MysteryBoxFactoryFacet.MysteryArgs",
+        "internalType": "struct LootBoxFactoryFacet.LootArgs",
         "name": "args",
         "type": "tuple"
       },
       { "internalType": "bytes", "name": "signature", "type": "bytes" }
     ],
-    "name": "deployMysterybox",
+    "name": "deployLootbox",
     "outputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "function"
