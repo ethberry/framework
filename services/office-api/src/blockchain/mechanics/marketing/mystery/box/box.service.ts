@@ -253,23 +253,18 @@ export class MysteryBoxService {
     // Check contract of each item for Random feature,
     const validationErrors: Array<INestedProperty> = [];
     for (const [index, component] of item.components.entries()) {
-      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId })
+      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId });
 
       if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM)) {
         validationErrors.push({
-          property: index, 
-          children: [
-            { 
-              property: "contractId", 
-              constraints: { isCustom: "randomFeature" },
-            }
-          ]
-        })
+          property: `${index}.contractId`,
+          constraints: { isCustom: "randomFeature" },
+        });
       }
     }
 
-    if(validationErrors.length) {
-      throw new BadRequestException(createNestedValidationError(dto, ["item", "components"], validationErrors))
+    if (validationErrors.length) {
+      throw new BadRequestException(createNestedValidationError(dto, "item.components", validationErrors));
     }
 
     const priceEntity = await this.assetService.create();

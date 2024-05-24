@@ -21,11 +21,6 @@ export const createNestedValidationError = (
     propertyPath = propertyPath.split(".");
   }
 
-  // Seperate property by '.' only after propertyPath empty.
-  //   if (!propertyPath.length) {
-
-  //   }
-
   if (propertyPath.length) {
     const property = propertyPath[0];
     const value = target[property];
@@ -47,7 +42,7 @@ export const createNestedValidationError = (
       const newPath = property.split(".");
       // Set children propery as 'contractId'
       child.property = newPath.pop() as string;
-      // Set newPath as ['item', 'components']
+      // newPath already ['item', 'components']
       // we pass current target, newPath and current child with updated property 'contractId'
       return createNestedValidationError(target, newPath, [child])[0]; // We know that only first propertyPath would be executed
     }
