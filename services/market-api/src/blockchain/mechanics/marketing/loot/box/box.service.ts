@@ -4,7 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { defaultChainId } from "@framework/constants";
 import type { ILootBoxSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractStatus, LootBoxStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { LootBoxEntity } from "./box.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -69,7 +69,7 @@ export class LootBoxService {
     });
 
     queryBuilder.andWhere("box.lootBoxStatus = :lootBoxStatus", {
-      lootBoxStatus: TemplateStatus.ACTIVE,
+      lootBoxStatus: LootBoxStatus.ACTIVE,
     });
 
     // item or price template must be active

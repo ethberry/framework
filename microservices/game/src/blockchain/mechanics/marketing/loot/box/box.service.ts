@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ILootBoxSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractStatus, LootBoxStatus, ModuleType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { LootBoxEntity } from "./box.entity";
@@ -69,7 +69,7 @@ export class LootBoxService {
       chainId,
     });
     queryBuilder.andWhere("box.lootBoxStatus = :lootBoxStatus", {
-      lootBoxStatus: TemplateStatus.ACTIVE,
+      lootBoxStatus: LootBoxStatus.ACTIVE,
     });
 
     if (contractIds) {

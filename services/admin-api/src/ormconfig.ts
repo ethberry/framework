@@ -476,7 +476,7 @@ const config: PostgresConnectionOptions = {
   migrationsTableName: ns,
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.

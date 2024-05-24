@@ -3,26 +3,27 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
+import { ModuleType, TokenType } from "@framework/types";
 
 import {
   generateTestAsset,
   generateTestAssetComponent,
-  generateTestClaim,
   generateTestContract,
   generateTestMerchant,
+  generateTestMysteryBox,
   generateTestTemplate,
   generateTestUser,
-} from "../../../../test";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
-import { AssetEntity } from "../../../exchange/asset/asset.entity";
-import { AssetComponentEntity } from "../../../exchange/asset/asset-component.entity";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { ClaimEntity } from "./claim.entity";
+} from "../../../../../test";
+import { MysteryBoxEntity } from "./box.entity";
+import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { AssetComponentEntity } from "../../../../exchange/asset/asset-component.entity";
 
 @Injectable()
-export class ClaimSeedService {
+export class MysteryBoxSeedService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userEntityRepository: Repository<UserEntity>,
@@ -36,8 +37,8 @@ export class ClaimSeedService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @InjectRepository(ClaimEntity)
-    private readonly claimEntityRepository: Repository<ClaimEntity>,
+    @InjectRepository(MysteryBoxEntity)
+    private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
   ) {}
 
   public async setup(): Promise<any> {
@@ -84,7 +85,27 @@ export class ClaimSeedService {
     const contract2 = await this.contractEntityRepository
       .create(
         generateTestContract({
+          merchant: merchant1,
+          contractType: TokenType.ERC721,
+          contractModule: ModuleType.MYSTERY,
+        }),
+      )
+      .save();
+
+    const contract3 = await this.contractEntityRepository
+      .create(
+        generateTestContract({
           merchant: merchant2,
+        }),
+      )
+      .save();
+
+    const contract4 = await this.contractEntityRepository
+      .create(
+        generateTestContract({
+          merchant: merchant2,
+          contractType: TokenType.ERC721,
+          contractModule: ModuleType.MYSTERY,
         }),
       )
       .save();
@@ -101,6 +122,22 @@ export class ClaimSeedService {
       .create(
         generateTestTemplate({
           contract: contract2,
+        }),
+      )
+      .save();
+
+    const template3 = await this.templateEntityRepository
+      .create(
+        generateTestTemplate({
+          contract: contract3,
+        }),
+      )
+      .save();
+
+    const template4 = await this.templateEntityRepository
+      .create(
+        generateTestTemplate({
+          contract: contract4,
         }),
       )
       .save();
@@ -122,27 +159,27 @@ export class ClaimSeedService {
     const component2 = await this.assetComponentEntityRepository
       .create(
         generateTestAssetComponent({
-          contract: contract2,
-          template: template2,
+          contract: contract3,
+          template: template3,
           asset: asset2,
         }),
       )
       .save();
 
-    const claim1 = await this.claimEntityRepository
+    const box1 = await this.mysteryBoxEntityRepository
       .create(
-        generateTestClaim({
+        generateTestMysteryBox({
+          template: template2,
           item: asset1,
-          merchant: merchant1,
         }),
       )
       .save();
 
-    const claim2 = await this.claimEntityRepository
+    const box2 = await this.mysteryBoxEntityRepository
       .create(
-        generateTestClaim({
+        generateTestMysteryBox({
+          template: template4,
           item: asset2,
-          merchant: merchant2,
         }),
       )
       .save();
@@ -154,17 +191,17 @@ export class ClaimSeedService {
       templates: [template1, template2],
       assets: [asset1, asset2],
       components: [component1, component2],
-      claims: [claim1, claim2],
+      boxes: [box1, box2],
     };
   }
 
   public async tearDown(): Promise<void> {
     await this.userEntityRepository.delete({});
-    await this.claimEntityRepository.delete({});
     await this.merchantEntityRepository.delete({});
     await this.contractEntityRepository.delete({});
     await this.templateEntityRepository.delete({});
     await this.assetComponentEntityRepository.delete({});
     await this.assetEntityRepository.delete({});
+    await this.mysteryBoxEntityRepository.delete({});
   }
 }
