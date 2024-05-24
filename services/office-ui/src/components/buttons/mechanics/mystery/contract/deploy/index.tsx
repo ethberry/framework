@@ -35,7 +35,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployMysterybox(
+      return contract.deployMysteryBox(
         {
           nonce,
           bytecode: sign.bytecode,
