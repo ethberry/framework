@@ -17,6 +17,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -35,6 +36,7 @@ import {
   IContractManagerPaymentSplitterDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
+  LootContractTemplates,
   RmqProviderType,
   SignalEventType,
   // StakingContractFeatures,
@@ -70,6 +72,7 @@ import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log
 import { WaitListLogService } from "../mechanics/marketing/wait-list/log/log.service";
 import { decodeExternalId } from "../../common/utils";
 import { PaymentSplitterLogService } from "../mechanics/meta/payment-splitter/log/log.service";
+import { LootLogService } from "../mechanics/marketing/loot/box/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -94,6 +97,7 @@ export class ContractManagerServiceEth {
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
+    private readonly lootLogService: LootLogService,
     private readonly ponziLogService: PonziLogService,
     private readonly paymentSplitterLogService: PaymentSplitterLogService,
     private readonly lotteryLogService: LotteryLogService,
@@ -495,6 +499,52 @@ export class ContractManagerServiceEth {
     });
 
     this.mysteryLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+    });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.getUserWalletById(externalId),
+        transactionHash,
+        transactionType: event.name,
+      })
+      .toPromise();
+  }
+
+  public async lootBox(event: ILogEvent<IContractManagerLootTokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account, args, externalId },
+    } = event;
+    const { transactionHash } = context;
+
+    const { name, symbol, baseTokenURI, royalty, contractTemplate } = args;
+
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: name,
+      name,
+      symbol,
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractType: TokenType.ERC721,
+      contractModule: ModuleType.LOOT,
+      chainId,
+      royalty: Number(royalty),
+      baseTokenURI,
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.lootLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(context.blockNumber.toString(), 16),
     });
