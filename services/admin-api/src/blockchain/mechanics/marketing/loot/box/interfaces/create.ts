@@ -7,4 +7,6 @@ export interface ILootBoxCreateDto {
   price: IAssetDto;
   imageUrl: string;
   contractId: number;
+  min: number;
+  max: number;
 }

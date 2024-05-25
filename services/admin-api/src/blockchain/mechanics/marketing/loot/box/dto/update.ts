@@ -1,11 +1,12 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
+import { IsEnum, IsJSON, IsNumber, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { LootBoxStatus } from "@framework/types";
 
 import type { ILootBoxUpdateDto } from "../interfaces";
+import { MaxPropertyValue } from "../../../../../../common/decorators";
 
 export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   @ApiPropertyOptional()
@@ -44,4 +45,13 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   @IsOptional()
   @IsEnum(LootBoxStatus, { message: "badInput" })
   public lootBoxStatus: LootBoxStatus;
+
+  @ApiPropertyOptional()
+  @IsNumber({ maxDecimalPlaces: 0 })
+  @Min(1, { message: "rangeUnderflow" })
+  public min: number;
+
+  @ApiPropertyOptional()
+  @MaxPropertyValue("item.components.length", { message: "maxItemLength" })
+  public max: number;
 }

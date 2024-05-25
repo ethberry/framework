@@ -1,11 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsInt, IsNumber, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 
 import type { ILootBoxCreateDto } from "../interfaces";
+import { MaxPropertyValue } from "../../../../../../common/decorators";
 
 export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto {
   @ApiProperty({
@@ -33,4 +34,17 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
+
+  @ApiProperty({
+    type: Number,
+  })
+  @IsNumber({ maxDecimalPlaces: 0 })
+  @Min(1, { message: "rangeUnderflow" })
+  public min: number;
+
+  @ApiProperty({
+    type: Number,
+  })
+  @MaxPropertyValue("item.components.length", { message: "maxItemLength" })
+  public max: number;
 }
