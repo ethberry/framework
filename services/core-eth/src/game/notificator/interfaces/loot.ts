@@ -12,4 +12,5 @@ export interface ILootUnpackData {
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
   transactionHash: string;
+  merchantId: number;
 }
