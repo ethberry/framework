@@ -3,10 +3,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { MysteryTokenService } from "./token.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { TokenSearchDto } from "../../../../hierarchy/token/dto";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { MysteryTokenService } from "./token.service";
 
 @ApiBearerAuth()
 @Controller("/mystery/tokens")

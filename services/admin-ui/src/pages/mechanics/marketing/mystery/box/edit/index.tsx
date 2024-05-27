@@ -67,6 +67,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
           },
         }}
         forceAmount
+        readOnly={!!id}
       />
       <TemplateAssetInput
         autoSelect

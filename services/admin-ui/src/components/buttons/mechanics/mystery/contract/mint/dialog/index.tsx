@@ -6,7 +6,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-import { MysteryboxInput } from "../../../../../../inputs/mystery-box";
+import { MysteryBoxInput } from "../../../../../../inputs/mystery";
 import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
 
@@ -46,7 +46,7 @@ export const MintMysteryBoxDialog: FC<IMintMysteryBoxDialogProps> = props => {
         autoselect
         disableClear
       />
-      <MysteryboxInput />
+      <MysteryBoxInput />
       <TextInput name="account" />
       <BoxContent />
     </FormDialog>

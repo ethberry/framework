@@ -66,5 +66,5 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   @Type(() => Number)
   public merchantId: number;
 
-  public chainId: number;
+  public chainId: bigint;
 }

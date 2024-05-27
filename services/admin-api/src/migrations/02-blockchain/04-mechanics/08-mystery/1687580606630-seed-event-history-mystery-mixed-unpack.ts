@@ -34,7 +34,7 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
         created_at,
         updated_at
       ) VALUES (
-        102120210,
+        102088210,
         '${erc721ContractMysteryBlacklistPausableAddress}',
         '${ZeroHash}',
         'UnpackMysteryBox',
@@ -46,7 +46,7 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        102120211,
+        102088211,
         '${erc721ContractMysteryBlacklistPausableAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -55,11 +55,11 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
           to: ZeroAddress,
           tokenId: "111060101",
         })}',
-        102120210,
+        102088210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120212,
+        102088212,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -68,11 +68,11 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
           to: wallets[0],
           amount: WeiPerEther.toString(),
         })}',
-        102120210,
+        102088210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120213,
+        102088213,
         '${erc721ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -81,11 +81,11 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
           to: wallets[0],
           tokenId: "103060101",
         })}',
-        102120210,
+        102088210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120214,
+        102088214,
         '${erc998ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -94,11 +94,11 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
           to: wallets[0],
           tokenId: "104060101",
         })}',
-        102120210,
+        102088210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102120215,
+        102088215,
         '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
         'TransferSingle',
@@ -109,7 +109,7 @@ export class SeedEventHistoryMysteryMixedUnpackAt1687580606630 implements Migrat
           tokenId: "105010101",
           amount: "1000",
         })}',
-        102120210,
+        102088210,
         '${currentDateTime}',
         '${currentDateTime}'
       );

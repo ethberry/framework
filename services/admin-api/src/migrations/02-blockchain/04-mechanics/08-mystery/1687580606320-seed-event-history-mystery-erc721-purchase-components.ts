@@ -18,61 +18,61 @@ export class SeedEventHistoryMysteryErc721PurchaseComponentsAt1687580606320 impl
         token_id,
         amount
       ) VALUES (
-        102110110,
+        102083110,
         'ITEM',
         11101,
         111010101,
         1
       ), (
-        102110110,
+        102083110,
         'PRICE',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        102110120,
+        102083120,
         'ITEM',
         11101,
         111010102,
         1
       ), (
-        102110120,
+        102083120,
         'PRICE',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        102110130,
+        102083130,
         'ITEM',
         11101,
         111010103,
         1
       ), (
-        102110130,
+        102083130,
         'PRICE',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        102110140,
+        102083140,
         'ITEM',
         11101,
         111010104,
         1
       ), (
-        102110140,
+        102083140,
         'PRICE',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        102110150,
+        102083150,
         'ITEM',
         11101,
         111010105,
         1
       ), (
-        102110150,
+        102083150,
         'PRICE',
         10201,
         102010101, -- Space Credits

@@ -13,6 +13,8 @@ import type {
   ICraftData,
   IDiscreteData,
   IDismantleData,
+  ILootPurchaseData,
+  ILootUnpackData,
   ILotteryFinalizeData,
   ILotteryPrizeData,
   ILotteryPurchaseData,
@@ -117,6 +119,19 @@ export class NotificatorService {
     });
   }
 
+  // MODULE:LOOT
+  public purchaseLoot(data: ILootPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOOT_PURCHASE, data).toPromise();
+    });
+  }
+
+  public unpackLoot(data: ILootUnpackData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOOT_UNPACK, data).toPromise();
+    });
+  }
+
   // MODULE:MYSTERY
   public purchaseMystery(data: IMysteryPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
@@ -125,7 +140,7 @@ export class NotificatorService {
   }
 
   public unpackMystery(data: IMysteryUnpackData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+    return this.sendMessage(data.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.MYSTERY_UNPACK, data).toPromise();
     });
   }

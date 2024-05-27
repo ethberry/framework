@@ -32,12 +32,12 @@ export class ClaimSeedService {
     private readonly contractEntityRepository: Repository<ContractEntity>,
     @InjectRepository(TemplateEntity)
     private readonly templateEntityRepository: Repository<TemplateEntity>,
-    @InjectRepository(ClaimEntity)
-    private readonly claimEntityRepository: Repository<ClaimEntity>,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
+    @InjectRepository(ClaimEntity)
+    private readonly claimEntityRepository: Repository<ClaimEntity>,
   ) {}
 
   public async setup(): Promise<any> {

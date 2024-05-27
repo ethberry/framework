@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
-import { ContractFeatures, MysteryBoxStatus, TemplateStatus } from "@framework/types";
+import { ContractFeatures, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -138,6 +138,10 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
 
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
+      contractType: TokenType.ERC1155,
+    });
+
     if (contractIds) {
       if (contractIds.length === 1) {
         queryBuilder.andWhere("template.contractId = :contractId", {
@@ -193,7 +197,7 @@ export class MysteryBoxService {
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, ...rest } = dto;
 
     const mysteryBoxEntity = await this.findOne(where, {
       join: {
@@ -219,10 +223,6 @@ export class MysteryBoxService {
 
     if (price) {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
-    }
-
-    if (item) {
-      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
     // SYNC UPDATE TEMPLATE

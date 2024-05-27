@@ -11,6 +11,7 @@ export * from "./mechanics/lottery/contract/deploy";
 
 export * from "./mechanics/raffle/contract/deploy";
 
+export * from "./mechanics/loot/contract/deploy";
 export * from "./mechanics/mystery/contract/deploy";
 
 export * from "./mechanics/payment-splitter/deploy";

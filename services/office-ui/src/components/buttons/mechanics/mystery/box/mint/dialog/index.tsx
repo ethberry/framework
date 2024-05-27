@@ -4,7 +4,7 @@ import type { IMysteryBox } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import { MysteryboxInput } from "../../../../../../inputs/mystery-box";
+import { MysteryBoxInput } from "../../../../../../inputs/mystery-box";
 import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
 
@@ -34,7 +34,7 @@ export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
       disabled={false}
       {...rest}
     >
-      <MysteryboxInput />
+      <MysteryBoxInput />
       <TextInput name="account" />
       <BoxContent />
     </FormDialog>

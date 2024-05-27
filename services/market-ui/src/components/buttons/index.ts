@@ -17,6 +17,8 @@ export * from "./mechanics/lottery/purchase";
 export * from "./mechanics/lottery/reward";
 export * from "./mechanics/raffle/purchase";
 export * from "./mechanics/raffle/reward";
+export * from "./mechanics/loot/purchase";
+export * from "./mechanics/loot/unpack";
 export * from "./mechanics/mystery/purchase";
 export * from "./mechanics/mystery/unpack";
 export * from "./mechanics/ponzi/deposit";

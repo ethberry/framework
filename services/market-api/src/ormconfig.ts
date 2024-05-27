@@ -33,6 +33,7 @@ import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/roun
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { LootBoxEntity } from "./blockchain/mechanics/marketing/loot/box/box.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
 import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
@@ -113,6 +114,7 @@ const config: PostgresConnectionOptions = {
     LotteryRoundAggregationEntity,
     MergeEntity,
     RaffleRoundEntity,
+    LootBoxEntity,
     MysteryBoxEntity,
     WaitListListEntity,
     WaitListItemEntity,
@@ -149,7 +151,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
 };
 
 export default config;
