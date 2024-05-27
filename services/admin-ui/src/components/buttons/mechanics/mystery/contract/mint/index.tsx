@@ -6,10 +6,10 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
+import { convertAssetComponentsToAssets } from "../../../../../../utils/asset";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
@@ -48,21 +48,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysteryBox!.item!.components.map(item => {
-      let tokenId;
-      if (item?.contract?.contractType === TokenType.ERC1155) {
-        tokenId = item.template?.tokens?.[0]?.tokenId;
-      } else {
-        tokenId = item.templateId;
-      }
-
-      return {
-        tokenType: Object.values(TokenType).indexOf(item.tokenType),
-        token: item.contract!.address,
-        tokenId,
-        amount: item.amount,
-      };
-    });
+    const items = convertAssetComponentsToAssets(values.mysteryBox!.item!.components);
 
     return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
