@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsNumber, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
@@ -47,11 +47,13 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   public lootBoxStatus: LootBoxStatus;
 
   @ApiPropertyOptional()
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt()
   @Min(1, { message: "rangeUnderflow" })
+  @MaxPropertyValue(["max"], { message: "maxMaxValue" })
   public min: number;
 
   @ApiPropertyOptional()
-  @MaxPropertyValue("item.components.length", { message: "maxItemLength" })
+  @IsInt()
+  @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }

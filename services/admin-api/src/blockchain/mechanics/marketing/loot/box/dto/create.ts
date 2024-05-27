@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNumber, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
@@ -38,13 +38,15 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
   @ApiProperty({
     type: Number,
   })
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt()
   @Min(1, { message: "rangeUnderflow" })
+  @MaxPropertyValue(["max"], { message: "maxMaxValue" })
   public min: number;
 
   @ApiProperty({
     type: Number,
   })
-  @MaxPropertyValue("item.components.length", { message: "maxItemLength" })
+  @IsInt()
+  @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }

@@ -17,13 +17,13 @@ class MaxLengthValidator implements ValidatorConstraintInterface {
     return value <= relatedValue;
   }
 
-  defaultMessage(args: ValidationArguments) {
-    const [relatedPropertyPath] = args.constraints;
-    return `The value of $property must be less than or equal to the length of ${relatedPropertyPath}`;
+  defaultMessage(_: ValidationArguments) {
+    // const [relatedPropertyPath] = args.constraints;
+    return `maxPropertyValue`;
   }
 }
 
-export function MaxPropertyValue(relatedPropertyPath: string, validationOptions?: ValidationOptions) {
+export function MaxPropertyValue(relatedPropertyPath: string[], validationOptions?: ValidationOptions) {
   return function (object: Record<string, any>, propertyName: string) {
     registerDecorator({
       target: object.constructor,
