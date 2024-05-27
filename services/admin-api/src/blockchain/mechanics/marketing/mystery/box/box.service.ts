@@ -19,7 +19,7 @@ import {
 } from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
-import { ContractFeatures, MysteryBoxStatus, TemplateStatus } from "@framework/types";
+import { ContractFeatures, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -165,15 +165,19 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
+      contractType: TokenType.ERC1155,
+    });
     // price
-    queryBuilder.leftJoinAndSelect("box.price", "price");
-    queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // queryBuilder.leftJoinAndSelect("box.price", "price");
+    // queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
     // item or price template must be active
     queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
-    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    // queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -237,7 +241,7 @@ export class MysteryBoxService {
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, ...rest } = dto;
 
     const mysteryBoxEntity = await this.findOne(where, {
       join: {
@@ -263,10 +267,6 @@ export class MysteryBoxService {
 
     if (price) {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
-    }
-
-    if (item) {
-      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
     // SYNC UPDATE TEMPLATE
