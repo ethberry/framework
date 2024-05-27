@@ -12,7 +12,7 @@ import {
 } from "typeorm";
 
 import type { ILootBoxAutocompleteDto, ILootBoxSearchDto } from "@framework/types";
-import { LootBoxStatus, TemplateStatus } from "@framework/types";
+import { LootBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -156,6 +156,10 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
+      contractType: TokenType.ERC1155,
+    });
     // price
     // queryBuilder.leftJoinAndSelect("box.price", "price");
     // queryBuilder.leftJoinAndSelect("price.components", "price_components");

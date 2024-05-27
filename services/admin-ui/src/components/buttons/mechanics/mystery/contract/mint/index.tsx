@@ -48,12 +48,21 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysteryBox!.item!.components.map(item => ({
-      tokenType: Object.values(TokenType).indexOf(item.tokenType),
-      token: item.contract!.address,
-      tokenId: item.templateId,
-      amount: item.amount,
-    }));
+    const items = values.mysteryBox!.item!.components.map(item => {
+      let tokenId;
+      if (item?.contract?.contractType === TokenType.ERC1155) {
+        tokenId = item.template?.tokens?.[0]?.tokenId;
+      } else {
+        tokenId = item.templateId;
+      }
+
+      return {
+        tokenType: Object.values(TokenType).indexOf(item.tokenType),
+        token: item.contract!.address,
+        tokenId,
+        amount: item.amount,
+      };
+    });
 
     return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
