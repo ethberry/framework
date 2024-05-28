@@ -2,9 +2,10 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { useApiCall } from "@gemunion/react-hooks";
 
-import type { IPredictionQuestion } from "@framework/types";
+import type { IPredictionAnswer, IPredictionQuestion } from "@framework/types";
 
 export interface IPredictionQuestionViewDialogProps {
   open: boolean;
@@ -14,15 +15,24 @@ export interface IPredictionQuestionViewDialogProps {
 }
 
 export const PredictionQuestionViewDialog: FC<IPredictionQuestionViewDialogProps> = props => {
-  const { initialValues, onConfirm, ...rest } = props;
-  const { title } = initialValues;
+  const { onConfirm, ...rest } = props;
 
-  const handleConfirm = (): void => {
-    onConfirm();
+  const { fn } = useApiCall(async (api, values) => {
+    return api.fetchJson({
+      url: "/prediction/answer",
+      method: "POST",
+      data: values,
+    });
+  });
+
+  const handleConfirm = async (values: IPredictionAnswer): Promise<void> => {
+    await fn(void 0, values).finally(() => {
+      onConfirm();
+    });
   };
 
   return (
-    <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
+    <FormDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
       <TableContainer component={Paper}>
         <Table aria-label="raffle token table">
           <TableBody>
@@ -30,11 +40,11 @@ export const PredictionQuestionViewDialog: FC<IPredictionQuestionViewDialogProps
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.question" />
               </TableCell>
-              <TableCell align="right">{title}</TableCell>
+              <TableCell align="right">{props.initialValues.title}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-    </ConfirmationDialog>
+    </FormDialog>
   );
 };

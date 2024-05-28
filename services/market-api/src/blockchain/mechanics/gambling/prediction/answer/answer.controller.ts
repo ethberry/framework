@@ -1,26 +1,24 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
+import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { PredictionAnswerService } from "./answer.service";
 import { PredictionAnswerEntity } from "./answer.entity";
+import { PredictionAnswerCreateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/prediction/answer")
 export class PredictionAnswerController {
-  constructor(private readonly lotteryRoundService: PredictionAnswerService) {}
+  constructor(private readonly predictionAnswerService: PredictionAnswerService) {}
 
-  @Get("/")
-  @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PaginationDto): Promise<[Array<PredictionAnswerEntity>, number]> {
-    return this.lotteryRoundService.search(dto);
-  }
-
-  @Get("/:id")
+  @Post("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<PredictionAnswerEntity | null> {
-    return this.lotteryRoundService.findOne({ id });
+  public create(
+    @Body() dto: PredictionAnswerCreateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<PredictionAnswerEntity> {
+    return this.predictionAnswerService.create(dto, userEntity);
   }
 }
