@@ -5,13 +5,17 @@ interface IOptions {
   sortBy?: string;
 }
 
-export const convertAssetComponentsToAssets = (components: IAssetComponent[], options: IOptions = {}) => {
+export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], options: IOptions = {}) => {
   const { sortBy = "id" } = options;
 
   return components.sort(sorter(sortBy)).map(item => {
     let tokenId;
     if (item?.contract?.contractType === TokenType.ERC1155) {
-      tokenId = item.template?.tokens?.[0]?.tokenId;
+      if (item.template?.tokens?.[0]?.tokenId) {
+        tokenId = item.template?.tokens?.[0]?.tokenId;
+      } else {
+        throw new Error("tokenId for ERC1155 not provided");
+      }
     } else if ([TokenType.NATIVE, TokenType.NATIVE].includes(item?.contract?.contractType as TokenType)) {
       tokenId = "0";
     } else {
