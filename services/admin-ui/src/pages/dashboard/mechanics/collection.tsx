@@ -4,14 +4,14 @@ import { AutoAwesomeMotion, Collections as CollectionsIcon, Storage } from "@mui
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-// import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@framework/types";
 
 export const CollectionSection: FC = () => {
-  // const isProd = process.env.NODE_ENV === NodeEnv.production;
-  //
-  // if (isProd) {
-  //   return null;
-  // }
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
+
+  if (isProd) {
+    return null;
+  }
 
   return (
     <Paper sx={{ mb: 2 }}>
