@@ -243,18 +243,19 @@ export class EventHistoryService {
     });
 
     if (nestedEvents) {
-      const responses = await Promise.allSettled(
+      await Promise.allSettled(
         nestedEvents.map(async nested => {
           if (nested.id !== parentId) {
             Object.assign(nested, { parentId });
             await nested.save();
           }
         }),
-      );
-      responses.forEach(value => {
-        if (value.status === "rejected") {
-          this.loggerService.error(value.reason);
-        }
+      ).then(res => {
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason);
+          }
+        });
       });
     }
   }

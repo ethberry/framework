@@ -31,16 +31,17 @@ export class StakingContractServiceCron {
 
     const allStakingContracts = await this.contractService.findAll({ contractModule: ModuleType.STAKING });
 
-    const responses = await Promise.allSettled(
+    await Promise.allSettled(
       allStakingContracts.map(async staking => {
         return await this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
       }),
+    ).then(res =>
+      res.forEach(value => {
+        if (value.status === "rejected") {
+          this.loggerService.error(value.reason);
+        }
+      }),
     );
-    responses.forEach(value => {
-      if (value.status === "rejected") {
-        this.loggerService.error(value.reason);
-      }
-    });
 
     // RELEASE CRON LOCK
     this.cronLock = false;

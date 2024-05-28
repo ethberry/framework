@@ -61,7 +61,7 @@ export class ChainLinkContractServiceCron {
     );
 
     if (merchantsWithSubs.length > 0) {
-      const responses = await Promise.allSettled(
+      await Promise.allSettled(
         merchantsWithSubs.map(async merchantEntity => {
           try {
             // must be only one VRF subscription per one chainId
@@ -78,12 +78,13 @@ export class ChainLinkContractServiceCron {
             this.loggerService.error(e, ChainLinkContractServiceCron.name);
           }
         }),
+      ).then(res =>
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason);
+          }
+        }),
       );
-      responses.forEach(value => {
-        if (value.status === "rejected") {
-          this.loggerService.error(value.reason);
-        }
-      });
     }
   }
 }
