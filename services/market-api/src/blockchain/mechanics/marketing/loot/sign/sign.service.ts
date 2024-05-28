@@ -5,8 +5,8 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
@@ -69,21 +69,15 @@ export class LootSignService {
     params: IParams,
     lootBoxEntity: LootBoxEntity,
   ): Promise<string> {
+    const items = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
+    const price = convertDatabaseAssetToChainAsset(lootBoxEntity.template.price.components);
+
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
       params,
       [
-        ...lootBoxEntity.item.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          // tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-          tokenId:
-            component.contract.contractType === TokenType.ERC1155
-              ? component.template.tokens[0].tokenId
-              : (component.templateId || 0).toString(),
-          amount: component.amount,
-        })),
+        ...items,
         {
           tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
           token: lootBoxEntity.template.contract.address,
@@ -91,12 +85,7 @@ export class LootSignService {
           amount: "1",
         },
       ],
-      lootBoxEntity.template.price.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
+      price,
     );
   }
 }

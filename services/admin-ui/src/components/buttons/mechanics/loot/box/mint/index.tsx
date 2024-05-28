@@ -6,10 +6,10 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/mintBox/ERC721LootBoxBlacklist.json";
 
-import { convertAssetComponentsToAssets } from "../../../../../../utils/asset";
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";
 
@@ -46,7 +46,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
       mintBoxERC721LootBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = convertAssetComponentsToAssets(values.lootBox!.item!.components);
+    const items = convertDatabaseAssetToChainAsset(values.lootBox!.item!.components);
     return contractLootbox.mintBox(values.account, values.lootBox!.templateId, items) as Promise<any>;
   });
 

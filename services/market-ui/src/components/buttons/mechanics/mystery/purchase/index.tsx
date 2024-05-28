@@ -5,14 +5,12 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { getEthPrice } from "@framework/exchange";
+import { convertDatabaseAssetToChainAsset, getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
-
-import { sorter } from "../../../../../utils/sorter";
 
 interface IMysteryBoxBuyButtonProps {
   className?: string;
@@ -30,6 +28,9 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
+      const items = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
+      const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);
+
       return contract.purchaseMystery(
         {
           externalId: mysteryBox.id,
@@ -40,16 +41,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
           referrer: constants.AddressZero,
         },
         [
-          ...mysteryBox.item!.components.sort(sorter("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            // tokenId: component.templateId || 0,
-            tokenId:
-              component.contract!.contractType === TokenType.ERC1155
-                ? component.template!.tokens![0].tokenId
-                : (component.templateId || 0).toString(),
-            amount: component.amount,
-          })),
+          ...items,
           {
             tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
             token: mysteryBox.template!.contract!.address,
@@ -57,12 +49,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
             amount: "1",
           },
         ],
-        mysteryBox.template?.price?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: component.amount,
-        })),
+        price,
         sign.signature,
         {
           value: getEthPrice(mysteryBox.template?.price),

@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
-import { convertAssetComponentsToAssets } from "../../../../../../utils/asset";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
@@ -48,7 +48,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = convertAssetComponentsToAssets(values.mysteryBox!.item!.components);
+    const items = convertDatabaseAssetToChainAsset(values.mysteryBox!.item!.components);
 
     return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
