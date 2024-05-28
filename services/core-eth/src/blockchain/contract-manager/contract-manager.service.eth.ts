@@ -523,6 +523,10 @@ export class ContractManagerServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractFeatures =
+      contractTemplate === "0"
+        ? []
+        : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>);
 
     await this.contractService.create({
       address: account.toLowerCase(),
@@ -531,10 +535,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures: [ContractFeatures.ALLOWANCE, ...contractFeatures],
       contractType: TokenType.ERC721,
       contractModule: ModuleType.LOOT,
       chainId,

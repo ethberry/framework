@@ -47,13 +47,13 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   public lootBoxStatus: LootBoxStatus;
 
   @ApiPropertyOptional()
-  @IsInt()
+  @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @MaxPropertyValue(["max"], { message: "maxMaxValue" })
   public min: number;
 
   @ApiPropertyOptional()
-  @IsInt()
+  @IsInt({ message: "typeMismatch" })
   @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }

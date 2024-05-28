@@ -38,7 +38,7 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
   @ApiProperty({
     type: Number,
   })
-  @IsInt()
+  @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @MaxPropertyValue(["max"], { message: "maxMaxValue" })
   public min: number;
@@ -46,7 +46,7 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
   @ApiProperty({
     type: Number,
   })
-  @IsInt()
+  @IsInt({ message: "typeMismatch" })
   @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }
