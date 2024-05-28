@@ -38,7 +38,7 @@
       },
       { "internalType": "bytes", "name": "signature", "type": "bytes" }
     ],
-    "name": "purchaseMystery",
+    "name": "purchaseLoot",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
