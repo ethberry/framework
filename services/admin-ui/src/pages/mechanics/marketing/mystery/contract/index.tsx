@@ -28,7 +28,6 @@ import { RoyaltyButton } from "../../../../../components/buttons/common/royalty"
 import { TransferButton } from "../../../../../components/buttons/common/transfer";
 import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
 import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
 import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 import { MysteryContractEditDialog } from "./edit";
 
@@ -103,7 +102,6 @@ export const MysteryContract: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
-                <TopUpButton contract={contract} />
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />
                 <RenounceRoleButton contract={contract} />
