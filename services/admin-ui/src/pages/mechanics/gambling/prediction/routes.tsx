@@ -6,6 +6,7 @@ import { IndexWrapper } from "../../../index-wrapper";
 import { PredictionSection } from "../../../dashboard/mechanics/prediction";
 import { PredictionQuestions } from "./questions";
 import { PredictionAnswers } from "./answers";
+import { PredictionContract } from "./contract";
 
 export const predictionRoutes: Array<RouteObject> = [
   {
@@ -18,6 +19,14 @@ export const predictionRoutes: Array<RouteObject> = [
             <PredictionSection />
           </IndexWrapper>
         ),
+      },
+      {
+        path: "/prediction/contracts",
+        element: <Protected />,
+        children: [
+          { index: true, element: <PredictionContract /> },
+          { path: "/prediction/contracts/:id", element: <PredictionContract /> },
+        ],
       },
       {
         path: "/prediction/questions",

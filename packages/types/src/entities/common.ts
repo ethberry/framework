@@ -35,10 +35,10 @@ export enum ModuleType {
   RAFFLE = "RAFFLE",
   PONZI = "PONZI",
   VESTING = "VESTING",
-  POLYGON = "POLYGON",
   STAKING = "STAKING",
   WAIT_LIST = "WAIT_LIST",
   PAYMENT_SPLITTER = "PAYMENT_SPLITTER",
+  PREDICTION = "PREDICTION",
 }
 
 export enum ListenerType {

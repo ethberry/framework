@@ -11,12 +11,14 @@ export * from "./mechanics/lottery/contract/deploy";
 
 export * from "./mechanics/raffle/contract/deploy";
 
+export * from "./mechanics/prediction/contract/deploy";
+
 export * from "./mechanics/loot/contract/deploy";
 export * from "./mechanics/mystery/contract/deploy";
 
 export * from "./mechanics/payment-splitter/deploy";
 
-export * from "./mechanics/ponzi/deploy";
+export * from "./mechanics/ponzi/contract/deploy";
 export * from "./mechanics/ponzi/upload";
 export * from "./mechanics/ponzi/rule-toggle";
 

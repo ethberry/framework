@@ -5,33 +5,33 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types";
-import { PonziContractTemplates } from "@framework/types";
+import type { IContract, IPredictionContractDeployDto, IUser } from "@framework/types";
+import { PredictionContractTemplates } from "@framework/types";
 
-import { PonziContractDeployDialog } from "./dialog";
-import deployPonziPonziFactoryFacetABI from "@framework/abis/deployPonzi/PonziFactoryFacet.json";
+import { PredictionContractDeployDialog } from "./dialog";
+import deployPredictionFactoryFacetABI from "@framework/abis/deployPrediction/PredictionFactoryFacet.json";
 
-export interface IPonziContractDeployButtonProps {
+export interface IPredictionContractDeployButtonProps {
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = props => {
+export const PredictionContractDeployButton: FC<IPredictionContractDeployButtonProps> = props => {
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IPonziContractDeployDto, web3Context, sign, systemContract: IContract) => {
+    (values: IPredictionContractDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployPonziPonziFactoryFacetABI,
+        deployPredictionFactoryFacetABI,
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployPonzi(
+      return contract.deployPrediction(
         {
           nonce,
           bytecode: sign.bytecode,
@@ -41,7 +41,7 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
         {
           payees: values.payees,
           shares: values.shares,
-          contractTemplate: Object.values(PonziContractTemplates).indexOf(values.contractTemplate).toString(),
+          contractTemplate: Object.values(PredictionContractTemplates).indexOf(values.contractTemplate).toString(),
         },
         sign.signature,
       ) as Promise<void>;
@@ -51,7 +51,7 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/ponzi",
+        url: "/contract-manager/prediction",
         method: "POST",
         data: {
           contractTemplate: values.contractTemplate,
@@ -70,11 +70,15 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
         icon={Add}
         message="form.buttons.deploy"
         className={className}
-        dataTestId="PonziContractDeployButton"
+        dataTestId="PredictionContractDeployButton"
         disabled={disabled}
         variant={variant}
       />
-      <PonziContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <PredictionContractDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+      />
     </Fragment>
   );
 };

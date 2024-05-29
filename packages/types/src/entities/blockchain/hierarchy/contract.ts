@@ -150,6 +150,16 @@ export enum PonziContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
+export enum PredictionContractFeatures {
+  "REFERRAL" = "REFERRAL",
+  "SPLITTER" = "SPLITTER",
+}
+
+export enum PredictionContractTemplates {
+  "SIMPLE" = "SIMPLE",
+  "REFERRAL" = "REFERRAL",
+}
+
 export enum StakingContractFeatures {
   "SIMPLE" = "SIMPLE",
 }
