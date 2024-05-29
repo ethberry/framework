@@ -453,7 +453,7 @@ export class StakingDepositServiceEth {
       await Promise.allSettled(promises).then(res =>
         res.forEach(value => {
           if (value.status === "rejected") {
-            this.loggerService.error(value.reason);
+            this.loggerService.error(value.reason, StakingDepositServiceEth.name);
           }
         }),
       );

@@ -253,7 +253,7 @@ export class EventHistoryService {
       ).then(res => {
         res.forEach(value => {
           if (value.status === "rejected") {
-            this.loggerService.error(value.reason);
+            this.loggerService.error(value.reason, EventHistoryService.name);
           }
         });
       });
