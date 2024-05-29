@@ -7,6 +7,7 @@ export enum ContractManagerEventType {
   ERC998TokenDeployed = "ERC998TokenDeployed",
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
   MysteryBoxDeployed = "MysteryBoxDeployed",
+  LootBoxDeployed = "LootBoxDeployed",
   CollectionDeployed = "CollectionDeployed",
   PaymentSplitterDeployed = "PaymentSplitterDeployed",
   PonziDeployed = "PonziDeployed",
@@ -79,6 +80,20 @@ export interface IContractManagerMysteryTokenDeployedEvent {
   account: string;
   externalId: number;
   args: IMysteryTokenDeployedEventArgs;
+}
+
+export interface ILootTokenDeployedEventArgs {
+  name: string;
+  symbol: string;
+  royalty: string;
+  baseTokenURI: string;
+  contractTemplate: string;
+}
+
+export interface IContractManagerLootTokenDeployedEvent {
+  account: string;
+  externalId: number;
+  args: ILootTokenDeployedEventArgs;
 }
 
 // struct Erc20Args {

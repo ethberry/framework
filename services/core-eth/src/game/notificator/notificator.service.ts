@@ -127,7 +127,7 @@ export class NotificatorService {
   }
 
   public unpackLoot(data: ILootUnpackData): Promise<any> {
-    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+    return this.sendMessage(data.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOOT_UNPACK, data).toPromise();
     });
   }

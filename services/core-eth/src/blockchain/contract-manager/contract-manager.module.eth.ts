@@ -37,6 +37,7 @@ import { LotteryTicketLogModule } from "../mechanics/gambling/lottery/ticket/log
 import { ChainLinkLogModule } from "../integrations/chain-link/contract/log/log.module";
 import { WaitListLogModule } from "../mechanics/marketing/wait-list/log/log.module";
 import { PaymentSplitterLogModule } from "../mechanics/meta/payment-splitter/log/log.module";
+import { LootLogModule } from "../mechanics/marketing/loot/box/log/log.module";
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { PaymentSplitterLogModule } from "../mechanics/meta/payment-splitter/log
     Erc998TokenRandomLogModule,
     Erc1155TokenLogModule,
     MysteryLogModule,
+    LootLogModule,
     VestingLogModule,
     StakingLogModule,
     PonziLogModule,

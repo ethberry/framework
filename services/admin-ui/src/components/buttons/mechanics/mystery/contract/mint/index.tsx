@@ -6,10 +6,10 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
@@ -48,12 +48,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysteryBox!.item!.components.map(item => ({
-      tokenType: Object.values(TokenType).indexOf(item.tokenType),
-      token: item.contract!.address,
-      tokenId: item.templateId,
-      amount: item.amount,
-    }));
+    const items = convertDatabaseAssetToChainAsset(values.mysteryBox!.item!.components);
 
     return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });

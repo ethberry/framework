@@ -41,6 +41,7 @@ import { getEventsTopics } from "../../../common/utils";
           ContractManagerEventType.ERC998TokenDeployed,
           ContractManagerEventType.ERC1155TokenDeployed,
           ContractManagerEventType.MysteryBoxDeployed,
+          ContractManagerEventType.LootBoxDeployed,
           ContractManagerEventType.CollectionDeployed,
           ContractManagerEventType.StakingDeployed,
           ContractManagerEventType.PonziDeployed,

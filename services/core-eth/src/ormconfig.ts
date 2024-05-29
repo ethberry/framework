@@ -6,6 +6,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { LootBoxEntity } from "./blockchain/mechanics/marketing/loot/box/box.entity";
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
@@ -82,6 +83,7 @@ const config: PostgresConnectionOptions = {
     DismantleEntity,
     DiscreteEntity,
     MysteryBoxEntity,
+    LootBoxEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     LotteryTicketEntity,

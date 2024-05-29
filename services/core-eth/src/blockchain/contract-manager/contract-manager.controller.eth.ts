@@ -10,6 +10,7 @@ import type {
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPaymentSplitterDeployedEvent,
   IContractManagerPonziDeployedEvent,
@@ -98,6 +99,14 @@ export class ContractManagerControllerEth {
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.mysteryBox(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.LootBoxDeployed,
+  })
+  public lootbox(@Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.lootBox(event, ctx);
   }
 
   @EventPattern({

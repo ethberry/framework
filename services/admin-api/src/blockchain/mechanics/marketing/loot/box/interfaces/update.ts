@@ -7,4 +7,6 @@ export interface ILootBoxUpdateDto {
   price: IAssetDto;
   imageUrl: string;
   lootBoxStatus: LootBoxStatus;
+  min: number;
+  max: number;
 }
