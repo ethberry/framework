@@ -11,12 +11,11 @@ export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], 
   return components.sort(sorter(sortBy)).map(item => {
     let tokenId;
     if (item?.contract?.contractType === TokenType.ERC1155) {
-      if (item.template?.tokens?.[0]?.tokenId) {
-        tokenId = item.template?.tokens?.[0]?.tokenId;
-      } else {
-        throw new Error("tokenId for ERC1155 not provided");
+      tokenId = item.template?.tokens?.[0]?.tokenId;
+      if (!tokenId) {
+        throw new Error("[DEV] tokenId for ERC1155 notFound. You rather forget to leftAndJoin tokens for ERC1155");
       }
-    } else if ([TokenType.NATIVE, TokenType.NATIVE].includes(item?.contract?.contractType as TokenType)) {
+    } else if ([TokenType.NATIVE, TokenType.ERC20].includes(item?.contract?.contractType as TokenType)) {
       tokenId = "0";
     } else {
       tokenId = (item.templateId || 0).toString();
