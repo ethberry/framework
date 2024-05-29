@@ -218,7 +218,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       erc998TokenEntity.template.contractId,
     );
 
-    childTokenIds.map(async (childTokenId, i) => {
+    const promises = childTokenIds.map(async (childTokenId, i) => {
       const childTokenEntity = await this.tokenService.getToken(
         Number(childTokenId).toString(),
         childContract.toLowerCase(),
@@ -235,6 +235,14 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
         amount: amounts[i],
       });
     });
+
+    await Promise.allSettled(promises).then(res =>
+      res.forEach(value => {
+        if (value.status === "rejected") {
+          this.loggerService.error(value.reason, Erc998TokenServiceEth.name);
+        }
+      }),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -290,30 +298,36 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    await Promise.all(
-      childTokenIds.map(async (childTokenId, i) => {
-        const childTokenEntity = await this.tokenService.getToken(
-          Number(childTokenId).toString(),
-          childContract.toLowerCase(),
-        );
+    const promises = childTokenIds.map(async (childTokenId, i) => {
+      const childTokenEntity = await this.tokenService.getToken(
+        Number(childTokenId).toString(),
+        childContract.toLowerCase(),
+      );
 
-        if (!childTokenEntity) {
-          throw new NotFoundException("childTokenNotFound");
-        }
+      if (!childTokenEntity) {
+        throw new NotFoundException("childTokenNotFound");
+      }
 
-        await this.eventHistoryService.updateHistory(event, context, childTokenEntity.id);
+      await this.eventHistoryService.updateHistory(event, context, childTokenEntity.id);
 
-        const balanceEntity = await this.balanceService.findOne({ tokenId: childTokenEntity.id });
+      const balanceEntity = await this.balanceService.findOne({ tokenId: childTokenEntity.id });
 
-        if (!balanceEntity) {
-          throw new NotFoundException("balanceNotFound");
-        }
+      if (!balanceEntity) {
+        throw new NotFoundException("balanceNotFound");
+      }
 
-        if (~~balanceEntity.amount > ~~amounts[i]) {
-          Object.assign(balanceEntity, { amount: ~~balanceEntity.amount - ~~amounts[i] });
-          await balanceEntity.save();
-        } else {
-          await this.balanceService.delete({ id: balanceEntity.id });
+      if (~~balanceEntity.amount > ~~amounts[i]) {
+        Object.assign(balanceEntity, { amount: ~~balanceEntity.amount - ~~amounts[i] });
+        await balanceEntity.save();
+      } else {
+        await this.balanceService.delete({ id: balanceEntity.id });
+      }
+    });
+
+    await Promise.allSettled(promises).then(res =>
+      res.forEach(value => {
+        if (value.status === "rejected") {
+          this.loggerService.error(value.reason, Erc998TokenServiceEth.name);
         }
       }),
     );

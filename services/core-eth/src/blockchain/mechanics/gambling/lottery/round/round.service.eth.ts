@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
@@ -32,6 +32,8 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     @Inject(RmqProviderType.EML_SERVICE)
@@ -301,29 +303,37 @@ export class LotteryRoundServiceEth {
         }
       });
 
-      await Promise.all(
-        Object.keys(aggregation).map(async aggr => {
-          // create new asset
-          const newAssetEntity = await this.assetService.create();
-          const roundPrice = roundEntity.price.components;
-          const multipliedPrice = roundPrice.map(price => {
-            return {
-              tokenType: price.tokenType,
-              contractId: price.contractId,
-              templateId: price.templateId,
-              tokenId: price.tokenId,
-              amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
-            };
-          });
+      const promises = Object.keys(aggregation).map(async aggr => {
+        // create new asset
+        const newAssetEntity = await this.assetService.create();
+        const roundPrice = roundEntity.price.components;
+        const multipliedPrice = roundPrice.map(price => {
+          return {
+            tokenType: price.tokenType,
+            contractId: price.contractId,
+            templateId: price.templateId,
+            tokenId: price.tokenId,
+            amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
+            // ?JFOM Is it coorect. Forget to multiply to COEFICIENT ? Find Point
+            // ? As more match as more amount would be. It suppose to be opposite...
+          };
+        });
 
-          await this.assetService.update(newAssetEntity, { components: multipliedPrice });
+        await this.assetService.update(newAssetEntity, { components: multipliedPrice });
 
-          await this.lotteryRoundAggregationService.create({
-            round: roundEntity,
-            match: Number(aggr),
-            tickets: aggregation[aggr],
-            priceId: newAssetEntity.id,
-          });
+        await this.lotteryRoundAggregationService.create({
+          round: roundEntity,
+          match: Number(aggr),
+          tickets: aggregation[aggr],
+          priceId: newAssetEntity.id,
+        });
+      });
+
+      await Promise.allSettled(promises).then(res =>
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason, LotteryRoundServiceEth.name);
+          }
         }),
       );
     }
