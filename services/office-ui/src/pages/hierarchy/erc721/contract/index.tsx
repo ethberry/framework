@@ -9,8 +9,14 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IContract, IContractSearchDto, IUser } from "@framework/types";
-import { ContractFeatures, ContractStatus, Erc721ContractFeatures } from "@framework/types";
+import {
+  BusinessType,
+  IContract,
+  IContractSearchDto,
+  IUser,
+  ContractStatus,
+  Erc721ContractFeatures,
+} from "@framework/types";
 
 import { Erc721ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -93,9 +99,13 @@ export const Erc721Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <></>
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
+          </Button>
+        )}
         <Erc721ContractDeployButton />
       </PageHeader>
 
@@ -109,9 +119,6 @@ export const Erc721Contract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
-            const itemDisabled =
-              contract.contractStatus === ContractStatus.INACTIVE ||
-              contract.contractFeatures.includes(ContractFeatures.EXTERNAL);
             return (
               <StyledListItem key={contract.id}>
                 <ListItemText>{contract.title}</ListItemText>
@@ -123,19 +130,19 @@ export const Erc721Contract: FC = () => {
                     icon={Delete}
                     message="form.buttons.delete"
                   />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <BlacklistButton contract={contract} disabled={itemDisabled} />
-                  <UnBlacklistButton contract={contract} disabled={itemDisabled} />
-                  <WhitelistButton contract={contract} disabled={itemDisabled} />
-                  <UnWhitelistButton contract={contract} disabled={itemDisabled} />
-                  <MintButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <TransferButton contract={contract} disabled={itemDisabled} />
-                  <RoyaltyButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <BlacklistButton contract={contract} />
+                  <UnBlacklistButton contract={contract} />
+                  <WhitelistButton contract={contract} />
+                  <UnWhitelistButton contract={contract} />
+                  <MintButton contract={contract} />
+                  <AllowanceButton contract={contract} />
+                  <TransferButton contract={contract} />
+                  <RoyaltyButton contract={contract} />
+                  <EthListenerAddButton contract={contract} />
+                  <EthListenerRemoveButton contract={contract} />
                 </ListActions>
               </StyledListItem>
             );

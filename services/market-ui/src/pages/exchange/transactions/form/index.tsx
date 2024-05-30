@@ -3,16 +3,16 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-// import { ContractEventType } from "@framework/types";
 import type { IPaginationDto } from "@gemunion/types-collection";
+
+import { FormRefresher } from "../../../../components/forms/form-refresher";
 
 export enum ContractEventType {
   WaitListRewardClaimed = "WaitListRewardClaimed", // +
   Claim = "Claim", // +
   Dismantle = "Dismantle", // ???
   Craft = "Craft", // +
-  Upgrade = "Upgrade", // ???? upgrade is an exchange event
-  LevelUp = "LevelUp", // ???? levelUp is a contract event
+  Upgrade = "Upgrade", // +
   Purchase = "Purchase", // +
   PurchaseRaffle = "PurchaseRaffle", // assets; lucky number
   PurchaseLottery = "PurchaseLottery", // assets; numbers - array
@@ -30,12 +30,13 @@ export interface IEventSearchDto extends IPaginationDto {
 
 interface ITransactionSearchFormProps {
   onSubmit: (values: IEventSearchDto) => Promise<void>;
+  onRefreshPage: () => Promise<void>;
   initialValues: IEventSearchDto;
   open: boolean;
 }
 
 export const TransactionSearchForm: FC<ITransactionSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSubmit, initialValues, open, onRefreshPage } = props;
 
   const { eventTypes } = initialValues;
   const fixedValues = { eventTypes };
@@ -48,6 +49,7 @@ export const TransactionSearchForm: FC<ITransactionSearchFormProps> = props => {
       showPrompt={false}
       testId="EventSearchForm"
     >
+      <FormRefresher onRefreshPage={onRefreshPage} />
       <Collapse in={open}>
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>

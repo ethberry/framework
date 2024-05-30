@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
-import { GradeModule } from "./grade/grade.module";
+import { DiscreteModule } from "./discrete/discrete.module";
 
 @Module({
-  imports: [GradeModule],
+  imports: [DiscreteModule],
 })
 export class GamingMechanicsModule {}

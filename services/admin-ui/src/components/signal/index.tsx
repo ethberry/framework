@@ -46,7 +46,7 @@ export const Signal: FC = () => {
         );
 
       if (isRouteMatchToEvent) {
-        dispatch(setNeedRefresh(true));
+        await dispatch(setNeedRefresh(true));
       }
 
       await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(

@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceErc20": "Anda harus mengizinkan token ERC20 sebelum Isi Ulang",
     "allowanceClaim": "Anda harus mengizinkan token untuk kontrak Contract Manager",
+    "allowanceErc20": "Anda harus mengizinkan token ERC20 sebelum Isi Ulang",
     "allowanceWarning": "Anda akan mengizinkan semua token dari kontrak",
     "craftItem": "Item yang akan dibuat",
     "craftPrice": "Bahan pembuatan",
@@ -72,15 +72,15 @@
     "allowance": "Izin",
     "blacklist": "Tambahkan ke daftar hitam",
     "breedLimit": "Tetapkan batas pembiakan",
+    "checkBalance": {
+      "depAmount": "Jumlah setoran",
+      "stakeBalance": "Saldo Staking",
+      "title": "Saldo Staking",
+      "token": "Token"
+    },
     "claim": "Klaim",
     "confirmation": "Mohon konfirmasi",
     "create": "Buat",
-    "checkBalance": {
-      "title": "Saldo Staking",
-      "token": "Token",
-      "depAmount": "Jumlah setoran",
-      "stakeBalance": "Saldo Staking"
-    },
     "currentBalance": "Saldo: {value}",
     "delete": "Hapus `{title}`?",
     "deploy": "Sebar",
@@ -94,10 +94,10 @@
     "lotteryRoundStart": "Mulai Putaran Lotre",
     "mintBox": "Cetak Mysterybox",
     "mintToken": "Cetak token",
-    "ponziBalance": "Tarik Saldo Ponzi",
     "paymentSplitterBalances": "Lepaskan Saldo",
-    "paymentSplitterWallet": "Dompet Saat Ini {wallet}",
     "paymentSplitterShares": "memiliki {currentShare} dari {total} saham",
+    "paymentSplitterWallet": "Dompet Saat Ini {wallet}",
+    "ponziBalance": "Tarik Saldo Ponzi",
     "raffleRoundEnd": "Akhiri Putaran Raffle",
     "raffleRoundStart": "Mulai Putaran Raffle",
     "renounceRole": "Lepaskan peran",
@@ -123,6 +123,7 @@
   "enums": {
     "LEVEL": {
       "1": "1",
+      "10": "10",
       "2": "2",
       "3": "3",
       "4": "4",
@@ -130,8 +131,7 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9",
-      "10": "10"
+      "9": "9"
     },
     "RARITY": {
       "COMMON": "Umum",
@@ -176,26 +176,6 @@
       "WrongStake": "Taruhan salah",
       "WrongToken": "Token salah",
       "ZeroBalance": "Saldo nol"
-    },
-    "chainId": {
-      "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (testnet)",
-      "137": "POLYGON",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (testnet)",
-      "42161": "ARBITRUM",
-      "80001": "MUMBAI (testnet)",
-      "11155111": "SEPOLIA"
-    },
-    "referralProgramStatus": {
-      "ACTIVE": "AKTIF",
-      "INACTIVE": "TIDAK AKTIF"
     },
     "claimStatus": {
       "EXPIRED": "Kedaluwarsa",
@@ -246,20 +226,20 @@
       "GENES": "Gen",
       "GRADED": "Bergradasi",
       "LINEAR": "Linear",
+      "LINEAR_REFERRAL": "Rujukan Linear",
       "LOTTERY": "Tiket lotre",
       "PAUSABLE": "Dapat Dijeda",
       "RAFFLE": "Tiket raffle",
       "RANDOM": "Acak",
       "REFERRAL": "Rujukan",
-      "LINEAR_REFERRAL": "Rujukan Linear",
       "RENTABLE": "Dapat Disewa",
       "SIMPLE": "Sederhana",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Staking Sederhana",
       "SOULBOUND": "Terikat Jiwa",
       "SOULBOUND_VOTES": "Terikat Jiwa + Suara",
       "SPLITTER": "Pemisah",
       "STATEHASH": "Hash Negara",
-      "WHITELIST": "Daftar Putih"
+      "WHITELIST": "Daftar Putih",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Staking Sederhana"
     },
     "craftStatus": {
       "ACTIVE": "Aktif",
@@ -380,11 +360,11 @@
       "DefaultAdminTransferCanceled": "PembatalanTransferAdminDefault",
       "DefaultAdminTransferScheduled": "PenjadwalanTransferAdminDefault",
       "DefaultRoyaltyInfo": "InfoRoyaltiDefault",
+      "DepositFinish": "SelesaiPenyetoran",
       "DepositPenalty": "DendaPenyetoran",
+      "DepositReturn": "PengembalianPenyetoran",
       "DepositStart": "MulaiPenyetoran",
       "DepositWithdraw": "PenarikanPenyetoran",
-      "DepositFinish": "SelesaiPenyetoran",
-      "DepositReturn": "PengembalianPenyetoran",
       "Dismantle": "Pembongkaran",
       "ERC1155TokenDeployed": "ERC1155TokenDikerahkan",
       "ERC20PaymentReleased": "ERC20PaymentReleased",
@@ -480,21 +460,21 @@
       "STRENGTH": "Kekuatan",
       "WISDOM": "Kebijaksanaan"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Aktif",
       "INACTIVE": "Tidak Aktif"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "Eksponensial",
       "FLAT": "Datar",
       "LINEAR": "Linier"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arab",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Inggris",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Indonesia",
-      "RU": "\uD83C\uDDF7\uD83C\uDDFA Rusia",
-      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Ukraina"
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
     "listenerType": {
       "ERC1155": "ERC1155",
@@ -550,6 +530,10 @@
     "productStatus": {
       "ACTIVE": "Aktif",
       "INACTIVE": "Tidak Aktif"
+    },
+    "referralProgramStatus": {
+      "ACTIVE": "AKTIF",
+      "INACTIVE": "TIDAK AKTIF"
     },
     "rentStatus": {
       "ACTIVE": "Aktif",
@@ -630,8 +614,8 @@
       "baseTokenURI": "Base Token URI",
       "blacklist": "Blacklist",
       "cancel": "Batalkan",
-      "claim": "Klaim",
       "checkBalance": "Periksa Saldo",
+      "claim": "Klaim",
       "collectionUpload": "Unggah koleksi",
       "create": "Buat",
       "deactivate": "Menonaktifkan",
@@ -648,6 +632,7 @@
       "grantRole": "Berikan Peran",
       "hideFilters": "Sembunyikan filter",
       "invite": "Undang",
+      "saveToIpfs": "Simpan Ke IPFS",
       "load": "Muat",
       "loaded": "Selesai",
       "login": "Masuk",
@@ -767,8 +752,8 @@
       "from": "Dari",
       "fromBlock": "Mendengarkan log dari blok №",
       "gender": "Jenis kelamin",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Strategi nilai",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Strategi nilai",
       "growthRate": "Tingkat pertumbuhan",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -835,9 +820,9 @@
       "recentDeposits": "Deposit terbaru",
       "recipient": "Penerima",
       "recurrent": "Berulang?",
+      "referral": "Rujukan",
       "referralProgramStatus": "Status program",
       "referrer": "Pengarah",
-      "referral": "Rujukan",
       "rentStatus": "Status",
       "reward": "Hadiah",
       "role": "Peran",
@@ -971,9 +956,9 @@
       "productStatus": "Status",
       "query": "Cari...",
       "rarity": "Legendaris",
-      "referral": "Referal",
       "rarityMultiplier": "0",
       "recipient": "Penerima",
+      "referral": "Referal",
       "roundIds": "Ronde",
       "royalty": "1",
       "search": "Cari...",
@@ -1023,8 +1008,8 @@
       "patternMismatch": "{label} tidak sesuai dengan pola yang diharapkan",
       "rangeOverflow": "{label} terlalu tinggi",
       "rangeUnderflow": "{label} terlalu rendah",
-      "stepMismatch": "{label} tidak valid",
       "refProgramTotal": "Total tidak valid. Harus merupakan jumlah dari semua level",
+      "stepMismatch": "{label} tidak valid",
       "tooLong": "{label} terlalu panjang",
       "tooShort": "{label} terlalu pendek",
       "totalMismatch": "Total tidak valid. Harus merupakan jumlah dari semua level",
@@ -1093,10 +1078,10 @@
       "template": {
         "title": "Template Klaim"
       },
+      "title": "Klaim",
       "token": {
         "title": "Token Klaim"
-      },
-      "title": "Klaim"
+      }
     },
     "coin-gecko": {
       "ohlc": "OHLC",
@@ -1179,9 +1164,9 @@
         "mystery": "Misteri",
         "payment-splitter": "Pembagi Pembayaran",
         "ponzi": "Ponzi",
+        "prediction": "Prediksi",
         "promo": "Promo",
         "raffle": "Undian",
-        "prediction": "Prediksi",
         "recipes": "Resep",
         "referral": "Referal",
         "rent": "Sewa",
@@ -1387,6 +1372,18 @@
       },
       "title": "Ponzi"
     },
+    "prediction": {
+      "answers": {
+        "title": "Jawaban"
+      },
+      "contracts": {
+        "title": "Kontrak"
+      },
+      "questions": {
+        "title": "Pertanyaan"
+      },
+      "title": "Prediksi"
+    },
     "productType": {
       "description": "Rencana Tarif",
       "dialog": {
@@ -1404,13 +1401,6 @@
         "empty": "Anda belum memiliki alamat",
         "inactive": "tidak aktif"
       },
-      "tabs": {
-        "addresses": "Alamat",
-        "general": "Umum",
-        "notifications": "Notifikasi",
-        "subscriptions": "Langganan",
-        "settings": "Pengaturan"
-      },
       "settings": {
         "wallet": {
           "attach": "Lampirkan",
@@ -1418,6 +1408,13 @@
           "detach": "Lepaskan",
           "title": "Dompet Saya"
         }
+      },
+      "tabs": {
+        "addresses": "Alamat",
+        "general": "Umum",
+        "notifications": "Notifikasi",
+        "settings": "Pengaturan",
+        "subscriptions": "Langganan"
       },
       "title": "Profil"
     },
@@ -1445,18 +1442,6 @@
         "title": "Token"
       }
     },
-    "prediction": {
-      "contracts": {
-        "title": "Kontrak"
-      },
-      "questions": {
-        "title": "Pertanyaan"
-      },
-      "title": "Prediksi",
-      "answers": {
-        "title": "Jawaban"
-      }
-    },
     "ratePlan": {
       "alwaysIncluded": {
         "dispenser": "Transfer token Massal",
@@ -1473,9 +1458,13 @@
         "erc20": "1 kontrak ERC20",
         "erc721": "5 kontrak ERC721",
         "grade": "Grade",
-        "mystery": "Kotak Misteri",
+        "loot": "0 Kotak Jarahan",
+        "mystery": "0 Kotak Misteri",
+        "raffle": "Undian",
+        "staking": "Staking",
         "title": "Perunggu",
-        "vesting": "1000 kontrak vesting"
+        "vesting": "100 kontrak vesting",
+        "waitList": "Daftar Tunggu"
       },
       "contactViaTelegram": "Hubungi via Telegram",
       "gold": {
@@ -1486,9 +1475,13 @@
         "erc20": "5 kontrak ERC20",
         "erc721": "25 kontrak ERC721",
         "grade": "Grade",
-        "mystery": "Kotak Misteri",
+        "loot": "10 Kotak Jarahan",
+        "mystery": "10 Kotak Misteri",
+        "raffle": "Undian",
+        "staking": "Staking",
         "title": "Emas",
-        "vesting": "5000 kontrak vesting"
+        "vesting": "500 kontrak vesting",
+        "waitList": "Daftar Tunggu"
       },
       "month": "bulan",
       "onDemand": {
@@ -1505,9 +1498,13 @@
         "erc20": "1 kontrak ERC20",
         "erc721": "10 kontrak ERC721",
         "grade": "Grade",
-        "mystery": "Kotak Misteri",
+        "loot": "5 Kotak Jarahan",
+        "mystery": "5 Kotak Misteri",
+        "raffle": "Undian",
+        "staking": "Staking",
         "title": "Perak",
-        "vesting": "3000 kontrak vesting"
+        "vesting": "300 kontrak vesting",
+        "waitList": "Daftar Tunggu"
       },
       "title": "Rencana Tarif"
     },
@@ -1536,22 +1533,22 @@
       "chart": {
         "title": "Grafik"
       },
-      "tree": {
-        "title": "Pohon Rujukan"
-      },
       "leaderboard": {
         "title": "Papan Pemimpin"
       },
       "program": {
-        "total": "Total",
         "level": "Level {level}",
         "levels": "Tingkatan Program Rujukan",
-        "title": "Program"
+        "title": "Program",
+        "total": "Total"
       },
       "report": {
         "title": "Laporan"
       },
-      "title": "Program Rujukan"
+      "title": "Program Rujukan",
+      "tree": {
+        "title": "Pohon Rujukan"
+      }
     },
     "rent": {
       "title": "Sewa"

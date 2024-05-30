@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IPredictionAnswerSearchDto } from "@framework/types";
+import type { IPredictionAnswerSearchDto } from "@framework/types";
 
 interface IPredictionAnswerFormProps {
   onSubmit: (values: IPredictionAnswerSearchDto) => Promise<void>;

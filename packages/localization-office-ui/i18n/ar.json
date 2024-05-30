@@ -106,22 +106,6 @@
       "WrongToken": "الرمز المميز خاطئ",
       "ZeroBalance": "الرصيد صفر"
     },
-    "chainId": {
-      "1": "إيثريوم",
-      "5": "جورلي",
-      "56": "بينانس",
-      "97": "بينانس (شبكة اختبار)",
-      "137": "بوليجون",
-      "10000": "جيميونيون",
-      "10001": "بيسو",
-      "13371": "إيميوتابل zkEVM",
-      "13377": "جيميونيون",
-      "13378": "بيسو",
-      "13473": "إيميوتابل zkEVM (شبكة اختبار)",
-      "42161": "أربيتروم",
-      "80001": "مومباي (شبكة اختبار)",
-      "11155111": "سيبوليا"
-    },
     "claimStatus": {
       "EXPIRED": "منتهي الصلاحية",
       "NEW": "جديد",
@@ -209,14 +193,14 @@
       "FEMALE": "أنثى",
       "MALE": "ذكر"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA عربي",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 إنجليزي",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Indonesian",
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
@@ -461,8 +445,8 @@
       "from": "من",
       "fromBlock": "الاستماع لسجل الكتل من الرقم",
       "gender": "الجنس",
-      "gradeStatus": "الحالة",
-      "gradeStrategy": "استراتيجية الدرجة",
+      "discreteStatus": "الحالة",
+      "discreteStrategy": "استراتيجية الدرجة",
       "growthRate": "معدل النمو",
       "id": "الهوية",
       "imageUrl": "الصورة الرمزية",

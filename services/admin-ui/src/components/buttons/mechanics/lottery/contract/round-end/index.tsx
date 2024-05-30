@@ -7,8 +7,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import endRoundLotteryRandomABI from "@framework/abis/endRound/LotteryRandom.json";
+import LotteryEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
 import { shouldDisableByContractType } from "../../../../utils";
+import { haveChainlinkCompatibility } from "../../../../../../utils/chain-link";
 
 export interface ILotteryRoundEndButtonProps {
   className?: string;
@@ -20,13 +21,14 @@ export interface ILotteryRoundEndButtonProps {
 export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, parameters },
     disabled,
     variant,
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, endRoundLotteryRandomABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, LotteryEndRoundABI, web3Context.provider?.getSigner());
     return contract.endRound() as Promise<void>;
   });
 
@@ -46,9 +48,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       message="pages.lottery.rounds.end"
       className={className}
       dataTestId="LotteryRoundEndButton"
-      disabled={
-        disabled || shouldDisableByContractType(props.contract) || !parameters.vrfSubId || !parameters.isConsumer
-      }
+      disabled={disabled || shouldDisableByContractType(contract) || !haveChainlinkCompatibility(contract)}
       variant={variant}
     />
   );

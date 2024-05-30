@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import { useCheckAccessMetadata } from "../../../../../utils/use-check-access-metadata";
+import { useCheckTokenOwnership } from "../../../../../utils/use-check-token-ownership";
 import { GradeButton } from "../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { TokenDiscreteView } from "./discrete";
@@ -20,18 +20,18 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
   const { token } = props;
 
   const { account } = useWeb3React();
-  const { checkAccessMetadata } = useCheckAccessMetadata();
+  const { checkTokenOwnership } = useCheckTokenOwnership();
 
-  const [hasAccess, setHasAccess] = useState(false);
+  const [hasOwnership, setHasOwnership] = useState(false);
 
   useEffect(() => {
-    if (token.template?.contract?.address && account) {
-      void checkAccessMetadata(void 0, {
+    if (token.id && account) {
+      void checkTokenOwnership(void 0, {
         account,
-        address: token.template.contract.address,
+        tokenId: token.id,
       })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
+        .then((json: { hasOwnership: boolean }) => {
+          setHasOwnership(json?.hasOwnership);
         })
         .catch(console.error);
     }
@@ -46,14 +46,14 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
       <CardContent>
         <StyledToolbar disableGutters>
           <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.discrete" />
+            <FormattedMessage id="pages.token.attributes" />
           </StyledTypography>
           <AllowanceInfoPopover />
         </StyledToolbar>
         <TokenDiscreteView metadata={token.metadata} />
       </CardContent>
       <CardActions>
-        <GradeButton token={token} disabled={!hasAccess} />
+        <GradeButton token={token} disabled={!hasOwnership} />
       </CardActions>
     </StyledCard>
   );

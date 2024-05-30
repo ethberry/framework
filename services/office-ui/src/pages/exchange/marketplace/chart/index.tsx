@@ -17,19 +17,17 @@ import { MarketplaceChartSearchForm } from "./form";
 export const MarketplaceChart: FC = () => {
   const { profile } = useUser<IUser>();
 
-  const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
-    IToken,
-    IMarketplaceReportSearchDto
-  >({
-    baseUrl: "/marketplace/report/chart",
-    search: {
-      contractIds: [],
-      templateIds: [],
-      merchantId: profile.merchantId,
-      startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
-      endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
-    },
-  });
+  const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleRefreshPage } =
+    useCollection<IToken, IMarketplaceReportSearchDto>({
+      baseUrl: "/marketplace/report/chart",
+      search: {
+        contractIds: [],
+        templateIds: [],
+        merchantId: profile.merchantId,
+        startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
+        endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
+      },
+    });
 
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -141,7 +139,12 @@ export const MarketplaceChart: FC = () => {
         </Button>
       </PageHeader>
 
-      <MarketplaceChartSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <MarketplaceChartSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        onRefreshPage={handleRefreshPage}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>

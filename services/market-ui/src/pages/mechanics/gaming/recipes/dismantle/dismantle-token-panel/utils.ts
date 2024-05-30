@@ -11,12 +11,12 @@ export const getDismantleMultiplier = (
   const level = metadata.RARITY
     ? Number(metadata.RARITY)
     : metadata.LEVEL && !metadata.GRADE
-    ? Number(metadata.LEVEL)
-    : metadata.GRADE && !metadata.LEVEL
-    ? Number(metadata.GRADE)
-    : metadata.LEVEL && metadata.GRADE
-    ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
-    : 1;
+      ? Number(metadata.LEVEL)
+      : metadata.GRADE && !metadata.LEVEL
+        ? Number(metadata.GRADE)
+        : metadata.LEVEL && metadata.GRADE
+          ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
+          : 1;
 
   if (dismantleStrategy === DismantleStrategy.FLAT) {
     return { amount: BigNumber.from(amount), multiplier: 1 };

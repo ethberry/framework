@@ -4,11 +4,9 @@ import { ns } from "@framework/constants";
 export class CreatePredictionAnswer1681273013050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.prediction_answer_answer_enum AS ENUM (
+      CREATE TYPE ${ns}.prediction_answer_enum AS ENUM (
         'YES',
-        'NO',
-        'DRAW',
-        'TECH'
+        'NO'
       );
     `);
 
@@ -30,7 +28,7 @@ export class CreatePredictionAnswer1681273013050 implements MigrationInterface {
         },
         {
           name: "answer",
-          type: `${ns}.prediction_answer_answer_enum`,
+          type: `${ns}.prediction_answer_enum`,
           default: "'YES'",
         },
         {

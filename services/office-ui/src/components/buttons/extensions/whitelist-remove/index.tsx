@@ -6,6 +6,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { AccessListUnWhitelistDialog } from "./dialog";
+import { shouldDisableByContractType } from "../../../utils";
 
 export interface IUnWhitelistButtonProps {
   className?: string;
@@ -17,6 +18,7 @@ export interface IUnWhitelistButtonProps {
 export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -48,7 +50,7 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
         message="form.buttons.unwhitelist"
         className={className}
         dataTestId="UnWhitelistButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccessListUnWhitelistDialog

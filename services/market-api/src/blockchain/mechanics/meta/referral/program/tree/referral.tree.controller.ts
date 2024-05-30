@@ -3,7 +3,8 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { IRefTreeMerchantAutocomplete, ReferralTreeService } from "./referral.tree.service";
+import type { IRefTreeMerchantAutocomplete } from "./referral.tree.service";
+import { ReferralTreeService } from "./referral.tree.service";
 import { ReferralTreeSearchDto } from "./dto";
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";

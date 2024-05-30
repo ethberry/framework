@@ -34,7 +34,7 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
-  public chainId: number;
+  public chainId: bigint;
   public merchantId: number;
   public templateIds: Array<number>;
   public mysteryBoxStatus: Array<MysteryBoxStatus>;

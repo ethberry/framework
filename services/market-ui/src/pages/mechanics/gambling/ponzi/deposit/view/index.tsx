@@ -4,8 +4,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { formatPenalty, formatItem } from "@framework/exchange";
-import { IPonziDeposit } from "@framework/types";
+import { formatItem, formatPenalty } from "@framework/exchange";
+import type { IPonziDeposit } from "@framework/types";
 
 import { normalizeDuration } from "../../../../../../utils/time";
 

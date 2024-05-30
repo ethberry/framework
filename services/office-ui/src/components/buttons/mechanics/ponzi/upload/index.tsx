@@ -9,9 +9,8 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
-import PonziSetRulesABI from "@framework/abis/setRules/Ponzi.json";
-
 import { PonziRuleUploadDialog } from "./upload-dialog";
+import setRulesPonziABI from "@framework/abis/setRules/Ponzi.json";
 
 export interface IPonziRuleCreateButtonProps {
   className?: string;
@@ -58,18 +57,18 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
             token: component.contract!.address,
             tokenId: component.templateId,
             amount: component.amount,
-          }))[0]
+          }))
         : {
-            /* zero asset */
+            /* empty asset */
           },
       terms: {
         period: rule.durationAmount, // todo fix same name // seconds in days
         penalty: rule.penalty || 0,
         maxCycles: rule.maxCycles,
       },
-      active: true, // TODO add var in interface?
+      active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract.address, PonziSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, setRulesPonziABI, web3Context.provider?.getSigner());
     return contract.setRules([ponziRule]) as Promise<void>;
   });
 

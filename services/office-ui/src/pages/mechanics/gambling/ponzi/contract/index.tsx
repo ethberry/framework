@@ -13,7 +13,7 @@ import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, PonziContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { PonziDeployButton } from "../../../../../components/buttons";
+import { PonziContractDeployButton } from "../../../../../components/buttons";
 import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
 import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
 import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
@@ -75,7 +75,7 @@ export const PonziContract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <PonziDeployButton />
+        <PonziContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm
@@ -88,26 +88,20 @@ export const PonziContract: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(contract => {
-            const itemDisabled = contract.contractStatus === ContractStatus.INACTIVE;
             return (
               <StyledListItem key={contract.id}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListActions dataTestId="PonziActionsMenuButton">
                   <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    icon={Delete}
-                    message="form.buttons.delete"
-                    disabled={itemDisabled}
-                  />
-                  <GrantRoleButton contract={contract} disabled={itemDisabled} />
-                  <RevokeRoleButton contract={contract} disabled={itemDisabled} />
-                  <RenounceRoleButton contract={contract} disabled={itemDisabled} />
-                  <AllowanceButton contract={contract} disabled={itemDisabled} />
-                  <TopUpButton contract={contract} disabled={itemDisabled} />
-                  <PonziBalanceButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerAddButton contract={contract} disabled={itemDisabled} />
-                  <EthListenerRemoveButton contract={contract} disabled={itemDisabled} />
+                  <ListAction onClick={handleDelete(contract)} icon={Delete} message="form.buttons.delete" />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <AllowanceButton contract={contract} />
+                  <TopUpButton contract={contract} />
+                  <PonziBalanceButton contract={contract} />
+                  <EthListenerAddButton contract={contract} />
+                  <EthListenerRemoveButton contract={contract} />
                 </ListActions>
               </StyledListItem>
             );

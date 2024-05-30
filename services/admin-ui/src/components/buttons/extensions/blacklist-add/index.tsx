@@ -23,6 +23,7 @@ export interface IBlacklistButtonProps {
 export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -61,7 +62,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
         message="form.buttons.blacklist"
         className={className}
         dataTestId="BlacklistButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccountDialog

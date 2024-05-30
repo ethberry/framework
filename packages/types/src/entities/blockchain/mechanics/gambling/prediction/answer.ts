@@ -1,14 +1,14 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IUser } from "../../../../infrastructure";
-import { IPredictionQuestion } from "./question";
+import type { IUser } from "../../../../infrastructure";
+import type { IPredictionQuestion } from "./question";
 
-export enum PredictionAnswerAnswer {
+export enum PredictionAnswer {
   YES = "YES",
   NO = "NO",
 }
 
 export interface IPredictionAnswer extends IIdDateBase {
-  answer: PredictionAnswerAnswer;
+  answer: PredictionAnswer;
   questionId: number;
   question: IPredictionQuestion;
   userId: number;

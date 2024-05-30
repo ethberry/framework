@@ -12,8 +12,8 @@ import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.jso
 import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import { StakingAllowanceDialog } from "./dialog";
 import type { IStakingAllowanceDto } from "./dialog";
+import { StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
   className?: string;
@@ -25,6 +25,7 @@ export interface IStakingAllowanceButtonProps {
 export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -79,7 +80,7 @@ export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
         message="form.buttons.allowance"
         className={className}
         dataTestId="StakingAllowanceButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <StakingAllowanceDialog

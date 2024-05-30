@@ -72,7 +72,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: false,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), "MM/dd/yy hh:mm"),
+      valueFormatter: (value: string) => format(parseISO(value), "MM/dd/yy hh:mm"),
       flex: 0.9,
     },
     {
@@ -110,13 +110,13 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
         </StyledTitle>
         <StyledDataGridPremium
           pagination
+          paginationMode="server"
           rowCount={count || 0}
           paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
           onPaginationModelChange={handleChangePaginationModel}
           pageSizeOptions={[5, 10, 25]}
           loading={isLoading}
           columns={columns}
-          rowThreshold={0}
           getDetailPanelHeight={getDetailPanelHeight}
           getDetailPanelContent={getDetailPanelContent}
           rows={rows || []}

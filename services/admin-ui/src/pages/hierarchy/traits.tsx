@@ -18,6 +18,11 @@ export const TokenTraitsView: FC<ITokenMetadataView> = props => {
         // MODULE:DND
         // MODULE:BREEDING
         // MODULE:COLLECTION
+        case TokenMetadata.GENES:
+          Object.entries(decodeTraits(BigInt(value), DND)).forEach(([key, value]) => {
+            Object.assign(memo, { [key.toUpperCase()]: value });
+          });
+          break;
         case TokenMetadata.TRAITS:
           Object.entries(decodeTraits(BigInt(value), DND))
             .slice(2) // delete sire & matron info from traits

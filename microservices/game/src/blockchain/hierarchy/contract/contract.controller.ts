@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
@@ -8,7 +9,7 @@ import { ContractAutocompleteDto, ContractSearchDto, SystemContractSearchDto } f
 import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
 
-@Public()
+@ApiBearerAuth()
 @Controller("/contracts")
 export class ContractController {
   constructor(private readonly contractService: ContractService) {}

@@ -44,12 +44,17 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'VESTING',
         null,
-        1000
+        100
       ), (
         'BRONZE',
         'MYSTERY',
         'ERC721',
-        1
+        0
+      ), (
+        'BRONZE',
+        'LOOT',
+        'ERC721',
+        0
       ), (
         'BRONZE',
         'LOTTERY',
@@ -64,12 +69,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'RAFFLE',
         null,
-        1
+        0
       ), (
         'BRONZE',
         'RAFFLE',
         'ERC721',
-        1
+        0
       ), (
         'BRONZE',
         'COLLECTION',
@@ -79,7 +84,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'STAKING',
         null,
-        1
+        0
       ), (
         'BRONZE',
         'PAYMENT_SPLITTER',
@@ -119,12 +124,17 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'SILVER',
         'VESTING',
         null,
-        1000
+        300
       ), (
         'SILVER',
         'MYSTERY',
         'ERC721',
-        1
+        5
+      ), (
+        'SILVER',
+        'LOOT',
+        'ERC721',
+        5
       ), (
         'SILVER',
         'LOTTERY',
@@ -139,12 +149,12 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'SILVER',
         'RAFFLE',
         null,
-        1
+        0
       ), (
         'SILVER',
         'RAFFLE',
         'ERC721',
-        1
+        0
       ), (
         'SILVER',
         'COLLECTION',
@@ -179,7 +189,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'GOLD',
         'HIERARCHY',
         'ERC998',
-        0
+        1
       ), (
         'GOLD',
         'HIERARCHY',
@@ -194,12 +204,17 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'GOLD',
         'VESTING',
         null,
-        1000
+        500
       ), (
         'GOLD',
         'MYSTERY',
         'ERC721',
-        1
+        10
+      ), (
+        'GOLD',
+        'MYSTERY',
+        'ERC721',
+        10
       ), (
         'GOLD',
         'LOTTERY',

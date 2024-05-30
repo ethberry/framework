@@ -17,6 +17,7 @@ export interface IPonziBalanceButtonProps {
 export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -44,7 +45,7 @@ export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
         message="form.buttons.ponziBalance"
         className={className}
         dataTestId="PonziBalanceButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <PonziBalanceDialog

@@ -11,6 +11,7 @@ import { ContractFeatures } from "@framework/types";
 import WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
+import { shouldDisableByContractType } from "../../../utils";
 
 export interface IWhitelistButtonProps {
   className?: string;
@@ -22,6 +23,7 @@ export interface IWhitelistButtonProps {
 export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures },
     disabled,
     variant,
@@ -60,7 +62,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
         message="form.buttons.whitelist"
         className={className}
         dataTestId="WhitelistButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccountDialog

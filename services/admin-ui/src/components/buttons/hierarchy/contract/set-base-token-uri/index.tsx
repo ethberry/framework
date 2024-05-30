@@ -1,7 +1,7 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { Link } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -24,6 +24,7 @@ export interface ISetBaseTokenURIButtonProps {
 export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, baseTokenURI, contractType },
     disabled,
     variant,
@@ -82,7 +83,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
         dataTestId="SetTokenURIButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(props.contract) ||
+          shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
           !hasAccess
         }

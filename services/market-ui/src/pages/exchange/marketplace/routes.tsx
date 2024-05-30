@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { MarketplaceSection } from "../../dashboard/exchange/marketplace";
+import { MarketplaceSection } from "../../dashboard/mechanics/marketplace";
 import { IndexWrapper } from "../../index-wrapper";
 import { MerchantList } from "./merchant-list";
 import { Merchant } from "./merchant";

@@ -29,7 +29,7 @@ import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-c
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 // mechanics
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
 import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposit/deposit.entity";
@@ -81,7 +81,7 @@ const config: PostgresConnectionOptions = {
     CompositionEntity,
     // mechanics
     MysteryBoxEntity,
-    GradeEntity,
+    DiscreteEntity,
     ClaimEntity,
     AssetPromoEntity,
     EventHistoryEntity,
@@ -121,7 +121,7 @@ const config: PostgresConnectionOptions = {
   // We are using migrations, synchronize should market-api set to false.
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
 };
 
 export default config;

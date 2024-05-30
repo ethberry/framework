@@ -23,6 +23,7 @@ export interface IGrantRoleButtonProps {
 export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractSecurity },
     disabled,
     variant,
@@ -61,7 +62,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         message="form.buttons.grantRole"
         className={className}
         dataTestId="GrantRoleButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <AccessControlGrantRoleDialog

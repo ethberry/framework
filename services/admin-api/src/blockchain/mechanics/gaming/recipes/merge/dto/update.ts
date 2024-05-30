@@ -4,7 +4,7 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { MergeStatus } from "@framework/types";
 
-import { IMergeUpdateDto } from "../interfaces";
+import type { IMergeUpdateDto } from "../interfaces";
 import { MergeCreateDto } from "./index";
 
 export class MergeUpdateDto extends MergeCreateDto implements IMergeUpdateDto {

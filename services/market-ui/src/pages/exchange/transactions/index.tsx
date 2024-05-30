@@ -36,6 +36,7 @@ export const MyTransactions: FC = () => {
     handleSearch,
     handleToggleFilters,
     handleChangePaginationModel,
+    handleRefreshPage,
     handleChangeSortModel,
   } = useCollection<IEventHistory, IEventSearchDto>({
     search: {
@@ -69,18 +70,10 @@ export const MyTransactions: FC = () => {
       minWidth: 140,
     },
     {
-      field: "chainId",
-      headerName: formatMessage({ id: "form.labels.network" }),
-      sortable: false,
-      valueFormatter: ({ value }: { value: number }) => formatMessage({ id: `enums.chainId.${value}` }),
-      flex: 1,
-      minWidth: 120,
-    },
-    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1.2,
       minWidth: 160,
     },
@@ -116,7 +109,12 @@ export const MyTransactions: FC = () => {
         </Button>
       </PageHeader>
 
-      <TransactionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TransactionSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        onRefreshPage={handleRefreshPage}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledDataGridPremium
@@ -130,7 +128,6 @@ export const MyTransactions: FC = () => {
           pageSizeOptions={[5, 10, 25]}
           loading={isLoading}
           columns={columns}
-          rowThreshold={0}
           getDetailPanelHeight={getDetailPanelHeight}
           getDetailPanelContent={getDetailPanelContent}
           rows={rows}

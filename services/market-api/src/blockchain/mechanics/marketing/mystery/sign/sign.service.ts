@@ -6,13 +6,13 @@ import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
 import type { ISignMysteryboxDto } from "./interfaces";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 @Injectable()
 export class MysterySignService {
@@ -69,21 +69,15 @@ export class MysterySignService {
     params: IParams,
     mysteryBoxEntity: MysteryBoxEntity,
   ): Promise<string> {
+    const items = convertDatabaseAssetToChainAsset(mysteryBoxEntity.item.components);
+    const price = convertDatabaseAssetToChainAsset(mysteryBoxEntity.template.price.components);
+
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
       params,
       [
-        ...mysteryBoxEntity.item.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          // tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-          tokenId:
-            component.contract.contractType === TokenType.ERC1155
-              ? component.template.tokens[0].tokenId
-              : (component.templateId || 0).toString(),
-          amount: component.amount,
-        })),
+        ...items,
         {
           tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
           token: mysteryBoxEntity.template.contract.address,
@@ -91,12 +85,7 @@ export class MysterySignService {
           amount: "1",
         },
       ],
-      mysteryBoxEntity.template.price.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
+      price,
     );
   }
 }

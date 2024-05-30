@@ -60,7 +60,7 @@ export const EthListenerRemoveButton: FC<IEthListenerRemoveButtonProps> = props 
         message="form.buttons.removeListener"
         className={className}
         dataTestId="EthListenerRemoveButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <EthListenerRemoveDialog

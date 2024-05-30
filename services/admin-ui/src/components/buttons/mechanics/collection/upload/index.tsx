@@ -3,7 +3,7 @@ import { PaidOutlined } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, ICollectionUploadDto } from "@framework/types";
+import type { ICollectionUploadDto, IContract } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../../utils";
 import { CollectionUploadDialog } from "./dialog";
@@ -19,6 +19,7 @@ export interface ICollectionUploadButtonProps {
 export const CollectionUploadButton: FC<ICollectionUploadButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -61,7 +62,7 @@ export const CollectionUploadButton: FC<ICollectionUploadButtonProps> = props =>
         message="form.buttons.collectionUpload"
         className={className}
         dataTestId="CollectionUploadButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <CollectionUploadDialog

@@ -1,5 +1,5 @@
 import { FC, Fragment, useCallback } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
 import {
   DataGridPremium,
@@ -11,19 +11,15 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatItem } from "@framework/exchange";
-import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IAssetComponent, IMarketplaceReport, IMarketplaceReportSearchDto } from "@framework/types";
 
-import { TemplateInput } from "../../../../components/inputs/template";
-import { ReportDataView } from "./report-data-view";
+import { MarketplaceReportDataView } from "./report-data-view";
+import { MarketplaceReportSearchForm } from "./form";
 
 export const MarketplaceReport: FC = () => {
   const {
@@ -35,7 +31,8 @@ export const MarketplaceReport: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePaginationModel,
-  } = useCollection<IEventHistoryReport, IMarketplaceReportSearchDto>({
+    handleRefreshPage,
+  } = useCollection<IMarketplaceReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
       query: "",
@@ -59,7 +56,7 @@ export const MarketplaceReport: FC = () => {
   };
 
   const getDetailPanelContent = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelContent"]>>(
-    ({ row }: GridRowParams<IEventHistoryReport>) => <ReportDataView row={row} />,
+    ({ row }: GridRowParams<IMarketplaceReport>) => <MarketplaceReportDataView row={row} />,
     [],
   );
 
@@ -99,7 +96,7 @@ export const MarketplaceReport: FC = () => {
       field: "price",
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatItem({ id: 0, components: value }),
+      valueFormatter: (value: Array<IAssetComponent>) => formatItem({ id: 0, components: value }),
       flex: 1,
       minWidth: 100
     },
@@ -107,7 +104,7 @@ export const MarketplaceReport: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
     },
@@ -126,32 +123,13 @@ export const MarketplaceReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm
+      <MarketplaceReportSearchForm
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        testId="MarketplaceReportSearchForm"
-      >
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
-            <DateTimeInput name="startTimestamp" />
-          </Grid>
-          <Grid item xs={6}>
-            <DateTimeInput name="endTimestamp" />
-          </Grid>
-          <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TemplateInput />
-          </Grid>
-        </Grid>
-      </CommonSearchForm>
+        contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
+      />
 
       <DataGridPremium
         pagination
@@ -162,10 +140,9 @@ export const MarketplaceReport: FC = () => {
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rowThreshold={0}
         getDetailPanelHeight={getDetailPanelHeight}
         getDetailPanelContent={getDetailPanelContent}
-        rows={rows.map((event: IEventHistoryReport) => {
+        rows={rows.map((event: IMarketplaceReport) => {
           return {
             id: event.id,
             tokenId: event.items[0]?.token?.id,

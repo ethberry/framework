@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { CardActions, CardContent } from "@mui/material";
+import { CardActions, CardContent, Grid } from "@mui/material";
 
 import { formatItemHtmlList } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { ReferralButton } from "../../../../../components/buttons/refferal";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
-import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 
 export interface ICommonTemplatePanelProps {
   template: ITemplate;
@@ -29,8 +29,16 @@ export const Erc721TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
         <StyledList component="ul">{formatItemHtmlList(template.price)}</StyledList>
       </CardContent>
       <CardActions>
-        <TemplatePurchaseButton template={template} />
-        <AllowanceButton token={template.price} isSmall isExchange />
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12}>
+            <TemplatePurchaseButton template={template} />
+          </Grid>
+          {template?.contract?.merchant?.refLevels?.length ? (
+            <Grid item xs={12}>
+              <ReferralButton endpoint={`/erc721/template/${template.id}`} />
+            </Grid>
+          ) : null}
+        </Grid>
       </CardActions>
     </StyledCard>
   );

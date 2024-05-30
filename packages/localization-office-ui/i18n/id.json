@@ -106,22 +106,6 @@
       "WrongToken": "Token salah",
       "ZeroBalance": "Saldo adalah nol"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (testnet)",
-      "137": "POLYGON",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (testnet)",
-      "42161": "ARBITRUM",
-      "80001": "MUMBAI (testnet)",
-      "11155111": "SEPOLIA"
-    },
     "claimStatus": {
       "EXPIRED": "Kedaluwarsa",
       "NEW": "Baru",
@@ -209,16 +193,16 @@
       "FEMALE": "Perempuan",
       "MALE": "Laki-laki"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Aktif",
       "INACTIVE": "Tidak Aktif"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arab",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Inggris",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Indonesia",
-      "RU": "\uD83C\uDDF7\uD83C\uDDFA Rusia",
-      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Ukraina"
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
     "listenerType": {
       "ERC1155": "ERC1155",
@@ -461,8 +445,8 @@
       "from": "Dari",
       "fromBlock": "Mendengarkan log dari blok №",
       "gender": "Jenis kelamin",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Strategi nilai",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Strategi nilai",
       "growthRate": "Tingkat pertumbuhan",
       "id": "ID",
       "imageUrl": "Avatar",

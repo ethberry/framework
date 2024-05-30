@@ -39,7 +39,6 @@ export const CsvContentView: FC<ICsvContentViewProps> = props => {
   return (
     <Box sx={{ height: 440 }}>
       <DataGridPremium
-        rowCount={csvContent.length}
         columns={columns}
         rows={csvContent}
         rowReordering

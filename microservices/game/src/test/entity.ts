@@ -6,13 +6,23 @@ import { addDays } from "date-fns";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
-import type { IAsset, IAssetComponent, IClaim, IContract, IMerchant, ITemplate, IUser } from "@framework/types";
+import type {
+  IAsset,
+  IAssetComponent,
+  IClaim,
+  IContract,
+  IMerchant,
+  IMysteryBox,
+  ITemplate,
+  IUser,
+} from "@framework/types";
 import {
   ClaimStatus,
   ClaimType,
   ContractStatus,
   MerchantStatus,
   ModuleType,
+  MysteryBoxStatus,
   RatePlanType,
   TemplateStatus,
   TokenType,
@@ -109,12 +119,6 @@ export const generateTestAsset = (data: Partial<IAsset> = {}): Record<string, an
   );
 };
 
-export interface IAssetComponentDto {
-  contract: IContract;
-  template: ITemplate;
-  asset: IAsset;
-}
-
 export const generateTestAssetComponent = (data: Partial<IAssetComponent> = {}): Record<string, any> => {
   return Object.assign(
     {
@@ -134,6 +138,18 @@ export const generateTestClaim = (data: Partial<IClaim> = {}): Record<string, an
       signature: "",
       nonce: "",
       endTimestamp: `${addDays(new Date(), 1).toISOString()}`,
+    },
+    data,
+  );
+};
+
+export const generateTestMysteryBox = (data: Partial<IMysteryBox> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      title: "Mystery Box",
+      description: simpleFormatting,
+      imageUrl,
+      mysteryBoxStatus: MysteryBoxStatus.ACTIVE,
     },
     data,
   );

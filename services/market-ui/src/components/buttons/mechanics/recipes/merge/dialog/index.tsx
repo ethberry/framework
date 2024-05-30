@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { formatItem } from "@framework/exchange";
-import { IMerge, IMergeSignDto, IToken } from "@framework/types";
+import type { IMerge, IMergeSignDto, IToken } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { TokenMergeInput } from "../../../../../inputs/merge-token";

@@ -3,7 +3,7 @@ import { IsISO8601, IsOptional, IsString, ValidateIf } from "class-validator";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
-import { IReferralReportSearchDto } from "@framework/types";
+import type { IReferralReportSearchDto } from "@framework/types";
 
 export class ReferralReportSearchDto extends SearchDto implements IReferralReportSearchDto {
   @ApiPropertyOptional()

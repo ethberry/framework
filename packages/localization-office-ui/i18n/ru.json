@@ -3,7 +3,7 @@
     "allowanceWarning": "Вы собираетесь разрешить все токены контракта",
     "editNotAllowed": "Редактирование этого правила не разрешено",
     "knownError": "Ой! Мы знаем об этой проблеме и активно работаем над её исправлением. Спасибо за ваше терпение!",
-    "minterRole": "После развертывания вам нужно вручную предоставить роль MINTER_ROLE на контракте билетов",
+    "minterRole": "После деплоя вам нужно вручную предоставить роль MINTER_ROLE на контракте билетов",
     "risk": "Вы делаете это на свой страх и риск!",
     "uncaughtError": "Произошла непредвиденная ошибка"
   },
@@ -47,7 +47,7 @@
     "confirmation": "Пожалуйста, подтвердите",
     "create": "Создать",
     "delete": "Удалить `{title}`?",
-    "deploy": "Развернуть",
+    "deploy": "Деплой",
     "edit": "Редактировать",
     "fund": "Финансировать",
     "grantRole": "Предоставить роль",
@@ -106,22 +106,6 @@
       "WrongToken": "Токен неверен",
       "ZeroBalance": "Баланс равен нулю"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (тестнет)",
-      "137": "POLYGON",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (тестнет)",
-      "42161": "ARBITRUM",
-      "80001": "MUMBAI (тестнет)",
-      "11155111": "SEPOLIA"
-    },
     "claimStatus": {
       "EXPIRED": "Истек",
       "NEW": "Новый",
@@ -141,7 +125,7 @@
       "RANDOM": "Случайный",
       "REFERRAL": "Линейная реферальная программа",
       "RENTABLE": "Арендуемый",
-      "SOULBOUND": "Привязанный к душе",
+      "SOULBOUND": "Непередаваемые NFT",
       "SPLITTER": "Разделитель платежей",
       "STABLE_COIN": "Стейблкоин",
       "STATEHASH": "Хэш состояния",
@@ -179,9 +163,9 @@
       "LINEAR_REFERRAL": "Линейная реферальная программа",
       "RENTABLE": "Арендуемый",
       "SIMPLE": "Простой",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Простое стейкинг",
-      "SOULBOUND": "Привязанный к душе",
-      "SOULBOUND_VOTES": "Привязанный к душе + Голоса",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Простой стейкинг",
+      "SOULBOUND": "Непередаваемые NFT",
+      "SOULBOUND_VOTES": "Непередаваемые NFT + Голоса",
       "SPLITTER": "Разделитель",
       "STATEHASH": "Хэш состояния",
       "WHITELIST": "Белый список"
@@ -209,16 +193,16 @@
       "FEMALE": "Женский",
       "MALE": "Мужской"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA Арабский",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Английский",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Индонезийский",
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
-      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Украинский"
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
     "listenerType": {
       "ERC1155": "ERC1155",
@@ -339,7 +323,7 @@
       "create": "Создать",
       "deactivate": "Деактивировать",
       "delete": "Удалить",
-      "deploy": "Развернуть",
+      "deploy": "Деплой",
       "disconnect": "Отключить",
       "edit": "Редактировать",
       "empty": "\uFEFF",
@@ -417,7 +401,7 @@
       "breeder": "Заводчик",
       "cap": "Лимит",
       "categoryIds": "Категории",
-      "chainId": "Цепь",
+      "chainId": "Сеть",
       "child": "Дочерний элемент",
       "childId": "Дочерний элемент",
       "childIds": "Дочерние элементы",
@@ -461,8 +445,8 @@
       "from": "От",
       "fromBlock": "Слушать лог с блока №",
       "gender": "Пол",
-      "gradeStatus": "Статус",
-      "gradeStrategy": "Стратегия оценки",
+      "discreteStatus": "Статус",
+      "discreteStrategy": "Стратегия оценки",
       "growthRate": "Темп роста",
       "id": "ID",
       "imageUrl": "Аватар",
@@ -600,7 +584,7 @@
       "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Корень",
-      "chainId": "ChainId",
+      "chainId": "Сеть",
       "childId": "Контракт",
       "childIds": "Контракты",
       "city": "Гамбург",
@@ -745,7 +729,7 @@
       "exchange": {
         "marketplace": {
           "chart": "График",
-          "grade": "Оценка",
+          "grade": "Грейд",
           "report": "Отчет",
           "title": "Маркетплейс"
         }
@@ -854,7 +838,7 @@
       }
     },
     "grade": {
-      "title": "Правила оценки"
+      "title": "Правила грейда"
     },
     "guest": {
       "confirmation": "Пожалуйста, проверьте свой почтовый ящик, чтобы подтвердить ваш электронный адрес.",
@@ -887,17 +871,17 @@
     },
     "mystery": {
       "boxContent": {
-        "title": "Содержимое Мистерибокса"
+        "title": "Содержимое Мистических коробок"
       },
       "boxes": {
-        "title": "Мистерибоксы"
+        "title": "Мистические коробки"
       },
       "contracts": {
-        "title": "Мистери Контракты"
+        "title": "Контракты Мистических коробок"
       },
-      "title": "Мистери",
+      "title": "Мистические коробок",
       "tokens": {
-        "title": "Мистери Токены"
+        "title": "Мистические Токены"
       }
     },
     "native": {
@@ -1026,7 +1010,7 @@
     "created": "Успешно создано",
     "declined": "Отклонено!",
     "deleted": "Успешно удалено",
-    "deployed": "Успешно развернуто",
+    "deployed": "Деплой успешно завершен",
     "duplicateAccount": "Дубликат аккаунта",
     "duplicateEmail": "Пользователь с этим электронным адресом уже зарегистрирован",
     "email": "Электронное письмо успешно отправлено.",

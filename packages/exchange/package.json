@@ -9,9 +9,9 @@
   },
   "devDependencies": {
     "@framework/types": "0.0.1",
-    "@mui/material": "5.15.14",
+    "@mui/material": "5.15.17",
     "ethers": "5.7.2",
-    "react": "18.2.0"
+    "react": "18.3.1"
   },
   "engines": {
     "node": ">=18"
@@ -24,7 +24,7 @@
     "@framework/types": "^0.0.1",
     "@mui/material": "^5.14.18",
     "ethers": "^5.0.0",
-    "react": "^18.2.0"
+    "react": "^18.3.1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

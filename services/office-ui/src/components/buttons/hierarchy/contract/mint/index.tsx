@@ -16,6 +16,7 @@ import ERC1155MintABI from "@framework/abis/mint/ERC1155Blacklist.json";
 import { useCheckAccessMint } from "../../../../../utils/use-check-access-mint";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
+import { shouldDisableByContractType } from "../../../../utils";
 
 export interface IMintButtonProps {
   className?: string;
@@ -27,6 +28,7 @@ export interface IMintButtonProps {
 export const MintButton: FC<IMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
@@ -111,6 +113,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         disabled={
           disabled ||
           contractType === TokenType.NATIVE ||
+          shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasAccess
         }

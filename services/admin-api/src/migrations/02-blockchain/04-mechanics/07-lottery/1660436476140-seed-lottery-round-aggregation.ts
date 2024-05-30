@@ -16,33 +16,33 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102230100
+        102231100
       ),(
-        102230101
+        102231101
       ), (
-        102230102
+        102231102
       ), (
-        102230103
+        102231103
       ), (
-        102230104
+        102231104
       ), (
-        102230105
+        102231105
       ), (
-        102230106
+        102231106
       ), (
-        102230200
+        102231200
       ), (
-        102230201
+        102231201
       ), (
-        102230202
+        102231202
       ), (
-        102230203
+        102231203
       ), (
-        102230204
+        102231204
       ), (
-        102230205
+        102231205
       ), (
-        102230206
+        102231206
       );
     `);
 
@@ -58,85 +58,85 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102230100
+        102231100
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '294000000000000000000',
-        102230101
+        102231101
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '71400000000000000000',
-        102230102
+        102231102
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '49700000000000000000',
-        102230103
+        102231103
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '22400000000000000000',
-        102230104
+        102231104
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '3500000000000000000',
-        102230105
+        102231105
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '700000000000000000',
-        102230106
+        102231106
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102230200
+        102231200
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '532000000000000000000',
-        102230201
+        102231201
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '147700000000000000000',
-        102230202
+        102231202
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '58800000000000000000',
-        102230203
+        102231203
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '29400000000000000000',
-        102230204
+        102231204
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '10500000000000000000',
-        102230205
+        102231205
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '1400000000000000000',
-        102230206
+        102231206
       );
     `);
 
@@ -154,7 +154,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         0,
         404,
-        102230100,
+        102231100,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -162,7 +162,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         1,
         420,
-        102230101,
+        102231101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -170,7 +170,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         2,
         102,
-        102230102,
+        102231102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -178,7 +178,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         3,
         71,
-        102230103,
+        102231103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -186,7 +186,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         4,
         32,
-        102230104,
+        102231104,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -194,7 +194,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         5,
         5,
-        102230105,
+        102231105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -202,7 +202,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         101,
         6,
         1,
-        102230106,
+        102231106,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -210,7 +210,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         0,
         301,
-        102230200,
+        102231200,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -218,7 +218,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         1,
         760,
-        102230201,
+        102231201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -226,7 +226,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         2,
         211,
-        102230202,
+        102231202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -234,7 +234,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         3,
         84,
-        102230203,
+        102231203,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -242,7 +242,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         4,
         42,
-        102230204,
+        102231204,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -250,7 +250,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         5,
         15,
-        102230205,
+        102231205,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -258,7 +258,7 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         102,
         6,
         2,
-        102230206,
+        102231206,
         '${currentDateTime}',
         '${currentDateTime}'
       );

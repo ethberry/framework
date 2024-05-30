@@ -17,6 +17,7 @@ import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/my
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
+import { IpfsTokenPanel } from "./ipfs-token-panel";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -53,6 +54,7 @@ export const Erc721Token: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
+              <IpfsTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
               <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />

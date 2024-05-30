@@ -7,9 +7,15 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { IContract, IContractSearchDto } from "@framework/types";
+import {
+  BusinessType,
+  IContract,
+  IContractSearchDto,
+  ContractFeatures,
+  ContractStatus,
+  Erc721ContractFeatures,
+} from "@framework/types";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { ContractFeatures, ContractStatus, Erc721ContractFeatures } from "@framework/types";
 
 import { Erc721ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -94,9 +100,13 @@ export const Erc721Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <></>
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
+          </Button>
+        )}
         <Erc721ContractDeployButton />
       </PageHeader>
 

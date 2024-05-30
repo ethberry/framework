@@ -98,6 +98,10 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         10100038001
       ), (
+        10100038002
+      ), (
+        10100038003
+      ), (
         201030101
       );
     `);
@@ -613,6 +617,30 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${simpleFormatting}',
         '${imagePath}/cuisses.png',
         10100038001,
+        0,
+        1,
+        'ACTIVE',
+        10380,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1038002,
+        'Pantaloons',
+        '${simpleFormatting}',
+        '${imagePath}/cuisses.png',
+        10100038002,
+        0,
+        1,
+        'ACTIVE',
+        10380,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1038003,
+        'Bra',
+        '${simpleFormatting}',
+        '${imagePath}/cuisses.png',
+        10100038003,
         0,
         1,
         'ACTIVE',

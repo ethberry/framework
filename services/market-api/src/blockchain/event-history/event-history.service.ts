@@ -104,6 +104,10 @@ export class EventHistoryService {
 
     queryBuilder.andWhere("history.parent_id IS NULL");
 
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
     if (eventTypes) {
       if (eventTypes.length === 1) {
         queryBuilder.andWhere("history.eventType = :eventType", {

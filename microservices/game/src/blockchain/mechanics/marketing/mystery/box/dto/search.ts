@@ -40,7 +40,7 @@ export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchD
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
-  public chainId: number;
+  public chainId: bigint;
 
   public templateIds: Array<number>;
   public mysteryBoxStatus: Array<MysteryBoxStatus>;

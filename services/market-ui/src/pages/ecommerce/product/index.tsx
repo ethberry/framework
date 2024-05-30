@@ -5,7 +5,7 @@ import { Box, Grid, Hidden, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
 import { formatItem } from "@framework/exchange";
-import { IProduct } from "@framework/types";
+import type { IProduct } from "@framework/types";
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api-firebase";
 import { RichTextDisplay } from "@gemunion/mui-rte";

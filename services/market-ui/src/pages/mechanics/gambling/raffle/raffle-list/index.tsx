@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import type { ISearchDto } from "@gemunion/types-collection";
@@ -19,7 +19,7 @@ export const RaffleList: FC = () => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "raffle"]} />
 
       <PageHeader message="pages.raffle-list.title" />
@@ -44,6 +44,6 @@ export const RaffleList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

@@ -27,12 +27,13 @@ import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/d
 import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
 import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
 import { AssetPromoEntity } from "./blockchain/mechanics/meta/promo/promo.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { LootBoxEntity } from "./blockchain/mechanics/marketing/loot/box/box.entity";
 import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
 import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/rules.entity";
@@ -108,11 +109,12 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     DismantleEntity,
     AssetPromoEntity,
-    GradeEntity,
+    DiscreteEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     MergeEntity,
     RaffleRoundEntity,
+    LootBoxEntity,
     MysteryBoxEntity,
     WaitListListEntity,
     WaitListItemEntity,
@@ -149,7 +151,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
 };
 
 export default config;

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPredictionAnswerSearchDto } from "@framework/types";
+import type { IPredictionAnswerSearchDto } from "@framework/types";
 
 import { PredictionAnswerEntity } from "./answer.entity";
 

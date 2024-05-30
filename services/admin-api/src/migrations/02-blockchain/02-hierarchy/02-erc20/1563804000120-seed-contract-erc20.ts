@@ -154,6 +154,25 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         2,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        20201,
+        '${erc20TokenSimpleAddress}',
+        56,
+        'BEP Credits',
+        '${simpleFormatting}',
+        '${imagePath}/space_credit.png',
+        'BEP Credits',
+        'BEP20',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{}',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IClaim } from "../../marketing/claim/claim";
-import { IReferralRewardShare } from "./share";
+
+import type { IClaim } from "../../marketing";
+import type { IReferralRewardShare } from "./share";
 
 export interface IReferralClaim extends IIdDateBase {
   account: string;

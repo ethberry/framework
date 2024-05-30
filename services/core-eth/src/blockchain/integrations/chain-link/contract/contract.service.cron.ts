@@ -78,6 +78,12 @@ export class ChainLinkContractServiceCron {
             this.loggerService.error(e, ChainLinkContractServiceCron.name);
           }
         }),
+      ).then(res =>
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason, ChainLinkContractServiceCron.name);
+          }
+        }),
       );
     }
   }

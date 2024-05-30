@@ -9,6 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import PauseABI from "@framework/abis/pause/Pausable.json";
+import { shouldDisableByContractType } from "../../../../utils";
 
 export interface IPausableButtonProps {
   className?: string;
@@ -20,6 +21,7 @@ export interface IPausableButtonProps {
 export const PauseButton: FC<IPausableButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, isPaused, contractFeatures },
     disabled,
     variant,
@@ -45,7 +47,7 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
       message="form.buttons.pause"
       className={className}
       dataTestId="PauseButton"
-      disabled={disabled}
+      disabled={disabled || shouldDisableByContractType(contract)}
       variant={variant}
     />
   );

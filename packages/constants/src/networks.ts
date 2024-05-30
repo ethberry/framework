@@ -1,7 +1,7 @@
 export const networks = {
   "1": {
     order: 1,
-    chainName: "Ethereum",
+    chainName: "Ethereum Mainnet",
     chainId: 1,
     rpcUrls: [
       "https://main-rpc.linkpool.io",
@@ -17,19 +17,31 @@ export const networks = {
   },
   "5": {
     order: 2,
-    chainName: "Goerly",
+    chainName: "Ethereum Goerly",
     chainId: 5,
     rpcUrls: ["https://rpc.goerli.mudit.blog"],
     blockExplorerUrls: ["https://goerli.etherscan.io"],
     nativeCurrency: {
-      name: "GOR",
-      symbol: "GOR",
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+  },
+  "11155111": {
+    order: 9,
+    chainName: "Ethereum Sepolia",
+    chainId: 11155111,
+    rpcUrls: ["https://rpc.sepolia.org"],
+    blockExplorerUrls: ["https://sepolia.etherscan.io/"],
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
       decimals: 18,
     },
   },
   "56": {
     order: 3,
-    chainName: "BNB Chain",
+    chainName: "BNB Chain Mainnet",
     chainId: 56,
     rpcUrls: [
       "https://bsc-dataseed.binance.org",
@@ -64,7 +76,7 @@ export const networks = {
   },
   "137": {
     order: 5,
-    chainName: "Polygon",
+    chainName: "Polygon Mainnet",
     chainId: 137,
     rpcUrls: [
       "https://polygon-mainnet.public.blastapi.io",
@@ -81,7 +93,7 @@ export const networks = {
   },
   "80001": {
     order: 6,
-    chainName: "Mumbai",
+    chainName: "Polygon Mumbai",
     chainId: 80001,
     rpcUrls: [
       "https://rpc-mumbai.maticvigil.com",
@@ -97,37 +109,25 @@ export const networks = {
   },
   "10000": {
     order: 7,
-    chainName: "Gemunion",
+    chainName: "Gemunion Mainnet",
     chainId: 10000,
     rpcUrls: ["https://besu.gemunion.io"],
     blockExplorerUrls: ["https://besu-explorer.gemunion.io"],
     nativeCurrency: {
-      name: "BESU",
-      symbol: "BESU",
+      name: "GEM",
+      symbol: "GEM",
       decimals: 18,
     },
   },
   "10001": {
     order: 8,
-    chainName: "Besu",
+    chainName: "Gemunion Testnet",
     chainId: 10001,
     rpcUrls: ["http://127.0.0.1:8545"],
     blockExplorerUrls: ["http://localhost:8080"],
     nativeCurrency: {
-      name: "BESU",
-      symbol: "BESU",
-      decimals: 18,
-    },
-  },
-  "11155111": {
-    order: 9,
-    chainName: "Sepolia",
-    chainId: 11155111,
-    rpcUrls: ["https://rpc.sepolia.org"],
-    blockExplorerUrls: ["https://sepolia.etherscan.io/"],
-    nativeCurrency: {
-      name: "SETH",
-      symbol: "SETH",
+      name: "GEM",
+      symbol: "GEM",
       decimals: 18,
     },
   },

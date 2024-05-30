@@ -3,7 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ContractStatus,
+  ModuleType,
+  ReferralProgramStatus,
+  TemplateStatus,
+  TokenType,
+} from "@framework/types";
 import { defaultChainId } from "@framework/constants";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -226,6 +233,17 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    // MODULE:REFERRAL PROGRAM
+    queryBuilder.leftJoinAndSelect(
+      "merchant.refLevels",
+      "referral_program",
+      "referral_program.level = :level AND referral_program.referralProgramStatus = :status",
+      {
+        level: 0,
+        status: ReferralProgramStatus.ACTIVE,
+      },
+    );
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",

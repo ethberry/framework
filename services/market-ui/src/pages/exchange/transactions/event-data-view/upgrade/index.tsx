@@ -7,7 +7,7 @@ import {
   ExchangeType,
   IAssetComponentHistory,
   IContract,
-  IExchangeGradeEvent,
+  IExchangeDiscreteEvent,
   TContractEventData,
 } from "@framework/types";
 
@@ -27,7 +27,7 @@ export interface IUpgradeDataViewProps {
 
 export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
   const { assets, contract, eventData } = props;
-  const { attribute, level } = eventData as IExchangeGradeEvent;
+  const { attribute, level } = eventData as IExchangeDiscreteEvent;
 
   return (
     <StyledDataViewWrapper>

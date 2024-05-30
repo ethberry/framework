@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsString, IsUrl } from "class-validator";
 
-import { IPhotoCreateDto } from "../interfaces";
+import type { IPhotoCreateDto } from "../interfaces";
 
 export class PhotoCreateDto implements IPhotoCreateDto {
   @ApiPropertyOptional()

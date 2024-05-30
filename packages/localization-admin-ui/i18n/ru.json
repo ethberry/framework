@@ -1,7 +1,7 @@
 {
   "alert": {
-    "allowanceErc20": "Вам необходимо разрешить токены ERC20 перед пополнением",
     "allowanceClaim": "Вам необходимо разрешить токены для контракта Contract Manager",
+    "allowanceErc20": "Вам необходимо разрешить токены ERC20 перед пополнением",
     "allowanceWarning": "Вы собираетесь разрешить все токены контракта",
     "craftItem": "Предметы для создания",
     "craftPrice": "Ингредиенты для создания",
@@ -11,7 +11,7 @@
     "knownError": "Ой! Мы знаем об этой проблеме и активно работаем над её исправлением. Спасибо за ваше терпение!",
     "mergeItem": "Предметы, получаемые после объединения",
     "mergePrice": "Токен для объединения и сжигания",
-    "minterRole": "После развертывания вам необходимо вручную предоставить роль MINTER_ROLE контракту билетов",
+    "minterRole": "После деплоя вам необходимо вручную предоставить роль MINTER_ROLE контракту билетов",
     "onlyIfUserExists": "Мы отправим приглашение только если пользователь с таким электронным адресом существует в системе",
     "randomChainlink": "Случайный Chain-Link VRF: Необходимо установить подписку и добавить в список потребителей!",
     "risk": "Вы делаете это на свой страх и риск!",
@@ -72,18 +72,18 @@
     "allowance": "Разрешение",
     "blacklist": "Добавить в черный список",
     "breedLimit": "Установить лимиты размножения",
+    "checkBalance": {
+      "depAmount": "Сумма депозита",
+      "stakeBalance": "Баланс стейкинга",
+      "title": "Балансы стейкинга",
+      "token": "Токен"
+    },
     "claim": "Клейм",
     "confirmation": "Пожалуйста, подтвердите",
     "create": "Создать",
-    "checkBalance": {
-      "title": "Балансы стейкинга",
-      "token": "Токен",
-      "depAmount": "Сумма депозита",
-      "stakeBalance": "Баланс стейкинга"
-    },
     "currentBalance": "Баланс: {value}",
     "delete": "Удалить `{title}`?",
-    "deploy": "Развернуть",
+    "deploy": "Деплой",
     "edit": "Редактировать",
     "fund": "Финансировать",
     "grantRole": "Предоставить роль",
@@ -92,12 +92,12 @@
     "listenerRemove": "Удалить ETH Listener",
     "lotteryRoundEnd": "Завершить раунд лотереи",
     "lotteryRoundStart": "Начать раунд лотереи",
-    "mintBox": "Минт Мистерибокса",
+    "mintBox": "Минт Мистической коробки",
     "mintToken": "Минт токена",
-    "ponziBalance": "Снять балансы Понци",
     "paymentSplitterBalances": "Снять с баланса",
-    "paymentSplitterWallet": "Текущий кошелек {wallet}",
     "paymentSplitterShares": "имеет {currentShare} из {total} долей",
+    "paymentSplitterWallet": "Текущий кошелек {wallet}",
+    "ponziBalance": "Снять балансы Понци",
     "raffleRoundEnd": "Завершить раунд розыгрыша",
     "raffleRoundStart": "Начать раунд розыгрыша",
     "renounceRole": "Отказаться от роли",
@@ -123,6 +123,7 @@
   "enums": {
     "LEVEL": {
       "1": "1",
+      "10": "10",
       "2": "2",
       "3": "3",
       "4": "4",
@@ -130,8 +131,7 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9",
-      "10": "10"
+      "9": "9"
     },
     "RARITY": {
       "COMMON": "Обычный",
@@ -177,26 +177,6 @@
       "WrongToken": "Токен неверный",
       "ZeroBalance": "Баланс нулевой"
     },
-    "chainId": {
-      "1": "ETHEREUM",
-      "5": "GOERLI",
-      "56": "BINANCE",
-      "97": "BINANCE (тестнет)",
-      "137": "POLYGON",
-      "10000": "GEMUNION",
-      "10001": "BESU",
-      "13371": "IMMUTABLE zkEVM",
-      "13377": "GEMUNION",
-      "13378": "BESU",
-      "13473": "IMMUTABLE zkEVM (тестнет)",
-      "42161": "ARBITRUM",
-      "80001": "MUMBAI (тестнет)",
-      "11155111": "SEPOLIA"
-    },
-    "referralProgramStatus": {
-      "ACTIVE": "Активный",
-      "INACTIVE": "Неактивный"
-    },
     "claimStatus": {
       "EXPIRED": "Истекший",
       "NEW": "Новый",
@@ -210,13 +190,13 @@
       "ERC20OWNER": "Владелец ERC20",
       "EXTERNAL": "Внешний",
       "GENES": "Гены",
-      "MYSTERYBOX": "Мистерибокс",
+      "MYSTERYBOX": "Мистическая коробка",
       "NATIVE": "Нативный",
       "PAUSABLE": "Приостановленный",
       "RANDOM": "Случайный",
       "REFERRAL": "Линейная реферальная программа",
       "RENTABLE": "Арендуемый",
-      "SOULBOUND": "Привязанный к душе",
+      "SOULBOUND": "Непередаваемые NFT",
       "SPLITTER": "Разделитель платежей",
       "STABLE_COIN": "Стейблкоин",
       "STATEHASH": "Хеш состояния",
@@ -246,20 +226,20 @@
       "GENES": "Гены",
       "GRADED": "Грейд",
       "LINEAR": "Линейный",
+      "LINEAR_REFERRAL": "Линейная реферальная программа",
       "LOTTERY": "Лотерейный билет",
       "PAUSABLE": "Приостановленный",
       "RAFFLE": "Билет розыгрыша",
       "RANDOM": "Случайный",
       "REFERRAL": "Реферальный",
-      "LINEAR_REFERRAL": "Линейная реферальная программа",
       "RENTABLE": "Арендуемый",
       "SIMPLE": "Простой",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Простой Стейкинг",
-      "SOULBOUND": "Привязанный к Душе",
-      "SOULBOUND_VOTES": "Привязанный к Душе + Голосование",
+      "SOULBOUND": "Непередаваемые NFT",
+      "SOULBOUND_VOTES": "Непередаваемые NFT + Голосование",
       "SPLITTER": "Разделитель",
       "STATEHASH": "Хеш Состояния",
-      "WHITELIST": "Белый Список"
+      "WHITELIST": "Белый Список",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Простой Стейкинг"
     },
     "craftStatus": {
       "ACTIVE": "Активный",
@@ -372,7 +352,7 @@
       "Blacklisted": "В Черном Списке",
       "Breed": "Разведение",
       "Claim": "Клейм",
-      "CollectionDeployed": "Развертывание Коллекции",
+      "CollectionDeployed": "Деплой Коллекции",
       "ConsecutiveTransfer": "Последовательная Передача",
       "Craft": "Крафт",
       "DefaultAdminDelayChangeCanceled": "Отмена Изменения Задержки Администратора по Умолчанию",
@@ -380,28 +360,28 @@
       "DefaultAdminTransferCanceled": "Отмена Передачи Администратора по Умолчанию",
       "DefaultAdminTransferScheduled": "Запланирована Передача Администратора по Умолчанию",
       "DefaultRoyaltyInfo": "Информация о Роялти по Умолчанию",
+      "DepositFinish": "Завершение Депозита",
       "DepositPenalty": "Штраф Депозита",
+      "DepositReturn": "Возврат Депозита",
       "DepositStart": "Начало Депозита",
       "DepositWithdraw": "Снятие Депозита",
-      "DepositFinish": "Завершение Депозита",
-      "DepositReturn": "Возврат Депозита",
-      "Dismantle": "Разборка (Dismantle)",
-      "ERC1155TokenDeployed": "Развертывание Токена ERC1155",
+      "Dismantle": "Разборка",
+      "ERC1155TokenDeployed": "Деплой Токена ERC1155",
       "ERC20PaymentReleased": "Выпущен Платеж ERC20",
       "ERC20Released": "Выпущен ERC20",
-      "ERC20TokenDeployed": "Развертывание Токена ERC20",
-      "ERC721TokenDeployed": "Развертывание Токена ERC721",
-      "ERC998TokenDeployed": "Развертывание Токена ERC998",
+      "ERC20TokenDeployed": "Деплой Токена ERC20",
+      "ERC721TokenDeployed": "Деплой Токена ERC721",
+      "ERC998TokenDeployed": "Деплой Токена ERC998",
       "EcommercePurchase": "Покупка в Электронной Коммерции",
       "EtherReceived": "Получен Эфир",
       "EtherReleased": "Выпущен Эфир",
       "Lend": "Займ",
       "LevelUp": "Повышение Уровня",
-      "LotteryDeployed": "Развертывание Лотереи",
-      "Merge": "Объединение (Merge)",
+      "LotteryDeployed": "Деплой Лотереи",
+      "Merge": "Объединение",
       "MetadataUpdate": "Обновление Метаданных",
       "MintRandom": "Случайный Минт",
-      "MysteryBoxDeployed": "Развертывание Мистерибокса",
+      "MysteryBoxDeployed": "Деплой Мистической коробки",
       "OwnershipTransferStarted": "Начало Передачи Владения",
       "OwnershipTransferred": "Передано Владение",
       "Paused": "Приостановлено",
@@ -410,14 +390,14 @@
       "PaymentEthSent": "Отправлен Платеж в Эфире",
       "PaymentReceived": "Получен Платеж",
       "PaymentReleased": "Выпущен Платеж",
-      "PaymentSplitterDeployed": "Развертывание Разделителя Платежей",
-      "PonziDeployed": "Развертывание Пирамиды",
+      "PaymentSplitterDeployed": "Деплой Разделителя Платежей",
+      "PonziDeployed": "Деплой Пирамиды",
       "Prize": "Приз",
       "Purchase": "Покупка",
       "PurchaseLottery": "Покупка Лотереи",
-      "PurchaseMysteryBox": "Покупка Мистерибокса",
+      "PurchaseMysteryBox": "Покупка Мистической коробки",
       "PurchaseRaffle": "Покупка Розыгрыша",
-      "RaffleDeployed": "Развертывание Розыгрыша",
+      "RaffleDeployed": "Деплой Розыгрыша",
       "RandomWordsRequested": "Запрошены Случайные Слова",
       "RandomnessRequest": "Запрос Случайности",
       "RandomnessRequestId": "ID Запроса Случайности",
@@ -439,7 +419,7 @@
       "RuleCreatedP": "Создано Правило P",
       "RuleUpdated": "Обновлено Правило",
       "SetMaxChild": "Установлен Максимальный Потомок",
-      "StakingDeployed": "Развертывание Стейкинга",
+      "StakingDeployed": "Деплой Стейкинга",
       "StakingFinish": "Завершение Стейкинга",
       "StakingStart": "Начало Стейкинга",
       "StakingWithdraw": "Снятие со Стейкинга",
@@ -454,14 +434,14 @@
       "UnBlacklisted": "Снят с Черного Списка",
       "UnWhitelisted": "Снят с Белого Списка",
       "UnWhitelistedChild": "Снят с Белого Списка (Потомок)",
-      "UnpackMysteryBox": "Распаковка Мистерибокса",
+      "UnpackMysteryBox": "Распаковка Мистической коробки",
       "UnpackWrapper": "Распаковка Обертки",
       "Unpaused": "Возобновлено",
       "UpdateUser": "Обновление Пользователя",
       "Upgrade": "Обновление",
-      "VestingDeployed": "Развертывание Вестинга",
+      "VestingDeployed": "Деплой Вестинга",
       "VrfSubscriptionSet": "Установлена Подписка Vrf",
-      "WaitListDeployed": "Развертывание Списка Ожидания",
+      "WaitListDeployed": "Деплой Списка Ожидания",
       "WaitListRewardClaimed": "Получена Награда из Списка Ожидания",
       "WaitListRewardSet": "Установлена Награда из Списка Ожидания",
       "Whitelisted": "В Белом Списке",
@@ -480,28 +460,28 @@
       "STRENGTH": "Сила",
       "WISDOM": "Мудрость"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "Экспоненциальный",
       "FLAT": "Фиксированный",
       "LINEAR": "Линейный"
     },
     "language": {
-      "AR": "\uD83C\uDDE6\uD83C\uDDEA Арабский",
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 Английский",
-      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Индонезийский",
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
-      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Украинский"
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
     "listenerType": {
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "MYSTERYBOX": "Мистерибокс",
+      "MYSTERYBOX": "Мистическая коробка",
       "NATIVE": "Нативный",
       "PONZI": "Понци",
       "STAKING": "Стейкинг",
@@ -551,6 +531,10 @@
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный"
     },
+    "referralProgramStatus": {
+      "ACTIVE": "Активный",
+      "INACTIVE": "Неактивный"
+    },
     "rentStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный",
@@ -592,7 +576,7 @@
       "ERC20": "ERC20",
       "ERC721": "ERC721",
       "ERC998": "ERC998",
-      "MYSTERY": "Мистерибокс",
+      "MYSTERY": "Мистическая коробка",
       "NATIVE": "Нативный",
       "NONE": "Нет"
     },
@@ -630,13 +614,13 @@
       "baseTokenURI": "Базовый URI Токена",
       "blacklist": "Черный список",
       "cancel": "Отменить",
-      "claim": "Клейм",
       "checkBalance": "Проверить Балансы",
+      "claim": "Клейм",
       "collectionUpload": "Загрузить коллекцию",
       "create": "Создать",
       "deactivate": "Деактивировать",
       "delete": "Удалить",
-      "deploy": "Развернуть",
+      "deploy": "Деплой",
       "disconnect": "Отключить",
       "edit": "Редактировать",
       "empty": "\uFEFF",
@@ -648,6 +632,7 @@
       "grantRole": "Предоставить Роль",
       "hideFilters": "Скрыть фильтры",
       "invite": "Пригласить",
+      "saveToIpfs": "Сохранить в IPFS",
       "load": "Загрузить",
       "loaded": "Готово",
       "login": "Войти",
@@ -767,8 +752,8 @@
       "from": "От",
       "fromBlock": "Слушать лог с блока №",
       "gender": "Пол",
-      "gradeStatus": "Статус",
-      "gradeStrategy": "Стратегия Грейда",
+      "discreteStatus": "Статус",
+      "discreteStrategy": "Стратегия Грейда",
       "growthRate": "Темп роста",
       "id": "ID",
       "imageUrl": "Аватар",
@@ -795,7 +780,7 @@
       "metadata": "Атрибуты",
       "monthlyRelease": "Ежемесячный выпуск",
       "mysteryBoxStatus": "Статус",
-      "mysteryId": "Мистерибокс",
+      "mysteryId": "Мистическая коробка",
       "name": "Имя",
       "number": "Номер",
       "numbers": "Номера",
@@ -835,9 +820,9 @@
       "recentDeposits": "Недавние депозиты",
       "recipient": "Получатель",
       "recurrent": "Повторяющееся?",
+      "referral": "Реферал",
       "referralProgramStatus": "Статус программы",
       "referrer": "Реферер",
-      "referral": "Реферал",
       "rentStatus": "Статус",
       "reward": "Награда",
       "role": "Роль",
@@ -911,7 +896,7 @@
       "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Корень",
-      "chainId": "ChainId",
+      "chainId": "Сеть",
       "childId": "Контракт",
       "childIds": "Контракт",
       "city": "Гамбург",
@@ -949,7 +934,7 @@
       "merchantId": "Гордон Фримен",
       "metadata": "{}",
       "monthlyRelease": "10%",
-      "mysteryId": "Мистерибокс",
+      "mysteryId": "Мистическая коробка",
       "name": "Розовая пыль",
       "number": "100500",
       "owner": "0x...",
@@ -971,9 +956,9 @@
       "productStatus": "Статус",
       "query": "Поиск...",
       "rarity": "Легендарный",
-      "referral": "Реферал",
       "rarityMultiplier": "0",
       "recipient": "Получатель",
+      "referral": "Реферал",
       "roundIds": "Раунд",
       "royalty": "1",
       "search": "Поиск...",
@@ -1023,8 +1008,8 @@
       "patternMismatch": "{label} не соответствует ожидаемому паттерну",
       "rangeOverflow": "{label} слишком большой",
       "rangeUnderflow": "{label} слишком маленький",
-      "stepMismatch": "{label} недействителен",
       "refProgramTotal": "Общая сумма недействительна. Должна быть суммой всех уровней",
+      "stepMismatch": "{label} недействителен",
       "tooLong": "{label} слишком длинный",
       "tooShort": "{label} слишком короткий",
       "totalMismatch": "Общая сумма недействительна. Должна быть суммой всех уровней",
@@ -1093,10 +1078,10 @@
       "template": {
         "title": "Шаблоны Клеймов"
       },
+      "title": "Клейм",
       "token": {
         "title": "Токены Клеймов"
-      },
-      "title": "Клейм"
+      }
     },
     "coin-gecko": {
       "ohlc": "OHLC",
@@ -1176,12 +1161,12 @@
         "dispenser": "Диспенсер",
         "grade": "Грейд",
         "lottery": "Лотерея",
-        "mystery": "Мистерибокс",
+        "mystery": "Мистическая коробка",
         "payment-splitter": "Разделение платежей",
         "ponzi": "Понци",
+        "prediction": "Прогноз",
         "promo": "Промо",
         "raffle": "Розыгрыш",
-        "prediction": "Прогноз",
         "recipes": "Рецепты",
         "referral": "Реферальная система",
         "rent": "Аренда",
@@ -1217,14 +1202,14 @@
     },
     "erc20": {
       "contracts": {
-        "title": "ERC20 Контракты"
+        "title": "Контракты ERC20"
       },
       "title": "ERC20"
     },
     "erc721": {
       "contracts": {
         "royalty": "Роялти",
-        "title": "ERC721 Контракты"
+        "title": "Контракты ERC721"
       },
       "templates": {
         "title": "Шаблоны ERC721"
@@ -1251,7 +1236,7 @@
       }
     },
     "grade": {
-      "title": "Правила Грейда (Grade)"
+      "title": "Правила Грейда"
     },
     "guest": {
       "confirmation": "Пожалуйста, проверьте ваш почтовый ящик, чтобы подтвердить вашу электронную почту.",
@@ -1321,17 +1306,17 @@
     },
     "mystery": {
       "boxContent": {
-        "title": "Содержимое Мистерибокса"
+        "title": "Содержимое Мистических коробок"
       },
       "boxes": {
-        "title": "Мистерибоксы"
+        "title": "Мистические коробок"
       },
       "contracts": {
-        "title": "Мистери Контракты"
+        "title": "Контракты Мистических коробок"
       },
-      "title": "Мистери",
+      "title": "Мистические коробки",
       "tokens": {
-        "title": "Мистери Токены"
+        "title": "Мистические Токены"
       }
     },
     "native": {
@@ -1387,6 +1372,18 @@
       },
       "title": "Понци"
     },
+    "prediction": {
+      "answers": {
+        "title": "Ответы"
+      },
+      "contracts": {
+        "title": "Контракты"
+      },
+      "questions": {
+        "title": "Вопросы"
+      },
+      "title": "Прогноз"
+    },
     "productType": {
       "description": "Тарифные Планы",
       "dialog": {
@@ -1404,13 +1401,6 @@
         "empty": "У вас пока нет адресов",
         "inactive": "неактивный"
       },
-      "tabs": {
-        "addresses": "Адреса",
-        "general": "Общее",
-        "notifications": "Уведомления",
-        "subscriptions": "Подписки",
-        "settings": "Настройки"
-      },
       "settings": {
         "wallet": {
           "attach": "Прикрепить",
@@ -1418,6 +1408,13 @@
           "detach": "Открепить",
           "title": "Мой кошелек"
         }
+      },
+      "tabs": {
+        "addresses": "Адреса",
+        "general": "Общее",
+        "notifications": "Уведомления",
+        "settings": "Настройки",
+        "subscriptions": "Подписки"
       },
       "title": "Профиль"
     },
@@ -1445,18 +1442,6 @@
         "title": "Токены"
       }
     },
-    "prediction": {
-      "contracts": {
-        "title": "Контракты"
-      },
-      "questions": {
-        "title": "Вопросы"
-      },
-      "title": "Прогноз",
-      "answers": {
-        "title": "Ответы"
-      }
-    },
     "ratePlan": {
       "alwaysIncluded": {
         "dispenser": "Массовая передача токенов",
@@ -1466,48 +1451,60 @@
         "title": "Всегда включено"
       },
       "bronze": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "5 контрактов ERC1155",
         "erc20": "1 контракт ERC20",
         "erc721": "5 контрактов ERC721",
-        "grade": "Грейд (Grade)",
-        "mystery": "Мистерибокс",
+        "grade": "Грейд",
+        "loot": "0 Лут Боксов",
+        "mystery": "0 Мистери Боксов",
+        "raffle": "Розыгрыш",
+        "staking": "Стейкинг",
         "title": "Бронза",
-        "vesting": "1000 контрактов на вестинг"
+        "vesting": "100 контрактов на вестинг",
+        "waitList": "Список ожидания"
       },
       "contactViaTelegram": "Связаться через Telegram",
       "gold": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "25 контрактов ERC1155",
         "erc20": "5 контрактов ERC20",
         "erc721": "25 контрактов ERC721",
-        "grade": "Грейд (Grade)",
-        "mystery": "Мистерибокс",
+        "grade": "Грейд",
+        "loot": "10 Лут Боксов",
+        "mystery": "10 Мистери Боксов",
+        "raffle": "Розыгрыш",
+        "staking": "Стейкинг",
         "title": "Золото",
-        "vesting": "5000 контрактов на вестинг"
+        "vesting": "500 контрактов на вестинг",
+        "waitList": "Список ожидания"
       },
       "month": "месяц",
       "onDemand": {
-        "raffle": "Розыгрыш (Raffle)",
+        "raffle": "Розыгрыш",
         "staking": "Стейкинг",
         "title": "По требованию",
-        "waitList": "Список ожидания (Wait list)"
+        "waitList": "Список ожидания"
       },
       "silver": {
-        "claim": "Клейм (Claim)",
-        "craft": "Крафт (Craft)",
+        "claim": "Клейм",
+        "craft": "Крафт",
         "disperse": "Массовая транзакция",
         "erc1155": "10 контрактов ERC1155",
         "erc20": "1 контракт ERC20",
         "erc721": "10 контрактов ERC721",
-        "grade": "Грейд (Grade)",
-        "mystery": "Мистерибокс",
+        "grade": "Грейд",
+        "loot": "5 Лут Боксов",
+        "mystery": "5 Мистери Боксов",
+        "raffle": "Розыгрыш",
+        "staking": "Стейкинг",
         "title": "Серебро",
-        "vesting": "3000 контрактов на Вестинг"
+        "vesting": "300 контрактов на Вестинг",
+        "waitList": "Список ожидания"
       },
       "title": "Тарифные Планы"
     },
@@ -1515,17 +1512,17 @@
       "craft": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Крафта (Craft)"
+        "title": "Рецепты Крафта"
       },
       "dismantle": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Разборки (Dismantle)"
+        "title": "Рецепты Разборки"
       },
       "merge": {
         "activate": "Активировать правило",
         "deactivate": "Деактивировать правило",
-        "title": "Рецепты Объединения (Merge)"
+        "title": "Рецепты Объединения"
       },
       "title": "Рецепты"
     },
@@ -1536,22 +1533,22 @@
       "chart": {
         "title": "График"
       },
-      "tree": {
-        "title": "Дерево Рефералов"
-      },
       "leaderboard": {
         "title": "Таблица Лидеров"
       },
       "program": {
-        "total": "Всего",
         "level": "Уровень {level}",
         "levels": "Уровни Реферальной Программы",
-        "title": "Программа"
+        "title": "Программа",
+        "total": "Всего"
       },
       "report": {
         "title": "Отчет"
       },
-      "title": "Реферальная Программа"
+      "title": "Реферальная Программа",
+      "tree": {
+        "title": "Дерево Рефералов"
+      }
     },
     "rent": {
       "title": "Аренда"
@@ -1627,7 +1624,7 @@
     "created": "Успешно создано",
     "declined": "Отклонено!",
     "deleted": "Успешно удалено",
-    "deployed": "Успешно развернуто",
+    "deployed": "Деплой успешно завершен",
     "duplicateAccount": "Дубликат аккаунта",
     "duplicateEmail": "Пользователь с этим электронным адресом уже зарегистрирован",
     "email": "Электронное письмо успешно отправлено.",

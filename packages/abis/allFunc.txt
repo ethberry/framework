@@ -12,7 +12,8 @@ deployERC20Token
 deployERC721Token
 deployERC998Token
 deployLottery
-deployMysterybox
+deployMysteryBox
+deployLootBox
 deployPaymentSplitter
 deployPonzi
 deployRaffle

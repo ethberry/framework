@@ -1,16 +1,17 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 import { formatPriceHistory } from "@framework/exchange";
-import { ContractEventType, IEventHistoryReport, IExchangePurchaseEvent } from "@framework/types";
+import { ContractEventType, IExchangePurchaseEvent, IMarketplaceReport } from "@framework/types";
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
 
-export interface IEventDataViewProps {
-  row: IEventHistoryReport;
+export interface IMarketplaceReportDataViewProps {
+  row: IMarketplaceReport;
 }
 
-export const ReportDataView: FC<IEventDataViewProps> = props => {
+export const MarketplaceReportDataView: FC<IMarketplaceReportDataViewProps> = props => {
   const {
     row: { eventData, eventType, items, price, transactionHash },
   } = props;
@@ -44,9 +45,14 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
               <FormattedMessage id={`enums.eventDataLabel.token`} />:
             </Typography>
             <Box sx={{ ml: 1 }}>
-              <Box>
-                <Typography variant="body1">{itemAsset?.token?.tokenId}</Typography>
-              </Box>
+              <Typography variant="body1">
+                <Link
+                  component={RouterLink}
+                  to={`/${itemAsset?.token?.template?.contract?.contractType}/tokens/${itemAsset?.token?.id}`}
+                >
+                  #{itemAsset?.token?.tokenId}
+                </Link>
+              </Typography>
             </Box>
           </Box>
           {/* ITEM */}

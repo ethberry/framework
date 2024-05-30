@@ -24,6 +24,7 @@ export interface IAllowanceButtonProps {
 export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, contractType, decimals },
     disabled,
     variant,
@@ -77,9 +78,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         className={className}
         dataTestId="AllowanceButton"
         disabled={
-          disabled ||
-          shouldDisableByContractType(props.contract) ||
-          contractFeatures.includes(ContractFeatures.SOULBOUND)
+          disabled || shouldDisableByContractType(contract) || contractFeatures.includes(ContractFeatures.SOULBOUND)
         }
         variant={variant}
       />

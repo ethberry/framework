@@ -34,6 +34,7 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
     isArray: true,
   })
   @IsOptional()
+  @IsArray({ message: "typeMismatch" })
   @Transform(({ value }) => value as Array<TokenType>)
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public contractType: Array<TokenType>;

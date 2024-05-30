@@ -1,15 +1,15 @@
 import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
@@ -24,6 +24,7 @@ export interface IMysteryBoxMintButtonProps {
 export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId },
     disabled,
     variant,
@@ -47,12 +48,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       mintBoxERC721MysteryBoxBlacklistABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysteryBox!.item!.components.map(item => ({
-      tokenType: Object.values(TokenType).indexOf(item.tokenType),
-      token: item.contract!.address,
-      tokenId: item.templateId,
-      amount: item.amount,
-    }));
+    const items = convertDatabaseAssetToChainAsset(values.mysteryBox!.item!.components);
 
     return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
@@ -71,7 +67,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <MintMysteryBoxDialog

@@ -3,7 +3,7 @@ import { IsEnum } from "class-validator";
 
 import { ProductStatus } from "@framework/types";
 
-import { IProductUpdateDto } from "../interfaces";
+import type { IProductUpdateDto } from "../interfaces";
 import { ProductCreateDto } from "./create";
 
 export class ProductUpdateDto extends ProductCreateDto implements IProductUpdateDto {

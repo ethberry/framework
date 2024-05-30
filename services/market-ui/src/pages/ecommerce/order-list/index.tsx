@@ -14,6 +14,7 @@ import { OrderItem } from "./item";
 import { OrderSearchForm } from "./form";
 import { parseDateRange, stringifyDateRange } from "./utils";
 
+// @ts-ignore
 export type TTransformedSearch = Omit<IOrderSearchDto, "dateRange"> & { dateRange: DateRange<Date> };
 
 export interface IOrderSearchDto extends IPaginationDto {

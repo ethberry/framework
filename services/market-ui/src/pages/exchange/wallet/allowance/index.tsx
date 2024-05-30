@@ -5,11 +5,13 @@ import { HowToVote } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
+import { getEmptyToken } from "@gemunion/mui-inputs-asset";
+import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { ListAction } from "@framework/styled";
-import { ContractFeatures, IContract, SystemModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, SystemModuleType, TokenType } from "@framework/types";
+import type { IContract, IUser } from "@framework/types";
 
 import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
 import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
@@ -30,12 +32,14 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
 
   const [exchange, setExchange] = useState<IContract | null>(null);
 
-  const { chainId } = useWeb3React();
+  const { chainId, isActive } = useWeb3React();
+  const user = useUser<IUser>();
+  const isUserAuthenticated = user.isAuthenticated();
 
   const { fn: getContractExchangeFn } = useApiCall(
     api =>
       api.fetchJson({
-        url: `/contracts/system`,
+        url: "/contracts/system",
         method: "POST",
         data: {
           contractModule: SystemModuleType.EXCHANGE,
@@ -94,6 +98,10 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   };
 
   const disabled = (contract || token?.template?.contract)?.contractFeatures.includes(ContractFeatures.SOULBOUND);
+
+  if (!isActive || !isUserAuthenticated) {
+    return null;
+  }
 
   return (
     <Fragment>

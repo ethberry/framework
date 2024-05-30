@@ -11,7 +11,8 @@ import { ContractFeatures, TokenType } from "@framework/types";
 import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
 
 import { shouldDisableByContractType } from "../../utils";
-import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
+import type { IRoyaltyDto } from "./dialog";
+import { RoyaltyEditDialog } from "./dialog";
 
 export interface IRoyaltyButtonProps {
   className?: string;
@@ -23,6 +24,7 @@ export interface IRoyaltyButtonProps {
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, royalty, contractType },
     disabled,
     variant,
@@ -62,9 +64,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         className={className}
         dataTestId="RoyaltyButton"
         disabled={
-          disabled ||
-          shouldDisableByContractType(props.contract) ||
-          contractFeatures.includes(ContractFeatures.SOULBOUND)
+          disabled || shouldDisableByContractType(contract) || contractFeatures.includes(ContractFeatures.SOULBOUND)
         }
         variant={variant}
       />

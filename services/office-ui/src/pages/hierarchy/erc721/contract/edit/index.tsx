@@ -8,7 +8,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IContract } from "@framework/types";
-import { ContractStatus } from "@framework/types";
+import { ContractFeatures, ContractStatus } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { validationSchema } from "./validation";
@@ -65,9 +65,9 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
             symbol={symbol}
             address={address}
             baseTokenURI={baseTokenURI}
-            royalty={`${royalty / 100}%`}
             chainId={chainId}
             contractFeatures={contractFeatures}
+            {...(!contractFeatures.includes(ContractFeatures.SOULBOUND) && { royalty: `${royalty / 100}%` })}
           />
         ) : null
       }

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Avatar, Grid, List, ListItemAvatar, ListItemText } from "@mui/material";
+import { Avatar, Grid, ListItemAvatar, ListItemText } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";

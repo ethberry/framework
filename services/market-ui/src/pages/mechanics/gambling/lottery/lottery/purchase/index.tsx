@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { formatItem } from "@framework/exchange";
-import { IContract, ILotteryRound } from "@framework/types";
+import type { IContract, ILotteryRound } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../../components/common/interfaces";

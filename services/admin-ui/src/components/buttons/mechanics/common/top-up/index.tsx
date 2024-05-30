@@ -24,6 +24,7 @@ export interface ITopUpButtonProps {
 export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -82,7 +83,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
         message="form.buttons.topUp"
         className={className}
         dataTestId="TopUpButton"
-        disabled={disabled || shouldDisableByContractType(props.contract)}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <TopUpDialog

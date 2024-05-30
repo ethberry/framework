@@ -14,6 +14,7 @@ import {
   RmqProviderType,
   SignalEventType,
   TokenType,
+  EmailType,
 } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
@@ -34,6 +35,8 @@ export class RaffleRoundServiceEth {
     private readonly ethersSignerProvider: Wallet,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emailClientProxy: ClientProxy,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
@@ -232,12 +235,12 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    const ticketContractEntity = await this.tokenService.getToken(
+    const ticketTokenEntity = await this.tokenService.getToken(
       ticketId,
       raffleRoundEntity.ticketContract.address.toLowerCase(),
     );
 
-    if (!ticketContractEntity) {
+    if (!ticketTokenEntity) {
       throw new NotFoundException("ticketNotFound");
     }
 
@@ -249,25 +252,35 @@ export class RaffleRoundServiceEth {
     }
 
     // UPDATE PRIZE METADATA
-    Object.assign(ticketContractEntity.metadata, { PRIZE: amount });
-    await ticketContractEntity.save();
+    Object.assign(ticketTokenEntity.metadata, { PRIZE: amount });
+    await ticketTokenEntity.save();
 
-    await this.eventHistoryService.updateHistory(event, context, ticketContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, ticketTokenEntity.id);
 
     // NOTIFY
     await this.notificatorService.rafflePrize({
       round: raffleRoundEntity,
-      ticket: ticketContractEntity,
+      ticket: ticketTokenEntity,
       multiplier: amount,
       address,
       transactionHash,
     });
 
+    // NOTIFY SIGNAL SERVICE
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: account.toLowerCase(),
         transactionHash,
         transactionType: name,
+      })
+      .toPromise();
+
+    // NOTIFY EMAIL SERVICE
+    await this.emailClientProxy
+      .emit(EmailType.RAFFLE_PRIZE, {
+        merchant: raffleRoundEntity.contract.merchant,
+        round: raffleRoundEntity,
+        token: ticketTokenEntity,
       })
       .toPromise();
   }

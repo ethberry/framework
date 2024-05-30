@@ -6,8 +6,8 @@ import { SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ModuleType, TokenType } from "@framework/types";
+import type { ISignRaffleDto } from "@framework/types";
 
-import type { ISignRaffleDto } from "./interfaces";
 import { RaffleRoundService } from "../round/round.service";
 import { RaffleRoundEntity } from "../round/round.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
@@ -22,7 +22,7 @@ export class RaffleSignService {
   ) {}
 
   public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, contractId, chainId } = dto;
+    const { account, referrer = ZeroAddress, contractId } = dto;
 
     const raffleRoundEntity = await this.roundService.findCurrentRoundWithRelations(contractId);
 
@@ -33,7 +33,10 @@ export class RaffleSignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
+      await this.contractService.findOneOrFail({
+        contractModule: ModuleType.EXCHANGE,
+        chainId: raffleRoundEntity.contract.chainId,
+      }),
       account,
       {
         externalId: raffleRoundEntity.id,

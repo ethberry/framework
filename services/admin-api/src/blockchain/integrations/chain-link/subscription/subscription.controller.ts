@@ -26,7 +26,7 @@ export class ChainLinkSubscriptionController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("address", AddressPipe) address: string): Promise<Array<ChainLinkSubscriptionEntity>> {
     return this.chainLinkSubscriptionService.findAll(
-      { merchant: { wallet: address } },
+      { merchant: { wallet: address.toLowerCase() } },
       { relations: { merchant: true }, order: { vrfSubId: "ASC" } },
     );
   }

@@ -3,19 +3,19 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-export const MysteryboxInput: FC = () => {
+export const MysteryBoxInput: FC = () => {
   const contractId = useWatch({ name: "contractId" });
   const mysteryId = useWatch({ name: "mysteryId" });
   const form = useFormContext();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
-    form.setValue("mysterybox", option);
+    form.setValue("mysteryBox", option);
     form.setValue("mysteryId", option?.id ?? 0);
   };
 
   useEffect(() => {
     if (!mysteryId) {
-      form.setValue("mysterybox", null);
+      form.setValue("mysteryBox", null);
     }
   }, [mysteryId]);
 

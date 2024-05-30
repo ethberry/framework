@@ -25,13 +25,14 @@ import type { TContractManagerEventData } from "./contract-manager";
 import type { TStakingEvents } from "./mechanics/staking";
 import type { TLotteryEvents } from "./mechanics/lottery";
 import type { TPonziEvents } from "./mechanics/ponzi";
+import type { TLootEvents } from "./mechanics/loot";
 import type { TMysteryEvents } from "./mechanics/mystery";
 import type { TWrapperEvents } from "./mechanics/wrapper";
 import type { TErc4907Events } from "./extensions/erc4907";
-import type { TUpgradeEvents } from "./mechanics/grade";
+import type { TDiscreteEvents } from "./mechanics/discrete";
 import type { TRaffleEvents } from "./mechanics/raffle";
 import type { TWaitListEvents } from "./mechanics/waitlist";
-import { TBaseURIEvents } from "./extensions/base-uri";
+import type { TBaseURIEvents } from "./extensions/base-uri";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -72,6 +73,9 @@ export enum ContractEventType {
 
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper",
+
+  // MODULE:LOOT
+  UnpackLootBox = "UnpackLootBox",
 
   // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox",
@@ -127,16 +131,18 @@ export enum ContractEventType {
   // MODULE:RENTABLE
   UpdateUser = "UpdateUser",
   Lend = "Lend",
+  // MODULE:LOOT
+  PurchaseLootBox = "PurchaseLootBox",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   Upgrade = "Upgrade",
   // MODULE:WAITLIST
   WaitListRewardSet = "WaitListRewardSet",
   WaitListRewardClaimed = "WaitListRewardClaimed",
   // MODULE:BREEDING
   Breed = "Breed",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   LevelUp = "LevelUp",
   MetadataUpdate = "MetadataUpdate",
   BatchMetadataUpdate = "BatchMetadataUpdate",
@@ -222,6 +228,9 @@ export enum ContractEventSignature {
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper(uint256)",
 
+  // MODULE:LOOT
+  UnpackLootBox = "UnpackLootBox(address,uint256)",
+
   // MODULE:MYSTERY
   UnpackMysteryBox = "UnpackMysteryBox(address,uint256)",
 
@@ -282,10 +291,13 @@ export enum ContractEventSignature {
   // event LendMany(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
   Lend = "Lend(address,address,uint64,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[])",
   LendMany = "LendMany(address,address,uint64,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
+  // MODULE:LOOT
+  // event PurchaseLootBox(address account, uint256 externalId, Asset[] items, Asset[] price);
+  PurchaseLootBox = "PurchaseLootBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:MYSTERY
-  // event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
+  // event PurchaseMysteryBox(address account, uint256 externalId, Asset[] items, Asset[] price);
   PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
   Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",
   // MODULE:WAITLIST
@@ -296,7 +308,7 @@ export enum ContractEventSignature {
   // MODULE:BREEDING
   // event Breed(address from, uint256 externalId, Asset matron, Asset sire);
   Breed = "Breed(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   // event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
   LevelUp = "LevelUp(address,uint256,bytes32,uint256)",
   // MODULE:DISMANTLE
@@ -341,6 +353,7 @@ export enum ContractEventSignature {
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC1155TokenDeployed = "ERC1155TokenDeployed(address,uint256,(uint96,string,string))",
+  LootBoxDeployed = "LootBoxDeployed(address,uint256,(string,string,uint96,string,string))",
   MysteryBoxDeployed = "MysteryBoxDeployed(address,uint256,(string,string,uint96,string,string))",
   CollectionDeployed = "CollectionDeployed(address,uint256,(string,string,uint96,string,uint96,string))",
   PonziDeployed = "PonziDeployed(address,uint256,(address[],uint256[],string))",
@@ -370,6 +383,7 @@ export type TContractEventData =
 
   // mechanics
   | TVestingEvents
+  | TLootEvents
   | TMysteryEvents
   | TWrapperEvents
   | TStakingEvents
@@ -390,8 +404,8 @@ export type TContractEventData =
   // erc4907
   | TErc4907Events
 
-  // Upgrade
-  | TUpgradeEvents
+  // Discrete
+  | TDiscreteEvents
   // BASE URI
   | TBaseURIEvents
 
@@ -412,7 +426,7 @@ export interface IEventHistory extends IDeployable {
   assets?: Array<IAssetComponentHistory>;
 }
 
-export interface IEventHistoryReport extends IEventHistory {
+export interface IMarketplaceReport extends IEventHistory {
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
 }

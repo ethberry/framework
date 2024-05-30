@@ -1,4 +1,4 @@
-import { IProductPromo } from "@framework/types";
+import type { IProductPromo } from "@framework/types";
 
 export const emptyPromo = {
   title: "",

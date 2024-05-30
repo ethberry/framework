@@ -12,7 +12,7 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 // import { formatEther } from "@framework/exchange";
-import { IReferralReportSearchDto, IReferralEvents } from "@framework/types";
+import type { IReferralReportSearchDto, IReferralEvents } from "@framework/types";
 import { formatItem } from "@framework/exchange";
 
 // TODO rework to use assets
@@ -72,6 +72,18 @@ export const ReferralReport: FC = () => {
       minWidth: 360
     },
     {
+      field: "referral",
+      headerName: formatMessage({ id: "form.labels.referral" }),
+      sortable: false,
+      renderCell: (params: GridCellParams<any, string>) => {
+        return (
+          <AddressLink address={params.value} length={42} />
+        );
+      },
+      flex: 3,
+      minWidth: 360
+    },
+    {
       field: "item",
       headerName: formatMessage({ id: "form.labels.item" }),
       sortable: true,
@@ -103,7 +115,7 @@ export const ReferralReport: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
     }
@@ -150,9 +162,10 @@ export const ReferralReport: FC = () => {
         rows={rows.map((reward: IReferralEvents) => ({
           id: reward.id,
           referrer: reward.referrer,
+          referral: reward.account,
           item: formatItem(reward.item),
           price: formatItem(reward.price),
-          event: reward.history?.parent?.eventType,
+          event: reward.history?.eventType,
           contract: reward.contract!.title,
           createdAt: reward.createdAt,
         }))}

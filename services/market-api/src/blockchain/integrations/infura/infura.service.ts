@@ -36,7 +36,9 @@ export class InfuraService {
   }
 
   public async pinTemplate(templateEntity: TemplateEntity) {
-    const objectName = new URL(templateEntity.imageUrl).pathname.split("/").pop()!;
+    // URL - https://storage.googleapis.com/fw-static-page/FIREBASE_IMG/DO_NOT_REMOVE/[img_name].png
+    // NEED - FIREBASE_IMG/DO_NOT_REMOVE/[img_name].png (remove /fw-static-page/)
+    const objectName = new URL(templateEntity.imageUrl).pathname.split("/").slice(2).join("/");
     const pin = await this.infuraFirebaseService.pinFileToIPFS(objectName);
 
     Object.assign(templateEntity, { cid: pin });
@@ -46,7 +48,9 @@ export class InfuraService {
   }
 
   public async pinToken(tokenEntity: TokenEntity) {
-    const objectName = new URL(tokenEntity.template.imageUrl).pathname.split("/").pop()!;
+    // URL - https://storage.googleapis.com/fw-static-page/FIREBASE_IMG/DO_NOT_REMOVE/[img_name].png
+    // NEED - FIREBASE_IMG/DO_NOT_REMOVE/[img_name].png (remove /fw-static-page/)
+    const objectName = new URL(tokenEntity.template.imageUrl).pathname.split("/").slice(2).join("/");
     const pin = await this.infuraFirebaseService.pinJSONToIPFS(
       {
         title: tokenEntity.template.title,

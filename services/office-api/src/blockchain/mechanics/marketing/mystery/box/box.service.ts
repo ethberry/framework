@@ -1,9 +1,9 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
-import { MysteryBoxStatus, TemplateStatus } from "@framework/types";
+import { ContractFeatures, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -12,6 +12,8 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
+import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
 
 @Injectable()
 export class MysteryBoxService {
@@ -136,6 +138,10 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("components.template", "item_template");
 
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
+      contractType: TokenType.ERC1155,
+    });
+
     if (contractIds) {
       if (contractIds.length === 1) {
         queryBuilder.andWhere("template.contractId = :contractId", {
@@ -191,7 +197,7 @@ export class MysteryBoxService {
     dto: Partial<IMysteryBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, ...rest } = dto;
 
     const mysteryBoxEntity = await this.findOne(where, {
       join: {
@@ -219,10 +225,6 @@ export class MysteryBoxService {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
     }
 
-    if (item) {
-      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
-    }
-
     // SYNC UPDATE TEMPLATE
     const { title, description, imageUrl } = rest;
     await this.templateService.update(
@@ -246,6 +248,23 @@ export class MysteryBoxService {
 
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+
+    // Check contract of each item for Random feature,
+    const validationErrors: Array<INestedProperty> = [];
+    for (const [index, component] of item.components.entries()) {
+      const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId });
+
+      if (!tokenContract.contractFeatures.includes(ContractFeatures.RANDOM)) {
+        validationErrors.push({
+          property: `${index}.contractId`,
+          constraints: { isCustom: "randomFeature" },
+        });
+      }
+    }
+
+    if (validationErrors.length) {
+      throw new BadRequestException(createNestedValidationError(dto, "item.components", validationErrors));
     }
 
     const priceEntity = await this.assetService.create();

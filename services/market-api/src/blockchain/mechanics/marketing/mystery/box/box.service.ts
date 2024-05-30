@@ -4,7 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { defaultChainId } from "@framework/constants";
 import type { IMysteryBoxSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
 import { MysteryBoxEntity } from "./box.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -69,7 +69,7 @@ export class MysteryBoxService {
     });
 
     queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {
-      mysteryBoxStatus: TemplateStatus.ACTIVE,
+      mysteryBoxStatus: MysteryBoxStatus.ACTIVE,
     });
 
     // item or price template must be active

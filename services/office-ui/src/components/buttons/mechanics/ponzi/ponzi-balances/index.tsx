@@ -4,6 +4,7 @@ import { MonetizationOn } from "@mui/icons-material";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../../../utils";
 import { PonziBalanceDialog } from "./view";
 
 export interface IPonziBalanceButtonProps {
@@ -16,6 +17,7 @@ export interface IPonziBalanceButtonProps {
 export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address },
     disabled,
     variant,
@@ -43,7 +45,7 @@ export const PonziBalanceButton: FC<IPonziBalanceButtonProps> = props => {
         message="form.buttons.ponziBalance"
         className={className}
         dataTestId="PonziBalanceButton"
-        disabled={disabled}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <PonziBalanceDialog

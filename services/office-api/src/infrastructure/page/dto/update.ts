@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { PageStatus } from "@framework/types";
 
-import { IPageUpdateDto } from "../interfaces";
+import type { IPageUpdateDto } from "../interfaces";
 import { PageCreateDto } from "./create";
 
 export class PageUpdateDto extends PageCreateDto implements IPageUpdateDto {

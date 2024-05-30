@@ -128,7 +128,7 @@ export class AchievementsRuleService {
           const rules = await this.findAllWithRelations(contractId, eventType);
           if (rules.length) {
             // Check each rule condition
-            rules.map(async rule => {
+            const promises = rules.map(async rule => {
               // CHECK RULE TIMEFRAME
               // TODO fix format and check date
               const ruleStartTime = rule.startTimestamp;
@@ -168,6 +168,14 @@ export class AchievementsRuleService {
                 return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
               }
             });
+
+            await Promise.allSettled(promises).then(res =>
+              res.forEach(value => {
+                if (value.status === "rejected") {
+                  this.loggerService.error(value.reason, AchievementsRuleService.name);
+                }
+              }),
+            );
           }
         }
       }

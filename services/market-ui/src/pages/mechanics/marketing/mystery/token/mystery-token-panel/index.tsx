@@ -32,6 +32,7 @@ export const MysteryTokenPanel: FC<IMysteryTokenPanelProps> = props => {
         {/* @ts-ignore */}
         <StyledList component="ul">{formatItemHtmlList(token.template?.box?.item)}</StyledList>
       </CardContent>
+
       <CardActions>
         <MysteryWrapperUnpackButton token={token} onRefreshPage={onRefreshPage} />
       </CardActions>

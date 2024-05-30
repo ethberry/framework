@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsString, Min } from "class-validator";
 
-import { IProductItemParameterCreateDto } from "../interfaces";
+import type { IProductItemParameterCreateDto } from "../interfaces";
 
 export class ProductItemParameterCreateDto implements IProductItemParameterCreateDto {
   @ApiProperty({

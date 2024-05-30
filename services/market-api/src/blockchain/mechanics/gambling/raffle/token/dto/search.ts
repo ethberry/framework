@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
 
-import { IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleTokenSearchDto } from "@framework/types";
 
 export class RaffleTicketSearchDto extends PaginationDto implements IRaffleTokenSearchDto {
   @ApiPropertyOptional({

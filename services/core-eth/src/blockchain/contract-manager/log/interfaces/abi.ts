@@ -6,6 +6,7 @@ import ERC721FactoryFacetSol from "@framework/core-contracts/artifacts/contracts
 import ERC998FactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/ERC998FactoryFacet.sol/ERC998FactoryFacet.json";
 import ERC1155FactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/ERC1155FactoryFacet.sol/ERC1155FactoryFacet.json";
 import LotteryFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/LotteryFactoryFacet.sol/LotteryFactoryFacet.json";
+import LootBoxFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/LootBoxFactoryFacet.sol/LootBoxFactoryFacet.json";
 import MysteryBoxFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/MysteryBoxFactoryFacet.sol/MysteryBoxFactoryFacet.json";
 import PonziFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PonziFactoryFacet.sol/PonziFactoryFacet.json";
 import RaffleFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/RaffleFactoryFacet.sol/RaffleFactoryFacet.json";
@@ -22,6 +23,7 @@ export const ABI = new Interface([
       .concat(ERC998FactoryFacetSol.abi)
       .concat(ERC1155FactoryFacetSol.abi)
       .concat(LotteryFactoryFacetSol.abi)
+      .concat(LootBoxFactoryFacetSol.abi)
       .concat(MysteryBoxFactoryFacetSol.abi)
       .concat(PonziFactoryFacetSol.abi)
       .concat(RaffleFactoryFacetSol.abi)

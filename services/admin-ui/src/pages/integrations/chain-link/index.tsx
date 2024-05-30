@@ -73,6 +73,7 @@ export const ChainLink: FC = () => {
         balanceOfBasicTokenABI,
         web3Context.provider?.getSigner(),
       );
+
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         const value = await contract.callStatic.balanceOf(web3Context.account);
         return formatEther(value.toString(), values.decimals, values.symbol);
@@ -122,7 +123,9 @@ export const ChainLink: FC = () => {
   useEffect(() => {
     if (!merchantSubscriptions && !isLoading) {
       void fn().then((rows: Array<IChainLinkSubscription>) => {
-        const filtered = rows.filter(sub => sub.merchant.wallet === account && sub.chainId === profile.chainId);
+        const filtered = rows.filter(sub =>
+          sub.merchant.wallet === account ? account.toLowerCase() : account && sub.chainId === profile.chainId,
+        );
         setMerchantSubscriptions(filtered);
         setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
       });
@@ -185,7 +188,7 @@ export const ChainLink: FC = () => {
                 <FormattedMessage
                   id="pages.chain-link.balance"
                   values={{
-                    balance: formatEther(subData.balance.toString(), 18, "LINK"),
+                    balance: formatEther(subData ? subData.balance.toString() : "0", 18, "LINK"),
                   }}
                 />
               </Typography>
@@ -207,13 +210,13 @@ export const ChainLink: FC = () => {
             <Grid item xs={12}>
               <StyledDataGridPremium
                 pagination
+                paginationMode="server"
                 rowCount={subData.consumers.length}
                 pageSizeOptions={[5, 10, 25]}
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
                 loading={isLoading}
                 columns={columns}
-                rowThreshold={0}
                 rowHeight={40}
                 rows={subData.consumers.map(contract => ({
                   contract,
