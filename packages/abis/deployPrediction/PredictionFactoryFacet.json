@@ -12,18 +12,14 @@
         "type": "tuple"
       },
       {
-        "components": [
-          { "internalType": "address[]", "name": "payees", "type": "address[]" },
-          { "internalType": "uint256[]", "name": "shares", "type": "uint256[]" },
-          { "internalType": "string", "name": "contractTemplate", "type": "string" }
-        ],
-        "internalType": "struct PonziFactoryFacet.PonziArgs",
+        "components": [{ "internalType": "string", "name": "contractTemplate", "type": "string" }],
+        "internalType": "struct PredictionFactoryFacet.PredictionArgs",
         "name": "args",
         "type": "tuple"
       },
       { "internalType": "bytes", "name": "signature", "type": "bytes" }
     ],
-    "name": "deployPonzi",
+    "name": "deployPrediction",
     "outputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "function"
