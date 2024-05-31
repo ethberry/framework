@@ -17,6 +17,7 @@ export enum PredictionQuestionResult {
 }
 
 export interface IPredictionQuestion extends ISearchable {
+  contractId: number;
   merchantId: number;
   merchant?: IMerchant;
   price?: IAsset;
