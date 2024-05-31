@@ -3,15 +3,21 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { Collections, Inventory, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-import { RatePlanType } from "@framework/types";
+import { ChainLinkSupportedChains, RatePlanType } from "@framework/types";
 
 export const MysterySection: FC = () => {
   const { profile } = useUser<IUser>();
+  const { chainId = 0 } = useWeb3React();
 
   if (profile?.merchant?.ratePlan === RatePlanType.BRONZE) {
+    return null;
+  }
+
+  if (!ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

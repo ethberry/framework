@@ -3,11 +3,18 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
-import { BusinessType } from "@framework/types";
+import { BusinessType, ChainLinkSupportedChains } from "@framework/types";
 
 export const LotterySection: FC = () => {
+  const { chainId = 0 } = useWeb3React();
+
   if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
+    return null;
+  }
+
+  if (!ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

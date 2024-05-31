@@ -899,6 +899,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/ERC721/random/ERC721BlacklistDiscreteRandom.sol/ERC721BlacklistDiscreteRandom.json",
           chainId,
         );
+      case Erc721ContractTemplates.BLACKLIST_RENTABLE:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistRentable.sol/ERC721BlacklistRentable.json",
+          chainId,
+        );
       case Erc721ContractTemplates.BLACKLIST_DISCRETE_RENTABLE:
         return getContractABI(
           "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistDiscreteRentable.sol/ERC721BlacklistDiscreteRentable.json",

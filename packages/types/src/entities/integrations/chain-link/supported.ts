@@ -56,9 +56,5 @@ export enum ChainLinkSupportedChains {
   KROMA = 255,
   KROMA_SEPOLIA = 2358,
 
-  // BESU localhost and GEMUNION BESU
-  BESU = 10000,
-  GEMUNION_BESU = 10001,
-
   // SOLANA = null, not EVM
 }
