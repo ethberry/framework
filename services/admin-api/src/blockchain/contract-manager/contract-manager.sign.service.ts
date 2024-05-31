@@ -17,6 +17,7 @@ import type {
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
   IWalletContractDeployDto,
+  IPredictionContractDeployDto,
 } from "@framework/types";
 import {
   CollectionContractTemplates,
@@ -28,6 +29,7 @@ import {
   ModuleType,
   MysteryContractTemplates,
   PonziContractTemplates,
+  PredictionContractTemplates,
   StakingContractTemplates,
   TokenType,
 } from "@framework/types";
@@ -513,6 +515,53 @@ export class ContractManagerSignService {
           payees: dto.payees,
           shares: dto.shares,
           contractTemplate: Object.values(PonziContractTemplates).indexOf(dto.contractTemplate).toString(),
+        },
+      },
+    );
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:PREDICTION
+  public async prediction(dto: IPredictionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const { bytecode } = await this.getBytecodeByPredictionContractTemplate(dto, userEntity.chainId);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PREDICTION, null);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: ModuleType.CONTRACT_MANAGER,
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: await this.contractService
+          .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
+          .then(res => {
+            return res.address;
+          }),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "PredictionArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        PredictionArgs: [{ name: "contractTemplate", type: "string" }],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          contractTemplate: Object.values(PredictionContractTemplates).indexOf(dto.contractTemplate).toString(),
         },
       },
     );
@@ -1168,6 +1217,14 @@ export class ContractManagerSignService {
       default:
         throw new NotFoundException("templateNotFound");
     }
+  }
+
+  // MODULE:WAITLIST
+  public getBytecodeByPredictionContractTemplate(_dto: IPredictionContractDeployDto, chainId: number) {
+    return getContractABI(
+      "@framework/core-contracts/artifacts/contracts/Mechanics/Prediction/Prediction.sol/Prediction.json",
+      chainId,
+    );
   }
 
   // MODULE:WAITLIST

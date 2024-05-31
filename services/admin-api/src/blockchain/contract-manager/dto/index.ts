@@ -6,6 +6,7 @@ export * from "./erc1155";
 export * from "./lottery";
 export * from "./mystery";
 export * from "./ponzi";
+export * from "./prediction";
 // export * from "./raffle";
 export * from "./staking";
 export * from "./vesting";

@@ -28,6 +28,10 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
           isPrimary: true,
         },
         {
+          name: "contract_id",
+          type: "int",
+        },
+        {
           name: "title",
           type: "varchar",
         },
@@ -65,6 +69,12 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
         },
       ],
       foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
         {
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],

@@ -5,9 +5,10 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { IPredictionQuestion } from "@framework/types";
-import { PredictionQuestionStatus, TokenType } from "@framework/types";
+import { PredictionQuestionStatus, TokenType, ModuleType, ContractStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 export interface IRaffleEditDialogProps {
   open: boolean;
@@ -38,6 +39,15 @@ export const PredictionQuestionEditDialog: FC<IRaffleEditDialogProps> = props =>
       testId="PredictionQuestionEditForm"
       {...rest}
     >
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.PREDICTION],
+          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+        }}
+        readOnly={!!id}
+      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TemplateAssetInput

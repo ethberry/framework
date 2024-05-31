@@ -15,6 +15,7 @@ import {
   LotteryContractDeployDto,
   MysteryContractDeployDto,
   PonziContractDeployDto,
+  PredictionContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
 } from "./dto";
@@ -87,6 +88,15 @@ export class ContractManagerController {
   @Post("/ponzi")
   public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.ponzi(dto, userEntity);
+  }
+
+  // MODULE:PONZI
+  @Post("/prediction")
+  public prediction(
+    @Body() dto: PredictionContractDeployDto,
+    @User() userEntity: UserEntity,
+  ): Promise<IServerSignature> {
+    return this.contractManagerSignService.prediction(dto, userEntity);
   }
 
   // MODULE:WAITLIST

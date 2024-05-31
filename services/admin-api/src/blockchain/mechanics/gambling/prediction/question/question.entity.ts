@@ -9,9 +9,17 @@ import { PredictionQuestionResult, PredictionQuestionStatus } from "@framework/t
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { PredictionAnswerEntity } from "../answer/answer.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 
 @Entity({ schema: ns, name: "prediction_question" })
 export class PredictionQuestionEntity extends SearchableEntity implements IPredictionQuestion {
+  @Column({ type: "numeric" })
+  public contractId: number;
+
+  @JoinColumn()
+  @ManyToOne(_type => ContractEntity)
+  public contract: ContractEntity;
+
   @Column({ type: "int" })
   public merchantId: number;
 

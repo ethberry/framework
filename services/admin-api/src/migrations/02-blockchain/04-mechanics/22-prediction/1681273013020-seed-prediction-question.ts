@@ -23,6 +23,7 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.prediction_question (
         id,
+        contract_id,
         title,
         description,
         merchant_id,
@@ -32,6 +33,7 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
         updated_at
       ) VALUES (
         1,
+        12701,
         'Yes/No?',
         '${simpleFormatting}',
          1,
