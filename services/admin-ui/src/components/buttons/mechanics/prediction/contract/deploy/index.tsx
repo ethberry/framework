@@ -39,8 +39,6 @@ export const PredictionContractDeployButton: FC<IPredictionContractDeployButtonP
         },
         // values,
         {
-          payees: values.payees,
-          shares: values.shares,
           contractTemplate: Object.values(PredictionContractTemplates).indexOf(values.contractTemplate).toString(),
         },
         sign.signature,
@@ -55,8 +53,6 @@ export const PredictionContractDeployButton: FC<IPredictionContractDeployButtonP
         method: "POST",
         data: {
           contractTemplate: values.contractTemplate,
-          payees: values.shares.map(({ payee }: { payee: string }) => payee),
-          shares: values.shares.map(({ share }: { share: number }) => share),
         },
       },
       form,
