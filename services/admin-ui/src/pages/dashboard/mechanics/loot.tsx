@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-import { BusinessType, ChainLinkSupportedChains, RatePlanType } from "@framework/types";
+import { BusinessType, ChainLinkSupportedChains, NodeEnv, RatePlanType } from "@framework/types";
 
 export const LootSection: FC = () => {
   const { profile } = useUser<IUser>();
@@ -21,7 +21,7 @@ export const LootSection: FC = () => {
     return null;
   }
 
-  if (!ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 
