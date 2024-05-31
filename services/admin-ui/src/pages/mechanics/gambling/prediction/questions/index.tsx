@@ -53,7 +53,7 @@ export const PredictionQuestions: FC = () => {
       query: "",
       questionStatus: [],
     },
-    filter: ({ id, title, description, questionStatus, price }) =>
+    filter: ({ id, title, description, questionStatus, price, contractId }) =>
       id
         ? {
             title,
@@ -62,6 +62,7 @@ export const PredictionQuestions: FC = () => {
             price: cleanUpAsset(price),
           }
         : {
+            contractId,
             title,
             description,
             price: cleanUpAsset(price),

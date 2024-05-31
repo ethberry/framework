@@ -24,6 +24,8 @@ export const getListenerType = (contract: IContract) => {
       return ListenerType.STAKING;
     case ModuleType.PONZI:
       return ListenerType.PONZI;
+    case ModuleType.PREDICTION:
+      return ListenerType.PREDICTION;
     case ModuleType.WAIT_LIST:
       return ListenerType.WAIT_LIST;
     case ModuleType.LOTTERY:

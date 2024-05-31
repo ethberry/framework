@@ -330,6 +330,7 @@ import {
   SeedPonziPayees1663047650520,
   SeedPonziRulesErc20At1660436477220,
   SeedPonziRulesNativeAt1660436477210,
+  SeedContractPredictionAt1681273013000,
   SeedPredictionAnswer1681273013060,
   SeedPredictionQuestion1681273013020,
   SeedProduct1683724061410,
@@ -824,6 +825,7 @@ const config: PostgresConnectionOptions = {
     SeedGameBalance1686896594710,
 
     /* prediction */
+    SeedContractPredictionAt1681273013000,
     CreatePredictionQuestion1681273013010,
     SeedPredictionQuestion1681273013020,
     SeedAssetComponentQuestion1681273013040,

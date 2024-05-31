@@ -26,6 +26,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'MYSTERY',
         'PAYMENT_SPLITTER',
         'PONZI',
+        'PREDICTION',
         'RAFFLE',
         'STAKING',
         'TEST',
@@ -99,6 +100,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 24x - lottery
     // 25x - staking
     // 26x - ponzi
+    // 27x - prediction
 
     const table = new Table({
       name: `${ns}.contract`,

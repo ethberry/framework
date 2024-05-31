@@ -93,11 +93,11 @@ export const PredictionContract: FC = () => {
                   message="form.buttons.delete"
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
+                <TopUpButton contract={contract} />
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />
                 <RenounceRoleButton contract={contract} />
                 <AllowanceButton contract={contract} />
-                <TopUpButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
               </ListActions>
