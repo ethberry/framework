@@ -13,8 +13,12 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import type { IWaitListListAutocompleteDto, IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
+import type {
+  IWaitListListAutocompleteDto,
+  IWaitListListCreateDto,
+  IWaitListListUpdateDto,
+  IWaitListListSearchDto,
+} from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
@@ -38,7 +42,10 @@ export class WaitListListService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {
+  public async search(
+    dto: Partial<IWaitListListSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<WaitListListEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.waitListListEntityRepository.createQueryBuilder("waitlist");

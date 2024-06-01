@@ -25,8 +25,6 @@ export class AssetService {
     private readonly loggerService: LoggerService,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
-    @InjectRepository(AssetComponentEntity)
-    private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}

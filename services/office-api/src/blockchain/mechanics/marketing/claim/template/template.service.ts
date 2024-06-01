@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
@@ -20,9 +20,10 @@ import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types"
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
-import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { ClaimEntity } from "../claim.entity";
+import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
 
 @Injectable()
 export class ClaimTemplateService {
@@ -36,7 +37,7 @@ export class ClaimTemplateService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     const { account, claimStatus, merchantId, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
@@ -44,9 +45,13 @@ export class ClaimTemplateService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.andWhere("claim.merchantId = :merchantId", {
       merchantId,
@@ -255,6 +260,12 @@ export class ClaimTemplateService {
           resolve(results?.filter(Boolean) as Array<ClaimEntity>);
         },
       );
+    });
+  }
+
+  public async deactivateClaims(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    return await this.claimEntityRepository.delete({
+      itemId: In(assets.map(asset => asset.id)),
     });
   }
 }

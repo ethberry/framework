@@ -17,8 +17,8 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { SettingsModule } from "../../../../infrastructure/settings/settings.module";
 
-describe("GradeService", () => {
-  let gradeService: DiscreteService;
+describe("DiscreteService", () => {
+  let discreteService: DiscreteService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -52,17 +52,17 @@ describe("GradeService", () => {
       providers: [Logger, DiscreteService],
     }).compile();
 
-    gradeService = module.get<DiscreteService>(DiscreteService);
+    discreteService = module.get<DiscreteService>(DiscreteService);
   });
 
   it("should be defined", () => {
-    expect(gradeService).toBeDefined();
+    expect(discreteService).toBeDefined();
   });
 
   describe("getMultiplier", () => {
     describe("FLAT", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
           discreteStrategy: DiscreteStrategy.FLAT,
         } as DiscreteEntity);
         expect(multiplier.toString()).toEqual(WeiPerEther.toString());
@@ -71,7 +71,7 @@ describe("GradeService", () => {
 
     describe("LINEAR", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
           discreteStrategy: DiscreteStrategy.LINEAR,
         } as DiscreteEntity);
         expect(multiplier.toString()).toEqual((WeiPerEther * BigInt(i)).toString());
@@ -86,7 +86,7 @@ describe("GradeService", () => {
         [3, "1030301000000000100"],
         [4, "1040604010000000000"],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
           discreteStrategy: DiscreteStrategy.EXPONENTIAL,
           growthRate: 1,
         } as DiscreteEntity);
@@ -102,7 +102,7 @@ describe("GradeService", () => {
         [3, "8000000000000000000"],
         [4, "16000000000000000000"],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
           discreteStrategy: DiscreteStrategy.EXPONENTIAL,
           growthRate: 100,
         } as DiscreteEntity);

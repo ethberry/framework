@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeleteResult } from "typeorm";
 
 import type { ISearchableDto } from "@gemunion/types-collection";
 import type { IPonziRuleSearchDto } from "@framework/types";
@@ -8,6 +8,7 @@ import { PonziRuleStatus } from "@framework/types";
 
 import { PonziRulesEntity } from "./rules.entity";
 import type { IPonziRuleAutocompleteDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class PonziRulesService {
@@ -16,7 +17,7 @@ export class PonziRulesService {
     private readonly ponziRuleEntityRepository: Repository<PonziRulesEntity>,
   ) {}
 
-  public search(dto: IPonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
+  public search(dto: Partial<IPonziRuleSearchDto>): Promise<[Array<PonziRulesEntity>, number]> {
     const { query, deposit, reward, ponziRuleStatus, skip, take } = dto;
 
     const queryBuilder = this.ponziRuleEntityRepository.createQueryBuilder("rule");
@@ -160,5 +161,22 @@ export class PonziRulesService {
     });
 
     return ponziEntity.save();
+  }
+
+  public async deactivatePonziRules(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const rulesEntities = await this.ponziRuleEntityRepository.find({
+      where: [
+        {
+          deposit: In(assets.map(asset => asset.id)),
+        },
+        {
+          reward: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    return await this.ponziRuleEntityRepository.delete({
+      id: In(rulesEntities.map(r => r.id)),
+    });
   }
 }

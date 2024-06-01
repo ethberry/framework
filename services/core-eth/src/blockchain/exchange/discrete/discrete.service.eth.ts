@@ -15,7 +15,7 @@ import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
-export class ExchangeGradeServiceEth {
+export class ExchangeDiscreteServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -24,7 +24,7 @@ export class ExchangeGradeServiceEth {
     private readonly tokenService: TokenService,
     private readonly openSeaService: OpenSeaService,
     private readonly assetService: AssetService,
-    private readonly gradeService: DiscreteService,
+    private readonly discreteService: DiscreteService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
   ) {}
@@ -41,7 +41,7 @@ export class ExchangeGradeServiceEth {
     const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
     if (!tokenEntity) {
-      this.loggerService.error("tokenNotFound", tokenId, token.toLowerCase(), ExchangeGradeServiceEth.name);
+      this.loggerService.error("tokenNotFound", tokenId, token.toLowerCase(), ExchangeDiscreteServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
@@ -56,9 +56,9 @@ export class ExchangeGradeServiceEth {
 
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
-    const discreteEntity = await this.gradeService.findOneWithRelations({ id: Number(externalId) });
+    const discreteEntity = await this.discreteService.findOneWithRelations({ id: Number(externalId) });
     if (!discreteEntity) {
-      this.loggerService.error("gradeNotFound", tokenEntity.id, attribute, ExchangeGradeServiceEth.name);
+      this.loggerService.error("gradeNotFound", tokenEntity.id, attribute, ExchangeDiscreteServiceEth.name);
       throw new NotFoundException("gradeNotFound");
     }
 

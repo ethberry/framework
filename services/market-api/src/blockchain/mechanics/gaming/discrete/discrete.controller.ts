@@ -10,21 +10,21 @@ import { DiscreteAutocompleteDto, DiscreteSearchDto, DiscreteSignDto } from "./d
 @Public()
 @Controller("/grade")
 export class DiscreteController {
-  constructor(private readonly gradeService: DiscreteService) {}
+  constructor(private readonly discreteService: DiscreteService) {}
 
   @Get("/")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Query() dto: DiscreteSearchDto): Promise<DiscreteEntity | null> {
-    return this.gradeService.findOneByToken(dto);
+    return this.discreteService.findOneByToken(dto);
   }
 
   @Post("/sign")
   public sign(@Body() dto: DiscreteSignDto): Promise<IServerSignature> {
-    return this.gradeService.sign(dto);
+    return this.discreteService.sign(dto);
   }
 
   @Get("/autocomplete")
   public autocomplete(@Query() dto: DiscreteAutocompleteDto): Promise<Array<DiscreteEntity>> {
-    return this.gradeService.autocomplete(dto);
+    return this.discreteService.autocomplete(dto);
   }
 }

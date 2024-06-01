@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
@@ -8,9 +8,19 @@ import { AssetModule } from "../../../../exchange/asset/asset.module";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
+import { ClaimTemplateModule } from "../../claim/template/template.module";
+import { TemplateDeleteModule } from "../../../../hierarchy/template/template.delete.module";
 
 @Module({
-  imports: [ContractModule, TemplateModule, TokenModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],
+  imports: [
+    ContractModule,
+    TokenModule,
+    forwardRef(() => AssetModule),
+    forwardRef(() => TemplateModule),
+    forwardRef(() => TemplateDeleteModule),
+    TypeOrmModule.forFeature([MysteryBoxEntity]),
+    ClaimTemplateModule,
+  ],
   providers: [MysteryBoxService],
   controllers: [MysteryBoxController],
   exports: [MysteryBoxService],

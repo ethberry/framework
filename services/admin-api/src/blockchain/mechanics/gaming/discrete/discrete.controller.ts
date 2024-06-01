@@ -24,7 +24,7 @@ import { DiscreteCreateDto, DiscreteSearchDto, DiscreteUpdateDto } from "./dto";
 @ApiBearerAuth()
 @Controller("/grades")
 export class DiscreteController {
-  constructor(private readonly gradeService: DiscreteService) {}
+  constructor(private readonly discreteService: DiscreteService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
@@ -32,12 +32,12 @@ export class DiscreteController {
     @Query() dto: DiscreteSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<DiscreteEntity>, number]> {
-    return this.gradeService.search(dto, userEntity);
+    return this.discreteService.search(dto, userEntity);
   }
 
   @Post("/")
   public create(@Body() dto: DiscreteCreateDto, @User() userEntity: UserEntity): Promise<DiscreteEntity> {
-    return this.gradeService.create(dto, userEntity);
+    return this.discreteService.create(dto, userEntity);
   }
 
   @Put("/:id")
@@ -46,18 +46,18 @@ export class DiscreteController {
     @Body() dto: DiscreteUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<DiscreteEntity> {
-    return this.gradeService.update({ id }, dto, userEntity);
+    return this.discreteService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<DiscreteEntity | null> {
-    return this.gradeService.findOneWithRelations({ id });
+    return this.discreteService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.gradeService.delete({ id }, userEntity);
+    await this.discreteService.delete({ id }, userEntity);
   }
 }
