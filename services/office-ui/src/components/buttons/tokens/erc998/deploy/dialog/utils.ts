@@ -3,7 +3,7 @@ import { ChainLinkSupportedChains, Erc998ContractTemplates, NodeEnv } from "@fra
 export const isTemplateDisabled = (chainId: number) => {
   const disabledTemplates = [];
 
-  if (process.env.NODE_ENV === NodeEnv.production) {
+  if (process.env.NODE_ENV !== NodeEnv.development) {
     // These templates have too long code
     disabledTemplates.push(
       Erc998ContractTemplates.ERC1155OWNER_ERC20OWNER,

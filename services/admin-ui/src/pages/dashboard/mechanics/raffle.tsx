@@ -10,7 +10,7 @@ import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
 export const RaffleSection: FC = () => {
   const { chainId = 0 } = useWeb3React();
 
-  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV !== NodeEnv.development && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

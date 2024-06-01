@@ -14,7 +14,7 @@ export const LotterySection: FC = () => {
     return null;
   }
 
-  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV !== NodeEnv.development && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 
