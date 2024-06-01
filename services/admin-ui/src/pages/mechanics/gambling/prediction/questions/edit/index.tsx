@@ -1,14 +1,14 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionStatus, TokenType, ModuleType, ContractStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 export interface IRaffleEditDialogProps {
   open: boolean;
@@ -20,14 +20,16 @@ export interface IRaffleEditDialogProps {
 export const PredictionQuestionEditDialog: FC<IRaffleEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, questionStatus, price } = initialValues;
+  const { id, title, contractId, description, questionStatus, price, maxVotes } = initialValues;
 
   const fixedValues = {
     id,
+    contractId,
     title,
     description,
     questionStatus,
     price,
+    maxVotes,
   };
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -50,6 +52,8 @@ export const PredictionQuestionEditDialog: FC<IRaffleEditDialogProps> = props =>
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      {/* Todo - maxVotes editable untill the question is not started */}
+      <NumberInput name="maxVotes" readOnly={!!id} inputProps={{ min: 0 }} />
       <TemplateAssetInput
         autoSelect
         prefix="price"

@@ -27,6 +27,15 @@ export class PredictionQuestionEntity extends SearchableEntity implements IPredi
   @ManyToOne(_type => MerchantEntity)
   public merchant: MerchantEntity;
 
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
+
+  @Column({ type: "int" })
+  public maxVotes: number;
+
   @Column({
     type: "enum",
     enum: PredictionQuestionStatus,
@@ -41,6 +50,12 @@ export class PredictionQuestionEntity extends SearchableEntity implements IPredi
 
   @OneToMany(_type => PredictionAnswerEntity, assets => assets.question)
   public answers: Array<PredictionAnswerEntity>;
+
+  // ?? answerTemplate...
+  // For custom answers create extra template, that would contain all (2 or 4 or even more) types of answers.
+  // Example: (Yes, No - Draw, Tech) / (Left, Right - Draw, Tech)
+  // So each time question would be created, it can be connected with the template of answers
+  // So each answer would be connected by templateAnswerId and answerId.
 
   @Exclude()
   @Column({ type: "int" })

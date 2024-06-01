@@ -21,4 +21,10 @@ export class PredictionQuestionCreateDto extends SearchableDto implements IPredi
   @ValidateNested()
   @Type(() => SemiCoinDto)
   public price: InstanceType<typeof SemiCoinDto>;
+
+  @ApiProperty({
+    minimum: 0,
+  })
+  @IsInt({ message: "typeMismatch" })
+  public maxVotes: number;
 }

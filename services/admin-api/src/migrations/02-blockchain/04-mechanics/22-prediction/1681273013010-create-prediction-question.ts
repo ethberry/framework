@@ -50,6 +50,20 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
           isNullable: true,
         },
         {
+          name: "start_timestamp",
+          type: "timestamptz",
+          isNullable: true,
+        },
+        {
+          name: "end_timestamp",
+          type: "timestamptz",
+          isNullable: true,
+        },
+        {
+          name: "max_votes",
+          type: "int",
+        },
+        {
           name: "question_status",
           type: `${ns}.prediction_question_status_enum`,
           default: "'ACTIVE'",
@@ -57,7 +71,7 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
         {
           name: "question_result",
           type: `${ns}.prediction_question_result_enum`,
-          default: "'TECH'",
+          isNullable: true,
         },
         {
           name: "created_at",

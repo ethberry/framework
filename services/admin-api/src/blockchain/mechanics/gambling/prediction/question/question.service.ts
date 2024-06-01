@@ -4,11 +4,11 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import type { IPredictionQuestionSearchDto } from "@framework/types";
 
-import type { IPredictionQuestionCreateDto, IPredictionQuestionUpdateDto } from "./interfaces";
 import { PredictionQuestionEntity } from "./question.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { DiscreteEntity } from "../../../gaming/discrete/discrete.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
+import type { IPredictionQuestionCreateDto, IPredictionQuestionUpdateDto } from "./interfaces";
 
 @Injectable()
 export class PredictionQuestionService {
