@@ -36,14 +36,6 @@ export const LotterySection: FC = () => {
             <FormattedMessage id="pages.lottery.contracts.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/lottery/tickets">
-          <ListItemIcon>
-            <ConfirmationNumber />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.lottery.tickets.title" />
-          </ListItemText>
-        </ListItemButton>
         <ListItemButton component={RouterLink} to="/lottery/rounds">
           <ListItemIcon>
             <Savings />
@@ -52,7 +44,15 @@ export const LotterySection: FC = () => {
             <FormattedMessage id="pages.lottery.rounds.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/lottery/tokens">
+        <ListItemButton component={RouterLink} to="/lottery/ticket/contracts">
+          <ListItemIcon>
+            <ConfirmationNumber />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.lottery.tickets.title" />
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton component={RouterLink} to="/lottery/ticket/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

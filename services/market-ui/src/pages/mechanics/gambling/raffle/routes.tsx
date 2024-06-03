@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { RaffleSection } from "../../../dashboard/mechanics/raffle";
 import { IndexWrapper } from "../../../index-wrapper";
-import { RaffleTokenList } from "./token-list";
+import { RaffleTicketTokenList } from "./token-list";
 import { RaffleList } from "./raffle-list";
 import { RaffleContract } from "./raffle";
 
@@ -26,10 +26,10 @@ export const raffleRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/raffle/tokens",
+        path: "/raffle/ticket/tokens",
         children: [
-          { index: true, element: <RaffleTokenList /> },
-          { path: "/raffle/tokens/:id", element: <RaffleTokenList /> },
+          { index: true, element: <RaffleTicketTokenList /> },
+          { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokenList /> },
         ],
       },
     ],

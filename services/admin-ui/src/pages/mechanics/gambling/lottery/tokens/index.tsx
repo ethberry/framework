@@ -6,13 +6,13 @@ import { FormattedMessage } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { ILotteryRound, ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
+import type { ILotteryRound, ILotteryToken, ILotteryTicketTokenSearchDto } from "@framework/types";
 
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "../utils";
 import { LotteryTokenViewDialog } from "./view";
 import { LotteryTokenSearchForm } from "./form";
 
-export const LotteryTokens: FC = () => {
+export const LotteryTicketTokens: FC = () => {
   const {
     rows,
     count,
@@ -27,8 +27,8 @@ export const LotteryTokens: FC = () => {
     handleSearch,
     handleChangePage,
     handleToggleFilters,
-  } = useCollection<ILotteryToken, ILotteryTokenSearchDto>({
-    baseUrl: "/lottery/tokens",
+  } = useCollection<ILotteryToken, ILotteryTicketTokenSearchDto>({
+    baseUrl: "/lottery/ticket/tokens",
     search: {
       roundIds: [],
     },

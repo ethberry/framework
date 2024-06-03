@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../../../exchange/asset";
-import { ILotteryRound } from "./round";
+import type { IAsset } from "../../../exchange/asset";
+import type { ILotteryRound } from "./round";
 
 export interface ILotteryRoundAggregation extends IIdDateBase {
   roundId: number;

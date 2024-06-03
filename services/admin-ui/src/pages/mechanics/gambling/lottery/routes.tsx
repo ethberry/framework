@@ -5,9 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../../index-wrapper";
 import { LotterySection } from "../../../dashboard/mechanics/lottery";
 import { LotteryContracts } from "./contract";
-import { LotteryTickets } from "./tickets";
+import { LotteryTicketContracts } from "./tickets";
 import { LotteryRounds } from "./rounds";
-import { LotteryTokens } from "./tokens";
+import { LotteryTicketTokens } from "./tokens";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -30,14 +30,6 @@ export const lotteryRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/lottery/tickets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <LotteryTickets /> },
-          { path: "/lottery/tickets/:id", element: <LotteryTickets /> },
-        ],
-      },
-      {
         path: "/lottery/rounds",
         element: <Protected />,
         children: [
@@ -46,11 +38,19 @@ export const lotteryRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/lottery/tokens",
+        path: "/lottery/ticket/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <LotteryTokens /> },
-          { path: "/lottery/tokens/:id", element: <LotteryTokens /> },
+          { index: true, element: <LotteryTicketContracts /> },
+          { path: "/lottery/ticket/contracts/:id", element: <LotteryTicketContracts /> },
+        ],
+      },
+      {
+        path: "/lottery/ticket/tokens",
+        element: <Protected />,
+        children: [
+          { index: true, element: <LotteryTicketTokens /> },
+          { path: "/lottery/ticket/tokens/:id", element: <LotteryTicketTokens /> },
         ],
       },
     ],

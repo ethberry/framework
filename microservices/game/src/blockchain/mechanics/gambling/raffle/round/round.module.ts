@@ -5,7 +5,7 @@ import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
 import { RaffleRoundController } from "./round.controller";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
-import { RaffleTokenModule } from "../token/token.module";
+import { RaffleTokenModule } from "../ticket/token/token.module";
 
 @Module({
   imports: [ContractModule, RaffleTokenModule, TypeOrmModule.forFeature([RaffleRoundEntity])],

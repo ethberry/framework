@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TokenType } from "@framework/types";
 import { RaffleRoundEntity } from "./round.entity";
-import { RaffleTokenService } from "../token/token.service";
+import { RaffleTicketTokenService } from "../ticket/token/token.service";
 import type { IRaffleCurrentDto } from "./interfaces";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
-    private readonly raffleTokenService: RaffleTokenService,
+    private readonly raffleTokenService: RaffleTicketTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<RaffleRoundEntity>> {
