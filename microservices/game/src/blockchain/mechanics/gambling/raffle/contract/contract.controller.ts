@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { ContractAutocompleteDto, ContractSearchDto } from "../../../../hierarchy/contract/dto";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
-import { RaffleContractService } from "./raffle.service";
+import { RaffleContractService } from "./contract.service";
 
 @ApiBearerAuth()
 @Controller("/raffle/contracts")
