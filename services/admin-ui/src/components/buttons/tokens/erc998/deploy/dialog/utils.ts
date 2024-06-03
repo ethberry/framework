@@ -10,7 +10,7 @@ export const isTemplateDisabled = (chainId: number) => {
     Erc998ContractTemplates.ERC1155OWNER,
   );
 
-  if (process.env.NODE_ENV !== NodeEnv.development) {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     // Rent (is not tested yet)
     disabledTemplates.push(Erc998ContractTemplates.RENTABLE);
 

@@ -15,7 +15,7 @@ export const PredictionSection: FC = () => {
     return null;
   }
 
-  if (process.env.NODE_ENV !== NodeEnv.development && !ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

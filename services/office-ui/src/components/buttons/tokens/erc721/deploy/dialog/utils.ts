@@ -6,7 +6,7 @@ export const isTemplateDisabled = (chainId: number) => {
   // Deployed through corresponding mechanics
   disabledTemplates.push(Erc721ContractTemplates.RAFFLE, Erc721ContractTemplates.LOTTERY);
 
-  if (process.env.NODE_ENV !== NodeEnv.development) {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     // Rent (is not tested yet)
     disabledTemplates.push(
       Erc721ContractTemplates.RENTABLE,
