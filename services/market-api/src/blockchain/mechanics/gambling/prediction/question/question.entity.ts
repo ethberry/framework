@@ -7,9 +7,9 @@ import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionResult, PredictionQuestionStatus } from "@framework/types";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
-import { PredictionAnswerEntity } from "../answer/answer.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { PredictionAnswerEntity } from "../answer/answer.entity";
 
 @Entity({ schema: ns, name: "prediction_question" })
 export class PredictionQuestionEntity extends SearchableEntity implements IPredictionQuestion {

@@ -12,7 +12,7 @@ import { DiscreteService } from "../../mechanics/gaming/discrete/discrete.servic
 import { DiscreteEntity } from "../../mechanics/gaming/discrete/discrete.entity";
 import { AssetModule } from "../asset/asset.module";
 import { ExchangeGradeControllerEth } from "./discrete.controller.eth";
-import { ExchangeGradeServiceEth } from "./discrete.service.eth";
+import { ExchangeDiscreteServiceEth } from "./discrete.service.eth";
 import { signalServiceProvider } from "../../../common/providers";
 
 @Module({
@@ -26,8 +26,8 @@ import { signalServiceProvider } from "../../../common/providers";
     NotificatorModule,
     TypeOrmModule.forFeature([DiscreteEntity]),
   ],
-  providers: [signalServiceProvider, Logger, ExchangeGradeServiceEth, DiscreteService],
+  providers: [signalServiceProvider, Logger, ExchangeDiscreteServiceEth, DiscreteService],
   controllers: [ExchangeGradeControllerEth],
-  exports: [ExchangeGradeServiceEth, DiscreteService],
+  exports: [ExchangeDiscreteServiceEth, DiscreteService],
 })
 export class ExchangeGradeModule {}

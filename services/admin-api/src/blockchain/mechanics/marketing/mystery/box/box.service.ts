@@ -21,18 +21,18 @@ import {
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
 import { ContractFeatures, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
+import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
+import { ClaimTemplateService } from "../../claim/template/template.service";
 import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
-import { AssetEntity } from "../../../../exchange/asset/asset.entity";
-import { ClaimTemplateService } from "../../claim/template/template.service";
-import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
-import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
-import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
 
 @Injectable()
 export class MysteryBoxService {

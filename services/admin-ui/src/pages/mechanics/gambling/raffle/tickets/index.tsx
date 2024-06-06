@@ -26,7 +26,7 @@ import { TransferButton } from "../../../../../components/buttons/common/transfe
 import { RoyaltyButton } from "../../../../../components/buttons/common/royalty";
 import { RaffleEditDialog } from "./edit";
 
-export const RaffleTickets: FC = () => {
+export const RaffleTicketContracts: FC = () => {
   const {
     rows,
     count,
@@ -47,7 +47,7 @@ export const RaffleTickets: FC = () => {
     handleDeleteConfirm,
     handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/raffle/tickets",
+    baseUrl: "/raffle/ticket/contracts",
     empty: {
       title: "",
       description: emptyStateString,

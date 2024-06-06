@@ -3,13 +3,19 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { ConfirmationNumber, Storage, Collections } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
-import { NodeEnv } from "@framework/types";
+import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
 
 export const PredictionSection: FC = () => {
   const isProd = process.env.NODE_ENV === NodeEnv.production;
+  const { chainId = 0 } = useWeb3React();
 
   if (isProd) {
+    return null;
+  }
+
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

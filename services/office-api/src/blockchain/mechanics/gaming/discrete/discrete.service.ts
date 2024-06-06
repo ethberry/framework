@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { IDiscreteCreateDto, IDiscreteSearchDto, IDiscreteUpdateDto } from "@framework/types";
 import { DiscreteStatus } from "@framework/types";
@@ -10,6 +10,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { DiscreteEntity } from "./discrete.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class DiscreteService {
@@ -23,7 +24,7 @@ export class DiscreteService {
 
   public async search(
     dto: Partial<IDiscreteSearchDto>,
-    _userEntity: UserEntity,
+    userEntity: UserEntity,
   ): Promise<[Array<DiscreteEntity>, number]> {
     const { query, discreteStatus, merchantId, skip, take } = dto;
 
@@ -31,10 +32,12 @@ export class DiscreteService {
 
     queryBuilder.leftJoinAndSelect("grade.contract", "contract");
 
-    queryBuilder.select();
-
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
+    });
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
 
     if (discreteStatus) {
@@ -156,5 +159,17 @@ export class DiscreteService {
 
   public delete(where: FindOptionsWhere<DiscreteEntity>, userEntity: UserEntity): Promise<DiscreteEntity> {
     return this.update(where, { discreteStatus: DiscreteStatus.INACTIVE }, userEntity);
+  }
+
+  public async deactivateGrades(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const gradeEntities = await this.discreteEntityRepository.find({
+      where: {
+        priceId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    return await this.discreteEntityRepository.delete({
+      id: In(gradeEntities.map(g => g.id)),
+    });
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import type { IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleTicketTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -21,7 +21,7 @@ export class RaffleTokenService extends TokenService {
   }
 
   public async search(
-    dto: Partial<IRaffleTokenSearchDto>,
+    dto: Partial<IRaffleTicketTokenSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<TokenEntity>, number]> {
     const { roundIds, skip, take } = dto;

@@ -100,9 +100,7 @@ export const Erc721Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-          <></>
-        ) : (
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? null : (
           <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
             <FormattedMessage id="form.buttons.create" />
           </Button>

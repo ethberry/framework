@@ -3,19 +3,25 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { Collections, Inventory, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-import { BusinessType, RatePlanType } from "@framework/types";
+import { BusinessType, ChainLinkSupportedChains, NodeEnv, RatePlanType } from "@framework/types";
 
 export const LootSection: FC = () => {
   const { profile } = useUser<IUser>();
+  const { chainId = 0 } = useWeb3React();
 
   if (profile?.merchant?.ratePlan === RatePlanType.BRONZE) {
     return null;
   }
 
   if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
+    return null;
+  }
+
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 

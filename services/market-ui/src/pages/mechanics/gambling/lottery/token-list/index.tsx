@@ -4,7 +4,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { ILotteryToken, ILotteryTokenSearchDto } from "@framework/types";
+import { ILotteryToken, ILotteryTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -13,7 +13,7 @@ import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryTokenSearchForm } from "./form";
 import { LotteryTokenViewDialog } from "./view";
 
-export const LotteryTokenList: FC = () => {
+export const LotteryTicketTokenList: FC = () => {
   const {
     rows,
     count,
@@ -28,8 +28,8 @@ export const LotteryTokenList: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<ILotteryToken, ILotteryTokenSearchDto>({
-    baseUrl: "/lottery/tokens",
+  } = useCollection<ILotteryToken, ILotteryTicketTokenSearchDto>({
+    baseUrl: "/lottery/ticket/tokens",
     empty: {
       round: {
         numbers: [],

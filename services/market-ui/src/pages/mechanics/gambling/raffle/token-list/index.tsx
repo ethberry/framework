@@ -4,7 +4,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleRound, IRaffleToken, IRaffleTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -12,7 +12,7 @@ import { RaffleRewardButton } from "../../../../../components/buttons";
 import { RaffleTokenSearchForm } from "./form";
 import { RaffleTokenViewDialog } from "./view";
 
-export const RaffleTokenList: FC = () => {
+export const RaffleTicketTokenList: FC = () => {
   const {
     rows,
     count,
@@ -27,8 +27,8 @@ export const RaffleTokenList: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<IRaffleToken, IRaffleTokenSearchDto>({
-    baseUrl: "/raffle/tokens",
+  } = useCollection<IRaffleToken, IRaffleTicketTokenSearchDto>({
+    baseUrl: "/raffle/ticket/tokens",
     empty: {
       round: {
         number: "0",

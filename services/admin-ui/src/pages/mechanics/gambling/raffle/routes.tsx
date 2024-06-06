@@ -5,9 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../../index-wrapper";
 import { RaffleSection } from "../../../dashboard/mechanics/raffle";
 import { RaffleContracts } from "./contract";
-import { RaffleTickets } from "./tickets";
+import { RaffleTicketContracts } from "./tickets";
 import { RaffleRounds } from "./rounds";
-import { RaffleTokens } from "./tokens";
+import { RaffleTicketTokens } from "./tokens";
 
 export const raffleRoutes: Array<RouteObject> = [
   {
@@ -30,14 +30,6 @@ export const raffleRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/raffle/tickets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <RaffleTickets /> },
-          { path: "/raffle/tickets/:id", element: <RaffleTickets /> },
-        ],
-      },
-      {
         path: "/raffle/rounds",
         element: <Protected />,
         children: [
@@ -46,11 +38,19 @@ export const raffleRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/raffle/tokens",
+        path: "/raffle/ticket/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <RaffleTokens /> },
-          { path: "/raffle/tokens/:id", element: <RaffleTokens /> },
+          { index: true, element: <RaffleTicketContracts /> },
+          { path: "/raffle/ticket/contracts/:id", element: <RaffleTicketContracts /> },
+        ],
+      },
+      {
+        path: "/raffle/ticket/tokens",
+        element: <Protected />,
+        children: [
+          { index: true, element: <RaffleTicketTokens /> },
+          { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokens /> },
         ],
       },
     ],

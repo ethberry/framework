@@ -1,15 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { RaffleTicketService } from "./ticket.service";
-import { RaffleTicketController } from "./ticket.controller";
-import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { RaffleTicketTokenModule } from "./token/token.module";
+import { RaffleTicketContractModule } from "./contract/contract.module";
 
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity])],
-  providers: [RaffleTicketService],
-  controllers: [RaffleTicketController],
-  exports: [RaffleTicketService],
+  imports: [RaffleTicketContractModule, RaffleTicketTokenModule],
 })
 export class RaffleTicketModule {}
