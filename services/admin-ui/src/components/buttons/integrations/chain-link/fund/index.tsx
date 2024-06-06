@@ -1,15 +1,19 @@
-import { FC, Fragment, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { FC, Fragment, useState, useEffect } from "react";
 import { Savings } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, BigNumberish, Contract, utils } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { SystemModuleType } from "@framework/types";
 import type { IContract } from "@framework/types";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
-import transferAndCallERC677ABI from "@framework/abis/transferAndCall/ERC677.json";
+import topUpCoordinatorABI from "@framework/abis/topUp/CoordinatorV2.json";
+import ERC20AllowanceABI from "@framework/abis/allowance/ERC20Allowance.json";
+import ERC20ApproveABI from "@framework/abis/approve/ERC20.json";
+// import transferAndCallERC677ABI from "@framework/abis/transferAndCall/ERC677.json";
 
 export interface IChainLinkFundButtonProps {
   subscriptionId: number;
@@ -28,16 +32,61 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
     setIsFundDialogOpen(true);
   };
 
-  const metaTransfer = useSystemContract<IContract, SystemModuleType>(
+  const haveAllowanceForTx = (_allowance: BigNumberish, _amount: BigNumberish): boolean | null => {
+    _allowance = BigNumber.from(_allowance);
+
+    if (_allowance.lt(_amount)) {
+      return false; // approve tokens
+    } else {
+      return true; // tranfer tokens
+    }
+  };
+
+  const getAllowance = useSystemContract<IContract, SystemModuleType>(
+    async (values: number, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(
+        systemContract.parameters.linkAddress.toString(),
+        ERC20AllowanceABI,
+        web3Context.provider?.getSigner(),
+      );
+      return contract.callStatic.allowance(web3Context.account, systemContract.address);
+    },
+    { success: false },
+  );
+
+  const getAllowanceMetaFn = useMetamaskValue(async (web3Context: Web3ContextType) => {
+    return getAllowance(SystemModuleType.CHAIN_LINK, null, web3Context);
+  });
+
+  const metaApprove = useSystemContract<IContract, SystemModuleType>(
     async (values: IChainLinkFundDto, web3Context: Web3ContextType, systemContract: IContract) => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        transferAndCallERC677ABI,
+        ERC20ApproveABI,
         web3Context.provider?.getSigner(),
       );
-      const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
-      return contract.transferAndCall(systemContract.address, values.amount, subId) as Promise<void>;
+      return contract.approve(systemContract.address, values.amount) as Promise<void>;
+    },
+  );
+
+  const metaFnApprove = useMetamask((values: IChainLinkFundDto, web3Context: Web3ContextType) => {
+    return metaApprove(SystemModuleType.CHAIN_LINK, values, web3Context);
+  });
+
+  const metaTransfer = useSystemContract<IContract, SystemModuleType>(
+    async (values: IChainLinkFundDto, web3Context: Web3ContextType, systemContract: IContract) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(
+        systemContract.address,
+        // transferAndCallERC677ABI,
+        topUpCoordinatorABI,
+        web3Context.provider?.getSigner(),
+      );
+      // const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
+      // return contract.transferAndCall(systemContract.address, values.amount, subId) as Promise<void>;
+      return contract.topUp(values.subscriptionId, values.amount) as Promise<void>;
     },
   );
 
@@ -45,10 +94,17 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
     return metaTransfer(SystemModuleType.CHAIN_LINK, values, web3Context);
   });
 
-  const handleFundConfirm = async (values: IChainLinkFundDto): Promise<void> => {
-    await metaFnTransfer(values).finally(() => {
-      setIsFundDialogOpen(false);
-    });
+  const handleFundRoute = async (values: IChainLinkFundDto): Promise<void> => {
+    const _allowance = await getAllowanceMetaFn();
+    const haveAllowance = haveAllowanceForTx(_allowance, values.amount);
+
+    if (haveAllowance === false) {
+      // Not enough allowance, approve tokens
+      return metaFnApprove(values);
+    } else {
+      // Make Transfer
+      return metaFnTransfer(values);
+    }
   };
 
   const handleFundCancel = () => {
@@ -68,7 +124,7 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
       />
       <ChainLinkFundDialog
         onCancel={handleFundCancel}
-        onConfirm={handleFundConfirm}
+        onConfirm={handleFundRoute}
         open={isFundDialogOpen}
         initialValues={{
           amount: "0",

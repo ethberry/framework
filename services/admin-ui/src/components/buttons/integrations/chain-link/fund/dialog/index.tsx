@@ -57,6 +57,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       {...rest}
     >
       <TextInput name="subscriptionId" />
+      {/* Todo-j Change to token.decimals */}
       <AmountInput symbol="LINK " decimals={18} getCurrentBalance={metaFnBalanceData} />
     </FormDialog>
   );
