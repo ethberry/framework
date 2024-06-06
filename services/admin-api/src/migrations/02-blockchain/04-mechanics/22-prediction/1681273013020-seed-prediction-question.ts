@@ -28,7 +28,11 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
         description,
         merchant_id,
         price_id,
+        start_timestamp,
+        end_timestamp,
+        max_votes,
         question_status,
+        question_result,
         created_at,
         updated_at
       ) VALUES (
@@ -38,7 +42,39 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
         '${simpleFormatting}',
          1,
          102220101,
+         null,
+         null,
+         0,
         'ACTIVE',
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2,
+        12701,
+        'Yes/No? (Active)',
+        '${simpleFormatting}',
+         1,
+         102220101,
+         '${currentDateTime}',
+         null,
+         0,
+        'ACTIVE',
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        3,
+        12701,
+        'Yes/No? (Finished)',
+        '${simpleFormatting}',
+         1,
+         102220101,
+         '${currentDateTime}',
+         '${currentDateTime}',
+         0,
+        'ACTIVE',
+        'YES',
         '${currentDateTime}',
         '${currentDateTime}'
       );

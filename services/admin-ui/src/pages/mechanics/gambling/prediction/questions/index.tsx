@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
-import { Add, Create, Delete, Done, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -17,6 +17,11 @@ import { cleanUpAsset } from "@framework/exchange";
 
 import { PredictionResultDialog } from "./result";
 import { PredictionQuestionEditDialog } from "./edit";
+import {
+  PredictionQuestionResolveButton,
+  PredictionQuestionReleaseButton,
+  PredictionQuestionStartButton,
+} from "../../../../../components/buttons/mechanics/prediction/question";
 
 export const PredictionQuestions: FC = () => {
   const {
@@ -36,7 +41,6 @@ export const PredictionQuestions: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleView,
     handleViewConfirm,
     handleViewCancel,
     handleSearch,
@@ -48,12 +52,13 @@ export const PredictionQuestions: FC = () => {
       title: "",
       description: emptyStateString,
       price: emptyPrice,
+      maxVotes: 0,
     },
     search: {
       query: "",
       questionStatus: [],
     },
-    filter: ({ id, title, description, questionStatus, price, contractId }) =>
+    filter: ({ id, title, description, questionStatus, price, contractId, maxVotes }) =>
       id
         ? {
             title,
@@ -65,6 +70,7 @@ export const PredictionQuestions: FC = () => {
             contractId,
             title,
             description,
+            maxVotes,
             price: cleanUpAsset(price),
           },
   });
@@ -97,12 +103,9 @@ export const PredictionQuestions: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{question.title}</ListItemText>
               <ListActions dataTestId="QuestionMenuButton">
                 <ListAction onClick={handleEdit(question)} message="form.buttons.edit" icon={Create} />
-                <ListAction
-                  onClick={handleView(question)}
-                  disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}
-                  icon={Done}
-                  message="form.buttons.resolve"
-                />
+                <PredictionQuestionStartButton question={question} />
+                <PredictionQuestionResolveButton question={question} />
+                <PredictionQuestionReleaseButton question={question} />
                 <ListAction
                   onClick={handleDelete(question)}
                   disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}

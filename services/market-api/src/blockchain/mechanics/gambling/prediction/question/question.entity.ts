@@ -27,6 +27,15 @@ export class PredictionQuestionEntity extends SearchableEntity implements IPredi
   @ManyToOne(_type => MerchantEntity)
   public merchant: MerchantEntity;
 
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
+
+  @Column({ type: "int" })
+  public maxVotes: number;
+
   @Column({
     type: "enum",
     enum: PredictionQuestionStatus,

@@ -21,6 +21,9 @@ export interface IPredictionQuestion extends ISearchable {
   merchantId: number;
   merchant?: IMerchant;
   price?: IAsset;
+  maxVotes: number;
+  startTimestamp: string;
+  endTimestamp: string;
   questionStatus: PredictionQuestionStatus;
   questionResult: PredictionQuestionResult;
   answers: Array<IPredictionAnswer>;
