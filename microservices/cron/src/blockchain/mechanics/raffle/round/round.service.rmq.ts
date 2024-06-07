@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, NotAcceptableException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { ClientProxy } from "@nestjs/microservices";
 import { IsNull, Not, JsonContains } from "typeorm";
@@ -49,11 +49,6 @@ export class RaffleRoundServiceRmq {
 
     if (!raffleEntity) {
       throw new NotFoundException("contractNotFound");
-    }
-
-    // TODO do we need to test it?
-    if (!Object.values(CronExpression).includes(dto.schedule as unknown as CronExpression)) {
-      throw new NotAcceptableException("notAcceptableSchedule");
     }
 
     Object.assign(
