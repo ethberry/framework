@@ -22,7 +22,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.37",
     "@gemunion/nest-js-module-winston-logdna": "3.1.8",
     "@gemunion/nest-js-utils": "4.2.7",
-    "@gemunion/nest-js-validators": "4.0.33",
+    "@gemunion/nest-js-validators": "4.0.34",
     "@gemunion/types-collection": "1.5.14",
     "@golevelup/nestjs-discovery": "4.0.1",
     "@golevelup/nestjs-modules": "0.7.1",
