@@ -8,7 +8,6 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
-    "ajv": "8.8.2",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@framework/constants": "0.0.1",
