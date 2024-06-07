@@ -3,13 +3,11 @@ import { app } from "firebase-admin";
 
 import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
 import { MetamaskService } from "@gemunion/nest-js-module-metamask";
-// import { defaultChainId, EnabledLanguages } from "@framework/constants";
-// import { UserRole, UserStatus } from "@framework/types";
+import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
 import type { ICustomToken } from "./interfaces";
-import { UserRole } from "@framework/types";
 
 @Injectable()
 export class AuthMetamaskService {
@@ -31,37 +29,6 @@ export class AuthMetamaskService {
 
     if (!userEntity) {
       throw new ForbiddenException("adminNotFound");
-      // let userFb;
-      //
-      // // CHECK IF USER EMAIL EXISTS IN FIREBASE
-      // if (email) {
-      //   try {
-      //     userFb = await this.admin.auth().getUserByEmail(email);
-      //   } catch (err) {
-      //     console.error(err.errorInfo, "firebase.getUserByEmail");
-      //   }
-      // }
-      // // CREATE USER IN FIREBASE
-      // if (!userFb) {
-      //   userFb = await this.admin.auth().createUser({
-      //     displayName,
-      //     email,
-      //     photoURL: imageUrl,
-      //     emailVerified: !!email,
-      //   });
-      // }
-      //
-      // userEntity = await this.userService.import({
-      //   displayName: displayName || wallet.toLowerCase(),
-      //   imageUrl: imageUrl || "",
-      //   email: email || "",
-      //   language: EnabledLanguages.EN,
-      //   userRoles: [UserRole.CUSTOMER],
-      //   userStatus: UserStatus.ACTIVE,
-      //   sub: userFb.uid,
-      //   wallet: wallet.toLowerCase(),
-      //   chainId: Number(defaultChainId),
-      // });
     }
 
     const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];

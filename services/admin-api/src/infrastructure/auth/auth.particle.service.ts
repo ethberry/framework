@@ -1,8 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
-import { MetamaskService } from "@gemunion/nest-js-module-metamask";
+import type { IParticleDto } from "@gemunion/nest-js-module-particle";
+import { ParticleService } from "@gemunion/nest-js-module-particle";
 import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";
@@ -10,18 +10,18 @@ import { APP_PROVIDER } from "./auth.constants";
 import type { ICustomToken } from "./interfaces";
 
 @Injectable()
-export class AuthMetamaskService {
+export class AuthParticleService {
   constructor(
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
     private readonly userService: UserService,
-    private readonly metamaskService: MetamaskService,
+    private readonly particleService: ParticleService,
   ) {}
 
-  public async login(dto: IMetamaskDto): Promise<ICustomToken> {
+  public async login(dto: IParticleDto): Promise<ICustomToken> {
     const { nonce, signature, wallet } = dto;
 
-    if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
+    if (!this.particleService.isValidSignature({ signature, wallet, nonce })) {
       throw new ForbiddenException("signatureDoesNotMatch");
     }
 

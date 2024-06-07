@@ -1,28 +1,47 @@
 import * as React from "react";
-
-import { verifyLicense } from "../verifyLicense";
+import { verifyLicense } from "../verifyLicense/verifyLicense";
+import { LicenseInfo } from "../utils/licenseInfo";
 import {
-  LicenseInfo,
-  LicenseScope,
-  LicenseStatus,
-  showExpiredLicenseKeyError,
-  showExpiredPackageVersionError,
+  showExpiredAnnualGraceLicenseKeyError,
+  showExpiredAnnualLicenseKeyError,
   showInvalidLicenseKeyError,
-  showLicenseKeyPlanMismatchError,
   showMissingLicenseKeyError,
-} from "../utils";
+  showLicenseKeyPlanMismatchError,
+  showExpiredPackageVersionError,
+} from "../utils/licenseErrorMessageUtils";
+import { LICENSE_STATUS, LicenseStatus } from "../utils/licenseStatus";
+import { LicenseScope } from "../utils/licenseScope";
+import MuiLicenseInfoContext from "../Unstable_LicenseInfoProvider/MuiLicenseInfoContext";
 
-export type MuiCommercialPackageName = "x-data-grid-pro" | "x-data-grid-premium" | "x-date-pickers-pro";
+export type MuiCommercialPackageName =
+  | "x-data-grid-pro"
+  | "x-data-grid-premium"
+  | "x-date-pickers-pro"
+  | "x-tree-view-pro"
+  | "x-charts-pro";
 
 export const sharedLicenseStatuses: {
-  [packageName in MuiCommercialPackageName]?: { key: string | undefined; status: LicenseStatus };
+  [packageName in MuiCommercialPackageName]?: {
+    key: string | undefined;
+    licenseVerifier: {
+      status: LicenseStatus;
+    };
+  };
 } = {};
 
-export function useLicenseVerifier(packageName: MuiCommercialPackageName, releaseInfo: string): LicenseStatus {
+export function useLicenseVerifier(
+  packageName: MuiCommercialPackageName,
+  releaseInfo: string,
+): {
+  status: LicenseStatus;
+} {
+  const { key: contextKey } = React.useContext(MuiLicenseInfoContext);
   return React.useMemo(() => {
-    const licenseKey = LicenseInfo.getLicenseKey();
+    const licenseKey = contextKey ?? LicenseInfo.getLicenseKey();
+
+    // Cache the response to not trigger the error twice.
     if (sharedLicenseStatuses[packageName] && sharedLicenseStatuses[packageName]!.key === licenseKey) {
-      return sharedLicenseStatuses[packageName]!.status;
+      return sharedLicenseStatuses[packageName]!.licenseVerifier;
     }
 
     const acceptedScopes: LicenseScope[] = packageName.includes("premium") ? ["premium"] : ["pro", "premium"];
@@ -32,24 +51,29 @@ export function useLicenseVerifier(packageName: MuiCommercialPackageName, releas
       releaseInfo,
       licenseKey,
       acceptedScopes,
-      isProduction: process.env.NODE_ENV === "production",
     });
 
-    sharedLicenseStatuses[packageName] = { key: licenseKey, status: licenseStatus };
     const fullPackageName = `@mui/${packageName}`;
 
-    if (licenseStatus === LicenseStatus.Invalid) {
+    if (licenseStatus.status === LICENSE_STATUS.Valid) {
+      // Skip
+    } else if (licenseStatus.status === LICENSE_STATUS.Invalid) {
       showInvalidLicenseKeyError();
-    } else if (licenseStatus === LicenseStatus.OutOfScope) {
+    } else if (licenseStatus.status === LICENSE_STATUS.OutOfScope) {
       showLicenseKeyPlanMismatchError();
-    } else if (licenseStatus === LicenseStatus.NotFound) {
+    } else if (licenseStatus.status === LICENSE_STATUS.NotFound) {
       showMissingLicenseKeyError({ plan, packageName: fullPackageName });
-    } else if (licenseStatus === LicenseStatus.Expired) {
-      showExpiredLicenseKeyError();
-    } else if (licenseStatus === LicenseStatus.ExpiredVersion) {
+    } else if (licenseStatus.status === LICENSE_STATUS.ExpiredAnnualGrace) {
+      showExpiredAnnualGraceLicenseKeyError({ plan, ...licenseStatus.meta });
+    } else if (licenseStatus.status === LICENSE_STATUS.ExpiredAnnual) {
+      showExpiredAnnualLicenseKeyError({ plan, ...licenseStatus.meta });
+    } else if (licenseStatus.status === LICENSE_STATUS.ExpiredVersion) {
       showExpiredPackageVersionError({ packageName: fullPackageName });
+    } else if (process.env.NODE_ENV !== "production") {
+      throw new Error("missing status handler");
     }
 
+    sharedLicenseStatuses[packageName] = { key: licenseKey, licenseVerifier: licenseStatus };
     return licenseStatus;
-  }, [packageName, releaseInfo]);
+  }, [packageName, releaseInfo, contextKey]);
 }

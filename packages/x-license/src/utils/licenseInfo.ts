@@ -1,7 +1,9 @@
 import { ponyfillGlobal } from "@mui/utils";
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-interface MuiLicenseInfo {
+/**
+ * @ignore - do not document.
+ */
+export interface MuiLicenseInfo {
   key: string | undefined;
 }
 
@@ -16,12 +18,11 @@ ponyfillGlobal.__MUI_LICENSE_INFO__ = ponyfillGlobal.__MUI_LICENSE_INFO__ || {
 
 export class LicenseInfo {
   private static getLicenseInfo() {
-    // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/no-unsafe-return
+    // eslint-disable-next-line no-underscore-dangle
     return ponyfillGlobal.__MUI_LICENSE_INFO__;
   }
 
   public static getLicenseKey(): MuiLicenseInfo["key"] {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return LicenseInfo.getLicenseInfo().key;
   }
 

@@ -8,11 +8,11 @@ import type { ICustomToken } from "./interfaces";
 
 @Controller("/metamask")
 export class AuthMetamaskController {
-  constructor(private readonly metamaskService: AuthMetamaskService) {}
+  constructor(private readonly authMetamaskService: AuthMetamaskService) {}
 
   @Public()
   @Post("/login")
   public login(@Body() dto: IMetamaskDto): Promise<ICustomToken> {
-    return this.metamaskService.login(dto);
+    return this.authMetamaskService.login(dto);
   }
 }

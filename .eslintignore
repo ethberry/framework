@@ -2,5 +2,7 @@
 **/dist/*
 besu/**
 
+/packages/x-license/
+
 # Add nothing to here!
 # Fix your shit!!!

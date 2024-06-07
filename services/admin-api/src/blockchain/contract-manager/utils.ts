@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 
-import { ChainLinkSupportedChains } from "@framework/types/dist/entities/integrations/chain-link/supported";
-import { NodeEnv } from "@framework/types";
+import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
 
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {

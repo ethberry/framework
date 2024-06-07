@@ -5,33 +5,29 @@ import { LICENSING_MODELS, LicensingModel } from "../utils/licensingModel";
 
 const licenseVersion = "2";
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface LicenseDetails {
   orderNumber: string;
   expiryDate: Date;
-  // TODO: to be made required once the store is updated
-  scope?: LicenseScope;
-  // TODO: to be made required once the store is updated
-  licensingModel?: LicensingModel;
+  scope: LicenseScope;
+  licensingModel: LicensingModel;
 }
 
 function getClearLicenseString(details: LicenseDetails) {
   if (details.scope && !LICENSE_SCOPES.includes(details.scope)) {
-    throw new Error("MUI: Invalid scope");
+    throw new Error("MUI X: Invalid scope");
   }
 
   if (details.licensingModel && !LICENSING_MODELS.includes(details.licensingModel)) {
-    throw new Error("MUI: Invalid sales model");
+    throw new Error("MUI X: Invalid licensing model");
   }
 
-  return `O=${details.orderNumber},E=${details.expiryDate.getTime()},S=${details.scope ?? "pro"},LM=${
-    details.licensingModel ?? "perpetual"
+  return `O=${details.orderNumber},E=${details.expiryDate.getTime()},S=${details.scope},LM=${
+    details.licensingModel
   },KV=${licenseVersion}`;
 }
 
 export function generateLicense(details: LicenseDetails) {
   const licenseStr = getClearLicenseString(details);
 
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   return `${md5(base64Encode(licenseStr))}${base64Encode(licenseStr)}`;
 }
