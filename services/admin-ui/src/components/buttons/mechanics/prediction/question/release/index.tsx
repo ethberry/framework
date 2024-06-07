@@ -12,7 +12,7 @@ export interface IPredictionQuestionReleaseButtonProps {
 }
 
 export const PredictionQuestionReleaseButton: FC<IPredictionQuestionReleaseButtonProps> = props => {
-  const { className, disabled, variant = ListActionVariant.button, question } = props;
+  const { className, disabled, variant = ListActionVariant.iconButton, question } = props;
 
   const handleClick = () => {
     console.info("CLICK");
