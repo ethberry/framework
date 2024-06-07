@@ -8,13 +8,8 @@ export const shouldDisableByContractType = (contract: IContract): boolean => {
     return true;
   }
 
-  if (
-    contractType === TokenType.ERC20 ||
-    contractType === TokenType.ERC721 ||
-    contractType === TokenType.ERC998 ||
-    contractType === TokenType.ERC1155
-  ) {
-    return contractStatus === ContractStatus.INACTIVE || contractFeatures.includes(ContractFeatures.EXTERNAL);
+  if (contractFeatures.includes(ContractFeatures.EXTERNAL)) {
+    return true;
   }
 
   return contractStatus === ContractStatus.INACTIVE;
