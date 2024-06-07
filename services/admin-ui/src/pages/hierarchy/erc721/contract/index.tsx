@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -100,7 +100,9 @@ export const Erc721Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        {process.env.BUSINESS_TYPE === BusinessType.B2B ? null : (
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <Fragment />
+        ) : (
           <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
             <FormattedMessage id="form.buttons.create" />
           </Button>

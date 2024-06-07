@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@lerna/legacy-package-management": "8.1.3",
+    "ajv": "8.8.2",
     "lerna": "8.1.3",
     "nx": "18.3.5",
     "ajv": "8.8.2"
@@ -55,9 +56,9 @@
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream",
     "precommit": "lint-staged",
-    "prepare:env": "bash scripts/set-env.sh development",
     "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
     "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",
+    "prepare:env": "bash scripts/set-env.sh development",
     "prepare:framework:dev": "sh scripts/prepare-fw.sh development besu",
     "prepare:framework:prod": "sh scripts/prepare-fw.sh production binance",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",
