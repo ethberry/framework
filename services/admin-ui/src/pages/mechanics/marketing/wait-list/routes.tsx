@@ -26,6 +26,7 @@ export const waitListRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <WaitListContracts /> },
           { path: "/wait-list/contracts/:id", element: <WaitListContracts /> },
+          { path: "/wait-list/contracts/:id/:action", element: <WaitListContracts /> },
         ],
       },
       {
@@ -34,6 +35,7 @@ export const waitListRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <WaitListList /> },
           { path: "/wait-list/list/:id", element: <WaitListList /> },
+          { path: "/wait-list/list/:id/:action", element: <WaitListList /> },
         ],
       },
       {
@@ -42,6 +44,7 @@ export const waitListRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <WaitListItem /> },
           { path: "/wait-list/item/:id", element: <WaitListItem /> },
+          { path: "/wait-list/item/:id/:action", element: <WaitListItem /> },
         ],
       },
     ],

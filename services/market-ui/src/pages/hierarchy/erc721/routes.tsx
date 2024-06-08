@@ -26,6 +26,7 @@ export const erc721Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc721ContractList /> },
           { path: "/erc721/contracts/:id", element: <Erc721Contract /> },
+          { path: "/erc721/contracts/:id/:action", element: <Erc721Contract /> },
         ],
       },
       {
@@ -33,6 +34,7 @@ export const erc721Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc721TemplateList /> },
           { path: "/erc721/templates/:id", element: <Erc721Template /> },
+          { path: "/erc721/templates/:id/:action", element: <Erc721Template /> },
         ],
       },
       {
@@ -40,6 +42,7 @@ export const erc721Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc721TokenList /> },
           { path: "/erc721/tokens/:id", element: <Erc721Token /> },
+          { path: "/erc721/tokens/:id/:action", element: <Erc721Token /> },
         ],
       },
     ],

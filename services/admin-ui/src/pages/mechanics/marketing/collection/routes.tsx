@@ -26,6 +26,7 @@ export const collectionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <CollectionContract /> },
           { path: "/collection/contracts/:id", element: <CollectionContract /> },
+          { path: "/collection/contracts/:id/:action", element: <CollectionContract /> },
         ],
       },
       {
@@ -34,6 +35,7 @@ export const collectionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <CollectionTemplate /> },
           { path: "/collection/templates/:id", element: <CollectionTemplate /> },
+          { path: "/collection/templates/:id/:action", element: <CollectionTemplate /> },
         ],
       },
       {
@@ -42,6 +44,7 @@ export const collectionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <CollectionToken /> },
           { path: "/collection/tokens/:id", element: <CollectionToken /> },
+          { path: "/collection/tokens/:id/:action", element: <CollectionToken /> },
         ],
       },
     ],

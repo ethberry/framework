@@ -27,6 +27,7 @@ export const ecommerceRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <ProductList /> },
           { path: "/ecommerce/products/:id", element: <Product /> },
+          { path: "/ecommerce/products/:id/:action", element: <Product /> },
         ],
       },
       {

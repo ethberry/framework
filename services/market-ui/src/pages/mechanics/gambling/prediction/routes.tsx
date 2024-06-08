@@ -21,6 +21,7 @@ export const predictionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PredictionQuestion /> },
           { path: "/prediction/question/:id", element: <PredictionQuestion /> },
+          { path: "/prediction/question/:id/:action", element: <PredictionQuestion /> },
         ],
       },
     ],

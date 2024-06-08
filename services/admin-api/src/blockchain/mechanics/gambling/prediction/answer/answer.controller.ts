@@ -21,6 +21,6 @@ export class PredictionAnswerController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<PredictionAnswerEntity | null> {
-    return this.predictionAnswerService.findOne({ id });
+    return this.predictionAnswerService.findOne({ id }, { relations: { question: true } });
   }
 }

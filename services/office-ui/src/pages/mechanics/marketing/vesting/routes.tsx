@@ -25,6 +25,7 @@ export const vestingRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <VestingContracts /> },
           { path: "/vesting/contracts/:id", element: <VestingContracts /> },
+          { path: "/vesting/contracts/:id/:action", element: <VestingContracts /> },
         ],
       },
       {
@@ -33,6 +34,7 @@ export const vestingRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <VestingClaim /> },
           { path: "/vesting/claims/:id", element: <VestingClaim /> },
+          { path: "/vesting/claims/:id/:action", element: <VestingClaim /> },
         ],
       },
     ],

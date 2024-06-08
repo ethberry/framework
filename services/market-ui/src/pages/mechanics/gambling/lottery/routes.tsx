@@ -23,6 +23,7 @@ export const lotteryRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LotteryList /> },
           { path: "/lottery/contracts/:id", element: <LotteryContract /> },
+          { path: "/lottery/contracts/:id/:action", element: <LotteryContract /> },
         ],
       },
       {
@@ -30,6 +31,7 @@ export const lotteryRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LotteryTicketTokenList /> },
           { path: "/lottery/ticket/tokens/:id", element: <LotteryTicketTokenList /> },
+          { path: "/lottery/ticket/tokens/:id/:action", element: <LotteryTicketTokenList /> },
         ],
       },
     ],

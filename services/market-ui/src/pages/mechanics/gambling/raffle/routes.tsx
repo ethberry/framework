@@ -23,6 +23,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleList /> },
           { path: "/raffle/contracts/:id", element: <RaffleContract /> },
+          { path: "/raffle/contracts/:id/:action", element: <RaffleContract /> },
         ],
       },
       {
@@ -30,6 +31,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleTicketTokenList /> },
           { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokenList /> },
+          { path: "/raffle/ticket/tokens/:id/:action", element: <RaffleTicketTokenList /> },
         ],
       },
     ],

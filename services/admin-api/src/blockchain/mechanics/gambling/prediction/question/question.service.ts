@@ -137,4 +137,8 @@ export class PredictionQuestionService {
     Object.assign(questionEntity, rest);
     return questionEntity.save();
   }
+
+  public async delete(where: FindOptionsWhere<PredictionQuestionEntity>): Promise<void> {
+    await this.predictionQuestionEntityRepository.delete(where);
+  }
 }

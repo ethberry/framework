@@ -23,6 +23,7 @@ export const ponziRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PonziRules /> },
           { path: "/ponzi/rules/:id", element: <PonziRules /> },
+          { path: "/ponzi/rules/:id/:action", element: <PonziRules /> },
         ],
       },
       { path: "/ponzi/leaderboard", element: <PonziLeaderboard /> },
@@ -31,6 +32,7 @@ export const ponziRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PonziDeposit /> },
           { path: "/ponzi/stakes/:id", element: <PonziDeposit /> },
+          { path: "/ponzi/stakes/:id/:action", element: <PonziDeposit /> },
         ],
       },
     ],

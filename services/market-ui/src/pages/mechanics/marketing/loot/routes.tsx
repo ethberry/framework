@@ -26,6 +26,7 @@ export const lootRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LootContractList /> },
           { path: "/loot/contracts/:id", element: <LootContract /> },
+          { path: "/loot/contracts/:id/:action", element: <LootContract /> },
         ],
       },
       {
@@ -33,6 +34,7 @@ export const lootRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LootBoxList /> },
           { path: "/loot/boxes/:id", element: <LootBox /> },
+          { path: "/loot/boxes/:id/:action", element: <LootBox /> },
         ],
       },
       {
@@ -40,6 +42,7 @@ export const lootRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LootTokenList /> },
           { path: "/loot/tokens/:id", element: <LootBoxToken /> },
+          { path: "/loot/tokens/:id/:action", element: <LootBoxToken /> },
         ],
       },
     ],

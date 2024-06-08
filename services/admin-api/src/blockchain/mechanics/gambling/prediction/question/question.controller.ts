@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+  Delete,
+  HttpCode,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -45,5 +57,11 @@ export class PredictionQuestionController {
     @User() userEntity: UserEntity,
   ): Promise<PredictionQuestionEntity> {
     return this.predictionQuestionService.update({ id }, dto, userEntity);
+  }
+
+  @Delete("/:id")
+  @HttpCode(204)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
+    await this.predictionQuestionService.delete({ id });
   }
 }

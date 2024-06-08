@@ -27,6 +27,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleContracts /> },
           { path: "/raffle/contracts/:id", element: <RaffleContracts /> },
+          { path: "/raffle/contracts/:id/:action", element: <RaffleContracts /> },
         ],
       },
       {
@@ -35,6 +36,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleRounds /> },
           { path: "/raffle/rounds/:id", element: <RaffleRounds /> },
+          { path: "/raffle/rounds/:id/:action", element: <RaffleRounds /> },
         ],
       },
       {
@@ -43,6 +45,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleTicketContracts /> },
           { path: "/raffle/ticket/contracts/:id", element: <RaffleTicketContracts /> },
+          { path: "/raffle/ticket/contracts/:id/:action", element: <RaffleTicketContracts /> },
         ],
       },
       {
@@ -51,6 +54,7 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleTicketTokens /> },
           { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokens /> },
+          { path: "/raffle/ticket/tokens/:id/:action", element: <RaffleTicketTokens /> },
         ],
       },
     ],

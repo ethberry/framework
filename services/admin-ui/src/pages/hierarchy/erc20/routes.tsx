@@ -24,6 +24,7 @@ export const erc20Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc20Contract /> },
           { path: "/erc20/contracts/:id", element: <Erc20Contract /> },
+          { path: "/erc20/contracts/:id/:action", element: <Erc20Contract /> },
         ],
       },
     ],

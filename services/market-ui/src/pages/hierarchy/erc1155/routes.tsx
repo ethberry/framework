@@ -26,6 +26,7 @@ export const erc1155Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc1155ContractList /> },
           { path: "/erc1155/contracts/:id", element: <Erc1155Contract /> },
+          { path: "/erc1155/contracts/:id/:action", element: <Erc1155Contract /> },
         ],
       },
       {
@@ -33,6 +34,7 @@ export const erc1155Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc1155TemplateList /> },
           { path: "/erc1155/templates/:id", element: <Erc1155Template /> },
+          { path: "/erc1155/templates/:id/:action", element: <Erc1155Template /> },
         ],
       },
       {
@@ -40,6 +42,7 @@ export const erc1155Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc1155TokenList /> },
           { path: "/erc1155/tokens/:id", element: <Erc1155Token /> },
+          { path: "/erc1155/tokens/:id/:action", element: <Erc1155Token /> },
         ],
       },
     ],

@@ -27,6 +27,7 @@ export const recipesRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <CraftList /> },
           { path: "/recipes/craft/:id", element: <CraftItem /> },
+          { path: "/recipes/craft/:id/:action", element: <CraftItem /> },
         ],
       },
       {
@@ -35,6 +36,7 @@ export const recipesRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <MergeList /> },
           { path: "/recipes/merge/:id", element: <MergeItem /> },
+          { path: "/recipes/merge/:id/:action", element: <MergeItem /> },
         ],
       },
     ],

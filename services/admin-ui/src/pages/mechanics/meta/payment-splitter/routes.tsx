@@ -24,6 +24,7 @@ export const paymentSplitterRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PaymentSplitterContracts /> },
           { path: "/payment-splitter/contracts/:id", element: <PaymentSplitterContracts /> },
+          { path: "/payment-splitter/contracts/:id/:action", element: <PaymentSplitterContracts /> },
         ],
       },
     ],

@@ -26,6 +26,7 @@ export const predictionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PredictionContract /> },
           { path: "/prediction/contracts/:id", element: <PredictionContract /> },
+          { path: "/prediction/contracts/:id/:action", element: <PredictionContract /> },
         ],
       },
       {
@@ -33,7 +34,7 @@ export const predictionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PredictionQuestions /> },
-          { path: "/prediction/questions/:id", element: <PredictionQuestions /> },
+          { path: "/prediction/questions/:id/:action", element: <PredictionQuestions /> },
         ],
       },
       {
@@ -42,6 +43,7 @@ export const predictionRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PredictionAnswers /> },
           { path: "/prediction/answers/:id", element: <PredictionAnswers /> },
+          { path: "/prediction/answers/:id/:action", element: <PredictionAnswers /> },
         ],
       },
     ],
