@@ -16,7 +16,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { ILootBox, ILootBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, LootBoxStatus, TokenType } from "@framework/types";
 
-import { MintLootBoxButton } from "../../../../../components/buttons";
+import { LootBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { LootboxEditDialog } from "./edit";
 
@@ -125,7 +125,7 @@ export const LootBox: FC = () => {
                   message="form.buttons.delete"
                   disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE}
                 />
-                <MintLootBoxButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
+                <LootBoxMintButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
               </ListActions>
             </StyledListItem>
           ))}

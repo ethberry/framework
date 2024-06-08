@@ -17,7 +17,7 @@ import {
   EthListenerAddButton,
   EthListenerRemoveButton,
   GrantRoleButton,
-  LootBoxMintButton,
+  LootContractMintButton,
   LootContractDeployButton,
   PauseButton,
   RenounceRoleButton,
@@ -114,7 +114,7 @@ export const LootContract: FC = () => {
                 <UnWhitelistButton contract={contract} />
                 <PauseButton contract={contract} />
                 <UnPauseButton contract={contract} />
-                <LootBoxMintButton contract={contract} />
+                <LootContractMintButton contract={contract} />
                 <ContractAllowanceButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />

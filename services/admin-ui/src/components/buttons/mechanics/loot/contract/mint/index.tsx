@@ -14,14 +14,14 @@ import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintLootBoxDto } from "./dialog";
 import { MintLootBoxDialog } from "./dialog";
 
-export interface ILootBoxMintButtonProps {
+export interface ILootContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
+export const LootContractMintButton: FC<ILootContractMintButtonProps> = props => {
   const {
     className,
     contract,
