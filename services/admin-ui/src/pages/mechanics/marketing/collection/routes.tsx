@@ -25,7 +25,6 @@ export const collectionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <CollectionContract /> },
-          { path: "/collection/contracts/:id", element: <CollectionContract /> },
           { path: "/collection/contracts/:id/:action", element: <CollectionContract /> },
         ],
       },

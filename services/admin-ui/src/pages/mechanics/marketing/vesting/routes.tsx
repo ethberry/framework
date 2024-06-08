@@ -24,7 +24,6 @@ export const vestingRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <VestingContracts /> },
-          { path: "/vesting/contracts/:id", element: <VestingContracts /> },
           { path: "/vesting/contracts/:id/:action", element: <VestingContracts /> },
         ],
       },

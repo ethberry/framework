@@ -25,7 +25,6 @@ export const lootRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <LootContract /> },
-          { path: "/loot/contracts/:id", element: <LootContract /> },
           { path: "/loot/contracts/:id/:action", element: <LootContract /> },
         ],
       },

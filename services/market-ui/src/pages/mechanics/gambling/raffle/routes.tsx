@@ -22,7 +22,6 @@ export const raffleRoutes: Array<RouteObject> = [
         path: "/raffle/contracts",
         children: [
           { index: true, element: <RaffleList /> },
-          { path: "/raffle/contracts/:id", element: <RaffleContract /> },
           { path: "/raffle/contracts/:id/:action", element: <RaffleContract /> },
         ],
       },

@@ -23,7 +23,6 @@ export const nativeRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <NativeContract /> },
-          { path: "/native/contracts/:id", element: <NativeContract /> },
           { path: "/native/contracts/:id/:action", element: <NativeContract /> },
         ],
       },

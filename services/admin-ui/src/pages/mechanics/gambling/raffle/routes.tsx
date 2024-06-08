@@ -26,7 +26,6 @@ export const raffleRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <RaffleContracts /> },
-          { path: "/raffle/contracts/:id", element: <RaffleContracts /> },
           { path: "/raffle/contracts/:id/:action", element: <RaffleContracts /> },
         ],
       },
@@ -44,7 +43,6 @@ export const raffleRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <RaffleTicketContracts /> },
-          { path: "/raffle/ticket/contracts/:id", element: <RaffleTicketContracts /> },
           { path: "/raffle/ticket/contracts/:id/:action", element: <RaffleTicketContracts /> },
         ],
       },

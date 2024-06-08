@@ -33,7 +33,6 @@ export const marketplaceRoutes: Array<RouteObject> = [
         path: "/marketplace/contracts",
         children: [
           { index: true, element: <ContractList /> },
-          { path: "/marketplace/contracts/:id", element: <Contract /> },
           { path: "/marketplace/contracts/:id/:action", element: <Contract /> },
         ],
       },

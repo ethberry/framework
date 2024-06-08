@@ -26,7 +26,6 @@ export const erc998Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc998Contract /> },
-          { path: "/erc998/contracts/:id", element: <Erc998Contract /> },
           { path: "/erc998/contracts/:id/:action", element: <Erc998Contract /> },
         ],
       },

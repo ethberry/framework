@@ -25,7 +25,6 @@ export const mysteryRoutes: Array<RouteObject> = [
         path: "/mystery/contracts",
         children: [
           { index: true, element: <MysteryContractList /> },
-          { path: "/mystery/contracts/:id", element: <MysteryContract /> },
           { path: "/mystery/contracts/:id/:action", element: <MysteryContract /> },
         ],
       },

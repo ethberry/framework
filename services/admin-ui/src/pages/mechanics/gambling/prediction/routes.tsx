@@ -25,7 +25,6 @@ export const predictionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PredictionContract /> },
-          { path: "/prediction/contracts/:id", element: <PredictionContract /> },
           { path: "/prediction/contracts/:id/:action", element: <PredictionContract /> },
         ],
       },

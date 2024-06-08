@@ -25,7 +25,6 @@ export const mysteryRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <MysteryContract /> },
-          { path: "/mystery/contracts/:id", element: <MysteryContract /> },
           { path: "/mystery/contracts/:id/:action", element: <MysteryContract /> },
         ],
       },

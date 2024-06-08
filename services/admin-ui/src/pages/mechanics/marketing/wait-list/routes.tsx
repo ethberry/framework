@@ -25,7 +25,6 @@ export const waitListRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <WaitListContracts /> },
-          { path: "/wait-list/contracts/:id", element: <WaitListContracts /> },
           { path: "/wait-list/contracts/:id/:action", element: <WaitListContracts /> },
         ],
       },

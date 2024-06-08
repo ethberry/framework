@@ -26,7 +26,6 @@ export const ponziRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PonziContract /> },
-          { path: "/ponzi/contracts/:id", element: <PonziContract /> },
           { path: "/ponzi/contracts/:id/:action", element: <PonziContract /> },
         ],
       },

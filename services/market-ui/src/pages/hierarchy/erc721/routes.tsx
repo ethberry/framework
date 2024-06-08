@@ -25,7 +25,6 @@ export const erc721Routes: Array<RouteObject> = [
         path: "/erc721/contracts",
         children: [
           { index: true, element: <Erc721ContractList /> },
-          { path: "/erc721/contracts/:id", element: <Erc721Contract /> },
           { path: "/erc721/contracts/:id/:action", element: <Erc721Contract /> },
         ],
       },
