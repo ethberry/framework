@@ -4,11 +4,11 @@ import { Transform } from "class-transformer";
 import { CronExpression } from "@nestjs/schedule";
 
 import type { ILotteryScheduleUpdateDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
 
+// TODO extend ScheduleDto
 export class LotteryScheduleUpdateDto implements ILotteryScheduleUpdateDto {
   @ApiPropertyOptional({
-    enum: ContractStatus,
+    enum: CronExpression,
   })
   @IsOptional()
   @Transform(({ value }) => value as CronExpression)
