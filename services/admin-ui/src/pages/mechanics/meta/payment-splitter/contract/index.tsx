@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 // import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
@@ -21,10 +21,10 @@ export const PaymentSplitterContracts: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleSearch,
     handleToggleFilters,
     handleView,
@@ -110,14 +110,14 @@ export const PaymentSplitterContracts: FC = () => {
       <PaymentSplitterViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
 
       {/* <DeleteDialog */}
       {/*  onCancel={handleDeleteCancel} */}
       {/*  onConfirm={handleDeleteConfirm} */}
-      {/*  open={isDeleteDialogOpen} */}
+      {/*  open={action === CollectionActions.delete} */}
       {/*  initialValues={selected} */}
       {/* /> */}
     </Grid>

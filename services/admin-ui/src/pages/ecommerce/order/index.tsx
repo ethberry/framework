@@ -10,7 +10,7 @@ import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyOrder } from "../../../components/common/interfaces";
@@ -32,11 +32,10 @@ export const Order: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isDeleteDialogOpen,
-    isEditDialogOpen,
     handleCreate,
     handleDelete,
     handleDeleteCancel,
@@ -118,7 +117,7 @@ export const Order: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
         getTitle={(order: IOrder) => `Order #${order.id}`}
       />
@@ -126,7 +125,7 @@ export const Order: FC = () => {
       <EditOrderDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

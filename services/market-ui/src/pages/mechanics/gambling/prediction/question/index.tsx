@@ -3,7 +3,7 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { IPredictionQuestion, IPredictionQuestionSearchDto } from "@framework/types";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -15,9 +15,9 @@ export const PredictionQuestion: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isViewDialogOpen,
     handleSearch,
     handleViewCancel,
     handleViewConfirm,
@@ -61,7 +61,7 @@ export const PredictionQuestion: FC = () => {
       <PredictionQuestionViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

@@ -24,7 +24,7 @@ export const Rent: FC = () => {
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
+    action,
     handleCreate,
     handleEdit,
     handleEditCancel,
@@ -106,7 +106,7 @@ export const Rent: FC = () => {
       <RentEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

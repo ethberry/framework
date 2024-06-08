@@ -5,7 +5,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -24,10 +24,9 @@ export const WaitListList: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleEdit,
     handleCreate,
     handleEditCancel,
@@ -104,14 +103,14 @@ export const WaitListList: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <WaitListListEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         testId="WaitListListEditDialog"
         initialValues={selected}
       />

@@ -32,7 +32,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     search,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
+    action,
     handleCreate,
     handleEditCancel,
     handleToggleFilters,
@@ -112,7 +112,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
       <WrapperEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={{
           tokenType: TokenType.ERC721,
           contract: { address: constants.AddressZero },

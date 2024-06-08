@@ -7,7 +7,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IParameter } from "@framework/types";
 
@@ -20,8 +20,7 @@ export const Parameter: FC = () => {
     search,
     selected,
     isLoading,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
+    action,
     handleCreate,
     handleEdit,
     handleEditCancel,
@@ -74,7 +73,7 @@ export const Parameter: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
         getTitle={(parameter: IParameter) => parameter.parameterName}
       />
@@ -82,7 +81,7 @@ export const Parameter: FC = () => {
       <EditParameterDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
         parameters={rows}
       />

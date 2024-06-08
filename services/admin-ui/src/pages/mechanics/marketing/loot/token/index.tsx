@@ -7,7 +7,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc721TokenViewDialog } from "../../../../hierarchy/erc721/token/view";
@@ -17,10 +17,10 @@ export const LootToken: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleToggleFilters,
     handleView,
     handleViewCancel,
@@ -84,7 +84,7 @@ export const LootToken: FC = () => {
       <Erc721TokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

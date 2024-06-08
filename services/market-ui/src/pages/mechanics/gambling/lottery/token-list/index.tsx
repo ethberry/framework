@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { ILotteryToken, ILotteryTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 
 import { LotteryRewardButton } from "../../../../../components/buttons";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
@@ -18,11 +18,11 @@ export const LotteryTicketTokenList: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
     handleToggleFilters,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -93,7 +93,7 @@ export const LotteryTicketTokenList: FC = () => {
       <LotteryTokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

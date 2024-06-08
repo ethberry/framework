@@ -21,7 +21,7 @@ export const WaitListItem: FC = () => {
     search,
     selected,
     isLoading,
-    isEditDialogOpen,
+    action,
     handleCreate,
     handleEditConfirm,
     handleEditCancel,
@@ -69,7 +69,7 @@ export const WaitListItem: FC = () => {
       <WaitListJoinDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Fragment>

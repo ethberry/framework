@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IRaffleRound, IRaffleToken, IRaffleTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 
 import { RaffleRewardButton } from "../../../../../components/buttons";
 import { RaffleTokenSearchForm } from "./form";
@@ -17,11 +17,11 @@ export const RaffleTicketTokenList: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
     handleToggleFilters,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -84,7 +84,7 @@ export const RaffleTicketTokenList: FC = () => {
       <RaffleTokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>
