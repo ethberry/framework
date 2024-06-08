@@ -1,7 +1,8 @@
-import { number, object, string } from "yup";
+import { mixed, number, object, string } from "yup";
 
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 import { reISO8601 } from "@gemunion/constants";
+import { VestingContractTemplates } from "@framework/types";
 
 export const validationSchema = object().shape({
   owner: addressValidationSchema,
@@ -19,4 +20,7 @@ export const validationSchema = object().shape({
     .integer("form.validations.badInput")
     .max(10000, "form.validations.rangeOverflow")
     .min(1, "form.validations.rangeUnderflow"),
+  contractTemplate: mixed<VestingContractTemplates>()
+    .oneOf(Object.values(VestingContractTemplates))
+    .required("form.validations.valueMissing"),
 });

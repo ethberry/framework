@@ -170,6 +170,11 @@ export enum StakingContractTemplates {
   "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
 }
 
+export enum VestingContractTemplates {
+  "DAILY" = "DAILY",
+  "MONTHLY" = "MONTHLY",
+}
+
 export enum ContractFeatures {
   // SYSTEM
   "WITHDRAW" = "WITHDRAW",

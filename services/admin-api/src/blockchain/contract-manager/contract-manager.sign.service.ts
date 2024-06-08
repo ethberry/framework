@@ -31,6 +31,7 @@ import {
   PonziContractTemplates,
   PredictionContractTemplates,
   StakingContractTemplates,
+  VestingContractTemplates,
   TokenType,
 } from "@framework/types";
 
@@ -1082,11 +1083,23 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto, chainId: number) {
-    return getContractABI(
-      "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json",
-      chainId,
-    );
+  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto, chainId: number) {
+    const { contractTemplate } = dto;
+
+    switch (contractTemplate) {
+      case VestingContractTemplates.DAILY:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/DailyVesting.sol/DailyVesting.json",
+          chainId,
+        );
+      case VestingContractTemplates.MONTHLY:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/MonthlyVesting.sol/MonthlyVesting.json",
+          chainId,
+        );
+      default:
+        throw new NotFoundException("templateNotFound");
+    }
   }
 
   // MODULE:Loot
