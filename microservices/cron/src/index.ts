@@ -5,9 +5,12 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { AppModule } from "./app.module";
+import { MsValidationPipe } from "./common/utils/MsValidationPipe";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useGlobalPipes(new MsValidationPipe());
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
@@ -16,13 +19,16 @@ async function bootstrap(): Promise<void> {
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
   const rmqQueueCron = configService.get<string>("RMQ_QUEUE_CRON", "cron");
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: [rmqUrl],
-      queue: rmqQueueCron,
+  app.connectMicroservice<MicroserviceOptions>(
+    {
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueCron,
+      },
     },
-  });
+    { inheritAppConfig: true },
+  );
 
   await app.startAllMicroservices().then(() => console.info(`Cron service is subscribed to ${rmqUrl}/${rmqQueueCron}`));
 
