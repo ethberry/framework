@@ -1,13 +1,8 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsOptional, Min } from "class-validator";
+import { Mixin } from "ts-mixer";
+
+import { ChainIdOptionalDto } from "@gemunion/nest-js-validators";
 
 import type { IProfileUpdateDto } from "../interfaces";
 import { UserCommonDto } from "../../../common/dto";
 
-export class ProfileUpdateDto extends UserCommonDto implements IProfileUpdateDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public chainId: number;
-}
+export class ProfileUpdateDto extends Mixin(UserCommonDto, ChainIdOptionalDto) implements IProfileUpdateDto {}

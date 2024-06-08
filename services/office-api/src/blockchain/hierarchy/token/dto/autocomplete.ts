@@ -2,7 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ITokenAutocompleteDto, TokenStatus } from "@framework/types";
+import { TokenStatus } from "@framework/types";
+import type { ITokenAutocompleteDto } from "@framework/types";
 
 export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @ApiPropertyOptional({

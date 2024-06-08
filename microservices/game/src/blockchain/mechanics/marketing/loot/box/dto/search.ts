@@ -1,13 +1,14 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { ILootBoxSearchDto } from "@framework/types";
 import { LootBoxStatus } from "@framework/types";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { ChainIdDto, IsBigInt } from "@gemunion/nest-js-validators";
 
-export class LootBoxSearchDto extends SearchDto implements ILootBoxSearchDto {
+export class LootBoxSearchDto extends Mixin(SearchDto, ChainIdDto) implements ILootBoxSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -33,14 +34,6 @@ export class LootBoxSearchDto extends SearchDto implements ILootBoxSearchDto {
   @IsOptional()
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public templateIds: Array<number>;
   public lootBoxStatus: Array<LootBoxStatus>;

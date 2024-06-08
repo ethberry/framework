@@ -16,7 +16,7 @@ import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 import { Seaport } from "@opensea/seaport-js";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { ITokenSellDto } from "./interfaces";
+import type { ITokenSellDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import {
   calculatePricesFees,

@@ -1,11 +1,12 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsEnum, IsOptional } from "class-validator";
+import { Transform } from "class-transformer";
 
+import { ChainIdDto } from "@gemunion/nest-js-validators";
 import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-export class ContractAutocompleteDto implements IContractAutocompleteDto {
+export class ContractAutocompleteDto extends ChainIdDto implements IContractAutocompleteDto {
   @ApiPropertyOptional({
     enum: TokenType,
     isArray: true,
@@ -37,14 +38,6 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Transform(({ value }) => value as Array<ModuleType>)
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public contractStatus: Array<ContractStatus>;
   public excludeFeatures: Array<ContractFeatures>;

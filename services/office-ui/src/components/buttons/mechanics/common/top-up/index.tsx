@@ -11,7 +11,8 @@ import { TokenType } from "@framework/types";
 
 import TopUpABI from "@framework/abis/topUp/ExchangeMockFacet.json";
 
-import { ITopUpDto, TopUpDialog } from "./dialog";
+import { TopUpDialog } from "./dialog";
+import type { ITopUpDto } from "./dialog";
 import { shouldDisableByContractType } from "../../../../utils";
 
 export interface ITopUpButtonProps {

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TokenType } from "@gemunion/types-blockchain";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 import { formatTokenTitle } from "../../../../utils/token";
 

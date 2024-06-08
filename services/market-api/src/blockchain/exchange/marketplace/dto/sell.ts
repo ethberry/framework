@@ -6,7 +6,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, CoinDto, IsBigInt, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
-import { ITokenSellDto } from "../interfaces";
+import type { ITokenSellDto } from "../interfaces";
 
 export class SellTokenDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ITokenSellDto {
   @ApiProperty({

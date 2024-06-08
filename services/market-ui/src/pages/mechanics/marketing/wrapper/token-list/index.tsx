@@ -10,7 +10,8 @@ import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { IToken, ITokenSearchDto } from "@framework/types";
 
 import MintBoxABI from "@framework/abis/mintBox/ERC721Wrapper.json";
 

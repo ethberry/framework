@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 import { TokenSellOnOpenSeaButton, WrapperUnpackButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";

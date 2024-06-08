@@ -1,11 +1,6 @@
-import { IsEthereumAddress, IsString } from "class-validator";
+import { Mixin } from "ts-mixer";
 
+import { ScheduleDto, AddressDto } from "@gemunion/nest-js-validators";
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
 
-import { ScheduleDto } from "../../../../../common/dto/schedule";
-
-export class RaffleScheduleUpdateRmqDto extends ScheduleDto implements IRaffleScheduleUpdateRmq {
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  public address: string;
-}
+export class RaffleScheduleUpdateRmqDto extends Mixin(AddressDto, ScheduleDto) implements IRaffleScheduleUpdateRmq {}

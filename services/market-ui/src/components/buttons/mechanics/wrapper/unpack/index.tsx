@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import UnpackABI from "@framework/abis/unpack/WrapperMock.json";

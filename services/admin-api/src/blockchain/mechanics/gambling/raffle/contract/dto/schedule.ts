@@ -1,17 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
-import { CronExpression } from "@nestjs/schedule";
-
+import { ScheduleOptionalDto } from "@gemunion/nest-js-validators";
 import type { IRaffleScheduleUpdateDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
 
-export class RaffleScheduleUpdateDto implements IRaffleScheduleUpdateDto {
-  @ApiPropertyOptional({
-    enum: ContractStatus,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as CronExpression)
-  @IsEnum(CronExpression, { message: "badInput" })
-  public schedule: CronExpression;
-}
+export class RaffleScheduleUpdateDto extends ScheduleOptionalDto implements IRaffleScheduleUpdateDto {}
