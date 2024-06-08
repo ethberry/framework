@@ -1,18 +1,21 @@
-import { BadRequestException, ValidationPipe } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  ValidationError,
+  ValidationPipe,
+  ValidationPipeOptions,
+} from "@nestjs/common";
 
-export const MsValidationPipe = new ValidationPipe({
-  exceptionFactory: errors => {
-    const errorMessages = errors.map(err => {
-      return {
-        property: err.property,
-        error: err.constraints,
-        value: err.value,
-      };
+@Injectable()
+export class MsValidationPipe extends ValidationPipe {
+  constructor(options?: ValidationPipeOptions) {
+    super({
+      exceptionFactory: (errors: Array<ValidationError>): BadRequestException => new BadRequestException(errors),
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      forbidUnknownValues: true,
+      ...options,
     });
-
-    return new BadRequestException({
-      message: `Bad Request Exception: ${JSON.stringify(errorMessages, null, "\t")}`,
-      errors,
-    });
-  },
-});
+  }
+}

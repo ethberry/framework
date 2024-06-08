@@ -10,7 +10,7 @@ import { MsValidationPipe } from "./common/utils/MsValidationPipe";
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.useGlobalPipes(MsValidationPipe);
+  app.useGlobalPipes(new MsValidationPipe());
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
