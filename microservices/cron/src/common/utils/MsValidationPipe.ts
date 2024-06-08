@@ -1,10 +1,10 @@
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
 
-export const ValidationDtoPipe = new ValidationPipe({
+export const MsValidationPipe = new ValidationPipe({
   exceptionFactory: errors => {
     const errorMessages = errors.map(err => {
       return {
-        field: err.property,
+        property: err.property,
         error: err.constraints,
         value: err.value,
       };
