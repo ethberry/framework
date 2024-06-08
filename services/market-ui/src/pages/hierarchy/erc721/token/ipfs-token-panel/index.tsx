@@ -5,7 +5,7 @@ import { CardActions, CardContent, Grid } from "@mui/material";
 import type { IToken } from "@framework/types";
 
 import { StyledCard, StyledToolbar, StyledTypography } from "../common-token-panel/styled";
-import { IpfsInfuraButton } from "../../../../../components/buttons/ipfs/infura";
+import { IpfsInfuraButton } from "../../../../../components/buttons";
 
 export interface IIpfsPanelProps {
   token: IToken;

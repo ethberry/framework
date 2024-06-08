@@ -5,33 +5,35 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import {
   BusinessType,
+  ContractStatus,
   IContract,
   IContractSearchDto,
   IUser,
-  ContractStatus,
   NativeContractFeatures,
 } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
-import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
-import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
-import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
-import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
-import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
-import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
-import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
+import {
+  AllowanceButton,
+  BlacklistButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  ContractMintButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  TransferButton,
+  UnBlacklistButton,
+  UnWhitelistButton,
+  WhitelistButton,
+} from "../../../../components/buttons";
 import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
@@ -122,7 +124,7 @@ export const NativeContract: FC = () => {
                 <UnBlacklistButton contract={contract} disabled={true} />
                 <WhitelistButton contract={contract} disabled={true} />
                 <UnWhitelistButton contract={contract} disabled={true} />
-                <MintButton contract={contract} disabled={true} />
+                <ContractMintButton contract={contract} disabled={true} />
                 <AllowanceButton contract={contract} disabled={true} />
                 <TransferButton contract={contract} disabled={true} />
                 <RoyaltyButton contract={contract} disabled={true} />

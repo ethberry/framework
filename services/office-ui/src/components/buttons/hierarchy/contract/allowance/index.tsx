@@ -13,14 +13,14 @@ import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/setApproval
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 import { shouldDisableByContractType } from "../../../../utils";
 
-export interface IAllowanceButtonProps {
+export interface IContractAllowanceButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
+export const ContractAllowanceButton: FC<IContractAllowanceButtonProps> = props => {
   const {
     className,
     contract,

@@ -5,30 +5,32 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, MysteryContractFeatures } from "@framework/types";
 
-import { MysteryContractDeployButton } from "../../../../../components/buttons";
+import {
+  AllowanceButton,
+  BlacklistButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  MysteryContractDeployButton,
+  MysteryContractMintButton,
+  PauseButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  TransferButton,
+  UnBlacklistButton,
+  UnPauseButton,
+  UnWhitelistButton,
+  WhitelistButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { BlacklistButton } from "../../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../../components/buttons/extensions/blacklist-remove";
-import { WhitelistButton } from "../../../../../components/buttons/extensions/whitelist-add";
-import { UnWhitelistButton } from "../../../../../components/buttons/extensions/whitelist-remove";
-import { PauseButton } from "../../../../../components/buttons/mechanics/common/pause";
-import { UnPauseButton } from "../../../../../components/buttons/mechanics/common/unpause";
-import { MysteryBoxMintButton } from "../../../../../components/buttons/mechanics/mystery/contract/mint";
-import { AllowanceButton } from "../../../../../components/buttons/hierarchy/contract/allowance";
-import { RoyaltyButton } from "../../../../../components/buttons/common/royalty";
-import { TransferButton } from "../../../../../components/buttons/common/transfer";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
@@ -107,7 +109,7 @@ export const MysteryContract: FC = () => {
                   <UnWhitelistButton contract={contract} />
                   <PauseButton contract={contract} />
                   <UnPauseButton contract={contract} />
-                  <MysteryBoxMintButton contract={contract} />
+                  <MysteryContractMintButton contract={contract} />
                   <AllowanceButton contract={contract} />
                   <RoyaltyButton contract={contract} />
                   <TransferButton contract={contract} />

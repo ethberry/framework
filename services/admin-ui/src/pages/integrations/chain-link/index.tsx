@@ -11,13 +11,15 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
-
-import { ChainLinkSubscriptionCreateButton } from "../../../components/buttons/integrations/chain-link/create-subscription";
-import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
-import { ChainLinkAddConsumerButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
-import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperMixin } from "./styled";
 import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
 import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
+
+import {
+  ChainLinkAddConsumerButton,
+  ChainLinkFundButton,
+  ChainLinkSubscriptionCreateButton,
+} from "../../../components/buttons";
+import { StyledDataGridPremium, StyledGrid, StyledSelect, wrapperMixin } from "./styled";
 
 export interface IVrfSubscriptionData {
   owner: string;

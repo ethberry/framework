@@ -10,8 +10,7 @@ import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { VestingDeployButton } from "../../../../../components/buttons/mechanics/vesting/deploy";
-import { ClaimRedeemButton } from "../../../../../components/buttons";
+import { ClaimRedeemButton, VestingDeployButton } from "../../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {

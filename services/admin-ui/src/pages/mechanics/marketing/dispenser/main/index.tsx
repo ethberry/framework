@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
-import { DispenserUploadButton } from "../../../../../components/buttons/mechanics/dispenser/upload";
+import { DispenserUploadButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "./allowance";
 
 export const Dispenser: FC = () => {

@@ -13,14 +13,14 @@ import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721M
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
 
-export interface IMintButtonProps {
+export interface IMysteryBoxMintButtonProps {
   className?: string;
   mystery: IMysteryBox;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   const {
     className,
     mystery: { template },

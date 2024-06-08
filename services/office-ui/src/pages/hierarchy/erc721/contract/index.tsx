@@ -5,34 +5,36 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import {
   BusinessType,
+  ContractStatus,
+  Erc721ContractFeatures,
   IContract,
   IContractSearchDto,
   IUser,
-  ContractStatus,
-  Erc721ContractFeatures,
 } from "@framework/types";
 
-import { Erc721ContractDeployButton } from "../../../../components/buttons";
+import {
+  AllowanceButton,
+  BlacklistButton,
+  Erc721ContractDeployButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  ContractMintButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  TransferButton,
+  UnBlacklistButton,
+  UnWhitelistButton,
+  WhitelistButton,
+} from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
-import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
-import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
-import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
-import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
-import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
-import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
-import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
 import { Erc721ContractEditDialog } from "./edit";
 
 export const Erc721Contract: FC = () => {
@@ -136,7 +138,7 @@ export const Erc721Contract: FC = () => {
                   <UnBlacklistButton contract={contract} />
                   <WhitelistButton contract={contract} />
                   <UnWhitelistButton contract={contract} />
-                  <MintButton contract={contract} />
+                  <ContractMintButton contract={contract} />
                   <AllowanceButton contract={contract} />
                   <TransferButton contract={contract} />
                   <RoyaltyButton contract={contract} />

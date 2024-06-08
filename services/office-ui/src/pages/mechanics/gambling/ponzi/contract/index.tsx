@@ -6,22 +6,24 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, PonziContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { PonziContractDeployButton } from "../../../../../components/buttons";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { PonziBalanceButton } from "../../../../../components/buttons/mechanics/ponzi/ponzi-balances";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
+import {
+  AllowanceButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  PonziBalanceButton,
+  PonziContractDeployButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  TopUpButton,
+} from "../../../../../components/buttons";
 import { PonziContractEditDialog } from "./edit";
 
 export const PonziContract: FC = () => {

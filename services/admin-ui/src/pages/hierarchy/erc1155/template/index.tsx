@@ -14,7 +14,7 @@ import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
+import { TemplateMintButton } from "../../../../components/buttons";
 import { Erc1155TemplateEditDialog } from "./edit";
 
 export const Erc1155Template: FC = () => {
@@ -92,7 +92,7 @@ export const Erc1155Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintButton template={template} />
+                <TemplateMintButton template={template} />
               </ListActions>
             </StyledListItem>
           ))}

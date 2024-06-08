@@ -14,14 +14,14 @@ import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
 
-export interface IMysteryBoxMintButtonProps {
+export interface IMysteryContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
+export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = props => {
   const {
     className,
     contract,

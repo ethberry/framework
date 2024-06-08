@@ -14,9 +14,11 @@ import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/types";
 
-import { WaitListListCreateButton } from "../../../../../components/buttons/mechanics/wait-list/list/create";
-import { WaitListListUploadButton } from "../../../../../components/buttons/mechanics/wait-list/list/upload";
-import { WaitListListGenerateButton } from "../../../../../components/buttons/mechanics/wait-list/list/generate";
+import {
+  WaitListListCreateButton,
+  WaitListListUploadButton,
+  WaitListListGenerateButton,
+} from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { WaitListListEditDialog } from "./edit";
 

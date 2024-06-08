@@ -16,10 +16,10 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MysteryBoxMintButton } from "../../../../../components/buttons/mechanics/mystery/box/mint";
+import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { ContractInput } from "../../../../../components/forms/template-search/contract-input";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
-import { MysteryboxEditDialog } from "./edit";
+import { MysteryBoxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
   const { profile } = useUser<IUser>();
@@ -153,7 +153,7 @@ export const MysteryBox: FC = () => {
         initialValues={selected}
       />
 
-      <MysteryboxEditDialog
+      <MysteryBoxEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={action === CollectionActions.edit}

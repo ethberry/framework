@@ -16,7 +16,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MintButton } from "../../../../../components/buttons/mechanics/mystery/box/mint";
+import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryboxEditDialog } from "./edit";
 
@@ -125,7 +125,10 @@ export const MysteryBox: FC = () => {
                   message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-                <MintButton mystery={mystery} disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE} />
+                <MysteryBoxMintButton
+                  mystery={mystery}
+                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+                />
               </ListActions>
             </StyledListItem>
           ))}

@@ -6,7 +6,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
-import { AchievementRedeemButton } from "../../../../../components/buttons/achievements/redeem";
+import { AchievementRedeemButton } from "../../../../../components/buttons";
 import { AchievementInfoPopover } from "./popover";
 import { ReportChart } from "./chart";
 import { StyledGrid, StyledTitle } from "./styled";

@@ -13,14 +13,14 @@ import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/mintBox/ERC721Loot
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";
 
-export interface IMintButtonProps {
+export interface IMintLootBoxButtonProps {
   className?: string;
   loot: ILootBox;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const MintLootBoxButton: FC<IMintLootBoxButtonProps> = props => {
   const {
     className,
     loot: { template },

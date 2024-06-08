@@ -3,17 +3,19 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
-import { VestingDeployButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { TransferOwnershipButton } from "../../../../../components/buttons/extensions/transfer-ownership";
+import {
+  AllowanceButton,
+  TopUpButton,
+  TransferOwnershipButton,
+  VestingDeployButton,
+} from "../../../../../components/buttons";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {

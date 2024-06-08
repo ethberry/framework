@@ -5,7 +5,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -14,9 +14,11 @@ import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 
-import { WaitListListCreateButton } from "../../../../../components/buttons/mechanics/wait-list/list/create";
-import { WaitListListUploadButton } from "../../../../../components/buttons/mechanics/wait-list/list/upload";
-import { WaitListListGenerateButton } from "../../../../../components/buttons/mechanics/wait-list/list/generate";
+import {
+  WaitListListCreateButton,
+  WaitListListGenerateButton,
+  WaitListListUploadButton,
+} from "../../../../../components/buttons";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {

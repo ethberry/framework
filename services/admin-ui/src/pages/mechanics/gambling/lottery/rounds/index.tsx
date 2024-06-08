@@ -3,14 +3,13 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { LotteryReleaseButton } from "../../../../../components/buttons/mechanics/lottery/contract/release";
-import { LotteryRoundEndButton } from "../../../../../components/buttons/mechanics/lottery/contract/round-end";
+import { LotteryReleaseButton, LotteryRoundEndButton } from "../../../../../components/buttons";
 import { LotteryRoundViewDialog } from "./view";
 
 export const LotteryRounds: FC = () => {

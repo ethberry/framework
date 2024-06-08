@@ -5,9 +5,8 @@ import { CardActions, CardContent, Grid } from "@mui/material";
 import { formatItemHtmlList } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
-import { TemplatePurchaseButton } from "../../../../../components/buttons";
+import { ReferralButton, TemplatePurchaseButton } from "../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
-import { ReferralButton } from "../../../../../components/buttons/refferal";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTemplatePanelProps {

@@ -11,7 +11,7 @@ import type { IAchievementItemReport, IAchievementRule, IContract } from "@frame
 import { TokenType } from "@framework/types";
 
 import ClaimABI from "@framework/abis/claim/ExchangeClaimFacet.json";
-import { sorter } from "../../../../utils/sorter";
+import { sorter } from "../../../../../utils/sorter";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;

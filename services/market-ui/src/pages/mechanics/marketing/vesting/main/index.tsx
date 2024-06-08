@@ -16,7 +16,7 @@ import {
 } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
-import { VestingTransferOwnershipButton } from "../../../../../components/buttons/mechanics/vesting/transfer-ownership";
+import { VestingTransferOwnershipButton } from "../../../../../components/buttons";
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";

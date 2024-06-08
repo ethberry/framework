@@ -14,8 +14,8 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { TemplateMintButton } from "../../../../components/buttons";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { MintButton } from "../../../../components/buttons/hierarchy/template/mint";
 import { Erc1155TemplateEditDialog } from "./edit";
 
 export const Erc1155Template: FC = () => {
@@ -97,7 +97,7 @@ export const Erc1155Template: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintButton template={template} />
+                <TemplateMintButton template={template} />
               </ListActions>
             </StyledListItem>
           ))}

@@ -9,8 +9,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IRaffleRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { RaffleReleaseButton } from "../../../../../components/buttons/mechanics/raffle/contract/release";
-import { RaffleRoundEndButton } from "../../../../../components/buttons/mechanics/raffle/contract/round-end";
+import { RaffleReleaseButton, RaffleRoundEndButton } from "../../../../../components/buttons";
 import { RaffleRoundViewDialog } from "./view";
 
 export const RaffleRounds: FC = () => {

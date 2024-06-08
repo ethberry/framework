@@ -5,25 +5,27 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { CollectionContractFeatures, ContractStatus, IContract, IContractSearchDto } from "@framework/types";
 
-import { CollectionContractDeployButton } from "../../../../../components/buttons";
+import {
+  BlacklistButton,
+  CollectionContractDeployButton,
+  CollectionUploadButton,
+  ContractAllowanceButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  SetBaseTokenURIButton,
+  TransferButton,
+  UnBlacklistButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { AllowanceButton } from "../../../../../components/buttons/hierarchy/contract/allowance";
-import { RoyaltyButton } from "../../../../../components/buttons/common/royalty";
-import { BlacklistButton } from "../../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../../components/buttons/extensions/blacklist-remove";
-import { TransferButton } from "../../../../../components/buttons/common/transfer";
-import { CollectionUploadButton } from "../../../../../components/buttons/mechanics/collection/upload";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { SetBaseTokenURIButton } from "../../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 import { Erc721CollectionEditDialog } from "./edit";
 
 export const CollectionContract: FC = () => {
@@ -105,7 +107,7 @@ export const CollectionContract: FC = () => {
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />
                 <RenounceRoleButton contract={contract} />
-                <AllowanceButton contract={contract} />
+                <ContractAllowanceButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />
                 <BlacklistButton contract={contract} />

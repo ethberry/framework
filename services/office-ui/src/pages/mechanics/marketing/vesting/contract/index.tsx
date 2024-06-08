@@ -12,10 +12,12 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
-import { VestingDeployButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { TransferOwnershipButton } from "../../../../../components/buttons/extensions/transfer-ownership";
+import {
+  VestingDeployButton,
+  AllowanceButton,
+  TopUpButton,
+  TransferOwnershipButton,
+} from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { VestingViewDialog } from "./view";
 

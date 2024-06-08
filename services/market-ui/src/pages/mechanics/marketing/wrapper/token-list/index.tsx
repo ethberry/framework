@@ -6,7 +6,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
@@ -30,9 +30,9 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     rows,
     count,
     search,
+    action,
     isLoading,
     isFiltersOpen,
-    action,
     handleCreate,
     handleEditCancel,
     handleToggleFilters,

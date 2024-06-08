@@ -6,23 +6,25 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
-import { StakingDeployButton } from "../../../../../components/buttons";
+import {
+  StakingAllowanceButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  PauseButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  StakingDeployButton,
+  TopUpButton,
+  UnPauseButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { PauseButton } from "../../../../../components/buttons/mechanics/common/pause";
-import { UnPauseButton } from "../../../../../components/buttons/mechanics/common/unpause";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/staking/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
@@ -100,7 +102,7 @@ export const StakingContracts: FC = () => {
                   <RenounceRoleButton contract={contract} />
                   <PauseButton contract={contract} />
                   <UnPauseButton contract={contract} />
-                  <AllowanceButton contract={contract} />
+                  <StakingAllowanceButton contract={contract} />
                   <TopUpButton contract={contract} />
                   <EthListenerAddButton contract={contract} />
                   <EthListenerRemoveButton contract={contract} />

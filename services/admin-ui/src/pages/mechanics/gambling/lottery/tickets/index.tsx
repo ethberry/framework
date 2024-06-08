@@ -6,24 +6,26 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, Erc721ContractTemplates } from "@framework/types";
 
-import { Erc721ContractDeployButton } from "../../../../../components/buttons";
+import {
+  ContractAllowanceButton,
+  BlacklistButton,
+  ContractMintButton,
+  Erc721ContractDeployButton,
+  GrantRoleButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  TransferButton,
+  UnBlacklistButton,
+  UnWhitelistButton,
+  WhitelistButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { BlacklistButton } from "../../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../../components/buttons/extensions/blacklist-remove";
-import { WhitelistButton } from "../../../../../components/buttons/extensions/whitelist-add";
-import { UnWhitelistButton } from "../../../../../components/buttons/extensions/whitelist-remove";
-import { MintButton } from "../../../../../components/buttons/hierarchy/contract/mint";
-import { AllowanceButton } from "../../../../../components/buttons/hierarchy/contract/allowance";
-import { TransferButton } from "../../../../../components/buttons/common/transfer";
-import { RoyaltyButton } from "../../../../../components/buttons/common/royalty";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryTicketContracts: FC = () => {
@@ -104,8 +106,8 @@ export const LotteryTicketContracts: FC = () => {
                 <UnBlacklistButton contract={contract} />
                 <WhitelistButton contract={contract} />
                 <UnWhitelistButton contract={contract} />
-                <MintButton contract={contract} />
-                <AllowanceButton contract={contract} />
+                <ContractMintButton contract={contract} />
+                <ContractAllowanceButton contract={contract} />
                 <TransferButton contract={contract} />
                 <RoyaltyButton contract={contract} />
               </ListActions>

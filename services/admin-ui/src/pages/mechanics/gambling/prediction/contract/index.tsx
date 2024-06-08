@@ -5,20 +5,22 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { ContractStatus, IContract, IContractSearchDto, PredictionContractFeatures } from "@framework/types";
 
+import {
+  ContractAllowanceButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  PredictionContractDeployButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  TopUpButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { PredictionContractDeployButton } from "../../../../../components/buttons";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { PredictionContractEditDialog } from "./edit";
 
 export const PredictionContract: FC = () => {
@@ -96,7 +98,7 @@ export const PredictionContract: FC = () => {
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />
                 <RenounceRoleButton contract={contract} />
-                <AllowanceButton contract={contract} />
+                <ContractAllowanceButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
               </ListActions>

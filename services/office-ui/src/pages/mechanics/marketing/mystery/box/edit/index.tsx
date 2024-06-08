@@ -19,7 +19,7 @@ export interface IMysteryboxEditDialogProps {
   initialValues: IMysteryBox;
 }
 
-export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
+export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const {

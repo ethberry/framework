@@ -21,7 +21,7 @@ import {
   PredictionQuestionResolveButton,
   PredictionQuestionReleaseButton,
   PredictionQuestionStartButton,
-} from "../../../../../components/buttons/mechanics/prediction/question";
+} from "../../../../../components/buttons";
 
 export const PredictionQuestions: FC = () => {
   const {

@@ -13,14 +13,14 @@ import VestingDeployABI from "@framework/abis/deployVesting/VestingFactoryFacet.
 
 import { sorter } from "../../../../../utils/sorter";
 
-export interface IVestingReleaseButtonProps {
+export interface IVestingDeployButtonProps {
   claim: IClaim;
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
+export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { claim, className, disabled, variant } = props;
   const { profile } = useUser<IUser>();
 
