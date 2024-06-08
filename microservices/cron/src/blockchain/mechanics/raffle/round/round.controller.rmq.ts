@@ -4,7 +4,7 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 import { CronType } from "@framework/types";
 
 import { RaffleRoundServiceRmq } from "./round.service.rmq";
-import { RaffleScheduleUpdateRmqDto } from "./dto/update";
+import { RaffleScheduleUpdateRmqDto } from "./dto";
 
 @Controller()
 export class RoundControllerRmq {

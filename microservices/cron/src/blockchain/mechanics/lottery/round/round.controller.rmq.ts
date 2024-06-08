@@ -3,7 +3,7 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 
 import { CronType } from "@framework/types";
 
-import { LotteryScheduleUpdateDto } from "./dto/update";
+import { LotteryScheduleUpdateDto } from "./dto";
 import { LotteryRoundServiceRmq } from "./round.service.rmq";
 
 @Controller()
