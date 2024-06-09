@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -89,7 +89,7 @@ export const NativeContract: FC = () => {
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-          <></>
+          <Fragment />
         ) : (
           <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
             <FormattedMessage id="form.buttons.create" />

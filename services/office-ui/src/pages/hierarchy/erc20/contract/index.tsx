@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -10,24 +10,17 @@ import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import {
-  BusinessType,
-  ContractStatus,
-  Erc20ContractFeatures,
-  IContract,
-  IContractSearchDto,
-  ITemplate,
-  IUser,
-} from "@framework/types";
+import type { IContract, IContractSearchDto, ITemplate, IUser } from "@framework/types";
+import { BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
 import {
   AllowanceButton,
   BlacklistButton,
+  ContractMintButton,
   Erc20ContractDeployButton,
   EthListenerAddButton,
   EthListenerRemoveButton,
   GrantRoleButton,
-  ContractMintButton,
   RenounceRoleButton,
   RevokeRoleButton,
   RoyaltyButton,
@@ -108,7 +101,7 @@ export const Erc20Contract: FC = () => {
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-          <></>
+          <Fragment />
         ) : (
           <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc20TokenCreateButton">
             <FormattedMessage id="form.buttons.create" />

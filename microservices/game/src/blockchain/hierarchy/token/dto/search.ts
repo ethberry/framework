@@ -8,7 +8,7 @@ import { AccountDto, ChainIdDto } from "@gemunion/nest-js-validators";
 import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
 import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
 
-export class TokenAttributesSearchDto extends ChainIdDto implements ITokenMetadataSearchDto {
+export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({
     enum: TokenRarity,
     isArray: true,
@@ -34,7 +34,7 @@ export class TokenAttributesSearchDto extends ChainIdDto implements ITokenMetada
   public [TokenMetadata.LEVEL]: Array<number>;
 }
 
-export class TokenSearchDto extends Mixin(AccountDto, SearchDto) implements ITokenSearchDto {
+export class TokenSearchDto extends Mixin(AccountDto, SearchDto, ChainIdDto) implements ITokenSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,

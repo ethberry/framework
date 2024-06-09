@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
@@ -38,6 +38,18 @@ export class PonziRuleItemSearchDto implements IPonziRuleItemSearchDto {
 
 export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto {
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
     enum: PonziRuleStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
@@ -62,4 +74,12 @@ export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto
   @ValidateNested()
   @Type(() => PonziRuleItemSearchDto)
   public reward: PonziRuleItemSearchDto;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Transform(({ value }) => Number(value))
+  public merchantId: number;
 }

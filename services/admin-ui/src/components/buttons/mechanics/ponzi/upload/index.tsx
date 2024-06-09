@@ -19,7 +19,7 @@ export interface IPonziRuleCreateButtonProps {
 }
 
 export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
-  const { className, disabled, variant } = props;
+  const { className, disabled, variant = ListActionVariant.button } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 

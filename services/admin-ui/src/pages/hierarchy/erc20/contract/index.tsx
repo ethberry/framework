@@ -9,18 +9,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import {
-  BusinessType,
-  ContractStatus,
-  Erc20ContractFeatures,
-  IContract,
-  IContractSearchDto,
-  ITemplate,
-} from "@framework/types";
+import type { IContract, IContractSearchDto, ITemplate } from "@framework/types";
+import { BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
 import {
-  ContractAllowanceButton,
   BlacklistButton,
+  ContractAllowanceButton,
   ContractMintButton,
   Erc20ContractDeployButton,
   EthListenerAddButton,

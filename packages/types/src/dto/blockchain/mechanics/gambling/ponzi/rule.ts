@@ -10,6 +10,8 @@ export interface IPonziRuleItemSearchDto {
 }
 
 export interface IPonziRuleSearchDto extends ISearchDto {
+  merchantId: number;
+  contractIds: Array<number>;
   ponziRuleStatus: Array<PonziRuleStatus>;
   deposit: IPonziRuleItemSearchDto;
   reward: IPonziRuleItemSearchDto;
