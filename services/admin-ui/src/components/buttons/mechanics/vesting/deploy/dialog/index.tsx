@@ -37,11 +37,11 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
       testId="VestingDeployForm"
       {...rest}
     >
+      <SelectInput name="contractTemplate" options={VestingContractTemplates} />
       <TextInput name="owner" />
       <DateInput name="startTimestamp" />
       <NumberInput name="cliffInMonth" />
       <CurrencyInput name="monthlyRelease" symbol="%" />
-      <SelectInput name="contractTemplate" options={VestingContractTemplates} />
     </FormDialog>
   );
 };

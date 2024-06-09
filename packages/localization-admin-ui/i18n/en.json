@@ -219,6 +219,7 @@
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
       "CLIFF": "Cliff",
+      "DAILY": "Daily",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -230,6 +231,7 @@
       "LINEAR": "Linear",
       "LINEAR_REFERRAL": "Linear Referral",
       "LOTTERY": "Lottery ticket",
+      "MONTHLY": "Monthly",
       "PAUSABLE": "Pausable",
       "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
@@ -700,7 +702,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "questionIds": "Questions",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "LEVEL": "Level",
@@ -842,6 +843,7 @@
       "productStatus": "Status",
       "programLevel": "Program level",
       "programLevels": "Program levels",
+      "questionIds": "Questions",
       "questionResult": "Result",
       "questionStatus": "Status",
       "random": "Random",
