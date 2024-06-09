@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { IContractSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus } from "@framework/types";
 
 export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @ApiPropertyOptional({
@@ -26,26 +26,6 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @Transform(({ value }) => value as Array<ContractFeatures>)
   @IsEnum(ContractFeatures, { each: true, message: "badInput" })
   public contractFeatures: Array<ContractFeatures>;
-
-  @ApiPropertyOptional({
-    enum: TokenType,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<TokenType>)
-  @IsEnum(TokenType, { each: true, message: "badInput" })
-  public contractType: Array<TokenType>;
-
-  @ApiPropertyOptional({
-    enum: ModuleType,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ModuleType>)
-  @IsEnum(ModuleType, { each: true, message: "badInput" })
-  public contractModule: Array<ModuleType>;
 
   @ApiPropertyOptional({
     minimum: 0,
