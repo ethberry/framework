@@ -1,0 +1,49 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/framework/issues"
+  },
+  "dependencies": {
+    "@framework/types": "0.0.1",
+    "@nestjs/swagger": "7.3.1",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.1",
+    "ts-mixer": "6.0.4"
+  },
+  "description": "constants for validation on FE and BE",
+  "devDependencies": {
+    "rimraf": "5.0.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/validation",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}
