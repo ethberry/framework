@@ -52,6 +52,7 @@ export interface IVestingDeployedEventArgs {
   startTimestamp: string;
   cliffInMonth: number;
   monthlyRelease: number;
+  contractTemplate: string;
 }
 
 export interface IContractManagerVestingDeployedEvent {

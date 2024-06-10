@@ -30,7 +30,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingContractDeployDto, web3Context, sign, systemContract: IContract) => {
-      const { owner, startTimestamp, cliffInMonth, monthlyRelease } = values;
+      const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = values;
 
       const nonce = utils.arrayify(sign.nonce);
 
@@ -51,6 +51,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
           cliffInMonth,
           monthlyRelease,
+          contractTemplate: Object.values(VestingContractTemplates).indexOf(contractTemplate).toString(),
         },
         [],
         sign.signature,

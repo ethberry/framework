@@ -398,7 +398,8 @@ export class ContractManagerSignService {
     userEntity: UserEntity,
     asset?: AssetEntity,
   ): Promise<IServerSignature> {
-    const { owner, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, externalId, contractTemplate } = dto;
+
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByVestingContractTemplate(dto, userEntity.chainId);
 
@@ -433,6 +434,7 @@ export class ContractManagerSignService {
           { name: "startTimestamp", type: "uint64" },
           { name: "cliffInMonth", type: "uint16" },
           { name: "monthlyRelease", type: "uint16" },
+          { name: "contractTemplate", type: "string" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -453,6 +455,7 @@ export class ContractManagerSignService {
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
           cliffInMonth, // in seconds
           monthlyRelease,
+          contractTemplate: Object.values(VestingContractTemplates).indexOf(contractTemplate).toString(),
         },
         // items: [],
         items: asset
