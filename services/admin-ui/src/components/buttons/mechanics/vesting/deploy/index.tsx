@@ -89,7 +89,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           startTimestamp: new Date().toISOString(),
           cliffInMonth: 12,
           monthlyRelease: 1000,
-          contractTemplate: VestingContractTemplates.MONTHLY,
+          contractTemplate: VestingContractTemplates.VESTING,
         }}
       />
     </Fragment>

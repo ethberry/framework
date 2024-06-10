@@ -587,7 +587,7 @@ export class ContractManagerServiceEth {
         cliffInMonth,
         monthlyRelease,
       },
-      contractFeatures: [],
+      contractFeatures: [], // TODO add VOTES
       contractModule: ModuleType.VESTING,
       contractSecurity: ContractSecurity.OWNABLE,
       chainId,

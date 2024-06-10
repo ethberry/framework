@@ -171,8 +171,13 @@ export enum StakingContractTemplates {
 }
 
 export enum VestingContractTemplates {
-  "DAILY" = "DAILY",
-  "MONTHLY" = "MONTHLY",
+  "VESTING" = "VESTING",
+  "VESTING_VOTES" = "VESTING_VOTES",
+}
+
+export enum VestingContractFeatures {
+  "SIMPLE" = "SIMPLE",
+  "VOTES" = "VOTES",
 }
 
 export enum ContractFeatures {

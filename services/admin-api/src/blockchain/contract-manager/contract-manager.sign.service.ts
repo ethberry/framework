@@ -1087,14 +1087,14 @@ export class ContractManagerSignService {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
-      case VestingContractTemplates.DAILY:
+      case VestingContractTemplates.VESTING:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/DailyVesting.sol/DailyVesting.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json",
           chainId,
         );
-      case VestingContractTemplates.MONTHLY:
+      case VestingContractTemplates.VESTING_VOTES:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/MonthlyVesting.sol/MonthlyVesting.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/VestingVotes.sol/VestingVotes.json",
           chainId,
         );
       default:
