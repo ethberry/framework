@@ -12,17 +12,17 @@ import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.jso
 import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import type { IStakingAllowanceDto } from "./dialog";
-import { StakingAllowanceDialog } from "./dialog";
+import type { IAllowanceAllDto } from "./dialog";
+import { AllowanceAllDialog } from "./dialog";
 
-export interface IStakingAllowanceButtonProps {
+export interface IAllowanceAllButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
+export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
   const {
     className,
     contract,
@@ -31,17 +31,17 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     variant,
   } = props;
 
-  const [isStakingAllowanceDialogOpen, setIsStakingAllowanceDialogOpen] = useState(false);
+  const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
-  const handleStakingAllowance = (): void => {
-    setIsStakingAllowanceDialogOpen(true);
+  const handleAllowance = (): void => {
+    setIsAllowanceDialogOpen(true);
   };
 
-  const handleStakingAllowanceCancel = (): void => {
-    setIsStakingAllowanceDialogOpen(false);
+  const handleAllowanceCancel = (): void => {
+    setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAllowanceAllDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
@@ -66,27 +66,27 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     }
   });
 
-  const handleStakingAllowanceConfirm = async (values: IStakingAllowanceDto): Promise<void> => {
+  const handleAllowanceConfirm = async (values: IAllowanceAllDto): Promise<void> => {
     await metaFn(values).finally(() => {
-      setIsStakingAllowanceDialogOpen(false);
+      setIsAllowanceDialogOpen(false);
     });
   };
 
   return (
     <Fragment>
       <ListAction
-        onClick={handleStakingAllowance}
+        onClick={handleAllowance}
         icon={AddReaction}
         message="form.buttons.allowance"
         className={className}
-        dataTestId="StakingAllowanceButton"
+        dataTestId="AllowanceButton"
         disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
-      <StakingAllowanceDialog
-        onCancel={handleStakingAllowanceCancel}
-        onConfirm={handleStakingAllowanceConfirm}
-        open={isStakingAllowanceDialogOpen}
+      <AllowanceAllDialog
+        onCancel={handleAllowanceCancel}
+        onConfirm={handleAllowanceConfirm}
+        open={isAllowanceDialogOpen}
         initialValues={{
           tokenType: TokenType.ERC20,
           contractId: 0,

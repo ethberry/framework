@@ -1,6 +1,7 @@
 export * from "./common/pause";
 export * from "./common/unpause";
-export * from "./common/allowance";
+export * from "./common/allowance-erc20";
+export * from "./common/allowance-all";
 export * from "./common/top-up";
 
 export * from "./claim/upload";
@@ -44,10 +45,9 @@ export * from "./ponzi/ponzi-balances";
 
 export * from "./staking/deploy";
 export * from "./staking/upload";
-export * from "./staking/penalty";
+export * from "./staking/get-penalty";
 export * from "./staking/withdraw";
 export * from "./staking/rule-toggle";
-export * from "./staking/allowance";
 export * from "./staking/check-balances";
 export * from "./staking/withdraw-penalty";
 

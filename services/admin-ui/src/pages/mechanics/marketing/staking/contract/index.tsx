@@ -18,7 +18,7 @@ import {
   PauseButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  StakingAllowanceButton,
+  AllowanceAllButton,
   StakingCheckBalanceButton,
   StakingDeployButton,
   StakingWithdrawPenaltyButton,
@@ -104,7 +104,7 @@ export const StakingContracts: FC = () => {
                 <RenounceRoleButton contract={contract} />
                 <PauseButton contract={contract} />
                 <UnPauseButton contract={contract} />
-                <StakingAllowanceButton contract={contract} />
+                <AllowanceAllButton contract={contract} />
                 <TopUpButton contract={contract} />
                 <StakingWithdrawPenaltyButton contract={contract} />
                 <StakingCheckBalanceButton contract={contract} />

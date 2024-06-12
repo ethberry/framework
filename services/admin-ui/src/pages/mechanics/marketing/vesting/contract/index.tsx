@@ -13,7 +13,7 @@ import { VestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import {
-  AllowanceButton,
+  AllowanceERC20Button,
   TopUpButton,
   TransferOwnershipButton,
   VestingDeployButton,
@@ -67,7 +67,7 @@ export const VestingContracts: FC = () => {
               </ListItemText>
               <ListActions dataTestId="VestingActionsMenuButton">
                 <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
-                <AllowanceButton contract={vesting} />
+                <AllowanceERC20Button contract={vesting} />
                 <TopUpButton contract={vesting} />
                 <TransferOwnershipButton contract={vesting} />
               </ListActions>

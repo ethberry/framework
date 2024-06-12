@@ -11,16 +11,17 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import { AllowanceDialog, IAllowanceDto } from "./dialog";
+import { AllowanceERC20Dialog } from "./dialog";
+import type { IAllowanceERC20Dto } from "./dialog";
 
-export interface IAllowanceButtonProps {
+export interface IAllowanceERC20ButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
+export const AllowanceERC20Button: FC<IAllowanceERC20ButtonProps> = props => {
   const {
     className,
     contract,
@@ -39,7 +40,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAllowanceERC20Dto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
@@ -50,7 +51,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     }
   });
 
-  const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
+  const handleAllowanceConfirm = async (values: IAllowanceERC20Dto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsAllowanceDialogOpen(false);
     });
@@ -67,7 +68,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
-      <AllowanceDialog
+      <AllowanceERC20Dialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}

@@ -9,7 +9,7 @@ import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 
-export interface IAllowanceDto {
+export interface IAllowanceERC20Dto {
   amount: string;
   contract: {
     address: string;
@@ -19,14 +19,14 @@ export interface IAllowanceDto {
   contractId: number;
 }
 
-export interface IAllowanceDialogProps {
+export interface IAllowanceERC20DialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IAllowanceDto, form: any) => Promise<void>;
-  initialValues: IAllowanceDto;
+  onConfirm: (values: IAllowanceERC20Dto, form: any) => Promise<void>;
+  initialValues: IAllowanceERC20Dto;
 }
 
-export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
+export const AllowanceERC20Dialog: FC<IAllowanceERC20DialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const [showAlert, setShowAlert] = useState(false);

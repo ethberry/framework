@@ -8,7 +8,7 @@ import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 
-export interface IStakingAllowanceDto {
+export interface IAllowanceAllDto {
   tokenType: TokenType;
   contractId: number;
   amount: string;
@@ -19,14 +19,14 @@ export interface IStakingAllowanceDto {
   };
 }
 
-export interface IStakingAllowanceDialogProps {
+export interface IAllowanceAllDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IStakingAllowanceDto, form: any) => Promise<void>;
-  initialValues: IStakingAllowanceDto;
+  onConfirm: (values: IAllowanceAllDto, form: any) => Promise<void>;
+  initialValues: IAllowanceAllDto;
 }
 
-export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props => {
+export const AllowanceAllDialog: FC<IAllowanceAllDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const handleContractChange =
@@ -44,7 +44,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
-      testId="StakingAllowanceForm"
+      testId="AllowanceForm"
       {...rest}
     >
       <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />
