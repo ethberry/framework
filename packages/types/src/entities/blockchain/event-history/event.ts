@@ -347,7 +347,7 @@ export enum ContractEventSignature {
 
   // MODULE:CM
   // event VestingDeployed(address account, uint256 externalId, VestingArgs args, Asset[] items);
-  VestingDeployed = "VestingDeployed(address,uint256,(address,uint64,uint16,uint16),(uint8,address,uint256,uint256)[])",
+  VestingDeployed = "VestingDeployed(address,uint256,(address,uint64,uint16,uint16,string),(uint8,address,uint256,uint256)[])",
   // event ERC20TokenDeployed(address account, uint256 externalId, Erc20Args args);
   ERC20TokenDeployed = "ERC20TokenDeployed(address,uint256,(string,string,uint256,string))",
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
