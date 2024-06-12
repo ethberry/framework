@@ -1,22 +1,22 @@
-import { ChangeEvent, FC, useState } from "react";
-import { Alert } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { ChangeEvent, FC } from "react";
 
-import { TokenType } from "@framework/types";
+import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {
+  tokenType: TokenType;
+  contractId: number;
   amount: string;
   contract: {
     address: string;
     contractType: TokenType;
     decimals: number;
   };
-  contractId: number;
 }
 
 export interface IAllowanceDialogProps {
@@ -24,22 +24,20 @@ export interface IAllowanceDialogProps {
   onCancel: () => void;
   onConfirm: (values: IAllowanceDto, form: any) => Promise<void>;
   initialValues: IAllowanceDto;
+  disabledTokenTypes?: Array<TokenType>;
 }
 
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
-  const { initialValues, ...rest } = props;
-
-  const [showAlert, setShowAlert] = useState(false);
+  const { initialValues, disabledTokenTypes = [], ...rest } = props;
 
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
-      setShowAlert(option?.title === "USDT");
       form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
       form.setValue("contract.decimals", option?.decimals ?? 0);
-      form.trigger("contractId");
+      form.trigger();
     };
 
   return (
@@ -47,19 +45,21 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
-      testId="MechanicsAllowanceForm"
+      testId="AllowanceForm"
       {...rest}
     >
-      {showAlert ? (
-        <Alert severity="warning">
-          <FormattedMessage id="messages.allowanceUSDTWarning" />
-        </Alert>
-      ) : null}
+      <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE, ...disabledTokenTypes]} />
       <CommonContractInput
         name="contractId"
-        data={{ contractType: [TokenType.ERC20] }}
         onChange={handleContractChange}
         autoselect
+        withTokenType
+        data={{
+          contractType: [TokenType.ERC20],
+          contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE],
+          excludeFeatures: [Erc721ContractFeatures.SOULBOUND],
+        }}
       />
       <AmountInput />
     </FormDialog>

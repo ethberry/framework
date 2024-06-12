@@ -17,7 +17,7 @@ export interface IStakingPenaltyBalanceButtonProps {
   variant?: ListActionVariant;
 }
 
-export const StakingPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProps> = props => {
+export const StakingGetPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
   const metaGetPenalty = useMetamaskValue(
