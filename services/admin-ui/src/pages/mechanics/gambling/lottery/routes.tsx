@@ -5,9 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../../index-wrapper";
 import { LotterySection } from "../../../dashboard/mechanics/lottery";
 import { LotteryContracts } from "./contract";
-import { LotteryTickets } from "./tickets";
+import { LotteryTicketContracts } from "./tickets";
 import { LotteryRounds } from "./rounds";
-import { LotteryTokens } from "./tokens";
+import { LotteryTicketTokens } from "./tokens";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -26,15 +26,7 @@ export const lotteryRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <LotteryContracts /> },
-          { path: "/lottery/contracts/:id", element: <LotteryContracts /> },
-        ],
-      },
-      {
-        path: "/lottery/tickets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <LotteryTickets /> },
-          { path: "/lottery/tickets/:id", element: <LotteryTickets /> },
+          { path: "/lottery/contracts/:id/:action", element: <LotteryContracts /> },
         ],
       },
       {
@@ -43,14 +35,24 @@ export const lotteryRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <LotteryRounds /> },
           { path: "/lottery/rounds/:id", element: <LotteryRounds /> },
+          { path: "/lottery/rounds/:id/:action", element: <LotteryRounds /> },
         ],
       },
       {
-        path: "/lottery/tokens",
+        path: "/lottery/ticket/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <LotteryTokens /> },
-          { path: "/lottery/tokens/:id", element: <LotteryTokens /> },
+          { index: true, element: <LotteryTicketContracts /> },
+          { path: "/lottery/ticket/contracts/:id/:action", element: <LotteryTicketContracts /> },
+        ],
+      },
+      {
+        path: "/lottery/ticket/tokens",
+        element: <Protected />,
+        children: [
+          { index: true, element: <LotteryTicketTokens /> },
+          { path: "/lottery/ticket/tokens/:id", element: <LotteryTicketTokens /> },
+          { path: "/lottery/ticket/tokens/:id/:action", element: <LotteryTicketTokens /> },
         ],
       },
     ],

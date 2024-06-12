@@ -9,10 +9,11 @@ import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
-import RaffleStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
+import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
 
+import { RaffleStartRoundDialog } from "./round-dialog";
+import type { IRaffleRound } from "./round-dialog";
 import { shouldDisableByContractType } from "../../../../utils";
-import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;
@@ -33,7 +34,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, RaffleStartRoundABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),
@@ -77,7 +78,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+        disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
       <RaffleStartRoundDialog

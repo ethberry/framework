@@ -7,7 +7,7 @@ import { UserRole } from "@framework/types";
 
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
-import { IReferralTreeSearchDto } from "./dto";
+import type { IReferralTreeSearchDto } from "./dto";
 
 export interface IReferralChain {
   id: number;

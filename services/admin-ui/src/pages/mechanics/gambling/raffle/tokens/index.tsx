@@ -4,30 +4,30 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IRaffleRound, IRaffleToken, IRaffleTokenSearchDto } from "@framework/types";
+import type { IRaffleRound, IRaffleToken, IRaffleTicketTokenSearchDto } from "@framework/types";
 
 import { RaffleTokenViewDialog } from "./view";
 import { RaffleTokenSearchForm } from "./form";
 
-export const RaffleTokens: FC = () => {
+export const RaffleTicketTokens: FC = () => {
   const {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
     handleSearch,
     handleChangePage,
     handleToggleFilters,
-  } = useCollection<IRaffleToken, IRaffleTokenSearchDto>({
-    baseUrl: "/raffle/tokens",
+  } = useCollection<IRaffleToken, IRaffleTicketTokenSearchDto>({
+    baseUrl: "/raffle/ticket/tokens",
     search: {
       roundIds: [],
     },
@@ -85,7 +85,7 @@ export const RaffleTokens: FC = () => {
       <RaffleTokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

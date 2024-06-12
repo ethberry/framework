@@ -3,7 +3,8 @@ import { Transform } from "class-transformer";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 
 import { SearchDto } from "@gemunion/collection";
-import { IPageSearchDto, PageStatus } from "@framework/types";
+import type { IPageSearchDto } from "@framework/types";
+import { PageStatus } from "@framework/types";
 
 export class PageSearchDto extends SearchDto implements IPageSearchDto {
   @ApiPropertyOptional({

@@ -25,7 +25,7 @@ export const mysteryRoutes: Array<RouteObject> = [
         path: "/mystery/contracts",
         children: [
           { index: true, element: <MysteryContractList /> },
-          { path: "/mystery/contracts/:id", element: <MysteryContract /> },
+          { path: "/mystery/contracts/:id/:action", element: <MysteryContract /> },
         ],
       },
       {
@@ -33,6 +33,7 @@ export const mysteryRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <MysteryBoxList /> },
           { path: "/mystery/boxes/:id", element: <MysteryBox /> },
+          { path: "/mystery/boxes/:id/:action", element: <MysteryBox /> },
         ],
       },
       {
@@ -40,6 +41,7 @@ export const mysteryRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <MysteryTokenList /> },
           { path: "/mystery/tokens/:id", element: <MysteryBoxToken /> },
+          { path: "/mystery/tokens/:id/:action", element: <MysteryBoxToken /> },
         ],
       },
     ],

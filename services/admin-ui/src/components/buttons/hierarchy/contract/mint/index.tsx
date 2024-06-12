@@ -18,14 +18,14 @@ import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
-export interface IMintButtonProps {
+export interface IContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const {
     className,
     contract,

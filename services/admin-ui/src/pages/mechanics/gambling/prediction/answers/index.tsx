@@ -4,7 +4,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPredictionAnswer, IPredictionAnswerSearchDto, IPredictionQuestion } from "@framework/types";
 
@@ -16,10 +16,10 @@ export const PredictionAnswers: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -74,7 +74,7 @@ export const PredictionAnswers: FC = () => {
       <PredictionAnswerViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

@@ -138,18 +138,18 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, account.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
-
-    const assets = await this.assetService.saveAssetHistory(history, [], []);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
 
     await this.notificatorService.unpackMystery({
-      ...assets,
+      items: [], // todo put assets from mysteryBox.
+      price: [],
+      merchantId: tokenEntity.template.contract.merchantId,
       address,
       transactionHash,
     });

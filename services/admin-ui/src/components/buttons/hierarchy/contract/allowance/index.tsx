@@ -14,14 +14,14 @@ import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalFor
 import { shouldDisableByContractType } from "../../../utils";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
-export interface IAllowanceButtonProps {
+export interface IContractAllowanceButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
+export const ContractAllowanceButton: FC<IContractAllowanceButtonProps> = props => {
   const {
     className,
     contract,

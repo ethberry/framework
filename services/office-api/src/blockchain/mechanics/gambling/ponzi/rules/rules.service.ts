@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeleteResult } from "typeorm";
 
 import type { ISearchableDto } from "@gemunion/types-collection";
 import type { IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { PonziRulesEntity } from "./rules.entity";
-import { IPonziRuleAutocompleteDto } from "./interfaces";
+import type { IPonziRuleAutocompleteDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class PonziRulesService {
@@ -16,12 +18,13 @@ export class PonziRulesService {
     private readonly ponziRuleEntityRepository: Repository<PonziRulesEntity>,
   ) {}
 
-  public search(dto: IPonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
-    const { query, deposit, reward, ponziRuleStatus, skip, take } = dto;
+  public search(dto: Partial<IPonziRuleSearchDto>, userEntity: UserEntity): Promise<[Array<PonziRulesEntity>, number]> {
+    const { query, deposit, reward, ponziRuleStatus, contractIds, merchantId, skip, take } = dto;
 
     const queryBuilder = this.ponziRuleEntityRepository.createQueryBuilder("rule");
 
-    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.select();
+
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -32,7 +35,13 @@ export class PonziRulesService {
     // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
     queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
 
-    queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -49,6 +58,16 @@ export class PonziRulesService {
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
     if (ponziRuleStatus) {
@@ -89,6 +108,7 @@ export class PonziRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
+      "rule.createdAt": "DESC",
       "rule.id": "DESC",
     });
 
@@ -160,5 +180,22 @@ export class PonziRulesService {
     });
 
     return ponziEntity.save();
+  }
+
+  public async deactivatePonziRules(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const rulesEntities = await this.ponziRuleEntityRepository.find({
+      where: [
+        {
+          deposit: In(assets.map(asset => asset.id)),
+        },
+        {
+          reward: In(assets.map(asset => asset.id)),
+        },
+      ],
+    });
+
+    return await this.ponziRuleEntityRepository.delete({
+      id: In(rulesEntities.map(r => r.id)),
+    });
   }
 }

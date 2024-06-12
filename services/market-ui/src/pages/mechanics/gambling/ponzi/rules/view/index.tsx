@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { formatPenalty, formatItem } from "@framework/exchange";
-import { IPonziRule } from "@framework/types";
+import { formatItem, formatPenalty } from "@framework/exchange";
+import type { IPonziRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 

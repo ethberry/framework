@@ -5,9 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../../index-wrapper";
 import { RaffleSection } from "../../../dashboard/mechanics/raffle";
 import { RaffleContracts } from "./contract";
-import { RaffleTickets } from "./tickets";
+import { RaffleTicketContracts } from "./tickets";
 import { RaffleRounds } from "./rounds";
-import { RaffleTokens } from "./tokens";
+import { RaffleTicketTokens } from "./tokens";
 
 export const raffleRoutes: Array<RouteObject> = [
   {
@@ -26,15 +26,7 @@ export const raffleRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <RaffleContracts /> },
-          { path: "/raffle/contracts/:id", element: <RaffleContracts /> },
-        ],
-      },
-      {
-        path: "/raffle/tickets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <RaffleTickets /> },
-          { path: "/raffle/tickets/:id", element: <RaffleTickets /> },
+          { path: "/raffle/contracts/:id/:action", element: <RaffleContracts /> },
         ],
       },
       {
@@ -43,14 +35,24 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleRounds /> },
           { path: "/raffle/rounds/:id", element: <RaffleRounds /> },
+          { path: "/raffle/rounds/:id/:action", element: <RaffleRounds /> },
         ],
       },
       {
-        path: "/raffle/tokens",
+        path: "/raffle/ticket/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <RaffleTokens /> },
-          { path: "/raffle/tokens/:id", element: <RaffleTokens /> },
+          { index: true, element: <RaffleTicketContracts /> },
+          { path: "/raffle/ticket/contracts/:id/:action", element: <RaffleTicketContracts /> },
+        ],
+      },
+      {
+        path: "/raffle/ticket/tokens",
+        element: <Protected />,
+        children: [
+          { index: true, element: <RaffleTicketTokens /> },
+          { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokens /> },
+          { path: "/raffle/ticket/tokens/:id/:action", element: <RaffleTicketTokens /> },
         ],
       },
     ],

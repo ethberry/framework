@@ -5,7 +5,8 @@ import { Mixin } from "ts-mixer";
 
 import { SearchDto } from "@gemunion/collection";
 import { AccountOptionalDto, IsBigInt } from "@gemunion/nest-js-validators";
-import { ITokenMetadataSearchDto, ITokenSearchDto, TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
+import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
+import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
 
 export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({

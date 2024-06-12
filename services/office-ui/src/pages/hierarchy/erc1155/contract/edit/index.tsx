@@ -7,7 +7,7 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, IContract } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContract } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { validationSchema } from "./validation";
@@ -58,9 +58,9 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
           <BlockchainInfoPopover
             address={address}
             baseTokenURI={baseTokenURI}
-            royalty={`${royalty / 100}%`}
             chainId={chainId}
             contractFeatures={contractFeatures}
+            {...(!contractFeatures.includes(ContractFeatures.SOULBOUND) && { royalty: `${royalty / 100}%` })}
           />
         ) : null
       }

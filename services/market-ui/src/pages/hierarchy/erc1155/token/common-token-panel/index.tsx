@@ -36,9 +36,11 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         </StyledList>
       </CardContent>
       <CardActions>
-        <Grid container alignItems="center">
-          <Grid item xs={12} sm={2}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={12}>
             <TokenSellOnOpenSeaButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
             <Erc1155TransferButton token={token} />
           </Grid>
           <Grid item xs={12}>

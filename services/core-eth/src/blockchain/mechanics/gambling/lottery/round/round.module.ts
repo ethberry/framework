@@ -19,7 +19,7 @@ import { RoundControllerRmq } from "./round.controller.rmq";
 import { LotteryRoundServiceRmq } from "./round.service.rmq";
 import { LotteryRoundAggregationEntity } from "./round.aggregation.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
-import { signalServiceProvider } from "../../../../../common/providers";
+import { emlServiceProvider, signalServiceProvider } from "../../../../../common/providers";
 import { LotteryTicketModule } from "../ticket/ticket.module";
 
 @Module({
@@ -41,6 +41,7 @@ import { LotteryTicketModule } from "../ticket/ticket.module";
     ethersRpcProvider,
     ethersSignerProvider,
     signalServiceProvider,
+    emlServiceProvider,
     LotteryRoundService,
     LotteryRoundServiceEth,
     LotteryRoundServiceRmq,

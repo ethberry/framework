@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, Grid, List, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -8,7 +8,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
@@ -16,7 +16,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
-import { MintButton } from "../../../../../components/buttons/mechanics/mystery/box/mint";
+import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryboxEditDialog } from "./edit";
 
@@ -25,11 +25,10 @@ export const MysteryBox: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleCreate,
     handleToggleFilters,
     handleEdit,
@@ -62,7 +61,6 @@ export const MysteryBox: FC = () => {
             title,
             description,
             imageUrl,
-            item: cleanUpAsset(item),
             price: cleanUpAsset(template?.price),
             mysteryBoxStatus,
           }
@@ -127,7 +125,10 @@ export const MysteryBox: FC = () => {
                   message="form.buttons.delete"
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
-                <MintButton mystery={mystery} disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE} />
+                <MysteryBoxMintButton
+                  mystery={mystery}
+                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+                />
               </ListActions>
             </StyledListItem>
           ))}
@@ -144,14 +145,14 @@ export const MysteryBox: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <MysteryboxEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

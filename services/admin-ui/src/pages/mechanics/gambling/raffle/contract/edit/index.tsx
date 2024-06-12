@@ -43,14 +43,7 @@ export const RaffleEditDialog: FC<IRaffleEditDialogProps> = props => {
       testId="RaffleContractEditForm"
       action={
         id ? (
-          <BlockchainInfoPopover
-            name={name}
-            address={address}
-            chainId={chainId}
-            contractFeatures={contractFeatures}
-            vrfSubscription={parameters ? parameters.vrfSubId : ""}
-            vrfConsumer={parameters ? parameters.isConsumer : "false"}
-          />
+          <BlockchainInfoPopover name={name} address={address} chainId={chainId} contractFeatures={contractFeatures} />
         ) : null
       }
       {...rest}

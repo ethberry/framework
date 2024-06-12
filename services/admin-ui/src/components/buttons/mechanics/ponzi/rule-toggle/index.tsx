@@ -5,7 +5,8 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { IPonziRule, PonziRuleStatus } from "@framework/types";
+import type { IPonziRule } from "@framework/types";
+import { PonziRuleStatus } from "@framework/types";
 import updateRulePonziABI from "@framework/abis/updateRule/Ponzi.json";
 
 export interface IPonziToggleRuleButtonProps {

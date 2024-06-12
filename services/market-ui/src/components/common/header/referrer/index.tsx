@@ -14,13 +14,13 @@ export const Referrer: FC = () => {
   const dispatch = useAppDispatch();
 
   const handleRemoveReferrer = () => {
-    dispatch(setReferrer(constants.AddressZero));
+    void dispatch(setReferrer(constants.AddressZero));
   };
 
   useLayoutEffect(() => {
     const referrer = searchParams.get("referrer");
     if (referrer) {
-      dispatch(setReferrer(referrer));
+      void dispatch(setReferrer(referrer));
     }
   }, [searchParams]);
 

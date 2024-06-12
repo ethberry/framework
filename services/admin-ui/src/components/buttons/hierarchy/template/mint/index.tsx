@@ -17,14 +17,14 @@ import { useCheckAccessMint } from "../../../../../utils/use-check-access";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
-export interface IMintButtonProps {
+export interface ITemplateMintButtonProps {
   className?: string;
   disabled?: boolean;
   template: ITemplate;
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
   const {
     className,
     template: { contract, contractId, id: templateId, templateStatus, tokens },

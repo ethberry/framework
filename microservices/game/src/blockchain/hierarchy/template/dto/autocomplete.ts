@@ -1,10 +1,12 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ContractFeatures, ITemplateAutocompleteDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ChainIdDto } from "@gemunion/nest-js-validators";
+import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import type { ITemplateAutocompleteDto } from "@framework/types";
 
-export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
+export class TemplateAutocompleteDto extends ChainIdDto implements ITemplateAutocompleteDto {
   public templateStatus: Array<TemplateStatus>;
 
   @ApiPropertyOptional({
@@ -50,14 +52,6 @@ export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public merchantId: number;
 }

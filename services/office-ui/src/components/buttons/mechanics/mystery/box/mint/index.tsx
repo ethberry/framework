@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
-import type { IMintMysteryBoxDto } from "./dialog";
+import type { IMysteryBoxMintDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
 
 export interface IMysteryBoxMintButtonProps {
@@ -40,22 +40,31 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     setIsMintTokenDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IMysteryBoxMintDto, web3Context: Web3ContextType) => {
     const contractMysterybox = new Contract(
       template!.contract!.address,
       MysteryMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    const items = values.mysteryBox!.item!.components.map(item => ({
-      tokenType: Object.values(TokenType).indexOf(item.tokenType),
-      token: item.contract!.address,
-      tokenId: item.templateId,
-      amount: item.amount,
-    }));
+    const items = values.mysteryBox!.item!.components.map(item => {
+      let tokenId;
+      if (item?.contract?.contractType === TokenType.ERC1155) {
+        tokenId = item.template?.tokens?.[0]?.tokenId;
+      } else {
+        tokenId = item.templateId;
+      }
+
+      return {
+        tokenType: Object.values(TokenType).indexOf(item.tokenType),
+        token: item.contract!.address,
+        tokenId,
+        amount: item.amount,
+      };
+    });
     return contractMysterybox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
   });
 
-  const handleMintTokenConfirmed = async (values: IMintMysteryBoxDto): Promise<void> => {
+  const handleMintTokenConfirmed = async (values: IMysteryBoxMintDto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsMintTokenDialogOpen(false);
     });

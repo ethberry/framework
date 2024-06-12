@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IReferralEvents } from "./reward";
-import { IReferralTree } from "./tree";
-import { IReferralClaim } from "./claim";
+import type { IReferralEvents } from "./reward";
+import type { IReferralTree } from "./tree";
+import type { IReferralClaim } from "./claim";
 
 export interface IReferralRewardShare extends IIdDateBase {
   referrer: string;

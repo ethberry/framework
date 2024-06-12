@@ -8,7 +8,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type {
   IStakingRule,
@@ -26,11 +26,10 @@ export const StakingRules: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -122,14 +121,14 @@ export const StakingRules: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
       <StakingRuleEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
         readOnly={true}
       />

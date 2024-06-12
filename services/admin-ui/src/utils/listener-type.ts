@@ -15,13 +15,17 @@ export const getListenerType = (contract: IContract) => {
     case ModuleType.COLLECTION:
       return ListenerType.COLLECTION;
     case ModuleType.MYSTERY:
-      return ListenerType.MYSTERYBOX;
+      return ListenerType.MYSTERY;
+    case ModuleType.LOOT:
+      return ListenerType.LOOT;
     case ModuleType.VESTING:
       return ListenerType.VESTING;
     case ModuleType.STAKING:
       return ListenerType.STAKING;
     case ModuleType.PONZI:
       return ListenerType.PONZI;
+    case ModuleType.PREDICTION:
+      return ListenerType.PREDICTION;
     case ModuleType.WAIT_LIST:
       return ListenerType.WAIT_LIST;
     case ModuleType.LOTTERY:

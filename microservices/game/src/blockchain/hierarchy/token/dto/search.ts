@@ -1,10 +1,10 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { SearchDto } from "@gemunion/collection";
-import { AccountDto } from "@gemunion/nest-js-validators";
+import { AccountDto, ChainIdDto } from "@gemunion/nest-js-validators";
 import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
 import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
 
@@ -34,7 +34,7 @@ export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   public [TokenMetadata.LEVEL]: Array<number>;
 }
 
-export class TokenSearchDto extends Mixin(AccountDto, SearchDto) implements ITokenSearchDto {
+export class TokenSearchDto extends Mixin(AccountDto, SearchDto, ChainIdDto) implements ITokenSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -65,14 +65,6 @@ export class TokenSearchDto extends Mixin(AccountDto, SearchDto) implements ITok
   @ValidateNested()
   @Type(() => TokenAttributesSearchDto)
   public metadata: TokenAttributesSearchDto;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public merchantId: number;
   public tokenStatus: Array<TokenStatus>;

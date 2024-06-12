@@ -6,7 +6,7 @@ import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { EnumSelectInput } from "./enum-select";
-import { IParameterValueInput } from "./interface";
+import type { IParameterValueInput } from "./interface";
 
 export const ParameterValueInput: FC<IParameterValueInput> = props => {
   const { name = "parameterValue", prefix } = props;

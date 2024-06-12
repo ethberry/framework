@@ -4,18 +4,22 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
+import { VestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
-import { VestingDeployButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { TransferOwnershipButton } from "../../../../../components/buttons/extensions/transfer-ownership";
+import {
+  VestingDeployButton,
+  AllowanceButton,
+  TopUpButton,
+  TransferOwnershipButton,
+} from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { VestingViewDialog } from "./view";
 
@@ -26,11 +30,11 @@ export const VestingContracts: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
     handleToggleFilters,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -40,6 +44,7 @@ export const VestingContracts: FC = () => {
     baseUrl: "/vesting/contracts",
     search: {
       account: "",
+      contractFeatures: [],
       merchantId: profile.merchantId,
     },
     empty: emptyVestingContract,
@@ -60,6 +65,9 @@ export const VestingContracts: FC = () => {
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SearchMerchantInput disableClear />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectInput name="contractFeatures" options={VestingContractFeatures} multiple />
           </Grid>
         </Grid>
       </CommonSearchForm>
@@ -92,7 +100,7 @@ export const VestingContracts: FC = () => {
       <VestingViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

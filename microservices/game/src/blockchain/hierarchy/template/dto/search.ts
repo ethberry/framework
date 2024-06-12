@@ -1,13 +1,14 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { ChainIdDto, IsBigInt } from "@gemunion/nest-js-validators";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
+export class TemplateSearchDto extends Mixin(SearchDto, ChainIdDto) implements ITemplateSearchDto {
   @ApiPropertyOptional({
     enum: TemplateStatus,
     isArray: true,
@@ -57,14 +58,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsOptional()
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public merchantId: number;
   public contractType: Array<TokenType>;

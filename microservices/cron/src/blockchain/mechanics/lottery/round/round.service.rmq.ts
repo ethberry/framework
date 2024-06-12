@@ -1,11 +1,11 @@
-import { Inject, Injectable, Logger, LoggerService, NotAcceptableException, NotFoundException } from "@nestjs/common";
-import { SchedulerRegistry } from "@nestjs/schedule";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
 import { ClientProxy } from "@nestjs/microservices";
 import { CronJob } from "cron";
 import { IsNull, JsonContains, Not } from "typeorm";
 
 import type { ILotteryScheduleUpdateRmq } from "@framework/types";
-import { ContractStatus, CoreEthType, CronExpression, ModuleType, RmqProviderType } from "@framework/types";
+import { ContractStatus, CoreEthType, ModuleType, RmqProviderType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
@@ -49,11 +49,6 @@ export class LotteryRoundServiceRmq {
 
     if (!lotteryEntity) {
       throw new NotFoundException("contractNotFound");
-    }
-
-    // TODO do we need to test it?
-    if (!Object.values(CronExpression).includes(dto.schedule as unknown as CronExpression)) {
-      throw new NotAcceptableException("notAcceptableSchedule");
     }
 
     Object.assign(

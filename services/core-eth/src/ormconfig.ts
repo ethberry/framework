@@ -6,6 +6,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
+import { LootBoxEntity } from "./blockchain/mechanics/marketing/loot/box/box.entity";
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/marketing/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/marketing/staking/deposit/deposit.entity";
@@ -15,7 +16,7 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { GradeEntity } from "./blockchain/mechanics/gaming/grade/grade.entity";
+import { DiscreteEntity } from "./blockchain/mechanics/gaming/discrete/discrete.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/gambling/lottery/round/round.entity";
 import { LotteryRoundAggregationEntity } from "./blockchain/mechanics/gambling/lottery/round/round.aggregation.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/gambling/lottery/ticket/ticket.entity";
@@ -80,8 +81,9 @@ const config: PostgresConnectionOptions = {
     CraftEntity,
     MergeEntity,
     DismantleEntity,
-    GradeEntity,
+    DiscreteEntity,
     MysteryBoxEntity,
+    LootBoxEntity,
     LotteryRoundEntity,
     LotteryRoundAggregationEntity,
     LotteryTicketEntity,
@@ -107,7 +109,7 @@ const config: PostgresConnectionOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
 };
 
 export default config;

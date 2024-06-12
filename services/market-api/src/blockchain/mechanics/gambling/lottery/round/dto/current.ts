@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ILotteryCurrentDto } from "../interfaces";
+import type { ILotteryCurrentDto } from "../interfaces";
 
 export class LotteryCurrentDto implements ILotteryCurrentDto {
   @ApiProperty()

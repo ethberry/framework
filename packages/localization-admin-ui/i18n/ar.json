@@ -216,7 +216,6 @@
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "القائمة السوداء + منفصل + قابل للإيجار + عشوائي",
       "BLACKLIST_PAUSABLE": "القائمة السوداء + قابل للإيقاف",
       "BLACKLIST_RANDOM": "القائمة السوداء + عشوائي",
-      "CLIFF": "منحدر",
       "DISCRETE": "منفصل",
       "DISCRETE_RANDOM": "منفصل + عشوائي",
       "ERC1155OWNER": "مالك ERC1155",
@@ -224,8 +223,6 @@
       "ERC20OWNER": "مالك ERC20",
       "EXTERNAL": "خارجي",
       "GENES": "الجينات",
-      "GRADED": "مصنف",
-      "LINEAR": "خطي",
       "LINEAR_REFERRAL": "الإحالة الخطية",
       "LOTTERY": "تذكرة يانصيب",
       "PAUSABLE": "قابل للإيقاف",
@@ -460,11 +457,11 @@
       "STRENGTH": "قوة",
       "WISDOM": "حكمة"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط"
     },
-    "gradeStrategy": {
+    "discreteStrategy": {
       "EXPONENTIAL": "أُسي",
       "FLAT": "ثابت",
       "LINEAR": "خطي"
@@ -632,6 +629,7 @@
       "grantRole": "منح دور",
       "hideFilters": "إخفاء الفلاتر",
       "invite": "دعوة",
+      "saveToIpfs": "احفظه في IPFS",
       "load": "تحميل",
       "loaded": "تم",
       "login": "تسجيل الدخول",
@@ -751,8 +749,8 @@
       "from": "من",
       "fromBlock": "استمع لسجل البلوك من الرقم №",
       "gender": "الجنس",
-      "gradeStatus": "الحالة",
-      "gradeStrategy": "استراتيجية الدرجة",
+      "discreteStatus": "الحالة",
+      "discreteStrategy": "استراتيجية الدرجة",
       "growthRate": "معدل النمو",
       "id": "الهوية",
       "imageUrl": "الصورة الرمزية",
@@ -1457,7 +1455,6 @@
         "erc20": "عقد ERC20 واحد",
         "erc721": "5 عقود ERC721",
         "grade": "التصنيف",
-        "mystery": "صندوق الغموض",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "برونز",
@@ -1473,7 +1470,6 @@
         "erc20": "5 عقود ERC20",
         "erc721": "25 عقود ERC721",
         "grade": "التصنيف",
-        "mystery": "صندوق الغموض",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "ذهب",
@@ -1495,7 +1491,6 @@
         "erc20": "عقد ERC20 واحد",
         "erc721": "10 عقود ERC721",
         "grade": "التصنيف",
-        "mystery": "صندوق الغموض",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "فضة",

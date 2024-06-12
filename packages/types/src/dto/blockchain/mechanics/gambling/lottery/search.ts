@@ -1,5 +1,5 @@
 import type { IPaginationDto } from "@gemunion/types-collection";
 
-export interface ILotteryTokenSearchDto extends IPaginationDto {
+export interface ILotteryTicketTokenSearchDto extends IPaginationDto {
   roundIds: Array<number>;
 }

@@ -8,9 +8,9 @@ import type { IMysteryBox } from "@framework/types";
 import { MysteryboxContent } from "../../../../tables/mysterybox-content";
 
 export const BoxContent: FC = () => {
-  const mysterybox: IMysteryBox | undefined = useWatch({ name: "mysterybox" });
+  const mysteryBox: IMysteryBox | undefined = useWatch({ name: "mysteryBox" });
 
-  if (!mysterybox || !mysterybox.item?.components?.length) {
+  if (!mysteryBox || !mysteryBox.item?.components?.length) {
     return null;
   }
 
@@ -19,7 +19,7 @@ export const BoxContent: FC = () => {
       <Typography variant="h6">
         <FormattedMessage id="pages.mystery.boxContent.title" />
       </Typography>
-      <MysteryboxContent mysterybox={mysterybox} />
+      <MysteryboxContent mysteryBox={mysteryBox} />
     </Box>
   );
 };

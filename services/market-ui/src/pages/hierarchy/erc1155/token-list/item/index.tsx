@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { formatEther } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
@@ -32,7 +32,9 @@ export const Erc1155TokenListItem: FC<IErc1155TokenListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <TokenSellOnOpenSeaButton token={token} />
+          <Grid item xs={12}>
+            <TokenSellOnOpenSeaButton token={token} />
+          </Grid>
         </Grid>
       </CardActions>
     </Card>

@@ -12,7 +12,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";
@@ -27,11 +27,10 @@ export const Product: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isDeleteDialogOpen,
-    isEditDialogOpen,
     handleCreate,
     handleToggleFilters,
     handleEdit,
@@ -111,14 +110,14 @@ export const Product: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <EditProductDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { addSeconds, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
@@ -19,11 +19,11 @@ export const StakingDeposit: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
     handleToggleFilters,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -90,7 +90,7 @@ export const StakingDeposit: FC = () => {
       <StakesViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

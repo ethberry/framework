@@ -15,11 +15,13 @@ import {
   LotteryContractDeployDto,
   MysteryContractDeployDto,
   PonziContractDeployDto,
+  PredictionContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PaymentSplitterContractDeployDto } from "./dto/payment-splitter";
+import { LootContractDeployDto } from "./dto/loot";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -52,9 +54,15 @@ export class ContractManagerController {
     return this.contractManagerSignService.erc1155Token(dto, userEntity);
   }
 
+  // MODULE:LOOT
+  @Post("/lootbox")
+  public loot(@Body() dto: LootContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.loot(dto, userEntity);
+  }
+
   // MODULE:MYSTERY
   @Post("/mysterybox")
-  public mysterybox(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public mystery(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.mystery(dto, userEntity);
   }
 
@@ -80,6 +88,15 @@ export class ContractManagerController {
   @Post("/ponzi")
   public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.ponzi(dto, userEntity);
+  }
+
+  // MODULE:PONZI
+  @Post("/prediction")
+  public prediction(
+    @Body() dto: PredictionContractDeployDto,
+    @User() userEntity: UserEntity,
+  ): Promise<IServerSignature> {
+    return this.contractManagerSignService.prediction(dto, userEntity);
   }
 
   // MODULE:WAITLIST

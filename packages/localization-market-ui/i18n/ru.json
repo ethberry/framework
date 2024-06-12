@@ -338,7 +338,7 @@
   },
   "form": {
     "buttons": {
-      "GRADE": "Класс",
+      "GRADE": "Грейд",
       "add": "Добавить",
       "addToMetamask": "Добавить в MetaMask",
       "allowance": "Разрешение",
@@ -366,7 +366,7 @@
       "mainPage": "Главная страница",
       "merge": "Объединить",
       "next": "Далее",
-      "nonce": "Увеличить nonce",
+      "nonce": "Nonce",
       "ok": "Ок",
       "redeem": "Восстановить",
       "redeemLvl": "Восстановить {level}",
@@ -394,7 +394,7 @@
     "labels": {
       "DUMMY": "Заглушка",
       "EXCHANGE": "Обмен",
-      "GRADE": "Оценка",
+      "GRADE": "Грейд",
       "LEVEL": "Уровень",
       "RARITY": "Редкость",
       "SIGNATURE_TTL": "Время жизни подписи",
@@ -408,12 +408,12 @@
       "breakLastPeriod": "Прервать последний период",
       "categoryId": "Категория",
       "categoryIds": "Категории",
-      "chainId": "Цепочка",
+      "chainId": "Сеть",
       "city": "Город",
       "claimStatus": "Заявить",
       "claimed": "Заявлено",
       "claimType": "Тип",
-      "cliffInMonth": "Клифф в месяц",
+      "cliffInMonth": "Клифф",
       "collectionId": "Коллекция",
       "confirm": "Подтвердить",
       "contract": "Контракт",
@@ -447,7 +447,7 @@
       "facebookUrl": "Facebook",
       "from": "От",
       "gender": "Пол",
-      "gradeId": "Оценка",
+      "gradeId": "Грейд",
       "id": "ID",
       "imageUrl": "Аватар",
       "instagramUrl": "Instagram",
@@ -543,7 +543,7 @@
       "displayName": "Гордон Фримен",
       "email": "me@google.com",
       "facebookUrl": "https://facebook.com/",
-      "gradeId": "УРОВЕНЬ",
+      "gradeId": "Грейд",
       "instagramUrl": "https://instagram.com/",
       "listId": "1",
       "mainContractId": "Контракт",
@@ -579,7 +579,7 @@
       "clear": "Очистить",
       "create": "Создать",
       "delete": "Удалить",
-      "deploy": "Развернуть",
+      "deploy": "Деплой",
       "deposit": "Депозит",
       "edit": "Редактировать",
       "lend": "Одолжить",
@@ -698,7 +698,6 @@
       "integrations": {
         "coin-gecko": "CoinGecko",
         "dex": {
-          "1inch": "1inch",
           "title": "Dex",
           "uniswap": "Uniswap"
         },
@@ -722,86 +721,6 @@
       "title": "Панель управления"
     },
     "dex": {
-      "1inch": {
-        "advanced-settings": {
-          "gas": "Газ",
-          "slippage": "Допуск скольжения",
-          "title": "Расширенные настройки"
-        },
-        "buttons": {
-          "buy-crypto": "Купить криптовалюту",
-          "cancel": "Отмена",
-          "confirm": "Подтвердить",
-          "connect-wallet": "Подключить кошелек",
-          "download-metamask": "Скачать Metamask",
-          "learn-more": "Узнать больше",
-          "swap-tokens": "Обмен токенов",
-          "swapAgain": "Обменять снова"
-        },
-        "enums": {
-          "gasPrice": {
-            "HIGH": "Высокий",
-            "LOW": "Низкий",
-            "MEDIUM": "СРЕДНИЙ"
-          },
-          "networks": {
-            "ARBITRUM": "Arbitrum",
-            "BINANCE": "Binance",
-            "ETHEREUM": "Ethereum",
-            "OPTIMISM": "Optimism",
-            "POLYGON": "Polygon"
-          },
-          "slippage": {
-            "HIGH": "1%",
-            "LOW": "0.1%",
-            "MEDIUM": "0.5%",
-            "VERY_HIGH": "3%"
-          },
-          "text": "Сеть приложения {appNetwork} не соответствует выбранной в кошельке сети {walletNetwork}"
-        },
-        "header": {
-          "bridge": "Мост",
-          "network": "Сеть"
-        },
-        "snackbar": {
-          "accountNotFound": "Учетная запись не найдена в списке",
-          "approve-1inch": "Пожалуйста, разрешите 1inch использовать ваши {symbol}",
-          "web3-not-detected": "Провайдер Web3 не обнаружен"
-        },
-        "swap": {
-          "ETH": "ETH",
-          "approve": "Разрешить",
-          "approving": "Разрешение...",
-          "balanceOf": "Баланс",
-          "buyPrice": "цена покупки",
-          "complete": "Завершено",
-          "confirm": "Подтвердить обмен",
-          "cost": "Стоимость",
-          "fee": "Плата",
-          "gas": "Газ",
-          "gasPrice": "Цена газа",
-          "gwei": "GWEI",
-          "maxPriceSlippage": "Максимальное скольжение цены",
-          "preparing": "Подготовка к обмену",
-          "product": "Продукт",
-          "quantity": "Количество",
-          "rate": "Курс",
-          "selected": "Выбрано",
-          "spread": "Распределено по DEX",
-          "swapping": "Обмен токенов",
-          "title": "ОБМЕН",
-          "total": "Всего",
-          "txCost": "Стоимость транзакции"
-        },
-        "title": "1inch",
-        "token-search": {
-          "title": "Поиск {amount} токенов"
-        },
-        "warning": {
-          "cannotBeSame": "Токены не могут быть одинаковыми",
-          "insufficient": "Недостаточно {symbol} баланса"
-        }
-      },
       "title": "Dex",
       "uniswap": {
         "title": "Uniswap"
@@ -995,7 +914,7 @@
       }
     },
     "lottery-list": {
-      "title": "Лотерейные контракты"
+      "title": "Контракты Лотереи"
     },
     "marketplace": {
       "contract": {
@@ -1048,32 +967,32 @@
     },
     "mystery": {
       "box": {
-        "content": "Содержимое Мистерибокса",
+        "content": "Содержимое Мистических коробок",
         "price": "Цена",
-        "title": "Мистерибокс: {title}"
+        "title": "Мистическая коробка: {title}"
       },
       "boxes": {
-        "title": "Мистерибоксы"
+        "title": "Мистические коробки"
       },
       "contract": {
-        "title": "Мистери Контракт: {title}"
+        "title": "Мистическая коробка: {title}"
       },
       "contracts": {
-        "title": "Мистери Контракты"
+        "title": "Мистические коробки"
       },
-      "title": "Мистери",
+      "title": "Мистические коробки",
       "token": {
-        "content": "Содержимое Мистери Токена",
+        "content": "Содержимое Мистического Токена",
         "level": "Уровень: {GRADE}",
         "price": "Базовая цена: {amount}",
-        "title": "Мистери Токен: {title}"
+        "title": "Мистический Токен: {title}"
       },
       "tokens": {
         "sort": {
           "createdAt": "Дата",
           "price": "Цена"
         },
-        "title": "Мистери Токены"
+        "title": "Мистические Токены"
       }
     },
     "orders": {
@@ -1208,6 +1127,7 @@
       "report": {
         "title": "Отчет"
       },
+      "clipboard": "Скопирована реферальная ссылка",
       "title": "Реферальная программа"
     },
     "rent": {

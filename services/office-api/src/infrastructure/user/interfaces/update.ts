@@ -1,6 +1,6 @@
 import { UserRole, UserStatus } from "@framework/types";
 
-import { IProfileUpdateDto } from "../../profile/interfaces";
+import type { IProfileUpdateDto } from "../../profile/interfaces";
 
 export interface IUserUpdateDto extends IProfileUpdateDto {
   userStatus: UserStatus;

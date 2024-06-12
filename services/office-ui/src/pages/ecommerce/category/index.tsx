@@ -8,7 +8,7 @@ import type { ICategory } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 
 import { emptyCategory } from "../../../components/common/interfaces";
 import { EditCategoryDialog } from "./edit";
@@ -18,10 +18,9 @@ export const Category: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleCreate,
     handleEdit,
     handleEditCancel,
@@ -77,14 +76,14 @@ export const Category: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <EditCategoryDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

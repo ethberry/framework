@@ -3,11 +3,11 @@ import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
 import type { IEventHistory } from "../event-history";
 
+import { ModuleType } from "../../common";
+import type { IRent } from "../mechanics";
+import type { IMerchant } from "../../infrastructure";
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
-import { ModuleType } from "../../common";
-import type { IRent } from "../mechanics/gaming/rent/rent";
-import type { IMerchant } from "../../infrastructure";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -51,6 +51,7 @@ export enum Erc721ContractTemplates {
   "BLACKLIST" = "BLACKLIST",
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
   "BLACKLIST_DISCRETE" = "BLACKLIST_DISCRETE",
+  "BLACKLIST_RENTABLE" = "BLACKLIST_RENTABLE",
   "BLACKLIST_DISCRETE_RANDOM" = "BLACKLIST_DISCRETE_RANDOM",
   "BLACKLIST_DISCRETE_RENTABLE" = "BLACKLIST_DISCRETE_RENTABLE",
   "BLACKLIST_DISCRETE_RENTABLE_RANDOM" = "BLACKLIST_DISCRETE_RENTABLE_RANDOM",
@@ -117,6 +118,18 @@ export enum MysteryContractTemplates {
   "BLACKLIST" = "BLACKLIST",
 }
 
+export enum LootContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "PAUSABLE" = "PAUSABLE",
+}
+
+export enum LootContractTemplates {
+  "SIMPLE" = "SIMPLE",
+  "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
+  "PAUSABLE" = "PAUSABLE",
+  "BLACKLIST" = "BLACKLIST",
+}
+
 export enum CollectionContractFeatures {
   "BLACKLIST" = "BLACKLIST",
 }
@@ -138,6 +151,16 @@ export enum PonziContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
+export enum PredictionContractFeatures {
+  "REFERRAL" = "REFERRAL",
+  "SPLITTER" = "SPLITTER",
+}
+
+export enum PredictionContractTemplates {
+  "SIMPLE" = "SIMPLE",
+  "REFERRAL" = "REFERRAL",
+}
+
 export enum StakingContractFeatures {
   "SIMPLE" = "SIMPLE",
 }
@@ -145,6 +168,16 @@ export enum StakingContractFeatures {
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
   "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
+}
+
+export enum VestingContractTemplates {
+  "VESTING" = "VESTING",
+  "VESTING_VOTES" = "VESTING_VOTES",
+}
+
+export enum VestingContractFeatures {
+  "SIMPLE" = "SIMPLE",
+  "VOTES" = "VOTES",
 }
 
 export enum ContractFeatures {

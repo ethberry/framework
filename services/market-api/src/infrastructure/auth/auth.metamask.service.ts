@@ -20,43 +20,27 @@ export class AuthMetamaskService {
   ) {}
 
   public async login(dto: IMetamaskDto): Promise<ICustomToken> {
-    const { displayName, email, imageUrl, nonce, signature, wallet } = dto;
+    const { nonce, signature, wallet } = dto;
 
     if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
       throw new ForbiddenException("signatureDoesNotMatch");
     }
 
-    // LOOK FOR USER WALLET
+    // look for user wallet
     let userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
-    // IF NEW WALLET
+    // if new wallet
     if (!userEntity) {
-      let userFb;
+      // check if user email exists in firebase
 
-      // CHECK IF USER EMAIL EXISTS IN FIREBASE
-      if (email) {
-        try {
-          userFb = await this.admin.auth().getUserByEmail(email);
-        } catch (err) {
-          console.error(err.errorInfo, "firebase.getUserByEmail");
-        }
-      }
-      // CREATE NEW USER IN FIREBASE
-      if (!userFb) {
-        userFb = await this.admin.auth().createUser({
-          displayName,
-          email,
-          photoURL: imageUrl,
-          emailVerified: !!email,
-        });
-      }
+      const user = await this.findOrCreateUserInFirebase(dto);
 
-      // IMPORT NEW USER TO OUR DB
+      // import new user to our db
       userEntity = await this.userService.import({
-        sub: userFb.uid,
-        displayName: displayName || wallet.toLowerCase(),
-        imageUrl: imageUrl || "",
-        email: email || "",
+        sub: user.uid,
+        displayName: wallet.toLowerCase(),
+        imageUrl: "",
+        email: "",
         language: EnabledLanguages.EN,
         userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
@@ -69,5 +53,9 @@ export class AuthMetamaskService {
     const token = await this.admin.auth().createCustomToken(userEntity.sub);
 
     return { token };
+  }
+
+  public async findOrCreateUserInFirebase(_dto: IMetamaskDto) {
+    return this.admin.auth().createUser({});
   }
 }

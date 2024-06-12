@@ -4,7 +4,7 @@ import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { addMonths, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import {
   ListAction,
@@ -16,7 +16,7 @@ import {
 } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
-import { VestingTransferOwnershipButton } from "../../../../../components/buttons/mechanics/vesting/transfer-ownership";
+import { VestingTransferOwnershipButton } from "../../../../../components/buttons";
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
@@ -26,9 +26,9 @@ export const Vesting: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -108,7 +108,7 @@ export const Vesting: FC = () => {
       <VestingViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
 

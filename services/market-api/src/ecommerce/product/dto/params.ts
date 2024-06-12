@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 import { decorate } from "ts-mixer";
 
-import { IParamsDto } from "../interfaces/params";
+import type { IParamsDto } from "../interfaces/params";
 
 export class ParamsDto implements IParamsDto {
   @decorate(

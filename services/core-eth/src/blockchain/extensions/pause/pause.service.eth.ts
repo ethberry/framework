@@ -1,14 +1,16 @@
-import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { IPausedEvent, RmqProviderType, SignalEventType } from "@framework/types";
+import type { IPausedEvent } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
+import { testChainId } from "@framework/constants";
+
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class PauseServiceEth {

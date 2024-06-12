@@ -22,7 +22,7 @@ export interface IStakingAllowanceButtonProps {
   variant?: ListActionVariant;
 }
 
-export const AllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
+export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const {
     className,
     contract,

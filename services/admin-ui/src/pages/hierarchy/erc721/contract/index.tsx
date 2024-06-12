@@ -1,33 +1,41 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { IContract, IContractSearchDto } from "@framework/types";
+import {
+  BusinessType,
+  ContractFeatures,
+  ContractStatus,
+  Erc721ContractFeatures,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { ContractFeatures, ContractStatus, Erc721ContractFeatures } from "@framework/types";
 
-import { Erc721ContractDeployButton } from "../../../../components/buttons";
+import {
+  BlacklistButton,
+  ChainLinkSetSubscriptionButton,
+  ContractAllowanceButton,
+  ContractMintButton,
+  Erc721ContractDeployButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  RoyaltyButton,
+  SetBaseTokenURIButton,
+  TransferButton,
+  UnBlacklistButton,
+  UnWhitelistButton,
+  WhitelistButton,
+} from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../components/buttons/extensions/renounce-role";
-import { BlacklistButton } from "../../../../components/buttons/extensions/blacklist-add";
-import { UnBlacklistButton } from "../../../../components/buttons/extensions/blacklist-remove";
-import { WhitelistButton } from "../../../../components/buttons/extensions/whitelist-add";
-import { UnWhitelistButton } from "../../../../components/buttons/extensions/whitelist-remove";
-import { MintButton } from "../../../../components/buttons/hierarchy/contract/mint";
-import { AllowanceButton } from "../../../../components/buttons/hierarchy/contract/allowance";
-import { TransferButton } from "../../../../components/buttons/common/transfer";
-import { RoyaltyButton } from "../../../../components/buttons/common/royalty";
-import { EthListenerAddButton } from "../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../components/buttons/common/eth-remove";
-import { ChainLinkSetSubscriptionButton } from "../../../../components/buttons/integrations/chain-link/set-subscription";
-import { SetBaseTokenURIButton } from "../../../../components/buttons/hierarchy/contract/set-base-token-uri";
 import { Erc721ContractEditDialog } from "./edit";
 
 export const Erc721Contract: FC = () => {
@@ -35,11 +43,10 @@ export const Erc721Contract: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleCreate,
     handleEdit,
@@ -94,9 +101,13 @@ export const Erc721Contract: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <Fragment />
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
+          </Button>
+        )}
         <Erc721ContractDeployButton />
       </PageHeader>
 
@@ -128,8 +139,8 @@ export const Erc721Contract: FC = () => {
                 <UnBlacklistButton contract={contract} />
                 <WhitelistButton contract={contract} />
                 <UnWhitelistButton contract={contract} />
-                <MintButton contract={contract} />
-                <AllowanceButton contract={contract} />
+                <ContractMintButton contract={contract} />
+                <ContractAllowanceButton contract={contract} />
                 <TransferButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />
@@ -160,14 +171,14 @@ export const Erc721Contract: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <Erc721ContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

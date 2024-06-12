@@ -25,14 +25,6 @@ export const DexSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/dex/1inch">
-          <ListItemIcon>
-            <CurrencyExchange />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dex.1inch.title" />
-          </ListItemText>
-        </ListItemButton>
         <ListItemButton component={RouterLink} to="/dex/uniswap">
           <ListItemIcon>
             <CurrencyExchange />

@@ -403,7 +403,7 @@ export class StakingDepositServiceEth {
       const stakingBalances = await this.balanceService.searchByAddress(address);
 
       // EACH DEPOSIT TOKEN BALANCES
-      depositAssetContracts.map(async addr => {
+      const promises = depositAssetContracts.map(async addr => {
         const currentAssetBalance = stakingBalances.filter(bal => bal.token.template.contract.address === addr);
         if (currentAssetBalance.length > 0) {
           const { amount, token } = currentAssetBalance[0];
@@ -449,6 +449,14 @@ export class StakingDepositServiceEth {
           return null;
         }
       });
+
+      await Promise.allSettled(promises).then(res =>
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason, StakingDepositServiceEth.name);
+          }
+        }),
+      );
     }
   }
 

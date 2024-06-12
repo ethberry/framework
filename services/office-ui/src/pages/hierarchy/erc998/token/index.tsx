@@ -4,7 +4,7 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
@@ -21,10 +21,10 @@ export const Erc998Token: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleToggleFilters,
     handleView,
     handleViewCancel,
@@ -115,7 +115,7 @@ export const Erc998Token: FC = () => {
       <Erc998TokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
 

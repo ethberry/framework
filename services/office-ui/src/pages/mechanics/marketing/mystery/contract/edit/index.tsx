@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { ContractStatus, IContract } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
@@ -57,8 +57,8 @@ export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = pr
             symbol={symbol}
             address={address}
             baseTokenURI={baseTokenURI}
-            royalty={`${royalty / 100}%`}
             contractFeatures={contractFeatures}
+            {...(!contractFeatures.includes(ContractFeatures.SOULBOUND) && { royalty: `${royalty / 100}%` })}
           />
         ) : null
       }

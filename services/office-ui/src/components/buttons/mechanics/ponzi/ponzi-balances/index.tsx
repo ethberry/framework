@@ -4,8 +4,8 @@ import { MonetizationOn } from "@mui/icons-material";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import { PonziBalanceDialog } from "./view";
 import { shouldDisableByContractType } from "../../../../utils";
+import { PonziBalanceDialog } from "./view";
 
 export interface IPonziBalanceButtonProps {
   className?: string;

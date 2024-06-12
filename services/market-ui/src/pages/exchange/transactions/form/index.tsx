@@ -3,7 +3,6 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-// import { ContractEventType } from "@framework/types";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
@@ -13,8 +12,7 @@ export enum ContractEventType {
   Claim = "Claim", // +
   Dismantle = "Dismantle", // ???
   Craft = "Craft", // +
-  Upgrade = "Upgrade", // ???? upgrade is an exchange event
-  LevelUp = "LevelUp", // ???? levelUp is a contract event
+  Upgrade = "Upgrade", // +
   Purchase = "Purchase", // +
   PurchaseRaffle = "PurchaseRaffle", // assets; lucky number
   PurchaseLottery = "PurchaseLottery", // assets; numbers - array

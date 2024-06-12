@@ -9,7 +9,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, IsNull, Not, Repository, DeleteResult } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
@@ -27,6 +27,7 @@ import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class WaitListListService {
@@ -43,7 +44,7 @@ export class WaitListListService {
 
   public async search(
     dto: Partial<IWaitListListSearchDto>,
-    _userEntity: UserEntity,
+    userEntity: UserEntity,
   ): Promise<[Array<WaitListListEntity>, number]> {
     const { query, merchantId, skip, take } = dto;
 
@@ -56,6 +57,10 @@ export class WaitListListService {
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
+    });
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
 
     if (query) {
@@ -79,7 +84,8 @@ export class WaitListListService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "waitlist.createdAt": "ASC",
+      "waitlist.createdAt": "DESC",
+      "waitlist.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -170,7 +176,7 @@ export class WaitListListService {
       ]);
     }
 
-    Object.assign(waitListListEntity, rest);
+    Object.assign(waitListListEntity, { isPrivate, ...rest });
 
     // update of the item is not allowed, because user signed off for certain item
     // if (item) {
@@ -282,6 +288,18 @@ export class WaitListListService {
           resolve(results as Array<WaitListItemEntity>);
         },
       );
+    });
+  }
+
+  public async deactivateWaitlist(assets: Array<AssetEntity>): Promise<DeleteResult> {
+    const waitListEntities = await this.waitListListEntityRepository.find({
+      where: {
+        itemId: In(assets.map(asset => asset.id)),
+      },
+    });
+
+    return await this.waitListListEntityRepository.delete({
+      id: In(waitListEntities.map(w => w.id)),
     });
   }
 }

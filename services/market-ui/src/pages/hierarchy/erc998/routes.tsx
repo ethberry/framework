@@ -25,7 +25,7 @@ export const erc998Routes: Array<RouteObject> = [
         path: "/erc998/contracts",
         children: [
           { index: true, element: <Erc998ContractList /> },
-          { path: "/erc998/contracts/:id", element: <Erc998Contract /> },
+          { path: "/erc998/contracts/:id/:action", element: <Erc998Contract /> },
         ],
       },
       {
@@ -33,6 +33,7 @@ export const erc998Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc998TemplateList /> },
           { path: "/erc998/templates/:id", element: <Erc998Template /> },
+          { path: "/erc998/templates/:id/:action", element: <Erc998Template /> },
         ],
       },
       {
@@ -40,6 +41,7 @@ export const erc998Routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Erc998TokenList /> },
           { path: "/erc998/tokens/:id", element: <Erc998Token /> },
+          { path: "/erc998/tokens/:id/:action", element: <Erc998Token /> },
         ],
       },
     ],

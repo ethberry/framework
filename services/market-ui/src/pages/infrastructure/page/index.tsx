@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Navigate, useParams } from "react-router";
 
-import { IPage } from "@framework/types";
+import type { IPage } from "@framework/types";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ApiError } from "@gemunion/provider-api-firebase";

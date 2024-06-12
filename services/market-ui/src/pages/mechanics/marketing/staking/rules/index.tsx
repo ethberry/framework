@@ -7,7 +7,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { formatItemHtmlList, formatPenalty } from "@framework/exchange";
@@ -43,10 +43,10 @@ export const StakingRules: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleView,
     handleViewCancel,
     handleViewConfirm,
@@ -228,7 +228,7 @@ export const StakingRules: FC = () => {
       <StakingViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

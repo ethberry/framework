@@ -47,7 +47,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       message="pages.lottery.rounds.end"
       className={className}
       dataTestId="LotteryRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={disabled || shouldDisableByContractType(contract)}
       variant={variant}
     />
   );

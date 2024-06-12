@@ -7,7 +7,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -21,10 +21,10 @@ export const Rent: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
     handleCreate,
     handleEdit,
     handleEditCancel,
@@ -106,7 +106,7 @@ export const Rent: FC = () => {
       <RentEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

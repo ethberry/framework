@@ -35,10 +35,10 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
     deposit,
     reward,
     penalty,
-    maxCycles,
     durationAmount,
     durationUnit,
     contract,
+    maxCycles,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -66,7 +66,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
             autoSelect
-            // multiple
+            multiple
             prefix="deposit"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
@@ -76,7 +76,7 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
           <TemplateAssetInput
             allowEmpty
             autoSelect
-            // multiple
+            multiple
             prefix="reward"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}

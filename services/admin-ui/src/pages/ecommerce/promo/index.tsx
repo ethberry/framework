@@ -4,11 +4,11 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import { IProductPromo } from "@framework/types";
+import type { IProductPromo } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 
 import { emptyPromo } from "../../../components/common/interfaces";
@@ -19,10 +19,9 @@ export const ProductPromo: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isDeleteDialogOpen,
-    isEditDialogOpen,
     handleCreate,
     handleDelete,
     handleDeleteCancel,
@@ -73,14 +72,14 @@ export const ProductPromo: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <EditPromoDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

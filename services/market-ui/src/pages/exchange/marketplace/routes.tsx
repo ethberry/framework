@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { MarketplaceSection } from "../../dashboard/exchange/marketplace";
+import { MarketplaceSection } from "../../dashboard/mechanics/marketplace";
 import { IndexWrapper } from "../../index-wrapper";
 import { MerchantList } from "./merchant-list";
 import { Merchant } from "./merchant";
@@ -26,13 +26,14 @@ export const marketplaceRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <MerchantList /> },
           { path: "/marketplace/merchants/:id", element: <Merchant /> },
+          { path: "/marketplace/merchants/:id/:action", element: <Merchant /> },
         ],
       },
       {
         path: "/marketplace/contracts",
         children: [
           { index: true, element: <ContractList /> },
-          { path: "/marketplace/contracts/:id", element: <Contract /> },
+          { path: "/marketplace/contracts/:id/:action", element: <Contract /> },
         ],
       },
       {
@@ -40,6 +41,7 @@ export const marketplaceRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <TemplateList /> },
           { path: "/marketplace/templates/:id", element: <Template /> },
+          { path: "/marketplace/templates/:id/:action", element: <Template /> },
         ],
       },
     ],

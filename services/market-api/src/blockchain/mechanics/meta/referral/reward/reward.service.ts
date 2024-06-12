@@ -8,7 +8,7 @@ import type { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralRepo
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "./reward.entity";
-import { IReferralClaimSearchDto } from "../claim/dto";
+import type { IReferralClaimSearchDto } from "../claim/dto";
 
 export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;

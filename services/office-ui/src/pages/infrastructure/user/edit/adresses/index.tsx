@@ -8,7 +8,7 @@ import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyAddress } from "../../../../../components/common/interfaces";
@@ -29,10 +29,9 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
 
   const {
     rows,
+    action,
     selected,
     isLoading,
-    isDeleteDialogOpen,
-    isEditDialogOpen,
     handleCreate,
     handleDelete,
     handleDeleteCancel,
@@ -116,14 +115,14 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
       <UserAddressForm
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
 
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
         getTitle={formatAddress}
       />

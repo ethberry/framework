@@ -92,7 +92,7 @@
     "listenerRemove": "Remove ETH Listener",
     "lotteryRoundEnd": "End Lottery Round",
     "lotteryRoundStart": "Start Lottery Round",
-    "mintBox": "Mint Mysterybox",
+    "mintBox": "Mint box",
     "mintToken": "Mint tokens",
     "paymentSplitterBalances": "Release Balance",
     "paymentSplitterShares": "has {currentShare} of {total} shares",
@@ -101,6 +101,7 @@
     "raffleRoundEnd": "End Raffle Round",
     "raffleRoundStart": "Start Raffle Round",
     "renounceRole": "Renounce role",
+    "resolve": "Resolve",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
@@ -190,6 +191,7 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
+      "LOOTBOX": "LootBox",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
@@ -216,7 +218,6 @@
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
-      "CLIFF": "Cliff",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -224,8 +225,6 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
-      "GRADED": "Graded",
-      "LINEAR": "Linear",
       "LINEAR_REFERRAL": "Linear Referral",
       "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
@@ -238,12 +237,23 @@
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
+      "VESTING": "Vesting",
+      "VESTING_VOTES": "Vesting + Votes",
       "WHITELIST": "Whitelist",
       "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking"
     },
     "craftStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
+    },
+    "discreteStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "discreteStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
     },
     "dismantleStatus": {
       "ACTIVE": "Active",
@@ -377,6 +387,7 @@
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
       "LevelUp": "LevelUp",
+      "LootBoxDeployed": "LootBoxDeployed",
       "LotteryDeployed": "LotteryDeployed",
       "Merge": "Merge",
       "MetadataUpdate": "MetadataUpdate",
@@ -394,6 +405,7 @@
       "PonziDeployed": "PonziDeployed",
       "Prize": "Prize",
       "Purchase": "Purchase",
+      "PurchaseLootBox": "PurchaseLootBox",
       "PurchaseLottery": "PurchaseLottery",
       "PurchaseMysteryBox": "PurchaseMysteryBox",
       "PurchaseRaffle": "PurchaseRaffle",
@@ -460,15 +472,6 @@
       "STRENGTH": "Strength",
       "WISDOM": "Wisdom"
     },
-    "gradeStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
-    "gradeStrategy": {
-      "EXPONENTIAL": "Exponential",
-      "FLAT": "Flat",
-      "LINEAR": "Linear"
-    },
     "language": {
       "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
@@ -486,6 +489,10 @@
       "PONZI": "PONZI",
       "STAKING": "STAKING",
       "VESTING": "VESTING"
+    },
+    "lootBoxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "merchantStatus": {
       "ACTIVE": "Active",
@@ -528,6 +535,16 @@
       "NEW": "NEW"
     },
     "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "questionResult": {
+      "DRAW": "Draw",
+      "NO": "No",
+      "TECH": "Cancelled",
+      "YES": "Yes"
+    },
+    "questionStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -646,18 +663,22 @@
       "paymentSplitterBalance": "Release Balance",
       "ponziBalance": "Ponzi balance",
       "reject": "Reject",
+      "releaseFunds": "Release Funds",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
       "reset": "Reset",
+      "resolve": "Resolve",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
+      "saveToIpfs": "Save To IPFS",
       "schedule": "Schedule",
       "search": "Search",
       "setAmount": "Set amount",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "stakingInfo": "Staking info",
+      "start": "Start",
       "startRound": "Start round",
       "submit": "Submit",
       "topUp": "Top up",
@@ -736,6 +757,8 @@
       "decimals": "Decimals",
       "deposit": "Deposit",
       "description": "Description",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "dismantleStatus": "Status",
       "dismantleStrategy": "Strategy",
       "displayName": "Display name",
@@ -751,8 +774,6 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -766,17 +787,22 @@
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
+      "lootBoxStatus": "Status",
+      "lootId": "Lootbox",
       "lottery": "Lottery",
       "matron": "Matron",
+      "max": "Maximum",
       "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
       "maxTicket": "Max tickets",
       "maxTime": "Max Cooldown",
+      "maxVotes": "Max Votes",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
       "mergeStatus": "Status",
       "metadata": "Attributes",
+      "min": "Minimum",
       "monthlyRelease": "Monthly release",
       "mysteryBoxStatus": "Status",
       "mysteryId": "Mysterybox",
@@ -814,6 +840,9 @@
       "productStatus": "Status",
       "programLevel": "Program level",
       "programLevels": "Program levels",
+      "questionIds": "Questions",
+      "questionResult": "Result",
+      "questionStatus": "Status",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
       "recentDeposits": "Recent deposits",
@@ -925,13 +954,17 @@
       "level": "1",
       "listId": "Default list",
       "listIds": "Default list",
+      "lootId": "Lootbox",
+      "max": "10",
       "maxCycles": "0",
       "maxStake": "10",
       "maxStakes": "0",
       "maxTicket": "0",
       "maxTime": "0",
+      "maxVotes": "0",
       "merchantId": "Gordon Freeman",
       "metadata": "{}",
+      "min": "1",
       "monthlyRelease": "10%",
       "mysteryId": "Mysterybox",
       "name": "Pink dust",
@@ -954,6 +987,7 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "query": "Search...",
+      "questionIds": "Question",
       "rarity": "Legendary",
       "rarityMultiplier": "0",
       "recipient": "Recipient",
@@ -1004,7 +1038,11 @@
       "customError": "???",
       "duplicate": "{label} already in use",
       "invalidJSON": "Invalid JSON",
+      "maxItemLength": "Value must not be greater than the length of 'Item' assets",
+      "maxMaxValue": "Value must not be greater than 'maximum' field",
+      "maxPropertyValue": "{label} exeed the maximum value",
       "patternMismatch": "{label} does not match expected pattern",
+      "randomFeature": "{label} requires random feature",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
       "refProgramTotal": "Total is invalid. Must be sum of all levels",
@@ -1159,6 +1197,7 @@
         "collection": "Collections",
         "dispenser": "Dispenser",
         "grade": "Grade",
+        "loot": "Loot",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "payment-splitter": "Payment Splitter",
@@ -1251,6 +1290,21 @@
     },
     "kanban": {
       "title": "Orders"
+    },
+    "loot": {
+      "boxContent": {
+        "title": "Lootbox content"
+      },
+      "boxes": {
+        "title": "Loot Boxes"
+      },
+      "contracts": {
+        "title": "Loot Contracts"
+      },
+      "title": "Loot",
+      "tokens": {
+        "title": "Loot Tokens"
+      }
     },
     "lottery": {
       "contracts": {
@@ -1458,7 +1512,8 @@
         "erc721": "5 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "0 Loot boxes",
+        "mystery": "0 Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Bronze",
@@ -1475,7 +1530,8 @@
         "erc721": "25 ERC721 contracts",
         "erc998": "5 ERC998 contract",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "10 Loot boxes",
+        "mystery": "10 Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Gold",
@@ -1498,7 +1554,8 @@
         "erc721": "10 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
         "grade": "Grade",
-        "mystery": "Mystery box",
+        "loot": "Loot boxes",
+        "mystery": "Mystery boxes",
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "Silver",

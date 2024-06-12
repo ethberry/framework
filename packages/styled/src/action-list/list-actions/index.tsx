@@ -1,4 +1,4 @@
-import { Children, cloneElement, FC, PropsWithChildren, ReactElement } from "react";
+import { Children, cloneElement, FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 
 import { ListActionVariant } from "../interface";
@@ -15,7 +15,10 @@ export interface IListActionsProps {
 export const ListActions: FC<PropsWithChildren<IListActionsProps>> = props => {
   const { children, dataTestId, itemsVisibleOnMobile = 1, itemsVisibleOnDesktop = 3 } = props;
 
-  const actions = Children.toArray(children) as Array<ReactElement<IListActionProps>>;
+  const actions = Children.toArray(children).filter(
+    // @ts-ignore (child.type is not callable)
+    child => isValidElement(child) && child?.type(child.props),
+  ) as Array<ReactElement<IListActionProps>>;
 
   const actionsAmount = actions.length;
 

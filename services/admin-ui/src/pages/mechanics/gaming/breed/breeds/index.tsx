@@ -3,7 +3,7 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IBreed } from "@framework/types";
@@ -16,9 +16,9 @@ export const BreedBreeds: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -60,7 +60,7 @@ export const BreedBreeds: FC = () => {
       <BreedItemViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

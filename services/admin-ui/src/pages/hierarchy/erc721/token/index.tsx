@@ -4,7 +4,7 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
@@ -17,10 +17,10 @@ export const Erc721Token: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleToggleFilters,
     handleView,
     handleViewCancel,
@@ -88,7 +88,7 @@ export const Erc721Token: FC = () => {
       <Erc721TokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

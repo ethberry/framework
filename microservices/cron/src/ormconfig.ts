@@ -10,7 +10,7 @@ const config: PostgresConnectionOptions = {
   entities: [ContractEntity],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: (process.env.LOG_MODE && process.env.LOG_MODE === "true") || false,
+  logging: process.env.LOG_MODE === "true",
 };
 
 export default config;

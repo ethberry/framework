@@ -25,6 +25,7 @@ export const claimRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <ClaimTemplate /> },
           { path: "/claims/templates/:id", element: <ClaimTemplate /> },
+          { path: "/claims/templates/:id/:action", element: <ClaimTemplate /> },
         ],
       },
       {
@@ -33,6 +34,7 @@ export const claimRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <ClaimToken /> },
           { path: "/claims/tokens/:id", element: <ClaimToken /> },
+          { path: "/claims/tokens/:id/:action", element: <ClaimToken /> },
         ],
       },
     ],

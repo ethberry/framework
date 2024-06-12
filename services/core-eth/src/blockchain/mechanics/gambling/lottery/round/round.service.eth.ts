@@ -1,10 +1,11 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
+  EmailType,
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
@@ -31,8 +32,12 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
+    @Inject(RmqProviderType.EML_SERVICE)
+    protected readonly emlClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryTokenService: LotteryTokenService,
@@ -264,6 +269,14 @@ export class LotteryRoundServiceEth {
         transactionType: name,
       })
       .toPromise();
+
+    await this.emlClientProxy
+      .emit(EmailType.LOTTERY_PRIZE, {
+        merchant: lotteryRoundEntity.contract.merchant,
+        token: ticketEntity,
+        round: lotteryRoundEntity,
+      })
+      .toPromise();
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
@@ -290,7 +303,7 @@ export class LotteryRoundServiceEth {
         }
       });
 
-      Object.keys(aggregation).map(async aggr => {
+      const promises = Object.keys(aggregation).map(async aggr => {
         // create new asset
         const newAssetEntity = await this.assetService.create();
         const roundPrice = roundEntity.price.components;
@@ -301,6 +314,8 @@ export class LotteryRoundServiceEth {
             templateId: price.templateId,
             tokenId: price.tokenId,
             amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
+            // ?JFOM Is it coorect. Forget to multiply to COEFICIENT ? Find Point
+            // ? As more match as more amount would be. It suppose to be opposite...
           };
         });
 
@@ -313,6 +328,14 @@ export class LotteryRoundServiceEth {
           priceId: newAssetEntity.id,
         });
       });
+
+      await Promise.allSettled(promises).then(res =>
+        res.forEach(value => {
+          if (value.status === "rejected") {
+            this.loggerService.error(value.reason, LotteryRoundServiceEth.name);
+          }
+        }),
+      );
     }
   }
 }

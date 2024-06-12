@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 
 import { LotterySignModule } from "./sign/sign.module";
 import { LotteryRoundModule } from "./round/round.module";
-import { LotteryTokenModule } from "./token/token.module";
 import { LotteryContractModule } from "./contract/lottery.module";
+import { LotteryTicketModule } from "./ticket/ticket.module";
 
 @Module({
-  imports: [LotteryContractModule, LotteryRoundModule, LotteryTokenModule, LotterySignModule],
+  imports: [LotteryContractModule, LotteryRoundModule, LotterySignModule, LotteryTicketModule],
 })
 export class LotteryModule {}

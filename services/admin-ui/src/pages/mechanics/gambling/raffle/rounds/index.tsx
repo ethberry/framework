@@ -3,14 +3,13 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { RaffleReleaseButton } from "../../../../../components/buttons/mechanics/raffle/contract/release";
-import { RaffleRoundEndButton } from "../../../../../components/buttons/mechanics/raffle/contract/round-end";
+import { RaffleReleaseButton, RaffleRoundEndButton } from "../../../../../components/buttons";
 import { RaffleRoundViewDialog } from "./view";
 
 export const RaffleRounds: FC = () => {
@@ -18,9 +17,9 @@ export const RaffleRounds: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -72,7 +71,7 @@ export const RaffleRounds: FC = () => {
       <RaffleRoundViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import type { ILotteryTokenSearchDto } from "@framework/types";
+import type { ILotteryTicketTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -22,7 +22,7 @@ export class LotteryTokenService extends TokenService {
   }
 
   public async search(
-    dto: Partial<ILotteryTokenSearchDto>,
+    dto: Partial<ILotteryTicketTokenSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<TokenEntity>, number]> {
     const { roundIds, skip, take } = dto;

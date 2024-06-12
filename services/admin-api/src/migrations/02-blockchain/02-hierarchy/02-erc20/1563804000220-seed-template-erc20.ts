@@ -98,6 +98,18 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         10280,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        2020101,
+        'BEP Credits',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '${(1000n * WeiPerEther).toString()}',
+        'ACTIVE',
+        20201,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

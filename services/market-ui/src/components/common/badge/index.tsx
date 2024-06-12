@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IToken, TokenMetadata, TokenRarity } from "@framework/types";
+import type { IToken } from "@framework/types";
+import { TokenMetadata, TokenRarity } from "@framework/types";
 
 import { Root } from "./styled";
 

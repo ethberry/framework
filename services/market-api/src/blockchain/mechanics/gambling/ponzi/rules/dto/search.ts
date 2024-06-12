@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
+import { IsInt, Min, IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -27,6 +27,18 @@ export class PonziRuleItemSearchDto implements IPonziRuleItemSearchDto {
 
 export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto {
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
     type: PonziRuleItemSearchDto,
   })
   @ValidateNested()
@@ -41,4 +53,5 @@ export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto
   public reward: PonziRuleItemSearchDto;
 
   public ponziRuleStatus: Array<PonziRuleStatus>;
+  public merchantId: number;
 }

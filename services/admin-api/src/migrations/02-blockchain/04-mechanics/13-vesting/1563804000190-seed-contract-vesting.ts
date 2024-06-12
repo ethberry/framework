@@ -101,7 +101,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
           monthlyRelease: 417,
         })}',
         'ACTIVE',
-        '{}',
+        '{VOTES}',
         'VESTING',
         'OWNABLE',
         '${fromBlock}',

@@ -1,5 +1,5 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IMerchant } from "../../../../index";
+import type { IMerchant } from "../../../../index";
 
 export interface IReferralTree extends IIdDateBase {
   wallet: string;

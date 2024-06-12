@@ -1,13 +1,15 @@
 import type { ISearchable } from "@gemunion/types-collection";
-import { IMerchant } from "../../../../infrastructure";
-import { IPredictionAnswer } from "./answer";
+
+import type { IMerchant } from "../../../../infrastructure";
+import type { IAsset } from "../../../exchange/asset";
+import type { IPredictionAnswer } from "./answer";
 
 export enum PredictionQuestionStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }
 
-export enum PredictionQuestionAnswer {
+export enum PredictionQuestionResult {
   YES = "YES",
   NO = "NO",
   DRAW = "DRAW",
@@ -15,9 +17,14 @@ export enum PredictionQuestionAnswer {
 }
 
 export interface IPredictionQuestion extends ISearchable {
+  contractId: number;
   merchantId: number;
   merchant?: IMerchant;
+  price?: IAsset;
+  maxVotes: number;
+  startTimestamp: string;
+  endTimestamp: string;
   questionStatus: PredictionQuestionStatus;
-  answer: PredictionQuestionAnswer;
+  questionResult: PredictionQuestionResult;
   answers: Array<IPredictionAnswer>;
 }

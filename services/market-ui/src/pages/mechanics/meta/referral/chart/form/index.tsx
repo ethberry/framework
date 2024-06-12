@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { IReferralReportSearchDto } from "@framework/types";
+import type { IReferralReportSearchDto } from "@framework/types";
 
 interface IReferralReportSearchFormProps {
   onSubmit: (values: IReferralReportSearchDto) => Promise<void>;

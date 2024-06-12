@@ -2,7 +2,7 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
+import { SearchDto } from "@gemunion/collection";
 
 import { PredictionQuestionService } from "./question.service";
 import { PredictionQuestionEntity } from "./question.entity";
@@ -14,7 +14,7 @@ export class PredictionQuestionController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PaginationDto): Promise<[Array<PredictionQuestionEntity>, number]> {
+  public search(@Query() dto: SearchDto): Promise<[Array<PredictionQuestionEntity>, number]> {
     return this.predictionQuestionService.search(dto);
   }
 

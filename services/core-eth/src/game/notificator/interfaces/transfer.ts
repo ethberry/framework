@@ -1,4 +1,4 @@
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 export interface ITokenTransferData {
   token: IToken;

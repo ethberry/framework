@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
-import type { IPaginationDto } from "@gemunion/types-collection";
+import { DeepPartial, Repository } from "typeorm";
 
 import { PredictionAnswerEntity } from "./answer.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class PredictionAnswerService {
@@ -13,25 +12,12 @@ export class PredictionAnswerService {
     private readonly predictionAnswerEntityRepository: Repository<PredictionAnswerEntity>,
   ) {}
 
-  public async search(dto: Partial<IPaginationDto>): Promise<[Array<PredictionAnswerEntity>, number]> {
-    const { skip, take } = dto;
-
-    const queryBuilder = this.predictionAnswerEntityRepository.createQueryBuilder("answer");
-
-    queryBuilder.select();
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy("answer.createdAt", "DESC");
-
-    return queryBuilder.getManyAndCount();
-  }
-
-  public findOne(
-    where: FindOptionsWhere<PredictionAnswerEntity>,
-    options?: FindOneOptions<PredictionAnswerEntity>,
-  ): Promise<PredictionAnswerEntity | null> {
-    return this.predictionAnswerEntityRepository.findOne({ where, ...options });
+  public create(dto: DeepPartial<PredictionAnswerEntity>, userEntity: UserEntity): Promise<PredictionAnswerEntity> {
+    return this.predictionAnswerEntityRepository
+      .create({
+        ...dto,
+        user: userEntity,
+      })
+      .save();
   }
 }

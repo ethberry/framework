@@ -6,23 +6,25 @@ import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { WaitListDeployButton } from "../../../../../components/buttons";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { PauseButton } from "../../../../../components/buttons/mechanics/common/pause";
-import { UnPauseButton } from "../../../../../components/buttons/mechanics/common/unpause";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
+import {
+  WaitListDeployButton,
+  GrantRoleButton,
+  RevokeRoleButton,
+  RenounceRoleButton,
+  PauseButton,
+  UnPauseButton,
+  AllowanceButton,
+  TopUpButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+} from "../../../../../components/buttons";
 import { WaitListEditDialog } from "./edit";
 
 export const WaitListContracts: FC = () => {
@@ -32,11 +34,10 @@ export const WaitListContracts: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleSearch,
     handleToggleFilters,
     handleEdit,
@@ -120,14 +121,14 @@ export const WaitListContracts: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <WaitListEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

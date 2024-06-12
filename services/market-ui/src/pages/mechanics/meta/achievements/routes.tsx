@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/common-pages";
 
 import { IndexWrapper } from "../../../index-wrapper";
-import { AchievementsSection } from "../../../dashboard/achievements";
+import { AchievementsSection } from "../../../dashboard/mechanics/achievements";
 import { AchievementReport } from "./report";
 
 export const achievementsRoutes: Array<RouteObject> = [

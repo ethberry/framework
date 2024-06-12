@@ -1,10 +1,12 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ITokenAutocompleteDto, TokenStatus } from "@framework/types";
+import { ChainIdDto } from "@gemunion/nest-js-validators";
+import type { ITokenAutocompleteDto } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
-export class TokenAutocompleteDto implements ITokenAutocompleteDto {
+export class TokenAutocompleteDto extends ChainIdDto implements ITokenAutocompleteDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -40,14 +42,6 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @Transform(({ value }) => value as Array<TokenStatus>)
   @IsEnum(TokenStatus, { each: true, message: "badInput" })
   public tokenStatus: Array<TokenStatus>;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public chainId: number;
 
   public merchantId: number;
 }

@@ -4,13 +4,14 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, FilterList } from "@mui/icons-material";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
-import { PonziRuleStatus, TokenType } from "@framework/types";
+import { ModuleType, PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton, PonziToggleRuleButton } from "../../../../../components/buttons";
 import { PonziEditDialog } from "./edit";
@@ -20,11 +21,10 @@ export const PonziRules: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -41,6 +41,7 @@ export const PonziRules: FC = () => {
     }),
     search: {
       query: "",
+      contractIds: [],
       ponziRuleStatus: [PonziRuleStatus.ACTIVE, PonziRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
@@ -69,7 +70,15 @@ export const PonziRules: FC = () => {
         testId="PonziRuleSearchForm"
       >
         <Grid container columnSpacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.PONZI] }}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <SelectInput multiple name="ponziRuleStatus" options={PonziRuleStatus} />
           </Grid>
           <Grid item xs={6}>
@@ -105,14 +114,14 @@ export const PonziRules: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
       <PonziEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
         readOnly={true}
       />

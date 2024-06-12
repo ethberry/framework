@@ -1,8 +1,11 @@
 export * from "./breed/search";
 export * from "./breed/leaderboard";
 
-export * from "./grade/search";
-export * from "./grade/sign";
+export * from "./discrete/autocomplete";
+export * from "./discrete/create";
+export * from "./discrete/update";
+export * from "./discrete/search";
+export * from "./discrete/sign";
 
 export * from "./recipes/craft/count";
 export * from "./recipes/craft/search";

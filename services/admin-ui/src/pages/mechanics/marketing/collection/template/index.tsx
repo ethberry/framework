@@ -5,7 +5,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
@@ -14,7 +14,7 @@ import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
-import { MintButton } from "../../../../../components/buttons/hierarchy/template/mint";
+import { TemplateMintButton } from "../../../../../components/buttons";
 import { CollectionTemplateEditDialog } from "./edit";
 
 export const CollectionTemplate: FC = () => {
@@ -22,11 +22,10 @@ export const CollectionTemplate: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleCreate,
     handleToggleFilters,
     handleEdit,
@@ -114,7 +113,7 @@ export const CollectionTemplate: FC = () => {
                   icon={Delete}
                   message="form.buttons.delete"
                 />
-                <MintButton template={template} />
+                <TemplateMintButton template={template} />
               </ListActions>
             </StyledListItem>
           ))}
@@ -131,14 +130,14 @@ export const CollectionTemplate: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <CollectionTemplateEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

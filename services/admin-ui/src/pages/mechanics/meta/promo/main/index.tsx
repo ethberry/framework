@@ -8,7 +8,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -26,8 +26,7 @@ export const AssetPromo: FC = () => {
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
+    action,
     handleCreate,
     handleEdit,
     handleEditCancel,
@@ -94,14 +93,14 @@ export const AssetPromo: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={{ ...selected, title: selected.item?.components[0]?.template?.title }}
       />
 
       <AssetPromoEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

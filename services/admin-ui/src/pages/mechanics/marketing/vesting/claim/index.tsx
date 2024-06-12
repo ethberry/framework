@@ -7,7 +7,7 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { cleanUpAsset } from "@framework/exchange";
@@ -23,11 +23,10 @@ export const VestingClaim: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleCreate,
     handleToggleFilters,
     handleEdit,
@@ -133,7 +132,7 @@ export const VestingClaim: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={{
           ...selected,
           title: formatMessage({ id: "pages.claims.defaultItemTitle" }, { account: selected.account }),
@@ -143,7 +142,7 @@ export const VestingClaim: FC = () => {
       <VestingClaimEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

@@ -23,7 +23,7 @@ export const paymentSplitterRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PaymentSplitterContracts /> },
-          { path: "/payment-splitter/contracts/:id", element: <PaymentSplitterContracts /> },
+          { path: "/payment-splitter/contracts/:id/:action", element: <PaymentSplitterContracts /> },
         ],
       },
     ],

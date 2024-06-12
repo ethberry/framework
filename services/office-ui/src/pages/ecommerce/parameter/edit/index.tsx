@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { IParameter } from "@framework/types";
+import type { IParameter } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { ParameterInput } from "../../../../components/inputs/parameter";

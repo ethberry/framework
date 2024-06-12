@@ -48,7 +48,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !parameters.vrfSubId || !parameters.isConsumer}
+      disabled={disabled || shouldDisableByContractType(contract)}
       variant={variant}
     />
   );

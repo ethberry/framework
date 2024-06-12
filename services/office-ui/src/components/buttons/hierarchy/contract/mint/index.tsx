@@ -25,7 +25,7 @@ export interface IMintButtonProps {
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const ContractMintButton: FC<IMintButtonProps> = props => {
   const {
     className,
     contract,

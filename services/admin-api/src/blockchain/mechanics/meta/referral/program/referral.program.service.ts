@@ -6,10 +6,10 @@ import { UserRole } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MerchantService } from "../../../../../infrastructure/merchant/merchant.service";
-import { ReferralProgramEntity } from "./referral.program.entity";
-import { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
-import { ReferralProgramSearchDto } from "./dto";
 import { sorter } from "../../../../../common/utils/sorter";
+import { ReferralProgramEntity } from "./referral.program.entity";
+import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
+import { ReferralProgramSearchDto } from "./dto";
 
 @Injectable()
 export class ReferralProgramService {

@@ -6,9 +6,13 @@ export * from "./claim/upload";
 export * from "./collection/deploy";
 export * from "./collection/upload";
 
-export * from "./mystery-box/autocomplete";
-export * from "./mystery-box/deploy";
-export * from "./mystery-box/search";
+export * from "./loot/autocomplete";
+export * from "./loot/deploy";
+export * from "./loot/search";
+
+export * from "./mystery/autocomplete";
+export * from "./mystery/deploy";
+export * from "./mystery/search";
 
 export * from "./staking/deploy";
 export * from "./staking/chart";

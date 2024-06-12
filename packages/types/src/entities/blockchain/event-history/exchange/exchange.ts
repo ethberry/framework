@@ -1,13 +1,14 @@
 import type { IExchangePurchaseEvent } from "./core";
-import type { IExchangeClaimEvent } from "./claim";
+import type { IExchangePurchaseLootBoxEvent } from "./loot";
+import type { IExchangePurchaseLotteryEvent } from "./lottery";
 import type { IExchangePurchaseMysteryBoxEvent } from "./mystery";
+import type { IExchangePurchaseRaffleEvent } from "./raffle";
+import type { IExchangeClaimEvent } from "./claim";
 import type { IExchangeLendEvent } from "./rentable";
 import type { IExchangeCraftEvent } from "./craft";
 import type { IExchangeDismantleEvent } from "./dismantle";
 import type { IExchangeBreedEvent } from "./breeding";
-import type { IExchangePurchaseLotteryEvent } from "./lottery";
-import type { IExchangePurchaseRaffleEvent } from "./raffle";
-import type { IExchangeGradeEvent } from "./grade";
+import type { IExchangeDiscreteEvent } from "./discrete";
 
 export enum ExchangeEventType {
   // MODULE:CORE
@@ -17,9 +18,11 @@ export enum ExchangeEventType {
   // MODULE:CRAFT
   Craft = "Craft",
   Dismantle = "Dismantle",
+  // MODULE:LOOT
+  PurchaseLootBox = "PurchaseLootBox",
   // MODULE:MYSTERY
   PurchaseMysteryBox = "PurchaseMysteryBox",
-  // MODULE:GRADE
+  // MODULE:DISCRETE
   Upgrade = "Upgrade",
   // MODULE:LOTTERY
   PurchaseLottery = "PurchaseLottery",
@@ -68,16 +71,17 @@ export interface IExchangeErc20PaymentReleasedEvent {
 
 export type TExchangeEvents =
   | IExchangePurchaseEvent
+  | IExchangePurchaseLootBoxEvent
+  | IExchangePurchaseMysteryBoxEvent
+  | IExchangePurchaseLotteryEvent
+  | IExchangePurchaseRaffleEvent
   | IExchangeClaimEvent
   | IExchangeCraftEvent
   | IExchangeDismantleEvent
-  | IExchangeGradeEvent
-  | IExchangePurchaseMysteryBoxEvent
+  | IExchangeDiscreteEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent
   | IExchangePaymentReleasedEvent
   | IExchangeErc20PaymentReleasedEvent
-  | IExchangeLendEvent
-  | IExchangePurchaseLotteryEvent
-  | IExchangePurchaseRaffleEvent;
+  | IExchangeLendEvent;

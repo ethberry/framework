@@ -18,25 +18,25 @@ export class SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640 impleme
         token_id,
         amount
       ) VALUES (
-        102120210,
+        102088210,
         'ITEM',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        102120210,
+        102088210,
         'ITEM',
         10306,
         103060101,
         1
       ), (
-        102120210,
+        102088210,
         'ITEM',
         10406,
         104060101,
         1
       ), (
-        102120210,
+        102088210,
         'ITEM',
         10501,
         105010101,

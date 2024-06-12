@@ -83,7 +83,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 </TableCell>
                 <TableCell align="right">
                   {/* @ts-ignore */}
-                  <MysteryboxContent mysterybox={template.box} />
+                  <MysteryboxContent mysteryBox={template.box} />
                 </TableCell>
               </TableRow>
             ) : null}

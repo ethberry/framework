@@ -38,6 +38,18 @@ export class PonziRuleItemSearchDto implements IPonziRuleItemSearchDto {
 
 export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto {
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
     enum: PonziRuleStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
@@ -62,4 +74,6 @@ export class PonziRuleSearchDto extends SearchDto implements IPonziRuleSearchDto
   @ValidateNested()
   @Type(() => PonziRuleItemSearchDto)
   public reward: PonziRuleItemSearchDto;
+
+  public merchantId: number;
 }

@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITokenSearchDto } from "@framework/types";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";

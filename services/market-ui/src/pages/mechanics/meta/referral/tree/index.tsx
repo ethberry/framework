@@ -2,20 +2,21 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, Button, Grid, SvgIcon, Typography } from "@mui/material";
 import { ChevronRight, Done, ExpandMore, FilterList } from "@mui/icons-material";
-import { TreeItem, TreeView } from "@mui/x-tree-view";
+import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
 import { useWeb3React } from "@web3-react/core";
 import { useClipboard } from "use-clipboard-copy";
+import { enqueueSnackbar } from "notistack";
 
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
-import { NodeEnv } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
-import { calculateDepth, emptyRefProgram, getRefLevelShare, IRefProgramsLevels } from "../../../../../utils/referral";
+import { calculateDepth, emptyRefProgram, getRefLevelShare } from "../../../../../utils/referral";
+import type { IRefProgramsLevels } from "../../../../../utils/referral";
 import { ReferralTreeMerchantSearchForm } from "./form";
 import { StyledAlert, StyledCopyRefLinkWrapper, StyledTextField } from "./styled";
 
@@ -44,16 +45,13 @@ export const ReferralTree: FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const [programs, setPrograms] = useState<Array<IRefProgramsLevels>>([emptyRefProgram]);
 
-  const marketUrl = process.env.MARKET_FE_URL
-    ? process.env.MARKET_FE_URL
-    : process.env.NODE_ENV === NodeEnv.production
-      ? "https://market.gemunion.io"
-      : "https://st-market-b2b.gemunion.io";
+  const marketUrl = process.env.MARKET_FE_URL;
 
   const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
 
   const handleCopy = () => {
     clipboard.copy();
+    enqueueSnackbar(formatMessage({ id: "snackbar.clipboard" }));
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
@@ -113,7 +111,7 @@ export const ReferralTree: FC = () => {
   };
 
   const renderTree = (row: IReferralTree, idx: number) => (
-    <TreeItem key={row.id} nodeId={row.id.toString()} label={renderTreeLabel(row, idx)}>
+    <TreeItem key={row.id} itemId={row.id.toString()} label={renderTreeLabel(row, idx)}>
       {row.children.length > 0 ? row.children.map(items => renderTree(items, idx)) : null}
     </TreeItem>
   );
@@ -169,14 +167,13 @@ export const ReferralTree: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>
           <Box sx={{ minHeight: 150, flexGrow: 1, mt: 3 }}>
-            <TreeView
+            <SimpleTreeView
               aria-label="referral tree"
-              defaultCollapseIcon={<ExpandMore />}
-              defaultExpanded={["root"]}
-              defaultExpandIcon={<ChevronRight />}
+              defaultExpandedItems={["root"]}
+              slots={{ expandIcon: ChevronRight, collapseIcon: ExpandMore }}
             >
               {rows.map((row, idx) => renderTree(row, idx))}
-            </TreeView>
+            </SimpleTreeView>
           </Box>
         </StyledEmptyWrapper>
       </ProgressOverlay>

@@ -2,12 +2,13 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITokenSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
-import { ITokenUploadDto } from "../contract/interfaces";
+import type { ITokenUploadDto } from "../contract/interfaces";
 import { compare } from "../../../../../common/utils/sorter";
 
 @Injectable()

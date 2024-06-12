@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 import { TokenSellOnOpenSeaButton, WrapperUnpackButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
@@ -33,6 +33,8 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <TokenSellOnOpenSeaButton token={token} />
+          </Grid>
+          <Grid item xs={12}>
             <WrapperUnpackButton token={token} />
           </Grid>
         </Grid>

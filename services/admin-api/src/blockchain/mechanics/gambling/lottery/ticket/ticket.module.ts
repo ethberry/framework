@@ -1,15 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { LotteryTicketService } from "./ticket.service";
-import { LotteryTicketController } from "./ticket.controller";
-import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { LotteryTicketTokenModule } from "./token/token.module";
+import { LotteryTicketContractModule } from "./contract/contract.module";
 
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity])],
-  providers: [LotteryTicketService],
-  controllers: [LotteryTicketController],
-  exports: [LotteryTicketService],
+  imports: [LotteryTicketContractModule, LotteryTicketTokenModule],
 })
 export class LotteryTicketModule {}

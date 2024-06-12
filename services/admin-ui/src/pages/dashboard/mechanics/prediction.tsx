@@ -1,14 +1,21 @@
 import { FC } from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { ConfirmationNumber, Storage } from "@mui/icons-material";
+import { ConfirmationNumber, Storage, Collections } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { NodeEnv } from "@framework/types";
+import { useWeb3React } from "@web3-react/core";
+
+import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
 
 export const PredictionSection: FC = () => {
   const isProd = process.env.NODE_ENV === NodeEnv.production;
+  const { chainId = 0 } = useWeb3React();
 
   if (isProd) {
+    return null;
+  }
+
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
     return null;
   }
 
@@ -22,6 +29,14 @@ export const PredictionSection: FC = () => {
           </ListSubheader>
         }
       >
+        <ListItemButton component={RouterLink} to="/prediction/contracts">
+          <ListItemIcon>
+            <Collections />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.prediction.contracts.title" />
+          </ListItemText>
+        </ListItemButton>
         <ListItemButton component={RouterLink} to="/prediction/questions">
           <ListItemIcon>
             <ConfirmationNumber />

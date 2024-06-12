@@ -5,21 +5,23 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { ContractStatus, IContract, IContractSearchDto, PonziContractFeatures } from "@framework/types";
 
+import {
+  ContractAllowanceButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  PonziBalanceButton,
+  PonziContractDeployButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  TopUpButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { PonziContractDeployButton } from "../../../../../components/buttons";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { AllowanceButton } from "../../../../../components/buttons/mechanics/common/allowance";
-import { TopUpButton } from "../../../../../components/buttons/mechanics/common/top-up";
-import { PonziBalanceButton } from "../../../../../components/buttons/mechanics/ponzi/ponzi-balances";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
 import { PonziContractEditDialog } from "./edit";
 
 export const PonziContract: FC = () => {
@@ -27,11 +29,10 @@ export const PonziContract: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -97,7 +98,7 @@ export const PonziContract: FC = () => {
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />
                 <RenounceRoleButton contract={contract} />
-                <AllowanceButton contract={contract} />
+                <ContractAllowanceButton contract={contract} />
                 <TopUpButton contract={contract} />
                 <PonziBalanceButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
@@ -118,14 +119,14 @@ export const PonziContract: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <PonziContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>

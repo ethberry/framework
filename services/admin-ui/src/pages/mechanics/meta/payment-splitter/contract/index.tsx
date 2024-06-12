@@ -6,25 +6,24 @@ import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 // import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { PaymentSplitterContractDeployButton } from "../../../../../components/buttons";
+import { PaymentSplitterBalanceButton, PaymentSplitterContractDeployButton } from "../../../../../components/buttons";
 import { PaymentSplitterViewDialog } from "./view";
-import { PaymentSplitterBalanceButton } from "../../../../../components/buttons/mechanics/payment-splitter/balances";
 
 export const PaymentSplitterContracts: FC = () => {
   const {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleSearch,
     handleToggleFilters,
     handleView,
@@ -110,14 +109,14 @@ export const PaymentSplitterContracts: FC = () => {
       <PaymentSplitterViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
 
       {/* <DeleteDialog */}
       {/*  onCancel={handleDeleteCancel} */}
       {/*  onConfirm={handleDeleteConfirm} */}
-      {/*  open={isDeleteDialogOpen} */}
+      {/*  open={action === CollectionActions.delete} */}
       {/*  initialValues={selected} */}
       {/* /> */}
     </Grid>

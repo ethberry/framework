@@ -20,9 +20,14 @@ import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListListService } from "./list.service";
 import { WaitListListEntity } from "./list.entity";
-import { WaitListGenerateDto, WaitListListCreateDto, WaitListListUpdateDto, WaitListUploadDto } from "./dto";
-import { WaitListListAutocompleteDto } from "./dto/autocomplete";
-import { WaitListListSearchDto } from "./dto/search";
+import {
+  WaitListGenerateDto,
+  WaitListListAutocompleteDto,
+  WaitListListCreateDto,
+  WaitListListSearchDto,
+  WaitListListUpdateDto,
+  WaitListUploadDto,
+} from "./dto";
 
 @ApiBearerAuth()
 @Controller("/wait-list/list")

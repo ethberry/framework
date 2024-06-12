@@ -3,8 +3,17 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
+
+import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
 
 export const RaffleSection: FC = () => {
+  const { chainId = 0 } = useWeb3React();
+
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
+    return null;
+  }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -31,7 +40,7 @@ export const RaffleSection: FC = () => {
             <FormattedMessage id="pages.raffle.rounds.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/raffle/tickets">
+        <ListItemButton component={RouterLink} to="/raffle/ticket/contracts">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
@@ -39,7 +48,7 @@ export const RaffleSection: FC = () => {
             <FormattedMessage id="pages.raffle.tickets.title" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/raffle/tokens">
+        <ListItemButton component={RouterLink} to="/raffle/ticket/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

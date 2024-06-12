@@ -1,4 +1,4 @@
-import { IProductItemParameterUpdateDto } from "../interfaces";
+import type { IProductItemParameterUpdateDto } from "../interfaces";
 import { ProductItemParameterCreateDto } from "./create";
 
 export class ProductItemParameterUpdateDto

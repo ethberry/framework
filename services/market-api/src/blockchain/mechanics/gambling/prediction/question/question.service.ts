@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { PredictionQuestionEntity } from "./question.entity";
 
@@ -13,10 +13,18 @@ export class PredictionQuestionService {
     private readonly predictionQuestionEntityRepository: Repository<PredictionQuestionEntity>,
   ) {}
 
-  public async search(dto: Partial<IPaginationDto>): Promise<[Array<PredictionQuestionEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(dto: Partial<ISearchDto>): Promise<[Array<PredictionQuestionEntity>, number]> {
+    const { skip, take, query } = dto;
 
     const queryBuilder = this.predictionQuestionEntityRepository.createQueryBuilder("question");
+
+    if (query) {
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("question.title ILIKE '%' || :query || '%'", { query });
+        }),
+      );
+    }
 
     queryBuilder.select();
 

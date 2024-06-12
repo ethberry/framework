@@ -26,7 +26,7 @@ export const ponziRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PonziContract /> },
-          { path: "/ponzi/contracts/:id", element: <PonziContract /> },
+          { path: "/ponzi/contracts/:id/:action", element: <PonziContract /> },
         ],
       },
       {
@@ -35,6 +35,7 @@ export const ponziRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <PonziRules /> },
           { path: "/ponzi/rules/:id", element: <PonziRules /> },
+          { path: "/ponzi/rules/:id/:action", element: <PonziRules /> },
         ],
       },
       {

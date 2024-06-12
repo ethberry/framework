@@ -4,11 +4,11 @@ import type { IMysteryBox } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import { MysteryboxInput } from "../../../../../../inputs/mystery-box";
+import { MysteryBoxInput } from "../../../../../../inputs/mystery-box";
 import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
 
-export interface IMintMysteryBoxDto {
+export interface IMysteryBoxMintDto {
   account: string;
   contractId: number;
   mysteryId: number;
@@ -18,8 +18,8 @@ export interface IMintMysteryBoxDto {
 export interface IMintMysteryBoxDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IMintMysteryBoxDto, form: any) => Promise<void>;
-  initialValues: IMintMysteryBoxDto;
+  onConfirm: (values: IMysteryBoxMintDto, form: any) => Promise<void>;
+  initialValues: IMysteryBoxMintDto;
 }
 
 export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
@@ -34,7 +34,7 @@ export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
       disabled={false}
       {...rest}
     >
-      <MysteryboxInput />
+      <MysteryBoxInput />
       <TextInput name="account" />
       <BoxContent />
     </FormDialog>

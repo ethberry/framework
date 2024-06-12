@@ -24,19 +24,19 @@ export const Profile: FC = () => {
     navigate(`/profile/${newValue === ProfileTabs.general ? "" : newValue}`);
   };
 
-  const shouldHideAddress = process.env.NODE_ENV === NodeEnv.production;
+  const isProd = process.env.NODE_ENV === NodeEnv.production;
 
   return (
     <Fragment>
       <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} sx={{ mb: 2 }}>
         {Object.values(ProfileTabs).map(tab =>
-          shouldHideAddress && tab === ProfileTabs.addresses ? null : (
+          isProd && tab === ProfileTabs.addresses ? null : (
             <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
           ),
         )}
       </Tabs>
       <ProfileGeneral open={value === ProfileTabs.general} />
-      {!shouldHideAddress ? <ProfileAddresses open={value === ProfileTabs.addresses} /> : null}
+      {!isProd ? <ProfileAddresses open={value === ProfileTabs.addresses} /> : null}
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
       <ProfileNotifications open={value === ProfileTabs.notifications} />
       <ProfileSettings open={value === ProfileTabs.settings} />

@@ -1,4 +1,5 @@
-import { IToken, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 export const formatTokenTitle = (token: IToken): string => {
   if (

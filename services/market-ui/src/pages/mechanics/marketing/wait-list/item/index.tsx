@@ -5,12 +5,11 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
-import { WaitListClaimButton } from "../../../../../components/buttons";
-import { WaitListJoinDialog } from "../../../../../components/buttons/mechanics/wait-list/join";
+import { WaitListClaimButton, WaitListJoinDialog } from "../../../../../components/buttons";
 
 export const WaitListItem: FC = () => {
   const { account } = useWeb3React();
@@ -19,9 +18,9 @@ export const WaitListItem: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
-    isEditDialogOpen,
     handleCreate,
     handleEditConfirm,
     handleEditCancel,
@@ -69,7 +68,7 @@ export const WaitListItem: FC = () => {
       <WaitListJoinDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Fragment>

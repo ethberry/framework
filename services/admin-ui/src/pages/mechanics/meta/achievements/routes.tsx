@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/common-pages";
 
 import { IndexWrapper } from "../../../index-wrapper";
-import { AchievementsSection } from "../../../dashboard/achievements";
+import { AchievementsSection } from "../../../dashboard/mechanics/achievements";
 import { AchievementLevels } from "./levels";
 import { AchievementRules } from "./rule";
 import { AchievementReport } from "./report";
@@ -26,6 +26,7 @@ export const achievementsRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <AchievementRules /> },
           { path: "/achievements/rules/:id", element: <AchievementRules /> },
+          { path: "/achievements/rules/:id/:action", element: <AchievementRules /> },
         ],
       },
       {
@@ -34,6 +35,7 @@ export const achievementsRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <AchievementLevels /> },
           { path: "/achievements/levels/:id", element: <AchievementLevels /> },
+          { path: "/achievements/levels/:id/:action", element: <AchievementLevels /> },
         ],
       },
       {

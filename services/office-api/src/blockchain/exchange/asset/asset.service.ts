@@ -13,9 +13,9 @@ import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { AssetEntity } from "./asset.entity";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class AssetService {
@@ -24,8 +24,6 @@ export class AssetService {
     private readonly loggerService: LoggerService,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
-    @InjectRepository(AssetComponentEntity)
-    private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}
@@ -50,23 +48,29 @@ export class AssetService {
           where: {
             contractId: component.contractId,
           },
-          relations: {
-            contract: true,
-          },
+          relations:
+            component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20
+              ? {
+                  contract: true,
+                  tokens: true,
+                }
+              : {
+                  contract: true,
+                },
         });
 
         if (!templateEntity) {
           throw new NotFoundException("templateNotFound");
         }
 
-        // In office this check does not make sense because super admin edits contracts of merchants
-        // however it may happen he can mix assets of different merchants, this case is not covered
+        // In office this condition does not make sense
         // if (templateEntity.contract.merchantId !== userEntity.merchantId) {
         //   throw new ForbiddenException("insufficientPermissions");
         // }
 
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
           component.templateId = templateEntity.id;
+          component.tokenId = templateEntity.tokens[0].id;
         }
       }
 
@@ -136,5 +140,12 @@ export class AssetService {
     options?: FindOneOptions<AssetEntity>,
   ): Promise<AssetEntity | null> {
     return this.assetEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<AssetEntity>,
+    options?: FindOneOptions<AssetEntity>,
+  ): Promise<Array<AssetEntity>> {
+    return this.assetEntityRepository.find({ where, ...options });
   }
 }

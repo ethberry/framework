@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
@@ -26,10 +26,10 @@ export const Erc998Composition: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isViewDialogOpen,
     handleToggleFilters,
     handleView,
     handleViewCancel,
@@ -207,7 +207,7 @@ export const Erc998Composition: FC = () => {
       <Erc998CompositionViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

@@ -15,4 +15,5 @@ export * from "./raffle/search";
 export * from "./raffle/sign";
 
 export * from "./prediction/answer";
+export * from "./prediction/deploy";
 export * from "./prediction/question";

@@ -29,6 +29,7 @@ export class CreateTransactionHistory1563804040009 implements MigrationInterface
        'ERC1155_TOKEN',
        'METADATA',
        'LOTTERY',
+       'LOOT',
        'RAFFLE',
        'PONZI',
        'WAIT_LIST',

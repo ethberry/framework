@@ -17,6 +17,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -35,6 +36,7 @@ import {
   IContractManagerPaymentSplitterDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
+  LootContractTemplates,
   RmqProviderType,
   SignalEventType,
   // StakingContractFeatures,
@@ -70,6 +72,7 @@ import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log
 import { WaitListLogService } from "../mechanics/marketing/wait-list/log/log.service";
 import { decodeExternalId } from "../../common/utils";
 import { PaymentSplitterLogService } from "../mechanics/meta/payment-splitter/log/log.service";
+import { LootLogService } from "../mechanics/marketing/loot/box/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -94,6 +97,7 @@ export class ContractManagerServiceEth {
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
+    private readonly lootLogService: LootLogService,
     private readonly ponziLogService: PonziLogService,
     private readonly paymentSplitterLogService: PaymentSplitterLogService,
     private readonly lotteryLogService: LotteryLogService,
@@ -220,6 +224,17 @@ export class ContractManagerServiceEth {
       });
     }
 
+    if (contractEntity.contractModule === ModuleType.LOTTERY || contractEntity.contractModule === ModuleType.RAFFLE) {
+      // CREATE TEMPLATE TICKET
+      await this.templateService.create({
+        title: name,
+        description: emptyStateString,
+        imageUrl,
+        contractId: contractEntity.id,
+        templateStatus: TemplateStatus.ACTIVE,
+      });
+    }
+
     if (
       contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
@@ -234,6 +249,7 @@ export class ContractManagerServiceEth {
         fromBlock: parseInt(context.blockNumber.toString(), 16),
       });
     } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
+      // ADD LISTENER
       this.raffleTicketLogService.addListener({
         address: [account.toLowerCase()],
         fromBlock: parseInt(context.blockNumber.toString(), 16),
@@ -496,6 +512,53 @@ export class ContractManagerServiceEth {
       .toPromise();
   }
 
+  public async lootBox(event: ILogEvent<IContractManagerLootTokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account, args, externalId },
+    } = event;
+    const { transactionHash } = context;
+
+    const { name, symbol, baseTokenURI, royalty, contractTemplate } = args;
+
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractFeatures =
+      contractTemplate === "0"
+        ? []
+        : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>);
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: name,
+      name,
+      symbol,
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: [ContractFeatures.ALLOWANCE, ...contractFeatures],
+      contractType: TokenType.ERC721,
+      contractModule: ModuleType.LOOT,
+      chainId,
+      royalty: Number(royalty),
+      baseTokenURI,
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.lootLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(context.blockNumber.toString(), 16),
+    });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.getUserWalletById(externalId),
+        transactionHash,
+        transactionType: event.name,
+      })
+      .toPromise();
+  }
+
   public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, context: Log): Promise<void> {
     const {
       name,
@@ -507,11 +570,13 @@ export class ContractManagerServiceEth {
 
     const { userId, claimId } = decodedExternalId;
 
-    const { owner, startTimestamp, cliffInMonth, monthlyRelease } = args;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractFeatures = contractTemplate === "1" ? [ContractFeatures.VOTES] : [];
 
     await this.contractService.create({
       address: account.toLowerCase(),
@@ -524,7 +589,7 @@ export class ContractManagerServiceEth {
         cliffInMonth,
         monthlyRelease,
       },
-      contractFeatures: [],
+      contractFeatures,
       contractModule: ModuleType.VESTING,
       contractSecurity: ContractSecurity.OWNABLE,
       chainId,

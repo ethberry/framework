@@ -7,7 +7,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IPonziDeposit, IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 
 import { PonziRewardComplexButton } from "../../../../../components/buttons";
 import { PonziDepositSearchForm } from "./form";
@@ -18,11 +18,11 @@ export const PonziDeposit: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
     handleToggleFilters,
-    isViewDialogOpen,
     handleView,
     handleViewConfirm,
     handleViewCancel,
@@ -79,7 +79,7 @@ export const PonziDeposit: FC = () => {
       <StakesViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
+        open={action === CollectionActions.view}
         initialValues={selected}
       />
     </Grid>

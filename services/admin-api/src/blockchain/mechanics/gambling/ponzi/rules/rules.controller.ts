@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { SearchableDto } from "@gemunion/collection";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { PonziRulesService } from "./rules.service";
 import { PonziRulesEntity } from "./rules.entity";
 import { PonziRuleAutocompleteDto, PonziRuleSearchDto } from "./dto";
@@ -15,8 +16,11 @@ export class PonziRulesController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PonziRuleSearchDto): Promise<[Array<PonziRulesEntity>, number]> {
-    return this.ponziRulesService.search(dto);
+  public search(
+    @Query() dto: PonziRuleSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<PonziRulesEntity>, number]> {
+    return this.ponziRulesService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")

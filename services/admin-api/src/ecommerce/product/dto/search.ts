@@ -5,7 +5,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { SearchDto } from "@gemunion/collection";
 import { ProductStatus } from "@framework/types";
 
-import { IProductSearchDto } from "../interfaces";
+import type { IProductSearchDto } from "../interfaces";
 
 export class ProductSearchDto extends SearchDto implements IProductSearchDto {
   @ApiPropertyOptional({

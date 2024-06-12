@@ -17,7 +17,7 @@ import { RaffleRoundControllerEth } from "./round.controller.eth";
 import { RaffleRoundServiceEth } from "./round.service.eth";
 import { RoundControllerRmq } from "./round.controller.rmq";
 import { RaffleRoundServiceRmq } from "./round.service.rmq";
-import { signalServiceProvider } from "../../../../../common/providers";
+import { signalServiceProvider, emlServiceProvider } from "../../../../../common/providers";
 
 @Module({
   imports: [
@@ -38,6 +38,7 @@ import { signalServiceProvider } from "../../../../../common/providers";
     ethersRpcProvider,
     ethersSignerProvider,
     signalServiceProvider,
+    emlServiceProvider,
     RaffleRoundService,
     RaffleRoundServiceEth,
     RaffleRoundServiceRmq,

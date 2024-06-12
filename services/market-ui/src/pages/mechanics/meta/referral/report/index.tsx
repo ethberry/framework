@@ -12,7 +12,7 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 // import { formatEther } from "@framework/exchange";
-import { IReferralReportSearchDto, IReferralEvents } from "@framework/types";
+import type { IReferralReportSearchDto, IReferralEvents } from "@framework/types";
 import { formatItem } from "@framework/exchange";
 
 // TODO rework to use assets
@@ -96,7 +96,7 @@ export const ReferralReport: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
     }

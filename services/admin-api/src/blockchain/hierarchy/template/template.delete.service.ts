@@ -13,7 +13,7 @@ import { ClaimTemplateService } from "../../mechanics/marketing/claim/template/t
 import { CraftService } from "../../mechanics/gaming/recipes/craft/craft.service";
 import { MergeService } from "../../mechanics/gaming/recipes/merge/merge.service";
 import { DismantleService } from "../../mechanics/gaming/recipes/dismantle/dismantle.service";
-import { GradeService } from "../../mechanics/gaming/grade/grade.service";
+import { DiscreteService } from "../../mechanics/gaming/discrete/discrete.service";
 import { RentService } from "../../mechanics/gaming/rent/rent.service";
 import { WaitListListService } from "../../mechanics/marketing/wait-list/list/list.service";
 import { StakingRulesService } from "../../mechanics/marketing/staking/rules/rules.service";
@@ -31,7 +31,7 @@ export class TemplateDeleteService {
     protected readonly craftService: CraftService,
     protected readonly mergeService: MergeService,
     protected readonly dismantleService: DismantleService,
-    protected readonly gradeService: GradeService,
+    protected readonly discreteService: DiscreteService,
     protected readonly rentService: RentService,
     protected readonly waitListListService: WaitListListService,
     protected readonly stakingRulesService: StakingRulesService,
@@ -82,7 +82,7 @@ export class TemplateDeleteService {
       this.craftService.deactivateCrafts(assets),
       this.mergeService.deactivateMerge(assets),
       this.dismantleService.deactivateDismantle(assets),
-      this.gradeService.deactivateGrades(assets),
+      this.discreteService.deactivateGrades(assets),
       this.rentService.deactivateRent(assets),
       this.waitListListService.deactivateWaitlist(assets),
       this.stakingRulesService.deactivateStakingRules(assets),

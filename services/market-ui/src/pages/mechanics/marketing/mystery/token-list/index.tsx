@@ -6,7 +6,8 @@ import { FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { IToken, ITokenSearchDto } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { MysteryTokenListItem } from "./item";

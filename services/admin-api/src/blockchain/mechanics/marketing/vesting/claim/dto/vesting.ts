@@ -1,11 +1,20 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
 import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
-import { IVestingContractDeployDto } from "@framework/types";
+import { IVestingContractDeployDto, VestingContractTemplates } from "@framework/types";
 
 export class VestingClaimContractDeployDto implements IVestingContractDeployDto {
+  @decorate(
+    ApiProperty({
+      enum: VestingContractTemplates,
+    }),
+  )
+  @decorate(Transform(({ value }) => value as VestingContractTemplates))
+  @decorate(IsEnum(VestingContractTemplates, { message: "badInput" }))
+  public contractTemplate: VestingContractTemplates;
+
   @decorate(
     ApiProperty({
       type: String,

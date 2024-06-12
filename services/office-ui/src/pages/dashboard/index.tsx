@@ -5,7 +5,7 @@ import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { Root } from "./styled";
 
-import { MarketplaceSection } from "./exchange/marketplace";
+import { MarketplaceSection } from "./mechanics/marketplace";
 
 import { NativeSection } from "./hierarchy/native";
 import { Erc20Section } from "./hierarchy/erc20";
@@ -15,7 +15,7 @@ import { Erc1155Section } from "./hierarchy/erc1155";
 
 import { ClaimSection } from "./mechanics/claim";
 import { AssetPromoSection } from "./mechanics/promo";
-import { GradeSection } from "./mechanics/grade";
+import { DiscreteSection } from "./mechanics/discrete";
 import { AdminSection } from "./infrastructure";
 import { PonziSection } from "./mechanics/ponzi";
 import { StakingSection } from "./mechanics/staking";
@@ -44,7 +44,7 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <VestingSection />
-          <GradeSection />
+          <DiscreteSection />
           <AssetPromoSection />
           <StakingSection />
           <PonziSection />

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min } from "class-validator";
 
-import { IProductPromoCreateDto } from "../interfaces";
+import type { IProductPromoCreateDto } from "../interfaces";
 
 export class ProductPromoCreateDto implements IProductPromoCreateDto {
   @ApiProperty()

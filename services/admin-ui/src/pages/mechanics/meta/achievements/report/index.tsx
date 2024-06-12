@@ -76,7 +76,7 @@ export const AchievementReport: FC = () => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
     }

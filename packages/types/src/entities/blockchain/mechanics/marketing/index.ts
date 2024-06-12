@@ -1,5 +1,7 @@
 export * from "./claim/claim";
 
+export * from "./loot/box";
+
 export * from "./mystery/box";
 
 export * from "./staking/leaderboard";

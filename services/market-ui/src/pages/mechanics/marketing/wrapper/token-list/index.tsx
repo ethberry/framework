@@ -6,11 +6,12 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { IToken, ITokenSearchDto } from "@framework/types";
 
 import MintBoxABI from "@framework/abis/mintBox/ERC721Wrapper.json";
 
@@ -30,9 +31,9 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     rows,
     count,
     search,
+    action,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
     handleCreate,
     handleEditCancel,
     handleToggleFilters,
@@ -112,7 +113,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
       <WrapperEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={{
           tokenType: TokenType.ERC721,
           contract: { address: constants.AddressZero },

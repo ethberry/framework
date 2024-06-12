@@ -80,7 +80,7 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: false,
-      valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
+      valueFormatter: (value: string) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1.2,
       minWidth: 160,
     },
@@ -115,13 +115,13 @@ export const CraftTransactions: FC<ICraftTransactionsProps> = props => {
   return (
     <StyledDataGridPremium
       pagination
+      paginationMode="server"
       rowCount={count}
       paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
       onPaginationModelChange={handleChangePaginationModel}
       pageSizeOptions={[5, 10, 25]}
       loading={isLoading}
       columns={columns}
-      rowThreshold={0}
       getDetailPanelHeight={getDetailPanelHeight}
       getDetailPanelContent={getDetailPanelContent}
       rows={rows}

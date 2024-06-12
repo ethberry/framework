@@ -7,27 +7,31 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
+import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IPonziRule, IPonziRuleSearchDto } from "@framework/types";
-import { DurationUnit, IPonziRuleItemSearchDto, PonziRuleStatus, TokenType } from "@framework/types";
+import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
+import { DurationUnit, IUser, ModuleType, PonziRuleStatus, TokenType } from "@framework/types";
 
 import { PonziRuleCreateButton } from "../../../../../components/buttons";
 import { PonziEditDialog } from "./edit";
+import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
+import { SearchMerchantContractsInput } from "../../../../../components/inputs/search-merchant-contracts";
 
 export const PonziRules: FC = () => {
+  const { profile } = useUser<IUser>();
+
   const {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -58,6 +62,8 @@ export const PonziRules: FC = () => {
     }),
     search: {
       query: "",
+      merchantId: profile.merchantId,
+      contractIds: [],
       ponziRuleStatus: [PonziRuleStatus.ACTIVE, PonziRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
@@ -87,6 +93,18 @@ export const PonziRules: FC = () => {
       >
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
+            <SearchMerchantInput disableClear />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchMerchantContractsInput
+              name="contractIds"
+              multiple
+              data={{
+                contractModule: [ModuleType.PONZI],
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <SelectInput multiple name="ponziRuleStatus" options={PonziRuleStatus} />
           </Grid>
           <Grid item xs={6}>
@@ -124,14 +142,14 @@ export const PonziRules: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
       <PonziEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
         readOnly={selected.ponziRuleStatus === PonziRuleStatus.ACTIVE}
       />

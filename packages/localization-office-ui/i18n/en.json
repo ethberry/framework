@@ -145,7 +145,6 @@
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
-      "CLIFF": "Cliff",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -153,8 +152,6 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
-      "GRADED": "Graded",
-      "LINEAR": "Linear",
       "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
       "RAFFLE": "Raffle ticket",
@@ -193,7 +190,7 @@
       "FEMALE": "Female",
       "MALE": "Male"
     },
-    "gradeStatus": {
+    "discreteStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -445,8 +442,8 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "gradeStatus": "Status",
-      "gradeStrategy": "Grade strategy",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -691,6 +688,7 @@
       "duplicate": "{label} already in use",
       "invalidJSON": "Invalid JSON",
       "patternMismatch": "{label} does not match expected pattern",
+      "randomFeature": "{label} requires random feature",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
       "stepMismatch": "{label} is invalid",

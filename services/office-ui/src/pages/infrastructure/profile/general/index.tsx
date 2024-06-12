@@ -37,10 +37,9 @@ export const ProfileGeneral: FC<ITabPanelProps> = props => {
     await fn(form, values);
   };
 
-  const { id, email, displayName, language, gender, country, imageUrl } = user.profile;
+  const { email, displayName, language, gender, country, imageUrl } = user.profile;
 
   const fixedValues = {
-    id,
     email,
     displayName,
     gender: gender ?? "",

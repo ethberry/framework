@@ -6,24 +6,26 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { LotteryContractDeployButton } from "../../../../../components/buttons";
+import {
+  ChainLinkSetSubscriptionButton,
+  EthListenerAddButton,
+  EthListenerRemoveButton,
+  GrantRoleButton,
+  LotteryContractDeployButton,
+  LotteryRoundEndButton,
+  LotteryRoundStartButton,
+  LotteryScheduleButton,
+  PauseButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  UnPauseButton,
+} from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
-import { GrantRoleButton } from "../../../../../components/buttons/extensions/grant-role";
-import { RevokeRoleButton } from "../../../../../components/buttons/extensions/revoke-role";
-import { RenounceRoleButton } from "../../../../../components/buttons/extensions/renounce-role";
-import { PauseButton } from "../../../../../components/buttons/mechanics/common/pause";
-import { UnPauseButton } from "../../../../../components/buttons/mechanics/common/unpause";
-import { LotteryRoundStartButton } from "../../../../../components/buttons/mechanics/lottery/contract/round-start";
-import { LotteryRoundEndButton } from "../../../../../components/buttons/mechanics/lottery/contract/round-end";
-import { LotteryScheduleButton } from "../../../../../components/buttons/mechanics/lottery/contract/schedule";
-import { EthListenerAddButton } from "../../../../../components/buttons/common/eth-add";
-import { EthListenerRemoveButton } from "../../../../../components/buttons/common/eth-remove";
-import { ChainLinkSetSubscriptionButton } from "../../../../../components/buttons/integrations/chain-link/set-subscription";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
@@ -31,11 +33,10 @@ export const LotteryContracts: FC = () => {
     rows,
     count,
     search,
+    action,
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -125,14 +126,14 @@ export const LotteryContracts: FC = () => {
       <DeleteDialog
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
+        open={action === CollectionActions.delete}
         initialValues={selected}
       />
 
       <LotteryEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+        open={action === CollectionActions.edit}
         initialValues={selected}
       />
     </Grid>
