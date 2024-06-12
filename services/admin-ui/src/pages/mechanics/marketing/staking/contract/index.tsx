@@ -9,7 +9,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, StakingContractFeatures, TokenType } from "@framework/types";
+import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import {
   EthListenerAddButton,
@@ -104,7 +104,7 @@ export const StakingContracts: FC = () => {
                 <RenounceRoleButton contract={contract} />
                 <PauseButton contract={contract} />
                 <UnPauseButton contract={contract} />
-                <AllowanceButton contract={contract} disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+                <AllowanceButton contract={contract} />
                 <TopUpButton contract={contract} />
                 <StakingWithdrawPenaltyButton contract={contract} />
                 <StakingCheckBalanceButton contract={contract} />
