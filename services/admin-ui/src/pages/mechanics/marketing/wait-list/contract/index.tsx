@@ -9,10 +9,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
 import {
-  AllowanceERC20Button,
+  AllowanceButton,
   EthListenerAddButton,
   EthListenerRemoveButton,
   GrantRoleButton,
@@ -102,7 +102,10 @@ export const WaitListContracts: FC = () => {
                 <RenounceRoleButton contract={contract} />
                 <PauseButton contract={contract} />
                 <UnPauseButton contract={contract} />
-                <AllowanceERC20Button contract={contract} />
+                <AllowanceButton
+                  contract={contract}
+                  disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
+                />
                 <TopUpButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />

@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { AddReaction } from "@mui/icons-material";
+import { HowToVote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
@@ -12,10 +12,10 @@ import approveERC20BlacklistABI from "@framework/abis/approve/ERC20Blacklist.jso
 import setApprovalForAllERC1155BlacklistABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import type { IAllowanceAllDto } from "./dialog";
-import { AllowanceAllDialog } from "./dialog";
+import type { IAllowanceDto } from "./dialog";
+import { AllowanceDialog } from "./dialog";
 
-export interface IAllowanceAllButtonProps {
+export interface IAllowanceButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
@@ -23,7 +23,7 @@ export interface IAllowanceAllButtonProps {
   disabledTokenTypes?: Array<TokenType>;
 }
 
-export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
+export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const {
     className,
     contract,
@@ -43,7 +43,7 @@ export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IAllowanceAllDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
@@ -68,7 +68,7 @@ export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
     }
   });
 
-  const handleAllowanceConfirm = async (values: IAllowanceAllDto): Promise<void> => {
+  const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsAllowanceDialogOpen(false);
     });
@@ -78,14 +78,14 @@ export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
     <Fragment>
       <ListAction
         onClick={handleAllowance}
-        icon={AddReaction}
+        icon={HowToVote}
         message="form.buttons.allowance"
         className={className}
         dataTestId="AllowanceButton"
         disabled={disabled || shouldDisableByContractType(contract)}
         variant={variant}
       />
-      <AllowanceAllDialog
+      <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}

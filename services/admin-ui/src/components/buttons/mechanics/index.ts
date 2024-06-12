@@ -1,7 +1,6 @@
 export * from "./common/pause";
 export * from "./common/unpause";
-export * from "./common/allowance-erc20";
-export * from "./common/allowance-all";
+export * from "./common/allowance";
 export * from "./common/top-up";
 
 export * from "./claim/upload";

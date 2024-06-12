@@ -9,11 +9,11 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
-import { VestingContractFeatures } from "@framework/types";
+import { TokenType, VestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import {
-  AllowanceERC20Button,
+  AllowanceButton,
   TopUpButton,
   TransferOwnershipButton,
   VestingDeployButton,
@@ -67,7 +67,10 @@ export const VestingContracts: FC = () => {
               </ListItemText>
               <ListActions dataTestId="VestingActionsMenuButton">
                 <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
-                <AllowanceERC20Button contract={vesting} />
+                <AllowanceButton
+                  contract={vesting}
+                  disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
+                />
                 <TopUpButton contract={vesting} />
                 <TransferOwnershipButton contract={vesting} />
               </ListActions>
