@@ -77,7 +77,7 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
   else if (tokenType === TokenType.ERC20) {
     const contractErc20 = new Contract(token, ERC20AllowanceABI, web3Context.provider?.getSigner());
     const allowanceAmount = (await contractErc20.allowance(web3Context.account, contract)) as number;
-    return BigNumber.from(allowanceAmount) >= amount;
+    return BigNumber.from(allowanceAmount).gte(amount);
   }
 
   // ERC721 & ERC998
