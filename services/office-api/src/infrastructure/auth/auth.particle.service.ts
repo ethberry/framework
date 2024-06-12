@@ -28,7 +28,7 @@ export class AuthParticleService {
     const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
     if (!userEntity) {
-      throw new ForbiddenException("adminNotFound");
+      throw new ForbiddenException("userNotFound");
     }
 
     const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];

@@ -5,10 +5,9 @@ import { useIntl } from "react-intl";
 
 import { usePopup } from "@gemunion/provider-popup";
 import { useUser } from "@gemunion/provider-user";
-import { useWallet, WALLET_MENU_POPUP_TYPE } from "@gemunion/provider-wallet";
+import { useWallet, WALLET_MENU_POPUP_TYPE, WalletIcon } from "@gemunion/provider-wallet";
 import { useAppDispatch, useAppSelector, walletActions } from "@gemunion/redux";
 
-import { WalletIcon } from "./icon";
 import { WalletMenuDialog } from "../../dialogs/wallet";
 import { ConnectWallet } from "../../dialogs/connect";
 import { StyledButton, StyledTooltipContent } from "./styled";

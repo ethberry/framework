@@ -6,6 +6,7 @@ import { Error, Message, Protected } from "@gemunion/common-pages";
 import { FirebaseLogin } from "@gemunion/firebase-login";
 import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 import { ParticleLoginButton } from "@gemunion/login-button-particle";
+import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
@@ -36,7 +37,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <FirebaseLogin withEmail={false} wallets={[MetamaskLoginButton, ParticleLoginButton]} />,
+        element: (
+          <FirebaseLogin
+            withEmail={false}
+            wallets={[MetamaskLoginButton, WalletConnectLoginButton, ParticleLoginButton]}
+          />
+        ),
       },
       ...infrastructureRoutes,
       ...hierarchyRoutes,
