@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FirebaseLogin } from "@gemunion/firebase-login";
 import { ParticleLoginButton } from "@gemunion/login-button-particle";
 import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
+import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
 
 import { CloseButton } from "../../buttons";
 import { StyledLoginWrapper } from "./styled";
@@ -25,7 +26,10 @@ export const ConnectWallet: FC<IConnectWalletProps> = props => {
       </DialogTitle>
       <DialogContent>
         <StyledLoginWrapper>
-          <FirebaseLogin withEmail={false} wallets={[MetamaskLoginButton, ParticleLoginButton]} />
+          <FirebaseLogin
+            withEmail={false}
+            wallets={[MetamaskLoginButton, WalletConnectLoginButton, ParticleLoginButton]}
+          />
         </StyledLoginWrapper>
       </DialogContent>
     </Dialog>
