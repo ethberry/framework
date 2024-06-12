@@ -170,6 +170,16 @@ export enum StakingContractTemplates {
   "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
 }
 
+export enum VestingContractTemplates {
+  "VESTING" = "VESTING",
+  "VESTING_VOTES" = "VESTING_VOTES",
+}
+
+export enum VestingContractFeatures {
+  "SIMPLE" = "SIMPLE",
+  "VOTES" = "VOTES",
+}
+
 export enum ContractFeatures {
   // SYSTEM
   "WITHDRAW" = "WITHDRAW",

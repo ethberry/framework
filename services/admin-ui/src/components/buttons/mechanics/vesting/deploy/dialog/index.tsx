@@ -1,10 +1,11 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateInput } from "@gemunion/mui-inputs-picker";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import type { IContract, IVestingContractDeployDto } from "@framework/types";
+import { VestingContractTemplates } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -18,13 +19,14 @@ export interface IVestingDeployDialogProps {
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { owner, startTimestamp, cliffInMonth, monthlyRelease } = initialValues;
+  const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = initialValues;
 
   const fixedValues = {
     owner,
     startTimestamp,
     cliffInMonth,
     monthlyRelease,
+    contractTemplate,
   };
 
   return (
@@ -35,6 +37,7 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
       testId="VestingDeployForm"
       {...rest}
     >
+      <SelectInput name="contractTemplate" options={VestingContractTemplates} />
       <TextInput name="owner" />
       <DateInput name="startTimestamp" />
       <NumberInput name="cliffInMonth" />

@@ -218,7 +218,6 @@
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
-      "CLIFF": "Cliff",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -226,8 +225,6 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
-      "GRADED": "Graded",
-      "LINEAR": "Linear",
       "LINEAR_REFERRAL": "Linear Referral",
       "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
@@ -240,6 +237,8 @@
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
+      "VESTING": "Vesting",
+      "VESTING_VOTES": "Vesting + Votes",
       "WHITELIST": "Whitelist",
       "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking"
     },
@@ -700,7 +699,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "questionIds": "Questions",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "LEVEL": "Level",
@@ -842,6 +840,7 @@
       "productStatus": "Status",
       "programLevel": "Program level",
       "programLevels": "Program levels",
+      "questionIds": "Questions",
       "questionResult": "Result",
       "questionStatus": "Status",
       "random": "Random",

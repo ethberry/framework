@@ -570,11 +570,13 @@ export class ContractManagerServiceEth {
 
     const { userId, claimId } = decodedExternalId;
 
-    const { owner, startTimestamp, cliffInMonth, monthlyRelease } = args;
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractFeatures = contractTemplate === "1" ? [ContractFeatures.VOTES] : [];
 
     await this.contractService.create({
       address: account.toLowerCase(),
@@ -587,7 +589,7 @@ export class ContractManagerServiceEth {
         cliffInMonth,
         monthlyRelease,
       },
-      contractFeatures: [],
+      contractFeatures,
       contractModule: ModuleType.VESTING,
       contractSecurity: ContractSecurity.OWNABLE,
       chainId,

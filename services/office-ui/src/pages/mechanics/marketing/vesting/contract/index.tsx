@@ -4,12 +4,14 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, IVestingSearchDto } from "@framework/types";
+import { VestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import {
@@ -42,6 +44,7 @@ export const VestingContracts: FC = () => {
     baseUrl: "/vesting/contracts",
     search: {
       account: "",
+      contractFeatures: [],
       merchantId: profile.merchantId,
     },
     empty: emptyVestingContract,
@@ -62,6 +65,9 @@ export const VestingContracts: FC = () => {
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SearchMerchantInput disableClear />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectInput name="contractFeatures" options={VestingContractFeatures} multiple />
           </Grid>
         </Grid>
       </CommonSearchForm>
