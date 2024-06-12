@@ -20,6 +20,7 @@ export interface IAllowanceAllButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  disabledTokenTypes?: Array<TokenType>;
 }
 
 export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
@@ -29,6 +30,7 @@ export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
     contract: { address },
     disabled,
     variant,
+    disabledTokenTypes,
   } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
@@ -87,6 +89,7 @@ export const AllowanceAllButton: FC<IAllowanceAllButtonProps> = props => {
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
+        disabledTokenTypes={disabledTokenTypes}
         initialValues={{
           tokenType: TokenType.ERC20,
           contractId: 0,

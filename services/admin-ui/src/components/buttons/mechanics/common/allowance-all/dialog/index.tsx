@@ -24,10 +24,11 @@ export interface IAllowanceAllDialogProps {
   onCancel: () => void;
   onConfirm: (values: IAllowanceAllDto, form: any) => Promise<void>;
   initialValues: IAllowanceAllDto;
+  disabledTokenTypes?: Array<TokenType>;
 }
 
 export const AllowanceAllDialog: FC<IAllowanceAllDialogProps> = props => {
-  const { initialValues, ...rest } = props;
+  const { initialValues, disabledTokenTypes = [], ...rest } = props;
 
   const handleContractChange =
     (form: any) =>
@@ -47,13 +48,14 @@ export const AllowanceAllDialog: FC<IAllowanceAllDialogProps> = props => {
       testId="AllowanceForm"
       {...rest}
     >
-      <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE]} />
+      <SelectInput name="tokenType" options={TokenType} disabledOptions={[TokenType.NATIVE, ...disabledTokenTypes]} />
       <CommonContractInput
         name="contractId"
         onChange={handleContractChange}
         autoselect
         withTokenType
         data={{
+          contractType: [TokenType.ERC20],
           contractModule: [ModuleType.HIERARCHY],
           contractStatus: [ContractStatus.ACTIVE],
           excludeFeatures: [Erc721ContractFeatures.SOULBOUND],

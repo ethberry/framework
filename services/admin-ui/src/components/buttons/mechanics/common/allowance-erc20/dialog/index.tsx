@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from "react";
 import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { CommonContractInput } from "../../../../../inputs/common-contract";
@@ -57,7 +57,11 @@ export const AllowanceERC20Dialog: FC<IAllowanceERC20DialogProps> = props => {
       ) : null}
       <CommonContractInput
         name="contractId"
-        data={{ contractType: [TokenType.ERC20] }}
+        data={{
+          contractType: [TokenType.ERC20],
+          contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE],
+        }}
         onChange={handleContractChange}
         autoselect
       />
