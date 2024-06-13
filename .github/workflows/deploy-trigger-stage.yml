@@ -1,4 +1,4 @@
-name: Manual deploy trigger (master)
+name: Manual deploy trigger (staging)
 on:
   workflow_dispatch:
 #  push:
@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Send webhook cloud-build deploy
         run: |
-          curl --request POST --url $CLOUDBUILD_WEBHOOK_URL --header "content-type: application/json"
+          curl --request POST --url $CLOUDBUILD_WEBHOOK_URL_STAGE --header "content-type: application/json"
         env:
-          CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL }}
+          CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL_STAGE }}
 #  telegram-notify-start:
 #    needs: cloudbuild-deploy
 #    runs-on: ubuntu-latest
