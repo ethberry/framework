@@ -42,7 +42,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const { setIsDialogOpen } = walletActions;
 
   const metaFnWithAllowance = useAllowance(
-    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+    (web3Context: Web3ContextType, values: IAmountDto, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
 
       const item = convertTemplateToChainAsset(template, values.amount);
@@ -79,8 +79,8 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           contract: systemContract.address,
           assets,
         },
-        values,
         web3Context,
+        values,
         sign,
         systemContract,
       );

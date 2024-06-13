@@ -5,14 +5,17 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICraft } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
-import { sorter } from "../../../../../utils/sorter";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface ICraftButtonProps {
   className?: string;
@@ -26,9 +29,14 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
   const { referrer } = useAppSelector(state => state.settings);
 
-  const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    async (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+      const items = convertDatabaseAssetToChainAsset(craft.item?.components!);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+      const price = convertDatabaseAssetToChainAsset(craft.price?.components!);
 
       return contract.craft(
         {
@@ -39,28 +47,30 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           receiver: craft.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        craft.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId:
-            component.contract!.contractType === TokenType.ERC1155
-              ? component.template!.tokens![0].tokenId
-              : (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        })),
-        craft.price?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: component.amount,
-        })),
+        items,
+        price,
         sign.signature,
         {
           value: getEthPrice(craft.price),
         },
       ) as Promise<void>;
     },
-    // { error: false },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+      const price = convertDatabaseAssetToTokenTypeAsset(craft.price?.components!);
+      return metaFnWithAllowance(
+        {
+          contract: systemContract.address,
+          assets: price,
+        },
+        web3Context,
+        sign,
+        systemContract,
+      );
+    },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
