@@ -1,7 +1,7 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IMetamaskDto, IFirebaseToken } from "@gemunion/nest-js-module-metamask";
+import type { IWalletConnectDto, IFirebaseToken } from "@gemunion/nest-js-module-wallet-connect";
 import { MetamaskService } from "@gemunion/nest-js-module-metamask";
 import { defaultChainId, EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
@@ -10,7 +10,7 @@ import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
 
 @Injectable()
-export class AuthMetamaskService {
+export class AuthWalletConnectService {
   constructor(
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
@@ -18,7 +18,7 @@ export class AuthMetamaskService {
     private readonly metamaskService: MetamaskService,
   ) {}
 
-  public async login(dto: IMetamaskDto): Promise<IFirebaseToken> {
+  public async login(dto: IWalletConnectDto): Promise<IFirebaseToken> {
     const { nonce, signature, wallet } = dto;
 
     if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
@@ -54,7 +54,7 @@ export class AuthMetamaskService {
     return { token };
   }
 
-  public async findOrCreateUserInFirebase(_dto: IMetamaskDto) {
+  public async findOrCreateUserInFirebase(_dto: IWalletConnectDto) {
     return this.admin.auth().createUser({});
   }
 }

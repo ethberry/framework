@@ -26,15 +26,15 @@
     "directory": "packages/x-license-pro"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.6",
-    "@mui/utils": "^5.15.14"
+    "@babel/runtime": "7.24.6",
+    "@mui/utils": "5.15.14"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@mui/internal-test-utils": "1.0.1",
-    "rimraf": "^5.0.7"
+    "rimraf": "5.0.7"
   },
   "setupFiles": [
     "<rootDir>/src/setupTests.js"
