@@ -26,7 +26,7 @@
     "directory": "packages/x-license-pro"
   },
   "dependencies": {
-    "@babel/runtime": "7.24.6",
+    "@babel/runtime": "7.24.7",
     "@mui/utils": "5.15.20"
   },
   "peerDependencies": {
