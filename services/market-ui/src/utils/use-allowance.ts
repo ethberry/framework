@@ -6,11 +6,11 @@ import { TokenType } from "@gemunion/types-blockchain";
 import { BigNumber, BigNumberish, Contract } from "ethers";
 
 import ERC20AllowanceABI from "@framework/abis/allowance/ERC20.json";
-import ERC721GetApprovedABI from "@framework/abis/getApproved/ERC721.json";
+import ERC721IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC721.json";
 import ERC1155IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC1155.json";
 
 import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
-import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
+import ERC721SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC721.json";
 import ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
 
 // Where to import IAsset?
@@ -34,7 +34,10 @@ export const useAllowance = (
   const { formatMessage } = useIntl();
 
   return async (params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => {
-    for (const asset of params.assets) {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    const assets = groupAssetsByContract(params.assets); // Combine(ERC20) or Remove dublications by tokenAddress
+
+    for (const asset of assets) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         const hasAllowance = await checkAllowance(params.contract, asset, web3Context);
@@ -56,8 +59,34 @@ export const useAllowance = (
   };
 };
 
+export const groupAssetsByContract = (assets: IAsset[]) => {
+  const grouped: Record<string, IAsset> = {};
+
+  for (const asset of assets) {
+    const { token, tokenType, amount } = asset;
+
+    // If the token doesn't exist in the group, add it.
+    if (!grouped[token]) {
+      grouped[token] = asset;
+    } else {
+      // Dublication of the token
+      if (tokenType === TokenType.ERC20 && amount /* amount can be undefined */) {
+        // If the token is ERC20, combine amount.
+        const updatedAmount = BigNumber.from(grouped[token].amount).add(amount);
+        grouped[token].amount = updatedAmount;
+      } else {
+        // If the Token Is 721 / 998 / 1155
+        // We just have to skip, for dublicated transactions
+        // Skip...
+      }
+    }
+  }
+
+  return Object.values(grouped);
+};
+
 export const checkAllowance = async (contract: string, asset: IAsset, web3Context: Web3ContextType) => {
-  const { token, tokenType, tokenId, amount = 1n } = asset;
+  const { token, tokenType, amount = 1n } = asset;
   // NATIVE
   if (tokenType === TokenType.NATIVE) {
     return true;
@@ -72,9 +101,8 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
-    const contractErc721 = new Contract(contract, ERC721GetApprovedABI, web3Context.provider?.getSigner());
-    const approvedAddress = (await contractErc721.getApproved(tokenId)) as string;
-    return approvedAddress === contract;
+    const contractErc721 = new Contract(contract, ERC721IsApprovedForAllABI, web3Context.provider?.getSigner());
+    return (await contractErc721.isApprovedForAll(web3Context.account, contract)) as boolean;
   }
 
   // ERC1155
@@ -90,7 +118,7 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
 };
 
 export const approveTokens = async (contract: string, asset: IAsset, web3Context: Web3ContextType) => {
-  const { token, tokenType, tokenId, amount = 1n } = asset;
+  const { token, tokenType, amount = 1n } = asset;
 
   // ERC20
   if (tokenType === TokenType.ERC20) {
@@ -100,8 +128,8 @@ export const approveTokens = async (contract: string, asset: IAsset, web3Context
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
-    const contractErc721 = new Contract(token, ERC721SetApprovalABI, web3Context.provider?.getSigner());
-    await contractErc721.approve(contract, tokenId);
+    const contractErc721 = new Contract(token, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
+    await contractErc721.setApprovalForAll(contract, true);
   }
 
   // ERC1155
