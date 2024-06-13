@@ -94,7 +94,7 @@
     "socket.io-client": "4.7.5",
     "use-clipboard-copy": "0.2.0",
     "use-deep-compare-effect": "1.8.1",
-    "uuid": "9.0.1",
+    "uuid": "10.0.0",
     "yup": "1.4.0"
   },
   "description": "app",
