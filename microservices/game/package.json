@@ -23,7 +23,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.37",
     "@gemunion/nest-js-module-winston-logdna": "3.1.8",
     "@gemunion/nest-js-utils": "4.2.7",
-    "@gemunion/nest-js-validators": "4.0.35",
+    "@gemunion/nest-js-validators": "4.0.36",
     "@gemunion/types-collection": "1.5.14",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
