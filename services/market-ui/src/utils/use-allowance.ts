@@ -29,21 +29,11 @@ export interface IUseAllowanceOptionsParams {
 export const useAllowance = (
   fn: (...args: Array<any>) => Promise<any>,
   options: { error?: boolean; success?: boolean } = {},
-): ((
-  params: IUseAllowanceOptionsParams,
-  values: Record<string, any> | null,
-  web3Context: Web3ContextType,
-  ...args: Array<any>
-) => Promise<any>) => {
+): ((params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
   const { error = true } = options;
   const { formatMessage } = useIntl();
 
-  return async (
-    params: IUseAllowanceOptionsParams,
-    values: Record<string, any> | null,
-    web3Context: Web3ContextType,
-    ...args: Array<any>
-  ) => {
+  return async (params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => {
     for (const asset of params.assets) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -62,7 +52,7 @@ export const useAllowance = (
         throw new Error(e);
       }
     }
-    return fn(values, web3Context, ...args);
+    return fn(web3Context, ...args);
   };
 };
 
