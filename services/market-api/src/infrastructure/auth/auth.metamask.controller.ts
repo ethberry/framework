@@ -6,11 +6,11 @@ import { MetamaskDto } from "@gemunion/nest-js-module-metamask";
 
 import { AuthMetamaskService } from "./auth.metamask.service";
 
+@Public()
 @Controller("/metamask")
 export class AuthMetamaskController {
   constructor(private readonly authMetamaskService: AuthMetamaskService) {}
 
-  @Public()
   @Post("/login")
   public login(@Body() dto: MetamaskDto): Promise<IFirebaseToken> {
     return this.authMetamaskService.login(dto);

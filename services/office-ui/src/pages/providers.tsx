@@ -14,6 +14,8 @@ import { i18n } from "@framework/localization-office-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
 import { themeProps } from "../components/theme";
+import { Signal } from "../components/signal";
+import { WalletReLogin } from "../components/wallet-relogin";
 
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
@@ -27,7 +29,12 @@ export const Providers: FC<PropsWithChildren> = props => {
                 <SnackbarProvider>
                   <PopupProvider>
                     <WalletProvider>
-                      <PickerProvider>{children}</PickerProvider>
+                      <WalletReLogin>
+                        <PickerProvider>
+                          <Signal />
+                          {children}
+                        </PickerProvider>
+                      </WalletReLogin>
                     </WalletProvider>
                   </PopupProvider>
                 </SnackbarProvider>

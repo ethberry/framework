@@ -13,8 +13,8 @@ import { ReduxProvider, store } from "@gemunion/redux";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
-import { Signal } from "../components/signal";
 import { themeProps } from "../components/theme";
+import { Signal } from "../components/signal";
 import { WalletReLogin } from "../components/wallet-relogin";
 
 export const Providers: FC<PropsWithChildren> = props => {

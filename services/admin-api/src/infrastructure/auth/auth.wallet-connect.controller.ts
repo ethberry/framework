@@ -6,11 +6,11 @@ import { WalletConnectDto } from "@gemunion/nest-js-module-wallet-connect";
 
 import { AuthWalletConnectService } from "./auth.wallet-connect.service";
 
+@Public()
 @Controller("/wallet-connect")
 export class AuthWalletConnectController {
   constructor(private readonly authWalletConnectService: AuthWalletConnectService) {}
 
-  @Public()
   @Post("/login")
   public login(@Body() dto: WalletConnectDto): Promise<IFirebaseToken> {
     return this.authWalletConnectService.login(dto);
