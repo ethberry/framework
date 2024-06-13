@@ -158,6 +158,7 @@ export class VestingClaimService {
         startTimestamp: parameters.startTimestamp,
         cliffInMonth: parameters.cliffInMonth,
         monthlyRelease: parameters.monthlyRelease,
+        contractTemplate: parameters.contractTemplate,
         externalId: encodedExternalId,
       },
       userEntity,
@@ -182,6 +183,7 @@ export class VestingClaimService {
           startTimestamp,
           cliffInMonth,
           monthlyRelease,
+          contractTemplate,
           tokenType,
           address,
           templateId,
@@ -198,7 +200,7 @@ export class VestingClaimService {
 
           return this.create(
             {
-              parameters: { owner, startTimestamp, cliffInMonth, monthlyRelease },
+              parameters: { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate },
               item: {
                 components: [
                   {
