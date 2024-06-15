@@ -6,7 +6,7 @@ import { companyName, EnabledLanguages } from "@framework/constants";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 import { WalletButton, NetworkButton } from "@gemunion/provider-wallet";
-import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
+import { MetamaskLoginButton, MetamaskRelogin } from "@gemunion/login-button-metamask";
 import { ParticleLoginButton } from "@gemunion/login-button-particle";
 import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
 import { FirebaseLogin } from "@gemunion/firebase-login";
@@ -26,12 +26,13 @@ export const Header: FC = () => {
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
         <NetworkButton />
+        <MetamaskRelogin />
         <WalletButton>
           <FirebaseLogin
             withEmail={false}
-            wallets={[MetamaskLoginButton, WalletConnectLoginButton, ParticleLoginButton]}
+            buttons={[MetamaskLoginButton, WalletConnectLoginButton, ParticleLoginButton]}
           />
-        </WalletButton>{" "}
+        </WalletButton>
         <DashboardButton />
         <Sections />
       </StyledToolbar>

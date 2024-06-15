@@ -15,7 +15,6 @@ import { EnabledLanguages, ns } from "@framework/constants";
 
 import { themeProps } from "../components/theme";
 import { Signal } from "../components/signal";
-import { WalletReLogin } from "../components/wallet-relogin";
 
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
@@ -29,12 +28,10 @@ export const Providers: FC<PropsWithChildren> = props => {
                 <SnackbarProvider>
                   <PopupProvider>
                     <WalletProvider>
-                      <WalletReLogin>
-                        <PickerProvider>
-                          <Signal />
-                          {children}
-                        </PickerProvider>
-                      </WalletReLogin>
+                      <PickerProvider>
+                        <Signal />
+                        {children}
+                      </PickerProvider>
                     </WalletProvider>
                   </PopupProvider>
                 </SnackbarProvider>
