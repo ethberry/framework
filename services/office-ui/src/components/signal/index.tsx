@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useIndexedDB } from "react-indexed-db-hook";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
 
@@ -22,13 +21,10 @@ export const Signal: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const { add } = useIndexedDB("txs");
-
   const isUserAuthenticated = user.isAuthenticated();
 
-  const handleEvent = async (dto: { transactionHash: string; transactionType?: ContractEventSignature }) => {
+  const handleEvent = (dto: { transactionHash: string; transactionType?: ContractEventSignature }) => {
     if (dto.transactionType) {
-      const date = new Date();
       enqueueSnackbar(
         formatMessage(
           { id: "snackbar.transactionTypeExecuted" },
@@ -48,15 +44,6 @@ export const Signal: FC = () => {
       if (isRouteMatchToEvent) {
         dispatch(setNeedRefresh(true));
       }
-
-      await add({ txHash: dto.transactionHash, txType: dto.transactionType, time: date.toISOString() }).then(
-        event => {
-          console.info("DB ID Generated: ", event);
-        },
-        error => {
-          console.error(error);
-        },
-      );
     } else {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {
         variant: "success",

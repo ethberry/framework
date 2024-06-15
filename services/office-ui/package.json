@@ -85,7 +85,6 @@
     "react-beautiful-dnd": "13.1.1",
     "react-dom": "18.3.1",
     "react-hook-form": "7.51.5",
-    "react-indexed-db-hook": "1.0.14",
     "react-intl": "6.6.8",
     "react-router": "6.23.1",
     "react-router-dom": "6.23.1",

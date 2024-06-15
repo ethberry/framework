@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { initDB } from "react-indexed-db-hook";
 
 import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
 import { FirebaseLogin } from "@gemunion/firebase-login";
@@ -19,9 +18,6 @@ import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { hierarchyRoutes } from "./hierarchy/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
-import { myDBConfig } from "../components/dbstorage/db.config";
-
-initDB(myDBConfig);
 
 const router = createBrowserRouter([
   {
