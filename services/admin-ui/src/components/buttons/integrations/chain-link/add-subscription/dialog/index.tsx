@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
-import { VrfSubInput } from "../../set-subscription/dialog/sub-input";
+import { VrfSubInput } from "./sub-input";
 import { VrfConsumerInput } from "./contract-input";
 import { validationSchema } from "./validation";
 

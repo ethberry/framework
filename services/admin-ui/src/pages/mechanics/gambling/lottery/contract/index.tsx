@@ -107,9 +107,9 @@ export const LotteryContracts: FC = () => {
                 <LotteryRoundStartButton contract={contract} />
                 <LotteryRoundEndButton contract={contract} />
                 <LotteryScheduleButton contract={contract} refreshPage={handleRefreshPage} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
-                <ChainLinkSetSubscriptionButton contract={contract} />
               </ListActions>
             </StyledListItem>
           ))}

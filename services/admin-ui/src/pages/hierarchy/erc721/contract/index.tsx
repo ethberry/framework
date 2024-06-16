@@ -7,14 +7,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  BusinessType,
-  ContractFeatures,
-  ContractStatus,
-  Erc721ContractFeatures,
-  IContract,
-  IContractSearchDto,
-} from "@framework/types";
+import { BusinessType, ContractStatus, Erc721ContractFeatures } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 
 import {
@@ -144,17 +138,9 @@ export const Erc721Contract: FC = () => {
                 <TransferButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
-                <ChainLinkSetSubscriptionButton
-                  contract={contract}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL) ||
-                    (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
-                      !contract.contractFeatures.includes(ContractFeatures.GENES))
-                  }
-                />
               </ListActions>
             </StyledListItem>
           ))}
