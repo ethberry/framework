@@ -25,6 +25,10 @@ export const LootSection: FC = () => {
     return null;
   }
 
+  if (process.env.NODE_ENV === NodeEnv.production) {
+    return null;
+  }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List
