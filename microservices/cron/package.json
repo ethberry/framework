@@ -36,7 +36,7 @@
     "typeorm-naming-strategies": "4.1.0",
     "typescript": "5.4.5"
   },
-  "description": "EML engine",
+  "description": "Cron microservice",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.6",
@@ -76,6 +76,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
     "test": "exit 0"
   },
-  "title": "CRON",
+  "title": "Gemunion Framework - Cron microservice",
   "version": "0.0.1"
 }

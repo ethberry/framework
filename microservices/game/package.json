@@ -49,7 +49,7 @@
     "typeorm": "0.3.20",
     "typeorm-naming-strategies": "4.1.0"
   },
-  "description": "GAME API",
+  "description": "HTTP API for interaction with game server",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.6",
@@ -92,6 +92,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests"
   },
-  "title": "GAME",
+  "title": "Gemunion Framework - Game microservice",
   "version": "0.0.1"
 }

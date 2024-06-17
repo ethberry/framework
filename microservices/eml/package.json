@@ -26,7 +26,7 @@
     "reflect-metadata": "0.2.2",
     "typescript": "5.4.5"
   },
-  "description": "EML engine",
+  "description": "Email microservice",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.6",
@@ -66,6 +66,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "EML",
+  "title": "Gemunion Framework - Email microservice",
   "version": "0.0.1"
 }

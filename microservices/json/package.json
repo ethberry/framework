@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "@framework/constants": "0.0.1",
-    "@gemunion/traits-v6": "1.0.9",
     "@framework/types": "0.0.1",
     "@gemunion/draft-js-utils": "1.2.39",
     "@gemunion/nest-js-guards": "3.1.16",
@@ -19,6 +18,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.38",
     "@gemunion/nest-js-module-winston-logdna": "3.1.9",
     "@gemunion/nest-js-utils": "4.2.8",
+    "@gemunion/traits-v6": "1.0.9",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
     "@nestjs/cache-manager": "2.2.2",
@@ -42,7 +42,7 @@
     "typeorm": "0.3.20",
     "typeorm-naming-strategies": "4.1.0"
   },
-  "description": "JSON API",
+  "description": "HTTP API to retrieve NFT metadata",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.6",
@@ -83,6 +83,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "JSON",
+  "title": "Gemunion Framework - JSON microservice",
   "version": "0.0.1"
 }
