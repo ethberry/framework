@@ -8,11 +8,12 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { ContractService } from "./contract.service";
 import { ContractSeedService } from "./contract.seed.service";
 import { ContractSeedModule } from "./contract.seed.module";
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 describe("ContractService", () => {
   let contractService: ContractService;
@@ -32,7 +33,7 @@ describe("ContractService", () => {
           },
         }),
         GemunionTypeormModule.forRoot(ormconfig),
-        TypeOrmModule.forFeature([ContractEntity, UserEntity]),
+        TypeOrmModule.forFeature([MerchantEntity, UserEntity, ContractEntity]),
         ContractSeedModule,
       ],
       providers: [Logger, ContractService, ContractSeedService],
@@ -112,6 +113,48 @@ describe("ContractService", () => {
           contractFeatures: [ContractFeatures.GENES],
         },
         users[0],
+      );
+      expect(contractEntities).toHaveLength(2);
+    });
+  });
+
+  describe("search", () => {
+    it("should use default filter", async () => {
+      const { users } = await contractSeedService.setup();
+
+      const [contractEntities] = await contractService.search(
+        {},
+        users[0],
+        [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.LOTTERY],
+        [TokenType.ERC20, TokenType.ERC721],
+      );
+      expect(contractEntities).toHaveLength(4);
+    });
+
+    it("should filter by contractStatus", async () => {
+      const { users } = await contractSeedService.setup();
+
+      const [contractEntities] = await contractService.search(
+        {
+          contractStatus: [ContractStatus.ACTIVE],
+        },
+        users[0],
+        [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.LOTTERY],
+        [TokenType.ERC20, TokenType.ERC721],
+      );
+      expect(contractEntities).toHaveLength(2);
+    });
+
+    it("should filter by contractFeatures", async () => {
+      const { users } = await contractSeedService.setup();
+
+      const [contractEntities] = await contractService.search(
+        {
+          contractFeatures: [ContractFeatures.GENES],
+        },
+        users[0],
+        [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.LOTTERY],
+        [TokenType.ERC20, TokenType.ERC721],
       );
       expect(contractEntities).toHaveLength(2);
     });
