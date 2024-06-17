@@ -217,6 +217,7 @@
       "BLACKLIST_DISCRETE_RENTABLE": "Blacklist + Discrete + Rentable",
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
+      "BLACKLIST_RENTABLE": "Blacklist + Rentable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
