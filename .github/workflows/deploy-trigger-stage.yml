@@ -13,7 +13,7 @@ jobs:
         run: |
           curl --request POST --url $CLOUDBUILD_WEBHOOK_URL_STAGE --header "content-type: application/json"
         env:
-          CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL_STAGE }}
+          CLOUDBUILD_WEBHOOK_URL_STAGE: ${{ secrets.CLOUDBUILD_WEBHOOK_URL_STAGE }}
 #  telegram-notify-start:
 #    needs: cloudbuild-deploy
 #    runs-on: ubuntu-latest
