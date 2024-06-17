@@ -41,7 +41,7 @@ export const getContractABI = (path: string, chainId: bigint | number) => {
 
   if (isRandom) {
     const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
-    if (process.env.NODE_ENV !== NodeEnv.development && !isSupported) {
+    if (process.env.NODE_ENV === NodeEnv.production && !isSupported) {
       throw new NotFoundException("randomNotSupported", chainId.toString());
     }
 

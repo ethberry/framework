@@ -1,10 +1,10 @@
 // https://docs.chain.link/resources/link-token-contracts
 
 export enum ChainLinkV2SupportedChains {
-  BESU_LOCALHOST = 10001,
-  BESU_GEMUNION = 10000,
-
-  TELOS_TEST = 41, // gemunion's vrf v2
+  // BESU_LOCALHOST = 10001,
+  // BESU_GEMUNION = 10000,
+  //
+  // TELOS_TEST = 41, // gemunion's vrf v2
 
   ETHEREUM = 1,
   // ETHEREUM_GOERLI = 5,
