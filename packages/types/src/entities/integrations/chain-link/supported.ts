@@ -2,8 +2,8 @@
 
 export enum ChainLinkSupportedChains {
   ETHEREUM = 1,
-  SEPOLIA = 11155111,
-  GOERLI = 5,
+  ETHEREUM_SEPOLIA = 11155111,
+  ETHEREUM_GOERLI = 5,
 
   BINANCE = 56,
   BINANCE_TEST = 97,
