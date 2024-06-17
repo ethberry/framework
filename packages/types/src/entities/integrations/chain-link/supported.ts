@@ -1,6 +1,8 @@
 // https://docs.chain.link/resources/link-token-contracts
 
 export enum ChainLinkV2SupportedChains {
+  BESU_LOCALHOST = 10001,
+  BESU_GEMUNION = 10000,
   ETHEREUM = 1,
   // ETHEREUM_GOERLI = 5,
   ETHEREUM_SEPOLIA = 11155111,
