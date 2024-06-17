@@ -130,8 +130,8 @@ export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 67 : 60218},
-        '0x326c977e6efc84e512bb9c30f76e30c160ed06fb',
-        80001,
+        '0x0fd9e8d3af1aaee056eb9e802c3a762a667b1904',
+        80002,
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',

@@ -1,4 +1,4 @@
-import { ChainLinkSupportedChains, Erc998ContractTemplates, NodeEnv } from "@framework/types";
+import { ChainLinkV2SupportedChains, Erc998ContractTemplates, NodeEnv } from "@framework/types";
 
 export const isTemplateDisabled = (chainId: number) => {
   const disabledTemplates = [];
@@ -15,7 +15,7 @@ export const isTemplateDisabled = (chainId: number) => {
     disabledTemplates.push(Erc998ContractTemplates.RENTABLE);
 
     // ChainLink
-    if (!ChainLinkSupportedChains[chainId]) {
+    if (!ChainLinkV2SupportedChains[chainId]) {
       disabledTemplates.push(
         Erc998ContractTemplates.RANDOM,
         Erc998ContractTemplates.DISCRETE_RANDOM,

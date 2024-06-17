@@ -5,12 +5,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
+import { ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
 
 export const MysterySection: FC = () => {
   const { chainId = 0 } = useWeb3React();
 
-  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkV2SupportedChains[chainId]) {
     return null;
   }
 

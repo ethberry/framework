@@ -1,6 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 
-import { ChainLinkSupportedChains, NodeEnv } from "@framework/types";
+import { ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
 
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {
@@ -14,8 +14,8 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
       return "BinanceTestnet";
     case 137:
       return "Polygon";
-    case 80001:
-      return "PolygonMumbai";
+    case 80002:
+      return "PolygonAmoy";
     case 42161:
       return "Arbitrum";
     case 10000:
@@ -40,7 +40,7 @@ export const getContractABI = (path: string, chainId: bigint | number) => {
     path.includes("Raffle");
 
   if (isRandom) {
-    const isSupported = Object.values(ChainLinkSupportedChains).includes(Number(chainId));
+    const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
     if (process.env.NODE_ENV !== NodeEnv.development && !isSupported) {
       throw new NotFoundException("randomNotSupported", chainId.toString());
     }
