@@ -869,6 +869,7 @@
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "state": "State",
+      "subId": "VRF Subscription Id",
       "vrfSubId": "VRF Subscription Id",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
