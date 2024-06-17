@@ -3,16 +3,15 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-
-import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
-import { ChainLinkEventType, ChainLinkType } from "../interfaces";
-import {
-  ContractEventType,
-  ContractType,
-  IVrfSubscriptionCreatedEvent,
+import type {
   IVrfSubscriptionConsumerAddedEvent,
+  IVrfSubscriptionCreatedEvent,
   IVrfSubscriptionSetEvent,
 } from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
+
+import { ChainLinkEventType, ChainLinkType } from "../interfaces";
+import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 
 @Controller()
 export class ChainLinkSubscriptionControllerEth {
@@ -39,6 +38,7 @@ export class ChainLinkSubscriptionControllerEth {
     { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.VrfSubscriptionSet },
     { contractType: ContractType.RAFFLE, eventName: ContractEventType.VrfSubscriptionSet },
+    { contractType: ContractType.LOOT, eventName: ContractEventType.VrfSubscriptionSet },
   ])
   public setSubscription(@Payload() event: ILogEvent<IVrfSubscriptionSetEvent>, @Ctx() context: Log): Promise<void> {
     return this.chainLinkServiceEth.setVrfSubscription(event, context);
