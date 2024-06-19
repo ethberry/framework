@@ -497,6 +497,52 @@ services:
     ports:
       - "${PORT_RPC_API_TELOS_TEST}:${PORT_RPC_API_TELOS_TEST}"
 
+  core-eth-amoy:
+    container_name: core-eth-amoy
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API_AMOY}"
+      LOG_MODE: "${LOG_MODE}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL_ADMIN}"
+      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_AMOY}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID_AMOY}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_AMOY}"
+      LATENCY: "${LATENCY_AMOY}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE_AMOY}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_AMOY}"
+      STARTING_BLOCK: "${STARTING_BLOCK_AMOY}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_AMOY}"
+      # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
+    ports:
+      - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
+
   #  core-eth-binance:
   #    container_name: core-eth-binance
   #    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
