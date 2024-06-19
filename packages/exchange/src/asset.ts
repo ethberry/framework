@@ -1,14 +1,20 @@
-import { IAssetComponent, IContract, ITemplate, TokenType } from "@framework/types";
+import type { IAssetComponent, IContract } from "@framework/types";
+import { TokenType } from "@framework/types";
 import { sorter } from "./sorter";
 import { BigNumber, BigNumberish } from "ethers";
 
 interface IOptions {
   sortBy?: string;
-  multiplier?: BigNumberish;
+  multiplier?: BigNumberish | ((component: IAssetComponent) => BigNumberish);
 }
 
-export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id", multiplier = 1n } = options;
+export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
+  const { sortBy = "id" } = options;
+  let { multiplier = 1n } = options;
+
+  if (!components) {
+    throw new Error("Components is Undefined");
+  }
 
   return components
     .slice()
@@ -27,6 +33,9 @@ export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], 
         tokenId = (item.templateId || 0).toString();
       }
 
+      if (typeof multiplier === "function") {
+        multiplier = multiplier(item);
+      }
       const amount = BigNumber.from(item.amount).mul(multiplier).toString();
 
       return {
@@ -58,7 +67,7 @@ export interface ITemplateToAssetProps {
   amount: BigNumberish;
 }
 
-export const convertTemplateToChainAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {  
+export const convertTemplateToChainAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {
   let tokenId;
   if (template?.contract?.contractType === TokenType.ERC1155) {
     tokenId = template?.tokens?.[0]?.tokenId;
@@ -84,7 +93,7 @@ export const convertTemplateToTokenTypeAsset = (template: ITemplateToAssetProps,
   const asset = convertTemplateToChainAsset(template, amount);
 
   return {
-      ...asset,
-      tokenType: Object.values(TokenType)[asset.tokenType],
-    };
-}
+    ...asset,
+    tokenType: Object.values(TokenType)[asset.tokenType],
+  };
+};
