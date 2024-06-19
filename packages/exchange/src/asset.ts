@@ -1,4 +1,4 @@
-import { IAssetComponent, ITemplate, TokenType } from "@framework/types";
+import { IAssetComponent, IContract, ITemplate, TokenType } from "@framework/types";
 import { sorter } from "./sorter";
 import { BigNumber, BigNumberish } from "ethers";
 
@@ -18,7 +18,8 @@ export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], 
       if (item?.contract?.contractType === TokenType.ERC1155) {
         tokenId = item.template?.tokens?.[0]?.tokenId;
         if (!tokenId) {
-          throw new Error("[DEV] tokenId for ERC1155 notFound. You rather forget to leftAndJoin tokens for ERC1155");
+          // tokenId for ERC1155 notFound. You rather forget to leftAndJoin Tokens for ERC1155 (API)
+          throw new Error();
         }
       } else if ([TokenType.NATIVE, TokenType.ERC20].includes(item?.contract?.contractType as TokenType)) {
         tokenId = "0";
@@ -50,12 +51,20 @@ export const convertDatabaseAssetToTokenTypeAsset = (components: IAssetComponent
   });
 };
 
-export const convertTemplateToChainAsset = (template: ITemplate, amount?: BigNumberish) => {
+export interface ITemplateToAssetProps {
+  contract?: IContract;
+  id: number;
+  tokens?: Array<{ tokenId: string }>;
+  amount: BigNumberish;
+}
+
+export const convertTemplateToChainAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {  
   let tokenId;
   if (template?.contract?.contractType === TokenType.ERC1155) {
     tokenId = template?.tokens?.[0]?.tokenId;
     if (!tokenId) {
-      throw new Error("[DEV] tokenId for ERC1155 notFound. You rather forget to leftAndJoin tokens for ERC1155");
+      // tokenId for ERC1155 notFound. You rather forget to leftAndJoin Tokens for ERC1155 (API)
+      throw new Error();
     }
   } else if ([TokenType.NATIVE, TokenType.ERC20].includes(template?.contract?.contractType as TokenType)) {
     tokenId = "0";
@@ -70,3 +79,12 @@ export const convertTemplateToChainAsset = (template: ITemplate, amount?: BigNum
     amount: amount || template.amount,
   };
 };
+
+export const convertTemplateToTokenTypeAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {
+  const asset = convertTemplateToChainAsset(template, amount);
+
+  return {
+      ...asset,
+      tokenType: Object.values(TokenType)[asset.tokenType],
+    };
+}

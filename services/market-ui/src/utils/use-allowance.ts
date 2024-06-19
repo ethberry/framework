@@ -27,7 +27,7 @@ export interface IUseAllowanceOptionsParams {
 }
 
 export const useAllowance = (
-  fn: (...args: Array<any>) => Promise<any>,
+  fn: (web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>,
   options: { error?: boolean; success?: boolean } = {},
 ): ((params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
   const { error = true } = options;
@@ -101,7 +101,8 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
-    const contractErc721 = new Contract(contract, ERC721IsApprovedForAllABI, web3Context.provider?.getSigner());
+    console.log("ERC721 & ERC998 allowance");
+    const contractErc721 = new Contract(token, ERC721IsApprovedForAllABI, web3Context.provider?.getSigner());
     return (await contractErc721.isApprovedForAll(web3Context.account, contract)) as boolean;
   }
 
