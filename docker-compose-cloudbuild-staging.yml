@@ -18,6 +18,7 @@ services:
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "adminb2b-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -136,6 +137,7 @@ services:
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "adminb2c-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -247,6 +249,7 @@ services:
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "marketb2b-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -303,6 +306,7 @@ services:
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "marketb2c-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -359,6 +363,7 @@ services:
     command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "office-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -411,6 +416,7 @@ services:
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "core-eth-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -457,6 +463,7 @@ services:
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "core-eth-telos-test-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -503,6 +510,7 @@ services:
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "core-eth-amoy-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -542,6 +550,53 @@ services:
         max-size: "100m" # file size
     ports:
       - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
+
+  core-eth-manta-test:
+    container_name: core-eth-manta-test
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      APP_NAME: "core-eth-manta-test-${NODE_ENV}"
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API_MANTA_TEST}"
+      LOG_MODE: "${LOG_MODE}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL_ADMIN}"
+      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_MANTA_TEST}"
+      # REDIS
+      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID_MANTA_TEST}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_MANTA_TEST}"
+      LATENCY: "${LATENCY_MANTA_TEST}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE_MANTA_TEST}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_MANTA_TEST}"
+      STARTING_BLOCK: "${STARTING_BLOCK_MANTA_TEST}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_MANTA_TEST}"
+      # Contracts
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "100m" # file size
+    ports:
+      - "${PORT_RPC_API_MANTA_TEST}:${PORT_RPC_API_MANTA_TEST}"
 
   #  core-eth-binance:
   #    container_name: core-eth-binance
@@ -639,6 +694,7 @@ services:
     command: "npm run --prefix ./microservices/json start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "json-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       LOG_MODE: "${LOG_MODE}"
@@ -677,6 +733,7 @@ services:
     command: "npm run --prefix ./microservices/game start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "game-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -713,6 +770,7 @@ services:
     command: "npm run --prefix ./microservices/cron start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "cron-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -747,6 +805,7 @@ services:
     command: "npm run --prefix ./microservices/signal start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "signal-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -793,6 +852,8 @@ services:
     command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "emailer-${NODE_ENV}"
+      NODE_ENV: "${NODE_ENV}"
       NODE_OPTIONS: --max-old-space-size=8192
       HOST: 0.0.0.0
       # RMQ
