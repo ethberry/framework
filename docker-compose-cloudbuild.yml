@@ -17,6 +17,7 @@ services:
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "admin-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -90,6 +91,7 @@ services:
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "market-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -149,6 +151,7 @@ services:
     command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "office-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -206,7 +209,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
-      APP_NAME: "core-eth-besu"
+      APP_NAME: "core-eth-${NODE_ENV}"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
@@ -258,7 +261,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
-      APP_NAME: "core-eth-binance"
+      APP_NAME: "core-eth-binance-${NODE_ENV}"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
@@ -306,7 +309,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
-      APP_NAME: "core-eth-binance-test"
+      APP_NAME: "core-eth-binance-test-${NODE_ENV}"
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
@@ -355,6 +358,7 @@ services:
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "core-eth-polygon-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -395,16 +399,63 @@ services:
     ports:
       - "${PORT_RPC_API_POLYGON}:${PORT_RPC_API_POLYGON}"
 
-  core-eth-mumbai:
-    container_name: core-eth-mumbai
+#  core-eth-mumbai:
+#    container_name: core-eth-mumbai
+#    image: gcr.io/halogen-framing-335807/framework-img:latest
+#    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+#    environment:
+#      # common
+#      APP_NAME: "core-eth-mumbai-${NODE_ENV}"
+#      BASE_MODE: "${BASE_MODE}"
+#      NODE_ENV: "${NODE_ENV}"
+#      HOST: "${HOST}"
+#      PORT: "${PORT_RPC_API_MUMBAI}"
+#      # admin api
+#      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+#      # GEMUNION
+#      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+#      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+#      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+#      # RMQ
+#      RMQ_URL: "${RMQ_URL_ADMIN}"
+#      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+#      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+#      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_MUMBAI}"
+#      # REDIS
+#      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+#      # LOGDNA
+#      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+#      # BLOCKCHAIN
+#      CHAIN_ID: "${CHAIN_ID_MUMBAI}"
+#      ACCOUNT: "${ACCOUNT}"
+#      PRIVATE_KEY: "${PRIVATE_KEY}"
+#      JSON_RPC_ADDR: "${JSON_RPC_ADDR_MUMBAI}"
+#      LATENCY: "${LATENCY_MUMBAI}"
+#      CRON_SCHEDULE: "${CRON_SCHEDULE_MUMBAI}"
+#      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_MUMBAI}"
+#      STARTING_BLOCK: "${STARTING_MUMBAI_BLOCK}"
+#      # Chain-Link
+#      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_MUMBAI}"
+#      # Contracts
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-file: "5"   # number of files or file count
+#        max-size: "100m" # file size
+#    ports:
+#      - "${PORT_RPC_API_MUMBAI}:${PORT_RPC_API_MUMBAI}"
+
+  core-eth-amoy:
+    container_name: core-eth-amoy
     image: gcr.io/halogen-framing-335807/framework-img:latest
     command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "core-eth-amoy-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
-      PORT: "${PORT_RPC_API_MUMBAI}"
+      PORT: "${PORT_RPC_API_AMOY}"
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # GEMUNION
@@ -415,22 +466,22 @@ services:
       RMQ_URL: "${RMQ_URL_ADMIN}"
       RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
-      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_MUMBAI}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_AMOY}"
       # REDIS
       REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
-      CHAIN_ID: "${CHAIN_ID_MUMBAI}"
+      CHAIN_ID: "${CHAIN_ID_AMOY}"
       ACCOUNT: "${ACCOUNT}"
       PRIVATE_KEY: "${PRIVATE_KEY}"
-      JSON_RPC_ADDR: "${JSON_RPC_ADDR_MUMBAI}"
-      LATENCY: "${LATENCY_MUMBAI}"
-      CRON_SCHEDULE: "${CRON_SCHEDULE_MUMBAI}"
-      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_MUMBAI}"
-      STARTING_BLOCK: "${STARTING_MUMBAI_BLOCK}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR_AMOY}"
+      LATENCY: "${LATENCY_AMOY}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE_AMOY}"
+      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_AMOY}"
+      STARTING_BLOCK: "${STARTING_AMOY_BLOCK}"
       # Chain-Link
-      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_MUMBAI}"
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_AMOY}"
       # Contracts
     logging:
       driver: "json-file"
@@ -438,7 +489,7 @@ services:
         max-file: "5"   # number of files or file count
         max-size: "100m" # file size
     ports:
-      - "${PORT_RPC_API_MUMBAI}:${PORT_RPC_API_MUMBAI}"
+      - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
 
   json-api:
     container_name: json-api
@@ -446,6 +497,7 @@ services:
     command: "npm run --prefix ./microservices/json start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "json-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -482,6 +534,7 @@ services:
     command: "npm run --prefix ./microservices/game start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "game-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -517,6 +570,7 @@ services:
     command: "npm run --prefix ./microservices/cron start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "cron-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -547,6 +601,7 @@ services:
     command: "npm run --prefix ./microservices/signal start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "signal-api-${NODE_ENV}"
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
@@ -594,8 +649,10 @@ services:
     command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
     environment:
       # common
+      APP_NAME: "emailer-api-${NODE_ENV}"
       NODE_OPTIONS: --max-old-space-size=8192
       HOST: 0.0.0.0
+      NODE_ENV: "${NODE_ENV}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: email
