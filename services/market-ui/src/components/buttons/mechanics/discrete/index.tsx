@@ -6,15 +6,20 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IDiscrete, IToken } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import type { IAssetComponent, IContract, IDiscrete, IToken } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import UpgradeABI from "@framework/abis/json/ExchangeGradeFacet/upgrade.json";
 
-import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
 import { UpgradeDialog } from "./dialog";
+import { useAllowance } from "../../../../utils/use-allowance";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+} from "@framework/exchange";
 
 interface IUpgradeButtonProps {
   className?: string;
@@ -32,6 +37,43 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   const { contractFeatures } = token.template!.contract!;
 
+  const metaFnWithAllowance = useAllowance(
+    (
+      web3Context: Web3ContextType,
+      values: IUpgradeDto,
+      discrete: IDiscrete,
+      sign: IServerSignature,
+      systemContract: IContract,
+    ) => {
+      const level = token.metadata[values.attribute] || 0;
+
+      const item = convertTemplateToChainAsset(token.template!, "1");
+      const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
+        multiplier: (component: IAssetComponent) => getMultiplier(level, component.amount, discrete),
+      });
+
+      const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
+
+      return contract.upgrade(
+        {
+          externalId: discrete.id,
+          expiresAt: sign.expiresAt,
+          nonce: utils.arrayify(sign.nonce),
+          extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
+          receiver: discrete.contract!.merchant!.wallet,
+          referrer: constants.AddressZero,
+        },
+        // ITEM
+        item,
+        price,
+        sign.signature,
+        {
+          value: getEthPrice(price),
+        },
+      ) as Promise<void>;
+    },
+  );
+
   const metaFnWithSign = useServerSignature(
     (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       return api
@@ -44,42 +86,20 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         })
         .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
+          const price = convertDatabaseAssetToTokenTypeAsset(discrete.price?.components, {
+            multiplier: (component: IAssetComponent) => getMultiplier(level, component.amount, discrete),
+          });
 
-          const price =
-            discrete.price?.components.sort(sorter("id")).map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.contract!.address,
-              // tokenId: component.templateId || 0,
-              tokenId: component.template!.tokens![0].tokenId,
-              amount: getMultiplier(level, component.amount, discrete),
-            })) || [];
-
-          const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
-          return contract.upgrade(
-            {
-              externalId: discrete.id,
-              expiresAt: sign.expiresAt,
-              nonce: utils.arrayify(sign.nonce),
-              extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
-              receiver: discrete.contract!.merchant!.wallet,
-              referrer: constants.AddressZero,
-            },
-            // ITEM
-            {
-              tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),
-              token: token.template!.contract!.address,
-              tokenId: token.tokenId,
-              amount: "1",
-            },
-            price,
-            sign.signature,
-            {
-              value: getEthPrice(price),
-            },
-          ) as Promise<void>;
+          return metaFnWithAllowance(
+            { contract: systemContract.address, assets: price },
+            web3Context,
+            values,
+            discrete,
+            sign,
+            systemContract,
+          );
         });
     },
-    // { error: false },
   );
 
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {

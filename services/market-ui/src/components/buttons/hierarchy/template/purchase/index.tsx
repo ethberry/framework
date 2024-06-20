@@ -46,8 +46,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
 
       const item = convertTemplateToChainAsset(template, values.amount);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      const price = convertDatabaseAssetToChainAsset(template.price?.components!, { multiplier: values.amount });
+      const price = convertDatabaseAssetToChainAsset(template.price?.components, { multiplier: values.amount });
 
       return contract.purchase(
         {
@@ -70,8 +69,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      const assets = convertDatabaseAssetToTokenTypeAsset(template.price?.components!, {
+      const assets = convertDatabaseAssetToTokenTypeAsset(template.price?.components, {
         multiplier: values.amount,
       });
       return metaFnWithAllowance(
