@@ -13,7 +13,8 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
   let { multiplier = 1n } = options;
 
   if (!components) {
-    throw new Error("Components is Undefined");
+    // ? what error to put
+    throw new Error();
   }
 
   return components
@@ -49,7 +50,7 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
 
 // Same as convertDatabaseAssetToChainAsset
 // But return tokenType: TokenType
-export const convertDatabaseAssetToTokenTypeAsset = (components: IAssetComponent[], options: IOptions = {}) => {
+export const convertDatabaseAssetToTokenTypeAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
   const assets = convertDatabaseAssetToChainAsset(components, options);
 
   return assets.map(asset => {
@@ -67,8 +68,14 @@ export interface ITemplateToAssetProps {
   amount: BigNumberish;
 }
 
-export const convertTemplateToChainAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {
+export const convertTemplateToChainAsset = (template?: ITemplateToAssetProps, amount?: BigNumberish) => {
   let tokenId;
+
+  if (!template) {
+    // ? what error to put
+    throw new Error();
+  }
+
   if (template?.contract?.contractType === TokenType.ERC1155) {
     tokenId = template?.tokens?.[0]?.tokenId;
     if (!tokenId) {
@@ -89,7 +96,7 @@ export const convertTemplateToChainAsset = (template: ITemplateToAssetProps, amo
   };
 };
 
-export const convertTemplateToTokenTypeAsset = (template: ITemplateToAssetProps, amount?: BigNumberish) => {
+export const convertTemplateToTokenTypeAsset = (template?: ITemplateToAssetProps, amount?: BigNumberish) => {
   const asset = convertTemplateToChainAsset(template, amount);
 
   return {
