@@ -23,7 +23,6 @@ export const breedRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <BreedBreeds /> },
-          { path: "/breed/breeds/:id", element: <BreedBreeds /> },
           { path: "/breed/breeds/:id/:action", element: <BreedBreeds /> },
         ],
       },

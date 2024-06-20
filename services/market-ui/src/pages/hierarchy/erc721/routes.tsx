@@ -32,7 +32,6 @@ export const erc721Routes: Array<RouteObject> = [
         path: "/erc721/templates",
         children: [
           { index: true, element: <Erc721TemplateList /> },
-          { path: "/erc721/templates/:id", element: <Erc721Template /> },
           { path: "/erc721/templates/:id/:action", element: <Erc721Template /> },
         ],
       },
@@ -40,7 +39,7 @@ export const erc721Routes: Array<RouteObject> = [
         path: "/erc721/tokens",
         children: [
           { index: true, element: <Erc721TokenList /> },
-          { path: "/erc721/tokens/:id", element: <Erc721Token /> },
+
           { path: "/erc721/tokens/:id/:action", element: <Erc721Token /> },
         ],
       },

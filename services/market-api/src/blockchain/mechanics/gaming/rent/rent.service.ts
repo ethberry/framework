@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 
-import { TokenType } from "@framework/types";
+import { RentRuleStatus, TokenType } from "@framework/types";
 
 import { RentEntity } from "./rent.entity";
 import { IRentAutocompleteDto } from "./interfaces/autocomplete";
@@ -36,19 +36,16 @@ export class RentService {
   }
 
   public async autocomplete(dto: IRentAutocompleteDto): Promise<Array<RentEntity>> {
-    const { contractId, rentStatus } = dto;
+    const { contractId } = dto;
     const where = {};
 
-    // TODO add rentStatus here
+    Object.assign(where, {
+      rentStatus: RentRuleStatus.ACTIVE,
+    });
+
     if (contractId) {
       Object.assign(where, {
         contractId,
-      });
-    }
-
-    if (rentStatus) {
-      Object.assign(where, {
-        rentStatus,
       });
     }
 

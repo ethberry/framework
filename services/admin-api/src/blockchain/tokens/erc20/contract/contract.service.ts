@@ -24,7 +24,7 @@ export class Erc20ContractService extends ContractService {
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
     protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository, configService);
+    super(contractEntityRepository);
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {

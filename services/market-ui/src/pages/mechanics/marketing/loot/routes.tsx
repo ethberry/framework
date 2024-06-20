@@ -32,7 +32,7 @@ export const lootRoutes: Array<RouteObject> = [
         path: "/loot/boxes",
         children: [
           { index: true, element: <LootBoxList /> },
-          { path: "/loot/boxes/:id", element: <LootBox /> },
+
           { path: "/loot/boxes/:id/:action", element: <LootBox /> },
         ],
       },
@@ -40,7 +40,7 @@ export const lootRoutes: Array<RouteObject> = [
         path: "/loot/tokens",
         children: [
           { index: true, element: <LootTokenList /> },
-          { path: "/loot/tokens/:id", element: <LootBoxToken /> },
+
           { path: "/loot/tokens/:id/:action", element: <LootBoxToken /> },
         ],
       },

@@ -34,7 +34,6 @@ export const erc998Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc998Template /> },
-          { path: "/erc998/templates/:id", element: <Erc998Template /> },
           { path: "/erc998/templates/:id/:action", element: <Erc998Template /> },
         ],
       },
@@ -43,7 +42,6 @@ export const erc998Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc998Token /> },
-          { path: "/erc998/tokens/:id", element: <Erc998Token /> },
           { path: "/erc998/tokens/:id/:action", element: <Erc998Token /> },
         ],
       },
@@ -52,7 +50,6 @@ export const erc998Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc998Composition /> },
-          { path: "/erc998/composition/:id", element: <Erc998Composition /> },
           { path: "/erc998/composition/:id/:action", element: <Erc998Composition /> },
         ],
       },

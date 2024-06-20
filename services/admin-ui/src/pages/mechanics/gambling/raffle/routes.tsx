@@ -34,7 +34,6 @@ export const raffleRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <RaffleRounds /> },
-          { path: "/raffle/rounds/:id", element: <RaffleRounds /> },
           { path: "/raffle/rounds/:id/:action", element: <RaffleRounds /> },
         ],
       },
@@ -51,7 +50,6 @@ export const raffleRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <RaffleTicketTokens /> },
-          { path: "/raffle/ticket/tokens/:id", element: <RaffleTicketTokens /> },
           { path: "/raffle/ticket/tokens/:id/:action", element: <RaffleTicketTokens /> },
         ],
       },

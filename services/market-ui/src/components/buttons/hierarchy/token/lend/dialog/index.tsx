@@ -6,7 +6,6 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
-import { RentRuleStatus } from "@framework/types";
 
 export interface ILendDto {
   account: string;
@@ -37,7 +36,7 @@ export const LendDialog: FC<ILendDialogProps> = props => {
     >
       <TextInput name="account" />
       <DateTimeInput name="expires" />
-      <EntityInput name="rentRule" controller="rent" data={{ contractId, rentStatus: RentRuleStatus.ACTIVE }} />
+      <EntityInput name="rentRule" controller="rent" data={{ contractId }} />
     </FormDialog>
   );
 };

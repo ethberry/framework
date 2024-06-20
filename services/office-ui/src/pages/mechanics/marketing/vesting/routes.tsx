@@ -32,7 +32,7 @@ export const vestingRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <VestingClaim /> },
-          { path: "/vesting/claims/:id", element: <VestingClaim /> },
+
           { path: "/vesting/claims/:id/:action", element: <VestingClaim /> },
         ],
       },

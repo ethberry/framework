@@ -22,7 +22,7 @@ export const stakingRoutes: Array<RouteObject> = [
         path: "/staking/rules",
         children: [
           { index: true, element: <StakingRules /> },
-          { path: "/staking/rules/:id", element: <StakingRules /> },
+
           { path: "/staking/rules/:id/:action", element: <StakingRules /> },
         ],
       },
@@ -31,7 +31,7 @@ export const stakingRoutes: Array<RouteObject> = [
         path: "/staking/deposits",
         children: [
           { index: true, element: <StakingDeposit /> },
-          { path: "/staking/deposits/:id", element: <StakingDeposit /> },
+
           { path: "/staking/deposits/:id/:action", element: <StakingDeposit /> },
         ],
       },

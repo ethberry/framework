@@ -34,7 +34,6 @@ export const lotteryRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <LotteryRounds /> },
-          { path: "/lottery/rounds/:id", element: <LotteryRounds /> },
           { path: "/lottery/rounds/:id/:action", element: <LotteryRounds /> },
         ],
       },
@@ -51,7 +50,6 @@ export const lotteryRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <LotteryTicketTokens /> },
-          { path: "/lottery/ticket/tokens/:id", element: <LotteryTicketTokens /> },
           { path: "/lottery/ticket/tokens/:id/:action", element: <LotteryTicketTokens /> },
         ],
       },

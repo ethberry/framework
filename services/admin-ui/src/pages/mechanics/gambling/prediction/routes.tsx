@@ -41,7 +41,6 @@ export const predictionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <PredictionAnswers /> },
-          { path: "/prediction/answers/:id", element: <PredictionAnswers /> },
           { path: "/prediction/answers/:id/:action", element: <PredictionAnswers /> },
         ],
       },

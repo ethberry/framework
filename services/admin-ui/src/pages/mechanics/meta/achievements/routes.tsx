@@ -25,7 +25,7 @@ export const achievementsRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <AchievementRules /> },
-          { path: "/achievements/rules/:id", element: <AchievementRules /> },
+
           { path: "/achievements/rules/:id/:action", element: <AchievementRules /> },
         ],
       },
@@ -34,7 +34,7 @@ export const achievementsRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <AchievementLevels /> },
-          { path: "/achievements/levels/:id", element: <AchievementLevels /> },
+
           { path: "/achievements/levels/:id/:action", element: <AchievementLevels /> },
         ],
       },

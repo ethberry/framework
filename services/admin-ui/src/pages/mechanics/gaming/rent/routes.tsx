@@ -10,7 +10,7 @@ export const rentingRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Rent /> },
-      { path: "/rents/:id", element: <Rent /> },
+      { path: "/rents/:id/:action", element: <Rent /> },
     ],
   },
 ];

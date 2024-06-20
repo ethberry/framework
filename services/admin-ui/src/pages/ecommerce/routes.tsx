@@ -28,7 +28,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Product /> },
-      { path: "/ecommerce/products/:id", element: <Product /> },
       { path: "/ecommerce/products/:id/:action", element: <Product /> },
     ],
   },
@@ -37,7 +36,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Category /> },
-      { path: "/ecommerce/categories/:id", element: <Category /> },
       { path: "/ecommerce/categories/:id/:action", element: <Category /> },
     ],
   },
@@ -46,7 +44,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Parameter /> },
-      { path: "/ecommerce/parameters/:id", element: <Parameter /> },
       { path: "/ecommerce/parameters/:id/:action", element: <Parameter /> },
     ],
   },
@@ -55,7 +52,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <ProductPromo /> },
-      { path: "/ecommerce/promos/:id", element: <ProductPromo /> },
       { path: "/ecommerce/promos/:id/:action", element: <ProductPromo /> },
     ],
   },
@@ -64,7 +60,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Kanban /> },
-      { path: "/ecommerce/kanban/:id", element: <Kanban /> },
       { path: "/ecommerce/kanban/:id/:action", element: <Kanban /> },
     ],
   },
@@ -73,7 +68,6 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Order /> },
-      { path: "/ecommerce/orders/:id", element: <Order /> },
       { path: "/ecommerce/orders/:id/:action", element: <Order /> },
     ],
   },

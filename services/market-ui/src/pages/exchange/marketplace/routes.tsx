@@ -25,7 +25,7 @@ export const marketplaceRoutes: Array<RouteObject> = [
         path: "/marketplace/merchants",
         children: [
           { index: true, element: <MerchantList /> },
-          { path: "/marketplace/merchants/:id", element: <Merchant /> },
+
           { path: "/marketplace/merchants/:id/:action", element: <Merchant /> },
         ],
       },
@@ -40,7 +40,7 @@ export const marketplaceRoutes: Array<RouteObject> = [
         path: "/marketplace/templates",
         children: [
           { index: true, element: <TemplateList /> },
-          { path: "/marketplace/templates/:id", element: <Template /> },
+
           { path: "/marketplace/templates/:id/:action", element: <Template /> },
         ],
       },
