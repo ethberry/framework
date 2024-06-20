@@ -7,12 +7,14 @@ import { PassportInitialize } from "@gemunion/nest-js-module-passport";
 
 import { UserModule } from "../user/user.module";
 import { APP_PROVIDER } from "./auth.constants";
-import { AuthMetamaskController } from "./auth.metamask.controller";
-import { AuthMetamaskService } from "./auth.metamask.service";
-import { AuthParticleController } from "./auth.particle.controller";
-import { AuthParticleService } from "./auth.particle.service";
 import { AuthService } from "./auth.service";
 import { FirebaseStrategy } from "./strategies";
+import { AuthMetamaskController } from "./auth.metamask.controller";
+import { AuthMetamaskService } from "./auth.metamask.service";
+import { AuthWalletConnectController } from "./auth.wallet-connect.controller";
+import { AuthWalletConnectService } from "./auth.wallet-connect.service";
+import { AuthParticleController } from "./auth.particle.controller";
+import { AuthParticleService } from "./auth.particle.service";
 
 @Module({
   imports: [MetamaskModule, ParticleModule, UserModule, PassportInitialize.forRoot()],
@@ -20,6 +22,7 @@ import { FirebaseStrategy } from "./strategies";
     Logger,
     AuthService,
     AuthMetamaskService,
+    AuthWalletConnectService,
     AuthParticleService,
     FirebaseStrategy,
     {
@@ -27,7 +30,7 @@ import { FirebaseStrategy } from "./strategies";
       useValue: admin,
     },
   ],
-  controllers: [AuthMetamaskController, AuthParticleController],
+  controllers: [AuthMetamaskController, AuthWalletConnectController, AuthParticleController],
   exports: [AuthService],
 })
 export class AuthModule {

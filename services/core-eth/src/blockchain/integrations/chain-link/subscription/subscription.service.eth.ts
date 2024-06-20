@@ -3,20 +3,19 @@ import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
-import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type {
   IVrfSubscriptionConsumerAddedEvent,
   IVrfSubscriptionCreatedEvent,
   IVrfSubscriptionSetEvent,
-  RmqProviderType,
-  SignalEventType,
 } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
-import { ChainLinkSubscriptionService } from "./subscription.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ChainLinkSubscriptionService } from "./subscription.service";
 
 @Injectable()
 export class ChainLinkSubscriptionServiceEth {

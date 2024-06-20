@@ -6,7 +6,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
-
+import { VestingContractTemplates } from "@framework/types";
 import DeployVestingABI from "@framework/abis/deployVesting/VestingFactoryFacet.json";
 
 import { VestingDeployDialog } from "./dialog";
@@ -85,6 +85,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           startTimestamp: new Date().toISOString(),
           cliffInMonth: 12,
           monthlyRelease: 1000,
+          contractTemplate: VestingContractTemplates.VESTING,
         }}
       />
     </Fragment>

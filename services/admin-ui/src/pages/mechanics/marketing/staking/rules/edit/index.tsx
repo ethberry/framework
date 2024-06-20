@@ -95,7 +95,12 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
             readOnly={readOnly}
             allowEmpty
             disableClear={false}
-            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+            contract={{
+              data: {
+                contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY],
+                includeExternalContracts: true,
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -104,7 +109,12 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
             autoSelect
             prefix="reward"
             readOnly={readOnly}
-            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+            contract={{
+              data: {
+                contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY],
+                includeExteralContracts: true,
+              },
+            }}
           />
         </Grid>
       </Grid>

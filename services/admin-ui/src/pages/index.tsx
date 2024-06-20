@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { initDB } from "react-indexed-db-hook";
 
 import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
 import { FirebaseLogin } from "@gemunion/firebase-login";
 import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
 import { ParticleLoginButton } from "@gemunion/login-button-particle";
+import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
@@ -17,9 +17,6 @@ import { integrationsRoutes } from "./integrations/routes";
 import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
-import { myDBConfig } from "../components/dbstorage/db.config";
-
-initDB(myDBConfig);
 
 const router = createBrowserRouter([
   {
@@ -38,7 +35,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <FirebaseLogin withEmail={false} wallets={[MetamaskLoginButton, ParticleLoginButton]} />,
+        element: (
+          <FirebaseLogin
+            withEmail={false}
+            buttons={[MetamaskLoginButton, WalletConnectLoginButton, ParticleLoginButton]}
+          />
+        ),
       },
       ...infrastructureRoutes,
       ...hierarchyRoutes,

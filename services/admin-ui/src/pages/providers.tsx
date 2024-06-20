@@ -13,9 +13,8 @@ import { ReduxProvider, store } from "@gemunion/redux";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
-import { Signal } from "../components/signal";
 import { themeProps } from "../components/theme";
-import { WalletReLogin } from "../components/wallet-relogin";
+import { Signal } from "../components/signal";
 
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
@@ -30,10 +29,8 @@ export const Providers: FC<PropsWithChildren> = props => {
                   <PopupProvider>
                     <WalletProvider>
                       <PickerProvider>
-                        <WalletReLogin>
-                          <Signal />
-                          {children}
-                        </WalletReLogin>
+                        <Signal />
+                        {children}
                       </PickerProvider>
                     </WalletProvider>
                   </PopupProvider>

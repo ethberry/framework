@@ -8,7 +8,6 @@ import { NodeEnv } from "@framework/types";
 import { ProfileTabs } from "./tabs";
 import { ProfileAddresses } from "./adresses";
 import { ProfileGeneral } from "./general";
-import { ProfileNotifications } from "./notifications";
 import { ProfileSubscriptions } from "./subscriptions";
 import { ProfileSettings } from "./settings";
 
@@ -38,7 +37,6 @@ export const Profile: FC = () => {
       <ProfileGeneral open={value === ProfileTabs.general} />
       {!isProd ? <ProfileAddresses open={value === ProfileTabs.addresses} /> : null}
       <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
-      <ProfileNotifications open={value === ProfileTabs.notifications} />
       <ProfileSettings open={value === ProfileTabs.settings} />
     </Fragment>
   );

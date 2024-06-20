@@ -44,10 +44,9 @@ export * from "./ponzi/ponzi-balances";
 
 export * from "./staking/deploy";
 export * from "./staking/upload";
-export * from "./staking/penalty";
+export * from "./staking/get-penalty";
 export * from "./staking/withdraw";
 export * from "./staking/rule-toggle";
-export * from "./staking/allowance";
 export * from "./staking/check-balances";
 export * from "./staking/withdraw-penalty";
 

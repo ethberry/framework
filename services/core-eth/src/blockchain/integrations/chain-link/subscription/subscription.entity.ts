@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IChainLinkSubscription } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "chain_link_subscriptions" })

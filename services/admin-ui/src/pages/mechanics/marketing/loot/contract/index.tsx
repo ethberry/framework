@@ -13,12 +13,13 @@ import { ContractStatus, LootContractFeatures } from "@framework/types";
 
 import {
   BlacklistButton,
+  ChainLinkSetSubscriptionButton,
   ContractAllowanceButton,
   EthListenerAddButton,
   EthListenerRemoveButton,
   GrantRoleButton,
-  LootContractMintButton,
   LootContractDeployButton,
+  LootContractMintButton,
   PauseButton,
   RenounceRoleButton,
   RevokeRoleButton,
@@ -119,6 +120,7 @@ export const LootContract: FC = () => {
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />
                 <TransferButton contract={contract} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
               </ListActions>

@@ -1,13 +1,12 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
+import type { IMetamaskDto, IFirebaseToken } from "@gemunion/nest-js-module-metamask";
 import { MetamaskService } from "@gemunion/nest-js-module-metamask";
 import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
-import type { ICustomToken } from "./interfaces";
 
 @Injectable()
 export class AuthMetamaskService {
@@ -18,7 +17,7 @@ export class AuthMetamaskService {
     private readonly metamaskService: MetamaskService,
   ) {}
 
-  public async login(dto: IMetamaskDto): Promise<ICustomToken> {
+  public async login(dto: IMetamaskDto): Promise<IFirebaseToken> {
     const { nonce, signature, wallet } = dto;
 
     if (!this.metamaskService.isValidSignature({ signature, wallet, nonce })) {
@@ -28,7 +27,7 @@ export class AuthMetamaskService {
     const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
     if (!userEntity) {
-      throw new ForbiddenException("adminNotFound");
+      throw new ForbiddenException("userNotFound");
     }
 
     const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];

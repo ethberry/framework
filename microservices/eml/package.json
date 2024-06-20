@@ -7,10 +7,10 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/nest-js-module-license": "4.0.29",
-    "@gemunion/nest-js-module-mailjet": "4.0.32",
-    "@gemunion/nest-js-module-request-logger": "3.0.25",
-    "@gemunion/nest-js-module-winston-logdna": "3.1.8",
+    "@gemunion/nest-js-module-license": "4.0.30",
+    "@gemunion/nest-js-module-mailjet": "4.0.33",
+    "@gemunion/nest-js-module-request-logger": "3.0.26",
+    "@gemunion/nest-js-module-winston-logdna": "3.1.9",
     "@nestjs/axios": "3.0.2",
     "@nestjs/common": "10.3.9",
     "@nestjs/config": "3.2.2",
@@ -26,14 +26,14 @@
     "reflect-metadata": "0.2.2",
     "typescript": "5.4.5"
   },
-  "description": "EML engine",
+  "description": "Email microservice",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "4.0.6",
     "@nestjs/testing": "10.3.9",
     "@types/node": "20.14.2",
-    "@typescript-eslint/eslint-plugin": "7.12.0",
-    "@typescript-eslint/parser": "7.12.0",
+    "@typescript-eslint/eslint-plugin": "7.13.0",
+    "@typescript-eslint/parser": "7.13.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
@@ -66,6 +66,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "EML",
+  "title": "Gemunion Framework - Email microservice",
   "version": "0.0.1"
 }

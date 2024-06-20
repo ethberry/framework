@@ -4,11 +4,42 @@ import { DeepPartial } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI } from "@gemunion/contracts-constants";
+import { wallet } from "@gemunion/constants";
 import type { IContract, IUser } from "@framework/types";
-import { ContractStatus, TokenType, UserRole, UserStatus } from "@framework/types";
+import {
+  ContractStatus,
+  IMerchant,
+  MerchantStatus,
+  RatePlanType,
+  TokenType,
+  UserRole,
+  UserStatus,
+} from "@framework/types";
 import { EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 import { UserEntity } from "../infrastructure/user/user.entity";
+import { MerchantEntity } from "../infrastructure/merchant/merchant.entity";
+
+export const generateTestMerchant = (data: Partial<IMerchant> = {}): DeepPartial<MerchantEntity> => {
+  return Object.assign(
+    {
+      title: "GEMUNION",
+      description: simpleFormatting,
+      email: `trejgun+${v4()}@gmail.com`,
+      imageUrl,
+      wallet,
+      merchantStatus: MerchantStatus.ACTIVE,
+      // social: IMerchantSocial,
+      ratePlan: RatePlanType.GOLD,
+      users: [],
+      products: [],
+      orders: [],
+      chainLinkSubscriptions: [],
+      refLevels: [],
+    },
+    data,
+  );
+};
 
 export const generateTestUser = (data: Partial<IUser> = {}): DeepPartial<UserEntity> => {
   return Object.assign(

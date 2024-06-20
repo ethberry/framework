@@ -82,6 +82,11 @@ export class TransactionServiceCron {
 
   public async processTransactions(uniqueTxs: Array<string>) {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const logMode: boolean = this.configService.get<boolean>("LOG_MODE", false);
+    if (logMode) {
+      this.loggerService.log(`FOUND PENDING ${uniqueTxs.length} TXS, PROCESSING..`, TransactionServiceCron.name);
+    }
+
     for (const transactionHash of uniqueTxs) {
       let txReceipt: TransactionReceipt | null = null;
       try {

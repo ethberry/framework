@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { BusinessType, ChainLinkSupportedChains, NodeEnv } from "@framework/types";
+import { BusinessType, ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
 
 export const LotterySection: FC = () => {
   const { chainId = 0 } = useWeb3React();
@@ -14,7 +14,7 @@ export const LotterySection: FC = () => {
     return null;
   }
 
-  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkSupportedChains[chainId]) {
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkV2SupportedChains[chainId]) {
     return null;
   }
 

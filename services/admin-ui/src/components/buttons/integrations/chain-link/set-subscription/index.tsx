@@ -3,12 +3,14 @@ import { Subscriptions } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-
-import { ChainLinkSetSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
+import type { IContract } from "@framework/types";
+import { ContractFeatures, ModuleType } from "@framework/types";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/setSubscriptionId/ERC721GenesBesu.json";
+
+import { ChainLinkSetSubscriptionDialog } from "./dialog";
+import type { IChainLinkVrfSubscriptionDto } from "./dialog";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;
@@ -21,7 +23,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
   const {
     className,
     disabled,
-    contract: { address },
+    contract: { address, contractModule, contractFeatures },
     variant = ListActionVariant.button,
   } = props;
   const { account } = useWeb3React();
@@ -34,6 +36,13 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
     return contract.setSubscriptionId(options.vrfSubId) as Promise<void>;
   });
 
+  if (
+    contractModule === ModuleType.HIERARCHY &&
+    !(contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES))
+  ) {
+    return null;
+  }
+
   const handleSetSubscription = (): void => {
     setIsSetSubscriptionDialogOpen(true);
   };
@@ -42,9 +51,6 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
     await metaFnSetSub(values).then(() => {
       setIsSetSubscriptionDialogOpen(false);
     });
-    // .finally(() => {
-    //   navigate("/chain-link", { replace: true });
-    // });
   };
 
   const handleSetSubscriptionCancel = () => {

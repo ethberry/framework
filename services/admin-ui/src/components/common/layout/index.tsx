@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
+import { ErrorBoundary } from "@gemunion/mui-page-layout";
+
 import { Header } from "../header";
-import ErrorBoundary from "../error-boundary";
 import { Root, StyledContainer } from "./styled";
 
 export const Layout: FC = () => {

@@ -1,14 +1,13 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IParticleDto } from "@gemunion/nest-js-module-particle";
+import type { IParticleDto, IFirebaseToken } from "@gemunion/nest-js-module-particle";
 import { ParticleService } from "@gemunion/nest-js-module-particle";
 import { defaultChainId, EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
-import type { ICustomToken } from "./interfaces";
 
 @Injectable()
 export class AuthParticleService {
@@ -19,7 +18,7 @@ export class AuthParticleService {
     private readonly particleService: ParticleService,
   ) {}
 
-  public async login(dto: IParticleDto): Promise<ICustomToken> {
+  public async login(dto: IParticleDto): Promise<IFirebaseToken> {
     const { displayName, email, imageUrl, nonce, signature, wallet } = dto;
 
     if (!this.particleService.isValidSignature({ signature, wallet, nonce })) {

@@ -131,8 +131,8 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 16 : 60215},
-        '0xa02f6adc7926efebbd59fd43a84f4e0c0c91e832',
-        80001,
+        '0x1616d425cd540b256475cbfb604586c8598ec0fb',
+        80002,
         'USDT',
         '${simpleFormatting}',
         '${usdtImgUrl}',

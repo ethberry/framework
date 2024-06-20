@@ -7,12 +7,12 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
+import { signalServiceProvider } from "../../../../common/providers";
 import { ChainLinkSubscriptionEntity } from "./subscription.entity";
 import { ChainLinkSubscriptionService } from "./subscription.service";
 import { ChainLinkSubscriptionLogModule } from "./log/log.module";
 import { ChainLinkSubscriptionControllerEth } from "./subscription.controller.eth";
 import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
-import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [

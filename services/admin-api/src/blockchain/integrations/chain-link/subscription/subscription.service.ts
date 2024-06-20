@@ -4,7 +4,6 @@ import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Reposit
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ChainLinkSubscriptionEntity } from "./subscription.entity";
-import type { ISubscriptionAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class ChainLinkSubscriptionService {
@@ -27,29 +26,17 @@ export class ChainLinkSubscriptionService {
     return this.chainLinkSubscriptionEntityRepository.find({ where, ...options });
   }
 
-  public async autocomplete(
-    dto: Partial<ISubscriptionAutocompleteDto>,
-    userEntity: UserEntity,
-  ): Promise<Array<ChainLinkSubscriptionEntity>> {
-    const { chainId, merchantId } = dto;
+  public async autocomplete(userEntity: UserEntity): Promise<Array<ChainLinkSubscriptionEntity>> {
+    const { chainId, merchantId } = userEntity;
 
-    if (userEntity.merchantId === Number(merchantId)) {
-      const where = {
-        chainId,
-        merchantId,
-      };
-
-      return await this.chainLinkSubscriptionEntityRepository.find({
-        where,
-        select: {
-          id: true,
-          vrfSubId: true,
-        },
-        order: { vrfSubId: "ASC" },
-      });
-    } else {
-      return [];
-    }
+    return await this.chainLinkSubscriptionEntityRepository.find({
+      where: { chainId, merchantId },
+      select: {
+        id: true,
+        vrfSubId: true,
+      },
+      order: { vrfSubId: "ASC" },
+    });
   }
 
   public async create(dto: DeepPartial<ChainLinkSubscriptionEntity>): Promise<ChainLinkSubscriptionEntity> {

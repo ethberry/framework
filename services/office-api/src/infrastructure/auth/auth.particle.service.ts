@@ -1,13 +1,12 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IParticleDto } from "@gemunion/nest-js-module-particle";
+import type { IParticleDto, IFirebaseToken } from "@gemunion/nest-js-module-particle";
 import { ParticleService } from "@gemunion/nest-js-module-particle";
 import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";
 import { APP_PROVIDER } from "./auth.constants";
-import type { ICustomToken } from "./interfaces";
 
 @Injectable()
 export class AuthParticleService {
@@ -18,7 +17,7 @@ export class AuthParticleService {
     private readonly particleService: ParticleService,
   ) {}
 
-  public async login(dto: IParticleDto): Promise<ICustomToken> {
+  public async login(dto: IParticleDto): Promise<IFirebaseToken> {
     const { nonce, signature, wallet } = dto;
 
     if (!this.particleService.isValidSignature({ signature, wallet, nonce })) {
@@ -28,7 +27,7 @@ export class AuthParticleService {
     const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
     if (!userEntity) {
-      throw new ForbiddenException("adminNotFound");
+      throw new ForbiddenException("userNotFound");
     }
 
     const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];

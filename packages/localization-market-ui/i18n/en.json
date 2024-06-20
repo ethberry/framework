@@ -844,7 +844,8 @@
         "facebook": "Sign in with Facebook",
         "google": "Sign in with Google",
         "metamask": "Sign in with Metamask",
-        "particle": "Sign in with Particle"
+        "particle": "Sign in with Particle",
+        "walletConnect": "Sign in with Wallet Connect"
       }
     },
     "history": {

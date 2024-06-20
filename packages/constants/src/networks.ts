@@ -91,16 +91,16 @@ export const networks = {
       decimals: 18,
     },
   },
-  "80001": {
+  "80002": {
     order: 6,
-    chainName: "Polygon Mumbai",
-    chainId: 80001,
+    chainName: "Polygon Amoy",
+    chainId: 80002,
     rpcUrls: [
-      "https://rpc-mumbai.maticvigil.com",
-      "https://matic-mumbai.chainstacklabs.com",
-      "https://matic-testnet-archive-rpc.bwarelabs.com",
+      "https://rpc-amoy.polygon.technology",
+      "https://rpc.ankr.com/polygon_amoy",
+      "https://polygon-bor-amoy-rpc.publicnode.com",
     ],
-    blockExplorerUrls: ["https://mumbai.polygonscan.com"],
+    blockExplorerUrls: ["https://amoy.polygonscan.com"],
     nativeCurrency: {
       name: "MATIC",
       symbol: "MATIC",

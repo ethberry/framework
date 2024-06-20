@@ -1,29 +1,63 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
 import { Transform } from "class-transformer";
+import { decorate } from "ts-mixer";
 
-import { IVestingContractDeployDto } from "@framework/types";
+import { IVestingContractDeployDto, VestingContractTemplates } from "@framework/types";
 
 export class VestingContractDeployDto implements IVestingContractDeployDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  @decorate(
+    ApiProperty({
+      enum: VestingContractTemplates,
+    }),
+  )
+  @decorate(Transform(({ value }) => value as VestingContractTemplates))
+  @decorate(IsEnum(VestingContractTemplates, { message: "badInput" }))
+  public contractTemplate: VestingContractTemplates;
+
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  @decorate(IsEthereumAddress({ message: "patternMismatch" }))
+  @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
   public owner: string;
 
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsISO8601({}, { message: "patternMismatch" })
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  @decorate(IsISO8601({}, { message: "patternMismatch" }))
   public startTimestamp: string;
 
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
+  @decorate(
+    ApiProperty({
+      type: Number,
+    }),
+  )
+  @decorate(IsInt({ message: "typeMismatch" }))
+  @decorate(Min(0, { message: "rangeUnderflow" }))
   public cliffInMonth: number;
 
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Max(10000, { message: "rangeOverflow" })
+  @decorate(
+    ApiProperty({
+      type: Number,
+    }),
+  )
+  @decorate(IsInt({ message: "typeMismatch" }))
+  @decorate(Min(1, { message: "rangeUnderflow" }))
+  @decorate(Max(10000, { message: "rangeOverflow" }))
   public monthlyRelease: number;
+
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  public externalId: string;
 }

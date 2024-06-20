@@ -1,6 +1,7 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsEmail, IsEnum, IsOptional, IsString, IsUrl, MaxLength, MinLength } from "class-validator";
+import { decorate } from "ts-mixer";
 
 import {
   displayNameMaxLength,
@@ -10,55 +11,67 @@ import {
   EnabledGenders,
 } from "@gemunion/constants";
 import { EnabledLanguages } from "@framework/constants";
-import { IUserCommonDto } from "@framework/types";
+import type { IUserCommonDto } from "@framework/types";
 
 export class UserCommonDto implements IUserCommonDto {
-  @ApiPropertyOptional({
-    minLength: displayNameMinLength,
-    maxLength: displayNameMaxLength,
-  })
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @MinLength(displayNameMinLength, { message: "rangeUnderflow" })
-  @MaxLength(displayNameMaxLength, { message: "rangeOverflow" })
+  @decorate(
+    ApiProperty({
+      minLength: displayNameMinLength,
+      maxLength: displayNameMaxLength,
+      type: String,
+    }),
+  )
+  @decorate(IsOptional())
+  @decorate(IsString({ message: "typeMismatch" }))
+  @decorate(MinLength(displayNameMinLength, { message: "rangeUnderflow" }))
+  @decorate(MaxLength(displayNameMaxLength, { message: "rangeOverflow" }))
   public displayName: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl({}, { message: "patternMismatch" })
-  @IsString({ message: "typeMismatch" })
+  @decorate(ApiPropertyOptional({ type: String }))
+  @decorate(IsOptional())
+  @decorate(IsUrl({}, { message: "patternMismatch" }))
+  @decorate(IsString({ message: "typeMismatch" }))
   public imageUrl: string;
 
-  @ApiPropertyOptional({
-    enum: EnabledLanguages,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as EnabledLanguages)
-  @IsEnum(EnabledLanguages, { message: "badInput" })
-  public language: EnabledLanguages = EnabledLanguages.EN;
+  @decorate(
+    ApiPropertyOptional({
+      enum: EnabledLanguages,
+    }),
+  )
+  @decorate(IsOptional())
+  @decorate(Transform(({ value }) => value as EnabledLanguages))
+  @decorate(IsEnum(EnabledLanguages, { message: "badInput" }))
+  public language: EnabledLanguages;
 
-  @ApiPropertyOptional({
-    enum: EnabledCountries,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as EnabledCountries)
-  @IsEnum(EnabledCountries, { message: "badInput" })
+  @decorate(
+    ApiPropertyOptional({
+      enum: EnabledCountries,
+    }),
+  )
+  @decorate(IsOptional())
+  @decorate(Transform(({ value }) => value as EnabledCountries))
+  @decorate(IsEnum(EnabledCountries, { message: "badInput" }))
   public country: EnabledCountries;
 
-  @ApiPropertyOptional({
-    enum: EnabledGenders,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as EnabledGenders)
-  @IsEnum(EnabledGenders, { message: "badInput" })
+  @decorate(
+    ApiPropertyOptional({
+      enum: EnabledGenders,
+    }),
+  )
+  @decorate(IsOptional())
+  @decorate(Transform(({ value }) => value as EnabledGenders))
+  @decorate(IsEnum(EnabledGenders, { message: "badInput" }))
   public gender: EnabledGenders;
 
-  @ApiPropertyOptional({
-    maxLength: emailMaxLength,
-  })
-  @IsOptional()
-  @IsEmail({}, { message: "patternMismatch" })
-  @MaxLength(emailMaxLength, { message: "rangeOverflow" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  @decorate(
+    ApiPropertyOptional({
+      maxLength: emailMaxLength,
+      type: String,
+    }),
+  )
+  @decorate(IsOptional())
+  @decorate(IsEmail({}, { message: "patternMismatch" }))
+  @decorate(MaxLength(emailMaxLength, { message: "rangeOverflow" }))
+  @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
   public email: string;
 }

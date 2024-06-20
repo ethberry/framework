@@ -6,7 +6,7 @@ import { Button, SvgIcon } from "@mui/material";
 import type { IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { MetaMaskIcon } from "@gemunion/provider-wallet";
+import { MetaMaskIcon } from "@gemunion/mui-icons";
 import { TConnectors, useAppSelector } from "@gemunion/redux";
 
 interface IErc20AddToMetamaskButtonProps {

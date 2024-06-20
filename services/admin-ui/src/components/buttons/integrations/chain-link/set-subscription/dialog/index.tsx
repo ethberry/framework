@@ -1,7 +1,9 @@
 import { FC } from "react";
+
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { NumberInput } from "@gemunion/mui-inputs-core";
+
 import { validationSchema } from "./validation";
-import { VrfSubInput } from "./sub-input";
 
 export interface IChainLinkVrfSubscriptionDto {
   vrfSubId: number;
@@ -23,10 +25,10 @@ export const ChainLinkSetSubscriptionDialog: FC<IChainLinkSubscriptionDialogProp
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.vrfSetSub"
-      testId="VrfConsumerForm"
+      testId="ChainLinkSetSubscriptionDialog"
       {...rest}
     >
-      <VrfSubInput />
+      <NumberInput name="vrfSubId" />
     </FormDialog>
   );
 };

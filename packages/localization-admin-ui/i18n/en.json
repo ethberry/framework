@@ -217,6 +217,7 @@
       "BLACKLIST_DISCRETE_RENTABLE": "Blacklist + Discrete + Rentable",
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
+      "BLACKLIST_RENTABLE": "Blacklist + Rentable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
@@ -869,6 +870,7 @@
       "startTimestamp": "Start date",
       "state": "State",
       "subId": "VRF Subscription Id",
+      "vrfSubId": "VRF Subscription Id",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
       "template": "Template",
@@ -1001,7 +1003,7 @@
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
-      "subId": "0",
+      "vrfSubId": "0",
       "subscriptionId": "2",
       "symbol": "XXX",
       "templateId": "Template",
@@ -1105,7 +1107,7 @@
       "manage": "Subscriptions",
       "noSubscription": "No subscription",
       "select": "Select subscription ID",
-      "set": "Set Vrf subscription ID",
+      "set": "Set VRF subscription ID",
       "subscription": "Subscription",
       "title": "Chain-Link Subscriptions",
       "wallet": "Wallet balance: {value}"
@@ -1285,7 +1287,8 @@
         "facebook": "Sign in with Facebook",
         "google": "Sign in with Google",
         "metamask": "Sign in with Metamask",
-        "particle": "Sign in with Particle"
+        "particle": "Sign in with Particle",
+        "walletConnect": "Sign in with Wallet Connect"
       }
     },
     "kanban": {

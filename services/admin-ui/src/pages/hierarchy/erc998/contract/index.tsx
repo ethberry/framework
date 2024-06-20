@@ -8,7 +8,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, Erc998ContractFeatures } from "@framework/types";
+import { ContractStatus, Erc998ContractFeatures } from "@framework/types";
 
 import {
   BlacklistButton,
@@ -112,16 +112,9 @@ export const Erc998Contract: FC = () => {
                 <TransferButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <SetBaseTokenURIButton contract={contract} />
+                <ChainLinkSetSubscriptionButton contract={contract} />
                 <EthListenerAddButton contract={contract} />
                 <EthListenerRemoveButton contract={contract} />
-                <ChainLinkSetSubscriptionButton
-                  contract={contract}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    (!contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
-                      !contract.contractFeatures.includes(ContractFeatures.GENES))
-                  }
-                />
               </ListActions>
             </StyledListItem>
           ))}
