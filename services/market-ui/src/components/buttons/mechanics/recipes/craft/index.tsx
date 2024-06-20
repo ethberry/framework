@@ -33,10 +33,8 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
     async (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      const items = convertDatabaseAssetToChainAsset(craft.item?.components!);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      const price = convertDatabaseAssetToChainAsset(craft.price?.components!);
+      const items = convertDatabaseAssetToChainAsset(craft.item?.components);
+      const price = convertDatabaseAssetToChainAsset(craft.price?.components);
 
       return contract.craft(
         {
@@ -59,8 +57,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      const price = convertDatabaseAssetToTokenTypeAsset(craft.price?.components!);
+      const price = convertDatabaseAssetToTokenTypeAsset(craft.price?.components);
       return metaFnWithAllowance(
         {
           contract: systemContract.address,
