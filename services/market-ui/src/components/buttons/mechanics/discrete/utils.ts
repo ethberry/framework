@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, BigNumberish } from "ethers";
 
 import { DiscreteStrategy, IDiscrete } from "@framework/types";
 
@@ -16,7 +16,7 @@ export const getMultiplier = (level: number, amount: string, { discreteStrategy,
   }
 };
 
-export const getEthPrice = (price: Array<{ tokenType: number; amount: BigNumber }>) => {
+export const getEthPrice = (price: Array<{ tokenType: number; amount: BigNumberish }>) => {
   return price.reduce((memo, current) => {
     if (current.tokenType === 0) {
       return memo.add(current.amount);
