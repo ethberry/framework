@@ -44,11 +44,10 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         32,
       );
 
-      // @typescript-eslint/no-non-null-asserted-optional-chain
       const items = convertDatabaseAssetToChainAsset(merge.item?.components);
       const price = values.tokenEntities
         ?.sort(sorter("tokenId"))
-        .map(token => convertTemplateToChainAsset(token.template!, "1"));
+        .map(token => convertTemplateToChainAsset(token.template, "1"));
 
       return contract.merge(
         {
@@ -74,7 +73,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
       const price = values.tokenEntities
         ?.slice()
         ?.sort(sorter("tokenId"))
-        .map(token => convertTemplateToTokenTypeAsset(token.template!, "1"));
+        .map(token => convertTemplateToTokenTypeAsset(token.template, "1"));
 
       return metaFnWithAllowance(
         { contract: systemContract.address, assets: price },

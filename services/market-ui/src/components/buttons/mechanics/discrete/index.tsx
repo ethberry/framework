@@ -8,6 +8,11 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetComponent, IContract, IDiscrete, IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+} from "@framework/exchange";
 
 import UpgradeABI from "@framework/abis/upgrade/ExchangeGradeFacet.json";
 
@@ -15,11 +20,6 @@ import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
 import { UpgradeDialog } from "./dialog";
 import { useAllowance } from "../../../../utils/use-allowance";
-import {
-  convertDatabaseAssetToChainAsset,
-  convertDatabaseAssetToTokenTypeAsset,
-  convertTemplateToChainAsset,
-} from "@framework/exchange";
 
 interface IUpgradeButtonProps {
   className?: string;
@@ -47,7 +47,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     ) => {
       const level = token.metadata[values.attribute] || 0;
 
-      const item = convertTemplateToChainAsset(token.template!, "1");
+      const item = convertTemplateToChainAsset(token.template, "1");
       const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
         multiplier: (component: IAssetComponent) => getMultiplier(level, component.amount, discrete),
       });

@@ -5,12 +5,17 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { convertDatabaseAssetToChainAsset, getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMysteryBoxBuyButtonProps {
   className?: string;
@@ -24,11 +29,12 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
 
   const { referrer } = useAppSelector(state => state.settings);
 
-  const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
       const items = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
+      const mysteryItem = convertTemplateToChainAsset(mysteryBox.template);
       const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);
 
       return contract.purchaseMystery(
@@ -40,21 +46,25 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
           receiver: mysteryBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        [
-          ...items,
-          {
-            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: mysteryBox.template!.contract!.address,
-            tokenId: mysteryBox.templateId,
-            amount: "1",
-          },
-        ],
+        [...items, mysteryItem],
         price,
         sign.signature,
         {
           value: getEthPrice(mysteryBox.template?.price),
         },
       ) as Promise<void>;
+    },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const price = convertDatabaseAssetToTokenTypeAsset(mysteryBox.template!.price!.components);
+      return metaFnWithAllowance(
+        { contract: systemContract.address, assets: price },
+        web3Context,
+        sign,
+        systemContract,
+      );
     },
     // { error: false },
   );
