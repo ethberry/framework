@@ -445,7 +445,7 @@ services:
   #    ports:
   #      - "${PORT_RPC_API_MUMBAI}:${PORT_RPC_API_MUMBAI}"
 
-#  core-eth-amoy:
+  #  core-eth-amoy:
 #    container_name: core-eth-amoy
 #    image: gcr.io/halogen-framing-335807/framework-img:latest
 #    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
