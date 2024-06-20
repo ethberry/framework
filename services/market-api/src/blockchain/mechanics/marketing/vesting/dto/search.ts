@@ -5,5 +5,4 @@ export class VestingSearchDto extends PaginationDto implements IVestingSearchDto
   public contractFeatures: Array<VestingContractFeatures>;
   public account: string;
   public merchantId: number;
-  public contractFeatures: VestingContractFeatures[];
 }
