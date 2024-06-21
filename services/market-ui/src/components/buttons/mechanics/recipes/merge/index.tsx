@@ -8,16 +8,16 @@ import { useAppSelector } from "@gemunion/redux";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import {
   convertDatabaseAssetToChainAsset,
-  convertTemplateToChainAsset,
   convertTemplateToTokenTypeAsset,
+  convertTemplateToChainAsset,
   getEthPrice,
+  sortArrObj,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMerge } from "@framework/types";
 
 import MergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
-import { sorter } from "../../../../../utils/sorter";
 import { MergeDialog, IMergeDto } from "./dialog";
 import { useAllowance } from "../../../../../utils/use-allowance";
 
@@ -45,9 +45,9 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
       );
 
       const items = convertDatabaseAssetToChainAsset(merge.item?.components);
-      const price = values.tokenEntities
-        ?.sort(sorter("tokenId"))
-        .map(token => convertTemplateToChainAsset(token.template, "1"));
+      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el =>
+        convertTemplateToChainAsset(el.template),
+      );
 
       return contract.merge(
         {
@@ -70,10 +70,9 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     async (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const price = values.tokenEntities
-        ?.slice()
-        ?.sort(sorter("tokenId"))
-        .map(token => convertTemplateToTokenTypeAsset(token.template, "1"));
+      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el =>
+        convertTemplateToTokenTypeAsset(el.template),
+      );
 
       return metaFnWithAllowance(
         { contract: systemContract.address, assets: price },

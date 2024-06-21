@@ -2,15 +2,13 @@ import { BigNumber, BigNumberish } from "ethers";
 
 import { DiscreteStrategy, IDiscrete } from "@framework/types";
 
-export const getMultiplier = (level: number, amount: string, { discreteStrategy, growthRate }: IDiscrete) => {
+export const getMultiplier = (level: number, { discreteStrategy, growthRate }: IDiscrete) => {
   if (discreteStrategy === DiscreteStrategy.FLAT) {
-    return BigNumber.from(amount);
+    return 1;
   } else if (discreteStrategy === DiscreteStrategy.LINEAR) {
-    return BigNumber.from(amount).mul(level);
+    return level; // For linear probably need to add step (in token decimals)
   } else if (discreteStrategy === DiscreteStrategy.EXPONENTIAL) {
-    const exp = (1 + growthRate / 100) ** level;
-    const [whole = "", decimals = ""] = exp.toString().split(".");
-    return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
+    return (1 + growthRate / 100) ** level;
   } else {
     throw new Error("unknownStrategy");
   }
