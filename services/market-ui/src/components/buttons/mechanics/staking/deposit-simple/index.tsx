@@ -3,13 +3,14 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { getEthPrice } from "@framework/exchange";
+import { convertDatabaseAssetToTokenTypeAsset, getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "@framework/abis/deposit/Staking.json";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IStakingDepositSimpleButtonProps {
   className?: string;
@@ -21,7 +22,7 @@ export interface IStakingDepositSimpleButtonProps {
 export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
 
-  const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
+  const metaFnWithAllowance = useAllowance((web3Context: Web3ContextType, rule: IStakingRule) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
 
     const params = {
@@ -32,10 +33,23 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       receiver: constants.AddressZero,
       referrer: constants.AddressZero,
     };
+
     const tokenId = rule.deposit!.components[0].templateId;
     return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
+  });
+
+  const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
+    const price = convertDatabaseAssetToTokenTypeAsset(rule.deposit?.components);
+    return metaFnWithAllowance(
+      {
+        contract: rule.contract!.address,
+        assets: [price[0]],
+      },
+      web3Context,
+      rule,
+    );
   });
 
   const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {

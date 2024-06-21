@@ -6,7 +6,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IAssetComponent, IContract, IDiscrete, IToken } from "@framework/types";
+import type { IContract, IDiscrete, IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 import {
   convertDatabaseAssetToChainAsset,
@@ -49,7 +49,8 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
       const item = convertTemplateToChainAsset(token.template, "1");
       const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
-        multiplier: (component: IAssetComponent) => getMultiplier(level, component.amount, discrete),
+        multiplier: getMultiplier(level, discrete) * 100, // mul by 100 in order to convert 1.12 to 112, otherwise calculation with BN will throw an error
+        multiplierPercent: true,
       });
 
       const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
@@ -87,7 +88,8 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
           const price = convertDatabaseAssetToTokenTypeAsset(discrete.price?.components, {
-            multiplier: (component: IAssetComponent) => getMultiplier(level, component.amount, discrete),
+            multiplier: getMultiplier(level, discrete) * 100,
+            multiplierPercent: true,
           });
 
           return metaFnWithAllowance(
