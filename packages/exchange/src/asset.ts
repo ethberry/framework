@@ -5,16 +5,16 @@ import { BigNumber, BigNumberish } from "ethers";
 
 interface IOptions {
   sortBy?: string;
-  multiplier?: BigNumberish | ((component: IAssetComponent) => BigNumberish);
+  multiplier?: BigNumberish;
+  multiplierPercent?: boolean;
 }
 
 export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id" } = options;
-  let { multiplier = 1n } = options;
+  const { sortBy = "id", multiplierPercent = false } = options;
+  const { multiplier = 1 } = options;
 
-  if (!components) {
-    // ? what error to put
-    throw new Error();
+  if (components === undefined) {
+    throw new Error("blockchainError");
   }
 
   return components
@@ -33,11 +33,17 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
       } else {
         tokenId = (item.templateId || 0).toString();
       }
+      let amount: string;
 
-      if (typeof multiplier === "function") {
-        multiplier = multiplier(item);
+      if (multiplierPercent) {
+        // in case if multiplier is in percent.
+        // It can be helpful if the <multiplier> is float, because converting '1.1' to BigNumber will throw an error.
+        // Don't forget to multiply <multiplier> to '100', before passing it here and <multiplierPercent> = 'true'.
+        // ? It may give an error if multiplier will have more than 2 precisions like 1.123 * 100 = 112.3 (.3 will probably give an error)
+        amount = BigNumber.from(item.amount).mul(multiplier).div(100).toString();
+      } else {
+        amount = BigNumber.from(item.amount).mul(multiplier).toString();
       }
-      const amount = BigNumber.from(item.amount).mul(multiplier).toString();
 
       return {
         tokenType: Object.values(TokenType).indexOf(item.tokenType),
@@ -68,12 +74,11 @@ export interface ITemplateToAssetProps {
   amount: BigNumberish;
 }
 
-export const convertTemplateToChainAsset = (template?: ITemplateToAssetProps, amount?: BigNumberish) => {
+export const convertTemplateToChainAsset = (template?: ITemplateToAssetProps, amount: BigNumberish = 1n) => {
   let tokenId;
 
-  if (!template) {
-    // ? what error to put
-    throw new Error();
+  if (template === undefined) {
+    throw new Error("blockchainError");
   }
 
   if (template?.contract?.contractType === TokenType.ERC1155) {
@@ -92,7 +97,7 @@ export const convertTemplateToChainAsset = (template?: ITemplateToAssetProps, am
     tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
     token: template.contract!.address,
     tokenId,
-    amount: amount || template.amount,
+    amount,
   };
 };
 
