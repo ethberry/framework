@@ -50,8 +50,6 @@ export class AccessControlServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
-
     await this.accessControlService.create({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
@@ -59,6 +57,8 @@ export class AccessControlServiceEth {
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ],
     });
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -85,8 +85,6 @@ export class AccessControlServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
-
     await this.accessControlService.delete({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
@@ -94,6 +92,8 @@ export class AccessControlServiceEth {
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ],
     });
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
     if (role === AccessControlRoleHash.MINTER_ROLE.toString()) {
       const systemContractEntity = await this.contractService.findOne({ address: account.toLowerCase() });
@@ -162,8 +162,6 @@ export class AccessControlServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
-
     await this.accessControlService.delete({
       address: context.address.toLowerCase(),
       account: previousOwner.toLowerCase(),
@@ -175,6 +173,8 @@ export class AccessControlServiceEth {
       account: newOwner.toLowerCase(),
       role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
     });
+
+    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
