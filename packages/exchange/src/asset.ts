@@ -6,11 +6,10 @@ import { BigNumber, BigNumberish } from "ethers";
 interface IOptions {
   sortBy?: string;
   multiplier?: BigNumberish;
-  multiplierPercent?: boolean;
 }
 
 export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id", multiplierPercent = false } = options;
+  const { sortBy = "id" } = options;
   const { multiplier = 1 } = options;
 
   if (components === undefined) {
@@ -33,17 +32,13 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
       } else {
         tokenId = (item.templateId || 0).toString();
       }
-      let amount: string;
 
-      if (multiplierPercent) {
-        // in case if multiplier is in percent.
-        // It can be helpful if the <multiplier> is float, because converting '1.1' to BigNumber will throw an error.
-        // Don't forget to multiply <multiplier> to '100', before passing it here and <multiplierPercent> = 'true'.
-        // ? It may give an error if multiplier will have more than 2 precisions like 1.123 * 100 = 112.3 (.3 will probably give an error)
-        amount = BigNumber.from(item.amount).mul(multiplier).div(100).toString();
-      } else {
-        amount = BigNumber.from(item.amount).mul(multiplier).toString();
-      }
+      const [whole = "", decimals = ""] = multiplier.toString().split(".");
+
+      const amount = BigNumber.from(item.amount)
+        .mul(`${whole}${decimals}`) // multipler (multiplier * 10 ** decimals)
+        .div(BigNumber.from(10).pow(decimals.length)) // div 10 ** decimals 
+        .toString();
 
       return {
         tokenType: Object.values(TokenType).indexOf(item.tokenType),
