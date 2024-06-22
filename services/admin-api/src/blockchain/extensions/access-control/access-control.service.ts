@@ -51,8 +51,16 @@ export class AccessControlService {
       "roles.account_contract",
       ContractEntity,
       "account_contract",
-      `roles.account = account_contract.address`,
+      `roles.account = account_contract.address AND address_contract.chain_id = account_contract.chain_id`,
     );
+
+    // TODO add User connected to entity
+    // queryBuilder.leftJoinAndMapOne(
+    //   "roles.account_user",
+    //   UserEntity,
+    //   "account_user",
+    //   `roles.account = account_user.wallet`,
+    // );
 
     queryBuilder.orderBy("roles.createdAt", "DESC");
 
