@@ -49,8 +49,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
       const item = convertTemplateToChainAsset(token.template, "1");
       const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
-        multiplier: getMultiplier(level, discrete) * 100, // mul by 100 in order to convert 1.12 to 112, otherwise calculation with BN will throw an error
-        multiplierPercent: true,
+        multiplier: getMultiplier(level, discrete),
       });
 
       const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
@@ -88,8 +87,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
           const price = convertDatabaseAssetToTokenTypeAsset(discrete.price?.components, {
-            multiplier: getMultiplier(level, discrete) * 100,
-            multiplierPercent: true,
+            multiplier: getMultiplier(level, discrete),
           });
 
           return metaFnWithAllowance(
