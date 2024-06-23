@@ -12,14 +12,14 @@ import pausePausableABI from "@framework/abis/pause/PausableFacet.json";
 
 import { shouldDisableByContractType } from "../../../utils";
 
-export interface IPausableButtonProps {
+export interface IPauseButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const PauseButton: FC<IPausableButtonProps> = props => {
+export const PauseButton: FC<IPauseButtonProps> = props => {
   const {
     className,
     contract,

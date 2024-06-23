@@ -6,11 +6,11 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
-import { useCheckAccessDefaultAdmin } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-access";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 
@@ -35,7 +35,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
   const [hasAccess, setHasAccess] = useState(false);
-  const { checkAccessDefaultAdmin } = useCheckAccessDefaultAdmin();
+  const { fn: checkPermissions } = useCheckPermissions();
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -58,14 +58,13 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccessDefaultAdmin(void 0, {
+      void checkPermissions(void 0, {
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 
