@@ -149,8 +149,8 @@ export class AssetPromoService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IAssetPromoSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, promoId, chainId } = dto;
+  public async sign(dto: IAssetPromoSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, promoId } = dto;
 
     const AssetPromoEntity = await this.findOneWithRelations({ id: promoId });
 
@@ -184,8 +184,8 @@ export class AssetPromoService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: AssetPromoEntity.id,
         expiresAt,

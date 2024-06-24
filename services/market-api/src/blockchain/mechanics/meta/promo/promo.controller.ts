@@ -32,7 +32,7 @@ export class AssetPromoController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: AssetPromoSignDto): Promise<IServerSignature> {
-    return this.assetPromoService.sign(dto);
+  public sign(@Body() dto: AssetPromoSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.assetPromoService.sign(dto, userEntity);
   }
 }
