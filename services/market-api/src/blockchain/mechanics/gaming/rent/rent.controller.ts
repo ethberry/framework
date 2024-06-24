@@ -42,7 +42,7 @@ export class RentController {
   }
 
   @Post("/tokens/sign")
-  public sign(@Body() dto: SignRentTokenDto): Promise<IServerSignature> {
-    return this.rentSignService.sign(dto);
+  public sign(@Body() dto: SignRentTokenDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.rentSignService.sign(dto, userEntity);
   }
 }

@@ -15,6 +15,7 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import type { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class RentSignService {
@@ -26,8 +27,8 @@ export class RentSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
-    const { tokenId, account, referrer, expires, externalId, chainId } = dto;
+  public async sign(dto: ISignRentTokenDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { tokenId, referrer, expires, externalId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -46,8 +47,8 @@ export class RentSignService {
     const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account, // from
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet, // from
       {
         externalId, // rent.id
         expiresAt, // sign expires
