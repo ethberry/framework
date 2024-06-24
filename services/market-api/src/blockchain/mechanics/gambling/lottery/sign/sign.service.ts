@@ -11,6 +11,7 @@ import { LotteryRoundEntity } from "../round/round.entity";
 import type { ISignLotteryDto } from "./interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class LotterySignService {
@@ -20,8 +21,8 @@ export class LotterySignService {
     private readonly roundService: LotteryRoundService,
   ) {}
 
-  public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, ticketNumbers, contractId, chainId } = dto;
+  public async sign(dto: ISignLotteryDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, ticketNumbers, contractId } = dto;
     const lotteryRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 
     if (!lotteryRound) {
@@ -31,8 +32,8 @@ export class LotterySignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: lotteryRound.id,
         expiresAt,

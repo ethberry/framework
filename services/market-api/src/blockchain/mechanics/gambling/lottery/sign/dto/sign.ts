@@ -2,12 +2,12 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
 import type { ISignLotteryDto } from "../interfaces";
 import { LotteryTicketRule } from "./rule";
 
-export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignLotteryDto {
+export class SignLotteryDto extends Mixin(ReferrerOptionalDto) implements ISignLotteryDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MinLength(66, { message: "rangeUnderflow" })
@@ -20,4 +20,7 @@ export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, Chain
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   public contractId: number;
+
+  public chainId?: number;
+  public account?: string;
 }
