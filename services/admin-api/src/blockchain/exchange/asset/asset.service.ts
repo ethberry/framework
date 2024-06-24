@@ -105,9 +105,10 @@ export class AssetService {
             }),
         ).then(values =>
           values
-            .filter(c => c.status === "fulfilled")
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-            .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
+            .filter(
+              <T extends AssetComponentEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+                c.status === "fulfilled",
+            )
             .map(c => c.value),
         );
         // add new
@@ -119,9 +120,10 @@ export class AssetService {
             }),
         ).then(values =>
           values
-            .filter(c => c.status === "fulfilled")
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-            .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
+            .filter(
+              <T extends AssetComponentEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+                c.status === "fulfilled",
+            )
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });

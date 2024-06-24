@@ -119,8 +119,10 @@ export class ProductItemService {
     await Promise.allSettled([this.photoService.create({ ...photo, priority: 0 }, null, productItemEntity)]).then(
       (values: Array<PromiseSettledResult<PhotoEntity>>) =>
         values
-          .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .filter(
+            <T extends PhotoEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+              c.status === "fulfilled",
+          )
           .map(c => c.value),
     );
 
