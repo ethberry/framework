@@ -82,7 +82,6 @@ export class EventHistoryService {
   // TODO add All Exchange events
   // TODO include others events, such as LevelUp
   public async my(dto: EventHistorySearchDto2, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
-    // @ts-ignore  (react < 5 )
     const { take, skip, order, eventTypes } = dto;
 
     const { wallet } = userEntity;

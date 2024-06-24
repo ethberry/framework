@@ -1,12 +1,13 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { MuiSortDto, PaginationDto } from "@gemunion/collection";
 import { ContractEventType } from "@framework/types";
-import { Mixin } from "ts-mixer";
+import type { IDateBase } from "@gemunion/types-collection";
 
-export class EventHistorySearchDto2 extends Mixin(PaginationDto, MuiSortDto) {
+export class EventHistorySearchDto2 extends Mixin(PaginationDto, MuiSortDto<IDateBase>) {
   @ApiPropertyOptional({
     enum: ContractEventType,
     isArray: true,
