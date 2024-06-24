@@ -132,6 +132,7 @@ export class AssetService {
         ).then(values =>
           values
             .filter(c => c.status === "fulfilled")
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
             .map(c => c.value),
         );
@@ -144,6 +145,7 @@ export class AssetService {
         ).then(values =>
           values
             .filter(c => c.status === "fulfilled")
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
             .map(c => c.value),
         );
@@ -330,7 +332,7 @@ export class AssetService {
       ).then(values =>
         values
           .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<AssetComponentHistoryEntity>>c)
+          .map(c => c)
           .map(c => c.value),
       ),
 
@@ -364,7 +366,7 @@ export class AssetService {
       ).then(values =>
         values
           .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<AssetComponentHistoryEntity>>c)
+          .map(c => c)
           .map(c => c.value),
       ),
     };
