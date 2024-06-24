@@ -2,18 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
-import type { ISignMysteryboxDto } from "../interfaces";
+import type { IMysteryboxSignDto } from "../interfaces";
 
-export class SignMysteryboxDto
-  extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto)
-  implements ISignMysteryboxDto
-{
+export class MysteryboxSignDto extends Mixin(ReferrerOptionalDto) implements IMysteryboxSignDto {
   @ApiProperty({
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public mysteryBoxId: number;
+
+  public chainId?: number;
+  public account?: string;
 }

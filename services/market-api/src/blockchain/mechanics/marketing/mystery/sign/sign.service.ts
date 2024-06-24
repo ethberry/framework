@@ -11,8 +11,9 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import type { ISignMysteryboxDto } from "./interfaces";
+import type { IMysteryboxSignDto } from "./interfaces";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysterySignService {
@@ -23,8 +24,8 @@ export class MysterySignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, mysteryBoxId, chainId } = dto;
+  public async sign(dto: IMysteryboxSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, mysteryBoxId } = dto;
 
     const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryBoxId });
 
@@ -47,8 +48,8 @@ export class MysterySignService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: mysteryBoxEntity.id,
         expiresAt,
