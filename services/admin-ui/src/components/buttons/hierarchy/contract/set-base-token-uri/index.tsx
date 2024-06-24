@@ -10,7 +10,7 @@ import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/t
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 

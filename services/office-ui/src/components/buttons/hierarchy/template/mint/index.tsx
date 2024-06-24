@@ -13,7 +13,7 @@ import ERC20MintABI from "@framework/abis/mint/ERC20Blacklist.json";
 import ERC721MintCommonABI from "@framework/abis/mintCommon/ERC721Blacklist.json";
 import ERC1155MintABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-access-mint";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
