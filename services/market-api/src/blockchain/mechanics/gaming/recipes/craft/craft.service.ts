@@ -15,6 +15,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { CraftEntity } from "./craft.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class CraftService {
@@ -145,8 +146,8 @@ export class CraftService {
     return this.craftEntityRepository.find({ where, ...options });
   }
 
-  public async sign(dto: ICraftSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, craftId, chainId } = dto;
+  public async sign(dto: ICraftSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, craftId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
@@ -158,8 +159,8 @@ export class CraftService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: craftEntity.id,
         expiresAt,
