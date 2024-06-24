@@ -70,15 +70,11 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   );
 
   const metaFn = useMetamask((values: IAmountDto, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/marketplace/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           templateId: template.id,
           amount: values.amount,
