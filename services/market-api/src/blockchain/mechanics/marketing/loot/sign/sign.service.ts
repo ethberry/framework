@@ -7,6 +7,7 @@ import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
@@ -23,8 +24,8 @@ export class LootSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignLootboxDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, lootBoxId, chainId } = dto;
+  public async sign(dto: ISignLootboxDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, lootBoxId } = dto;
 
     const lootBoxEntity = await this.lootBoxService.findOneWithRelations({ id: lootBoxId });
 
@@ -47,8 +48,8 @@ export class LootSignService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: lootBoxEntity.id,
         expiresAt,
