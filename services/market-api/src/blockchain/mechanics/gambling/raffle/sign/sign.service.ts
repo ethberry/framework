@@ -12,6 +12,7 @@ import { RaffleRoundService } from "../round/round.service";
 import { RaffleRoundEntity } from "../round/round.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class RaffleSignService {
@@ -21,7 +22,7 @@ export class RaffleSignService {
     private readonly roundService: RaffleRoundService,
   ) {}
 
-  public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
+  public async sign(dto: ISignRaffleDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, contractId } = dto;
 
     const raffleRoundEntity = await this.roundService.findCurrentRoundWithRelations(contractId);
@@ -37,7 +38,7 @@ export class RaffleSignService {
         contractModule: ModuleType.EXCHANGE,
         chainId: raffleRoundEntity.contract.chainId,
       }),
-      account,
+      userEntity.wallet,
       {
         externalId: raffleRoundEntity.id,
         expiresAt,
