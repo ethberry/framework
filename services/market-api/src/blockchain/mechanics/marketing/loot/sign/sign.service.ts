@@ -13,7 +13,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { LootBoxService } from "../box/box.service";
 import { LootBoxEntity } from "../box/box.entity";
-import type { ISignLootboxDto } from "./interfaces";
+import type { ILootboxSignDto } from "./interfaces";
 
 @Injectable()
 export class LootSignService {
@@ -24,7 +24,7 @@ export class LootSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignLootboxDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ILootboxSignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { referrer = ZeroAddress, lootBoxId } = dto;
 
     const lootBoxEntity = await this.lootBoxService.findOneWithRelations({ id: lootBoxId });

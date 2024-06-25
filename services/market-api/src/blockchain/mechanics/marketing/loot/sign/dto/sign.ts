@@ -4,9 +4,9 @@ import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
-import type { ISignLootboxDto } from "../interfaces";
+import type { ILootboxSignDto } from "../interfaces";
 
-export class SignLootboxDto extends Mixin(ReferrerOptionalDto) implements ISignLootboxDto {
+export class LootboxSignDto extends Mixin(ReferrerOptionalDto) implements ILootboxSignDto {
   @ApiProperty({
     minimum: 1,
   })
