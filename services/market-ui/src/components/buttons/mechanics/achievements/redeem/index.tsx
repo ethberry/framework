@@ -75,14 +75,11 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/achievements/sign",
         method: "POST",
         data: {
-          account,
           referrer,
           achievementLevelId: achievementLevel.id,
         },
