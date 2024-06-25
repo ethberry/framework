@@ -8,7 +8,7 @@ import { ModuleType, TokenType } from "@framework/types";
 
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
-import type { ISignLotteryDto } from "./interfaces";
+import type { ILotterySignDto } from "./interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -21,7 +21,7 @@ export class LotterySignService {
     private readonly roundService: LotteryRoundService,
   ) {}
 
-  public async sign(dto: ISignLotteryDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ILotterySignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { referrer = ZeroAddress, ticketNumbers, contractId } = dto;
     const lotteryRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 

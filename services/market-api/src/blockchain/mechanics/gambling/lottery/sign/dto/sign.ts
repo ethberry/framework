@@ -4,10 +4,10 @@ import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
-import type { ISignLotteryDto } from "../interfaces";
+import type { ILotterySignDto } from "../interfaces";
 import { LotteryTicketRule } from "./rule";
 
-export class SignLotteryDto extends Mixin(ReferrerOptionalDto) implements ISignLotteryDto {
+export class LotterySignDto extends Mixin(ReferrerOptionalDto) implements ILotterySignDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MinLength(66, { message: "rangeUnderflow" })

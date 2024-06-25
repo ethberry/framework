@@ -1,4 +1,4 @@
-export interface ISignLotteryDto {
+export interface ILotterySignDto {
   contractId: number;
   referrer: string;
   ticketNumbers: string;
