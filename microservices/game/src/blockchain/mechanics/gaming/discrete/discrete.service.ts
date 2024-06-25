@@ -127,7 +127,7 @@ export class DiscreteService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      account!,
       {
         externalId: discreteEntity.id,
         expiresAt,
