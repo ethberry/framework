@@ -1,11 +1,11 @@
-import { number, object, string } from "yup";
+import { number, object } from "yup";
 
-import { draftValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
 import { templateAssetValidationSchema, tokenAssetContractIdValidationSchema } from "@gemunion/mui-inputs-asset";
 
 export const validationSchema = object().shape({
   contractId: tokenAssetContractIdValidationSchema,
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   description: draftValidationSchema,
   deposit: templateAssetValidationSchema,
   reward: templateAssetValidationSchema,
