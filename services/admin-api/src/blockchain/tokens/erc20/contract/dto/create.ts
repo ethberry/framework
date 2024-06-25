@@ -1,10 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString, Max, MaxLength, Min } from "class-validator";
+import { IsInt, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { SearchableDto } from "@gemunion/collection";
 import { AddressDto, ImageUrlOptionalDto } from "@gemunion/nest-js-validators";
 import { IErc20ContractCreateDto } from "@framework/types";
+import { symbolMaxLength, symbolMinLength } from "@gemunion/constants";
 
 export class Erc20ContractCreateDto
   extends Mixin(AddressDto, ImageUrlOptionalDto, SearchableDto)
@@ -12,7 +13,8 @@ export class Erc20ContractCreateDto
 {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
+  @MinLength(symbolMinLength, { message: "tooShort" })
+  @MaxLength(symbolMaxLength, { message: "tooLong" })
   public symbol: string;
 
   @ApiProperty()
