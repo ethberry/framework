@@ -1,4 +1,4 @@
-export interface ISignRentTokenDto {
+export interface IRentSignDto {
   tokenId: number; // tokenEntity.id
   referrer: string; // account to
   expires: number; // EXPIRED time in sec

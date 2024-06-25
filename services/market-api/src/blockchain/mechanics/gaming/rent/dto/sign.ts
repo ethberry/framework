@@ -4,9 +4,9 @@ import { Mixin } from "ts-mixer";
 
 import { ReferrerDto } from "@gemunion/nest-js-validators";
 
-import type { ISignRentTokenDto } from "../interfaces";
+import type { IRentSignDto } from "../interfaces";
 
-export class SignRentTokenDto extends Mixin(ReferrerDto) implements ISignRentTokenDto {
+export class RentSignDto extends Mixin(ReferrerDto) implements IRentSignDto {
   @ApiProperty({
     minimum: 1,
   })

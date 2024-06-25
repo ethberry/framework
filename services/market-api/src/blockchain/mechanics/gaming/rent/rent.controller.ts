@@ -5,7 +5,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import { SignRentTokenDto } from "./dto";
+import { RentSignDto } from "./dto";
 import { RentSignService } from "./rent.sign.service";
 import { TokenSearchDto } from "../../../hierarchy/token/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -42,7 +42,7 @@ export class RentController {
   }
 
   @Post("/tokens/sign")
-  public sign(@Body() dto: SignRentTokenDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public sign(@Body() dto: RentSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.rentSignService.sign(dto, userEntity);
   }
 }

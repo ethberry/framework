@@ -12,7 +12,7 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import type { ISignRentTokenDto } from "./interfaces";
+import type { IRentSignDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -27,7 +27,7 @@ export class RentSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignRentTokenDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: IRentSignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { tokenId, referrer, expires, externalId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
