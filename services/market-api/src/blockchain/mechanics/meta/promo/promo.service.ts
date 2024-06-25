@@ -9,7 +9,7 @@ import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import type { IAssetPromoSignDto, IPromoSearchDto } from "./interfaces";
+import type { IPromoSignDto, IPromoSearchDto } from "./interfaces";
 import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -149,7 +149,7 @@ export class AssetPromoService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IAssetPromoSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: IPromoSignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { referrer = ZeroAddress, promoId } = dto;
 
     const AssetPromoEntity = await this.findOneWithRelations({ id: promoId });

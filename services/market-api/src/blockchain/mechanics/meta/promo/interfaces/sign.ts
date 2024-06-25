@@ -1,4 +1,4 @@
-export interface IAssetPromoSignDto {
+export interface IPromoSignDto {
   referrer: string;
   promoId: number;
   chainId?: number;

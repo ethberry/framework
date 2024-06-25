@@ -4,9 +4,9 @@ import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
 
-import { IAssetPromoSignDto } from "../interfaces";
+import { IPromoSignDto } from "../interfaces";
 
-export class AssetPromoSignDto extends Mixin(ReferrerOptionalDto) implements IAssetPromoSignDto {
+export class PromoSignDto extends Mixin(ReferrerOptionalDto) implements IPromoSignDto {
   @ApiProperty({
     minimum: 1,
   })
