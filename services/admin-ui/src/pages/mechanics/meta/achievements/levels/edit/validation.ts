@@ -1,10 +1,10 @@
-import { number, object, string } from "yup";
+import { number, object } from "yup";
 
-import { draftValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
 export const validationSchema = object().shape({
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   description: draftValidationSchema,
   reward: templateAssetValidationSchema,
   achievementLevel: number()

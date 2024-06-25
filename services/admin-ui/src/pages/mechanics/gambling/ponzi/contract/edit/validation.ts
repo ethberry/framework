@@ -1,8 +1,9 @@
-import { object, string } from "yup";
+import { object } from "yup";
+import { titleValidationSchema } from "@gemunion/yup-rules";
 
 // import { draftValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   // description: draftValidationSchema,
 });
