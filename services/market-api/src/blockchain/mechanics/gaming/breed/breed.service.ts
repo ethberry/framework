@@ -15,7 +15,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { BreedEntity } from "./breed.entity";
-import type { ISignBreedDto } from "./interfaces";
+import type { IBreedSignDto } from "./interfaces";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
@@ -74,7 +74,7 @@ export class BreedService {
     return tokenEntity;
   }
 
-  public async sign(dto: ISignBreedDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: IBreedSignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { referrer = ZeroAddress, momId, dadId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });

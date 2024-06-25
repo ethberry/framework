@@ -1,4 +1,4 @@
-export interface ISignBreedDto {
+export interface IBreedSignDto {
   referrer: string;
   momId: number;
   dadId: number;
