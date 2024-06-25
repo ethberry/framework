@@ -1,9 +1,9 @@
-import { object, string } from "yup";
+import { object } from "yup";
 
-import { dbIdValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
+import { dbIdValidationSchema, titleValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   productId: dbIdValidationSchema,
   imageUrl: urlValidationSchema,
 });
