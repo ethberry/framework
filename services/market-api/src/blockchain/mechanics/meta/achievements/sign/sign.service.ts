@@ -10,7 +10,7 @@ import { ClaimService } from "../../../marketing/claim/claim.service";
 import { AchievementRedemptionService } from "../redemption/redemption.service";
 import { AchievementLevelService } from "../level/level.service";
 import { AchievementItemService } from "../item/item.service";
-import type { ISignAchievementsDto } from "./interfaces";
+import type { IAchievementsSignDto } from "./interfaces";
 
 @Injectable()
 export class AchievementSignService {
@@ -22,8 +22,8 @@ export class AchievementSignService {
     private readonly claimService: ClaimService,
   ) {}
 
-  public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { achievementLevelId, account } = dto;
+  public async sign(dto: IAchievementsSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { achievementLevelId } = dto;
 
     const achievementLevelEntity = await this.achievementLevelService.findOneWithRelations({ id: achievementLevelId });
 
@@ -46,7 +46,7 @@ export class AchievementSignService {
 
     const claimEntity = await this.claimService.create(
       {
-        account: account.toLowerCase(),
+        account: userEntity.wallet,
         item: achievementLevelEntity.reward,
         endTimestamp: new Date(0).toISOString(),
         chainId: userEntity.chainId,

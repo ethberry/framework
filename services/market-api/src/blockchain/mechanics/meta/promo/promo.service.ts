@@ -8,8 +8,8 @@ import { defaultChainId } from "@framework/constants";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IPromoSignDto, IPromoSearchDto } from "@framework/types";
 
-import type { IAssetPromoSignDto, IPromoSearchDto } from "./interfaces";
 import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -149,8 +149,8 @@ export class AssetPromoService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IAssetPromoSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, promoId, chainId } = dto;
+  public async sign(dto: IPromoSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, promoId } = dto;
 
     const AssetPromoEntity = await this.findOneWithRelations({ id: promoId });
 
@@ -184,8 +184,8 @@ export class AssetPromoService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: AssetPromoEntity.id,
         expiresAt,

@@ -24,6 +24,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import type { IDiscreteSearchDto } from "./interfaces";
 import { DiscreteEntity } from "./discrete.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class DiscreteService {
@@ -85,8 +86,8 @@ export class DiscreteService {
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IDiscreteSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
+  public async sign(dto: IDiscreteSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, tokenId, attribute } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -115,8 +116,8 @@ export class DiscreteService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: discreteEntity.id,
         expiresAt,

@@ -1,6 +1,6 @@
-export interface ICraftSignDto {
+export interface ILootBoxSignDto {
+  lootBoxId: number;
   referrer: string;
-  craftId: number;
   chainId: number;
   account: string;
 }

@@ -95,15 +95,11 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   );
 
   const metaFn = useMetamask((values: IDismantle, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/recipes/dismantle/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           dismantleId: values.id,
           tokenId: token.id,

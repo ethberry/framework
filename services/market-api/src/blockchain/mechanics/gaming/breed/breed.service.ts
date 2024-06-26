@@ -7,6 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IBreedSignDto } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -15,7 +16,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { BreedEntity } from "./breed.entity";
-import type { ISignBreedDto } from "./interfaces";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class BreedService {
@@ -73,8 +74,8 @@ export class BreedService {
     return tokenEntity;
   }
 
-  public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, momId, dadId, chainId } = dto;
+  public async sign(dto: IBreedSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, momId, dadId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
@@ -103,8 +104,8 @@ export class BreedService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: encodedExternalId.toString(),
         expiresAt,

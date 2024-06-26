@@ -1,6 +1,6 @@
-export interface ICraftSignDto {
+export interface IPromoSignDto {
   referrer: string;
-  craftId: number;
+  promoId: number;
   chainId: number;
   account: string;
 }

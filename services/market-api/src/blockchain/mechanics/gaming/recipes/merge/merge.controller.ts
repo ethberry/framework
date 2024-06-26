@@ -21,8 +21,8 @@ export class MergeController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: MergeSignDto): Promise<IServerSignature> {
-    return this.mergeService.sign(dto);
+  public sign(@Body() dto: MergeSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.mergeService.sign(dto, userEntity);
   }
 
   @Get("/:id")
