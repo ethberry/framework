@@ -52,7 +52,7 @@ export class SeedDiscrete1657846587010 implements MigrationInterface {
         10302,
         'EXPONENTIAL',
         'LEVEL',
-        0,
+        1,
         102000302,
         10306, -- Weapon
         '${currentDateTime}',
