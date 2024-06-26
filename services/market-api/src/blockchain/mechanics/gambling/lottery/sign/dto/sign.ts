@@ -3,8 +3,8 @@ import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator
 import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ILotterySignDto } from "@framework/types";
 
-import type { ILotterySignDto } from "../interfaces";
 import { LotteryTicketRule } from "./rule";
 
 export class LotterySignDto extends Mixin(ReferrerOptionalDto) implements ILotterySignDto {
@@ -21,6 +21,6 @@ export class LotterySignDto extends Mixin(ReferrerOptionalDto) implements ILotte
   @IsInt({ message: "typeMismatch" })
   public contractId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

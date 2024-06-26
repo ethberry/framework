@@ -3,10 +3,9 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import type { IMysteryBoxSignDto } from "@framework/types";
 
-import type { IMysteryboxSignDto } from "../interfaces";
-
-export class MysteryboxSignDto extends Mixin(ReferrerOptionalDto) implements IMysteryboxSignDto {
+export class MysteryBoxSignDto extends Mixin(ReferrerOptionalDto) implements IMysteryBoxSignDto {
   @ApiProperty({
     minimum: 1,
   })
@@ -14,6 +13,6 @@ export class MysteryboxSignDto extends Mixin(ReferrerOptionalDto) implements IMy
   @Min(1, { message: "rangeUnderflow" })
   public mysteryBoxId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

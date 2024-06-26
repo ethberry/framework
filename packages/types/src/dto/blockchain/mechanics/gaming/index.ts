@@ -1,5 +1,6 @@
-export * from "./breed/search";
 export * from "./breed/leaderboard";
+export * from "./breed/search";
+export * from "./breed/sign";
 
 export * from "./discrete/autocomplete";
 export * from "./discrete/create";

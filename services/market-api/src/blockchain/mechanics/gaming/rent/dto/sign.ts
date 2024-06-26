@@ -28,6 +28,6 @@ export class RentSignDto extends Mixin(ReferrerDto) implements IRentSignDto {
   @Min(0, { message: "rangeUnderflow" })
   public externalId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

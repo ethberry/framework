@@ -3,10 +3,9 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import type { ILootBoxSignDto } from "@framework/types";
 
-import type { ILootboxSignDto } from "../interfaces";
-
-export class LootboxSignDto extends Mixin(ReferrerOptionalDto) implements ILootboxSignDto {
+export class LootBoxSignDto extends Mixin(ReferrerOptionalDto) implements ILootBoxSignDto {
   @ApiProperty({
     minimum: 1,
   })
@@ -14,6 +13,6 @@ export class LootboxSignDto extends Mixin(ReferrerOptionalDto) implements ILootb
   @Min(1, { message: "rangeUnderflow" })
   public lootBoxId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

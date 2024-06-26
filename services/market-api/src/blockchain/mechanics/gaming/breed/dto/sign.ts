@@ -3,8 +3,7 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
-
-import type { IBreedSignDto } from "../interfaces";
+import type { IBreedSignDto } from "@framework/types";
 
 export class BreedSignDto extends Mixin(ReferrerOptionalDto) implements IBreedSignDto {
   @ApiProperty({
@@ -21,6 +20,6 @@ export class BreedSignDto extends Mixin(ReferrerOptionalDto) implements IBreedSi
   @Min(1, { message: "rangeUnderflow" })
   public dadId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

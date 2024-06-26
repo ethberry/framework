@@ -4,11 +4,10 @@ import { hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType, ILotterySignDto } from "@framework/types";
 
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
-import type { ILotterySignDto } from "./interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";

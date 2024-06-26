@@ -7,6 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IBreedSignDto } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -15,7 +16,6 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { BreedEntity } from "./breed.entity";
-import type { IBreedSignDto } from "./interfaces";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()

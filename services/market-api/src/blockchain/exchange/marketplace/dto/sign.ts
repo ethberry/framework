@@ -20,6 +20,6 @@ export class TemplateSignDto extends Mixin(ReferrerOptionalDto) implements ITemp
   @IsBigInt({}, { message: "typeMismatch" })
   public amount: string;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

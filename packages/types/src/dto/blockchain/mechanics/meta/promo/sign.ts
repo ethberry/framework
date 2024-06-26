@@ -1,6 +1,6 @@
 export interface IPromoSignDto {
   referrer: string;
   promoId: number;
-  chainId?: number;
-  account?: string;
+  chainId: number;
+  account: string;
 }

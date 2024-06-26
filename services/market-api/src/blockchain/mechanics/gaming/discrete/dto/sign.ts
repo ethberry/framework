@@ -21,6 +21,6 @@ export class DiscreteSignDto extends Mixin(ReferrerOptionalDto) implements IDisc
   @Matches(/^[0-9A-Z]+$/, { message: "patternMismatch" })
   public attribute: string;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

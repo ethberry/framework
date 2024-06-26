@@ -3,8 +3,7 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
-
-import { IPromoSignDto } from "../interfaces";
+import { IPromoSignDto } from "@framework/types";
 
 export class PromoSignDto extends Mixin(ReferrerOptionalDto) implements IPromoSignDto {
   @ApiProperty({
@@ -14,6 +13,6 @@ export class PromoSignDto extends Mixin(ReferrerOptionalDto) implements IPromoSi
   @Min(1, { message: "rangeUnderflow" })
   public promoId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

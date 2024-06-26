@@ -13,6 +13,6 @@ export class CraftSignDto extends Mixin(ReferrerOptionalDto) implements ICraftSi
   @Min(1, { message: "rangeUnderflow" })
   public craftId: number;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

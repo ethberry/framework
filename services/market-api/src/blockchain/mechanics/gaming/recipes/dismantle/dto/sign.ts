@@ -19,4 +19,7 @@ export class DismantleSignDto extends Mixin(ReferrerOptionalDto) implements IDis
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public tokenId: number;
+
+  public chainId: number;
+  public account: string;
 }

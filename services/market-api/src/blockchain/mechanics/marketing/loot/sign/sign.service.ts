@@ -5,6 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import type { ILootBoxSignDto } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -13,7 +14,6 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { LootBoxService } from "../box/box.service";
 import { LootBoxEntity } from "../box/box.entity";
-import type { ILootboxSignDto } from "./interfaces";
 
 @Injectable()
 export class LootSignService {
@@ -24,7 +24,7 @@ export class LootSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ILootboxSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ILootBoxSignDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { referrer = ZeroAddress, lootBoxId } = dto;
 
     const lootBoxEntity = await this.lootBoxService.findOneWithRelations({ id: lootBoxId });

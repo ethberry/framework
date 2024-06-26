@@ -8,8 +8,8 @@ import { defaultChainId } from "@framework/constants";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IPromoSignDto, IPromoSearchDto } from "@framework/types";
 
-import type { IPromoSignDto, IPromoSearchDto } from "./interfaces";
 import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";

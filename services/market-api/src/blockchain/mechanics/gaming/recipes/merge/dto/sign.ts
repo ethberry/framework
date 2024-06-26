@@ -24,6 +24,6 @@ export class MergeSignDto extends Mixin(ReferrerOptionalDto) implements IMergeSi
   @Min(1, { each: true, message: "rangeUnderflow" })
   public tokenIds: Array<number>;
 
-  public chainId?: number;
-  public account?: string;
+  public chainId: number;
+  public account: string;
 }

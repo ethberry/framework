@@ -5,7 +5,7 @@ import { User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
-import { LootboxSignDto } from "./dto";
+import { LootBoxSignDto } from "./dto";
 import { LootSignService } from "./sign.service";
 
 @ApiBearerAuth()
@@ -14,7 +14,7 @@ export class LootSignController {
   constructor(private readonly lootSignService: LootSignService) {}
 
   @Post("/sign")
-  public sign(@Body() dto: LootboxSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public sign(@Body() dto: LootBoxSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.lootSignService.sign(dto, userEntity);
   }
 }
