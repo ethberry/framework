@@ -42,7 +42,7 @@ export class RaffleSignService {
         contractModule: ModuleType.EXCHANGE,
         chainId: raffleRoundEntity.contract.chainId,
       }),
-      account!,
+      account,
       {
         externalId: raffleRoundEntity.id,
         expiresAt,
