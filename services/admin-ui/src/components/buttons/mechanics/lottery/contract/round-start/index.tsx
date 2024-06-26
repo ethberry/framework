@@ -1,5 +1,5 @@
-import { FC, Fragment, useState } from "react";
-import { Web3ContextType } from "@web3-react/core";
+import { FC, Fragment, useEffect, useState } from "react";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { PlayCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 
@@ -14,6 +14,7 @@ import LotteryStartRoundABI from "@framework/abis/startRound/LotteryRandom.json"
 import { LotteryStartRoundDialog } from "./round-dialog";
 import type { ILotteryRound } from "./round-dialog";
 import { shouldDisableByContractType } from "../../../../utils";
+import { useCheckAccess } from "../../../../../../utils/use-check-access";
 
 export interface ILotteryRoundStartButtonProps {
   className?: string;
@@ -32,6 +33,12 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkAccess } = useCheckAccess();
 
   const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
     const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
@@ -65,6 +72,19 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
     setIsStartRoundDialogOpen(false);
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
+
   // round already started
   if (parameters.roundId) {
     return null;
@@ -78,7 +98,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         message="pages.lottery.rounds.start"
         className={className}
         dataTestId="LotteryRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
         variant={variant}
       />
       <LotteryStartRoundDialog

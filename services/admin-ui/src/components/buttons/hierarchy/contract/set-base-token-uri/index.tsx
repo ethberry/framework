@@ -10,7 +10,7 @@ import { ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
-import { useCheckAccessDefaultAdmin } from "../../../../../utils/use-check-access";
+import { useCheckAccess } from "../../../../../utils/use-check-access";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 
@@ -35,7 +35,8 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
   const [hasAccess, setHasAccess] = useState(false);
-  const { checkAccessDefaultAdmin } = useCheckAccessDefaultAdmin();
+
+  const { checkAccess } = useCheckAccess();
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -58,7 +59,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccessDefaultAdmin(void 0, {
+      void checkAccess({
         account,
         address,
       })

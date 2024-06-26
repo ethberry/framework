@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { RequestQuote } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -9,6 +9,7 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
+import { useCheckAccess } from "../../../../../utils/use-check-access";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
@@ -19,6 +20,12 @@ export interface IStakingWithdrawButtonProps {
 
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkAccess } = useCheckAccess();
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -39,6 +46,19 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
     return metaWithdraw(balance);
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address: balance.account,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
+
   return (
     <ListAction
       onClick={handleClick}
@@ -46,7 +66,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       message="form.tips.withdrawPenalty"
       className={className}
       dataTestId="StakingBalanceWithdrawButton"
-      disabled={disabled}
+      disabled={disabled || !hasAccess}
       variant={variant}
     />
   );

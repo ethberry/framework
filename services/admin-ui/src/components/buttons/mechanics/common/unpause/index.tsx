@@ -1,16 +1,17 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { PlayCircleOutline } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import unpausePausableABI from "@framework/abis/unpause/Pausable.json";
 
 import { shouldDisableByContractType } from "../../../utils";
+import { useCheckAccess } from "../../../../../utils/use-check-access";
 
 export interface IUnPauseButtonProps {
   className?: string;
@@ -28,6 +29,12 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
     variant,
   } = props;
 
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkAccess } = useCheckAccess(AccessControlRoleType.PAUSER_ROLE);
+
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, unpausePausableABI, web3Context.provider?.getSigner());
     return contract.unpause() as Promise<void>;
@@ -36,6 +43,19 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
   const handleUnPause = () => {
     return metaUnPause();
   };
+
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
 
   if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || !isPaused) {
     return null;
@@ -48,7 +68,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
       message="form.buttons.unpause"
       className={className}
       dataTestId="UnPauseButton"
-      disabled={disabled || shouldDisableByContractType(contract)}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
       variant={variant}
     />
   );

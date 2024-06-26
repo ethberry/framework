@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -13,6 +13,7 @@ import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
+import { useCheckAccess } from "../../../../../../utils/use-check-access";
 
 export interface IMysteryContractMintButtonProps {
   className?: string;
@@ -33,6 +34,10 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
   const { account = "" } = useWeb3React();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { checkAccess } = useCheckAccess();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -59,6 +64,19 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
+
   return (
     <Fragment>
       <ListAction
@@ -67,7 +85,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
         variant={variant}
       />
       <MintMysteryBoxDialog

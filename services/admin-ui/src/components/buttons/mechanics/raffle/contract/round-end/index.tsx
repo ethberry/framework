@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { StopCircleOutlined } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -10,6 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import RafflesEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
+import { useCheckAccess } from "../../../../../../utils/use-check-access";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;
@@ -27,6 +28,12 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
     variant,
   } = props;
 
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkAccess } = useCheckAccess();
+
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, RafflesEndRoundABI, web3Context.provider?.getSigner());
     return contract.endRound() as Promise<void>;
@@ -35,6 +42,19 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   const handleEndRound = () => {
     return metaFn();
   };
+
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
 
   // round not started
   if (!parameters.roundId) {
@@ -48,7 +68,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract)}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
       variant={variant}
     />
   );

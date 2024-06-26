@@ -46,6 +46,8 @@ export const TransferOwnershipButton: FC<ITransferOwnershipButtonProps> = props 
     setIsOwnershipDialogOpen(false);
   };
 
+  // Check the ownership in blockchain? or where to see this information in DB?
+
   if (contractSecurity !== ContractSecurity.OWNABLE) {
     return null;
   }

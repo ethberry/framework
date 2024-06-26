@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -12,6 +12,7 @@ import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721M
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
+import { useCheckAccess } from "../../../../../../utils/use-check-access";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -31,6 +32,10 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
   const { account = "" } = useWeb3React();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { checkAccess } = useCheckAccess();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -56,6 +61,19 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address: template!.contract!.address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
+
   return (
     <Fragment>
       <ListAction
@@ -64,7 +82,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryBoxMintButton"
-        disabled={disabled}
+        disabled={disabled || !hasAccess}
         variant={variant}
       />
       <MysteryBoxMintDialog

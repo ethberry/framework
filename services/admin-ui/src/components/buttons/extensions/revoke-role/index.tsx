@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { NoAccounts } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -7,6 +7,8 @@ import { ContractSecurity } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRevokeRoleDialog } from "./dialog";
+import { useWeb3React } from "@web3-react/core";
+import { useCheckAccess } from "../../../../utils/use-check-access";
 
 export interface IRevokeRoleButtonProps {
   className?: string;
@@ -26,6 +28,12 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
 
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkAccess } = useCheckAccess();
+
   const handleRevokeRole = (): void => {
     setIsRevokeRoleDialogOpen(true);
   };
@@ -37,6 +45,19 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
   const handleRevokeRoleConfirm = () => {
     setIsRevokeRoleDialogOpen(false);
   };
+
+  useEffect(() => {
+    if (account) {
+      void checkAccess({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
 
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;
@@ -50,7 +71,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         message="form.buttons.revokeRole"
         className={className}
         dataTestId="RevokeRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
         variant={variant}
       />
       <AccessControlRevokeRoleDialog
