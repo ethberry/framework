@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { AccessControlRoleType, type IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
@@ -37,7 +37,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
 
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -66,10 +66,9 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

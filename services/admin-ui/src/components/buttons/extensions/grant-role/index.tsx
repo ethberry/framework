@@ -36,7 +36,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -59,10 +59,9 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

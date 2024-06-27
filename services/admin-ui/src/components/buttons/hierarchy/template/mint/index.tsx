@@ -34,7 +34,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
   const [hasAccess, setHasAccess] = useState(false);
 
   const { address, contractType, decimals } = contract!;
@@ -91,7 +91,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
         role: AccessControlRoleType.MINTER_ROLE,

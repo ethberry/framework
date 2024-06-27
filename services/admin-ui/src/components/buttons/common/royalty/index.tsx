@@ -6,7 +6,7 @@ import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
 
@@ -37,7 +37,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -60,10 +60,9 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

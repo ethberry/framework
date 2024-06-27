@@ -1,6 +1,6 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { CheckCircle } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -12,6 +12,7 @@ import WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import { shouldDisableByContractType } from "../../../utils";
+import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IWhitelistButtonProps {
   className?: string;
@@ -30,6 +31,12 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   } = props;
 
   const [isWhitelistDialogOpen, setIsWhitelistDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const handleWhitelist = (): void => {
     setIsWhitelistDialogOpen(true);
@@ -50,6 +57,19 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [account]);
+
   if (!contractFeatures.includes(ContractFeatures.WHITELIST)) {
     return null;
   }
@@ -62,7 +82,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
         message="form.buttons.whitelist"
         className={className}
         dataTestId="WhitelistButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
         variant={variant}
       />
       <AccountDialog

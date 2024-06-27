@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";
-import { AccessControlRoleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
@@ -32,7 +32,7 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -81,10 +81,9 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   useEffect(() => {
     const address = rows[0].contract?.address;
     if (account && address) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

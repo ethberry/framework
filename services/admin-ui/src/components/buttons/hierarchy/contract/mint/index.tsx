@@ -38,7 +38,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const [hasAccess, setHasAccess] = useState(false);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
-  const { fn: checkPermissions } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -90,7 +90,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkPermissions(void 0, {
+      void checkPermissions({
         account,
         address,
         role: AccessControlRoleType.MINTER_ROLE,

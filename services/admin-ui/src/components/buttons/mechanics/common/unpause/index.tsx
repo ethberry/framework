@@ -33,7 +33,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, unpausePausableABI, web3Context.provider?.getSigner());
@@ -46,7 +46,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
         role: AccessControlRoleType.PAUSER_ROLE,

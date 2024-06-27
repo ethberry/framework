@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { RequestQuote } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -9,6 +9,7 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import StakingWithdrawABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
@@ -19,6 +20,12 @@ export interface IStakingWithdrawButtonProps {
 
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
@@ -35,6 +42,17 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
     return metaWithdraw(balance);
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: balance.account,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   return (
     <ListAction
       onClick={handleClick}
@@ -42,7 +60,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       message="form.tips.withdrawPenalty"
       className={className}
       dataTestId="StakingBalanceWithdrawButton"
-      disabled={disabled}
+      disabled={disabled || !hasAccess}
       variant={variant}
     />
   );

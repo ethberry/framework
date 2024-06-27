@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import LotteryStartRoundABI from "@framework/abis/startRound/LotteryRandom.json";
 
@@ -38,7 +38,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
     const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
@@ -74,10 +74,9 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

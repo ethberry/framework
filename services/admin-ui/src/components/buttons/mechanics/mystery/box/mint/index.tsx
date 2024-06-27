@@ -4,7 +4,7 @@ import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
-import { AccessControlRoleType, type IMysteryBox } from "@framework/types";
+import type { IMysteryBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
@@ -35,7 +35,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -63,10 +63,9 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address: template!.contract!.address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

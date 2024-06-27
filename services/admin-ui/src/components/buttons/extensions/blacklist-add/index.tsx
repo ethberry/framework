@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleType, ContractFeatures } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import blacklistERC1155BlacklistABI from "@framework/abis/blacklist/ERC1155Blacklist.json";
 
@@ -36,7 +36,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleBlacklist = (): void => {
     setIsBlacklistDialogOpen(true);
@@ -59,10 +59,9 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

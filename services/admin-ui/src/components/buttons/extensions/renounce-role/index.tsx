@@ -3,7 +3,7 @@ import { NoAccounts } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleType, ContractSecurity } from "@framework/types";
+import { ContractSecurity } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRenounceRoleDialog } from "./dialog";
@@ -32,7 +32,7 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { fn: checkAccess } = useCheckPermissions();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleRenounceRole = (): void => {
     setIsRenounceRoleDialogOpen(true);
@@ -48,10 +48,9 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess(void 0, {
+      void checkPermissions({
         account,
         address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);
