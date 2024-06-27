@@ -12,7 +12,7 @@ import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessCont
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
-import { useCheckAccess } from "../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -36,7 +36,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -59,9 +59,10 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

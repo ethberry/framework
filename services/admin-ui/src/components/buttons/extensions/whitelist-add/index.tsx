@@ -6,13 +6,13 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import whitelistERC20WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import { shouldDisableByContractType } from "../../utils";
-import { useCheckAccess } from "../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IWhitelistButtonProps {
   className?: string;
@@ -36,7 +36,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const handleWhitelist = (): void => {
     setIsWhitelistDialogOpen(true);
@@ -59,9 +59,10 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

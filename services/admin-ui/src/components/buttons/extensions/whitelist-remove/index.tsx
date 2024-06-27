@@ -3,12 +3,12 @@ import { Unpublished } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessListUnWhitelistDialog } from "./dialog";
 import { useWeb3React } from "@web3-react/core";
-import { useCheckAccess } from "../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IUnWhitelistButtonProps {
   className?: string;
@@ -32,7 +32,7 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const handleUnWhitelist = (): void => {
     setIsUnWhitelistDialogOpen(true);
@@ -48,9 +48,10 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

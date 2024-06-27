@@ -4,7 +4,7 @@ import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IMysteryBox } from "@framework/types";
+import { AccessControlRoleType, type IMysteryBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
@@ -12,7 +12,7 @@ import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/mintBox/ERC721M
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
-import { useCheckAccess } from "../../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -35,7 +35,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -63,9 +63,10 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address: template!.contract!.address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

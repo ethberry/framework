@@ -11,7 +11,7 @@ import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 import pausePausableABI from "@framework/abis/pause/PausableFacet.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import { useCheckAccess } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IPauseButtonProps {
   className?: string;
@@ -33,7 +33,7 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess(AccessControlRoleType.PAUSER_ROLE);
+  const { fn: checkAccess } = useCheckPermissions();
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, pausePausableABI, web3Context.provider?.getSigner());
@@ -46,9 +46,10 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.PAUSER_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

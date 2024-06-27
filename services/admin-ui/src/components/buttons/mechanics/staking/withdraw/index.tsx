@@ -6,10 +6,10 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { AccessControlRoleType, TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
-import { useCheckAccess } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
@@ -25,7 +25,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -48,9 +48,10 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address: balance.account,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

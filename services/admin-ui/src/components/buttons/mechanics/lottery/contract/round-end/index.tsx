@@ -5,11 +5,11 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract } from "@framework/types";
+import { AccessControlRoleType, type IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckAccess } from "../../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface ILotteryRoundEndButtonProps {
   className?: string;
@@ -31,7 +31,7 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, LotteryEndRoundABI, web3Context.provider?.getSigner());
@@ -44,9 +44,10 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

@@ -5,13 +5,13 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/setSubscriptionId/ERC721GenesBesu.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
-import { useCheckAccess } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;
@@ -33,7 +33,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
 
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
@@ -64,9 +64,10 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);

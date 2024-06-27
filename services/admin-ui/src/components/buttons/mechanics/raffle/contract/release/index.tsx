@@ -5,9 +5,9 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IRaffleRound } from "@framework/types";
+import { AccessControlRoleType, type IRaffleRound } from "@framework/types";
 import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
-import { useCheckAccess } from "../../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IRaffleReleaseButtonProps {
   className?: string;
@@ -24,7 +24,7 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccess } = useCheckAccess();
+  const { fn: checkAccess } = useCheckPermissions();
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -46,9 +46,10 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccess({
+      void checkAccess(void 0, {
         account,
         address: round.contract!.address,
+        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
       })
         .then((json: { hasRole: boolean }) => {
           setHasAccess(json?.hasRole);
