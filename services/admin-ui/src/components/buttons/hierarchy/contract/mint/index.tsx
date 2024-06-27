@@ -18,14 +18,14 @@ import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 
-export interface IMintButtonProps {
+export interface IContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const MintButton: FC<IMintButtonProps> = props => {
+export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const {
     className,
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
@@ -110,7 +110,7 @@ export const MintButton: FC<IMintButtonProps> = props => {
         dataTestId="ContractMintButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(contract) ||
+          shouldDisableByContractType(props.contract) ||
           contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasAccess
