@@ -10,6 +10,6 @@ export class RaffleSignDto extends Mixin(ReferrerOptionalDto) implements IRaffle
   @IsInt({ message: "typeMismatch" })
   public contractId: number;
 
-  public account?: string;
-  public chainId?: number;
+  public account: string;
+  public chainId: number;
 }

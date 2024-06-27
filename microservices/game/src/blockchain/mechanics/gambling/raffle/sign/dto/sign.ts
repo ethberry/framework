@@ -9,4 +9,7 @@ export class RaffleSignDto extends Mixin(AccountDto, ReferrerOptionalDto) implem
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   public contractId: number;
+
+  public account: string;
+  public chainId: number;
 }
