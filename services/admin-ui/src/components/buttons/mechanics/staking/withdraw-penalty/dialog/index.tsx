@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { ListItemText } from "@mui/material";
 import { PriceChange } from "@mui/icons-material";
 
@@ -14,7 +14,6 @@ import type { IAssetComponent, IStakingPenalty } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawPenaltyDialogProps {
   open: boolean;
@@ -27,12 +26,6 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   const { data, open, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAssetComponent>>([]);
-
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -78,20 +71,6 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
     }
   }, [open]);
 
-  useEffect(() => {
-    const address = rows[0].contract?.address;
-    if (account && address) {
-      void checkPermissions({
-        account,
-        address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
-    }
-  }, [rows, account]);
-
   return (
     <ConfirmationDialog
       message="dialogs.withdrawPenalty"
@@ -108,12 +87,7 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
               }`}</ListItemText>
               <ListItemText>{formatEther(comp.amount, comp.contract!.decimals, comp.contract!.symbol)}</ListItemText>
               <ListActions>
-                <ListAction
-                  disabled={!hasAccess}
-                  onClick={handleWithdraw(comp)}
-                  message="form.buttons.withdraw"
-                  icon={PriceChange}
-                />
+                <ListAction onClick={handleWithdraw(comp)} message="form.buttons.withdraw" icon={PriceChange} />
               </ListActions>
             </StyledListItem>
           ))}
