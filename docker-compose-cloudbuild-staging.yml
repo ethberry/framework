@@ -1,5 +1,3 @@
-version: "3.3"
-
 volumes:
   static-admin-ui-b2b:
   static-admin-ui-b2c:

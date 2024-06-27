@@ -1,5 +1,3 @@
-version: "3.3"
-
 volumes:
   static-admin-ui:
   static-market-ui:
