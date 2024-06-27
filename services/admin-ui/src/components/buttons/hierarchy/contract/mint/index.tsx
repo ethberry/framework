@@ -28,6 +28,7 @@ export interface IContractMintButtonProps {
 export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
@@ -110,7 +111,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
         dataTestId="ContractMintButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(props.contract) ||
+          shouldDisableByContractType(contract) ||
           contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasAccess
