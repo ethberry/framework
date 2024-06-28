@@ -63,11 +63,9 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

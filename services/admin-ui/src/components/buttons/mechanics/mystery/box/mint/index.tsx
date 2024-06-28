@@ -66,11 +66,9 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
       void checkPermissions({
         account,
         address: template!.contract!.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

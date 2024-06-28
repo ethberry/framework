@@ -6,7 +6,9 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
+
 import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
+
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IRaffleReleaseButtonProps {
@@ -49,11 +51,9 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
       void checkPermissions({
         account,
         address: round.contract!.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

@@ -50,11 +50,9 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
         account,
         address,
         role: AccessControlRoleType.PAUSER_ROLE,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

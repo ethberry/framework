@@ -10,6 +10,7 @@ import type { IWaitListList } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
 
 import setRewardWaitListABI from "@framework/abis/setReward/WaitList.json";
+
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IWailtListListGenerateButtonProps {
@@ -86,11 +87,9 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [address, account]);
 
@@ -101,7 +100,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !hasAccess || !account}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !hasAccess}
       variant={variant}
     />
   );

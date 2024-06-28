@@ -8,6 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
+
 import { shouldDisableByContractType } from "../../../../utils";
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
@@ -47,11 +48,9 @@ export const LotteryRoundEndButton: FC<ILotteryRoundEndButtonProps> = props => {
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

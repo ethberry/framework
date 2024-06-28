@@ -1,11 +1,11 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { PriceChange } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { StakingWithdrawPenaltyDialog } from "./dialog";
-import { useWeb3React } from "@web3-react/core";
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawPenaltyProps {
@@ -48,11 +48,9 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [address, account]);
 

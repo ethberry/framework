@@ -63,11 +63,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
       void checkPermissions({
         account,
         address: data.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
     if (account && open) {
       void fn().then((rows: Array<IAccessControl>) => {

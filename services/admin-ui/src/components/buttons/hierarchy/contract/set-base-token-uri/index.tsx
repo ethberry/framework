@@ -24,6 +24,7 @@ export interface ISetBaseTokenURIButtonProps {
 export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const {
     className,
+    contract,
     contract: { address, contractFeatures, baseTokenURI, contractType },
     disabled,
     variant,
@@ -80,7 +81,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
         dataTestId="SetTokenURIButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(props.contract) ||
+          shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
           !hasAccess
         }

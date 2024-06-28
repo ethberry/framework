@@ -9,6 +9,7 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
+
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawButtonProps {
@@ -51,11 +52,9 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       void checkPermissions({
         account,
         address: balance.account,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

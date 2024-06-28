@@ -1,5 +1,6 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { DoNotDisturbOff } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
@@ -7,7 +8,6 @@ import { ContractFeatures } from "@framework/types";
 
 import { AccessListUnBlacklistDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
-import { useWeb3React } from "@web3-react/core";
 import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IUnBlacklistButtonProps {
@@ -51,11 +51,9 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

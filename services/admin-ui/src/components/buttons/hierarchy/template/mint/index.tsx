@@ -95,11 +95,9 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
         account,
         address,
         role: AccessControlRoleType.MINTER_ROLE,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

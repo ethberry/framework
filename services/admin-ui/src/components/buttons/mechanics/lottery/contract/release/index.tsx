@@ -8,6 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";
 
 import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
+
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface ILotteryReleaseButtonProps {
@@ -50,11 +51,9 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
       void checkPermissions({
         account,
         address: round.contract!.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

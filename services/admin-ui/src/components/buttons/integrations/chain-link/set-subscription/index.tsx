@@ -67,11 +67,9 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 
@@ -83,7 +81,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         message="pages.chain-link.set"
         className={className}
         dataTestId="ChainLinkSetSubscriptionButton"
-        disabled={disabled || !account || !hasAccess}
+        disabled={disabled || !hasAccess}
         variant={variant}
       />
       <ChainLinkSetSubscriptionDialog

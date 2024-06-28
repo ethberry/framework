@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessControl, IContract } from "@framework/types";
-import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
+import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "@framework/abis/revokeRole/AccessControlFacet.json";
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
@@ -68,12 +68,9 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
       void checkPermissions({
         account,
         address: data.address,
-        role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
     if (account && open) {
       void fn().then((rows: Array<IAccessControlWithRelations>) => {

@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Settings } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
@@ -10,6 +10,7 @@ import type { IWaitListList } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
 
 import WaitListSetRewardABI from "@framework/abis/setReward/WaitList.json";
+import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;
@@ -25,6 +26,12 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
     disabled,
     variant,
   } = props;
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const { fn } = useApiCall(
     async (api, values) => {
@@ -70,6 +77,17 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: contract.address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   return (
     <ListAction
       onClick={handleUpload}
@@ -77,7 +95,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !hasAccess}
       variant={variant}
     />
   );

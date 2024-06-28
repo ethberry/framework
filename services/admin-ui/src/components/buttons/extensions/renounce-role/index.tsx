@@ -1,5 +1,6 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { NoAccounts } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
@@ -7,7 +8,6 @@ import { ContractSecurity } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRenounceRoleDialog } from "./dialog";
-import { useWeb3React } from "@web3-react/core";
 import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IRenounceRoleButtonProps {
@@ -51,11 +51,9 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
       void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 
