@@ -1,7 +1,7 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -13,6 +13,7 @@ import RoyaltySetDefaultRoyaltyABI from "@framework/abis/setDefaultRoyalty/ERC11
 import type { IRoyaltyDto } from "./dialog";
 import { RoyaltyEditDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
+import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IRoyaltyButtonProps {
   className?: string;
@@ -31,6 +32,12 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -51,6 +58,17 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   if (contractType === TokenType.NATIVE || contractType === TokenType.ERC20) {
     return null;
   }
@@ -64,7 +82,10 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         className={className}
         dataTestId="RoyaltyButton"
         disabled={
-          disabled || shouldDisableByContractType(contract) || contractFeatures.includes(ContractFeatures.SOULBOUND)
+          disabled ||
+          shouldDisableByContractType(contract) ||
+          contractFeatures.includes(ContractFeatures.SOULBOUND) ||
+          !hasAccess
         }
         variant={variant}
       />

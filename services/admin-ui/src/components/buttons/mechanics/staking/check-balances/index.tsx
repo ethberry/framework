@@ -16,6 +16,7 @@ export interface IStakingCheckBalanceProps {
 export const StakingCheckBalanceButton: FC<IStakingCheckBalanceProps> = props => {
   const {
     className,
+    contract,
     contract: { id, address },
     disabled,
     variant,
@@ -54,7 +55,7 @@ export const StakingCheckBalanceButton: FC<IStakingCheckBalanceProps> = props =>
         onCancel={handleCheckBalanceCancel}
         onConfirm={handleCheckBalanceConfirm}
         open={isStakingCheckBalanceDialogOpen}
-        data={{ id, address, contract: props.contract }}
+        data={{ id, address, contract }}
       />
     </Fragment>
   );

@@ -13,6 +13,7 @@ import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RenounceRoleABI from "@framework/abis/renounceRole/AccessControlFacet.json";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -27,6 +28,10 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
   const { account } = useWeb3React();
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -54,6 +59,14 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   };
 
   useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: data.address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
     if (account && open) {
       void fn().then((rows: Array<IAccessControl>) => {
         setRows(rows.filter(row => row.account === account));
@@ -78,7 +91,12 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                 {access.role}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  disabled={!hasAccess}
+                  onClick={handleRenounce(access)}
+                  message="form.buttons.delete"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

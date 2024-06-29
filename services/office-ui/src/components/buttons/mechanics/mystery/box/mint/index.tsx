@@ -1,17 +1,18 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IMysteryBox } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { AccessControlRoleType, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import MysteryMintBoxABI from "@framework/abis/mintBox/ERC721MysteryBoxBlacklist.json";
 
 import type { IMysteryBoxMintDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
+import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -28,9 +29,13 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     variant,
   } = props;
 
+  const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
   const { account = "" } = useWeb3React();
 
-  const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -70,6 +75,18 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     });
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: template!.contract!.address,
+        role: AccessControlRoleType.MINTER_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   return (
     <Fragment>
       <ListAction
@@ -78,7 +95,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryBoxMintButton"
-        disabled={disabled}
+        disabled={disabled || !hasAccess}
         variant={variant}
       />
       <MysteryBoxMintDialog

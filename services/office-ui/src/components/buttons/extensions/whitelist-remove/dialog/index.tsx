@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
@@ -12,6 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessList } from "@framework/types";
 
 import UnWhitelistABI from "@framework/abis/unWhitelist/ERC20Whitelist.json";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
@@ -24,6 +25,12 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
   const { data, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -51,6 +58,17 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
     });
   }, []);
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: data.address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   return (
     <ConfirmationDialog message="dialogs.unWhitelist" data-testid="AccessListUnWhitelistDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
@@ -59,7 +77,12 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
             <StyledListItem key={access.id}>
               <ListItemText>{access.account}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleUnWhitelist(access)} message="dialogs.unWhitelist" icon={Delete} />
+                <ListAction
+                  onClick={handleUnWhitelist(access)}
+                  message="dialogs.unWhitelist"
+                  icon={Delete}
+                  disabled={!hasAccess}
+                />
               </ListActions>
             </StyledListItem>
           ))}

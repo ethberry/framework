@@ -1,10 +1,12 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { PriceChange } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { StakingWithdrawPenaltyDialog } from "./dialog";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IStakingWithdrawPenaltyProps {
   contract: IContract;
@@ -23,6 +25,12 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
 
   const [isStakingWithdrawPenaltyDialogOpen, setIsStakingWithdrawPenaltyDialogOpen] = useState(false);
 
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
+
   const handleWithdrawPenalty = (): void => {
     setIsStakingWithdrawPenaltyDialogOpen(true);
   };
@@ -34,6 +42,17 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
   const handleWithdrawPenaltyConfirm = () => {
     setIsStakingWithdrawPenaltyDialogOpen(false);
   };
+
+  useEffect(() => {
+    if (account && address) {
+      void checkPermissions({
+        account,
+        address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [address, account]);
 
   // if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
   //   return null;
@@ -47,7 +66,7 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
         message="form.buttons.withdrawPenalty"
         className={className}
         dataTestId="WithdrawPenaltyButton"
-        disabled={disabled}
+        disabled={disabled || !hasAccess}
         variant={variant}
       />
       <StakingWithdrawPenaltyDialog
