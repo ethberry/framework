@@ -34,13 +34,13 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         1020205
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         102050002
       );
     `);

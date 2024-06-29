@@ -50,7 +50,7 @@ export class SeedLootBoxMixedAt1653616447970 implements MigrationInterface {
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         102128401
       );
     `);

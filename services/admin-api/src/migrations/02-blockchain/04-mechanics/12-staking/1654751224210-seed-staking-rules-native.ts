@@ -63,19 +63,19 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       ) VALUES (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81111
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81112
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81121
       ), (
@@ -87,79 +87,79 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81131
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81132
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81141
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         1,
         81142
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81151
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
-        10,
+        1000,
         81152
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81199
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         82111
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         82112
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         83111
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         83112
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         84111
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         84112
       );
@@ -281,7 +281,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         82111,
         82112,
-        'INACTIVE',
+        'NEW',
         211,
         12502,
         '${currentDateTime}',

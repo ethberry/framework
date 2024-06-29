@@ -35,7 +35,7 @@ export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationIn
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         10204350101
       ), (
@@ -53,7 +53,7 @@ export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationIn
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         10204350201
       ), (

@@ -35,7 +35,7 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
         102020301
       ), (

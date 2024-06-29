@@ -104,7 +104,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         updated_at
       ) VALUES (
         1010801,
-        'Fake token (BESU)',
+        'FAKE',
         '${simpleFormatting}',
         '${imagePath}/besu.png',
         null,

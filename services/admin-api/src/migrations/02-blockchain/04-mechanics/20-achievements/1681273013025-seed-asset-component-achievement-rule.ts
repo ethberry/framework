@@ -19,7 +19,7 @@ export class SeedAssetComponentsAchievementRule1681273013025 implements Migratio
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         50100101
       ), (

@@ -31,20 +31,20 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
         102029901
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         '1',
         102029901
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         102029901
       );
     `);

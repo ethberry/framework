@@ -51,19 +51,19 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81311
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81312
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81321
       ), (
@@ -75,31 +75,31 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81331
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81332
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81341
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         1,
         81342
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81351
       ), (
@@ -111,7 +111,7 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81399
       );
