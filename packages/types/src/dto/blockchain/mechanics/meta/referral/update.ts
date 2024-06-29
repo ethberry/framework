@@ -1,6 +1,7 @@
-import type { IReferralProgramLevelDto } from "./create";
+import { ReferralProgramStatus } from "../../../../../entities";
+import { IReferralProgramLevelDto } from "./create";
 
 export interface IReferralProgramUpdateDto {
-  merchantId: number;
-  levels: Array<IReferralProgramLevelDto>;
+  levels?: Array<IReferralProgramLevelDto>;
+  referralProgramStatus?: ReferralProgramStatus;
 }

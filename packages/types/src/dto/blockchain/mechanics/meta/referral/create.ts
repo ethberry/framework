@@ -4,6 +4,5 @@ export interface IReferralProgramLevelDto {
 }
 
 export interface IReferralProgramCreateDto {
-  merchantId: number;
   levels: Array<IReferralProgramLevelDto>;
 }

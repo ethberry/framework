@@ -1,11 +1,11 @@
 import { FC, Fragment, useCallback, useEffect, useState } from "react";
 
-import type { IReferralProgram, IUser } from "@framework/types";
-import { ReferralProgramStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import type { IPaginationResult } from "@gemunion/types-collection";
 import { useUser } from "@gemunion/provider-user";
+import type { IPaginationResult } from "@gemunion/types-collection";
+import type { IReferralProgram, IReferralProgramCreateDto, IReferralProgramUpdateDto, IUser } from "@framework/types";
+import { ReferralProgramStatus } from "@framework/types";
 
 import { sorter } from "../../../../../utils/sorter";
 import { ReferralProgramForm } from "./form";
@@ -13,29 +13,13 @@ import { getEmptyProgramLevel } from "./form/levels";
 import { StatusSwitch } from "./status";
 import { StyledDisableOverlay } from "./styled";
 
-export interface IReferralProgramLevel {
-  id?: number;
-  level: number;
-  share: number;
-}
-
-export interface IReferralProgramCreate {
-  merchantId: number;
-  levels: Array<IReferralProgramLevel>;
-}
-
-export interface IReferralProgramUpdateStatus {
-  referralProgramStatus: ReferralProgramStatus;
-}
-
 export const ReferralProgram: FC = () => {
   const { profile } = useUser<IUser>();
   const merchantId = profile?.merchantId;
-  // const [levels, setLevels] = useState<IReferralProgramLevel[] | null>(null);
   const [referralProgramStatus, setReferralProgramStatus] = useState<ReferralProgramStatus | null>(null);
-  const [initialValues, setInitialValues] = useState<IReferralProgramCreate | null>(null);
+  const [initialValues, setInitialValues] = useState<IReferralProgramCreateDto | null>(null);
 
-  const { fn: getReferralProgramLevels, isLoading } = useApiCall(
+  const { fn: getReferralProgram, isLoading } = useApiCall(
     api =>
       api.fetchJson({
         url: "/referral/program",
@@ -43,19 +27,18 @@ export const ReferralProgram: FC = () => {
     { success: false },
   );
 
-  const { fn: createReferralProgramLevels, isLoading: isCreateLoading } = useApiCall(
-    (api, data: IReferralProgramCreate) =>
-      api.fetchJson({
-        url: "/referral/program",
-        method: "POST",
-        data,
-      }),
+  const { fn: createReferralProgram, isLoading: isCreateLoading } = useApiCall((api, data: IReferralProgramCreateDto) =>
+    api.fetchJson({
+      url: "/referral/program",
+      method: "POST",
+      data,
+    }),
   );
 
-  const { fn: updateReferralProgramLevels, isLoading: isUpdateLoading } = useApiCall(
-    (api, data: IReferralProgramCreate) =>
+  const { fn: updateReferralProgram, isLoading: isUpdateLoading } = useApiCall(
+    (api, data: IReferralProgramUpdateDto) =>
       api.fetchJson({
-        url: `/referral/program/${merchantId}/levels`,
+        url: `/referral/program/`,
         method: "PUT",
         data,
       }),
@@ -63,43 +46,32 @@ export const ReferralProgram: FC = () => {
   );
 
   const handleSubmit = useCallback(
-    async (values: IReferralProgramCreate, form: any): Promise<void> => {
+    async (values: IReferralProgramCreateDto, form: any): Promise<void> => {
       const filteredLevels = values.levels
         .sort(sorter("level"))
         .map((lev, indx) => ({ level: indx, share: lev.share }));
       // CREATE OR UPDATE
       if (initialValues?.levels.length === 0) {
-        await createReferralProgramLevels(form, { merchantId, levels: filteredLevels }).then(() => {
+        await createReferralProgram(form, { levels: filteredLevels }).then(() => {
           setInitialValues(value => ({ ...value, merchantId, levels: filteredLevels }));
         });
       } else {
-        await updateReferralProgramLevels(form, { merchantId, levels: filteredLevels });
+        await updateReferralProgram(form, { levels: filteredLevels });
       }
     },
     [initialValues],
   );
 
-  const { fn: updateReferralProgramStatus, isLoading: isUpdateStatusLoading } = useApiCall(
-    (api, data: IReferralProgramUpdateStatus) =>
-      api.fetchJson({
-        url: `/referral/program/${merchantId}/status`,
-        method: "PUT",
-        data,
-      }),
-    { success: false, error: false },
-  );
-
   const handleChangeStatus = async (value: ReferralProgramStatus): Promise<void> => {
-    await updateReferralProgramStatus(void 0, { merchantId, referralProgramStatus: value }).then(() => {
+    await updateReferralProgram(void 0, { referralProgramStatus: value, levels: [] as any }).then(() => {
       setReferralProgramStatus(value);
     });
   };
 
   useEffect(() => {
-    void getReferralProgramLevels().then((json: IPaginationResult<IReferralProgram>) => {
+    void getReferralProgram().then((json: IPaginationResult<IReferralProgram>) => {
       if (!json?.rows?.length) {
         setInitialValues({
-          merchantId,
           levels: [...getEmptyProgramLevel([], merchantId)],
         });
         return;
@@ -110,7 +82,6 @@ export const ReferralProgram: FC = () => {
 
       setReferralProgramStatus(referralProgramStatus);
       setInitialValues({
-        merchantId,
         levels,
       });
     });
@@ -130,9 +101,9 @@ export const ReferralProgram: FC = () => {
       <Breadcrumbs path={["dashboard", "referral", "referral.program"]} />
 
       <PageHeader message="pages.referral.program.title">
-        <StatusSwitch isLoading={isUpdateStatusLoading} onChange={handleChangeStatus} status={referralProgramStatus} />
+        <StatusSwitch isLoading={isUpdateLoading} onChange={handleChangeStatus} status={referralProgramStatus} />
       </PageHeader>
-      <ProgressOverlay isLoading={isLoading || isCreateLoading || isUpdateLoading || isUpdateStatusLoading}>
+      <ProgressOverlay isLoading={isLoading || isCreateLoading || isUpdateLoading}>
         <StyledDisableOverlay isDisabled={referralProgramStatus === ReferralProgramStatus.INACTIVE}>
           <ReferralProgramForm onSubmit={handleSubmit} initialValues={initialValues} />
         </StyledDisableOverlay>

@@ -1,24 +1,12 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  UseInterceptors,
-  HttpCode,
-  HttpStatus,
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { ReferralProgramService } from "./referral.program.service";
-import { ReferralProgramCreateDto, ReferralProgramSearchDto, ReferralProgramUpdateDto } from "./dto";
-import { ReferralProgramEntity } from "./referral.program.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { ReferralProgramService } from "./referral.program.service";
+import { ReferralProgramCreateDto, ReferralProgramUpdateDto } from "./dto";
+import { ReferralProgramEntity } from "./referral.program.entity";
 
 @ApiBearerAuth()
 @Controller("/referral/program")
@@ -26,21 +14,9 @@ export class ReferralProgramController {
   constructor(private readonly referralProgramService: ReferralProgramService) {}
 
   @Get("/")
-  @UseInterceptors(PaginationInterceptor)
-  public search(
-    @Query() dto: ReferralProgramSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<[Array<ReferralProgramEntity>, number]> {
-    return this.referralProgramService.findRefProgram(dto, userEntity);
-  }
-
-  @Get("/:merchantId")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(
-    @Param("merchantId", ParseIntPipe) merchantId: number,
-    @User() userEntity: UserEntity,
-  ): Promise<Array<ReferralProgramEntity>> {
-    return this.referralProgramService.findAllWithRelations(merchantId, userEntity);
+  public findOne(@User() userEntity: UserEntity): Promise<Array<ReferralProgramEntity>> {
+    return this.referralProgramService.findAllWithRelations(userEntity);
   }
 
   @Post("/")
@@ -51,23 +27,11 @@ export class ReferralProgramController {
     return this.referralProgramService.createRefProgram(dto, userEntity);
   }
 
-  // TODO TEST ALL
-  @Put("/:merchantId/levels")
+  @Put("/")
   public update(
-    @Param("merchantId", ParseIntPipe) merchantId: number,
-    @Body() dto: ReferralProgramCreateDto,
-    @User() userEntity: UserEntity,
-  ): Promise<ReferralProgramEntity[]> {
-    return this.referralProgramService.updateRefProgram(merchantId, dto, userEntity);
-  }
-
-  @Put("/:merchantId/status")
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public updateStatus(
-    @Param("merchantId", ParseIntPipe) merchantId: number,
     @Body() dto: ReferralProgramUpdateDto,
     @User() userEntity: UserEntity,
-  ): Promise<void> {
-    return this.referralProgramService.updateRefProgramStatus(merchantId, dto, userEntity);
+  ): Promise<ReferralProgramEntity[]> {
+    return this.referralProgramService.update(dto, userEntity);
   }
 }

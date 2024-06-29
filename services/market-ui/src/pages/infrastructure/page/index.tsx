@@ -14,7 +14,7 @@ import { emptyPage } from "../../../components/common/interfaces";
 import { StyledContentWrapper } from "./styled";
 
 export const Page: FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug = "" } = useParams<{ slug: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 

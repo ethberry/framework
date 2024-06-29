@@ -1,15 +1,13 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, DeepPartial } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UserRole } from "@framework/types";
+import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MerchantService } from "../../../../../infrastructure/merchant/merchant.service";
 import { sorter } from "../../../../../common/utils/sorter";
 import { ReferralProgramEntity } from "./referral.program.entity";
-import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "./interfaces";
-import { ReferralProgramSearchDto } from "./dto";
 
 @Injectable()
 export class ReferralProgramService {
@@ -37,147 +35,49 @@ export class ReferralProgramService {
     return this.referralProgramEntityRepository.create(dto).save();
   }
 
-  public async findRefProgram(
-    dto: ReferralProgramSearchDto,
-    userEntity: UserEntity,
-  ): Promise<[Array<ReferralProgramEntity>, number]> {
-    const { merchantIds, skip, take } = dto;
-    const queryBuilder = this.referralProgramEntityRepository.createQueryBuilder("program");
-
-    queryBuilder.leftJoinAndSelect("program.merchant", "merchant");
-
-    queryBuilder.select();
-
-    // GET ALL
-    if (userEntity.userRoles.includes(UserRole.SUPER)) {
-      if (merchantIds) {
-        if (merchantIds.length === 1) {
-          queryBuilder.andWhere("program.merchantId = :merchantId", {
-            merchantId: merchantIds[0],
-          });
-        } else {
-          queryBuilder.andWhere("program.merchantId IN(:...merchantIds)", { merchantIds });
-        }
-      }
-      // GET USER's
-      queryBuilder.andWhere("program.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    } else {
-      // GET USER's
-      queryBuilder.andWhere("program.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy({
-      "program.level": "ASC",
-    });
-
-    return queryBuilder.getManyAndCount();
-  }
-
-  public async findAllWithRelations(merchantId: number, userEntity: UserEntity): Promise<Array<ReferralProgramEntity>> {
-    // TEST USER ROLE
-    if (merchantId !== userEntity.merchantId) {
-      if (userEntity.userRoles.includes(UserRole.SUPER)) {
-        return await this.findAll({ merchantId }, { relations: { merchant: true } });
-      } else {
-        throw new ForbiddenException("insufficientPermissions");
-      }
-    } else {
-      return await this.findAll({ merchantId }, { relations: { merchant: true } });
-    }
+  public async findAllWithRelations(userEntity: UserEntity): Promise<Array<ReferralProgramEntity>> {
+    return this.findAll({ merchantId: userEntity.merchantId }, { relations: { merchant: true } });
   }
 
   public async createRefProgram(
     dto: IReferralProgramCreateDto,
     userEntity: UserEntity,
   ): Promise<ReferralProgramEntity[]> {
-    const { merchantId, levels } = dto;
-    // TEST MERCHANT
-    const merchantEntity = await this.merchantService.findOne({ id: dto.merchantId });
-    if (!merchantEntity) {
-      throw new NotFoundException("merchantNotFound");
-    }
+    const { levels } = dto;
 
-    // TODO test program doesn't exist
-    if (merchantId === userEntity.merchantId || userEntity.userRoles.includes(UserRole.SUPER)) {
+    if (levels.length > 0) {
       // CREATE ALL REF PROGRAM LEVELS
-      const levelsArr = [];
       for (const level of levels.sort(sorter("level"))) {
-        levelsArr.push(
-          await this.create({
-            merchantId,
-            level: level.level,
-            share: level.share,
-          }),
-        );
+        await this.create({
+          merchantId: userEntity.merchantId,
+          level: level.level,
+          share: level.share,
+        });
       }
-      return levelsArr;
-    } else {
-      throw new ForbiddenException("insufficientPermissions");
     }
+
+    return this.findAllWithRelations(userEntity);
   }
 
-  public async updateRefProgram(
-    merchantId: number,
-    dto: IReferralProgramCreateDto,
-    userEntity: UserEntity,
-  ): Promise<ReferralProgramEntity[]> {
-    if (merchantId !== userEntity.merchantId) {
-      if (userEntity.userRoles.includes(UserRole.SUPER)) {
-        // const refProgram = await this.findAllWithRelations(merchantId, userEntity);
-        // await Promise.all(refProgram.map(async lev => await this.deleteIfExist({ id: lev.id })));
-        // REMOVE OLD
-        await this.deleteProgram(merchantId);
-        // CREATE NEW
-        return await this.createRefProgram(dto, userEntity);
-      } else {
-        throw new ForbiddenException("insufficientPermissions");
-      }
-    } else {
+  public async update(dto: IReferralProgramUpdateDto, userEntity: UserEntity): Promise<ReferralProgramEntity[]> {
+    const { levels, referralProgramStatus } = dto;
+
+    if (levels && levels.length > 0) {
       // REMOVE OLD
-      await this.deleteProgram(merchantId);
+      await this.deleteProgram(userEntity.merchantId);
       // CREATE NEW
-      return await this.createRefProgram(dto, userEntity);
+      await this.createRefProgram({ levels }, userEntity);
     }
-  }
 
-  public async updateRefProgramStatus(
-    merchantId: number,
-    dto: IReferralProgramUpdateDto,
-    userEntity: UserEntity,
-  ): Promise<void> {
-    if (merchantId !== userEntity.merchantId) {
-      if (userEntity.userRoles.includes(UserRole.SUPER)) {
-        // UPDATE STATUS ON ALL LEVELS
-        const refLevels = await this.findAll({ merchantId });
-        for (const level of refLevels) {
-          Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
-          await level.save();
-        }
-      } else {
-        throw new ForbiddenException("insufficientPermissions");
-      }
-    } else {
-      // UPDATE STATUS ON ALL LEVELS
-      const refLevels = await this.findAll({ merchantId });
+    if (referralProgramStatus) {
+      const refLevels = await this.findAll({ merchantId: userEntity.merchantId });
       for (const level of refLevels) {
-        Object.assign(level, { referralProgramStatus: dto.referralProgramStatus });
+        Object.assign(level, { referralProgramStatus });
         await level.save();
       }
     }
-  }
 
-  public async deleteLevelIfExist(where: FindOptionsWhere<ReferralProgramEntity>): Promise<void> {
-    const entity = await this.findOne(where);
-    if (entity) {
-      await entity.remove();
-    }
+    return this.findAllWithRelations(userEntity);
   }
 
   public async deleteProgram(merchantId: number): Promise<void> {

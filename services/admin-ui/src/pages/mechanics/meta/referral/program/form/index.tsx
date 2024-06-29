@@ -1,14 +1,14 @@
 import { FC } from "react";
 
 import { FormWrapper } from "@gemunion/mui-form";
+import type { IReferralProgramCreateDto } from "@framework/types";
 
 import { ReferralProgramLevelsInput } from "./levels";
-import type { IReferralProgramCreate } from "../index";
 import { validationSchema } from "./validation";
 
 export interface IReferralProgramFormProps {
   onSubmit: (values: any, form?: any) => Promise<void>;
-  initialValues: IReferralProgramCreate | null;
+  initialValues: IReferralProgramCreateDto | null;
 }
 
 export const ReferralProgramForm: FC<IReferralProgramFormProps> = props => {

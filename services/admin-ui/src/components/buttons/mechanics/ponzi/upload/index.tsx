@@ -77,21 +77,23 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
     const content = [] as Array<any>;
     if (rule.reward) {
       for (const row of rule.reward.components) {
-        const {
-          rows: [mysteryBox],
-        } = await fn(void 0, { templateIds: [row.templateId] });
-        // MODULE:MYSTERYBOX
-        if (mysteryBox) {
-          content.push(
-            (mysteryBox as IMysteryBox).item!.components.map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.contract!.address,
-              tokenId: component.templateId || 0,
-              amount: component.amount,
-            })),
-          );
-        } else {
-          content.push([]);
+        if (row.templateId) {
+          const {
+            rows: [mysteryBox],
+          } = await fn(void 0, { templateIds: [row.templateId] });
+          // MODULE:MYSTERYBOX
+          if (mysteryBox) {
+            content.push(
+              (mysteryBox as IMysteryBox).item!.components.map(component => ({
+                tokenType: Object.values(TokenType).indexOf(component.tokenType),
+                token: component.contract!.address,
+                tokenId: component.templateId || 0,
+                amount: component.amount,
+              })),
+            );
+          } else {
+            content.push([]);
+          }
         }
       }
       if (!content.length) content.push([]);

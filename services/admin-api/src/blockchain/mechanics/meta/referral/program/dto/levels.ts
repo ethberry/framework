@@ -1,6 +1,6 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 
-import type { IReferralProgramLevelDto } from "../interfaces";
+import type { IReferralProgramLevelDto } from "@framework/types";
 
 @ValidatorConstraint()
 export class RefProgramLevelsRule implements ValidatorConstraintInterface {
