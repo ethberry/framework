@@ -10,7 +10,7 @@ export const gradeRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Discrete /> },
-      { path: "/grades/:id", element: <Discrete /> },
+      { path: "/grades/:id/:action", element: <Discrete /> },
     ],
   },
 ];
