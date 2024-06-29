@@ -11,7 +11,7 @@
     "@gemunion/nest-js-module-request-logger": "3.0.26",
     "@gemunion/nest-js-module-typeorm-debug": "3.0.35",
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.40",
-    "@gemunion/nest-js-module-winston-logdna": "3.1.9",
+    "@gemunion/nest-js-module-winston-logdna": "3.1.10",
     "@gemunion/nest-js-utils-ms": "3.0.26",
     "@gemunion/nest-js-validators": "4.0.39",
     "@nestjs/common": "10.3.9",
