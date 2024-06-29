@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, imagePath } from "@framework/constants";
@@ -28,6 +29,64 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       ), (
         102080801
       ), (
+        201080101
+      );
+    `);
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.asset_component (
+        token_type,
+        contract_id,
+        template_id,
+        amount,
+        asset_id
+      ) VALUES (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102080101
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102080102
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102080401
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102080501
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102080601
+      ), (
+        'ERC20',
+        10280,
+        1028001, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        102080801
+      ), (
+        'ERC20',
+        10280,
+        1028001, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        102080801
+      ), (
+        'ERC20',
+        20201,
+        2020101, -- BEP Credits
+        '${WeiPerEther.toString()}',
         201080101
       );
     `);

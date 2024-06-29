@@ -8,7 +8,6 @@ export * from "./1563804000160-seed-contract-loot";
 export * from "./1563804000260-seed-template-loot";
 export * from "./1563804000360-seed-token-loot";
 export * from "./1563804000460-seed-balance-loot";
-export * from "./1563804001260-seed-asset-component-loot";
 export * from "./1687580606310-seed-event-history-loot-erc721-purchase";
 export * from "./1687580606320-seed-event-history-loot-erc721-purchase-components";
 export * from "./1687580606330-seed-event-history-loot-erc721-unpack";
