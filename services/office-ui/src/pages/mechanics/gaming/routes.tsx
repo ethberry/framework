@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
 
-import { gradeRoutes } from "./discrete/routes";
+import { discreteRoutes } from "./discrete/routes";
 
-export const gamingMechanicsRoutes: Array<RouteObject> = [...gradeRoutes];
+export const gamingMechanicsRoutes: Array<RouteObject> = [...discreteRoutes];

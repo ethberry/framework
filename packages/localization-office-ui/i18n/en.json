@@ -726,7 +726,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Chart",
-          "grade": "Grade",
+          "discrete": "Grade",
           "report": "Report",
           "title": "Marketplace"
         }
@@ -768,7 +768,7 @@
       "mechanics": {
         "claim": "Claim",
         "dispenser": "Dispenser",
-        "grade": "Grade",
+        "discrete": "Grade",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
         "promo": "Promo",
@@ -834,7 +834,7 @@
         "title": "ERC998 Tokens"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "Grade Rules"
     },
     "guest": {
@@ -854,7 +854,7 @@
       "chart": {
         "title": "Chart"
       },
-      "grade": {
+      "discrete": {
         "amount": "Amount",
         "attribute": "Grade",
         "title": "Grade"

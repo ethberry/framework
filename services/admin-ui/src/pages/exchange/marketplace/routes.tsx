@@ -6,7 +6,7 @@ import { Protected } from "@gemunion/common-pages";
 import { MarketplaceReport } from "./report";
 import { MarketplaceChart } from "./chart";
 import { MarketplaceRarity } from "./rarity";
-import { MarketplaceLevel } from "./grade";
+import { MarketplaceDiscrete } from "./discrete";
 import { IndexWrapper } from "../../index-wrapper";
 import { MarketplaceSection } from "../../dashboard/mechanics/marketplace";
 
@@ -33,7 +33,7 @@ export const marketRoutes: Array<RouteObject> = [
           { path: "/marketplace/report/search", element: <MarketplaceReport /> },
           { path: "/marketplace/report/chart", element: <MarketplaceChart /> },
           { path: "/marketplace/report/rarity", element: <MarketplaceRarity /> },
-          { path: "/marketplace/report/grade", element: <MarketplaceLevel /> },
+          { path: "/marketplace/report/discrete", element: <MarketplaceDiscrete /> },
         ],
       },
     ],

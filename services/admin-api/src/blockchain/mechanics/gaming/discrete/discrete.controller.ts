@@ -22,7 +22,7 @@ import { DiscreteEntity } from "./discrete.entity";
 import { DiscreteCreateDto, DiscreteSearchDto, DiscreteUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/grades")
+@Controller("/discrete")
 export class DiscreteController {
   constructor(private readonly discreteService: DiscreteService) {}
 

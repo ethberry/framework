@@ -9,7 +9,7 @@ import { DiscreteEntity } from "./discrete.entity";
 import { DiscreteAutocompleteDto, DiscreteSignDto, DiscreteSearchDto } from "./dto";
 
 @Public()
-@Controller("/grade")
+@Controller("/discrete")
 export class DiscreteController {
   constructor(private readonly discreteService: DiscreteService) {}
 

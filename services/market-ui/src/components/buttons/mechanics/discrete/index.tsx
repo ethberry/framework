@@ -36,7 +36,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       return api
         .fetchJson({
-          url: `/grade`,
+          url: "/discrete",
           data: {
             tokenId: token.id,
             attribute: values.attribute,
@@ -85,7 +85,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
     return metaFnWithSign(
       {
-        url: "/grade/sign",
+        url: "/discrete/sign",
         method: "POST",
         data: {
           tokenId: token.id,

@@ -4,13 +4,13 @@ import { Protected } from "@gemunion/common-pages";
 
 import { Discrete } from "./main";
 
-export const gradeRoutes: Array<RouteObject> = [
+export const discreteRoutes: Array<RouteObject> = [
   {
-    path: "/grades",
+    path: "/discrete",
     element: <Protected />,
     children: [
       { index: true, element: <Discrete /> },
-      { path: "/grades/:id", element: <Discrete /> },
+      { path: "/discrete/:id", element: <Discrete /> },
     ],
   },
 ];

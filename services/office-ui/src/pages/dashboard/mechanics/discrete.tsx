@@ -11,16 +11,16 @@ export const DiscreteSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.grade" />
+            <FormattedMessage id="pages.dashboard.mechanics.discrete" />
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/grades">
+        <ListItemButton component={RouterLink} to="/discrete">
           <ListItemIcon>
             <Upgrade />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.grade.title" />
+            <FormattedMessage id="pages.discrete.title" />
           </ListItemText>
         </ListItemButton>
       </List>

@@ -60,10 +60,10 @@ export class DiscreteService {
   }
 
   public async findOneWithRelations(where: FindOptionsWhere<DiscreteEntity>): Promise<DiscreteEntity | null> {
-    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("grade");
+    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("discrete");
 
-    queryBuilder.leftJoinAndSelect("grade.price", "price");
-    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+    queryBuilder.leftJoinAndSelect("discrete.price", "price");
+    queryBuilder.leftJoinAndSelect("discrete.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -76,10 +76,10 @@ export class DiscreteService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("grade.contractId = :contractId", {
+    queryBuilder.andWhere("discrete.contractId = :contractId", {
       contractId: where.contractId,
     });
-    queryBuilder.andWhere("grade.attribute = :attribute", {
+    queryBuilder.andWhere("discrete.attribute = :attribute", {
       attribute: where.attribute,
     });
 
@@ -105,11 +105,11 @@ export class DiscreteService {
     });
 
     if (!discreteEntity) {
-      throw new NotFoundException("gradeNotFound");
+      throw new NotFoundException("discreteNotFound");
     }
 
     if (discreteEntity.discreteStatus !== DiscreteStatus.ACTIVE) {
-      throw new ForbiddenException("gradeNotActive");
+      throw new ForbiddenException("discreteNotActive");
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
@@ -186,9 +186,9 @@ export class DiscreteService {
         contractId,
       },
       join: {
-        alias: "grade",
+        alias: "discrete",
         leftJoinAndSelect: {
-          price: "grade.price",
+          price: "discrete.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",

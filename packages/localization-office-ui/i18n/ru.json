@@ -725,7 +725,7 @@
       "exchange": {
         "marketplace": {
           "chart": "График",
-          "grade": "Грейд",
+          "discrete": "Грейд",
           "report": "Отчет",
           "title": "Маркетплейс"
         }
@@ -767,7 +767,7 @@
       "mechanics": {
         "claim": "Клейм",
         "dispenser": "Диспенсер",
-        "grade": "Грейд",
+        "discrete": "Грейд",
         "mystery": "Мистери",
         "ponzi": "Понци",
         "promo": "Промо",
@@ -833,7 +833,7 @@
         "title": "Токены ERC998"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "Правила грейда"
     },
     "guest": {
@@ -852,7 +852,7 @@
       "chart": {
         "title": "График"
       },
-      "grade": {
+      "discrete": {
         "amount": "Сумма",
         "attribute": "Уровень",
         "title": "Грейд"

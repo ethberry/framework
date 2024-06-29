@@ -12,7 +12,7 @@ export interface IAttributeInputProps {
 }
 
 export const AttributeInput: FC<IAttributeInputProps> = props => {
-  const { name = "gradeId", data = {} } = props;
+  const { name = "discreteId", data = {} } = props;
 
   const form = useFormContext<any>();
 
@@ -26,7 +26,7 @@ export const AttributeInput: FC<IAttributeInputProps> = props => {
     <EntityInput
       autoselect
       name={name}
-      controller="grade"
+      controller="discrete"
       getTitle={({ attribute }: IDiscrete) => attribute}
       onChange={handleChange}
       data={data}

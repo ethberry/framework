@@ -58,11 +58,11 @@ export class ExchangeDiscreteServiceEth {
 
     const discreteEntity = await this.discreteService.findOneWithRelations({ id: Number(externalId) });
     if (!discreteEntity) {
-      this.loggerService.error("gradeNotFound", tokenEntity.id, attribute, ExchangeDiscreteServiceEth.name);
-      throw new NotFoundException("gradeNotFound");
+      this.loggerService.error("discreteNotFound", tokenEntity.id, attribute, ExchangeDiscreteServiceEth.name);
+      throw new NotFoundException("discreteNotFound");
     }
 
-    await this.notificatorService.grade({
+    await this.notificatorService.discrete({
       discrete: discreteEntity,
       token: tokenEntity,
       price: assets.price,

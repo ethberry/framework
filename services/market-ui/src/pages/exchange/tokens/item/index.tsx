@@ -20,8 +20,8 @@ export const MyTokenListItem: FC<IMyTokenListItemProps> = props => {
   const navigateTo =
     token.template?.contract?.contractModule === ModuleType.LOTTERY ||
     token.template?.contract?.contractModule === ModuleType.RAFFLE
-      ? `/${token.template?.contract?.contractModule?.toLowerCase()}/tokens/${token.id}`
-      : `/${token.template?.contract?.contractType?.toLowerCase()}/tokens/${token.id}`;
+      ? `/${token.template?.contract?.contractModule?.toLowerCase()}/tokens/${token.id}/view`
+      : `/${token.template?.contract?.contractType?.toLowerCase()}/tokens/${token.id}/view`;
 
   return (
     <Card>

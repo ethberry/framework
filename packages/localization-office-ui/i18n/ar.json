@@ -725,7 +725,7 @@
       "exchange": {
         "marketplace": {
           "chart": "الرسم البياني",
-          "grade": "الدرجة",
+          "discrete": "الدرجة",
           "report": "التقرير",
           "title": "السوق"
         }
@@ -767,7 +767,7 @@
       "mechanics": {
         "claim": "المطالبة",
         "dispenser": "الموزع",
-        "grade": "الدرجة",
+        "discrete": "الدرجة",
         "mystery": "الغموض",
         "ponzi": "بونزي",
         "promo": "الترويج",
@@ -833,7 +833,7 @@
         "title": "رموز ERC998"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "قواعد الدرجات"
     },
     "guest": {
@@ -852,7 +852,7 @@
       "chart": {
         "title": "الرسم البياني"
       },
-      "grade": {
+      "discrete": {
         "amount": "المبلغ",
         "attribute": "الدرجة",
         "title": "الدرجة"

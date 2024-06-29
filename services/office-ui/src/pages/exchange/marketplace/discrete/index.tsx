@@ -25,7 +25,7 @@ import { useUser } from "@gemunion/provider-user";
 
 import { MarketplaceGradeSearchForm } from "./form";
 
-export const MarketplaceGrade: FC = () => {
+export const MarketplaceDiscrete: FC = () => {
   const { profile } = useUser<IUser>();
 
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
@@ -72,9 +72,9 @@ export const MarketplaceGrade: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "marketplace", "marketplace.grade"]} />
+      <Breadcrumbs path={["dashboard", "marketplace", "marketplace.discrete"]} />
 
-      <PageHeader message="pages.marketplace.grade.title">
+      <PageHeader message="pages.marketplace.discrete.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
@@ -88,10 +88,10 @@ export const MarketplaceGrade: FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell align="left">
-                  <FormattedMessage id="pages.marketplace.grade.attribute" />
+                  <FormattedMessage id="pages.marketplace.discrete.attribute" />
                 </TableCell>
                 <TableCell align="right">
-                  <FormattedMessage id="pages.marketplace.grade.amount" />
+                  <FormattedMessage id="pages.marketplace.discrete.amount" />
                 </TableCell>
               </TableRow>
             </TableHead>

@@ -1126,7 +1126,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Grafik",
-          "grade": "Grade",
+          "discrete": "Grade",
           "rarity": "Keunikan",
           "report": "Laporan",
           "title": "Pasar"
@@ -1155,7 +1155,7 @@
         "claim": "Klaim",
         "collection": "Koleksi",
         "dispenser": "Dispenser",
-        "grade": "Grade",
+        "discrete": "Grade",
         "lottery": "Lotere",
         "mystery": "Misteri",
         "payment-splitter": "Pembagi Pembayaran",
@@ -1231,7 +1231,7 @@
         "title": "Token ERC998"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "Aturan Grade"
     },
     "guest": {
@@ -1271,7 +1271,7 @@
       "chart": {
         "title": "Grafik"
       },
-      "grade": {
+      "discrete": {
         "amount": "Jumlah",
         "attribute": "Grade",
         "title": "Grade"
@@ -1453,7 +1453,7 @@
         "erc1155": "5 kontrak ERC1155",
         "erc20": "1 kontrak ERC20",
         "erc721": "5 kontrak ERC721",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "0 Kotak Jarahan",
         "mystery": "0 Kotak Misteri",
         "raffle": "Undian",
@@ -1470,7 +1470,7 @@
         "erc1155": "25 kontrak ERC1155",
         "erc20": "5 kontrak ERC20",
         "erc721": "25 kontrak ERC721",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "10 Kotak Jarahan",
         "mystery": "10 Kotak Misteri",
         "raffle": "Undian",
@@ -1493,7 +1493,7 @@
         "erc1155": "10 kontrak ERC1155",
         "erc20": "1 kontrak ERC20",
         "erc721": "10 kontrak ERC721",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "5 Kotak Jarahan",
         "mystery": "5 Kotak Misteri",
         "raffle": "Undian",

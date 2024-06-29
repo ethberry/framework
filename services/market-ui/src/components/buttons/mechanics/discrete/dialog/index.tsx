@@ -29,13 +29,13 @@ export const UpgradeDialog: FC<IUpgradeDialogProps> = props => {
       disabled={false}
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message="dialogs.grade"
+      message="dialogs.discrete"
       testId="UpgradeAttributeForm"
       {...rest}
     >
       <AttributePrice />
       <AttributeInput
-        name="gradeId"
+        name="discreteId"
         data={{
           contractId,
         }}

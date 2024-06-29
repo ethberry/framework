@@ -24,7 +24,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 
 import { MarketplaceGradeSearchForm } from "./form";
 
-export const MarketplaceLevel: FC = () => {
+export const MarketplaceDiscrete: FC = () => {
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
   const [search, setSearch] = useState<IMarketplaceSupplySearchDto>({
     attribute: TokenMetadata.LEVEL,
@@ -68,9 +68,9 @@ export const MarketplaceLevel: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "marketplace", "marketplace.grade"]} />
+      <Breadcrumbs path={["dashboard", "marketplace", "marketplace.discrete"]} />
 
-      <PageHeader message="pages.marketplace.grade.title">
+      <PageHeader message="pages.marketplace.discrete.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
@@ -84,10 +84,10 @@ export const MarketplaceLevel: FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell align="left">
-                  <FormattedMessage id="pages.marketplace.grade.attribute" />
+                  <FormattedMessage id="pages.marketplace.discrete.attribute" />
                 </TableCell>
                 <TableCell align="right">
-                  <FormattedMessage id="pages.marketplace.grade.amount" />
+                  <FormattedMessage id="pages.marketplace.discrete.amount" />
                 </TableCell>
               </TableRow>
             </TableHead>

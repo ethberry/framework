@@ -27,10 +27,10 @@ export class DiscreteService {
   public async findOneWithRelations(where: FindOptionsWhere<DiscreteEntity>): Promise<DiscreteEntity | null> {
     return this.findOne(where, {
       join: {
-        alias: "grade",
+        alias: "discrete",
         leftJoinAndSelect: {
-          contract: "grade.contract",
-          // price: "grade.price",
+          contract: "discrete.contract",
+          // price: "discrete.price",
           // price_components: "price.components",
           // price_contract: "price_components.contract",
           // price_template: "price_components.template",

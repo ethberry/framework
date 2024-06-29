@@ -725,7 +725,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Grafik",
-          "grade": "Grade",
+          "discrete": "Grade",
           "report": "Laporan",
           "title": "Pasar"
         }
@@ -767,7 +767,7 @@
       "mechanics": {
         "claim": "Klaim",
         "dispenser": "Dispenser",
-        "grade": "Grade",
+        "discrete": "Grade",
         "mystery": "Misteri",
         "ponzi": "Ponzi",
         "promo": "Promo",
@@ -833,7 +833,7 @@
         "title": "Token ERC998"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "Aturan Grade"
     },
     "guest": {
@@ -852,7 +852,7 @@
       "chart": {
         "title": "Grafik"
       },
-      "grade": {
+      "discrete": {
         "amount": "Jumlah",
         "attribute": "Tingkat",
         "title": "Tingkat"

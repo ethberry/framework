@@ -1168,7 +1168,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Chart",
-          "grade": "Grade",
+          "discrete": "Grade",
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
@@ -1197,7 +1197,7 @@
         "claim": "Claim",
         "collection": "Collections",
         "dispenser": "Dispenser",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "Loot",
         "lottery": "Lottery",
         "mystery": "Mystery",
@@ -1274,7 +1274,7 @@
         "title": "ERC998 Tokens"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "Grade Rules"
     },
     "guest": {
@@ -1330,7 +1330,7 @@
       "chart": {
         "title": "Chart"
       },
-      "grade": {
+      "discrete": {
         "amount": "Amount",
         "attribute": "Grade",
         "title": "Grade"
@@ -1513,7 +1513,7 @@
         "erc20": "5 ERC20 contract",
         "erc721": "5 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "0 Loot boxes",
         "mystery": "0 Mystery boxes",
         "raffle": "Raffle",
@@ -1531,7 +1531,7 @@
         "erc20": "25 ERC20 contract",
         "erc721": "25 ERC721 contracts",
         "erc998": "5 ERC998 contract",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "10 Loot boxes",
         "mystery": "10 Mystery boxes",
         "raffle": "Raffle",
@@ -1555,7 +1555,7 @@
         "erc20": "10 ERC20 contract",
         "erc721": "10 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
-        "grade": "Grade",
+        "discrete": "Grade",
         "loot": "Loot boxes",
         "mystery": "Mystery boxes",
         "raffle": "Raffle",
