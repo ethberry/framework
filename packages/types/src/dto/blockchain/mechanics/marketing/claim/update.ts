@@ -1,3 +1,8 @@
-import type { IClaimCreateDto } from "./create";
+import { IAssetDto } from "../../../exchange";
 
-export interface IClaimUpdateDto extends Omit<IClaimCreateDto, "claimType"> {}
+export interface IClaimUpdateDto {
+  chainId: number;
+  account: string;
+  item: IAssetDto;
+  endTimestamp: string;
+}

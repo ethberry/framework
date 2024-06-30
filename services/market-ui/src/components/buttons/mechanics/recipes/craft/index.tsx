@@ -64,7 +64,6 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-
     return metaFnWithSign(
       {
         url: "/recipes/craft/sign",

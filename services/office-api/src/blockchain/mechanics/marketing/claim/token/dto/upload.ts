@@ -16,7 +16,7 @@ export class ClaimTokenRowDto extends Mixin(BlockChainAssetTokenDto, AccountDto)
   public endTimestamp: string;
 }
 
-export class ClaimUploadDto implements IClaimTokenUploadDto {
+export class ClaimTokenUploadDto implements IClaimTokenUploadDto {
   @ApiProperty({
     isArray: true,
     type: ClaimTokenRowDto,

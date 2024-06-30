@@ -14,9 +14,14 @@ import { mapLimit } from "async";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import type {
+  IClaimCreateDto,
+  IClaimSearchDto,
+  IClaimUpdateDto,
+  IClaimTemplateRowDto,
+  IClaimTemplateUploadDto,
+} from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
-import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";

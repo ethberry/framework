@@ -17,9 +17,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimTokenUploadDto } from "./dto";
 import { ClaimTokenService } from "./token.service";
 import { ClaimEntity } from "../claim.entity";
-import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims/tokens")
@@ -38,7 +38,7 @@ export class ClaimTokenController {
   }
 
   @Post("/upload")
-  public upload(@Body() dto: ClaimUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public upload(@Body() dto: ClaimTokenUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     return this.claimTokenService.upload(dto, userEntity);
   }
 
