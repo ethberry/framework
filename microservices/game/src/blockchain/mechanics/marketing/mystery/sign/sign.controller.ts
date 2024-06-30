@@ -6,7 +6,7 @@ import { User } from "@gemunion/nest-js-utils";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { MysterySignService } from "./sign.service";
-import { SignMysteryboxDto } from "./dto";
+import { MysteryBoxSignDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/mystery")
@@ -14,7 +14,7 @@ export class MysterySignController {
   constructor(private readonly mysterySignService: MysterySignService) {}
 
   @Post("/sign")
-  public sign(@Body() dto: SignMysteryboxDto, @User() merchantEntity: MerchantEntity): Promise<IServerSignature> {
+  public sign(@Body() dto: MysteryBoxSignDto, @User() merchantEntity: MerchantEntity): Promise<IServerSignature> {
     return this.mysterySignService.sign(dto, merchantEntity);
   }
 }

@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import type { IRentAutocompleteDto } from "../interfaces/autocomplete";
+import type { IRentAutocompleteDto } from "@framework/types";
 
 export class RentAutocompleteDto implements IRentAutocompleteDto {
   @ApiPropertyOptional()

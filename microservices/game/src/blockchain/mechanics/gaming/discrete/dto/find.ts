@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IDiscreteSearchDto } from "../interfaces";
+import type { IDiscreteFindOneDto } from "@framework/types";
 
-export class DiscreteSearchDto implements IDiscreteSearchDto {
+export class DiscreteFindOneDto implements IDiscreteFindOneDto {
   @ApiProperty({
     minimum: 1,
   })

@@ -3,11 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
-
 import { RentRuleStatus, TokenType } from "@framework/types";
+import type { IRentAutocompleteDto } from "@framework/types";
 
 import { RentEntity } from "./rent.entity";
-import { IRentAutocompleteDto } from "./interfaces/autocomplete";
 
 @Injectable()
 export class RentService {

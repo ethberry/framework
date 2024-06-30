@@ -3,10 +3,9 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import type { ILootBoxSignDto } from "@framework/types";
 
-import type { ISignLootboxDto } from "../interfaces";
-
-export class SignLootboxDto extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto) implements ISignLootboxDto {
+export class LootBoxSignDto extends Mixin(ReferrerOptionalDto, AccountDto, ChainIdDto) implements ILootBoxSignDto {
   @ApiProperty({
     minimum: 1,
   })

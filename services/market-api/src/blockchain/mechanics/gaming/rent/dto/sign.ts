@@ -3,8 +3,7 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { ReferrerDto } from "@gemunion/nest-js-validators";
-
-import type { IRentSignDto } from "../interfaces";
+import type { IRentSignDto } from "@framework/types";
 
 export class RentSignDto extends Mixin(ReferrerDto) implements IRentSignDto {
   @ApiProperty({

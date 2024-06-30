@@ -6,7 +6,7 @@ import { User } from "@gemunion/nest-js-utils";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { LootSignService } from "./sign.service";
-import { SignLootboxDto } from "./dto";
+import { LootBoxSignDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/loot")
@@ -14,7 +14,7 @@ export class LootSignController {
   constructor(private readonly lootSignService: LootSignService) {}
 
   @Post("/sign")
-  public sign(@Body() dto: SignLootboxDto, @User() merchantEntity: MerchantEntity): Promise<IServerSignature> {
+  public sign(@Body() dto: LootBoxSignDto, @User() merchantEntity: MerchantEntity): Promise<IServerSignature> {
     return this.lootSignService.sign(dto, merchantEntity);
   }
 }

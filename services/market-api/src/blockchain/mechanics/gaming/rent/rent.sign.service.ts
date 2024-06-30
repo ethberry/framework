@@ -5,6 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IRentSignDto } from "@framework/types";
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
@@ -12,7 +13,6 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import type { IRentSignDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";

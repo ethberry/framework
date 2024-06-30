@@ -3,10 +3,10 @@ import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/com
 import { NotFoundInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { DiscreteAutocompleteDto, DiscreteFindOneDto, DiscreteSignDto } from "./dto";
 import { DiscreteService } from "./discrete.service";
 import { DiscreteEntity } from "./discrete.entity";
-import { DiscreteAutocompleteDto, DiscreteSearchDto, DiscreteSignDto } from "./dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Public()
 @Controller("/discrete")
@@ -15,7 +15,7 @@ export class DiscreteController {
 
   @Get("/")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Query() dto: DiscreteSearchDto): Promise<DiscreteEntity | null> {
+  public findOne(@Query() dto: DiscreteFindOneDto): Promise<DiscreteEntity | null> {
     return this.discreteService.findOneByToken(dto);
   }
 

@@ -6,7 +6,7 @@ import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "et
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IDiscreteAutocompleteDto, IDiscreteSignDto } from "@framework/types";
+import type { IDiscreteAutocompleteDto, IDiscreteFindOneDto, IDiscreteSignDto } from "@framework/types";
 import {
   ContractFeatures,
   DiscreteStatus,
@@ -23,7 +23,6 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import type { IDiscreteSearchDto } from "./interfaces";
 import { DiscreteEntity } from "./discrete.entity";
 
 @Injectable()
@@ -44,7 +43,10 @@ export class DiscreteService {
     return this.discreteEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: IDiscreteSearchDto, merchantEntity: MerchantEntity): Promise<DiscreteEntity | null> {
+  public async findOneByToken(
+    dto: IDiscreteFindOneDto,
+    merchantEntity: MerchantEntity,
+  ): Promise<DiscreteEntity | null> {
     const { tokenId, attribute } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelationsOrFail({ id: tokenId }, merchantEntity);

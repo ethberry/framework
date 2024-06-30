@@ -1,4 +1,4 @@
-export interface IDiscreteSearchDto {
+export interface IDiscreteFindOneDto {
   tokenId: number;
   attribute: string;
 }
