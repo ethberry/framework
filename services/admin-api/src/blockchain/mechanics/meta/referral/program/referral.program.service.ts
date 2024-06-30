@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
 import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -16,6 +15,24 @@ export class ReferralProgramService {
     private readonly referralProgramEntityRepository: Repository<ReferralProgramEntity>,
     protected readonly merchantService: MerchantService,
   ) {}
+
+  public async search(userEntity: UserEntity): Promise<[Array<ReferralProgramEntity>, number]> {
+    const queryBuilder = this.referralProgramEntityRepository.createQueryBuilder("program");
+
+    queryBuilder.leftJoinAndSelect("program.merchant", "merchant");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("program.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+
+    queryBuilder.orderBy({
+      "program.level": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public findOne(
     where: FindOptionsWhere<ReferralProgramEntity>,
@@ -62,7 +79,7 @@ export class ReferralProgramService {
   public async update(dto: IReferralProgramUpdateDto, userEntity: UserEntity): Promise<ReferralProgramEntity[]> {
     const { levels, referralProgramStatus } = dto;
 
-    if (levels && levels.length > 0) {
+    if (levels && levels.length) {
       // REMOVE OLD
       await this.deleteProgram(userEntity.merchantId);
       // CREATE NEW

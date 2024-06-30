@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Post, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
-import { ReferralProgramService } from "./referral.program.service";
 import { ReferralProgramCreateDto, ReferralProgramUpdateDto } from "./dto";
+import { ReferralProgramService } from "./referral.program.service";
 import { ReferralProgramEntity } from "./referral.program.entity";
 
 @ApiBearerAuth()
@@ -14,9 +14,9 @@ export class ReferralProgramController {
   constructor(private readonly referralProgramService: ReferralProgramService) {}
 
   @Get("/")
-  @UseInterceptors(NotFoundInterceptor)
-  public findOne(@User() userEntity: UserEntity): Promise<Array<ReferralProgramEntity>> {
-    return this.referralProgramService.findAllWithRelations(userEntity);
+  @UseInterceptors(PaginationInterceptor)
+  public search(@User() userEntity: UserEntity): Promise<[Array<ReferralProgramEntity>, number]> {
+    return this.referralProgramService.search(userEntity);
   }
 
   @Post("/")

@@ -17,7 +17,7 @@ export class ReferralProgramUpdateDto implements IReferralProgramUpdateDto {
   })
   @ValidateNested()
   @Type(() => ReferralProgramLevelCreateDto)
-  public levels?: Array<IReferralProgramLevelDto> = [];
+  public levels?: Array<IReferralProgramLevelDto>;
 
   @ApiPropertyOptional()
   @IsOptional()
