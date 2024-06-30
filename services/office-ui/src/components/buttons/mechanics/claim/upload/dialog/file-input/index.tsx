@@ -5,14 +5,14 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
-import type { IClaimRowDto, IClaimUploadDto } from "@framework/types";
+import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { claimsValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
 export interface IFileInputProps {
-  initialValues: IClaimUploadDto;
+  initialValues: IClaimTemplateUploadDto;
 }
 
 export const FileInput: FC<IFileInputProps> = props => {
@@ -32,7 +32,7 @@ export const FileInput: FC<IFileInputProps> = props => {
     form.reset(initialValues);
   };
 
-  const parseCsv = async (csv: File): Promise<Array<IClaimRowDto>> => {
+  const parseCsv = async (csv: File): Promise<Array<IClaimTemplateRowDto>> => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
@@ -45,7 +45,7 @@ export const FileInput: FC<IFileInputProps> = props => {
           checkType: true,
         })
           .fromString(reader.result as string)
-          .then((data: IClaimRowDto[]) => {
+          .then((data: IClaimTemplateRowDto[]) => {
             resolve(data.map(claim => ({ ...claim, id: v4() })));
           });
       };

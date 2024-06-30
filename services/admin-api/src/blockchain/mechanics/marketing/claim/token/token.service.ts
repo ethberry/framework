@@ -16,11 +16,11 @@ import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
+import type { IClaimTokenRowDto, IClaimTokenUploadDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 
@@ -218,13 +218,13 @@ export class ClaimTokenService {
     );
   }
 
-  public async upload(dto: IClaimUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public async upload(dto: IClaimTokenUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     const { claims } = dto;
     return new Promise(resolve => {
       mapLimit(
         claims,
         10,
-        async ({ account, endTimestamp, tokenType, address, templateId, tokenId, amount }: IClaimRowDto) => {
+        async ({ account, endTimestamp, tokenType, address, templateId, tokenId, amount }: IClaimTokenRowDto) => {
           const contractEntity = await this.contractService.findOne({
             address,
             merchantId: userEntity.merchantId,

@@ -1,4 +1,4 @@
-import type { IAssetDto } from "../../../exchange/asset/asset";
+import type { IAssetDto } from "../../../exchange";
 import { ClaimType } from "../../../../../entities";
 
 export interface IClaimCreateDto {

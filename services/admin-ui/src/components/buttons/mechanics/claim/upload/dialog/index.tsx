@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IClaimUploadDto } from "@framework/types";
+import type { IClaimTemplateUploadDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { FileInput } from "./file-input";
@@ -13,7 +13,7 @@ export interface IClaimUploadDialogProps {
   onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   isLoading: boolean;
-  initialValues: IClaimUploadDto;
+  initialValues: IClaimTemplateUploadDto;
 }
 
 export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
