@@ -32,7 +32,7 @@ export class RaffleRoundServiceRmq {
     });
 
     raffleEntities.map(raffle => {
-      return Object.values(CronExpression).includes(raffle.parameters.schedule as unknown as CronExpression)
+      return Object.values(CronExpression).includes(raffle.parameters.schedule as CronExpression)
         ? this.updateOrCreateRoundCronJob(
             {
               address: raffle.address,

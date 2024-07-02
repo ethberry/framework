@@ -13,10 +13,10 @@ import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeor
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { AssetEntity } from "./asset.entity";
-import { AssetComponentEntity } from "./asset-component.entity";
-import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { AssetComponentEntity } from "./asset-component.entity";
+import { AssetEntity } from "./asset.entity";
 
 @Injectable()
 export class AssetService {

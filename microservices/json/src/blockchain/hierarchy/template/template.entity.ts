@@ -5,9 +5,9 @@ import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { ITemplate } from "@framework/types";
 import { TemplateStatus } from "@framework/types";
 
+import { AssetEntity } from "../../exchange/asset/asset.entity";
 import { ContractEntity } from "../contract/contract.entity";
 import { TokenEntity } from "../token/token.entity";
-import { AssetEntity } from "../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "template" })
 export class TemplateEntity extends SearchableEntity implements ITemplate {

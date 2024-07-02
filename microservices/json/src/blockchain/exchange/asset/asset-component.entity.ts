@@ -6,8 +6,8 @@ import { ns } from "@framework/constants";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
-import { AssetEntity } from "./asset.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { AssetEntity } from "./asset.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
 export class AssetComponentEntity extends IdBaseEntity implements IAssetComponent {

@@ -32,7 +32,7 @@ export class LotteryRoundServiceRmq {
     });
 
     lotteryEntities.map(lottery => {
-      return Object.values(CronExpression).includes(lottery.parameters.schedule as unknown as CronExpression)
+      return Object.values(CronExpression).includes(lottery.parameters.schedule as CronExpression)
         ? this.updateOrCreateRoundCronJob(
             {
               address: lottery.address,

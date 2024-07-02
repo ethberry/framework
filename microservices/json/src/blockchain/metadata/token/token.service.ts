@@ -4,8 +4,8 @@ import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
 import { getText } from "@gemunion/draft-js-utils";
-import { TokenMetadata, TokenRarity } from "@framework/types";
 import { decodeTraits } from "@gemunion/traits-v6";
+import { TokenMetadata, TokenRarity } from "@framework/types";
 import type { IOpenSeaTokenMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";

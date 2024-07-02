@@ -8,11 +8,11 @@ import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Injectable()
 export class MarketplaceService {

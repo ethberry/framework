@@ -36,6 +36,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const user = useUser<IUser>();
   const isUserAuthenticated = user.isAuthenticated();
 
+  // TODO useSystemContract
   const { fn: getContractExchangeFn } = useApiCall(
     api =>
       api.fetchJson({
@@ -43,7 +44,6 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         method: "POST",
         data: {
           contractModule: SystemModuleType.EXCHANGE,
-          chainId,
         },
       }),
     { success: false, error: false },

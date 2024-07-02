@@ -4,9 +4,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { User } from "@gemunion/nest-js-utils";
 
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { MarketplaceService } from "./marketplace.service";
 import { TemplateSignDto } from "./dto";
-import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @ApiBearerAuth()
 @Controller("/marketplace")

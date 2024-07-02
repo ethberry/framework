@@ -3,9 +3,9 @@ import { IsString, MaxLength, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { AccountDto } from "@gemunion/nest-js-validators";
+import { ContractEventSignature } from "@framework/types";
 
 import type { ISignalMessageDto } from "../interfaces";
-import { ContractEventSignature } from "@framework/types";
 
 export class MessageDto extends AccountDto implements ISignalMessageDto {
   @ApiProperty()
