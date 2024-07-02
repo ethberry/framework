@@ -157,7 +157,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '0',
         'ACTIVE',
-        10504,
+        10505,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
