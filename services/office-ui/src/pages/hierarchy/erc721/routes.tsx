@@ -33,7 +33,7 @@ export const erc721Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc721Template /> },
-          { path: "/erc721/templates/:id", element: <Erc721Template /> },
+
           { path: "/erc721/templates/:id/:action", element: <Erc721Template /> },
         ],
       },
@@ -42,7 +42,7 @@ export const erc721Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc721Token /> },
-          { path: "/erc721/tokens/:id", element: <Erc721Token /> },
+
           { path: "/erc721/tokens/:id/:action", element: <Erc721Token /> },
         ],
       },

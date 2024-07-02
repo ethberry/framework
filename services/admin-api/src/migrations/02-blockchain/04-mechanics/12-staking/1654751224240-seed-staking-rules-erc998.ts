@@ -51,19 +51,19 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ) VALUES (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81411
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81412
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81421
       ), (
@@ -75,31 +75,31 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81431
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         81432
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81441
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81442
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81451
       ), (
@@ -111,7 +111,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998',
         10406,
-        1040602, -- rouge
+        1040602, -- Rouge
         1,
         81499
       );

@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { AssetPromoService } from "./promo.service";
 import { AssetPromoEntity } from "./promo.entity";
-import { AssetPromoCreateDto, AssetPromoSearchDto, AssetPromoUpdateDto } from "./dto";
+import { AssetPromoCreateDto, PromoSearchDto, AssetPromoUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
@@ -29,7 +29,7 @@ export class AssetPromoController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: AssetPromoSearchDto,
+    @Query() dto: PromoSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<AssetPromoEntity>, number]> {
     return this.assetPromoService.search(dto, userEntity);

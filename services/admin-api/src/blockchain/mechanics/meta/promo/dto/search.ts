@@ -1,6 +1,6 @@
 import { SearchDto } from "@gemunion/collection";
-import type { IAssetPromoSearchDto } from "@framework/types";
+import type { IPromoSearchDto } from "@framework/types";
 
-export class AssetPromoSearchDto extends SearchDto implements IAssetPromoSearchDto {
+export class PromoSearchDto extends SearchDto implements IPromoSearchDto {
   public merchantId: number;
 }

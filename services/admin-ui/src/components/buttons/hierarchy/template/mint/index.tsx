@@ -7,15 +7,15 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import mintERC20BlacklistABI from "@framework/abis/mint/ERC20Blacklist.json";
 import mintCommonERC721BlacklistABI from "@framework/abis/mintCommon/ERC721Blacklist.json";
 import mintERC1155BlacklistABI from "@framework/abis/mint/ERC1155Blacklist.json";
 
-import { useCheckAccessMint } from "../../../../../utils/use-check-access";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface ITemplateMintButtonProps {
   className?: string;
@@ -34,7 +34,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkAccessMint } = useCheckAccessMint();
+  const { checkPermissions } = useCheckPermissions();
   const [hasAccess, setHasAccess] = useState(false);
 
   const { address, contractType, decimals } = contract!;
@@ -91,14 +91,13 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccessMint(void 0, {
+      void checkPermissions({
         account,
-        address: contract?.address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+        address,
+        role: AccessControlRoleType.MINTER_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

@@ -30,7 +30,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         11101,
-        1110101, -- sword mysterybox
+        1110101, -- Sword MysteryBox
         '1',
         102021101
       );

@@ -30,7 +30,7 @@ export class SeedLootBoxErc998At1653616447940 implements MigrationInterface {
       ) VALUES (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         '1',
         102124201
       ), (

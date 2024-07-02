@@ -31,7 +31,7 @@ export class SeedMergeErc721Erc721RecipesAt1697979517330 implements MigrationInt
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         3,
         10219330101
       ), (

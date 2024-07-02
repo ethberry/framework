@@ -32,7 +32,7 @@ export const mysteryRoutes: Array<RouteObject> = [
         path: "/mystery/boxes",
         children: [
           { index: true, element: <MysteryBoxList /> },
-          { path: "/mystery/boxes/:id", element: <MysteryBox /> },
+
           { path: "/mystery/boxes/:id/:action", element: <MysteryBox /> },
         ],
       },
@@ -40,7 +40,7 @@ export const mysteryRoutes: Array<RouteObject> = [
         path: "/mystery/tokens",
         children: [
           { index: true, element: <MysteryTokenList /> },
-          { path: "/mystery/tokens/:id", element: <MysteryBoxToken /> },
+
           { path: "/mystery/tokens/:id/:action", element: <MysteryBoxToken /> },
         ],
       },

@@ -86,15 +86,11 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
   );
 
   const metaFn = useMetamask((values: IMergeDto, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/recipes/merge/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           mergeId: merge.id,
           tokenIds: values.tokenIds,

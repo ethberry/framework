@@ -1,7 +1,6 @@
-import { Mixin } from "ts-mixer";
+import { SearchDto } from "@gemunion/collection";
+import type { IPromoSearchDto } from "@framework/types";
 
-import { PaginationDto } from "@gemunion/collection";
-
-import type { IPromoSearchDto } from "../interfaces";
-
-export class PromoSearchDto extends Mixin(PaginationDto) implements IPromoSearchDto {}
+export class PromoSearchDto extends SearchDto implements IPromoSearchDto {
+  public merchantId: number;
+}

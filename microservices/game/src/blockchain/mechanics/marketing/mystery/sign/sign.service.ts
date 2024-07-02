@@ -5,6 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import type { IMysteryBoxSignDto } from "@framework/types";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -13,7 +14,6 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import type { ISignMysteryboxDto } from "./interfaces";
 
 @Injectable()
 export class MysterySignService {
@@ -24,7 +24,7 @@ export class MysterySignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignMysteryboxDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
+  public async sign(dto: IMysteryBoxSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, mysteryBoxId, chainId } = dto;
 
     if (merchantEntity.ratePlan === RatePlanType.BRONZE) {

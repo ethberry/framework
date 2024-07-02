@@ -1,7 +1,7 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { Link } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -10,7 +10,7 @@ import { ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
 
-import { useCheckAccessDefaultAdmin } from "../../../../../utils/use-check-access";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 
@@ -35,7 +35,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
   const [hasAccess, setHasAccess] = useState(false);
-  const { checkAccessDefaultAdmin } = useCheckAccessDefaultAdmin();
+  const { checkPermissions } = useCheckPermissions();
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -58,14 +58,12 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
 
   useEffect(() => {
     if (account) {
-      void checkAccessDefaultAdmin(void 0, {
+      void checkPermissions({
         account,
         address,
-      })
-        .then((json: { hasRole: boolean }) => {
-          setHasAccess(json?.hasRole);
-        })
-        .catch(console.error);
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
     }
   }, [account]);
 

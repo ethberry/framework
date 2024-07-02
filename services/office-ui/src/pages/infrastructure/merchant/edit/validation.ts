@@ -1,13 +1,13 @@
-import { mixed, object, string } from "yup";
+import { mixed, object } from "yup";
 
-import { draftValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema, titleValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 import { emailValidationSchema } from "@gemunion/yup-rules/dist/email";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 import { MerchantStatus, RatePlanType } from "@framework/types";
 
 export const validationSchema = object().shape({
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   description: draftValidationSchema,
   email: emailValidationSchema,
   wallet: addressValidationSchema,

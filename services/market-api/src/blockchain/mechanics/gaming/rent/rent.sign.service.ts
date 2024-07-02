@@ -5,6 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import type { IRentSignDto } from "@framework/types";
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
@@ -12,9 +13,9 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import type { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class RentSignService {
@@ -26,8 +27,8 @@ export class RentSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
-    const { tokenId, account, referrer, expires, externalId, chainId } = dto;
+  public async sign(dto: IRentSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { tokenId, referrer, expires, externalId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -46,8 +47,8 @@ export class RentSignService {
     const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account, // from
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet, // from
       {
         externalId, // rent.id
         expiresAt, // sign expires
@@ -78,7 +79,7 @@ export class RentSignService {
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,
-        amount: "1", // todo get from DTO? (for 1155)
+        amount: "1",
       },
       rentEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),

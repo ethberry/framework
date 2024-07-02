@@ -66,7 +66,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
             symbol={symbol}
             address={address}
             decimals={decimals}
-            cap={formatEther(template.amount, decimals, "")}
+            cap={formatEther(template.cap, decimals, "")}
             chainId={chainId}
             contractFeatures={contractFeatures}
           />

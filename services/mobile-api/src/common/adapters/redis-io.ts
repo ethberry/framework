@@ -3,7 +3,8 @@ import { INestApplicationContext } from "@nestjs/common";
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import { ConfigService } from "@nestjs/config";
 import { ServerOptions } from "socket.io";
-import { createAdapter } from "socket.io-redis";
+import { createAdapter } from "@socket.io/redis-adapter";
+import { Redis } from "ioredis";
 import passport from "passport";
 
 import { NodeEnv } from "@framework/types";
@@ -42,13 +43,14 @@ export class RedisIoAdapter extends IoAdapter {
       },
     });
 
-    const redisUrl = configService.get<string>("REDIS_WS_URL", "redis://127.0.0.1:6379/");
-    const redisAdapter = createAdapter(redisUrl);
-    server.adapter(redisAdapter);
+    const pubClient = new Redis();
+    const subClient = pubClient.duplicate();
+
+    // https://socket.io/docs/v4/redis-adapter/#with-the-ioredis-package
+    server.adapter(createAdapter(pubClient, subClient));
 
     // https://github.com/nestjs/nest/issues/1254
     // https://github.com/nestjs/nest/issues/1059
-
     server.use(adapter(passport.initialize()));
 
     return server;

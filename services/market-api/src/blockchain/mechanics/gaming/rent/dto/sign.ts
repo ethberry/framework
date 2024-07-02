@@ -2,11 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ReferrerDto, ChainIdDto } from "@gemunion/nest-js-validators";
+import { ReferrerDto } from "@gemunion/nest-js-validators";
+import type { IRentSignDto } from "@framework/types";
 
-import type { ISignRentTokenDto } from "../interfaces";
-
-export class SignRentTokenDto extends Mixin(ReferrerDto, AccountDto, ChainIdDto) implements ISignRentTokenDto {
+export class RentSignDto extends Mixin(ReferrerDto) implements IRentSignDto {
   @ApiProperty({
     minimum: 1,
   })
@@ -27,4 +26,7 @@ export class SignRentTokenDto extends Mixin(ReferrerDto, AccountDto, ChainIdDto)
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
   public externalId: number;
+
+  public chainId: number;
+  public account: string;
 }

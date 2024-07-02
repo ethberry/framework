@@ -149,6 +149,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       cap,
+      amount: cap,
       contractId: erc20ContractEntity.id,
     });
 

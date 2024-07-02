@@ -1,7 +1,7 @@
 import type { IVestingContractDeployDto } from "./deploy";
-import type { IBCAssetTemplateDto } from "../../../exchange/asset/bc-asset";
+import type { IBlockChainAssetTemplateDto } from "../../../exchange/asset/bc-asset";
 
-export interface IVestingClaimRowDto extends IVestingContractDeployDto, IBCAssetTemplateDto {}
+export interface IVestingClaimRowDto extends IVestingContractDeployDto, IBlockChainAssetTemplateDto {}
 
 export interface IVestingClaimUploadDto {
   claims: Array<IVestingClaimRowDto>;

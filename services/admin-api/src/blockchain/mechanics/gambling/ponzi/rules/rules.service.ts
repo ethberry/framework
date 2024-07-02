@@ -108,7 +108,7 @@ export class PonziRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "rule.id": "DESC",
+      "rule.createdAt": "ASC",
     });
 
     return queryBuilder.getManyAndCount();

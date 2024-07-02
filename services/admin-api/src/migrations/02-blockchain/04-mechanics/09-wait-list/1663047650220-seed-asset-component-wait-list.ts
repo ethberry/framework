@@ -45,7 +45,7 @@ export class SeedAssetComponentsWaitListAt1663047650220 implements MigrationInte
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         102090005
       ), (
         'NATIVE',
@@ -75,7 +75,7 @@ export class SeedAssetComponentsWaitListAt1663047650220 implements MigrationInte
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1000',
+        1000,
         102090006
       ), (
         'ERC20',

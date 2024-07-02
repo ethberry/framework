@@ -36,7 +36,7 @@ export const Discrete: FC = () => {
     handleChangePage,
     handleToggleFilters,
   } = useCollection<IDiscrete, IDiscreteSearchDto>({
-    baseUrl: "/grades",
+    baseUrl: "/discrete",
     empty: {
       contractId: 0,
       attribute: "",
@@ -68,9 +68,9 @@ export const Discrete: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "grade"]} />
+      <Breadcrumbs path={["dashboard", "discrete"]} />
 
-      <PageHeader message="pages.grade.title">
+      <PageHeader message="pages.discrete.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>

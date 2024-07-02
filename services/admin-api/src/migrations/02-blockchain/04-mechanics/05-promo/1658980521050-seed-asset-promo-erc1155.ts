@@ -35,7 +35,7 @@ export class SeedAssetPromoErc1155At1658980521050 implements MigrationInterface 
         'ERC1155',
         10501,
         1050101, -- Gold
-        '1',
+        1000,
         65101
       ), (
         'ERC20',

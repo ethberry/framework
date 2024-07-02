@@ -57,7 +57,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         81212
       ), (
@@ -81,8 +81,8 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC721',
         10301,
-        1030101, -- rune
-        '${WeiPerEther.toString()}',
+        1030101, -- Ruby
+        1,
         81232
       ), (
         'ERC20',
@@ -93,7 +93,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         1,
         81242
       ), (

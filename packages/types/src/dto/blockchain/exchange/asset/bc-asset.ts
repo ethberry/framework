@@ -1,15 +1,15 @@
 import type { TokenType } from "@gemunion/types-blockchain";
 
-export interface IBCAssetTemplateDto {
+export interface IBlockChainAssetDto {
   tokenType: TokenType;
   address: string;
-  templateId: number;
   amount: string;
 }
 
-export interface IBCAssetTokenDto {
-  tokenType: TokenType;
-  address: string;
+export interface IBlockChainAssetTemplateDto extends IBlockChainAssetDto {
+  templateId: number;
+}
+
+export interface IBlockChainAssetTokenDto extends IBlockChainAssetTemplateDto {
   tokenId: number;
-  amount: string;
 }

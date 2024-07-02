@@ -34,7 +34,7 @@ export class SeedAssetPromoErc998At1658980521040 implements MigrationInterface {
       ) VALUES (
         'ERC998',
         10406,
-        1040601, -- warrior
+        1040601, -- Warrior
         '1',
         64101
       ), (

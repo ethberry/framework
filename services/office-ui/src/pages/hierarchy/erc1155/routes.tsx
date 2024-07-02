@@ -32,7 +32,7 @@ export const erc1155Routes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Erc1155Template /> },
-          { path: "/erc1155/templates/:id", element: <Erc1155Template /> },
+
           { path: "/erc1155/templates/:id/:action", element: <Erc1155Template /> },
         ],
       },

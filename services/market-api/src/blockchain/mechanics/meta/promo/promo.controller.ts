@@ -6,7 +6,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetPromoService } from "./promo.service";
 import { AssetPromoEntity } from "./promo.entity";
-import { AssetPromoSignDto, PromoSearchDto } from "./dto";
+import { PromoSignDto, PromoSearchDto } from "./dto";
 
 @Public()
 @Controller("/promos")
@@ -32,7 +32,7 @@ export class AssetPromoController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: AssetPromoSignDto): Promise<IServerSignature> {
-    return this.assetPromoService.sign(dto);
+  public sign(@Body() dto: PromoSignDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.assetPromoService.sign(dto, userEntity);
   }
 }

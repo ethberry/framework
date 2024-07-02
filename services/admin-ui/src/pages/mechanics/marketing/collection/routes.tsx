@@ -33,7 +33,6 @@ export const collectionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <CollectionTemplate /> },
-          { path: "/collection/templates/:id", element: <CollectionTemplate /> },
           { path: "/collection/templates/:id/:action", element: <CollectionTemplate /> },
         ],
       },
@@ -42,7 +41,6 @@ export const collectionRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <CollectionToken /> },
-          { path: "/collection/tokens/:id", element: <CollectionToken /> },
           { path: "/collection/tokens/:id/:action", element: <CollectionToken /> },
         ],
       },

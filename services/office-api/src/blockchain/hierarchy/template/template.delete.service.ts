@@ -71,7 +71,7 @@ export class TemplateDeleteService {
 
     return Promise.allSettled([
       // Delete use in mechanics
-      this.discreteService.deactivateGrades(assets),
+      this.discreteService.deactivateDiscrete(assets),
       this.waitListListService.deactivateWaitlist(assets),
       this.stakingRulesService.deactivateStakingRules(assets),
       this.ponziRulesService.deactivatePonziRules(assets),

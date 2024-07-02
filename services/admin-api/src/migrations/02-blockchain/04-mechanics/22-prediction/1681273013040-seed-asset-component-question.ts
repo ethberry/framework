@@ -20,7 +20,7 @@ export class SeedAssetComponentQuestion1681273013040 implements MigrationInterfa
       ) VALUES (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         102220101
       );

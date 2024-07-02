@@ -5,7 +5,7 @@ import { enqueueSnackbar } from "notistack";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { ClaimType } from "@framework/types";
-import type { IClaim, IClaimUploadDto } from "@framework/types";
+import type { IClaim, IClaimTemplateUploadDto } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { ClaimUploadDialog } from "./dialog";
@@ -26,7 +26,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
   const { fn, isLoading } = useApiCall(
-    (api, values: IClaimUploadDto) => {
+    (api, values: IClaimTemplateUploadDto) => {
       const { claims } = values;
       return api
         .fetchJson({
@@ -55,7 +55,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
     setIsUploadDialogOpen(true);
   };
 
-  const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
+  const handleUploadConfirm = async (values: IClaimTemplateUploadDto, form: any) => {
     return fn(form, values).then(async () => {
       await onRefreshPage();
       setIsUploadDialogOpen(false);

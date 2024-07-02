@@ -43,7 +43,7 @@ export class SeedPonziRulesErc20At1660436477220 implements MigrationInterface {
       ), (
         'NATIVE',
         10101,
-        1010101, -- ETH
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
         90212
       ), (

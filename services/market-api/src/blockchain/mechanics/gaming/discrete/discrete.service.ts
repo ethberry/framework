@@ -6,7 +6,7 @@ import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "et
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IDiscreteAutocompleteDto, IDiscreteSignDto } from "@framework/types";
+import type { IDiscreteAutocompleteDto, IDiscreteFindOneDto, IDiscreteSignDto } from "@framework/types";
 import {
   ContractFeatures,
   DiscreteStatus,
@@ -22,7 +22,7 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import type { IDiscreteSearchDto } from "./interfaces";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { DiscreteEntity } from "./discrete.entity";
 
 @Injectable()
@@ -43,7 +43,7 @@ export class DiscreteService {
     return this.discreteEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: IDiscreteSearchDto): Promise<DiscreteEntity | null> {
+  public async findOneByToken(dto: IDiscreteFindOneDto): Promise<DiscreteEntity | null> {
     const { tokenId, attribute } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
@@ -59,10 +59,10 @@ export class DiscreteService {
   }
 
   public async findOneWithRelations(where: FindOptionsWhere<DiscreteEntity>): Promise<DiscreteEntity | null> {
-    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("grade");
+    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("discrete");
 
-    queryBuilder.leftJoinAndSelect("grade.price", "price");
-    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+    queryBuilder.leftJoinAndSelect("discrete.price", "price");
+    queryBuilder.leftJoinAndSelect("discrete.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -75,18 +75,18 @@ export class DiscreteService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("grade.contractId = :contractId", {
+    queryBuilder.andWhere("discrete.contractId = :contractId", {
       contractId: where.contractId,
     });
-    queryBuilder.andWhere("grade.attribute = :attribute", {
+    queryBuilder.andWhere("discrete.attribute = :attribute", {
       attribute: where.attribute,
     });
 
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: IDiscreteSignDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
+  public async sign(dto: IDiscreteSignDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { referrer = ZeroAddress, tokenId, attribute } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -104,19 +104,19 @@ export class DiscreteService {
     });
 
     if (!discreteEntity) {
-      throw new NotFoundException("gradeNotFound");
+      throw new NotFoundException("discreteNotFound");
     }
 
     if (discreteEntity.discreteStatus !== DiscreteStatus.ACTIVE) {
-      throw new ForbiddenException("gradeNotActive");
+      throw new ForbiddenException("discreteNotActive");
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
-      account,
+      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
+      userEntity.wallet,
       {
         externalId: discreteEntity.id,
         expiresAt,
@@ -185,9 +185,9 @@ export class DiscreteService {
         contractId,
       },
       join: {
-        alias: "grade",
+        alias: "discrete",
         leftJoinAndSelect: {
-          price: "grade.price",
+          price: "discrete.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",

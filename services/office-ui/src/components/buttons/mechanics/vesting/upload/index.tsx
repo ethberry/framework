@@ -3,7 +3,7 @@ import { Add } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IClaimUploadDto } from "@framework/types";
+import type { IClaimTemplateUploadDto } from "@framework/types";
 
 import { VestingClaimUploadDialog } from "./dialog";
 
@@ -19,7 +19,7 @@ export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = prop
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
+  const { fn, isLoading } = useApiCall((api, values: IClaimTemplateUploadDto) => {
     const { claims } = values;
     return api.fetchJson({
       url: "/vesting/claims/upload",
@@ -34,7 +34,7 @@ export const VestingClaimUploadButton: FC<IVestingClaimUploadButtonProps> = prop
     setIsUploadDialogOpen(true);
   };
 
-  const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
+  const handleUploadConfirm = async (values: IClaimTemplateUploadDto, form: any) => {
     return fn(form, values).then(async () => {
       await onRefreshPage();
       setIsUploadDialogOpen(false);

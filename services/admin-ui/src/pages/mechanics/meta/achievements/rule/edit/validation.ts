@@ -1,11 +1,11 @@
 import { mixed, object, string } from "yup";
 
-import { draftValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 import { reISO8601 } from "@gemunion/constants";
 
 export const validationSchema = object().shape({
-  title: string().required("form.validations.valueMissing"),
+  title: titleValidationSchema,
   description: draftValidationSchema,
   achievementStatus: mixed<AchievementRuleStatus>()
     .oneOf(Object.values(AchievementRuleStatus))

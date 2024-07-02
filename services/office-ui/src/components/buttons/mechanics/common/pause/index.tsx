@@ -1,24 +1,25 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { PauseCircleOutline } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import PauseABI from "@framework/abis/pause/Pausable.json";
 import { shouldDisableByContractType } from "../../../../utils";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
-export interface IPausableButtonProps {
+export interface IPauseButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const PauseButton: FC<IPausableButtonProps> = props => {
+export const PauseButton: FC<IPauseButtonProps> = props => {
   const {
     className,
     contract,
@@ -26,6 +27,12 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
     disabled,
     variant,
   } = props;
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { account = "" } = useWeb3React();
+
+  const { checkPermissions } = useCheckPermissions();
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
@@ -35,6 +42,18 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
   const handlePause = () => {
     return metaPause();
   };
+
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address,
+        role: AccessControlRoleType.PAUSER_ROLE,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
 
   if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || isPaused) {
     return null;
@@ -47,7 +66,7 @@ export const PauseButton: FC<IPausableButtonProps> = props => {
       message="form.buttons.pause"
       className={className}
       dataTestId="PauseButton"
-      disabled={disabled || shouldDisableByContractType(contract)}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
       variant={variant}
     />
   );

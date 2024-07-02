@@ -28,9 +28,9 @@ export class DiscreteService {
   ): Promise<[Array<DiscreteEntity>, number]> {
     const { query, discreteStatus, skip, take } = dto;
 
-    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("grade");
+    const queryBuilder = this.discreteEntityRepository.createQueryBuilder("discrete");
 
-    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+    queryBuilder.leftJoinAndSelect("discrete.contract", "contract");
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
@@ -42,9 +42,9 @@ export class DiscreteService {
 
     if (discreteStatus) {
       if (discreteStatus.length === 1) {
-        queryBuilder.andWhere("grade.discreteStatus = :discreteStatus", { discreteStatus: discreteStatus[0] });
+        queryBuilder.andWhere("discrete.discreteStatus = :discreteStatus", { discreteStatus: discreteStatus[0] });
       } else {
-        queryBuilder.andWhere("grade.discreteStatus IN(:...discreteStatus)", { discreteStatus });
+        queryBuilder.andWhere("discrete.discreteStatus IN(:...discreteStatus)", { discreteStatus });
       }
     }
 
@@ -71,7 +71,7 @@ export class DiscreteService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "grade.createdAt": "DESC",
+      "discrete.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -127,7 +127,7 @@ export class DiscreteService {
     });
 
     if (!discreteEntity) {
-      throw new NotFoundException("gradeNotFound");
+      throw new NotFoundException("discreteNotFound");
     }
 
     if (discreteEntity.contract.merchantId !== userEntity.merchantId) {
@@ -145,10 +145,10 @@ export class DiscreteService {
   public findOneWithRelations(where: FindOptionsWhere<DiscreteEntity>): Promise<DiscreteEntity | null> {
     return this.findOne(where, {
       join: {
-        alias: "grade",
+        alias: "discrete",
         leftJoinAndSelect: {
-          contract: "grade.contract",
-          price: "grade.price",
+          contract: "discrete.contract",
+          price: "discrete.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",
@@ -162,14 +162,14 @@ export class DiscreteService {
   }
 
   public async deactivateGrades(assets: Array<AssetEntity>): Promise<DeleteResult> {
-    const gradeEntities = await this.discreteEntityRepository.find({
+    const discreteEntities = await this.discreteEntityRepository.find({
       where: {
         priceId: In(assets.map(asset => asset.id)),
       },
     });
 
     return await this.discreteEntityRepository.delete({
-      id: In(gradeEntities.map(g => g.id)),
+      id: In(discreteEntities.map(g => g.id)),
     });
   }
 }

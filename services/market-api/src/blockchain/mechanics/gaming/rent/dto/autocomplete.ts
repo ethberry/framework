@@ -1,10 +1,8 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, Min } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsInt, IsOptional, Min } from "class-validator";
+import { Type } from "class-transformer";
 
-import { RentRuleStatus } from "@framework/types";
-
-import type { IRentAutocompleteDto } from "../interfaces/autocomplete";
+import type { IRentAutocompleteDto } from "@framework/types";
 
 export class RentAutocompleteDto implements IRentAutocompleteDto {
   @ApiPropertyOptional()
@@ -13,12 +11,4 @@ export class RentAutocompleteDto implements IRentAutocompleteDto {
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public contractId: number;
-
-  @ApiPropertyOptional({
-    enum: RentRuleStatus,
-  })
-  @Transform(({ value }) => value as RentRuleStatus)
-  @IsOptional()
-  @IsEnum(RentRuleStatus, { message: "badInput" })
-  public rentStatus: RentRuleStatus;
 }

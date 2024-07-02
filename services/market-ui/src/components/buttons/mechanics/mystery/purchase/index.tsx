@@ -70,14 +70,11 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/mystery/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           mysteryBoxId: mysteryBox.id,
         },

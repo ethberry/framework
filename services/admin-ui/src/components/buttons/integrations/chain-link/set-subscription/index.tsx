@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Subscriptions } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -11,6 +11,7 @@ import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/setSubscription
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;
@@ -29,6 +30,10 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
   const { account } = useWeb3React();
 
   const [isSetSubscriptionDialogOpen, setIsSetSubscriptionDialogOpen] = useState(false);
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { checkPermissions } = useCheckPermissions();
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
@@ -57,6 +62,17 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
     setIsSetSubscriptionDialogOpen(false);
   };
 
+  useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
+  }, [account]);
+
   return (
     <Fragment>
       <ListAction
@@ -65,7 +81,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         message="pages.chain-link.set"
         className={className}
         dataTestId="ChainLinkSetSubscriptionButton"
-        disabled={disabled || !account}
+        disabled={disabled || !hasAccess}
         variant={variant}
       />
       <ChainLinkSetSubscriptionDialog

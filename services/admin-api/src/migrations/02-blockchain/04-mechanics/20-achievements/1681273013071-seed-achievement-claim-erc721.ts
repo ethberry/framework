@@ -33,7 +33,7 @@ export class SeedAchievementClaimErc721At1681273013071 implements MigrationInter
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
         104000301
       ), (

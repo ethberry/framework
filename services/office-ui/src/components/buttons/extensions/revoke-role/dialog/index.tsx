@@ -13,6 +13,7 @@ import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "@framework/abis/revokeRole/AccessControlFacet.json";
+import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
@@ -32,6 +33,10 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
   const { account } = useWeb3React();
+
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -59,6 +64,14 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   };
 
   useEffect(() => {
+    if (account) {
+      void checkPermissions({
+        account,
+        address: data.address,
+      }).then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      });
+    }
     if (account && open) {
       void fn().then((rows: Array<IAccessControlWithRelations>) => {
         setRows(rows.filter(row => row.account !== account));
@@ -80,7 +93,12 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
                 {access.role}
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleRevoke(access)} message="dialogs.revokeRole" icon={Delete} />
+                <ListAction
+                  onClick={handleRevoke(access)}
+                  message="dialogs.revokeRole"
+                  icon={Delete}
+                  disabled={!hasAccess}
+                />
               </ListActions>
             </StyledListItem>
           ))}

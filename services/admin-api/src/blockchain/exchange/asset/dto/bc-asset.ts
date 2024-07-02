@@ -4,10 +4,10 @@ import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
 import { AddressDto, IsBigInt } from "@gemunion/nest-js-validators";
-import type { IBCAssetTemplateDto, IBCAssetTokenDto } from "@framework/types";
+import type { IBlockChainAssetTemplateDto, IBlockChainAssetTokenDto, IBlockChainAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-export class BCAssetTemplateDto extends AddressDto implements IBCAssetTemplateDto {
+export class BlockChainAssetDto extends AddressDto implements IBlockChainAssetDto {
   @decorate(
     ApiProperty({
       enum: TokenType,
@@ -16,16 +16,6 @@ export class BCAssetTemplateDto extends AddressDto implements IBCAssetTemplateDt
   @decorate(Transform(({ value }) => value as TokenType))
   @decorate(IsEnum(TokenType, { message: "badInput" }))
   public tokenType: TokenType;
-
-  @decorate(
-    ApiProperty({
-      type: String,
-    }),
-  )
-  @decorate(IsInt({ message: "typeMismatch" }))
-  @decorate(Min(1, { message: "rangeUnderflow" }))
-  @decorate(ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType)))
-  public templateId: number;
 
   @decorate(
     ApiProperty({
@@ -37,16 +27,7 @@ export class BCAssetTemplateDto extends AddressDto implements IBCAssetTemplateDt
   public amount: string;
 }
 
-export class BCAssetTokenDto extends AddressDto implements IBCAssetTokenDto {
-  @decorate(
-    ApiProperty({
-      enum: TokenType,
-    }),
-  )
-  @decorate(Transform(({ value }) => value as TokenType))
-  @decorate(IsEnum(TokenType, { message: "badInput" }))
-  public tokenType: TokenType;
-
+export class BlockChainAssetTemplateDto extends BlockChainAssetDto implements IBlockChainAssetTemplateDto {
   @decorate(
     ApiProperty({
       type: String,
@@ -56,7 +37,9 @@ export class BCAssetTokenDto extends AddressDto implements IBCAssetTokenDto {
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType)))
   public templateId: number;
+}
 
+export class BlockChainAssetTokenDto extends BlockChainAssetTemplateDto implements IBlockChainAssetTokenDto {
   @decorate(
     ApiProperty({
       type: String,
@@ -66,13 +49,4 @@ export class BCAssetTokenDto extends AddressDto implements IBCAssetTokenDto {
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType)))
   public tokenId: number;
-
-  @decorate(
-    ApiProperty({
-      type: Number,
-    }),
-  )
-  @decorate(IsBigInt({}, { message: "typeMismatch" }))
-  @decorate(ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType)))
-  public amount: string;
 }

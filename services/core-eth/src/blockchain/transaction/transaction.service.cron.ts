@@ -1,20 +1,17 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { MessageHandler } from "@nestjs/microservices";
 
-import { PATTERN_METADATA } from "@nestjs/microservices/constants";
-import { transformPatternToRoute } from "@nestjs/microservices/utils";
-
 import { Cron } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, TransactionReceipt } from "ethers";
 import { LessThan } from "typeorm";
 
-import { DiscoveredMethodWithMeta, DiscoveryService } from "@golevelup/nestjs-discovery";
+import { DiscoveryService } from "@golevelup/nestjs-discovery";
 
 import { ETHERS_RPC } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 import { ContractType, TransactionStatus } from "@framework/types";
-import { delayMs, getBlockNumber, getTransactionReceipt } from "../../common/utils";
+import { delayMs, getBlockNumber, getHandlerByPattern, getTransactionReceipt } from "../../common/utils";
 import { TransactionService } from "./transaction.service";
 
 @Injectable()
@@ -77,6 +74,8 @@ export class TransactionServiceCron {
           this.cronLock = false;
         }
       }
+    } else {
+      this.cronLock = false;
     }
   }
 
@@ -104,10 +103,7 @@ export class TransactionServiceCron {
           await this.transactionService.updateTxsStatus({ id: logEntity.id }, TransactionStatus.PROCESS);
           console.info(`PROCESSING JOB ${logEntity.logData.id}, route: ${logEntity.logData.route}`);
           const { logData } = logEntity;
-          const discoveredMethodsWithMeta = await this.getHandlerByPattern(
-            logData.route.toString(),
-            this.discoveryService,
-          );
+          const discoveredMethodsWithMeta = await getHandlerByPattern(logData.route.toString(), this.discoveryService);
           // process all controllers
           await Promise.allSettled(
             discoveredMethodsWithMeta.map(discoveredMethodWithMeta => {
@@ -137,15 +133,15 @@ export class TransactionServiceCron {
     this.cronLock = false;
   }
 
-  protected async getHandlerByPattern<T extends Array<Record<string, string>>>(
-    route: string,
-    discoveryService: DiscoveryService,
-  ): Promise<Array<DiscoveredMethodWithMeta<T>>> {
-    const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return methods.filter(method => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return method.meta.some(meta => transformPatternToRoute(meta) === route);
-    });
-  }
+  // protected async getHandlerByPattern<T extends Array<Record<string, string>>>(
+  //   route: string,
+  //   discoveryService: DiscoveryService,
+  // ): Promise<Array<DiscoveredMethodWithMeta<T>>> {
+  //   const methods = await discoveryService.controllerMethodsWithMetaAtKey<T>(PATTERN_METADATA);
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //   return methods.filter(method => {
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //     return method.meta.some(meta => transformPatternToRoute(meta) === route);
+  //   });
+  // }
 }

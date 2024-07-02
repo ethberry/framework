@@ -5,6 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import type { ILootBoxSignDto } from "@framework/types";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -13,7 +14,6 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { LootBoxService } from "../box/box.service";
 import { LootBoxEntity } from "../box/box.entity";
-import type { ISignLootboxDto } from "./interfaces";
 
 @Injectable()
 export class LootSignService {
@@ -24,7 +24,7 @@ export class LootSignService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public async sign(dto: ISignLootboxDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
+  public async sign(dto: ILootBoxSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, lootBoxId, chainId } = dto;
 
     if (merchantEntity.ratePlan === RatePlanType.BRONZE) {

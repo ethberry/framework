@@ -1,6 +1,4 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -20,9 +18,8 @@ export class CollectionContractService extends ContractService {
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     protected readonly collectionTokenService: CollectionTokenService,
-    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository, configService);
+    super(contractEntityRepository);
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {

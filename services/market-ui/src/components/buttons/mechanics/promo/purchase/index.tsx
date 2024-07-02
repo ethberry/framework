@@ -104,15 +104,11 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/promos/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           promoId: promo.id,
         },

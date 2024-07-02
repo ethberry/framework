@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IAssetPromoSearchDto } from "@framework/types";
+import type { IPromoSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -18,7 +18,7 @@ export class AssetPromoService {
   ) {}
 
   public async search(
-    dto: Partial<IAssetPromoSearchDto>,
+    dto: Partial<IPromoSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<AssetPromoEntity>, number]> {
     const { query, skip, take } = dto;

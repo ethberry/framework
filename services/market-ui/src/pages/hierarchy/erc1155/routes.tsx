@@ -32,7 +32,7 @@ export const erc1155Routes: Array<RouteObject> = [
         path: "/erc1155/templates",
         children: [
           { index: true, element: <Erc1155TemplateList /> },
-          { path: "/erc1155/templates/:id", element: <Erc1155Template /> },
+
           { path: "/erc1155/templates/:id/:action", element: <Erc1155Template /> },
         ],
       },
@@ -40,7 +40,7 @@ export const erc1155Routes: Array<RouteObject> = [
         path: "/erc1155/tokens",
         children: [
           { index: true, element: <Erc1155TokenList /> },
-          { path: "/erc1155/tokens/:id", element: <Erc1155Token /> },
+
           { path: "/erc1155/tokens/:id/:action", element: <Erc1155Token /> },
         ],
       },

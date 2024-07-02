@@ -198,7 +198,6 @@
       "RENTABLE": "قابل للإيجار",
       "SOULBOUND": "مرتبط بالروح",
       "SPLITTER": "موزع الدفع",
-      "STABLE_COIN": "عملة مستقرة",
       "STATEHASH": "هاش الحالة",
       "VOTES": "الأصوات",
       "WHITELIST": "القائمة البيضاء"
@@ -1127,7 +1126,7 @@
       "exchange": {
         "marketplace": {
           "chart": "الرسم البياني",
-          "grade": "الدرجة",
+          "discrete": "الدرجة",
           "rarity": "الندرة",
           "report": "تقرير",
           "title": "السوق"
@@ -1156,7 +1155,7 @@
         "claim": "المطالبة",
         "collection": "المجموعات",
         "dispenser": "الجهاز",
-        "grade": "الدرجة",
+        "discrete": "الدرجة",
         "lottery": "اليانصيب",
         "mystery": "الغموض",
         "payment-splitter": "موزع الدفع",
@@ -1232,7 +1231,7 @@
         "title": "رموز ERC998"
       }
     },
-    "grade": {
+    "discrete": {
       "title": "قواعد التصنيف"
     },
     "guest": {
@@ -1272,7 +1271,7 @@
       "chart": {
         "title": "الرسم البياني"
       },
-      "grade": {
+      "discrete": {
         "amount": "الكمية",
         "attribute": "التصنيف",
         "title": "التصنيف"
@@ -1454,7 +1453,7 @@
         "erc1155": "5 عقود ERC1155",
         "erc20": "عقد ERC20 واحد",
         "erc721": "5 عقود ERC721",
-        "grade": "التصنيف",
+        "discrete": "التصنيف",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "برونز",
@@ -1469,7 +1468,7 @@
         "erc1155": "25 عقود ERC1155",
         "erc20": "5 عقود ERC20",
         "erc721": "25 عقود ERC721",
-        "grade": "التصنيف",
+        "discrete": "التصنيف",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "ذهب",
@@ -1490,7 +1489,7 @@
         "erc1155": "10 عقود ERC1155",
         "erc20": "عقد ERC20 واحد",
         "erc721": "10 عقود ERC721",
-        "grade": "التصنيف",
+        "discrete": "التصنيف",
         "raffle": "اليانصيب",
         "staking": "الاستثمار",
         "title": "فضة",

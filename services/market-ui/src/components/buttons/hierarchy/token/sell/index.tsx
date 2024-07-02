@@ -65,7 +65,7 @@ export const TokenSellOnOpenSeaButton: FC<ITokenSellOnOpenSeaButtonProps> = prop
     { success: false },
   );
 
-  const handleSellConfirm = async (values: Partial<ISellDto>, form: any) => {
+  const handleSellConfirm = async (values: ISellDto, form: any) => {
     return fn(form, values)
       .then(async resp => {
         return await metaFn(resp);

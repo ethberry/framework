@@ -41,7 +41,7 @@ export class SeedStakingRulesMixedAt1654751224270 implements MigrationInterface 
       ) VALUES (
         'NATIVE',
         10108,
-        1010801, -- BESU (fake)
+        1010801, -- FAKE
         '${WeiPerEther.toString()}',
         81711
       ), (
@@ -66,31 +66,31 @@ export class SeedStakingRulesMixedAt1654751224270 implements MigrationInterface 
         'ERC721',
         10380,
         1038001, -- Under Armour
-        1000,
+        1,
         81811
       ), (
         'ERC721',
         10380,
         1038001, -- Under Armour
-        10,
+        1,
         81812
       ), (
         'ERC1155',
         10505,
-        1050501, -- Candy
+        1050501, -- Lollypop
         1000,
         81911
       ), (
         'ERC1155',
         10505,
-        1050501, -- Candy
-        10,
+        1050501, -- Lollypop
+        1000,
         81911
       ), (
         'ERC721',
         10380,
         1038001, -- Under Armour
-        100,
+        1,
         81912
       );
     `);

@@ -20,7 +20,7 @@ export const predictionRoutes: Array<RouteObject> = [
         path: "/prediction/question",
         children: [
           { index: true, element: <PredictionQuestion /> },
-          { path: "/prediction/question/:id", element: <PredictionQuestion /> },
+
           { path: "/prediction/question/:id/:action", element: <PredictionQuestion /> },
         ],
       },

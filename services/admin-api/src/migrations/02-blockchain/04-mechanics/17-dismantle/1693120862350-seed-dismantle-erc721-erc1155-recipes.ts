@@ -31,7 +31,7 @@ export class SeedDismantleErc721Erc155RecipesAt1693120862350 implements Migratio
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         10217350101
       ), (

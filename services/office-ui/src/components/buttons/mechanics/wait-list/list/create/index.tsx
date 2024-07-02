@@ -40,7 +40,7 @@ export const WaitListListCreateButton: FC<IWaitListListCreateButtonProps> = prop
     setIsCreateDialogOpen(true);
   };
 
-  const handleCreateConfirm = async (values: Partial<IWaitListItem>, form: any) => {
+  const handleCreateConfirm = async (values: IWaitListItem, form: any) => {
     return fn(form, values).then(async () => {
       await onRefreshPage();
       setIsCreateDialogOpen(false);

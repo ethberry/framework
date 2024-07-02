@@ -20,7 +20,7 @@ export class SeedAssetComponentsAchievementAt1681273013045 implements MigrationI
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         1,
         40100101
       ), (

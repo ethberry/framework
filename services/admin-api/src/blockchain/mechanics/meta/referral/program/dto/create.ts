@@ -1,9 +1,10 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { ArrayNotEmpty, IsEnum, IsArray, IsInt, IsOptional, Max, Min, Validate, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
-import { IReferralProgramCreateDto, IReferralProgramLevelDto } from "../interfaces";
+import { ApiProperty } from "@nestjs/swagger";
+import { ArrayNotEmpty, IsArray, IsInt, Max, Min, Validate, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
+
+import type { IReferralProgramCreateDto, IReferralProgramLevelDto } from "@framework/types";
+
 import { RefProgramLevelsRule } from "./levels";
-import { ReferralProgramStatus } from "@framework/types";
 
 export class ReferralProgramLevelCreateDto implements IReferralProgramLevelDto {
   @ApiProperty()
@@ -19,13 +20,6 @@ export class ReferralProgramLevelCreateDto implements IReferralProgramLevelDto {
 }
 
 export class ReferralProgramCreateDto implements IReferralProgramCreateDto {
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public merchantId: number;
-
   @ApiProperty({ type: () => [ReferralProgramLevelCreateDto] })
   @IsArray({ message: "typeMismatch" })
   @ArrayNotEmpty({ message: "badInput" })
@@ -35,12 +29,4 @@ export class ReferralProgramCreateDto implements IReferralProgramCreateDto {
   @ValidateNested()
   @Type(() => ReferralProgramLevelCreateDto)
   public levels: Array<IReferralProgramLevelDto>;
-
-  /* update status */
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => value as ReferralProgramStatus)
-  @IsEnum(ReferralProgramStatus, { message: "badInput" })
-  public referralProgramStatus: ReferralProgramStatus;
 }

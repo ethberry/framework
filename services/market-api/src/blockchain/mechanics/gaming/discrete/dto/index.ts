@@ -1,3 +1,3 @@
 export * from "./autocomplete";
-export * from "./search";
+export * from "./find";
 export * from "./sign";

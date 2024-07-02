@@ -4,7 +4,13 @@ import { ConfigService } from "@nestjs/config";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { AchievementRuleStatus, ContractEventType, ContractManagerEventType, TokenType } from "@framework/types";
+import {
+  AccessControlEventType,
+  AchievementRuleStatus,
+  ContractEventType,
+  ContractManagerEventType,
+  TokenType,
+} from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { AchievementRuleEntity } from "./rule.entity";
@@ -99,8 +105,12 @@ export class AchievementsRuleService {
     const { contractId, eventType, eventData } = event;
 
     // do not check ContractManager's deploy events
+    // do not check AccessControlEventType's events
     // TODO rename CM's events args account -> addr
-    if (!(<any>Object).values(ContractManagerEventType).includes(eventType)) {
+    if (
+      !(<any>Object).values(ContractManagerEventType).includes(eventType) &&
+      !(<any>Object).values(AccessControlEventType).includes(eventType)
+    ) {
       if (eventData && "account" in eventData) {
         const wallet = eventData.account;
         // TODO filter all db.contracts or limit rule events

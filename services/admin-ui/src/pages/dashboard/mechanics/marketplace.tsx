@@ -49,12 +49,12 @@ export const MarketplaceSection: FC = () => {
             <FormattedMessage id="pages.dashboard.exchange.marketplace.rarity" />
           </ListItemText>
         </ListItemButton>
-        <ListItemButton component={RouterLink} to="/marketplace/report/grade">
+        <ListItemButton component={RouterLink} to="/marketplace/report/discrete">
           <ListItemIcon>
             <Grade />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.exchange.marketplace.grade" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.discrete" />
           </ListItemText>
         </ListItemButton>
       </List>

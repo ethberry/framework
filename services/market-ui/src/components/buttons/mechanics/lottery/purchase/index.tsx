@@ -78,15 +78,11 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/lottery/ticket/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           ticketNumbers: bool36ArrayToByte32(ticketNumbers),
           contractId: round.contractId,

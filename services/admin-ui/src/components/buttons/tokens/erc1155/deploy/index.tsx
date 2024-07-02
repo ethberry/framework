@@ -53,7 +53,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
     },
   );
 
-  const onDeployConfirm = (values: Record<string, any>, form: any) => {
+  const onDeployConfirm = (values: Partial<IContract>, form: any) => {
     return handleDeployConfirm(
       {
         url: "/contract-manager/erc1155",

@@ -81,7 +81,7 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        101080101, -- BESU (fake)
+        101080101, -- FAKE
         '${defaultJSON}',
         0,
         '0',

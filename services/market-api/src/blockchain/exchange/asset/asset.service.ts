@@ -78,8 +78,10 @@ export class AssetService {
             }),
         ).then(values =>
           values
-            .filter(c => c.status === "fulfilled")
-            .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
+            .filter(
+              <T extends AssetComponentEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+                c.status === "fulfilled",
+            )
             .map(c => c.value),
         );
         const newComponents = await Promise.allSettled(
@@ -90,8 +92,10 @@ export class AssetService {
             }),
         ).then(values =>
           values
-            .filter(c => c.status === "fulfilled")
-            .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
+            .filter(
+              <T extends AssetComponentEntity>(c: PromiseSettledResult<T>): c is PromiseFulfilledResult<T> =>
+                c.status === "fulfilled",
+            )
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });

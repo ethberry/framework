@@ -1,5 +1,5 @@
 import type { ISearchDto } from "@gemunion/types-collection";
 
-export interface IAssetPromoSearchDto extends ISearchDto {
+export interface IPromoSearchDto extends ISearchDto {
   merchantId: number;
 }

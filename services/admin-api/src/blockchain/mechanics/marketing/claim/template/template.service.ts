@@ -14,7 +14,13 @@ import { mapLimit } from "async";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import type {
+  IClaimCreateDto,
+  IClaimSearchDto,
+  IClaimUpdateDto,
+  IClaimTemplateRowDto,
+  IClaimTemplateUploadDto,
+} from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -23,7 +29,6 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ClaimEntity } from "../claim.entity";
-import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
 
 @Injectable()
 export class ClaimTemplateService {
@@ -217,13 +222,13 @@ export class ClaimTemplateService {
     );
   }
 
-  public async upload(dto: IClaimUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public async upload(dto: IClaimTemplateUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     const { claims } = dto;
     return new Promise(resolve => {
       mapLimit(
         claims,
         10,
-        async ({ account, endTimestamp, tokenType, address, templateId, amount }: IClaimRowDto) => {
+        async ({ account, endTimestamp, tokenType, address, templateId, amount }: IClaimTemplateRowDto) => {
           const contractEntity = await this.contractService.findOne({
             address,
             merchantId: userEntity.merchantId,

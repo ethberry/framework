@@ -1,13 +1,24 @@
-import type { IBCAssetTemplateDto } from "../../../exchange/asset/bc-asset";
+import type { IBlockChainAssetTemplateDto } from "../../../exchange";
 import { ClaimType } from "../../../../../entities";
+import { IBlockChainAssetTokenDto } from "../../../exchange";
 
-export interface IClaimRowDto extends IBCAssetTemplateDto {
+export interface IClaimTemplateRowDto extends IBlockChainAssetTemplateDto {
   id?: string;
   account: string;
   endTimestamp: string;
 }
 
-export interface IClaimUploadDto {
-  claims: Array<IClaimRowDto>;
+export interface IClaimTemplateUploadDto {
+  claims: Array<IClaimTemplateRowDto>;
+  claimType: ClaimType;
+}
+
+export interface IClaimTokenRowDto extends IBlockChainAssetTokenDto {
+  account: string;
+  endTimestamp: string;
+}
+
+export interface IClaimTokenUploadDto {
+  claims: Array<IClaimTokenRowDto>;
   claimType: ClaimType;
 }

@@ -25,7 +25,6 @@ export const recipesRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Craft /> },
-          { path: "/recipes/craft/:id", element: <Craft /> },
           { path: "/recipes/craft/:id/:action", element: <Craft /> },
         ],
       },
@@ -34,7 +33,6 @@ export const recipesRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Dismantle /> },
-          { path: "/recipes/dismantle/:id", element: <Dismantle /> },
           { path: "/recipes/dismantle/:id/:action", element: <Dismantle /> },
         ],
       },
@@ -43,7 +41,6 @@ export const recipesRoutes: Array<RouteObject> = [
         element: <Protected />,
         children: [
           { index: true, element: <Merge /> },
-          { path: "/recipes/merge/:id", element: <Merge /> },
           { path: "/recipes/merge/:id/:action", element: <Merge /> },
         ],
       },

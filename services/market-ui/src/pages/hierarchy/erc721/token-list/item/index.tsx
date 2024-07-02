@@ -18,7 +18,7 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}/view`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />

@@ -149,7 +149,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         10108,
         '${ZeroAddress}',
         '${chainId}',
-        'Fake token (BESU)',
+        'FAKE',
         '${simpleFormatting}',
         '${imagePath}/besu.png',
         'Ethereum',

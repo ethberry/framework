@@ -5,26 +5,26 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@gemunion/nest-js-validators";
 import { ClaimType } from "@framework/types";
+import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
 
-import type { IClaimRowDto, IClaimUploadDto } from "../interfaces";
-import { BCAssetTemplateDto } from "../../../../../exchange/asset/dto";
+import { BlockChainAssetTemplateDto } from "../../../../../exchange/asset/dto";
 
-export class ClaimRowDto extends Mixin(BCAssetTemplateDto, AccountDto) implements IClaimRowDto {
+export class ClaimTemplateRowDto extends Mixin(BlockChainAssetTemplateDto, AccountDto) implements IClaimTemplateRowDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
 }
 
-export class ClaimUploadDto implements IClaimUploadDto {
+export class ClaimTemplateUploadDto implements IClaimTemplateUploadDto {
   @ApiProperty({
     isArray: true,
-    type: ClaimRowDto,
+    type: ClaimTemplateRowDto,
   })
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
-  @Type(() => ClaimRowDto)
-  public claims: Array<ClaimRowDto>;
+  @Type(() => ClaimTemplateRowDto)
+  public claims: Array<ClaimTemplateRowDto>;
 
   @ApiProperty({
     enum: ClaimType,

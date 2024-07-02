@@ -19,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ClaimTemplateService } from "./template.service";
 import { ClaimEntity } from "../claim.entity";
-import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimUploadDto } from "./dto";
+import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimTemplateUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims/templates")
@@ -38,7 +38,7 @@ export class ClaimTemplateController {
   }
 
   @Post("/upload")
-  public upload(@Body() dto: ClaimUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public upload(@Body() dto: ClaimTemplateUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     return this.claimTemplateService.upload(dto, userEntity);
   }
 

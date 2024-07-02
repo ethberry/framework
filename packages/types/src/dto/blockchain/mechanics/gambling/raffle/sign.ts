@@ -1,5 +1,6 @@
-export interface ISignRaffleDto {
-  account: string;
+export interface IRaffleSignDto {
   referrer: string;
   contractId: number;
+  account: string;
+  chainId: number;
 }

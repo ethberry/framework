@@ -1,8 +1,9 @@
+import { symbolValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
 import { number, object, string } from "yup";
 
 export const validationSchema = object().shape({
-  name: string().required("form.validations.valueMissing"),
-  symbol: string().required("form.validations.valueMissing").max(32, "form.validations.rangeUnderflow"),
+  name: titleValidationSchema,
+  symbol: symbolValidationSchema,
   baseTokenURI: string().required("form.validations.valueMissing"),
   royalty: number()
     .typeError("form.validations.badInput")

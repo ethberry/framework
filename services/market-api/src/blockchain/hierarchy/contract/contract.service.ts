@@ -7,6 +7,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
 import type { IContractAutocompleteExtDto } from "./interface";
+import { defaultChainId } from "@framework/constants";
 
 @Injectable()
 export class ContractService {
@@ -123,7 +124,7 @@ export class ContractService {
     } = dto;
 
     const where = {
-      chainId: userEntity.chainId,
+      chainId: userEntity?.chainId || Number(defaultChainId),
       contractStatus: ContractStatus.ACTIVE,
     };
 

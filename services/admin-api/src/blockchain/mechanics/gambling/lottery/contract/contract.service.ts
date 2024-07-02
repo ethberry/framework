@@ -1,5 +1,4 @@
 import { ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
@@ -19,9 +18,8 @@ export class LotteryContractService extends ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     @Inject(RmqProviderType.CRON_SERVICE)
     protected readonly cronServiceProxy: ClientProxy,
-    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository, configService);
+    super(contractEntityRepository);
   }
 
   public search(dto: Partial<IContractSearchDto>, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
