@@ -1,37 +1,48 @@
-# NFT Framework
+# Token Management System
 
-Welcome to Framework monorepo.
+Welcome to Gemunion Framework monorepo.
 
-## Pre Install
+## Installation
 
-I assume you have NodeJS NPM/YARN, Postgres, RabbitMQ and Redis installed
-or, you can just use docker and docker compose :)
+All commands are given for mac, please figure windows equivalents yourself
 
-In any case you have to fill up sensitive keys in docker files or .env files
+1. Clone repo from git
 
 ```shell script
 git clone git@github.com:Gemunion/framework.git
 git submodule update --init --recursive
 ```
 
-## DEV setup with Docker-compose and Besu blockchain
+2. Install [NVM](https://github.com/nvm-sh/nvm)
 
-0. Stop all containers (if any) and clean existing postgres and besu
+3. Install Node.js using NVM
+
 ```shell script
-docker stop $(docker ps -a -q)
-docker compose down -v
-rm -rf postgres
-rm -rf besu
+nvm use 22
+nvm alias default 22
 ```
+
+4. Install Postgres, RabbitMQ, Redis using docker
+
+```shell script
+docker compose up -d
+```
+
+Then connect to Postgres and manually create `gemunion-development` database
+
+5. Fill up sensitive keys in .env files
+
+6. Obtain gemunion-firebase-key.json
+
+## DEV setup with Docker-compose and Besu blockchain
 
 1. Run prepare script
 ```shell script
 npm run prepare:framework:dev
 ```
-
 2. Run framework services one-by-one in separate terminals for easy monitoring
 
-Admin-api (it will run initpostgres migrations)
+Admin-api (it will run postgres migrations)
 ```shell script
 npm run --prefix ./services/admin-api start
 ```
@@ -52,16 +63,24 @@ Core-eth
 npm run --prefix ./services/core-eth start
 ```
 
+3. In case everything went off-rails stop all containers (if any) and clean existing postgres and besu
+
+```shell script
+docker stop $(docker ps -a -q)
+docker compose down -v
+rm -rf postgres
+rm -rf besu
+```
+
 ## API docs
 
-There is Swagger API documentation configured on http://localhost:3001/swagger
+There is Swagger API documentation configured on
+
+1. http://localhost:3001/swagger
+2. http://localhost:3003/swagger
+3. http://localhost:3005/swagger
 
 ## Configuration
 
 For fine tune check services READMEs
 
-***
-In case you have installed postgres db, you must create `gemunion-development` database manually,
-script only creates schema for you.
-
-In order to run tests, you must create `gemunion-test` database manually too.
