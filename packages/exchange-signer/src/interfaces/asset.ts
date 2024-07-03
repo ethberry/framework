@@ -6,3 +6,10 @@ export interface IParams {
   receiver: string;
   referrer: string;
 }
+
+export interface IAsset {
+  tokenType: number;
+  token: string;
+  tokenId: string;
+  amount: string;
+}
