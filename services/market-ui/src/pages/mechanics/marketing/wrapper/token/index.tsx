@@ -10,7 +10,7 @@ import { formatItem } from "@framework/exchange";
 import type { ITemplate, IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
+import { OpenSeaSellButton } from "../../../../../components/buttons";
 import { WrapperContent } from "./wrapper-content";
 import { StyledImage, StyledPaper } from "./styled";
 
@@ -59,7 +59,7 @@ export const WrapperToken: FC = () => {
                   values={{ amount: formatItem(selected.template?.price) }}
                 />
               </Typography>
-              <TokenSellOnOpenSeaButton token={selected} />
+              <OpenSeaSellButton token={selected} />
             </StyledPaper>
           ) : null}
         </Grid>

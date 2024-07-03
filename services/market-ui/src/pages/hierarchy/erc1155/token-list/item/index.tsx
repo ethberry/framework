@@ -7,7 +7,7 @@ import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled
 import type { IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { TokenSellOnOpenSeaButton } from "../../../../../components/buttons";
+import { OpenSeaSellButton } from "../../../../../components/buttons";
 
 interface IErc1155TokenListItemProps {
   token: IToken;
@@ -33,7 +33,7 @@ export const Erc1155TokenListItem: FC<IErc1155TokenListItemProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <TokenSellOnOpenSeaButton token={token} />
+            <OpenSeaSellButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

@@ -9,21 +9,21 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
-import { ContractFeatures, OpenSeaSupportedChains, TokenStatus } from "@framework/types";
+import { ContractFeatures, NodeEnv, OpenSea16SupportedChains, TokenStatus } from "@framework/types";
 import type { ISellDto } from "./dialog";
 import { SellDialog } from "./dialog";
 
-interface ITokenSellOnOpenSeaButtonProps {
+interface IOpenSeaSellButtonProps {
   className?: string;
   disabled?: boolean;
   token: IToken;
   variant?: ListActionVariant;
 }
 
-export const TokenSellOnOpenSeaButton: FC<ITokenSellOnOpenSeaButtonProps> = props => {
+export const OpenSeaSellButton: FC<IOpenSeaSellButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
   const { referrer } = useAppSelector(state => state.settings);
-  const { account, chainId } = useWeb3React();
+  const { account, chainId = 0 } = useWeb3React();
 
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
 
@@ -87,9 +87,10 @@ export const TokenSellOnOpenSeaButton: FC<ITokenSellOnOpenSeaButtonProps> = prop
   const date = new Date();
   date.setDate(date.getDate() + 1);
 
-  // disable SELL for unsupported chains
-  if (!chainId || !Object.values(OpenSeaSupportedChains).includes(chainId)) {
-    return null;
+  if (process.env.NODE_ENV === NodeEnv.production) {
+    if (!Object.values(OpenSea16SupportedChains).includes(chainId)) {
+      return null;
+    }
   }
 
   if (token.tokenStatus === TokenStatus.BURNED) {
@@ -103,7 +104,7 @@ export const TokenSellOnOpenSeaButton: FC<ITokenSellOnOpenSeaButtonProps> = prop
         onClick={handleSell}
         message="form.buttons.sell"
         className={className}
-        dataTestId="TokenSellButton"
+        dataTestId="OpenSeaSellButton"
         disabled={disabled || token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
         variant={variant}
       />

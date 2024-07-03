@@ -16,6 +16,8 @@ import { TraitTokenPanel } from "../../../mechanics/gaming/traits/traits-token-p
 import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/mystery-token-panel";
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "../../erc721/token/common-token-panel";
+import { IpfsTokenPanel } from "../../erc721/token/ipfs-token-panel";
+import { OpenSeaTokenPanel } from "../../erc721/token/opensea-token-panel";
 import { Erc998Composition } from "./composition";
 import { StyledDescription, StyledImage } from "./styled";
 
@@ -61,6 +63,8 @@ export const Erc998Token: FC = () => {
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
               <LendTokenPanel token={selected} />
+              <IpfsTokenPanel token={selected} />
+              <OpenSeaTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

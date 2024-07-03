@@ -8,8 +8,9 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IBalance, ITemplate, IToken } from "@framework/types";
 
 import { DismantleTokenPanel } from "../../../mechanics/gaming/recipes/dismantle/dismantle-token-panel";
-import { CommonTokenPanel } from "./common-token-panel";
 import { TokenHistory } from "../../../../components/common/token-history";
+import { OpenSeaTokenPanel } from "../../erc721/token/opensea-token-panel";
+import { CommonTokenPanel } from "./common-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc1155Token: FC = () => {
@@ -50,6 +51,7 @@ export const Erc1155Token: FC = () => {
             <>
               <CommonTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
+              <OpenSeaTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

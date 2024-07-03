@@ -1,26 +1,41 @@
-// this supposed to be official list of supported chains
-// unfortunately it does not align with actual chains listed in the system
-// https://support.opensea.io/en/articles/8867082-which-blockchains-are-compatible-with-opensea
-
-export enum OpenSeaSupportedChains {
+// https://github.com/ProjectOpenSea/seaport
+export enum OpenSea16SupportedChains {
   ETHEREUM = 1,
+  ETHEREUM_SEPOLIA = 11155111,
 
   POLYGON = 137,
-
-  KLAYTN = 8217,
-
-  ARBITRUM = 42161,
-  ARBITRUM_NOVA = 42170,
+  POLYGON_AMOY = 80002,
 
   OPTIMISM = 10,
+  OPTIMISM_SEPOLIA = 11155420,
 
-  AVALANCHE = 43114,
-
-  // BINANCE = 56, removed
-
-  ZORA = 7777777,
+  ARBITRUM = 42161,
+  ARBITRUM_SEPOLIA = 421614,
+  ARBITRUM_NOVA = 42170,
 
   BASE = 8453,
+  BASE_SEPOLIA = 84532,
 
-  // SOLANA = null, not EVM
+  AVALANCHE = 43114,
+  AVALANCHE_FUJI = 43113,
+
+  GNOSIS = 100,
+  GNOSIS_CHIADO = 10200,
+
+  BINANCE = 56,
+  BINANCE_TEST = 97,
+
+  KLAYTN = 8217,
+  KLAYTN_BAOBAB = 1001,
+
+  MOONBEAM = 1284,
+  MOONRIVER = 1285,
+  CANTO = 7700,
+
+  FANTOM = 250,
+
+  CELO = 42220,
+
+  ZORA = 7777777,
+  ZORA_SEPOLIA = 999999999,
 }

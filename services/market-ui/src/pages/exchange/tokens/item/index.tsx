@@ -7,7 +7,7 @@ import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled
 import { ModuleType } from "@framework/types";
 import type { IToken } from "@framework/types";
 
-import { TokenSellOnOpenSeaButton } from "../../../../components/buttons";
+import { OpenSeaSellButton } from "../../../../components/buttons";
 import { RarityBadge } from "../../../../components/common/badge";
 
 interface IMyTokenListItemProps {
@@ -38,7 +38,7 @@ export const MyTokenListItem: FC<IMyTokenListItemProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <TokenSellOnOpenSeaButton token={token} />
+            <OpenSeaSellButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

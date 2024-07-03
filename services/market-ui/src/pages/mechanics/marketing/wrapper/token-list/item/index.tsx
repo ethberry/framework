@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IToken } from "@framework/types";
 
-import { TokenSellOnOpenSeaButton, WrapperUnpackButton } from "../../../../../../components/buttons";
+import { OpenSeaSellButton, WrapperUnpackButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
 import { formatTokenTitle } from "../../../../../../utils/token";
 
@@ -32,7 +32,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <TokenSellOnOpenSeaButton token={token} />
+            <OpenSeaSellButton token={token} />
           </Grid>
           <Grid item xs={12}>
             <WrapperUnpackButton token={token} />

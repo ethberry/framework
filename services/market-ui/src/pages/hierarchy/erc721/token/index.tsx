@@ -16,8 +16,9 @@ import { RarityTokenPanel } from "../../../mechanics/gaming/rarity/rarity-token-
 import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/mystery-token-panel";
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
-import { StyledDescription, StyledImage } from "./styled";
 import { IpfsTokenPanel } from "./ipfs-token-panel";
+import { OpenSeaTokenPanel } from "./opensea-token-panel";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
@@ -54,7 +55,6 @@ export const Erc721Token: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
-              <IpfsTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
               <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
@@ -62,6 +62,8 @@ export const Erc721Token: FC = () => {
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />
               <LendTokenPanel token={selected} />
+              <IpfsTokenPanel token={selected} />
+              <OpenSeaTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

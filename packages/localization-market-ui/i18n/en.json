@@ -1190,6 +1190,8 @@
       "title": "Staking"
     },
     "token": {
+      "ipfsTitle": "IPFS",
+      "openseaTitle": "OpenSea",
       "balanceTitle": "Balance:",
       "craft": "Craft",
       "attributes": "Attributes",

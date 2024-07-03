@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IToken } from "@framework/types";
 
-import { TokenSellOnOpenSeaButton } from "../../../../../../components/buttons";
+import { OpenSeaSellButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
 
 interface IMysteryTokenListItemProps {
@@ -31,7 +31,7 @@ export const MysteryTokenListItem: FC<IMysteryTokenListItemProps> = props => {
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <TokenSellOnOpenSeaButton token={token} />
+            <OpenSeaSellButton token={token} />
           </Grid>
         </Grid>
       </CardActions>
