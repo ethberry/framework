@@ -92,8 +92,18 @@ export const AssetPromo: FC = () => {
             <StyledListItem key={promo.id}>
               <ListItemText>{promo.item?.components[0].template?.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(promo)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(promo)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(promo)}
+                  message="form.buttons.edit"
+                  dataTestId="PromoEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(promo)}
+                  message="form.buttons.delete"
+                  dataTestId="PromoDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

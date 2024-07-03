@@ -89,7 +89,12 @@ export const Rent: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
               <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(rent)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(rent)}
+                  message="form.buttons.edit"
+                  dataTestId="RentEditButton"
+                  icon={Create}
+                />
               </ListActions>
             </StyledListItem>
           ))}

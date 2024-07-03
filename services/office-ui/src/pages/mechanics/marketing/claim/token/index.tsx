@@ -111,12 +111,14 @@ export const ClaimToken: FC = () => {
                   onClick={handleEdit(claim)}
                   icon={Create}
                   message="form.buttons.edit"
+                  dataTestId="ClaimEditButton"
                   disabled={claim.claimStatus !== ClaimStatus.NEW}
                 />
                 <ListAction
                   onClick={handleDelete(claim)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="ClaimEditButton"
+                  icon={Delete}
                   disabled={claim.claimStatus !== ClaimStatus.NEW}
                 />
               </ListActions>

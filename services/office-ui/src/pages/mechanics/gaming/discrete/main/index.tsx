@@ -103,10 +103,16 @@ export const Discrete: FC = () => {
                 {grade.contract?.title} ({grade.attribute})
               </ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(grade)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(grade)}
+                  message="form.buttons.edit"
+                  dataTestId="GradeEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(grade)}
                   message="form.buttons.delete"
+                  dataTestId="GradeDeleteButton"
                   icon={Delete}
                   disabled={grade.discreteStatus === DiscreteStatus.INACTIVE}
                 />

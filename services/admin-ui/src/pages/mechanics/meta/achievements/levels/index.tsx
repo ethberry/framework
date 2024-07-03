@@ -128,8 +128,18 @@ export const AchievementLevels: FC = () => {
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
               <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(level)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(level)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(level)}
+                  message="form.buttons.edit"
+                  dataTestId="LevelEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(level)}
+                  message="form.buttons.delete"
+                  dataTestId="LevelDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

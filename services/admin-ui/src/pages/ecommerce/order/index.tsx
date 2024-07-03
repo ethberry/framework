@@ -99,8 +99,18 @@ export const Order: FC = () => {
             <StyledListItem key={order.id}>
               <ListItemText>Order #{order.id}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(order)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(order)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(order)}
+                  message="form.buttons.edit"
+                  dataTestId="OrderEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(order)}
+                  message="form.buttons.delete"
+                  dataTestId="OrderDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

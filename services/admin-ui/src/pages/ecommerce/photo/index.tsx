@@ -58,11 +58,13 @@ export const Photo: FC = () => {
                 <ListAction
                   onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}
                   message="form.buttons.approve"
+                  dataTestId="PhotoAproveButton"
                   icon={Done}
                 />
                 <ListAction
                   onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}
                   message="form.buttons.delete"
+                  dataTestId="PhotoRejectButton"
                   icon={Clear}
                 />
               </ListActions>

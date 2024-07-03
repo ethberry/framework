@@ -14,10 +14,14 @@ git submodule update --init --recursive
 ```
 
 2. Install [NVM](https://github.com/nvm-sh/nvm)
+```shell script
+sudo port install nvm
+```
 
 3. Install Node.js using NVM
 
 ```shell script
+nvm install 22
 nvm use 22
 nvm alias default 22
 ```

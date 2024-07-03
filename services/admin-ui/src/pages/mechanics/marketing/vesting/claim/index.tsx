@@ -108,12 +108,14 @@ export const VestingClaim: FC = () => {
                   onClick={handleEdit(vesting)}
                   icon={Create}
                   message="form.buttons.edit"
+                  dataTestId="VestingEditButton"
                   disabled={vesting.claimStatus !== ClaimStatus.NEW}
                 />
                 <ListAction
                   onClick={handleDelete(vesting)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="VestingDeleteButton"
+                  icon={Delete}
                   disabled={vesting.claimStatus !== ClaimStatus.NEW}
                 />
               </ListActions>

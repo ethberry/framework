@@ -69,8 +69,18 @@ export const Merchant: FC = () => {
             <StyledListItem key={merchant.id}>
               <ListItemText>{merchant.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(merchant)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(merchant)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(merchant)}
+                  message="form.buttons.edit"
+                  dataTestId="MerchantEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(merchant)}
+                  message="form.buttons.delete"
+                  dataTestId="MerchantDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

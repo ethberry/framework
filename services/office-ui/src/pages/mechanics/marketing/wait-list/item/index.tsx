@@ -88,8 +88,9 @@ export const WaitListItem: FC = () => {
               <ListActions>
                 <ListAction
                   onClick={handleDelete(waitListItem)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="WaitListDeleteButton"
+                  icon={Delete}
                   disabled={
                     !!waitListItem.list?.root || waitListItem.list?.contract.contractStatus !== ContractStatus.ACTIVE
                   }

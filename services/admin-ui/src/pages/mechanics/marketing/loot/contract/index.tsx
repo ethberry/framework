@@ -98,11 +98,17 @@ export const LootContract: FC = () => {
             <StyledListItem key={contract.id}>
               <ListItemText>{contract.title}</ListItemText>
               <ListActions dataTestId="LootActionsMenuButton">
-                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(contract)}
+                  message="form.buttons.edit"
+                  dataTestId="ContractEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(contract)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="ContractDeleteButton"
+                  icon={Delete}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
                 <TopUpButton contract={contract} />

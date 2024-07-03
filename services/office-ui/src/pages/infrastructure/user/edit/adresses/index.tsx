@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { Box, Button, Chip, ListItemText } from "@mui/material";
-import { Add, Delete, Edit } from "@mui/icons-material";
+import { Add, Delete, Create } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
@@ -104,8 +104,18 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
                 sx={{ pr: 7 }}
               />
               <ListActions>
-                <ListAction onClick={handleEdit(address)} message="form.buttons.edit" icon={Edit} />
-                <ListAction onClick={handleDelete(address)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(address)}
+                  message="form.buttons.edit"
+                  dataTestId="AddressEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(address)}
+                  message="form.buttons.delete"
+                  dataTestId="AddressDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

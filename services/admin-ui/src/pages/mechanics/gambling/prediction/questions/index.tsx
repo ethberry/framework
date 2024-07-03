@@ -101,16 +101,22 @@ export const PredictionQuestions: FC = () => {
             <StyledListItem key={question.id}>
               <ListItemText sx={{ width: 0.6 }}>{question.title}</ListItemText>
               <ListActions dataTestId="QuestionMenuButton">
-                <ListAction onClick={handleEdit(question)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(question)}
+                  message="form.buttons.edit"
+                  dataTestId="QuestionEditButton"
+                  icon={Create}
+                />
                 <ListAction onClick={handleView(question)} message="form.buttons.resolve" icon={Done} />
                 <PredictionQuestionStartButton question={question} />
                 <PredictionQuestionResolveButton question={question} />
                 <PredictionQuestionReleaseButton question={question} />
                 <ListAction
                   onClick={handleDelete(question)}
-                  disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="QuestionDeleteButton"
+                  icon={Delete}
+                  disabled={question.questionStatus === PredictionQuestionStatus.INACTIVE}
                 />
               </ListActions>
             </StyledListItem>

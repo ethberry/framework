@@ -80,8 +80,18 @@ export const Craft: FC = () => {
               <ListItemText sx={{ width: 0.3, px: 0.5 }}>{formatItem(craft.price)}</ListItemText>
               <ListItemText sx={{ width: 0.3, px: 0.5 }}>{formatItem(craft.item)}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(craft)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(craft)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(craft)}
+                  message="form.buttons.edit"
+                  dataTestId="CraftEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(craft)}
+                  message="form.buttons.delete"
+                  dataTestId="CraftDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

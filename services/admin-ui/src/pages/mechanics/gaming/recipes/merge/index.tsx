@@ -87,8 +87,18 @@ export const Merge: FC = () => {
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.price)}</ListItemText>
               <ListItemText sx={{ flex: "0 1 45%" }}>{formatItem(merge.item)}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(merge)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(merge)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(merge)}
+                  message="form.buttons.edit"
+                  dataTestId="MergeEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(merge)}
+                  message="form.buttons.delete"
+                  dataTestId="MergeDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

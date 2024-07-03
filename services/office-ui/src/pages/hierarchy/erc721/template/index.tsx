@@ -104,12 +104,18 @@ export const Erc721Template: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
               <ListActions dataTestId="TemplateActionsMenuButton">
-                <ListAction onClick={handleEdit(template)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(template)}
+                  message="form.buttons.edit"
+                  dataTestId="TemplateEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="ContractDeleteButton"
+                  icon={Delete}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
                 />
                 <TemplateMintButton template={template} />
               </ListActions>

@@ -118,11 +118,17 @@ export const MysteryBox: FC = () => {
             <StyledListItem key={mystery.id}>
               <ListItemText>{mystery.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(mystery)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(mystery)}
+                  message="form.buttons.edit"
+                  dataTestId="MysteryEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(mystery)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="MysteryDeleteButton"
+                  icon={Delete}
                   disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
                 <MysteryBoxMintButton

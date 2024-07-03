@@ -87,11 +87,17 @@ export const Product: FC = () => {
             <StyledListItem key={product.id}>
               <ListItemText>{product.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(product)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(product)}
+                  message="form.buttons.edit"
+                  dataTestId="ProductEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(product)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="ProductDeleteButton"
+                  icon={Delete}
                   disabled={product.productStatus === ProductStatus.INACTIVE}
                 />
               </ListActions>

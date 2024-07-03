@@ -84,8 +84,18 @@ export const WaitListList: FC = () => {
             <StyledListItem key={waitListList.id}>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListActions dataTestId="WaitListActionsMenuButton">
-                <ListAction onClick={handleEdit(waitListList)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(waitListList)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(waitListList)}
+                  message="form.buttons.edit"
+                  dataTestId="WaitListEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(waitListList)}
+                  message="form.buttons.delete"
+                  dataTestId="WaitListDeleteButton"
+                  icon={Delete}
+                />
                 <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
                 <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
                 <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />

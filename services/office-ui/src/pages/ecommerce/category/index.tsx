@@ -58,8 +58,18 @@ export const Category: FC = () => {
             <StyledListItem key={category.id}>
               <ListItemText>{category.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(category)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(category)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(category)}
+                  message="form.buttons.edit"
+                  dataTestId="CategoryEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(category)}
+                  message="form.buttons.delete"
+                  dataTestId="CategoryDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

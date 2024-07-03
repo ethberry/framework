@@ -57,8 +57,18 @@ export const Page: FC = () => {
             <StyledListItem key={page.id}>
               <ListItemText>{page.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(page)} message="form.buttons.edit" icon={Create} />
-                <ListAction onClick={handleDelete(page)} message="form.buttons.delete" icon={Delete} />
+                <ListAction
+                  onClick={handleEdit(page)}
+                  message="form.buttons.edit"
+                  dataTestId="PageEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(page)}
+                  message="form.buttons.delete"
+                  dataTestId="PageDeleteButton"
+                  icon={Delete}
+                />
               </ListActions>
             </StyledListItem>
           ))}

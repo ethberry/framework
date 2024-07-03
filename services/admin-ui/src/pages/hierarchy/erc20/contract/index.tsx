@@ -119,12 +119,18 @@ export const Erc20Contract: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>{contract.symbol}</ListItemText>
               <ListActions dataTestId="ContractActionsMenuButton">
-                <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(contract)}
+                  message="form.buttons.edit"
+                  dataTestId="ContractEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(contract)}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="ContractDeleteButton"
+                  icon={Delete}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />
                 <GrantRoleButton contract={contract} />
                 <RevokeRoleButton contract={contract} />

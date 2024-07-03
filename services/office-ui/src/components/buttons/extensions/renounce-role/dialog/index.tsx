@@ -92,10 +92,11 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
               </ListItemText>
               <ListActions>
                 <ListAction
-                  disabled={!hasAccess}
                   onClick={handleRenounce(access)}
                   message="form.buttons.delete"
+                  dataTestId="AccessDeleteButton"
                   icon={Delete}
+                  disabled={!hasAccess}
                 />
               </ListActions>
             </StyledListItem>

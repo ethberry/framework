@@ -98,8 +98,18 @@ export const MysteryContract: FC = () => {
               <StyledListItem key={contract.id}>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="MysteryActionsMenuButton">
-                  <ListAction onClick={handleEdit(contract)} message="form.buttons.edit" icon={Create} />
-                  <ListAction onClick={handleDelete(contract)} icon={Delete} message="form.buttons.delete" />
+                  <ListAction
+                    onClick={handleEdit(contract)}
+                    message="form.buttons.edit"
+                    dataTestId="ContractEditButton"
+                    icon={Create}
+                  />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    message="form.buttons.delete"
+                    dataTestId="ContractDeleteButton"
+                    icon={Delete}
+                  />
                   <GrantRoleButton contract={contract} />
                   <RevokeRoleButton contract={contract} />
                   <RenounceRoleButton contract={contract} />

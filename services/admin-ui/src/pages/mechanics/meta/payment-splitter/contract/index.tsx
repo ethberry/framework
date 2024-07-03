@@ -81,11 +81,17 @@ export const PaymentSplitterContracts: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListActions>
                 <ListActions>
-                  <ListAction onClick={handleView(contract)} message="form.tips.view" icon={Visibility} />
+                  <ListAction
+                    onClick={handleView(contract)}
+                    message="form.buttons.view"
+                    dataTestId="ContractViewButton"
+                    icon={Visibility}
+                  />
                   {/* <ListAction */}
                   {/*  onClick={handleDelete(contract)} */}
-                  {/*  icon={Delete} */}
                   {/*  message="form.buttons.delete" */}
+                  {/*  dataTestId="ContractDeleteButton" */}
+                  {/*  icon={Delete} */}
                   {/*  disabled={contract.contractStatus === ContractStatus.INACTIVE} */}
                   {/* /> */}
                   <PaymentSplitterBalanceButton

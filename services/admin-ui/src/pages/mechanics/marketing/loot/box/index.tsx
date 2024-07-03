@@ -118,11 +118,17 @@ export const LootBox: FC = () => {
             <StyledListItem key={loot.id}>
               <ListItemText>{loot.title}</ListItemText>
               <ListActions>
-                <ListAction onClick={handleEdit(loot)} message="form.buttons.edit" icon={Create} />
+                <ListAction
+                  onClick={handleEdit(loot)}
+                  message="form.buttons.edit"
+                  dataTestId="LootEditButton"
+                  icon={Create}
+                />
                 <ListAction
                   onClick={handleDelete(loot)}
-                  icon={Delete}
                   message="form.buttons.delete"
+                  dataTestId="LootDeleteButton"
+                  icon={Delete}
                   disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE}
                 />
                 <LootBoxMintButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
