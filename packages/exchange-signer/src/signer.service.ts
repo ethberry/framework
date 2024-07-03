@@ -3,9 +3,9 @@ import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 
-import type { IContract } from "@framework/types";
+import type { IAsset, IContract } from "@framework/types";
 
-import type { IAsset, IParams } from "./interfaces";
+import type { IParams } from "./interfaces";
 
 @Injectable()
 export class SignerService {
