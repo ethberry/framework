@@ -1,3 +1,13 @@
+// https://docs.chain.link/vrf/v1/supported-networks
+export enum ChainLinkV1SupportedChains {
+  ETHEREUM = 1,
+
+  BINANCE = 56,
+  BINANCE_TEST = 97,
+
+  POLYGON = 137,
+}
+
 // https://docs.chain.link/vrf/v2/subscription/supported-networks
 export enum ChainLinkV2SupportedChains {
   ETHEREUM = 1,
