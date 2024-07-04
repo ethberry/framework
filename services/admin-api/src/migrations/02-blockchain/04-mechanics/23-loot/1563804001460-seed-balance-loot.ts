@@ -4,7 +4,7 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedBalanceErc721MysteryAt1563804020460 implements MigrationInterface {
+export class SeedBalanceErc721LootAt1563804001460 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -22,61 +22,61 @@ export class SeedBalanceErc721MysteryAt1563804020460 implements MigrationInterfa
       ) VALUES (
         '${wallets[0]}',
         1,
-        111010101,
+        112010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111010102,
+        112010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111010103,
+        112010103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         1,
-        111010104,
+        112010104,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         1,
-        111010105,
+        112010105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111040101,
+        112040101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111050101,
+        112050101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111060101,
+        112060101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        111800101,
+        112800101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        211010101,
+        212010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

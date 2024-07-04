@@ -6,7 +6,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
+export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;

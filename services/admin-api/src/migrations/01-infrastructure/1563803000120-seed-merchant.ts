@@ -52,6 +52,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         merchant_status,
         wallet,
         api_key,
+        rate_plan,
         created_at,
         updated_at
       ) VALUES (
@@ -63,6 +64,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         'ACTIVE',
         '${wallets[1]}',
         '00010203-0405-0607-0809-0a0b0c0d0e0f',
+        'SILVER',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -71,9 +73,10 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
-        'INACTIVE',
+        'ACTIVE',
         '${wallets[2]}',
         '12345678-1234-5678-1234-567812345678',
+        'BRONZE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

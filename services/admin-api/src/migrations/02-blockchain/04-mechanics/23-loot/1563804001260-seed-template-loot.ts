@@ -5,7 +5,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, imagePath } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
+export class SeedTemplateLootAt1563804001260 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -17,19 +17,19 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102080101
+        102230101
       ), (
-        102080102
+        102230102
       ), (
-        102080401
+        102230401
       ), (
-        102080501
+        102230501
       ), (
-        102080601
+        102230601
       ), (
-        102080801
+        102230801
       ), (
-        201080101
+        202230101
       );
     `);
 
@@ -45,49 +45,49 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102080101
+        102230101
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102080102
+        102230102
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102080401
+        102230401
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102080501
+        102230501
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102080601
+        102230601
       ), (
         'ERC20',
         10280,
         1028001, -- Warp Credits
         '${WeiPerEther.toString()}',
-        102080801
+        102230801
       ), (
         'ERC20',
         10280,
         1028001, -- Warp Credits
         '${WeiPerEther.toString()}',
-        102080801
+        102230801
       ), (
         'ERC20',
         20201,
         2020101, -- BEP Credits
         '${WeiPerEther.toString()}',
-        201080101
+        202230101
       );
     `);
 
@@ -105,87 +105,99 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1110101,
-        'Sword Mystery Box',
+        1120101,
+        'Weapon Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080101,
+        '${imagePath}/lootbox.png',
+        102230101,
         0,
         4,
         'ACTIVE',
-        11101,
+        11201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1110102,
-        'Sword Mystery Box Inactive',
+        1120102,
+        'Weapon Loot Box (inactive)',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080102,
+        '${imagePath}/lootbox.png',
+        102230102,
         0,
         1,
         'INACTIVE',
-        11101,
+        11201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1110401,
-        'Warrior Mystery Box',
+        1120401,
+        'Character Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080401,
+        '${imagePath}/lootbox.png',
+        102230401,
         0,
         1,
         'ACTIVE',
-        11104,
+        11204,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1110501,
-        'Gold Mystery Box',
+        1120501,
+        'Resources Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080501,
+        '${imagePath}/lootbox.png',
+        102230501,
         0,
         1,
         'ACTIVE',
-        11105,
+        11205,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1110601,
-        'Mixed Mystery Box',
+        1120601,
+        'Mixed Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080601,
+        '${imagePath}/lootbox.png',
+        102230601,
         0,
         1,
         'ACTIVE',
-        11106,
+        11206,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1118001,
-        'Mystery Box',
+        1120701,
+        'Coin Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        102080801,
+        '${imagePath}/lootbox.png',
+        102230101,
         0,
-        1,
+        4,
         'ACTIVE',
-        11180,
+        11201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2110101,
-        'Mystery Box (BEP)',
+        1128001,
+        'Loot Box',
         '${simpleFormatting}',
-        '${imagePath}/mysterybox.png',
-        201080101,
+        '${imagePath}/lootbox.png',
+        102230801,
         0,
         1,
         'ACTIVE',
-        21101,
+        11280,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2120101,
+        'Loot Box (BEP)',
+        '${simpleFormatting}',
+        '${imagePath}/lootbox.png',
+        202230101,
+        0,
+        1,
+        'ACTIVE',
+        21201,
         '${currentDateTime}',
         '${currentDateTime}'
       );
