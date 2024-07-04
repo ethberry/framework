@@ -7,7 +7,7 @@ export interface IParams {
   referrer: string;
 }
 
-export interface IAsset {
+export interface IBlockchainAsset {
   tokenType: number;
   token: string;
   tokenId: string;

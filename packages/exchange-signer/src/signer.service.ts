@@ -2,10 +2,9 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
-
 import type { IContract } from "@framework/types";
 
-import type { IAsset, IParams } from "./interfaces";
+import type { IBlockchainAsset, IParams } from "./interfaces";
 
 @Injectable()
 export class SignerService {
@@ -18,8 +17,8 @@ export class SignerService {
     verifyingContract: IContract,
     account: string,
     params: IParams,
-    item: IAsset,
-    price: IAsset,
+    item: IBlockchainAsset,
+    price: IBlockchainAsset,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -66,8 +65,8 @@ export class SignerService {
     verifyingContract: IContract,
     account: string,
     params: IParams,
-    item: IAsset,
-    price: Array<IAsset>,
+    item: IBlockchainAsset,
+    price: Array<IBlockchainAsset>,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -114,8 +113,8 @@ export class SignerService {
     verifyingContract: IContract,
     account: string,
     params: IParams,
-    items: Array<IAsset>,
-    price: Array<IAsset>,
+    items: Array<IBlockchainAsset>,
+    price: Array<IBlockchainAsset>,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
