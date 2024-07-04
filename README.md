@@ -16,6 +16,8 @@ git submodule update --init --recursive
 2. Install [NVM](https://github.com/nvm-sh/nvm)
 ```shell script
 sudo port install nvm
+
+sudo echo "export NODE_OPTIONS=\"--max-old-space-size=16384\"" >>  /opt/local/share/nvm/init-nvm.sh
 ```
 
 3. Install Node.js using NVM
