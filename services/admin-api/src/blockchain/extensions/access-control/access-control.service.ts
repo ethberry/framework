@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AccessControlEntity } from "./access-control.entity";
-import type { IAccessControlCheckDto } from "./interfaces";
+import type { IAccessControlCheckDto, IAccessControlSearchDto } from "./interfaces";
 
 @Injectable()
 export class AccessControlService {
@@ -12,6 +13,22 @@ export class AccessControlService {
     @InjectRepository(AccessControlEntity)
     private readonly accessControlEntityRepository: Repository<AccessControlEntity>,
   ) {}
+
+  public async search(dto: IAccessControlSearchDto, userEntity: UserEntity): Promise<Array<AccessControlEntity>> {
+    const queryBuilder = this.accessControlEntityRepository.createQueryBuilder("roles");
+
+    queryBuilder.select();
+
+    queryBuilder.where(dto);
+
+    queryBuilder.leftJoin("roles.address_contract", "address_contract", "address_contract.chain_id = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    queryBuilder.orderBy("roles.createdAt", "DESC");
+
+    return queryBuilder.getMany();
+  }
 
   public async create(dto: DeepPartial<AccessControlEntity>): Promise<AccessControlEntity> {
     return this.accessControlEntityRepository.create(dto).save();
@@ -31,7 +48,10 @@ export class AccessControlService {
     return this.accessControlEntityRepository.find({ where, ...options });
   }
 
-  public async findAllWithRelations(where: FindOptionsWhere<AccessControlEntity>): Promise<Array<AccessControlEntity>> {
+  public async findAllWithRelations(
+    where: FindOptionsWhere<AccessControlEntity>,
+    userEntity: UserEntity,
+  ): Promise<Array<AccessControlEntity>> {
     const queryBuilder = this.accessControlEntityRepository.createQueryBuilder("roles");
 
     queryBuilder.select();
@@ -44,7 +64,8 @@ export class AccessControlService {
       "roles.address_contract",
       ContractEntity,
       "address_contract",
-      `roles.address = address_contract.address`,
+      `roles.address = address_contract.address AND address_contract.chain_id = :chainId`,
+      { chainId: userEntity.chainId },
     );
 
     queryBuilder.leftJoinAndMapOne(
@@ -53,14 +74,6 @@ export class AccessControlService {
       "account_contract",
       `roles.account = account_contract.address AND address_contract.chain_id = account_contract.chain_id`,
     );
-
-    // TODO add User connected to entity
-    // queryBuilder.leftJoinAndMapOne(
-    //   "roles.account_user",
-    //   UserEntity,
-    //   "account_user",
-    //   `roles.account = account_user.wallet`,
-    // );
 
     queryBuilder.orderBy("roles.createdAt", "DESC");
 
