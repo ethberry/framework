@@ -14,8 +14,8 @@
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.36"
   },
   "devDependencies": {
-    "@nestjs/common": "10.3.9",
-    "@nestjs/config": "3.2.2",
+    "@nestjs/common": "10.3.10",
+    "@nestjs/config": "3.2.3",
     "ethers": "6.13.1"
   },
   "engines": {
