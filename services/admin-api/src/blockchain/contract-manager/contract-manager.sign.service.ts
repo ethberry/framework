@@ -929,7 +929,7 @@ export class ContractManagerSignService {
         );
       case Erc721ContractTemplates.SOULBOUND_VOTES:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundVotes.sol/ERC721SoulboundVotes.json",
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundWotes.sol/ERC721SoulboundWotes.json",
           chainId,
         );
       case Erc721ContractTemplates.DISCRETE:
