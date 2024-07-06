@@ -24,6 +24,7 @@ export enum NativeContractTemplates {
 export enum Erc20ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
+  "VOTES" = "VOTES",
   "EXTERNAL" = "EXTERNAL",
 }
 
@@ -31,6 +32,7 @@ export enum Erc20ContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
+  "VOTES" = "VOTES",
   "EXTERNAL" = "EXTERNAL",
 }
 
@@ -59,6 +61,7 @@ export enum Erc721ContractTemplates {
   "RENTABLE" = "RENTABLE",
   "SOULBOUND" = "SOULBOUND",
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
+  "VOTES" = "VOTES",
   "DISCRETE" = "DISCRETE",
   "DISCRETE_RANDOM" = "DISCRETE_RANDOM",
   "LOTTERY" = "LOTTERY",
