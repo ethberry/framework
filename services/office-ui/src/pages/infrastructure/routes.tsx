@@ -24,7 +24,7 @@ export const infrastructureRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <User /> },
-      { path: "/users/:id", element: <User /> },
+      { path: "/users/:id/:action", element: <User /> },
     ],
   },
   {
@@ -32,7 +32,7 @@ export const infrastructureRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Merchant /> },
-      { path: "/merchants/:id", element: <Merchant /> },
+      { path: "/merchants/:id/:action", element: <Merchant /> },
     ],
   },
   {
@@ -48,7 +48,7 @@ export const infrastructureRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Page /> },
-      { path: "/pages/:id", element: <Page /> },
+      { path: "/pages/:id/:action", element: <Page /> },
     ],
   },
   {

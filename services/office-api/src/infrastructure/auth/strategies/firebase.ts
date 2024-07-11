@@ -59,7 +59,8 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
       });
     }
 
-    const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER];
+    // Only SuperAdmin can login to office
+    const roles = [UserRole.SUPER];
     if (!userEntity.userRoles.some(role => roles.includes(role))) {
       throw new UnauthorizedException("userHasWrongRole");
     }
