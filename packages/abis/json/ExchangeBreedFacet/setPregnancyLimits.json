@@ -1,0 +1,25 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "count",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "time",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxTime",
+        "type": "uint64"
+      }
+    ],
+    "name": "setPregnancyLimits",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

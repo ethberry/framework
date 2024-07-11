@@ -11,8 +11,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
-import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/getSubscription/VRFCoordinatorV2Mock.json";
-import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
+import getSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/json/VRFCoordinatorV2Mock/getSubscription.json";
+import balanceOfBasicTokenABI from "@framework/abis/json/BasicToken/balanceOf.json";
 
 import {
   ChainLinkAddConsumerButton,

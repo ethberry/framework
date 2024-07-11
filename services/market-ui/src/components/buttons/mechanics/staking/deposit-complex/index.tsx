@@ -10,7 +10,7 @@ import { StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 
-import StakingDepositABI from "@framework/abis/deposit/Staking.json";
+import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 
 import type { IStakingDepositDto } from "./dialog";
 import { StakingDepositDialog } from "./dialog";

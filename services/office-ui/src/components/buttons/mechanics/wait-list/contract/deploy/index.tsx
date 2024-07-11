@@ -7,7 +7,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IWaitListContractDeployDto } from "@framework/types";
 
-import DeployWaitListABI from "@framework/abis/deployWaitList/WaitListFactoryFacet.json";
+import DeployWaitListABI from "@framework/abis/json/WaitListFactoryFacet/deployWaitList.json";
 
 export interface IWaitListDeployButtonProps {
   className?: string;

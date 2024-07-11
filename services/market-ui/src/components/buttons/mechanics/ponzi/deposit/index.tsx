@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
 
-import PonziDepositABI from "@framework/abis/deposit/Ponzi.json";
+import PonziDepositABI from "@framework/abis/json/Ponzi/deposit.json";
 
 export interface IPonziDepositButtonProps {
   className?: string;

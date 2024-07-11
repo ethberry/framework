@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
 
-import UnWhitelistABI from "@framework/abis/unWhitelist/ERC20Whitelist.json";
+import UnWhitelistABI from "@framework/abis/json/ERC20Whitelist/unWhitelist.json";
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessListUnWhitelistDialogProps {

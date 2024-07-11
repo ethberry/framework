@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleContractDeployDto, IUser } from "@framework/types";
 
 import { RaffleContractDeployDialog } from "./dialog";
-import deployRaffleRaffleFactoryFacetABI from "@framework/abis/deployRaffle/RaffleFactoryFacet.json";
+import deployRaffleRaffleFactoryFacetABI from "@framework/abis/json/RaffleFactoryFacet/deployRaffle.json";
 
 export interface IRaffleContractDeployButtonProps {
   className?: string;

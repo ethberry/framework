@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ILootBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LootBoxPurchaseABI from "@framework/abis/purchaseLoot/ExchangeLootBoxFacet.json";
+import LootBoxPurchaseABI from "@framework/abis/json/ExchangeLootBoxFacet/purchaseLoot.json";
 
 interface ILootBoxBuyButtonProps {
   className?: string;

@@ -7,8 +7,6 @@ import { useClipboard } from "use-clipboard-copy";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 
-import { NodeEnv } from "@framework/types";
-import { ReferralRewardButton } from "../../../../../components/buttons";
 import { StyledTextField } from "./styled";
 
 export const ReferralCabinet: FC = () => {
@@ -16,13 +14,7 @@ export const ReferralCabinet: FC = () => {
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const clipboard = useClipboard();
 
-  const marketUrl = process.env.MARKET_FE_URL
-    ? process.env.MARKET_FE_URL
-    : process.env.NODE_ENV === NodeEnv.production
-      ? "https://market.gemunion.io"
-      : "https://st-market-b2b.gemunion.io";
-
-  const refLink = `${marketUrl}/?referrer=${account.toLowerCase()}`;
+  const refLink = `${process.env.MARKET_FE_URL}/?referrer=${account.toLowerCase()}`;
 
   useEffect(() => {
     if (!isActive) {
@@ -36,9 +28,7 @@ export const ReferralCabinet: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.cabinet"]} />
 
-      <PageHeader message="pages.referral.cabinet.title">
-        <ReferralRewardButton />
-      </PageHeader>
+      <PageHeader message="pages.referral.cabinet.title" />
 
       <StyledTextField value={`${refLink}`} variant="standard" inputRef={clipboard.target} />
       <Button onClick={clipboard.copy}>

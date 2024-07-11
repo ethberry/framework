@@ -1,0 +1,15 @@
+[
+  {
+    "inputs": [],
+    "name": "createSubscription",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

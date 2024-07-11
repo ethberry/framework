@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionResult } from "@framework/types";
 // TODO use real ABI
-import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
+import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/setDefaultRoyalty.json";
 
 import { validationSchema } from "./validation";
 

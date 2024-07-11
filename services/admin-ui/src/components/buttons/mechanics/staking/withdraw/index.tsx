@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/withdrawBalance/ReentrancyStakingReward.json";
+import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/json/ReentrancyStakingReward/withdrawBalance.json";
 
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 

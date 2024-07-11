@@ -12,7 +12,7 @@ import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
-import withdrawTokenPonziABI from "@framework/abis/withdrawToken/Ponzi.json";
+import withdrawTokenPonziABI from "@framework/abis/json/Ponzi/withdrawToken.json";
 
 import { emptyBalance } from "../../../../../common/interfaces";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";

@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
-import revokeRoleAccessControlFacetABI from "@framework/abis/revokeRole/AccessControlFacet.json";
+import revokeRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;

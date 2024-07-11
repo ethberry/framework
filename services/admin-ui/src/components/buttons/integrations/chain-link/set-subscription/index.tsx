@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/setSubscriptionId/ERC721GenesBesu.json";
+import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/json/ERC721GenesBesu/setSubscriptionId.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";

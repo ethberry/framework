@@ -7,7 +7,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 import { VestingContractTemplates } from "@framework/types";
-import DeployVestingABI from "@framework/abis/deployVesting/VestingFactoryFacet.json";
+import DeployVestingABI from "@framework/abis/json/VestingFactoryFacet/deployVesting.json";
 
 import { VestingDeployDialog } from "./dialog";
 

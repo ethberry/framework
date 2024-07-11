@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
-import updateRulePonziABI from "@framework/abis/updateRule/Ponzi.json";
+import updateRulePonziABI from "@framework/abis/json/Ponzi/updateRule.json";
 
 export interface IPonziToggleRuleButtonProps {
   className?: string;

@@ -14,7 +14,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import type { IComposition, ICompositionSearchDto, IUser } from "@framework/types";
 
-import ERC998WhitelistChildABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
+import ERC998WhitelistChildABI from "@framework/abis/json/ERC998Blacklist/whiteListChild.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";

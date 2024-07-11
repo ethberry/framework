@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import topUpExchangeMockFacetABI from "@framework/abis/topUp/ExchangeMockFacet.json";
+import topUpExchangeMockFacetABI from "@framework/abis/json/ExchangeMockFacet/topUp.json";
 
 import { shouldDisableByContractType } from "../../../utils";
 import type { ITopUpDto } from "./dialog";

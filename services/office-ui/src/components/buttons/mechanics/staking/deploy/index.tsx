@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IStakingContractDeployDto, IUser } from "@framework/types";
 import { StakingContractTemplates } from "@framework/types";
 
-import DeployStakingABI from "@framework/abis/deployStaking/StakingFactoryFacet.json";
+import DeployStakingABI from "@framework/abis/json/StakingFactoryFacet/deployStaking.json";
 
 import { StakingDeployDialog } from "./dialog";
 
