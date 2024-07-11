@@ -5,13 +5,13 @@ import { enqueueSnackbar } from "notistack";
 import { TokenType } from "@gemunion/types-blockchain";
 import { BigNumber, BigNumberish, Contract } from "ethers";
 
-import ERC20AllowanceABI from "@framework/abis/allowance/ERC20.json";
-import ERC721IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC721.json";
-import ERC1155IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC1155.json";
+import ERC20AllowanceABI from "@framework/abis/json/ERC20Simple/allowance.json";
+import ERC721IsApprovedForAllABI from "@framework/abis/json/ERC721Simple/isApprovedForAll.json";
+import ERC1155IsApprovedForAllABI from "@framework/abis/json/ERC1155Simple/isApprovedForAll.json";
 
-import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
-import ERC721SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC721.json";
-import ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
+import ERC20ApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
+import ERC721SetApprovalForAllABI from "@framework/abis/json/ERC721Simple/setApprovalForAll.json";
+import ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 // Where to import IAsset?
 interface IAsset {
@@ -101,7 +101,6 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
-    console.log("ERC721 & ERC998 allowance");
     const contractErc721 = new Contract(token, ERC721IsApprovedForAllABI, web3Context.provider?.getSigner());
     return (await contractErc721.isApprovedForAll(web3Context.account, contract)) as boolean;
   }
