@@ -27,13 +27,13 @@
   },
   "dependencies": {
     "@babel/runtime": "7.24.8",
-    "@mui/utils": "5.16.0"
+    "@mui/utils": "5.16.1"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@mui/internal-test-utils": "1.0.4",
+    "@mui/internal-test-utils": "1.0.5",
     "rimraf": "5.0.9"
   },
   "setupFiles": [
