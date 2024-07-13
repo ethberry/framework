@@ -12,7 +12,7 @@
   },
   "description": "localization for ui",
   "devDependencies": {
-    "rimraf": "5.0.8"
+    "rimraf": "5.0.9"
   },
   "engines": {
     "node": ">=22"
