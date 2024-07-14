@@ -18,7 +18,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.41",
     "@gemunion/nest-js-module-winston-logdna": "3.1.12",
     "@gemunion/nest-js-utils": "4.2.10",
-    "@gemunion/traits-v6": "1.0.16",
+    "@gemunion/traits-v6": "1.0.17",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
     "@nestjs/cache-manager": "2.2.2",
