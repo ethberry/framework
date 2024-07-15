@@ -3,11 +3,10 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DataSource, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { UserRole } from "@framework/types";
 
 import { UserEntity } from "../../../../../../infrastructure/user/user.entity";
 import { ReferralTreeEntity } from "./referral.tree.entity";
-import type { IReferralTreeSearchDto } from "./dto";
+import type { IReferralTreeSearchDto } from "./interfaces";
 
 export interface IReferralChain {
   id: number;
@@ -30,7 +29,7 @@ export class ReferralTreeService {
     dto: Partial<IReferralTreeSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<ReferralTreeEntity>, number]> {
-    const { query, wallet, referral, level, merchantIds, skip, take } = dto;
+    const { query, wallet, referral, level, skip, take } = dto;
 
     const queryBuilder = this.referralTreeEntityRepository.createQueryBuilder("tree");
 
@@ -38,11 +37,9 @@ export class ReferralTreeService {
 
     queryBuilder.leftJoinAndSelect("tree.merchant", "merchant");
 
-    if (!userEntity.userRoles.includes(UserRole.SUPER)) {
-      queryBuilder.andWhere("tree.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("tree.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (wallet) {
       queryBuilder.andWhere("tree.wallet = :wallet", {
@@ -62,16 +59,6 @@ export class ReferralTreeService {
       });
     }
 
-    if (merchantIds) {
-      if (merchantIds.length === 1) {
-        queryBuilder.andWhere("tree.merchantId = :merchantId", {
-          merchantId: merchantIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("tree.merchantId IN(:...merchantIds)", { merchantIds });
-      }
-    }
-
     if (query) {
       queryBuilder.andWhere(
         new Brackets(qb => {
@@ -85,7 +72,6 @@ export class ReferralTreeService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      // "tree.createdAt": "DESC",
       "tree.level": "ASC",
     });
 

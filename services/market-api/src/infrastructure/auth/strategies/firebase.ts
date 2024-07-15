@@ -56,10 +56,11 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
       });
     }
 
-    const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER, UserRole.CUSTOMER];
-    if (!userEntity.userRoles.some(role => roles.includes(role))) {
-      throw new UnauthorizedException("userHasWrongRole");
-    }
+    // All roles can login to market
+    // const roles = [UserRole.SUPER, UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER, UserRole.CUSTOMER];
+    // if (!userEntity.userRoles.some(role => roles.includes(role))) {
+    //   throw new UnauthorizedException("userHasWrongRole");
+    // }
 
     if (userEntity.userStatus !== UserStatus.ACTIVE) {
       throw new UnauthorizedException("userIsNotActive");

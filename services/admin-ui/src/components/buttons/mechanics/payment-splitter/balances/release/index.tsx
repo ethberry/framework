@@ -15,7 +15,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IContract, IBalance, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import releaseVestingABI from "@framework/abis/release/Vesting.json";
+import releaseVestingABI from "@framework/abis/json/Vesting/release.json";
 
 export interface IPaymentSplitterBalanceDialogProps {
   open: boolean;

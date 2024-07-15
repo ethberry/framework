@@ -8,7 +8,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IMysteryContractDeployDto, IUser, IContract } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
-import deployMysteryBoxMysteryBoxFactoryFacetABI from "@framework/abis/deployMysteryBox/MysteryBoxFactoryFacet.json";
+import deployMysteryBoxMysteryBoxFactoryFacetABI from "@framework/abis/json/MysteryBoxFactoryFacet/deployMysteryBox.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 

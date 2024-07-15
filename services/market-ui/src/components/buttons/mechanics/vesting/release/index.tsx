@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import VestingReleaseABI from "@framework/abis/release/Vesting.json";
+import VestingReleaseABI from "@framework/abis/json/Vesting/release.json";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;

@@ -11,7 +11,7 @@ import { SystemModuleType } from "@framework/types";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
-import balanceOfBasicTokenABI from "@framework/abis/balanceOf/BasicToken.json";
+import balanceOfBasicTokenABI from "@framework/abis/json/BasicToken/balanceOf.json";
 
 export interface IChainLinkFundDto {
   subscriptionId: number;

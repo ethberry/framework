@@ -8,7 +8,7 @@ import { StakingDepositStatus } from "@framework/types";
 import type { IStakingDeposit } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingReceiveRewardABI from "@framework/abis/receiveReward/ReentrancyStakingReward.json";
+import StakingReceiveRewardABI from "@framework/abis/json/ReentrancyStakingReward/receiveReward.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 

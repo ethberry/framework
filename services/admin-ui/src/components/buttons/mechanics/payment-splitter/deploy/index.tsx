@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPaymentSplitterContractDeployDto, IUser } from "@framework/types";
 
 import { PaymentSplitterContractDeployDialog } from "./dialog";
-import deployPaymentSplitterPaymentSplitterFactoryFacetABI from "@framework/abis/deployPaymentSplitter/PaymentSplitterFactoryFacet.json";
+import deployPaymentSplitterPaymentSplitterFactoryFacetABI from "@framework/abis/json/PaymentSplitterFactoryFacet/deployPaymentSplitter.json";
 
 export interface IPaymentSplitterContractDeployButtonProps {
   className?: string;

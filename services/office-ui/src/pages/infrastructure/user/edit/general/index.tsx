@@ -4,12 +4,11 @@ import { format, parseISO } from "date-fns";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { useUser } from "@gemunion/provider-user";
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { EnabledLanguages } from "@framework/constants";
-import { IUser, UserRole, UserStatus } from "@framework/types";
+import { UserRole, UserStatus } from "@framework/types";
 // import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 
 export interface IUserGeneralFormProps {
@@ -20,7 +19,6 @@ export interface IUserGeneralFormProps {
 export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
   const { createdAt, open } = props;
 
-  const { profile } = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -32,7 +30,7 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
     return null;
   }
 
-  const disabledRoles = profile.userRoles.includes(UserRole.SUPER) ? [] : [UserRole.SUPER, UserRole.ADMIN];
+  const disabledRoles = [UserRole.SUPER];
 
   return (
     <>

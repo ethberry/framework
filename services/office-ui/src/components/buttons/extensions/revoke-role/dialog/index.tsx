@@ -12,7 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import RevokeRoleABI from "@framework/abis/revokeRole/AccessControlFacet.json";
+import RevokeRoleABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessControlRevokeRoleDialogProps {

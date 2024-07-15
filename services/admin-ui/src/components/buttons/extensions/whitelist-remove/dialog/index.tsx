@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-import unWhitelistERC20WhitelistABI from "@framework/abis/unWhitelist/ERC20Whitelist.json";
+import unWhitelistERC20WhitelistABI from "@framework/abis/json/ERC20Whitelist/unWhitelist.json";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;

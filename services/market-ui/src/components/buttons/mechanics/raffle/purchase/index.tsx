@@ -11,7 +11,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import RafflePurchaseABI from "@framework/abis/purchaseRaffle/ExchangeRaffleFacet.json";
+import RafflePurchaseABI from "@framework/abis/json/ExchangeRaffleFacet/purchaseRaffle.json";
 
 export interface IRafflePurchaseButtonProps {
   className?: string;

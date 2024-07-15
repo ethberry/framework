@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import LotteryEndRoundABI from "@framework/abis/endRound/LotteryRandom.json";
+import LotteryEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";

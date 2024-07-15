@@ -1,4 +1,5 @@
 export interface IUnpackWrapper {
+  account: string;
   tokenId: string;
 }
 

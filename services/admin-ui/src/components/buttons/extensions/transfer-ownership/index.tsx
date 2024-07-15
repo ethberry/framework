@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
-import transferOwnershipOwnershipFacetABI from "@framework/abis/transferOwnership/OwnershipFacet.json";
+import transferOwnershipOwnershipFacetABI from "@framework/abis/json/OwnershipFacet/transferOwnership.json";
 
 export interface ITransferOwnershipButtonProps {
   className?: string;

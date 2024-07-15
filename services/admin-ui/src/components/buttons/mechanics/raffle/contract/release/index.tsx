@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 
-import releaseFundsLotteryRandomABI from "@framework/abis/releaseFunds/LotteryRandom.json";
+import releaseFundsLotteryRandomABI from "@framework/abis/json/LotteryRandom/releaseFunds.json";
 
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 

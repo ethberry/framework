@@ -12,7 +12,7 @@ import { bool36ArrayToByte32 } from "@gemunion/traits-v5";
 import type { IContract, ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LotteryPurchaseABI from "@framework/abis/purchaseLottery/ExchangeLotteryFacet.json";
+import LotteryPurchaseABI from "@framework/abis/json/ExchangeLotteryFacet/purchaseLottery.json";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;

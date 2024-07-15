@@ -7,7 +7,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType, TokenStatus } from "@framework/types";
 
-import UnpackABI from "@framework/abis/unpack/ERC721LootBoxBlacklist.json";
+import UnpackABI from "@framework/abis/json/ERC721LootBoxBlacklist/unpack.json";
 
 export interface ILootUnpackButtonProps {
   className?: string;

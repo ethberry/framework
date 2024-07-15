@@ -9,7 +9,7 @@ import { StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingDepositABI from "@framework/abis/deposit/Staking.json";
+import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 
 export interface IStakingDepositSimpleButtonProps {
   className?: string;

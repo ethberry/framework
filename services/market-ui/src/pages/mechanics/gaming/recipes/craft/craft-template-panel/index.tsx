@@ -14,7 +14,7 @@ import { StyledListWrapper } from "@framework/styled";
 import type { IContract, ICraft, ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import CraftABI from "@framework/abis/craft/ExchangeCraftFacet.json";
+import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { sorter } from "../../../../../../utils/sorter";

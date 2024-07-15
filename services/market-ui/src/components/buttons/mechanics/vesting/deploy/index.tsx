@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract, IUser } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import VestingDeployABI from "@framework/abis/deployVesting/VestingFactoryFacet.json";
+import VestingDeployABI from "@framework/abis/json/VestingFactoryFacet/deployVesting.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

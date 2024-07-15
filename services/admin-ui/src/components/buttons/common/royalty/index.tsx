@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/setDefaultRoyalty/ERC1155Blacklist.json";
+import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/setDefaultRoyalty.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import type { IRoyaltyDto } from "./dialog";

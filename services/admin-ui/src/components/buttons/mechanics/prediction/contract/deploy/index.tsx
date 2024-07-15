@@ -9,7 +9,7 @@ import type { IContract, IPredictionContractDeployDto, IUser } from "@framework/
 import { PredictionContractTemplates } from "@framework/types";
 
 import { PredictionContractDeployDialog } from "./dialog";
-import deployPredictionFactoryFacetABI from "@framework/abis/deployPrediction/PredictionFactoryFacet.json";
+import deployPredictionFactoryFacetABI from "@framework/abis/json/PredictionFactoryFacet/deployPrediction.json";
 
 export interface IPredictionContractDeployButtonProps {
   className?: string;

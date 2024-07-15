@@ -86,11 +86,7 @@ export class UserService {
     return this.userEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(
-    where: FindOptionsWhere<UserEntity>,
-    dto: Partial<IUserUpdateDto>,
-    user: UserEntity,
-  ): Promise<UserEntity> {
+  public async update(where: FindOptionsWhere<UserEntity>, dto: Partial<IUserUpdateDto>): Promise<UserEntity> {
     const { userRoles, ...rest } = dto;
 
     const userEntity = await this.userEntityRepository.findOne({ where });
@@ -99,14 +95,10 @@ export class UserService {
       throw new NotFoundException("userNotFound");
     }
 
-    // UPDATING CERTAIN USER-ROLES for SUPER ADMIN ONLY !!!
+    // SUPER can be assigned only through DB
     if (userRoles) {
-      if (userRoles.includes(UserRole.SUPER) || userRoles.includes(UserRole.ADMIN)) {
-        if (user.userRoles.includes(UserRole.SUPER)) {
-          Object.assign(userEntity, userRoles);
-        } else {
-          throw new ForbiddenException("insufficientPermissions");
-        }
+      if (userRoles.includes(UserRole.SUPER)) {
+        throw new ForbiddenException("insufficientPermissions");
       } else {
         Object.assign(userEntity, userRoles);
       }

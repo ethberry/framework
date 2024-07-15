@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import setBaseURIABI from "@framework/abis/setBaseURI/SetBaseURI.json";
+import setBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
 
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";

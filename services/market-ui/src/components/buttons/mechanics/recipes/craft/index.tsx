@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICraft } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import CraftABI from "@framework/abis/craft/ExchangeCraftFacet.json";
+import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

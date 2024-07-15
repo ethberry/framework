@@ -15,7 +15,6 @@ export * from "./ponzi/deposit";
 export * from "./ponzi/allowance";
 export * from "./ponzi/reward";
 export * from "./ponzi/reward-complex";
-export * from "./referral/reward";
 export * from "./staking/allowance";
 export * from "./staking/deposit";
 export * from "./staking/reward";

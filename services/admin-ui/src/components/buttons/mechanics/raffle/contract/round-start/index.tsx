@@ -9,7 +9,7 @@ import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
-import startRoundLotteryRandomABI from "@framework/abis/startRound/LotteryRandom.json";
+import startRoundLotteryRandomABI from "@framework/abis/json/LotteryRandom/startRound.json";
 
 import { RaffleStartRoundDialog } from "./round-dialog";
 import type { IRaffleRound } from "./round-dialog";

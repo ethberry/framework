@@ -8,7 +8,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListItem } from "@framework/types";
 
-import ClaimABI from "@framework/abis/claim/WaitList.json";
+import ClaimABI from "@framework/abis/json/WaitList/claim.json";
 
 export interface IWaitListClaimButtonProps {
   className?: string;

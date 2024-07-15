@@ -14,8 +14,8 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import type { IComposition, ICompositionSearchDto } from "@framework/types";
 
-import unWhitelistChildERC998BlacklistABI from "@framework/abis/unWhitelistChild/ERC998Blacklist.json";
-import whiteListChildERC998BlacklistABI from "@framework/abis/whiteListChild/ERC998Blacklist.json";
+import unWhitelistChildERC998BlacklistABI from "@framework/abis/json/ERC998Blacklist/unWhitelistChild.json";
+import whiteListChildERC998BlacklistABI from "@framework/abis/json/ERC998Blacklist/whiteListChild.json";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";

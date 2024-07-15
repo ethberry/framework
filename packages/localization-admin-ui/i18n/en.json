@@ -216,8 +216,8 @@
       "BLACKLIST_DISCRETE_RENTABLE": "Blacklist + Discrete + Rentable",
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
-      "BLACKLIST_RENTABLE": "Blacklist + Rentable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
+      "BLACKLIST_RENTABLE": "Blacklist + Rentable",
       "DISCRETE": "Discrete",
       "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -845,6 +845,7 @@
       "questionStatus": "Status",
       "random": "Random",
       "rarityMultiplier": "Rarity multiplier X.YY%",
+      "ratePlan": "Rate plan",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -869,7 +870,6 @@
       "startTimestamp": "Start date",
       "state": "State",
       "subId": "VRF Subscription Id",
-      "vrfSubId": "VRF Subscription Id",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
       "template": "Template",
@@ -899,6 +899,7 @@
       "userStakes": "User Stakes",
       "userStatus": "Status",
       "vrfConsumer": "Chain-Link Consumer Status",
+      "vrfSubId": "VRF Subscription Id",
       "vrfSubscription": "Chain-Link Subscription ID",
       "wallet": "Wallet",
       "winNumber": "Win number",
@@ -1002,7 +1003,6 @@
       "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
-      "vrfSubId": "0",
       "subscriptionId": "2",
       "symbol": "XXX",
       "templateId": "Template",
@@ -1019,6 +1019,7 @@
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
       "userIds": "Gordon Freeman",
+      "vrfSubId": "0",
       "wallet": "Wallet",
       "youtubeUrl": "https://youtube.com/",
       "zip": "80576"
@@ -1196,8 +1197,8 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "dispenser": "Dispenser",
         "discrete": "Grade",
+        "dispenser": "Dispenser",
         "loot": "Loot",
         "lottery": "Lottery",
         "mystery": "Mystery",
@@ -1215,6 +1216,9 @@
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "discrete": {
+      "title": "Grade Rules"
     },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
@@ -1273,9 +1277,6 @@
       "tokens": {
         "title": "ERC998 Tokens"
       }
-    },
-    "discrete": {
-      "title": "Grade Rules"
     },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
@@ -1508,12 +1509,12 @@
       "bronze": {
         "claim": "Claim",
         "craft": "Craft",
+        "discrete": "Grade",
         "disperse": "Mass transact",
         "erc1155": "5 ERC1155 contracts",
         "erc20": "5 ERC20 contract",
         "erc721": "5 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
-        "discrete": "Grade",
         "loot": "0 Loot boxes",
         "mystery": "0 Mystery boxes",
         "raffle": "Raffle",
@@ -1526,12 +1527,12 @@
       "gold": {
         "claim": "Claim",
         "craft": "Craft",
+        "discrete": "Grade",
         "disperse": "Mass transact",
         "erc1155": "25 ERC1155 contracts",
         "erc20": "25 ERC20 contract",
         "erc721": "25 ERC721 contracts",
         "erc998": "5 ERC998 contract",
-        "discrete": "Grade",
         "loot": "10 Loot boxes",
         "mystery": "10 Mystery boxes",
         "raffle": "Raffle",
@@ -1550,12 +1551,12 @@
       "silver": {
         "claim": "Claim",
         "craft": "Craft",
+        "discrete": "Grade",
         "disperse": "Mass transact",
         "erc1155": "10 ERC1155 contracts",
         "erc20": "10 ERC20 contract",
         "erc721": "10 ERC721 contracts",
         "erc998": "0 ERC998 contracts",
-        "discrete": "Grade",
         "loot": "Loot boxes",
         "mystery": "Mystery boxes",
         "raffle": "Raffle",
