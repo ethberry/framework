@@ -12,7 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import renounceRoleAccessControlFacetABI from "@framework/abis/renounceRole/AccessControlFacet.json";
+import renounceRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;

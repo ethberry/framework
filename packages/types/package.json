@@ -11,7 +11,7 @@
     "@gemunion/types-collection": "1.5.16"
   },
   "devDependencies": {
-    "rimraf": "5.0.7"
+    "rimraf": "6.0.1"
   },
   "files": [
     "dist/*"

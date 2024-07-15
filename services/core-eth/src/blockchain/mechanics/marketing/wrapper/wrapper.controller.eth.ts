@@ -3,14 +3,13 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  ContractEventType,
-  ContractType,
+import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
   IUnpackWrapper,
 } from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { WrapperServiceEth } from "./wrapper.service.eth";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";

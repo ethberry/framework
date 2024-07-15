@@ -13,12 +13,12 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { CompositionStatus, IBalance, IToken, TokenType } from "@framework/types";
 
-import safeTransferChildABI from "@framework/abis/safeTransferChild/ERC998Blacklist.json";
-import safeTransferFrom1155ABI from "@framework/abis/safeTransferFrom/ERC1155Blacklist.json";
-import safeTransferFrom721ABI from "@framework/abis/safeTransferFrom/ERC721Blacklist.json";
-import safeTransferFromERC1155ABI from "@framework/abis/safeTransferFromERC1155/ERC998ERC1155ERC20Enum.json";
-import transferERC20ABI from "@framework/abis/transferERC20/ERC998ERC1155ERC20Enum.json";
-import getERC20ABI from "@framework/abis/getERC20/ERC998ERC1155ERC20Enum.json";
+import safeTransferChildABI from "@framework/abis/json/ERC998Blacklist/safeTransferChild.json";
+import safeTransferFrom1155ABI from "@framework/abis/json/ERC1155Blacklist/safeTransferFrom.json";
+import safeTransferFrom721ABI from "@framework/abis/json/ERC721Blacklist/safeTransferFrom.json";
+import safeTransferFromERC1155ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/safeTransferFromERC1155.json";
+import transferERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/transferERC20.json";
+import getERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/getERC20.json";
 
 import { formatTokenTitle } from "../../../../../utils/token";
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";

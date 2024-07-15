@@ -15,7 +15,7 @@ import { StyledListWrapper } from "@framework/styled";
 import type { IContract, IDismantle, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import DismantleABI from "@framework/abis/dismantle/ExchangeDismantleFacet.json";
+import DismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
 
 import { sorter } from "../../../../../../utils/sorter";
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";

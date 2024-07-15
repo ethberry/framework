@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import AllowanceABI from "@framework/abis/approve/ERC20Blacklist.json";
+import AllowanceABI from "@framework/abis/json/ERC20Blacklist/approve.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

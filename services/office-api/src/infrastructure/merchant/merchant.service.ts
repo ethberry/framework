@@ -84,9 +84,8 @@ export class MerchantService {
   public async update(
     where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
-    userEntity: UserEntity,
   ): Promise<MerchantEntity | null> {
-    const { wallet, ratePlan, ...rest } = dto;
+    const { wallet, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
@@ -110,18 +109,8 @@ export class MerchantService {
     if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {
       merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
 
+      // this may assign role OWNER to more than 1 user in case merchant was marked as pending by admin
       await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.OWNER);
-    }
-
-    // UPDATING RATE-PLAN for SUPER ADMIN ONLY !!!
-    if (userEntity.userRoles.includes(UserRole.SUPER)) {
-      if (ratePlan) {
-        Object.assign(merchantEntity, { ratePlan });
-      }
-    } else {
-      if (ratePlan) {
-        throw new ForbiddenException("insufficientPermissions");
-      }
     }
 
     Object.assign(merchantEntity, rest);

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
 
-import setRewardWaitListABI from "@framework/abis/setReward/WaitList.json";
+import setRewardWaitListABI from "@framework/abis/json/WaitList/setReward.json";
 
 import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
 

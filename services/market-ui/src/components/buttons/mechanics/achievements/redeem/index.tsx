@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ClaimABI from "@framework/abis/claim/ExchangeClaimFacet.json";
+import ClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IAchievementRedeemButtonProps {

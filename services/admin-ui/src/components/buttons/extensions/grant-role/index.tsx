@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant, useListWrapperContext } from "@framework
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
-import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessControlFacet.json";
+import grantRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/grantRole.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";

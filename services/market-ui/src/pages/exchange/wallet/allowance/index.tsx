@@ -13,9 +13,9 @@ import { ListAction } from "@framework/styled";
 import { ContractFeatures, SystemModuleType, TokenType } from "@framework/types";
 import type { IContract, IUser } from "@framework/types";
 
-import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
-import ERC721SetApprovalABI from "@framework/abis/approve/ERC721Blacklist.json";
-import ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
+import ERC20ApproveABI from "@framework/abis/json/ERC20Blacklist/approve.json";
+import ERC721SetApprovalABI from "@framework/abis/json/ERC721Blacklist/approve.json";
+import ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Blacklist/setApprovalForAll.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

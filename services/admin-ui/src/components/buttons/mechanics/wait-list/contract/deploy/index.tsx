@@ -6,7 +6,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IWaitListContractDeployDto } from "@framework/types";
-import deployWaitListWaitListFactoryFacetABI from "@framework/abis/deployWaitList/WaitListFactoryFacet.json";
+import deployWaitListWaitListFactoryFacetABI from "@framework/abis/json/WaitListFactoryFacet/deployWaitList.json";
 
 export interface IWaitListDeployButtonProps {
   className?: string;

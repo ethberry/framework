@@ -8,7 +8,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootContractDeployDto, IUser, IContract } from "@framework/types";
 import { LootContractTemplates } from "@framework/types";
-import deployLootBoxLootBoxFactoryFacetABI from "@framework/abis/deployLootBox/LootBoxFactoryFacet.json";
+import deployLootBoxLootBoxFactoryFacetABI from "@framework/abis/json/LootBoxFactoryFacet/deployLootBox.json";
 
 import { LootContractDeployDialog } from "./dialog";
 

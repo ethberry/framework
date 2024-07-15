@@ -8,8 +8,8 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20ApproveABI from "@framework/abis/approve/ERC20Blacklist.json";
-import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/setApprovalForAll/ERC1155Blacklist.json";
+import ERC20ApproveABI from "@framework/abis/json/ERC20Blacklist/approve.json";
+import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Blacklist/setApprovalForAll.json";
 
 import type { IStakingAllowanceDto } from "./dialog";
 import { StakingAllowanceDialog } from "./dialog";

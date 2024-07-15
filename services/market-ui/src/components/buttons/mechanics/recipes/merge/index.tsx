@@ -11,7 +11,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMerge } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import MergeABI from "@framework/abis/merge/ExchangeMergeFacet.json";
+import MergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
 import { sorter } from "../../../../../utils/sorter";
 import { MergeDialog, IMergeDto } from "./dialog";

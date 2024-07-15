@@ -12,7 +12,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
-import TemplatePurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
+import TemplatePurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";

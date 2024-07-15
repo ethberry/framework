@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput, StaticInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError, useApi } from "@gemunion/provider-api-firebase";
@@ -25,10 +25,10 @@ export const MerchantGeneral: FC<ITabPanelProps> = props => {
   const user = useUser<IUser>();
 
   const handleSubmit = (values: Partial<IMerchant>): Promise<void> => {
-    const { id: _id, ...data } = values;
+    const { id: _id, ratePlan: _ratePlan, ...data } = values;
     return api
       .fetchJson({
-        url: `/merchants`,
+        url: "/merchants",
         method: "PUT",
         data,
       })
@@ -52,8 +52,8 @@ export const MerchantGeneral: FC<ITabPanelProps> = props => {
       });
   };
 
-  const { id, title, description, email, wallet, imageUrl, social } = user.profile.merchant;
-  const fixedValues = { id, title, description, email, wallet, imageUrl, social };
+  const { id, title, description, email, wallet, imageUrl, social, ratePlan } = user.profile.merchant;
+  const fixedValues = { id, title, description, email, wallet, imageUrl, social, ratePlan };
 
   if (!open) {
     return null;
@@ -66,6 +66,7 @@ export const MerchantGeneral: FC<ITabPanelProps> = props => {
       <FormWrapper initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <TextInput name="title" />
         <RichTextEditor name="description" />
+        <StaticInput name="ratePlan" />
         <TextInput name="email" autoComplete="username" />
         <TextInput name="wallet" />
         <AvatarInput name="imageUrl" />

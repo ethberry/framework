@@ -13,7 +13,7 @@ import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { ModuleType, TokenType } from "@framework/types";
 import type { IToken, ITokenSearchDto } from "@framework/types";
 
-import MintBoxABI from "@framework/abis/mintBox/ERC721Wrapper.json";
+import MintBoxABI from "@framework/abis/json/ERC721Wrapper/mintBox.json";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { WrapperEditDialog } from "./edit";

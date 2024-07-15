@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IDiscrete, IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import UpgradeABI from "@framework/abis/upgrade/ExchangeGradeFacet.json";
+import UpgradeABI from "@framework/abis/json/ExchangeGradeFacet/upgrade.json";
 
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";

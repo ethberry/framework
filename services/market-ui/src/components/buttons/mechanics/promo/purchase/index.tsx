@@ -10,8 +10,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
-import PurchaseABI from "@framework/abis/purchase/ExchangePurchaseFacet.json";
-import PurchaseMysteryABI from "@framework/abis/purchaseMystery/ExchangeMysteryBoxFacet.json";
+import PurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
+import PurchaseMysteryABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
 
 import { sorter } from "../../../../../utils/sorter";
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
-import unpausePausableABI from "@framework/abis/unpause/Pausable.json";
+import unpausePausableABI from "@framework/abis/json/Pausable/unpause.json";
 
 import { shouldDisableByContractType } from "../../../utils";
 import { useCheckPermissions } from "../../../../../utils/use-check-permissions";

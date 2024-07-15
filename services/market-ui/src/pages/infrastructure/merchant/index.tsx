@@ -29,7 +29,7 @@ export const Merchant: FC = () => {
     const { id: _id, ...data } = values;
     return api
       .fetchJson({
-        url: `/merchants`,
+        url: "/merchants",
         method: "POST",
         data,
       })

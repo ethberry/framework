@@ -8,7 +8,7 @@ import type { ILootBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
-import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/mintBox/ERC721LootBoxBlacklist.json";
+import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxBlacklist/mintBox.json";
 
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";

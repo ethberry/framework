@@ -37,12 +37,8 @@ export class MerchantController {
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: MerchantUpdateDto,
-    @User() userEntity: UserEntity,
-  ): Promise<MerchantEntity | null> {
-    return this.merchantService.update({ id }, dto, userEntity);
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MerchantUpdateDto): Promise<MerchantEntity | null> {
+    return this.merchantService.update({ id }, dto);
   }
 
   @Get("/:id")

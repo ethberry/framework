@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import whitelistERC20WhitelistABI from "@framework/abis/whitelist/ERC20Whitelist.json";
+import whitelistERC20WhitelistABI from "@framework/abis/json/ERC20Whitelist/whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import { shouldDisableByContractType } from "../../utils";

@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { UserService } from "./user.service";
 import { UserEntity } from "./user.entity";
@@ -36,12 +36,8 @@ export class UserController {
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: UserUpdateDto,
-    @User() userEntity: UserEntity,
-  ): Promise<UserEntity> {
-    return this.userService.update({ id }, dto, userEntity);
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: UserUpdateDto): Promise<UserEntity> {
+    return this.userService.update({ id }, dto);
   }
 
   @Get("/:id")
