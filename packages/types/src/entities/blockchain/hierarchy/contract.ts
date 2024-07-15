@@ -221,6 +221,7 @@ export enum ContractSecurity {
 }
 
 export interface IContract extends IDeployable, ISearchable {
+  id: number;
   imageUrl: string;
   name: string;
   symbol: string;

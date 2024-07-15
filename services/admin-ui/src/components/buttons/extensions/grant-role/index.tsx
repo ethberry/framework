@@ -1,10 +1,10 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/styled";
+import { ListAction, ListActionVariant, useListWrapperContext } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
@@ -12,7 +12,6 @@ import grantRoleAccessControlFacetABI from "@framework/abis/grantRole/AccessCont
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -34,9 +33,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const [hasAccess, setHasAccess] = useState(false);
 
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const context = useListWrapperContext();
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -58,15 +55,11 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   };
 
   useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
+    if (!contract || !context) return;
+    if (context.callbackResponse) {
+      context.callbackResponse[contract.id] && setHasAccess(context.callbackResponse[contract.id].hasRole);
     }
-  }, [account]);
+  }, [contract, context]);
 
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;
