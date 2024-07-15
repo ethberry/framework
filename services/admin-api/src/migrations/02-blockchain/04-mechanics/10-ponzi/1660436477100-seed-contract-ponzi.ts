@@ -1,9 +1,17 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    PONZI_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractPonziAt1660436477100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -14,7 +22,7 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const ponziAddr = process.env.PONZI_ADDR || wallet;
+    const ponziAddr = process.env.PONZI_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

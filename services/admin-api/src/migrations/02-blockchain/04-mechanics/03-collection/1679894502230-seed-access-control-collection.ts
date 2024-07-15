@@ -11,7 +11,7 @@ export class SeedAccessControlCollectionAt1679894502230 implements MigrationInte
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR || wallet;
+    const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (

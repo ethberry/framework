@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroHash } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,7 +11,7 @@ export class SeedEventHistoryVestingTransferOwnershipAt1687338973200 implements 
       return;
     }
 
-    const vestingAddress = process.env.VESTING_ADDR || wallet;
+    const vestingAddress = process.env.VESTING_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

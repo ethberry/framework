@@ -1,15 +1,23 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { wallet } from "@gemunion/constants";
+import { Wallet } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, imagePath, testChainId } from "@framework/constants";
+import { imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    LINK_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractErc20LINKAt1563804000124 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const linkAddr = process.env.LINK_ADDR || wallet;
+    const linkAddr = process.env.LINK_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
 

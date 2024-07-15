@@ -18,7 +18,8 @@ import {
   StyledPagination,
 } from "@framework/styled";
 import type { IAccessControl, IContract, IContractSearchDto, ITemplate } from "@framework/types";
-import { AccessControlRoleType, BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
+import { BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
+// import { AccessControlRoleType } from "@framework/types";
 
 import {
   // BlacklistButton,
@@ -99,7 +100,7 @@ export const Erc20Contract: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
+    <ListWrapperProvider<IAccessControl, any> callback={checkPermissions}>
       <Grid>
         <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />
 
@@ -127,7 +128,7 @@ export const Erc20Contract: FC = () => {
 
         <ProgressOverlay isLoading={isLoading}>
           <StyledListWrapper<IContract>
-            callbackValue={{ account: "account", address: "adrress", role: AccessControlRoleType.DEFAULT_ADMIN_ROLE }}
+            // callbackValue={{ account: "account", address: "adrress", role: AccessControlRoleType.DEFAULT_ADMIN_ROLE }}
             count={rows.length}
             isLoading={isLoading}
             rows={rows}

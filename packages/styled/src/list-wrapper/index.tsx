@@ -1,5 +1,7 @@
 import { PropsWithChildren, ReactNode, useEffect } from "react";
 
+import { AccessControlRoleType } from "@framework/types";
+
 import { StyledEmptyWrapper } from "../empty-wrapper";
 import { StyledList } from "./styled";
 import { ListWrapperProvider, useListWrapperContext } from "./context";
@@ -25,7 +27,7 @@ export const StyledListWrapper = <T extends Record<string, any>>(
     if (!context || !rows || !account) return;
     rows.forEach(row => {
       void context
-        .callback({ role: "DEFAULT_ADMIN_ROLE", address: row.address, account })
+        .callback({ role: AccessControlRoleType.DEFAULT_ADMIN_ROLE, address: row.address, account })
         .then((json: { hasRole: boolean }) => {
           context.setCallbackResponse(prevState => ({ ...prevState, [row.id]: json }));
         });

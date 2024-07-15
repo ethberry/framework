@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther, ZeroHash } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,7 +11,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
       return;
     }
 
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

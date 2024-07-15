@@ -1,10 +1,18 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    ERC721_WRAPPER_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -13,7 +21,7 @@ export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
+    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

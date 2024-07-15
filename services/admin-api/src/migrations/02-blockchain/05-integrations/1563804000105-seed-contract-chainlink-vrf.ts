@@ -1,21 +1,32 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    VRF_ADDR: Wallet.createRandom().address.toLowerCase(),
+    VRF_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    LINK_ADDR: Wallet.createRandom().address.toLowerCase(),
+    LINK_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const vrfAddress = process.env.VRF_ADDR || wallet;
-    const vrfAddressBinance = process.env.VRF_BINANCE_ADDR || wallet;
+    const vrfAddress = process.env.VRF_ADDR;
+    const vrfAddressBinance = process.env.VRF_BINANCE_ADDR;
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
-    const linkBesuAddr = process.env.LINK_ADDR || wallet;
-    const linkBinanceAddr = process.env.LINK_BINANCE_ADDR || wallet;
+    const linkBesuAddr = process.env.LINK_ADDR;
+    const linkBinanceAddr = process.env.LINK_BINANCE_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

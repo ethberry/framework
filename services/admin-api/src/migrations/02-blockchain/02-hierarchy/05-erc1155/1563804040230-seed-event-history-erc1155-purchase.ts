@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,10 +12,10 @@ export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements Migration
       return;
     }
 
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc1155ContractSimpleAddress = process.env.ERC1155_RANDOM_ADDR || wallet;
-    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_RANDOM_ADDR;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR;
 
     const now = new Date();
     const currentDateTime = now.toISOString();

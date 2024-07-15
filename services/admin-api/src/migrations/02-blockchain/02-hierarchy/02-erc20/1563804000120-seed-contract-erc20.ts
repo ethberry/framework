@@ -1,9 +1,21 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    ERC20_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC20_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC20_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC20_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC20_WHITELIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,11 +24,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
-    const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
-    const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
-    const erc20TokenWhiteListAddress = process.env.ERC20_WHITELIST_ADDR || wallet;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
+    const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR;
+    const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR;
+    const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR;
+    const erc20TokenWhiteListAddress = process.env.ERC20_WHITELIST_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

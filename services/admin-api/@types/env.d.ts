@@ -14,9 +14,14 @@ declare global {
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
       CHAIN_ID: string;
-      LINK_ADDR: string;
       WAIT_LIST_ADDR: string;
       LOTTERY_ADDR: string;
+
+      // MODULE:CHAINLINK
+      VRF_ADDR: string;
+      VRF_BINANCE_ADDR: string;
+      LINK_ADDR: string;
+      LINK_BINANCE_ADDR: string;
     }
   }
 }
