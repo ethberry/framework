@@ -23,10 +23,6 @@ export class AccessControlService {
 
     queryBuilder.where({ address: address.toLowerCase(), account: account.toLowerCase() });
 
-    // queryBuilder.leftJoin("roles.address_contract", "address_contract", "address_contract.chain_id = :chainId", {
-    //   chainId: userEntity.chainId,
-    // });
-
     queryBuilder.leftJoinAndMapOne(
       "roles.address_contract",
       ContractEntity,
