@@ -35,7 +35,7 @@ export class AccessControlService {
       "roles.account_contract",
       ContractEntity,
       "account_contract",
-      `roles.address = account_contract.address AND account_contract.chain_id = :chainId`,
+      `roles.account = account_contract.address AND account_contract.chain_id = :chainId`,
       { chainId: userEntity.chainId },
     );
 
