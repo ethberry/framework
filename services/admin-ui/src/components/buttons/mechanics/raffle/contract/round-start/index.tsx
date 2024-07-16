@@ -14,7 +14,7 @@ import startRoundLotteryRandomABI from "@framework/abis/json/LotteryRandom/start
 import { RaffleStartRoundDialog } from "./round-dialog";
 import type { IRaffleRound } from "./round-dialog";
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;

@@ -15,7 +15,7 @@ import mintERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/mint.
 
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 
 export interface ITemplateMintButtonProps {
   className?: string;

@@ -1,20 +1,20 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { NoAccounts } from "@mui/icons-material";
-import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractSecurity } from "@framework/types";
+import { AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRenounceRoleDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRenounceRoleButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  permissionRole?: AccessControlRoleType;
 }
 
 export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
@@ -24,15 +24,12 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
     contract: { address, contractSecurity },
     disabled,
     variant,
+    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isRenounceRoleDialogOpen, setIsRenounceRoleDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
 
   const handleRenounceRole = (): void => {
     setIsRenounceRoleDialogOpen(true);
@@ -46,17 +43,6 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
     setIsRenounceRoleDialogOpen(false);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;
   }
@@ -69,7 +55,7 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
         message="form.buttons.renounceRole"
         className={className}
         dataTestId="RenounceRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
         variant={variant}
       />
       <AccessControlRenounceRoleDialog

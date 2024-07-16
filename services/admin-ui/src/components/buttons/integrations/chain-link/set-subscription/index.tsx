@@ -11,7 +11,7 @@ import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/json/ERC721Gene
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;

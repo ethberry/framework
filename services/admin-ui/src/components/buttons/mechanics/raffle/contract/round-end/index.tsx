@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import RafflesEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;

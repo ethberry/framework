@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
@@ -13,16 +13,17 @@ import mintERC20BlacklistABI from "@framework/abis/json/ERC20Blacklist/mint.json
 import mintCommonERC721BlacklistABI from "@framework/abis/json/ERC721Blacklist/mintCommon.json";
 import mintERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/mint.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  permissionRole?: AccessControlRoleType;
 }
 
 export const ContractMintButton: FC<IContractMintButtonProps> = props => {
@@ -32,14 +33,14 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
+    permissionRole = AccessControlRoleType.MINTER_ROLE,
   } = props;
 
   const { account = "" } = useWeb3React();
 
-  const [hasAccess, setHasAccess] = useState(false);
+  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
-  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -89,18 +90,6 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -114,7 +103,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
           shouldDisableByContractType(contract) ||
           contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
-          !hasAccess
+          !isButtonAvailable
         }
         variant={variant}
       />

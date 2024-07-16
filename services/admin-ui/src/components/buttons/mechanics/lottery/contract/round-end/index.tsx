@@ -10,7 +10,7 @@ import type { IContract } from "@framework/types";
 import LotteryEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface ILotteryRoundEndButtonProps {
   className?: string;

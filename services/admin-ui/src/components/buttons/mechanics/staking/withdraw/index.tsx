@@ -10,7 +10,7 @@ import { TokenType } from "@framework/types";
 
 import withdrawBalanceReentrancyStakingRewardABI from "@framework/abis/json/ReentrancyStakingReward/withdrawBalance.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;

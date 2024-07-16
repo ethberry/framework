@@ -1,20 +1,20 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOff } from "@mui/icons-material";
-import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessListUnBlacklistDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IUnBlacklistButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  permissionRole?: AccessControlRoleType;
 }
 
 export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
@@ -24,15 +24,12 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
     contract: { address, contractFeatures },
     disabled,
     variant,
+    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isUnBlacklistDialogOpen, setIsUnBlacklistDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
 
   const handleUnBlacklist = (): void => {
     setIsUnBlacklistDialogOpen(true);
@@ -46,17 +43,6 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
     setIsUnBlacklistDialogOpen(false);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (!contractFeatures.includes(ContractFeatures.BLACKLIST)) {
     return null;
   }
@@ -69,7 +55,7 @@ export const UnBlacklistButton: FC<IUnBlacklistButtonProps> = props => {
         message="form.buttons.unblacklist"
         className={className}
         dataTestId="UnBlacklistButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
         variant={variant}
       />
       <AccessListUnBlacklistDialog

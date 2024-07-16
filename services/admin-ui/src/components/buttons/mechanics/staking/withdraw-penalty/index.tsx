@@ -6,7 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
 import { StakingWithdrawPenaltyDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 
 export interface IStakingWithdrawPenaltyProps {
   contract: IContract;

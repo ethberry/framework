@@ -10,7 +10,7 @@ import { ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
 

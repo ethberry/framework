@@ -1,23 +1,18 @@
-import { FC, Fragment, useMemo, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ListAction, ListActionVariant, useListWrapperContext } from "@framework/styled";
+import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import {
-  AccessControlRoleHash,
-  AccessControlRoleType,
-  ContractSecurity,
-  IPermission,
-  IPermissionControl,
-} from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import grantRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/grantRole.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -39,7 +34,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
-  const context = useListWrapperContext<IPermissionControl, Array<IPermission>>();
+  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -59,12 +54,6 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
       setIsGrantRoleDialogOpen(false);
     });
   };
-
-  const isButtonAvailable = useMemo(() => {
-    if (!contract || !context) return false;
-    if (!context.callbackResponse[contract.id]) return false;
-    return context.callbackResponse[contract.id].some(item => item.role === permissionRole) as boolean;
-  }, [context, contract, permissionRole]);
 
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;

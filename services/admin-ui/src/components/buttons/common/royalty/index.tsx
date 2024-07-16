@@ -1,25 +1,26 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
 import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/setDefaultRoyalty.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import type { IRoyaltyDto } from "./dialog";
 import { RoyaltyEditDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRoyaltyButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
+  permissionRole?: AccessControlRoleType;
 }
 
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
@@ -29,15 +30,12 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
     contract: { address, contractFeatures, royalty, contractType },
     disabled,
     variant,
+    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -58,17 +56,6 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (contractType === TokenType.NATIVE || contractType === TokenType.ERC20) {
     return null;
   }
@@ -85,7 +72,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
           disabled ||
           shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
-          !hasAccess
+          !isButtonAvailable
         }
         variant={variant}
       />

@@ -11,7 +11,7 @@ import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 import pausePausableABI from "@framework/abis/json/PausableFacet/pause.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
 
 export interface IPauseButtonProps {
   className?: string;

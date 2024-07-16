@@ -13,7 +13,7 @@ import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721Myst
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MintMysteryBoxDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface IMysteryContractMintButtonProps {
   className?: string;

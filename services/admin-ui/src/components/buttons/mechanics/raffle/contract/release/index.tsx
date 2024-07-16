@@ -9,7 +9,7 @@ import type { IRaffleRound } from "@framework/types";
 
 import releaseFundsLotteryRandomABI from "@framework/abis/json/LotteryRandom/releaseFunds.json";
 
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface IRaffleReleaseButtonProps {
   className?: string;

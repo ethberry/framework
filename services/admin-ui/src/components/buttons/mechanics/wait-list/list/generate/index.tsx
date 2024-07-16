@@ -11,7 +11,7 @@ import { ContractStatus, TokenType } from "@framework/types";
 
 import setRewardWaitListABI from "@framework/abis/json/WaitList/setReward.json";
 
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;
