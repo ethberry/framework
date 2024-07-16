@@ -32,7 +32,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleBlacklist = (): void => {
     setIsBlacklistDialogOpen(true);

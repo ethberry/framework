@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
@@ -15,7 +15,7 @@ import mintERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/mint.
 
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface ITemplateMintButtonProps {
   className?: string;
@@ -34,8 +34,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkPermissions } = useCheckPermissions();
-  const [hasAccess, setHasAccess] = useState(false);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, templateId);
 
   const { address, contractType, decimals } = contract!;
 
@@ -89,18 +88,6 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -114,7 +101,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
           templateStatus === TemplateStatus.INACTIVE ||
           contract?.contractType === TokenType.NATIVE ||
           contract?.contractFeatures.includes(ContractFeatures.GENES) ||
-          !hasAccess
+          !isButtonAvailable
         }
         variant={variant}
       />

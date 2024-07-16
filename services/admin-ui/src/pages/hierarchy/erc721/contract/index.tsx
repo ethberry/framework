@@ -127,11 +127,12 @@ export const Erc721Contract: FC = () => {
         />
 
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>
+          <StyledListWrapper<IContract>
             count={rows.length}
             isLoading={isLoading}
             rows={rows}
             account={account}
+            path={"address"}
           >
             {rows.map(contract => (
               <StyledListItem key={contract.id}>

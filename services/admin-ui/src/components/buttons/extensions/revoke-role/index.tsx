@@ -27,7 +27,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleRevokeRole = (): void => {
     setIsRevokeRoleDialogOpen(true);

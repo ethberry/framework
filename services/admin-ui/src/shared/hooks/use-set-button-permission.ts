@@ -1,19 +1,19 @@
-import { AccessControlRoleType, IAccessControl, IContract } from "@framework/types";
+import { AccessControlRoleType, IAccessControl } from "@framework/types";
 import { useListWrapperContext } from "@framework/styled";
 import { useMemo } from "react";
 
-export const useSetButtonPermission = (permissionRole: AccessControlRoleType, contract: IContract) => {
-  const context = useListWrapperContext<IAccessControl, Array<IAccessControl>>();
+export const useSetButtonPermission = (permissionRole: AccessControlRoleType, id?: number) => {
+  const context = useListWrapperContext<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>();
 
   const isButtonAvailable = useMemo(() => {
-    if (!contract || !context) {
+    if (!id || !context) {
       return false;
     }
-    if (!context.callbackResponse[contract.id]) {
+    if (!context.callbackResponse[id]) {
       return false;
     }
-    return context.callbackResponse[contract.id].some(item => item.role === permissionRole) as boolean;
-  }, [context, contract, permissionRole]);
+    return context.callbackResponse[id].some(item => item.role === permissionRole);
+  }, [context, permissionRole]);
 
   return {
     isButtonAvailable,

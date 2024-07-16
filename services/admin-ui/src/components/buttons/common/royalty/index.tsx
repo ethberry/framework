@@ -33,7 +33,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);

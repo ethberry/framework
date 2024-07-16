@@ -32,7 +32,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
 
   const [isWhitelistDialogOpen, setIsWhitelistDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleWhitelist = (): void => {
     setIsWhitelistDialogOpen(true);
