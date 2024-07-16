@@ -14,7 +14,6 @@ export interface IRenounceRoleButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
-  permissionRole?: AccessControlRoleType;
 }
 
 export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
@@ -24,12 +23,11 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
     contract: { address, contractSecurity },
     disabled,
     variant,
-    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isRenounceRoleDialogOpen, setIsRenounceRoleDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
 
   const handleRenounceRole = (): void => {
     setIsRenounceRoleDialogOpen(true);

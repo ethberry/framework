@@ -20,7 +20,6 @@ export interface IRoyaltyButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
-  permissionRole?: AccessControlRoleType;
 }
 
 export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
@@ -30,12 +29,11 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
     contract: { address, contractFeatures, royalty, contractType },
     disabled,
     variant,
-    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);

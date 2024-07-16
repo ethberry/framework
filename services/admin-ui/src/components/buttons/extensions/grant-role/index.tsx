@@ -19,7 +19,6 @@ export interface IGrantRoleButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
-  permissionRole?: AccessControlRoleType;
 }
 
 export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
@@ -29,12 +28,11 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
     contract: { address, contractSecurity },
     disabled,
     variant,
-    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);

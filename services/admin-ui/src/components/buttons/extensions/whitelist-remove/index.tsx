@@ -14,7 +14,6 @@ export interface IUnWhitelistButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
-  permissionRole?: AccessControlRoleType;
 }
 
 export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
@@ -24,12 +23,11 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
     contract: { address, contractFeatures },
     disabled,
     variant,
-    permissionRole = AccessControlRoleType.DEFAULT_ADMIN_ROLE,
   } = props;
 
   const [isUnWhitelistDialogOpen, setIsUnWhitelistDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
 
   const handleUnWhitelist = (): void => {
     setIsUnWhitelistDialogOpen(true);

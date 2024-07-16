@@ -23,7 +23,6 @@ export interface IContractMintButtonProps {
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
-  permissionRole?: AccessControlRoleType;
 }
 
 export const ContractMintButton: FC<IContractMintButtonProps> = props => {
@@ -33,12 +32,11 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
     contract: { address, id: contractId, contractFeatures, contractType, decimals },
     disabled,
     variant,
-    permissionRole = AccessControlRoleType.MINTER_ROLE,
   } = props;
 
   const { account = "" } = useWeb3React();
 
-  const { isButtonAvailable } = useSetButtonPermission(permissionRole, contract);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contract);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 

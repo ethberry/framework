@@ -18,7 +18,7 @@ import {
   StyledPagination,
 } from "@framework/styled";
 import type { IAccessControl, IContract, IContractSearchDto, ITemplate } from "@framework/types";
-import { BusinessType, ContractStatus, Erc20ContractFeatures, IPermission, IPermissionControl } from "@framework/types";
+import { BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
 import {
   BlacklistButton,
@@ -125,7 +125,7 @@ export const Erc20Contract: FC = () => {
         />
 
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper<IPermissionControl, Array<IPermission>>
+          <StyledListWrapper<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>
             count={rows.length}
             isLoading={isLoading}
             rows={rows}

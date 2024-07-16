@@ -1,16 +1,10 @@
 import { useCallback } from "react";
 import { useApiCall } from "@gemunion/react-hooks";
-import { AccessControlRoleType } from "@framework/types";
-
-export interface IAccessControl {
-  address: string;
-  account: string;
-  role?: AccessControlRoleType;
-}
+import { IAccessControl } from "@framework/types";
 
 export const useCheckPermissions = () => {
   const { fn } = useApiCall(
-    (api, values: IAccessControl) =>
+    (api, values: Pick<IAccessControl, "address" | "account">) =>
       api.fetchJson({
         url: "/access-control",
         data: values,
