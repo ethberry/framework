@@ -6,9 +6,9 @@
   },
   "dependencies": {
     "@framework/constants": "0.0.1",
-    "@gemunion/constants": "0.12.12",
-    "@gemunion/types-blockchain": "1.2.12",
-    "@gemunion/types-collection": "1.5.16"
+    "@gemunion/constants": "0.12.13",
+    "@gemunion/types-blockchain": "1.2.13",
+    "@gemunion/types-collection": "1.5.17"
   },
   "devDependencies": {
     "rimraf": "6.0.1"
