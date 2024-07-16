@@ -2,6 +2,7 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -12,13 +13,21 @@ import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import {
+  ListAction,
+  ListActions,
+  ListWrapperProvider,
+  StyledListItem,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
 import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate } from "@framework/types";
-import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
+import { IAccessControl, ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryboxEditDialog } from "./edit";
+import { useCheckPermissions } from "../../../../../shared";
 
 export const MysteryBox: FC = () => {
   const {
@@ -74,93 +83,104 @@ export const MysteryBox: FC = () => {
           },
   });
 
+  const { checkPermissions } = useCheckPermissions();
+  const { account = "" } = useWeb3React();
+
   return (
-    <Grid>
-      <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
+    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
+      <Grid>
+        <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
 
-      <PageHeader message="pages.mystery.boxes.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
-      </PageHeader>
+        <PageHeader message="pages.mystery.boxes.title">
+          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+          </Button>
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
+            <FormattedMessage id="form.buttons.create" />
+          </Button>
+        </PageHeader>
 
-      <CommonSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        testId="MysteryboxSearchForm"
-      >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{
-                contractType: [TokenType.ERC721],
-                contractModule: [ModuleType.MYSTERY],
-              }}
-            />
+        <CommonSearchForm
+          onSubmit={handleSearch}
+          initialValues={search}
+          open={isFiltersOpen}
+          testId="MysteryboxSearchForm"
+        >
+          <FormRefresher onRefreshPage={handleRefreshPage} />
+          <Grid container spacing={2} alignItems="flex-end">
+            <Grid item xs={6}>
+              <EntityInput
+                name="contractIds"
+                controller="contracts"
+                multiple
+                data={{
+                  contractType: [TokenType.ERC721],
+                  contractModule: [ModuleType.MYSTERY],
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
-          </Grid>
-        </Grid>
-      </CommonSearchForm>
+        </CommonSearchForm>
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(mystery => (
-            <StyledListItem key={mystery.id}>
-              <ListItemText>{mystery.title}</ListItemText>
-              <ListActions>
-                <ListAction
-                  onClick={handleEdit(mystery)}
-                  message="form.buttons.edit"
-                  dataTestId="MysteryEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(mystery)}
-                  message="form.buttons.delete"
-                  dataTestId="MysteryDeleteButton"
-                  icon={Delete}
-                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                />
-                <MysteryBoxMintButton
-                  mystery={mystery}
-                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+        <ProgressOverlay isLoading={isLoading}>
+          <StyledListWrapper
+            count={rows.length}
+            isLoading={isLoading}
+            rows={rows}
+            account={account}
+            path={"template.contract.address"}
+          >
+            {rows.map(mystery => (
+              <StyledListItem key={mystery.id}>
+                <ListItemText>{mystery.title}</ListItemText>
+                <ListActions>
+                  <ListAction
+                    onClick={handleEdit(mystery)}
+                    message="form.buttons.edit"
+                    dataTestId="MysteryEditButton"
+                    icon={Create}
+                  />
+                  <ListAction
+                    onClick={handleDelete(mystery)}
+                    message="form.buttons.delete"
+                    dataTestId="MysteryDeleteButton"
+                    icon={Delete}
+                    disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+                  />
+                  <MysteryBoxMintButton
+                    mystery={mystery}
+                    disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+                  />
+                </ListActions>
+              </StyledListItem>
+            ))}
+          </StyledListWrapper>
+        </ProgressOverlay>
 
-      <StyledPagination
-        shape="rounded"
-        page={search.skip / search.take + 1}
-        count={Math.ceil(count / search.take)}
-        onChange={handleChangePage}
-      />
+        <StyledPagination
+          shape="rounded"
+          page={search.skip / search.take + 1}
+          count={Math.ceil(count / search.take)}
+          onChange={handleChangePage}
+        />
 
-      <DeleteDialog
-        onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
-        open={action === CollectionActions.delete}
-        initialValues={selected}
-      />
+        <DeleteDialog
+          onCancel={handleDeleteCancel}
+          onConfirm={handleDeleteConfirm}
+          open={action === CollectionActions.delete}
+          initialValues={selected}
+        />
 
-      <MysteryboxEditDialog
-        onCancel={handleEditCancel}
-        onConfirm={handleEditConfirm}
-        open={action === CollectionActions.edit}
-        initialValues={selected}
-      />
-    </Grid>
+        <MysteryboxEditDialog
+          onCancel={handleEditCancel}
+          onConfirm={handleEditConfirm}
+          open={action === CollectionActions.edit}
+          initialValues={selected}
+        />
+      </Grid>
+    </ListWrapperProvider>
   );
 };
