@@ -23,3 +23,14 @@ export interface IAccessControl extends IIdDateBase {
   account: string;
   role: AccessControlRoleType;
 }
+
+export type IPermissionControl = Pick<IAccessControl, "address" | "account">;
+
+export interface IPermission {
+  id: number;
+  account: string;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
+  role: AccessControlRoleType;
+}

@@ -1,36 +1,30 @@
 import { PropsWithChildren, ReactNode, useEffect } from "react";
 
-import { AccessControlRoleType } from "@framework/types";
-
 import { StyledEmptyWrapper } from "../empty-wrapper";
 import { StyledList } from "./styled";
 import { ListWrapperProvider, useListWrapperContext } from "./context";
 
 export { ListWrapperProvider, useListWrapperContext };
 
-export interface IStyledListWrapperProps<T extends Record<string, any>> {
+export interface IStyledListWrapperProps {
   count?: number;
   isLoading?: boolean;
   message?: string;
   subheader?: ReactNode;
-  rows?: Array<T>;
+  rows?: Array<Record<string, any>>;
   account?: string;
 }
 
-export const StyledListWrapper = <T extends Record<string, any>>(
-  props: PropsWithChildren<IStyledListWrapperProps<T>>,
-) => {
+export const StyledListWrapper = <V, R = any>(props: PropsWithChildren<IStyledListWrapperProps>) => {
   const { children, subheader, rows, account, ...rest } = props;
-  const context = useListWrapperContext();
+  const context = useListWrapperContext<V, R>();
 
   useEffect(() => {
     if (!context || !rows || !account) return;
     rows.forEach(row => {
-      void context
-        .callback({ role: AccessControlRoleType.DEFAULT_ADMIN_ROLE, address: row.address, account })
-        .then((json: { hasRole: boolean }) => {
-          context.setCallbackResponse(prevState => ({ ...prevState, [row.id]: json }));
-        });
+      void context.callback({ address: row.address, account } as V).then(json => {
+        context.setCallbackResponse(prevState => ({ ...prevState, [row.id]: json }));
+      });
     });
   }, [rows]);
 

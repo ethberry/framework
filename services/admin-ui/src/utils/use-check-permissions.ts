@@ -12,7 +12,6 @@ export const useCheckPermissions = () => {
   const { fn } = useApiCall(
     (api, values: IAccessControl) =>
       api.fetchJson({
-        // url: "/access-control/check",
         url: "/access-control",
         data: values,
       }),
@@ -20,7 +19,7 @@ export const useCheckPermissions = () => {
   );
 
   const checkPermissions = useCallback(async (value: IAccessControl) => {
-    const { account, address } = value;
+    const { address, account } = value;
     return fn(void 0, { account, address });
   }, []);
 

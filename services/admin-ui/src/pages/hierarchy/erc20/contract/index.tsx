@@ -18,25 +18,9 @@ import {
   StyledPagination,
 } from "@framework/styled";
 import type { IAccessControl, IContract, IContractSearchDto, ITemplate } from "@framework/types";
-import { BusinessType, ContractStatus, Erc20ContractFeatures } from "@framework/types";
-// import { AccessControlRoleType } from "@framework/types";
+import { BusinessType, ContractStatus, Erc20ContractFeatures, IPermission, IPermissionControl } from "@framework/types";
 
-import {
-  // BlacklistButton,
-  // ContractAllowanceButton,
-  // ContractMintButton,
-  Erc20ContractDeployButton,
-  // EthListenerAddButton,
-  // EthListenerRemoveButton,
-  GrantRoleButton,
-  // RenounceRoleButton,
-  // RevokeRoleButton,
-  // RoyaltyButton,
-  // TransferButton,
-  // UnBlacklistButton,
-  // UnWhitelistButton,
-  // WhitelistButton,
-} from "../../../../components/buttons";
+import { Erc20ContractDeployButton, GrantRoleButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc20ContractEditDialog } from "./edit";
 import { useCheckPermissions } from "../../../../utils/use-check-permissions";
@@ -98,9 +82,8 @@ export const Erc20Contract: FC = () => {
 
   const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
-
   return (
-    <ListWrapperProvider<IAccessControl, any> callback={checkPermissions}>
+    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
       <Grid>
         <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />
 
@@ -127,8 +110,7 @@ export const Erc20Contract: FC = () => {
         />
 
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper<IContract>
-            // callbackValue={{ account: "account", address: "adrress", role: AccessControlRoleType.DEFAULT_ADMIN_ROLE }}
+          <StyledListWrapper<IPermissionControl, Array<IPermission>>
             count={rows.length}
             isLoading={isLoading}
             rows={rows}
@@ -152,6 +134,7 @@ export const Erc20Contract: FC = () => {
                     icon={Delete}
                     disabled={contract.contractStatus === ContractStatus.INACTIVE}
                   />
+                  {/* default admin role */}
                   <GrantRoleButton contract={contract} />
                   {/* <RevokeRoleButton contract={contract} /> */}
                   {/* <RenounceRoleButton contract={contract} /> */}
@@ -159,10 +142,12 @@ export const Erc20Contract: FC = () => {
                   {/* <UnBlacklistButton contract={contract} /> */}
                   {/* <WhitelistButton contract={contract} /> */}
                   {/* <UnWhitelistButton contract={contract} /> */}
+                  {/* <RoyaltyButton contract={contract} /> */}
+                  {/* minter role */}
                   {/* <ContractMintButton contract={contract} /> */}
+                  {/* always active */}
                   {/* <ContractAllowanceButton contract={contract} /> */}
                   {/* <TransferButton contract={contract} /> */}
-                  {/* <RoyaltyButton contract={contract} /> */}
                   {/* <EthListenerAddButton contract={contract} /> */}
                   {/* <EthListenerRemoveButton contract={contract} /> */}
                 </ListActions>
