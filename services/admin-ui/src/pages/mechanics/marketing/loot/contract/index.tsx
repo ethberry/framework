@@ -2,14 +2,22 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import {
+  ListAction,
+  ListActions,
+  ListWrapperProvider,
+  StyledListItem,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, LootContractFeatures } from "@framework/types";
+import { ContractStatus, IAccessControl, LootContractFeatures } from "@framework/types";
 
 import {
   BlacklistButton,
@@ -34,6 +42,7 @@ import {
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import { LootContractEditDialog } from "./edit";
+import { useCheckPermissions } from "../../../../../shared";
 
 export const LootContract: FC = () => {
   const {
@@ -73,88 +82,94 @@ export const LootContract: FC = () => {
       contractStatus,
     }),
   });
+
+  const { checkPermissions } = useCheckPermissions();
+  const { account = "" } = useWeb3React();
+
   return (
-    <Grid>
-      <Breadcrumbs path={["dashboard", "loot", "loot.contracts"]} />
+    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
+      <Grid>
+        <Breadcrumbs path={["dashboard", "loot", "loot.contracts"]} />
 
-      <PageHeader message="pages.loot.contracts.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-        <LootContractDeployButton />
-      </PageHeader>
+        <PageHeader message="pages.loot.contracts.title">
+          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+          </Button>
+          <LootContractDeployButton />
+        </PageHeader>
 
-      <ContractSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        contractFeaturesOptions={LootContractFeatures}
-        onRefreshPage={handleRefreshPage}
-      />
+        <ContractSearchForm
+          onSubmit={handleSearch}
+          initialValues={search}
+          open={isFiltersOpen}
+          contractFeaturesOptions={LootContractFeatures}
+          onRefreshPage={handleRefreshPage}
+        />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => (
-            <StyledListItem key={contract.id}>
-              <ListItemText>{contract.title}</ListItemText>
-              <ListActions dataTestId="LootActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(contract)}
-                  message="form.buttons.edit"
-                  dataTestId="ContractEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  message="form.buttons.delete"
-                  dataTestId="ContractDeleteButton"
-                  icon={Delete}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <TopUpButton contract={contract} />
-                <GrantRoleButton contract={contract} />
-                <RevokeRoleButton contract={contract} />
-                <RenounceRoleButton contract={contract} />
-                <BlacklistButton contract={contract} />
-                <UnBlacklistButton contract={contract} />
-                <WhitelistButton contract={contract} />
-                <UnWhitelistButton contract={contract} />
-                <PauseButton contract={contract} />
-                <UnPauseButton contract={contract} />
-                <LootContractMintButton contract={contract} />
-                <ContractAllowanceButton contract={contract} />
-                <RoyaltyButton contract={contract} />
-                <SetBaseTokenURIButton contract={contract} />
-                <TransferButton contract={contract} />
-                <ChainLinkSetSubscriptionButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+        <ProgressOverlay isLoading={isLoading}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+            {rows.map(contract => (
+              <StyledListItem key={contract.id}>
+                <ListItemText>{contract.title}</ListItemText>
+                <ListActions dataTestId="LootActionsMenuButton">
+                  <ListAction
+                    onClick={handleEdit(contract)}
+                    message="form.buttons.edit"
+                    dataTestId="ContractEditButton"
+                    icon={Create}
+                  />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    message="form.buttons.delete"
+                    dataTestId="ContractDeleteButton"
+                    icon={Delete}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  />
+                  <TopUpButton contract={contract} />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <BlacklistButton contract={contract} />
+                  <UnBlacklistButton contract={contract} />
+                  <WhitelistButton contract={contract} />
+                  <UnWhitelistButton contract={contract} />
+                  <PauseButton contract={contract} />
+                  <UnPauseButton contract={contract} />
+                  <LootContractMintButton contract={contract} />
+                  <ContractAllowanceButton contract={contract} />
+                  <RoyaltyButton contract={contract} />
+                  <SetBaseTokenURIButton contract={contract} />
+                  <TransferButton contract={contract} />
+                  <ChainLinkSetSubscriptionButton contract={contract} />
+                  <EthListenerAddButton contract={contract} />
+                  <EthListenerRemoveButton contract={contract} />
+                </ListActions>
+              </StyledListItem>
+            ))}
+          </StyledListWrapper>
+        </ProgressOverlay>
 
-      <StyledPagination
-        shape="rounded"
-        page={search.skip / search.take + 1}
-        count={Math.ceil(count / search.take)}
-        onChange={handleChangePage}
-      />
+        <StyledPagination
+          shape="rounded"
+          page={search.skip / search.take + 1}
+          count={Math.ceil(count / search.take)}
+          onChange={handleChangePage}
+        />
 
-      <DeleteDialog
-        onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
-        open={action === CollectionActions.delete}
-        initialValues={selected}
-      />
+        <DeleteDialog
+          onCancel={handleDeleteCancel}
+          onConfirm={handleDeleteConfirm}
+          open={action === CollectionActions.delete}
+          initialValues={selected}
+        />
 
-      <LootContractEditDialog
-        onCancel={handleEditCancel}
-        onConfirm={handleEditConfirm}
-        open={action === CollectionActions.edit}
-        initialValues={selected}
-      />
-    </Grid>
+        <LootContractEditDialog
+          onCancel={handleEditCancel}
+          onConfirm={handleEditConfirm}
+          open={action === CollectionActions.edit}
+          initialValues={selected}
+        />
+      </Grid>
+    </ListWrapperProvider>
   );
 };
