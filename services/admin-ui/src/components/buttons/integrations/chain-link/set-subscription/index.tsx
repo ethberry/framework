@@ -1,17 +1,17 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { Subscriptions } from "@mui/icons-material";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/json/ERC721GenesBesu/setSubscriptionId.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
-import { useCheckPermissions } from "../../../../../shared/hooks/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IChainLinkSetSubscriptionButtonProps {
   contract: IContract;
@@ -25,15 +25,13 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
     className,
     disabled,
     contract: { address, contractModule, contractFeatures },
+    contract,
     variant = ListActionVariant.button,
   } = props;
-  const { account } = useWeb3React();
 
   const [isSetSubscriptionDialogOpen, setIsSetSubscriptionDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract);
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
@@ -62,17 +60,6 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
     setIsSetSubscriptionDialogOpen(false);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -81,7 +68,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         message="pages.chain-link.set"
         className={className}
         dataTestId="ChainLinkSetSubscriptionButton"
-        disabled={disabled || !hasAccess}
+        disabled={disabled || !isButtonAvailable}
         variant={variant}
       />
       <ChainLinkSetSubscriptionDialog
