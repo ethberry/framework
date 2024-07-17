@@ -27,7 +27,7 @@ export interface ITemplateMintButtonProps {
 export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
   const {
     className,
-    template: { contract, contractId, templateStatus, tokens },
+    template: { contract, contractId, id: templateId, templateStatus, tokens },
     disabled,
     variant,
   } = props;
