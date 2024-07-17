@@ -1,16 +1,17 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { StopCircleOutlined } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
+import { AccessControlRoleType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import RafflesEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckPermissions } from "../../../../../../shared/hooks/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IRaffleRoundEndButtonProps {
   className?: string;
@@ -28,11 +29,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
     variant,
   } = props;
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, RafflesEndRoundABI, web3Context.provider?.getSigner());
@@ -42,17 +39,6 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
   const handleEndRound = () => {
     return metaFn();
   };
-
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
 
   // round not started
   if (!parameters.roundId) {
@@ -66,7 +52,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+      disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
       variant={variant}
     />
   );
