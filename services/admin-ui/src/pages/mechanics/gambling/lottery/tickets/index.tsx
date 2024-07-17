@@ -2,14 +2,22 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import {
+  ListAction,
+  ListActions,
+  ListWrapperProvider,
+  StyledListItem,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, Erc721ContractTemplates } from "@framework/types";
+import { ContractStatus, Erc721ContractTemplates, IAccessControl } from "@framework/types";
 
 import {
   ContractAllowanceButton,
@@ -27,6 +35,7 @@ import {
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import { LotteryEditDialog } from "./edit";
+import { useCheckPermissions } from "../../../../../shared";
 
 export const LotteryTicketContracts: FC = () => {
   const {
@@ -67,81 +76,86 @@ export const LotteryTicketContracts: FC = () => {
     }),
   });
 
+  const { checkPermissions } = useCheckPermissions();
+  const { account = "" } = useWeb3React();
+
   return (
-    <Grid>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.tickets"]} />
+    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
+      <Grid>
+        <Breadcrumbs path={["dashboard", "lottery", "lottery.tickets"]} />
 
-      <PageHeader message="pages.lottery.tickets.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-        <Erc721ContractDeployButton contractTemplate={Erc721ContractTemplates.LOTTERY} />
-      </PageHeader>
+        <PageHeader message="pages.lottery.tickets.title">
+          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+          </Button>
+          <Erc721ContractDeployButton contractTemplate={Erc721ContractTemplates.LOTTERY} />
+        </PageHeader>
 
-      <ContractSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
-      />
+        <ContractSearchForm
+          onSubmit={handleSearch}
+          initialValues={search}
+          open={isFiltersOpen}
+          contractFeaturesOptions={{}}
+          onRefreshPage={handleRefreshPage}
+        />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => (
-            <StyledListItem key={contract.id}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListActions dataTestId="ContractActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(contract)}
-                  message="form.buttons.edit"
-                  dataTestId="ContractEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  message="form.buttons.delete"
-                  dataTestId="ContractDeleteButton"
-                  icon={Delete}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <GrantRoleButton contract={contract} />
-                <RevokeRoleButton contract={contract} />
-                <RenounceRoleButton contract={contract} />
-                <BlacklistButton contract={contract} />
-                <UnBlacklistButton contract={contract} />
-                <WhitelistButton contract={contract} />
-                <UnWhitelistButton contract={contract} />
-                <ContractMintButton contract={contract} />
-                <ContractAllowanceButton contract={contract} />
-                <TransferButton contract={contract} />
-                <RoyaltyButton contract={contract} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+        <ProgressOverlay isLoading={isLoading}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+            {rows.map(contract => (
+              <StyledListItem key={contract.id}>
+                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                <ListActions dataTestId="ContractActionsMenuButton">
+                  <ListAction
+                    onClick={handleEdit(contract)}
+                    message="form.buttons.edit"
+                    dataTestId="ContractEditButton"
+                    icon={Create}
+                  />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    message="form.buttons.delete"
+                    dataTestId="ContractDeleteButton"
+                    icon={Delete}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  />
+                  <GrantRoleButton contract={contract} />
+                  <RevokeRoleButton contract={contract} />
+                  <RenounceRoleButton contract={contract} />
+                  <BlacklistButton contract={contract} />
+                  <UnBlacklistButton contract={contract} />
+                  <WhitelistButton contract={contract} />
+                  <UnWhitelistButton contract={contract} />
+                  <ContractMintButton contract={contract} />
+                  <ContractAllowanceButton contract={contract} />
+                  <TransferButton contract={contract} />
+                  <RoyaltyButton contract={contract} />
+                </ListActions>
+              </StyledListItem>
+            ))}
+          </StyledListWrapper>
+        </ProgressOverlay>
 
-      <StyledPagination
-        shape="rounded"
-        page={search.skip / search.take + 1}
-        count={Math.ceil(count / search.take)}
-        onChange={handleChangePage}
-      />
+        <StyledPagination
+          shape="rounded"
+          page={search.skip / search.take + 1}
+          count={Math.ceil(count / search.take)}
+          onChange={handleChangePage}
+        />
 
-      <DeleteDialog
-        onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
-        open={action === CollectionActions.delete}
-        initialValues={selected}
-      />
+        <DeleteDialog
+          onCancel={handleDeleteCancel}
+          onConfirm={handleDeleteConfirm}
+          open={action === CollectionActions.delete}
+          initialValues={selected}
+        />
 
-      <LotteryEditDialog
-        onCancel={handleEditCancel}
-        onConfirm={handleEditConfirm}
-        open={action === CollectionActions.edit}
-        initialValues={selected}
-      />
-    </Grid>
+        <LotteryEditDialog
+          onCancel={handleEditCancel}
+          onConfirm={handleEditConfirm}
+          open={action === CollectionActions.edit}
+          initialValues={selected}
+        />
+      </Grid>
+    </ListWrapperProvider>
   );
 };
