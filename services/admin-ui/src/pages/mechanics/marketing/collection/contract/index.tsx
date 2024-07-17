@@ -11,8 +11,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -90,29 +90,29 @@ export const CollectionContract: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "collection", "collection.contract"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "collection", "collection.contract"]} />
 
-        <PageHeader message="pages.collection.contracts">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-          </Button>
-          <CollectionContractDeployButton />
-        </PageHeader>
+      <PageHeader message="pages.collection.contracts">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <CollectionContractDeployButton />
+      </PageHeader>
 
-        <ContractSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractFeaturesOptions={CollectionContractFeatures}
-          onRefreshPage={handleRefreshPage}
-        />
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={CollectionContractFeatures}
+        onRefreshPage={handleRefreshPage}
+      />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(contract => (
-              <StyledListItem key={contract.id}>
+              <ListItem key={contract.id} account={account} contract={contract}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListItemText>{contract.parameters.batchSize}</ListItemText>
                 <ListActions dataTestId="CollectionActionsMenuButton">
@@ -142,32 +142,32 @@ export const CollectionContract: FC = () => {
                   <EthListenerAddButton contract={contract} />
                   <EthListenerRemoveButton contract={contract} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <Erc721CollectionEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <Erc721CollectionEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

@@ -1,9 +1,7 @@
-import { ListItem, ListItemProps } from "@mui/material";
+import { ListItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export interface IStyledListItemProps extends ListItemProps {
-  wrap?: boolean;
-}
+import { IStyledListItemProps } from "./types";
 
 export const StyledListItem = styled(ListItem, {
   shouldForwardProp: prop => prop !== "wrap",

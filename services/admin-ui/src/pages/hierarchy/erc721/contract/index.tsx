@@ -13,7 +13,7 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
+  ListItemProvider,
   StyledListItem,
   StyledListWrapper,
   StyledPagination,
@@ -100,7 +100,7 @@ export const Erc721Contract: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
+    <ListItemProvider<IAccessControl> callback={checkPermissions}>
       <Grid>
         <Breadcrumbs path={["dashboard", "erc721", "erc721.contracts"]} />
 
@@ -193,6 +193,6 @@ export const Erc721Contract: FC = () => {
           initialValues={selected}
         />
       </Grid>
-    </ListWrapperProvider>
+    </ListItemProvider>
   );
 };

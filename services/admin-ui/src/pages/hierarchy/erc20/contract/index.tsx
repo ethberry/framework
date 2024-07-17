@@ -12,8 +12,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -98,42 +98,36 @@ export const Erc20Contract: FC = () => {
   const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />
 
-        <PageHeader message="pages.erc20.contracts.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+      <PageHeader message="pages.erc20.contracts.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <Fragment />
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc20TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
           </Button>
-          {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-            <Fragment />
-          ) : (
-            <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc20TokenCreateButton">
-              <FormattedMessage id="form.buttons.create" />
-            </Button>
-          )}
-          <Erc20ContractDeployButton />
-        </PageHeader>
+        )}
+        <Erc20ContractDeployButton />
+      </PageHeader>
 
-        <ContractSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractFeaturesOptions={Erc20ContractFeatures}
-          onRefreshPage={handleRefreshPage}
-        />
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={Erc20ContractFeatures}
+        onRefreshPage={handleRefreshPage}
+      />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper<IContract>
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(contract => (
-              <StyledListItem key={contract.id}>
+              <ListItem key={contract.id} account={account} contract={contract}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListItemText sx={{ width: 0.4 }}>{contract.symbol}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
@@ -164,32 +158,32 @@ export const Erc20Contract: FC = () => {
                   <EthListenerAddButton contract={contract} />
                   <EthListenerRemoveButton contract={contract} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <Erc20ContractEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <Erc20ContractEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

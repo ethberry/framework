@@ -11,8 +11,8 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -55,26 +55,26 @@ export const VestingContracts: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
 
-        <PageHeader message="pages.vesting.contracts.title">
-          <VestingDeployButton />
-        </PageHeader>
+      <PageHeader message="pages.vesting.contracts.title">
+        <VestingDeployButton />
+      </PageHeader>
 
-        <CommonSearchForm onSubmit={handleSearch} initialValues={search} name="account">
-          <Grid container spacing={2} alignItems="flex-end">
-            <Grid item xs={12}>
-              <SelectInput name="contractFeatures" options={VestingContractFeatures} multiple />
-            </Grid>
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} name="account">
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <SelectInput name="contractFeatures" options={VestingContractFeatures} multiple />
           </Grid>
-        </CommonSearchForm>
+        </Grid>
+      </CommonSearchForm>
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(vesting => (
-              <StyledListItem key={vesting.id} wrap>
+              <ListItem key={vesting.id} wrap account={account} contract={vesting}>
                 <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
                   <AddressLink address={vesting.parameters.account as string} />
                 </ListItemText>
@@ -87,25 +87,25 @@ export const VestingContracts: FC = () => {
                   <TopUpButton contract={vesting} />
                   <TransferOwnershipButton contract={vesting} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <VestingViewDialog
-          onCancel={handleViewCancel}
-          onConfirm={handleViewConfirm}
-          open={action === CollectionActions.view}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <VestingViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={action === CollectionActions.view}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

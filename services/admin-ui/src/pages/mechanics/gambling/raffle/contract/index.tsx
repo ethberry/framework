@@ -11,8 +11,8 @@ import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -80,29 +80,28 @@ export const RaffleContracts: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "raffle", "raffle.contracts"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "raffle", "raffle.contracts"]} />
 
-        <PageHeader message="pages.raffle.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-          </Button>
-          <RaffleContractDeployButton />
-        </PageHeader>
+      <PageHeader message="pages.raffle.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <RaffleContractDeployButton />
+      </PageHeader>
 
-        <ContractSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractFeaturesOptions={{}}
-          onRefreshPage={handleRefreshPage}
-        />
-
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={{}}
+        onRefreshPage={handleRefreshPage}
+      />
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(contract => (
-              <StyledListItem key={contract.id}>
+              <ListItem key={contract.id} account={account} contract={contract}>
                 <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
                 <ListActions dataTestId="RaffleActionsMenuButton">
                   <ListAction
@@ -130,32 +129,32 @@ export const RaffleContracts: FC = () => {
                   <EthListenerAddButton contract={contract} />
                   <EthListenerRemoveButton contract={contract} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <RaffleEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <RaffleEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

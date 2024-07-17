@@ -11,8 +11,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -77,35 +77,35 @@ export const NativeContract: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "native", "native.contracts"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "native", "native.contracts"]} />
 
-        <PageHeader message="pages.native.contracts.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+      <PageHeader message="pages.native.contracts.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <Fragment />
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
           </Button>
-          {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-            <Fragment />
-          ) : (
-            <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
-              <FormattedMessage id="form.buttons.create" />
-            </Button>
-          )}
-        </PageHeader>
+        )}
+      </PageHeader>
 
-        <ContractSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractFeaturesOptions={NativeContractFeatures}
-          onRefreshPage={handleRefreshPage}
-        />
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={NativeContractFeatures}
+        onRefreshPage={handleRefreshPage}
+      />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading} rows={rows} account={account} path={"address"}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(contract => (
-              <StyledListItem key={contract.id}>
+              <ListItem key={contract.id} account={account} contract={contract}>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction
@@ -135,32 +135,32 @@ export const NativeContract: FC = () => {
                   <EthListenerAddButton contract={contract} disabled={true} />
                   <EthListenerRemoveButton contract={contract} disabled={true} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <NativeTokenEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <NativeTokenEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

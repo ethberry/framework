@@ -9,8 +9,8 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -45,22 +45,16 @@ export const LotteryRounds: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "lottery", "lottery.rounds"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.rounds"]} />
 
-        <PageHeader message="pages.lottery.rounds.title" />
+      <PageHeader message="pages.lottery.rounds.title" />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"contract.address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(round => (
-              <StyledListItem key={round.id}>
+              <ListItem key={round.id} account={account} contract={round.contract}>
                 <ListItemText sx={{ width: 0.2 }}>
                   {round.contract?.title} #{round.roundId}
                 </ListItemText>
@@ -75,25 +69,25 @@ export const LotteryRounds: FC = () => {
                     }
                   />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <LotteryRoundViewDialog
-          onCancel={handleViewCancel}
-          onConfirm={handleViewConfirm}
-          open={action === CollectionActions.view}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <LotteryRoundViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={action === CollectionActions.view}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

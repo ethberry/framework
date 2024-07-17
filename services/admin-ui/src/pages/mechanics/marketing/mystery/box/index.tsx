@@ -16,8 +16,8 @@ import { cleanUpAsset } from "@framework/exchange";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -87,54 +87,48 @@ export const MysteryBox: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
 
-        <PageHeader message="pages.mystery.boxes.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-          </Button>
-          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
-            <FormattedMessage id="form.buttons.create" />
-          </Button>
-        </PageHeader>
+      <PageHeader message="pages.mystery.boxes.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryBoxCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
-        <CommonSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          testId="MysteryboxSearchForm"
-        >
-          <FormRefresher onRefreshPage={handleRefreshPage} />
-          <Grid container spacing={2} alignItems="flex-end">
-            <Grid item xs={6}>
-              <EntityInput
-                name="contractIds"
-                controller="contracts"
-                multiple
-                data={{
-                  contractType: [TokenType.ERC721],
-                  contractModule: [ModuleType.MYSTERY],
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
-            </Grid>
+      <CommonSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        testId="MysteryboxSearchForm"
+      >
+        <FormRefresher onRefreshPage={handleRefreshPage} />
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC721],
+                contractModule: [ModuleType.MYSTERY],
+              }}
+            />
           </Grid>
-        </CommonSearchForm>
+          <Grid item xs={6}>
+            <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"template.contract.address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(mystery => (
-              <StyledListItem key={mystery.id}>
+              <ListItem key={mystery.id} account={account} contract={mystery.template.contract}>
                 <ListItemText>{mystery.title}</ListItemText>
                 <ListActions>
                   <ListAction
@@ -155,32 +149,32 @@ export const MysteryBox: FC = () => {
                     disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                   />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <MysteryboxEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <MysteryboxEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

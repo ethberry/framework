@@ -13,8 +13,8 @@ import { cleanUpAsset } from "@framework/exchange";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -84,44 +84,38 @@ export const CollectionTemplate: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "collection", "collection.template"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "collection", "collection.template"]} />
 
-        <PageHeader message="pages.collection.templates">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<Add />}
-            onClick={handleCreate}
-            data-testid="CollectionTemplateCreateButton"
-            disabled
-          >
-            <FormattedMessage id="form.buttons.create" />
-          </Button>
-        </PageHeader>
+      <PageHeader message="pages.collection.templates">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="CollectionTemplateCreateButton"
+          disabled
+        >
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
-        <TemplateSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractType={[TokenType.ERC721]}
-          contractModule={[ModuleType.COLLECTION]}
-          onRefreshPage={handleRefreshPage}
-        />
+      <TemplateSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.COLLECTION]}
+        onRefreshPage={handleRefreshPage}
+      />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"contract.address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(template => (
-              <StyledListItem key={template.id} wrap>
+              <ListItem key={template.id} wrap account={account} contract={template.contract}>
                 <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
                 <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
                 <ListActions dataTestId="TemplateActionsMenuButton">
@@ -140,32 +134,32 @@ export const CollectionTemplate: FC = () => {
                   />
                   <TemplateMintButton template={template} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <CollectionTemplateEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <CollectionTemplateEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

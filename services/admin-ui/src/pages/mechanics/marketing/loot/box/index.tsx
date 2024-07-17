@@ -16,8 +16,8 @@ import { cleanUpAsset } from "@framework/exchange";
 import {
   ListAction,
   ListActions,
-  ListWrapperProvider,
-  StyledListItem,
+  ListItem,
+  ListItemProvider,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -92,54 +92,43 @@ export const LootBox: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListWrapperProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "loot", "loot.boxes"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "loot", "loot.boxes"]} />
 
-        <PageHeader message="pages.loot.boxes.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-          </Button>
-          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="LootBoxCreateButton">
-            <FormattedMessage id="form.buttons.create" />
-          </Button>
-        </PageHeader>
+      <PageHeader message="pages.loot.boxes.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="LootBoxCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
-        <CommonSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          testId="LootboxSearchForm"
-        >
-          <FormRefresher onRefreshPage={handleRefreshPage} />
-          <Grid container spacing={2} alignItems="flex-end">
-            <Grid item xs={6}>
-              <EntityInput
-                name="contractIds"
-                controller="contracts"
-                multiple
-                data={{
-                  contractType: [TokenType.ERC721],
-                  contractModule: [ModuleType.LOOT],
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <SelectInput multiple name="lootBoxStatus" options={LootBoxStatus} />
-            </Grid>
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="LootboxSearchForm">
+        <FormRefresher onRefreshPage={handleRefreshPage} />
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{
+                contractType: [TokenType.ERC721],
+                contractModule: [ModuleType.LOOT],
+              }}
+            />
           </Grid>
-        </CommonSearchForm>
+          <Grid item xs={6}>
+            <SelectInput multiple name="lootBoxStatus" options={LootBoxStatus} />
+          </Grid>
+        </Grid>
+      </CommonSearchForm>
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"template.contract.address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(loot => (
-              <StyledListItem key={loot.id}>
+              <ListItem key={loot.id} account={account} contract={loot.template.contract}>
                 <ListItemText>{loot.title}</ListItemText>
                 <ListActions>
                   <ListAction
@@ -157,32 +146,32 @@ export const LootBox: FC = () => {
                   />
                   <LootBoxMintButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <LootboxEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListWrapperProvider>
+      <LootboxEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

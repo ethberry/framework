@@ -1,9 +1,9 @@
 import { AccessControlRoleType, IAccessControl } from "@framework/types";
-import { useListWrapperContext } from "@framework/styled";
+import { useListItemContext } from "@framework/styled";
 import { useMemo } from "react";
 
 export const useSetButtonPermission = (permissionRole: AccessControlRoleType, id?: number) => {
-  const context = useListWrapperContext<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>();
+  const context = useListItemContext<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>();
 
   const isButtonAvailable = useMemo(() => {
     if (!id || !context) {
