@@ -81,6 +81,15 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
+    // networks
+    // 1 - besu
+    // 2 - binance
+    // 3 - mainnet
+    // 4 - polygon
+    // 5 - binance test
+    // 6 - polygon amoy
+
+    // mechanics
     // 01   - CM
     // 02   - exchange
     // 07   - VRF

@@ -19,9 +19,7 @@ declare global {
 
       // MODULE:CHAINLINK
       VRF_ADDR: string;
-      VRF_BINANCE_ADDR: string;
       LINK_ADDR: string;
-      LINK_BINANCE_ADDR: string;
     }
   }
 }
