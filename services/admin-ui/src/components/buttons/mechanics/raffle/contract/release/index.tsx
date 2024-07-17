@@ -21,16 +21,9 @@ export interface IRaffleReleaseButtonProps {
 }
 
 export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
-  const {
-    className,
-    disabled,
-    round,
-    round: { id: roundId },
-    onRefreshPage = () => {},
-    variant,
-  } = props;
+  const { className, disabled, round, onRefreshPage = () => {}, variant } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, roundId);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(

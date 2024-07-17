@@ -27,14 +27,13 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     mystery: { template },
     disabled,
     variant,
-    id,
   } = props;
 
   const { account = "" } = useWeb3React();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, id);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, template?.contract?.id);
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);

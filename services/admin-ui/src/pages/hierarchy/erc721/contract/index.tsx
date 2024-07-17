@@ -13,8 +13,8 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import {
   ListAction,
   ListActions,
+  ListItem,
   ListItemProvider,
-  StyledListItem,
   StyledListWrapper,
   StyledPagination,
 } from "@framework/styled";
@@ -100,42 +100,36 @@ export const Erc721Contract: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <ListItemProvider<IAccessControl> callback={checkPermissions}>
-      <Grid>
-        <Breadcrumbs path={["dashboard", "erc721", "erc721.contracts"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.contracts"]} />
 
-        <PageHeader message="pages.erc721.contracts.title">
-          <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-            <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+      <PageHeader message="pages.erc721.contracts.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
+          <Fragment />
+        ) : (
+          <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
+            <FormattedMessage id="form.buttons.create" />
           </Button>
-          {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
-            <Fragment />
-          ) : (
-            <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
-              <FormattedMessage id="form.buttons.create" />
-            </Button>
-          )}
-          <Erc721ContractDeployButton />
-        </PageHeader>
+        )}
+        <Erc721ContractDeployButton />
+      </PageHeader>
 
-        <ContractSearchForm
-          onSubmit={handleSearch}
-          initialValues={search}
-          open={isFiltersOpen}
-          contractFeaturesOptions={Erc721ContractFeatures}
-          onRefreshPage={handleRefreshPage}
-        />
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={Erc721ContractFeatures}
+        onRefreshPage={handleRefreshPage}
+      />
 
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
         <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper<IContract>
-            count={rows.length}
-            isLoading={isLoading}
-            rows={rows}
-            account={account}
-            path={"address"}
-          >
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(contract => (
-              <StyledListItem key={contract.id}>
+              <ListItem key={contract.id} account={account} contract={contract}>
                 <ListItemText>{contract.title}</ListItemText>
                 <ListActions dataTestId="ContractActionsMenuButton">
                   <ListAction
@@ -167,32 +161,32 @@ export const Erc721Contract: FC = () => {
                   <EthListenerAddButton contract={contract} />
                   <EthListenerRemoveButton contract={contract} />
                 </ListActions>
-              </StyledListItem>
+              </ListItem>
             ))}
           </StyledListWrapper>
         </ProgressOverlay>
+      </ListItemProvider>
 
-        <StyledPagination
-          shape="rounded"
-          page={search.skip / search.take + 1}
-          count={Math.ceil(count / search.take)}
-          onChange={handleChangePage}
-        />
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
 
-        <DeleteDialog
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-          open={action === CollectionActions.delete}
-          initialValues={selected}
-        />
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
 
-        <Erc721ContractEditDialog
-          onCancel={handleEditCancel}
-          onConfirm={handleEditConfirm}
-          open={action === CollectionActions.edit}
-          initialValues={selected}
-        />
-      </Grid>
-    </ListItemProvider>
+      <Erc721ContractEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
   );
 };

@@ -128,7 +128,7 @@ export const MysteryBox: FC = () => {
         <ProgressOverlay isLoading={isLoading}>
           <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(mystery => (
-              <ListItem key={mystery.id} account={account} contract={mystery.template.contract}>
+              <ListItem key={mystery.id} account={account} contract={mystery.template?.contract}>
                 <ListItemText>{mystery.title}</ListItemText>
                 <ListActions>
                   <ListAction

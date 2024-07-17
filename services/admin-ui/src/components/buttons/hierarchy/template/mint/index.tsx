@@ -27,14 +27,14 @@ export interface ITemplateMintButtonProps {
 export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
   const {
     className,
-    template: { contract, contractId, id: templateId, templateStatus, tokens },
+    template: { contract, contractId, templateStatus, tokens },
     disabled,
     variant,
   } = props;
 
   const { account = "" } = useWeb3React();
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, templateId);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const { address, contractType, decimals } = contract!;
 

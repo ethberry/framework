@@ -97,6 +97,7 @@ export const Erc20Contract: FC = () => {
 
   const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />

@@ -128,7 +128,7 @@ export const LootBox: FC = () => {
         <ProgressOverlay isLoading={isLoading}>
           <StyledListWrapper count={rows.length} isLoading={isLoading}>
             {rows.map(loot => (
-              <ListItem key={loot.id} account={account} contract={loot.template.contract}>
+              <ListItem key={loot.id} account={account} contract={loot.template?.contract}>
                 <ListItemText>{loot.title}</ListItemText>
                 <ListActions>
                   <ListAction
