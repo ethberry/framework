@@ -28,6 +28,11 @@ jobs:
           --health-retries 5
 
     steps:
+      # SETUP NODE JS VERSION
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
       - name: checkout
         uses: actions/checkout@v4
         with:
