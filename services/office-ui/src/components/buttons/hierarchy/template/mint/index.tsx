@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
@@ -13,9 +13,9 @@ import ERC20MintABI from "@framework/abis/json/ERC20Blacklist/mint.json";
 import ERC721MintCommonABI from "@framework/abis/json/ERC721Blacklist/mintCommon.json";
 import ERC1155MintABI from "@framework/abis/json/ERC1155Blacklist/mint.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface ITemplateMintButtonProps {
   className?: string;
@@ -34,8 +34,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { checkPermissions } = useCheckPermissions();
-  const [hasAccess, setHasAccess] = useState(false);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const { address, contractType, id: contractId, decimals } = contract!;
 
@@ -89,18 +88,6 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -114,7 +101,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
           templateStatus === TemplateStatus.INACTIVE ||
           contract?.contractType === TokenType.NATIVE ||
           contract?.contractFeatures.includes(ContractFeatures.GENES) ||
-          !hasAccess
+          !isButtonAvailable
         }
         variant={variant}
       />

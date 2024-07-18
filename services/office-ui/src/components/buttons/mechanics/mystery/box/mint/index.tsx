@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -12,7 +12,7 @@ import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxBlacklist/mi
 
 import type { IMysteryBoxMintDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IMysteryBoxMintButtonProps {
   className?: string;
@@ -31,11 +31,9 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, template?.contract?.id);
 
   const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -75,18 +73,6 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address: template!.contract!.address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -95,7 +81,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryBoxMintButton"
-        disabled={disabled || !hasAccess}
+        disabled={disabled || !isButtonAvailable}
         variant={variant}
       />
       <MysteryBoxMintDialog

@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -13,7 +13,7 @@ import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxBlacklist/mi
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../../../utils";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IMysteryContractMintButtonProps {
   className?: string;
@@ -33,11 +33,9 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contractId);
 
   const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -65,18 +63,6 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -85,7 +71,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
         variant={variant}
       />
       <MysteryBoxMintDialog

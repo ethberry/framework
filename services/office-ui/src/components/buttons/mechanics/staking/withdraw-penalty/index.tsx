@@ -1,15 +1,15 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { RequestQuote } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { AccessControlRoleType, TokenType } from "@framework/types";
 
 import StakingWithdrawABI from "@framework/abis/json/ReentrancyStakingReward/withdrawBalance.json";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IStakingWithdrawButtonProps {
   balance: IBalance;
@@ -21,11 +21,7 @@ export interface IStakingWithdrawButtonProps {
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
@@ -42,17 +38,6 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
     return metaWithdraw(balance);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address: balance.account,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <ListAction
       onClick={handleClick}
@@ -60,7 +45,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       message="form.tips.withdrawPenalty"
       className={className}
       dataTestId="StakingBalanceWithdrawButton"
-      disabled={disabled || !hasAccess}
+      disabled={disabled || !isButtonAvailable}
       variant={variant}
     />
   );

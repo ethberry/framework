@@ -2,14 +2,22 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IContract, IContractSearchDto, IUser } from "@framework/types";
+import {
+  ListAction,
+  ListActions,
+  ListItem,
+  ListItemProvider,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
+import type { IAccessControl, IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import {
@@ -26,6 +34,7 @@ import {
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import { StakingEditDialog } from "./edit";
+import { useCheckPermissions } from "../../../../../shared";
 
 export const StakingContracts: FC = () => {
   const { profile } = useUser<IUser>();
@@ -69,6 +78,9 @@ export const StakingContracts: FC = () => {
     }),
   });
 
+  const { checkPermissions } = useCheckPermissions();
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.contracts"]} />
@@ -87,41 +99,43 @@ export const StakingContracts: FC = () => {
         contractFeaturesOptions={StakingContractFeatures}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => {
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                <ListItemText>{contract.parameters.maxStake}</ListItemText>
-                <ListActions dataTestId="StakingActionsMenuButton">
-                  <ListAction
-                    onClick={handleEdit(contract)}
-                    message="form.buttons.edit"
-                    dataTestId="ContractEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    message="form.buttons.delete"
-                    dataTestId="ContractDeleteButton"
-                    icon={Delete}
-                  />
-                  <GrantRoleButton contract={contract} />
-                  <RevokeRoleButton contract={contract} />
-                  <RenounceRoleButton contract={contract} />
-                  <PauseButton contract={contract} />
-                  <UnPauseButton contract={contract} />
-                  <StakingAllowanceButton contract={contract} />
-                  <TopUpButton contract={contract} />
-                  <EthListenerAddButton contract={contract} />
-                  <EthListenerRemoveButton contract={contract} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
+        <ProgressOverlay isLoading={isLoading}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => {
+              return (
+                <ListItem key={contract.id} account={account} contract={contract}>
+                  <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                  <ListItemText>{contract.parameters.maxStake}</ListItemText>
+                  <ListActions dataTestId="StakingActionsMenuButton">
+                    <ListAction
+                      onClick={handleEdit(contract)}
+                      message="form.buttons.edit"
+                      dataTestId="ContractEditButton"
+                      icon={Create}
+                    />
+                    <ListAction
+                      onClick={handleDelete(contract)}
+                      message="form.buttons.delete"
+                      dataTestId="ContractDeleteButton"
+                      icon={Delete}
+                    />
+                    <GrantRoleButton contract={contract} />
+                    <RevokeRoleButton contract={contract} />
+                    <RenounceRoleButton contract={contract} />
+                    <PauseButton contract={contract} />
+                    <UnPauseButton contract={contract} />
+                    <StakingAllowanceButton contract={contract} />
+                    <TopUpButton contract={contract} />
+                    <EthListenerAddButton contract={contract} />
+                    <EthListenerRemoveButton contract={contract} />
+                  </ListActions>
+                </ListItem>
+              );
+            })}
+          </StyledListWrapper>
+        </ProgressOverlay>
+      </ListItemProvider>
 
       <StyledPagination
         shape="rounded"

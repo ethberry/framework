@@ -2,14 +2,22 @@ import { FC } from "react";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
-import type { IContract, IContractSearchDto, IUser } from "@framework/types";
+import {
+  ListAction,
+  ListActions,
+  ListItem,
+  ListItemProvider,
+  StyledListWrapper,
+  StyledPagination,
+} from "@framework/styled";
+import type { IAccessControl, IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
@@ -68,6 +76,9 @@ export const WaitListContracts: FC = () => {
     }),
   });
 
+  const { checkPermissions } = useCheckPermissions();
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.contracts"]} />
@@ -86,40 +97,42 @@ export const WaitListContracts: FC = () => {
         contractFeaturesOptions={{}}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => {
-            return (
-              <StyledListItem key={contract.id}>
-                <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                <ListActions>
-                  <ListAction
-                    onClick={handleEdit(contract)}
-                    message="form.buttons.edit"
-                    dataTestId="ContractEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(contract)}
-                    message="form.buttons.delete"
-                    dataTestId="ContractDeleteButton"
-                    icon={Delete}
-                  />
-                  <GrantRoleButton contract={contract} />
-                  <RevokeRoleButton contract={contract} />
-                  <RenounceRoleButton contract={contract} />
-                  <PauseButton contract={contract} />
-                  <UnPauseButton contract={contract} />
-                  <AllowanceButton contract={contract} />
-                  <TopUpButton contract={contract} />
-                  <EthListenerAddButton contract={contract} />
-                  <EthListenerRemoveButton contract={contract} />
-                </ListActions>
-              </StyledListItem>
-            );
-          })}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <ListItemProvider<IAccessControl> callback={checkPermissions}>
+        <ProgressOverlay isLoading={isLoading}>
+          <StyledListWrapper count={rows.length} isLoading={isLoading}>
+            {rows.map(contract => {
+              return (
+                <ListItem key={contract.id} account={account} contract={contract}>
+                  <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+                  <ListActions>
+                    <ListAction
+                      onClick={handleEdit(contract)}
+                      message="form.buttons.edit"
+                      dataTestId="ContractEditButton"
+                      icon={Create}
+                    />
+                    <ListAction
+                      onClick={handleDelete(contract)}
+                      message="form.buttons.delete"
+                      dataTestId="ContractDeleteButton"
+                      icon={Delete}
+                    />
+                    <GrantRoleButton contract={contract} />
+                    <RevokeRoleButton contract={contract} />
+                    <RenounceRoleButton contract={contract} />
+                    <PauseButton contract={contract} />
+                    <UnPauseButton contract={contract} />
+                    <AllowanceButton contract={contract} />
+                    <TopUpButton contract={contract} />
+                    <EthListenerAddButton contract={contract} />
+                    <EthListenerRemoveButton contract={contract} />
+                  </ListActions>
+                </ListItem>
+              );
+            })}
+          </StyledListWrapper>
+        </ProgressOverlay>
+      </ListItemProvider>
 
       <StyledPagination
         shape="rounded"

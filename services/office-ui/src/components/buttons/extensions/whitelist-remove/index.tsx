@@ -3,10 +3,11 @@ import { Unpublished } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import { AccessListUnWhitelistDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IUnWhitelistButtonProps {
   className?: string;
@@ -25,6 +26,8 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
   } = props;
 
   const [isUnWhitelistDialogOpen, setIsUnWhitelistDialogOpen] = useState(false);
+
+  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleUnWhitelist = (): void => {
     setIsUnWhitelistDialogOpen(true);
@@ -50,7 +53,7 @@ export const UnWhitelistButton: FC<IUnWhitelistButtonProps> = props => {
         message="form.buttons.unwhitelist"
         className={className}
         dataTestId="UnWhitelistButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
         variant={variant}
       />
       <AccessListUnWhitelistDialog
