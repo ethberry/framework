@@ -2,12 +2,13 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
@@ -26,6 +27,7 @@ import {
   UnPauseButton,
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {
@@ -67,6 +69,8 @@ export const LotteryContracts: FC = () => {
     }),
   });
 
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.contracts"]} />
@@ -86,41 +90,39 @@ export const LotteryContracts: FC = () => {
         onRefreshPage={handleRefreshPage}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => (
-            <StyledListItem key={contract.id}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListActions dataTestId="LotteryActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(contract)}
-                  message="form.buttons.edit"
-                  dataTestId="ContractEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  message="form.buttons.delete"
-                  dataTestId="ContractDeleteButton"
-                  icon={Delete}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <GrantRoleButton contract={contract} />
-                <RevokeRoleButton contract={contract} />
-                <RenounceRoleButton contract={contract} />
-                <PauseButton contract={contract} />
-                <UnPauseButton contract={contract} />
-                <LotteryRoundStartButton contract={contract} />
-                <LotteryRoundEndButton contract={contract} />
-                <LotteryScheduleButton contract={contract} refreshPage={handleRefreshPage} />
-                <ChainLinkSetSubscriptionButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(contract => (
+          <ListItem key={contract.id} account={account} contract={contract}>
+            <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+            <ListActions dataTestId="LotteryActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(contract)}
+                message="form.buttons.edit"
+                dataTestId="ContractEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(contract)}
+                message="form.buttons.delete"
+                dataTestId="ContractDeleteButton"
+                icon={Delete}
+                disabled={contract.contractStatus === ContractStatus.INACTIVE}
+              />
+              <GrantRoleButton contract={contract} />
+              <RevokeRoleButton contract={contract} />
+              <RenounceRoleButton contract={contract} />
+              <PauseButton contract={contract} />
+              <UnPauseButton contract={contract} />
+              <LotteryRoundStartButton contract={contract} />
+              <LotteryRoundEndButton contract={contract} />
+              <LotteryScheduleButton contract={contract} refreshPage={handleRefreshPage} />
+              <ChainLinkSetSubscriptionButton contract={contract} />
+              <EthListenerAddButton contract={contract} />
+              <EthListenerRemoveButton contract={contract} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

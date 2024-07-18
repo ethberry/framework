@@ -117,9 +117,7 @@ services:
       DISPENSER_BINANCE_ADDR: "${DISPENSER_BINANCE_ADDR}"
       # CHAINLINK
       LINK_ADDR: "${LINK_ADDR}"
-      LINK_BINANCE_ADDR: "${LINK_BINANCE_ADDR}"
       VRF_ADDR: "${VRF_ADDR}"
-      VRF_BINANCE_ADDR: "${VRF_BINANCE_ADDR}"
     logging:
       driver: "json-file"
       options:

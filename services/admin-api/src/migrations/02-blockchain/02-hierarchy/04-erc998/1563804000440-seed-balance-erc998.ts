@@ -11,8 +11,8 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (

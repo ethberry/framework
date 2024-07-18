@@ -1,7 +1,7 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -12,7 +12,7 @@ import GrantRoleABI from "@framework/abis/json/AccessControlFacet/grantRole.json
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IGrantRoleButtonProps {
   className?: string;
@@ -32,11 +32,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -57,17 +53,6 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;
   }
@@ -80,7 +65,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         message="form.buttons.grantRole"
         className={className}
         dataTestId="GrantRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccessControlGrantRoleDialog

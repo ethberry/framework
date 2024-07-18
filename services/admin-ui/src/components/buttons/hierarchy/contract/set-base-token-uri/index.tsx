@@ -1,18 +1,18 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { Link } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
 import setBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface ISetBaseTokenURIButtonProps {
   className?: string;
@@ -30,12 +30,9 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
     variant,
   } = props;
 
-  const { account } = useWeb3React();
-
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -56,17 +53,6 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (contractType === TokenType.NATIVE || contractType === TokenType.ERC20) {
     return null;
   }
@@ -83,7 +69,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
           disabled ||
           shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
-          !hasAccess
+          !hasPermission
         }
         variant={variant}
       />

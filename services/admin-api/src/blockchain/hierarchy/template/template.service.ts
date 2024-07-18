@@ -38,6 +38,7 @@ export class TemplateService {
 
     queryBuilder.leftJoin("template.contract", "contract");
     queryBuilder.addSelect([
+      "contract.id",
       "contract.address",
       "contract.decimals",
       "contract.contractType",

@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { PauseCircleOutline } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -11,7 +11,7 @@ import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 import pausePausableABI from "@framework/abis/json/PausableFacet/pause.json";
 
 import { shouldDisableByContractType } from "../../../utils";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IPauseButtonProps {
   className?: string;
@@ -29,11 +29,7 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
     variant,
   } = props;
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, pausePausableABI, web3Context.provider?.getSigner());
@@ -43,18 +39,6 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
   const handlePause = () => {
     return metaPause();
   };
-
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.PAUSER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
 
   if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || isPaused) {
     return null;
@@ -67,7 +51,7 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
       message="form.buttons.pause"
       className={className}
       dataTestId="PauseButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
       variant={variant}
     />
   );

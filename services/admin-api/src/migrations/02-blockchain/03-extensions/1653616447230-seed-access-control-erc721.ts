@@ -11,14 +11,14 @@ export class SeedAccessControlErc721At1653616447230 implements MigrationInterfac
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
-    const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
-    const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
-    const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
-    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR || wallet;
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
-    const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
+    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR;
+    const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR;
+    const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR;
+    const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR;
+    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
+    const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR;
+    const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (

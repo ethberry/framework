@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress, ZeroHash } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,9 +11,9 @@ export class SeedEventHistoryErc998ClaimAt1653616447940 implements MigrationInte
       return;
     }
 
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
-    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

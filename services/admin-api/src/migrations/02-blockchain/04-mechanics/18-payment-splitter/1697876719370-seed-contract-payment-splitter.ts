@@ -1,10 +1,19 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    PAYMENT_SPLITTER_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -13,7 +22,7 @@ export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInte
     }
 
     const currentDateTime = new Date().toISOString();
-    const paymentSplitterAddress = process.env.PAYMENT_SPLITTER_ADDR || wallet;
+    const paymentSplitterAddress = process.env.PAYMENT_SPLITTER_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

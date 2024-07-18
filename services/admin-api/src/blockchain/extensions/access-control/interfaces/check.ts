@@ -1,7 +1,7 @@
 import { AccessControlRoleType } from "@framework/types";
 
-export interface IAccessControlCheckDto {
-  address: string;
-  account: string;
+import { IAccessControlSearchDto } from "./search";
+
+export interface IAccessControlCheckDto extends IAccessControlSearchDto {
   role: AccessControlRoleType;
 }

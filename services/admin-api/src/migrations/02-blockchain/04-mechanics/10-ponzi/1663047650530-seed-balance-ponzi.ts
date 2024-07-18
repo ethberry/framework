@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,7 +11,7 @@ export class SeedBalancePonziAt1663047650530 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const ponziAddress = process.env.PONZI_ADDR || wallet;
+    const ponziAddress = process.env.PONZI_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (

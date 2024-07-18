@@ -11,16 +11,16 @@ export class SeedAccessControlErc998At1653616447240 implements MigrationInterfac
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
-    const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
-    const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR || wallet;
-    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
-    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
-    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
-    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR || wallet;
-    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
+    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR;
+    const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR;
+    const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR;
+    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
+    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR;
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
+    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (

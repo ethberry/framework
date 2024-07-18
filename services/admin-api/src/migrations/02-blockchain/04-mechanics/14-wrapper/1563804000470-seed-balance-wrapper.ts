@@ -11,7 +11,7 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
       return;
     }
 
-    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
+    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

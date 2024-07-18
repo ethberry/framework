@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,7 +11,7 @@ export class SeedAccessListErc998At1653616447340 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
+    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_list (

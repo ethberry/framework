@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,12 +12,12 @@ export class SeedEventHistoryLootMixedPurchaseAt1687580606610 implements Migrati
       return;
     }
 
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
-    const erc721ContractLootBlacklistPausableAddress = process.env.ERC721_LOOTBOX_BLACKLIST_PAUSABLE_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR;
+    const erc721ContractLootBlacklistPausableAddress = process.env.ERC721_LOOTBOX_BLACKLIST_PAUSABLE_ADDR;
 
     const now = new Date();
     const currentDateTime = now.toISOString();
