@@ -4,20 +4,13 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
-import type { IAccessControl, IContract, IContractSearchDto, IUser } from "@framework/types";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
+import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, MysteryContractFeatures } from "@framework/types";
 
 import {
@@ -39,8 +32,8 @@ import {
   WhitelistButton,
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { MysteryContractEditDialog } from "./edit";
-import { useCheckPermissions } from "../../../../../shared";
 
 export const MysteryContract: FC = () => {
   const { profile } = useUser<IUser>();
@@ -83,7 +76,6 @@ export const MysteryContract: FC = () => {
     }),
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -104,48 +96,44 @@ export const MysteryContract: FC = () => {
         contractFeaturesOptions={MysteryContractFeatures}
       />
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(contract => {
-              return (
-                <ListItem key={contract.id} account={account} contract={contract}>
-                  <ListItemText>{contract.title}</ListItemText>
-                  <ListActions dataTestId="MysteryActionsMenuButton">
-                    <ListAction
-                      onClick={handleEdit(contract)}
-                      message="form.buttons.edit"
-                      dataTestId="ContractEditButton"
-                      icon={Create}
-                    />
-                    <ListAction
-                      onClick={handleDelete(contract)}
-                      message="form.buttons.delete"
-                      dataTestId="ContractDeleteButton"
-                      icon={Delete}
-                    />
-                    <GrantRoleButton contract={contract} />
-                    <RevokeRoleButton contract={contract} />
-                    <RenounceRoleButton contract={contract} />
-                    <BlacklistButton contract={contract} />
-                    <UnBlacklistButton contract={contract} />
-                    <WhitelistButton contract={contract} />
-                    <UnWhitelistButton contract={contract} />
-                    <PauseButton contract={contract} />
-                    <UnPauseButton contract={contract} />
-                    <MysteryContractMintButton contract={contract} />
-                    <AllowanceButton contract={contract} />
-                    <RoyaltyButton contract={contract} />
-                    <TransferButton contract={contract} />
-                    <EthListenerAddButton contract={contract} />
-                    <EthListenerRemoveButton contract={contract} />
-                  </ListActions>
-                </ListItem>
-              );
-            })}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(contract => {
+          return (
+            <ListItem key={contract.id} account={account} contract={contract}>
+              <ListItemText>{contract.title}</ListItemText>
+              <ListActions dataTestId="MysteryActionsMenuButton">
+                <ListAction
+                  onClick={handleEdit(contract)}
+                  message="form.buttons.edit"
+                  dataTestId="ContractEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  message="form.buttons.delete"
+                  dataTestId="ContractDeleteButton"
+                  icon={Delete}
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <BlacklistButton contract={contract} />
+                <UnBlacklistButton contract={contract} />
+                <WhitelistButton contract={contract} />
+                <UnWhitelistButton contract={contract} />
+                <PauseButton contract={contract} />
+                <UnPauseButton contract={contract} />
+                <MysteryContractMintButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <RoyaltyButton contract={contract} />
+                <TransferButton contract={contract} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+              </ListActions>
+            </ListItem>
+          );
+        })}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

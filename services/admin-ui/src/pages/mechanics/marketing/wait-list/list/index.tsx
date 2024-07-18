@@ -5,14 +5,14 @@ import { Add, Create, Delete } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, ListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 
 import {
@@ -20,6 +20,7 @@ import {
   WaitListListGenerateButton,
   WaitListListUploadButton,
 } from "../../../../../components/buttons";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { WaitListListEditDialog } from "./edit";
 
 export const WaitListList: FC = () => {
@@ -81,32 +82,30 @@ export const WaitListList: FC = () => {
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} testId="WaitListListSearchForm" />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(waitListList => (
-            <ListItem key={waitListList.id} account={account} contract={waitListList.contract}>
-              <ListItemText>{waitListList.title}</ListItemText>
-              <ListActions dataTestId="WaitListActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(waitListList)}
-                  message="form.buttons.edit"
-                  dataTestId="WaitListEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(waitListList)}
-                  message="form.buttons.delete"
-                  dataTestId="WaitListDeleteButton"
-                  icon={Delete}
-                />
-                <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-                <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-                <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-              </ListActions>
-            </ListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(waitListList => (
+          <ListItem key={waitListList.id} account={account} contract={waitListList.contract}>
+            <ListItemText>{waitListList.title}</ListItemText>
+            <ListActions dataTestId="WaitListActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(waitListList)}
+                message="form.buttons.edit"
+                dataTestId="WaitListEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(waitListList)}
+                message="form.buttons.delete"
+                dataTestId="WaitListDeleteButton"
+                icon={Delete}
+              />
+              <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+              <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+              <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

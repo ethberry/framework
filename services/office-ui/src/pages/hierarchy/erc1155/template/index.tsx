@@ -4,28 +4,21 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
-import type { IAccessControl, ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
+import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateMintButton } from "../../../../components/buttons";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
+import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { Erc1155TemplateEditDialog } from "./edit";
-import { useCheckPermissions } from "../../../../shared";
 
 export const Erc1155Template: FC = () => {
   const { profile } = useUser<IUser>();
@@ -70,7 +63,6 @@ export const Erc1155Template: FC = () => {
         : { title, description, price: cleanUpAsset(price), amount, imageUrl, contractId },
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -95,34 +87,30 @@ export const Erc1155Template: FC = () => {
         onRefreshPage={handleRefreshPage}
       />
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(template => (
-              <ListItem key={template.id} wrap account={account} contract={template.contract}>
-                <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
-                <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
-                <ListActions dataTestId="TemplateActionsMenuButton">
-                  <ListAction
-                    onClick={handleEdit(template)}
-                    message="form.buttons.edit"
-                    dataTestId="TemplateEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(template)}
-                    message="form.buttons.delete"
-                    dataTestId="ContractDeleteButton"
-                    icon={Delete}
-                    disabled={template.templateStatus === TemplateStatus.INACTIVE}
-                  />
-                  <TemplateMintButton template={template} />
-                </ListActions>
-              </ListItem>
-            ))}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(template => (
+          <ListItem key={template.id} wrap account={account} contract={template.contract}>
+            <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
+            <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
+            <ListActions dataTestId="TemplateActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(template)}
+                message="form.buttons.edit"
+                dataTestId="TemplateEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(template)}
+                message="form.buttons.delete"
+                dataTestId="ContractDeleteButton"
+                icon={Delete}
+                disabled={template.templateStatus === TemplateStatus.INACTIVE}
+              />
+              <TemplateMintButton template={template} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

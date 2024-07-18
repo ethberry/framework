@@ -7,9 +7,11 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import { AccessControlRoleType, ContractStatus, TokenType } from "@framework/types";
 
 import setRewardWaitListABI from "@framework/abis/json/WaitList/setReward.json";
+
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IWailtListListGenerateButtonProps {
   className?: string;
@@ -27,6 +29,8 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
     variant,
     onRefreshPage,
   } = props;
+
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const { fn } = useApiCall(
     async (api, values) => {
@@ -80,7 +84,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !hasPermission}
       variant={variant}
     />
   );

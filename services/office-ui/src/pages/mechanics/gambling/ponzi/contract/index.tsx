@@ -5,20 +5,13 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
-import { ContractStatus, IAccessControl, PonziContractFeatures } from "@framework/types";
+import { ContractStatus, PonziContractFeatures } from "@framework/types";
 
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import {
@@ -32,6 +25,7 @@ import {
   RevokeRoleButton,
   TopUpButton,
 } from "../../../../../components/buttons";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { PonziContractEditDialog } from "./edit";
 
 export const PonziContract: FC = () => {
@@ -76,7 +70,6 @@ export const PonziContract: FC = () => {
     }),
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -97,41 +90,37 @@ export const PonziContract: FC = () => {
         contractFeaturesOptions={PonziContractFeatures}
       />
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(contract => {
-              return (
-                <ListItem key={contract.id} account={account} contract={contract}>
-                  <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-                  <ListActions dataTestId="PonziActionsMenuButton">
-                    <ListAction
-                      onClick={handleEdit(contract)}
-                      message="form.buttons.edit"
-                      dataTestId="ContractEditButton"
-                      icon={Create}
-                    />
-                    <ListAction
-                      onClick={handleDelete(contract)}
-                      message="form.buttons.delete"
-                      dataTestId="ContractDeleteButton"
-                      icon={Delete}
-                    />
-                    <GrantRoleButton contract={contract} />
-                    <RevokeRoleButton contract={contract} />
-                    <RenounceRoleButton contract={contract} />
-                    <AllowanceButton contract={contract} />
-                    <TopUpButton contract={contract} />
-                    <PonziBalanceButton contract={contract} />
-                    <EthListenerAddButton contract={contract} />
-                    <EthListenerRemoveButton contract={contract} />
-                  </ListActions>
-                </ListItem>
-              );
-            })}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(contract => {
+          return (
+            <ListItem key={contract.id} account={account} contract={contract}>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListActions dataTestId="PonziActionsMenuButton">
+                <ListAction
+                  onClick={handleEdit(contract)}
+                  message="form.buttons.edit"
+                  dataTestId="ContractEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(contract)}
+                  message="form.buttons.delete"
+                  dataTestId="ContractDeleteButton"
+                  icon={Delete}
+                />
+                <GrantRoleButton contract={contract} />
+                <RevokeRoleButton contract={contract} />
+                <RenounceRoleButton contract={contract} />
+                <AllowanceButton contract={contract} />
+                <TopUpButton contract={contract} />
+                <PonziBalanceButton contract={contract} />
+                <EthListenerAddButton contract={contract} />
+                <EthListenerRemoveButton contract={contract} />
+              </ListActions>
+            </ListItem>
+          );
+        })}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

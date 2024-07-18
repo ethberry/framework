@@ -6,29 +6,22 @@ import { useWeb3React } from "@web3-react/core";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  StyledListWrapper,
-  StyledPagination,
-  ListItemProvider,
-} from "@framework/styled";
-import type { IAccessControl, IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
+import type { IMysteryBox, IMysteryBoxSearchDto, ITemplate, IUser } from "@framework/types";
 import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { ContractInput } from "../../../../../components/forms/template-search/contract-input";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { MysteryBoxEditDialog } from "./edit";
-import { useCheckPermissions } from "../../../../../shared";
 
 export const MysteryBox: FC = () => {
   const { profile } = useUser<IUser>();
@@ -86,7 +79,6 @@ export const MysteryBox: FC = () => {
           },
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -128,36 +120,32 @@ export const MysteryBox: FC = () => {
         </Grid>
       </CommonSearchForm>
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(mystery => (
-              <ListItem key={mystery.id} account={account} contract={mystery.template?.contract}>
-                <ListItemText>{mystery.title}</ListItemText>
-                <ListActions>
-                  <ListAction
-                    onClick={handleEdit(mystery)}
-                    message="form.buttons.edit"
-                    dataTestId="MysteryEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(mystery)}
-                    message="form.buttons.delete"
-                    dataTestId="MysteryDeleteButton"
-                    icon={Delete}
-                    disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                  />
-                  <MysteryBoxMintButton
-                    mystery={mystery}
-                    disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
-                  />
-                </ListActions>
-              </ListItem>
-            ))}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(mystery => (
+          <ListItem key={mystery.id} account={account} contract={mystery.template?.contract}>
+            <ListItemText>{mystery.title}</ListItemText>
+            <ListActions>
+              <ListAction
+                onClick={handleEdit(mystery)}
+                message="form.buttons.edit"
+                dataTestId="MysteryEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(mystery)}
+                message="form.buttons.delete"
+                dataTestId="MysteryDeleteButton"
+                icon={Delete}
+                disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+              />
+              <MysteryBoxMintButton
+                mystery={mystery}
+                disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
+              />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"
