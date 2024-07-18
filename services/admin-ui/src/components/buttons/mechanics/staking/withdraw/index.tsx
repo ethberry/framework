@@ -22,7 +22,7 @@ export interface IStakingWithdrawButtonProps {
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
-  // передать контракт при использовании кнопки и использовать id конткракта
+  // transfer the contract when using the button and use the contract id
   const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, 0);
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
