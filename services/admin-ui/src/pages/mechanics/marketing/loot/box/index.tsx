@@ -7,27 +7,20 @@ import { useWeb3React } from "@web3-react/core";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { ILootBox, ILootBoxSearchDto, ITemplate } from "@framework/types";
-import { ModuleType, LootBoxStatus, TokenType, IAccessControl } from "@framework/types";
+import { ModuleType, LootBoxStatus, TokenType } from "@framework/types";
 
 import { LootBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { LootboxEditDialog } from "./edit";
-import { useCheckPermissions } from "../../../../../shared";
 
 export const LootBox: FC = () => {
   const {
@@ -88,7 +81,6 @@ export const LootBox: FC = () => {
           },
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -124,33 +116,29 @@ export const LootBox: FC = () => {
         </Grid>
       </CommonSearchForm>
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(loot => (
-              <ListItem key={loot.id} account={account} contract={loot.template?.contract}>
-                <ListItemText>{loot.title}</ListItemText>
-                <ListActions>
-                  <ListAction
-                    onClick={handleEdit(loot)}
-                    message="form.buttons.edit"
-                    dataTestId="LootEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(loot)}
-                    message="form.buttons.delete"
-                    dataTestId="LootDeleteButton"
-                    icon={Delete}
-                    disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE}
-                  />
-                  <LootBoxMintButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
-                </ListActions>
-              </ListItem>
-            ))}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(loot => (
+          <ListItem key={loot.id} account={account} contract={loot.template?.contract}>
+            <ListItemText>{loot.title}</ListItemText>
+            <ListActions>
+              <ListAction
+                onClick={handleEdit(loot)}
+                message="form.buttons.edit"
+                dataTestId="LootEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(loot)}
+                message="form.buttons.delete"
+                dataTestId="LootDeleteButton"
+                icon={Delete}
+                disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE}
+              />
+              <LootBoxMintButton loot={loot} disabled={loot.lootBoxStatus === LootBoxStatus.INACTIVE} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

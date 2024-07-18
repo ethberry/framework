@@ -12,15 +12,8 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
-import type { IAccessControl, IWaitListList } from "@framework/types";
+import { ListAction, ListActions, ListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import type { IWaitListList } from "@framework/types";
 
 import {
   WaitListListCreateButton,
@@ -28,7 +21,6 @@ import {
   WaitListListUploadButton,
 } from "../../../../../components/buttons";
 import { WaitListListEditDialog } from "./edit";
-import { useCheckPermissions } from "../../../../../shared";
 
 export const WaitListList: FC = () => {
   const {
@@ -75,7 +67,6 @@ export const WaitListList: FC = () => {
           },
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -90,34 +81,32 @@ export const WaitListList: FC = () => {
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} testId="WaitListListSearchForm" />
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(waitListList => (
-              <ListItem key={waitListList.id} account={account} contract={waitListList.contract}>
-                <ListItemText>{waitListList.title}</ListItemText>
-                <ListActions dataTestId="WaitListActionsMenuButton">
-                  <ListAction
-                    onClick={handleEdit(waitListList)}
-                    message="form.buttons.edit"
-                    dataTestId="WaitListEditButton"
-                    icon={Create}
-                  />
-                  <ListAction
-                    onClick={handleDelete(waitListList)}
-                    message="form.buttons.delete"
-                    dataTestId="WaitListDeleteButton"
-                    icon={Delete}
-                  />
-                  <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-                  <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-                  <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
-                </ListActions>
-              </ListItem>
-            ))}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <ProgressOverlay isLoading={isLoading}>
+        <StyledListWrapper count={rows.length} isLoading={isLoading}>
+          {rows.map(waitListList => (
+            <ListItem key={waitListList.id} account={account} contract={waitListList.contract}>
+              <ListItemText>{waitListList.title}</ListItemText>
+              <ListActions dataTestId="WaitListActionsMenuButton">
+                <ListAction
+                  onClick={handleEdit(waitListList)}
+                  message="form.buttons.edit"
+                  dataTestId="WaitListEditButton"
+                  icon={Create}
+                />
+                <ListAction
+                  onClick={handleDelete(waitListList)}
+                  message="form.buttons.delete"
+                  dataTestId="WaitListDeleteButton"
+                  icon={Delete}
+                />
+                <WaitListListCreateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListUploadButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+                <WaitListListGenerateButton waitListList={waitListList} onRefreshPage={handleRefreshPage} />
+              </ListActions>
+            </ListItem>
+          ))}
+        </StyledListWrapper>
+      </ProgressOverlay>
 
       <StyledPagination
         shape="rounded"

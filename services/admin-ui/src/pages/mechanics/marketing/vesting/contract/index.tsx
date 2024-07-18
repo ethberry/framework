@@ -3,21 +3,14 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CollectionActions, useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import {
-  ListAction,
-  ListActions,
-  ListItem,
-  ListItemProvider,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
-import { IAccessControl, TokenType, VestingContractFeatures } from "@framework/types";
+import { TokenType, VestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import {
@@ -26,8 +19,8 @@ import {
   TransferOwnershipButton,
   VestingDeployButton,
 } from "../../../../../components/buttons";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { VestingViewDialog } from "./view";
-import { useCheckPermissions } from "../../../../../shared";
 
 export const VestingContracts: FC = () => {
   const {
@@ -51,7 +44,6 @@ export const VestingContracts: FC = () => {
     empty: emptyVestingContract,
   });
 
-  const { checkPermissions } = useCheckPermissions();
   const { account = "" } = useWeb3React();
 
   return (
@@ -70,28 +62,24 @@ export const VestingContracts: FC = () => {
         </Grid>
       </CommonSearchForm>
 
-      <ListItemProvider<IAccessControl> callback={checkPermissions}>
-        <ProgressOverlay isLoading={isLoading}>
-          <StyledListWrapper count={rows.length} isLoading={isLoading}>
-            {rows.map(vesting => (
-              <ListItem key={vesting.id} wrap account={account} contract={vesting}>
-                <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
-                  <AddressLink address={vesting.parameters.account as string} />
-                </ListItemText>
-                <ListActions dataTestId="VestingActionsMenuButton">
-                  <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
-                  <AllowanceButton
-                    contract={vesting}
-                    disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
-                  />
-                  <TopUpButton contract={vesting} />
-                  <TransferOwnershipButton contract={vesting} />
-                </ListActions>
-              </ListItem>
-            ))}
-          </StyledListWrapper>
-        </ProgressOverlay>
-      </ListItemProvider>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(vesting => (
+          <ListItem key={vesting.id} wrap account={account} contract={vesting}>
+            <ListItemText sx={{ mr: 0.5, overflowX: "auto", width: 0.5 }}>
+              <AddressLink address={vesting.parameters.account as string} />
+            </ListItemText>
+            <ListActions dataTestId="VestingActionsMenuButton">
+              <ListAction onClick={handleView(vesting)} message="form.tips.view" icon={Visibility} />
+              <AllowanceButton
+                contract={vesting}
+                disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
+              />
+              <TopUpButton contract={vesting} />
+              <TransferOwnershipButton contract={vesting} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"
