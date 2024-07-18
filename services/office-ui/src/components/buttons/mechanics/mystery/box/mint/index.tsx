@@ -31,7 +31,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, template?.contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, template?.contract?.id);
 
   const { account = "" } = useWeb3React();
 
@@ -81,7 +81,7 @@ export const MysteryBoxMintButton: FC<IMysteryBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryBoxMintButton"
-        disabled={disabled || !isButtonAvailable}
+        disabled={disabled || !hasPermission}
         variant={variant}
       />
       <MysteryBoxMintDialog

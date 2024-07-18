@@ -21,7 +21,7 @@ export interface IStakingWithdrawButtonProps {
 export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
@@ -45,7 +45,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       message="form.tips.withdrawPenalty"
       className={className}
       dataTestId="StakingBalanceWithdrawButton"
-      disabled={disabled || !isButtonAvailable}
+      disabled={disabled || !hasPermission}
       variant={variant}
     />
   );

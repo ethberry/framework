@@ -28,7 +28,7 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
     variant,
   } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
@@ -50,7 +50,7 @@ export const PauseButton: FC<IPauseButtonProps> = props => {
       message="form.buttons.pause"
       className={className}
       dataTestId="PauseButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
       variant={variant}
     />
   );

@@ -32,7 +32,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
 
   const [isBaseTokenURIDialogOpen, setIsBaseTokenURIDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleBaseTokenURI = (): void => {
     setIsBaseTokenURIDialogOpen(true);
@@ -69,7 +69,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
           disabled ||
           shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
-          !isButtonAvailable
+          !hasPermission
         }
         variant={variant}
       />

@@ -32,7 +32,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -65,7 +65,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
         message="form.buttons.grantRole"
         className={className}
         dataTestId="GrantRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccessControlGrantRoleDialog

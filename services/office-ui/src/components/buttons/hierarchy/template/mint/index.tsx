@@ -34,7 +34,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const { address, contractType, id: contractId, decimals } = contract!;
 
@@ -101,7 +101,7 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
           templateStatus === TemplateStatus.INACTIVE ||
           contract?.contractType === TokenType.NATIVE ||
           contract?.contractFeatures.includes(ContractFeatures.GENES) ||
-          !isButtonAvailable
+          !hasPermission
         }
         variant={variant}
       />

@@ -23,7 +23,7 @@ export interface IRaffleReleaseButtonProps {
 export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
   const { className, disabled, round, onRefreshPage = () => {}, variant } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -50,7 +50,7 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
       message="form.tips.release"
       className={className}
       dataTestId="RaffleReleaseButton"
-      disabled={disabled || !round.endTimestamp || !release || !isButtonAvailable}
+      disabled={disabled || !round.endTimestamp || !release || !hasPermission}
       variant={variant}
     />
   );

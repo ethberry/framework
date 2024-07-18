@@ -34,7 +34,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
     const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
@@ -81,7 +81,7 @@ export const LotteryRoundStartButton: FC<ILotteryRoundStartButtonProps> = props 
         message="pages.lottery.rounds.start"
         className={className}
         dataTestId="LotteryRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <LotteryStartRoundDialog

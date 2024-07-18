@@ -29,7 +29,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
     variant,
   } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, RafflesEndRoundABI, web3Context.provider?.getSigner());
@@ -52,7 +52,7 @@ export const RaffleRoundEndButton: FC<IRaffleRoundEndButtonProps> = props => {
       message="pages.raffle.rounds.end"
       className={className}
       dataTestId="RaffleRoundEndButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
       variant={variant}
     />
   );

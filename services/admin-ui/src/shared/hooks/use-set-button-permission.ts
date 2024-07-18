@@ -5,7 +5,7 @@ import { useMemo } from "react";
 export const useSetButtonPermission = (permissionRole: AccessControlRoleType, id?: number) => {
   const context = useListItemContext<Pick<IAccessControl, "address" | "account">, Array<IAccessControl>>();
 
-  const isButtonAvailable = useMemo(() => {
+  const hasPermission = useMemo(() => {
     if (!id || !context) {
       return false;
     }
@@ -16,6 +16,6 @@ export const useSetButtonPermission = (permissionRole: AccessControlRoleType, id
   }, [context, permissionRole]);
 
   return {
-    isButtonAvailable,
+    hasPermission,
   };
 };

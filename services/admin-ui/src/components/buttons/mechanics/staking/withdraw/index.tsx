@@ -23,7 +23,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
   // transfer the contract when using the button and use the contract id
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, 0);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, 0);
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -51,7 +51,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
       message="form.tips.withdrawPenalty"
       className={className}
       dataTestId="StakingBalanceWithdrawButton"
-      disabled={disabled || !isButtonAvailable}
+      disabled={disabled || !hasPermission}
       variant={variant}
     />
   );

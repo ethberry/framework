@@ -25,7 +25,7 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
 
   const [isStakingWithdrawPenaltyDialogOpen, setIsStakingWithdrawPenaltyDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, id);
 
   const handleWithdrawPenalty = (): void => {
     setIsStakingWithdrawPenaltyDialogOpen(true);
@@ -47,7 +47,7 @@ export const StakingWithdrawPenaltyButton: FC<IStakingWithdrawPenaltyProps> = pr
         message="form.buttons.withdrawPenalty"
         className={className}
         dataTestId="WithdrawPenaltyButton"
-        disabled={disabled || !isButtonAvailable}
+        disabled={disabled || !hasPermission}
         variant={variant}
       />
       <StakingWithdrawPenaltyDialog

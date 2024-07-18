@@ -36,7 +36,7 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contract?.id);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -101,7 +101,7 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
           contractType === TokenType.NATIVE ||
           shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.GENES) ||
-          !isButtonAvailable
+          !hasPermission
         }
         variant={variant}
       />

@@ -35,7 +35,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contractId);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contractId);
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -70,7 +70,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
         message="form.buttons.mintToken"
         className={className}
         dataTestId="MysteryContractMintButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <MintMysteryBoxDialog

@@ -27,7 +27,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
     variant,
   } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const { fn } = useApiCall(
     async (api, values) => {
@@ -80,7 +80,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
       message="form.buttons.submit"
       className={className}
       dataTestId="WaitListListGenerateButton"
-      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !isButtonAvailable}
+      disabled={disabled || !!root || contract.contractStatus !== ContractStatus.ACTIVE || !hasPermission}
       variant={variant}
     />
   );

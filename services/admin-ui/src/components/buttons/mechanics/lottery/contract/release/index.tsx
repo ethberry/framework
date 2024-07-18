@@ -23,7 +23,7 @@ export interface ILotteryReleaseButtonProps {
 export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
   const { className, disabled, round, variant, onRefreshPage } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -50,7 +50,7 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
       message="form.tips.release"
       className={className}
       dataTestId="LotteryReleaseButton"
-      disabled={disabled || !round.numbers || !round.endTimestamp || !release || !isButtonAvailable}
+      disabled={disabled || !round.numbers || !round.endTimestamp || !release || !hasPermission}
       variant={variant}
     />
   );

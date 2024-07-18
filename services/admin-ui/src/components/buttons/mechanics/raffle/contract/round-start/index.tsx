@@ -34,7 +34,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
     const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
@@ -81,7 +81,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <RaffleStartRoundDialog

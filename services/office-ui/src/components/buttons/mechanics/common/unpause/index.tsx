@@ -28,7 +28,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
     variant,
   } = props;
 
-  const { isButtonAvailable } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
 
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
@@ -50,7 +50,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
       message="form.buttons.unpause"
       className={className}
       dataTestId="UnPauseButton"
-      disabled={disabled || shouldDisableByContractType(contract) || !isButtonAvailable}
+      disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
       variant={variant}
     />
   );
