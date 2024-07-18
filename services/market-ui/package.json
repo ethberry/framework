@@ -24,7 +24,7 @@
     "@gemunion/firebase": "1.2.34",
     "@gemunion/firebase-login": "2.3.78",
     "@gemunion/history": "1.2.20",
-    "@gemunion/login-button-metamask": "1.1.76",
+    "@gemunion/login-button-metamask": "1.1.77",
     "@gemunion/login-button-particle": "1.2.35",
     "@gemunion/login-button-wallet-connect": "1.1.75",
     "@gemunion/mui-dialog-confirmation": "4.0.33",
