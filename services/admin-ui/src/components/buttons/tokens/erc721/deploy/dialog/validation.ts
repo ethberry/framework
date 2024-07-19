@@ -6,6 +6,10 @@ export const validationSchema = object().shape({
   symbol: symbolValidationSchema,
   baseTokenURI: string().required("form.validations.valueMissing"),
   royalty: number()
+    .transform((value: string | number, originalValue: string | number) => {
+      return originalValue === "" ? null : value;
+    })
+    .nullable()
     .typeError("form.validations.badInput")
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
