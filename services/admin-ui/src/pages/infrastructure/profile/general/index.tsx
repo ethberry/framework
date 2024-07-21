@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
 
 import { EnabledLanguages } from "@framework/constants";
 import type { IUser } from "@framework/types";
@@ -21,8 +22,14 @@ export const ProfileGeneral: FC<ITabPanelProps> = props => {
   const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+
   const { fn } = useApiCall((_api, values: Partial<IUser>) => {
-    return user.setProfile(values);
+    return user.setProfile(values).then(() => {
+      if (user.profile.language !== values.language) {
+        navigate(0);
+      }
+    });
   });
 
   if (!open) {
