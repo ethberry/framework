@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { useNavigate } from "react-router";
 
 import { EnabledLanguages } from "@framework/constants";
 import type { IUser } from "@framework/types";
@@ -10,6 +9,7 @@ import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { useAppDispatch, settingsActions } from "@gemunion/redux";
 import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 
@@ -22,12 +22,13 @@ export const ProfileGeneral: FC<ITabPanelProps> = props => {
   const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { setLanguage } = settingsActions;
 
   const { fn } = useApiCall((_api, values: Partial<IUser>) => {
     return user.setProfile(values).then(() => {
       if (user.profile.language !== values.language) {
-        navigate(0);
+        dispatch(setLanguage(values.language));
       }
     });
   });
