@@ -1,13 +1,15 @@
 export * from "./1653616447810-create-claim";
-export * from "./1653616447820-seed-claim-erc20";
-export * from "./1653616447830-seed-claim-erc721";
-export * from "./1653616447840-seed-claim-erc998";
-export * from "./1653616447850-seed-claim-erc1155";
-export * from "./1653616447860-seed-claim-mysterybox";
-export * from "./1653616447870-seed-claim-mixed";
-export * from "./1653616447920-seed-event-history-erc20-claim";
-export * from "./1653616447925-seed-event-history-erc20-claim-components";
-export * from "./1653616447930-seed-event-history-erc721-claim";
-export * from "./1653616447935-seed-event-history-erc721-claim-components";
-export * from "./1653616447940-seed-event-history-erc998-claim";
-export * from "./1653616447945-seed-event-history-erc998-claim-components";
+
+export * from "./01-template/1653616447830-seed-claim-template-erc721";
+export * from "./01-template/1653616447840-seed-claim-template-erc998";
+export * from "./01-template/1653616447850-seed-claim-template-erc1155";
+export * from "./01-template/1653616447860-seed-claim-template-mysterybox";
+export * from "./01-template/1653616447870-seed-claim-template-mixed";
+export * from "./01-template/1653616447930-seed-claim-template-erc721-event-history";
+export * from "./01-template/1653616447935-seed-claim-template-erc721-event-history-components";
+export * from "./01-template/1653616447940-seed-claim-template-erc998-event-history";
+export * from "./01-template/1653616447945-seed-claim-template-erc998-event-history-components";
+
+export * from "./02-token/1653616447820-seed-claim-token-erc20";
+export * from "./02-token/1653616447920-seed-claim-token-erc20-event-history";
+export * from "./02-token/1653616447925-seed-claim-token-erc20-event-history-components";

@@ -5,7 +5,7 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInterface {
+export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;

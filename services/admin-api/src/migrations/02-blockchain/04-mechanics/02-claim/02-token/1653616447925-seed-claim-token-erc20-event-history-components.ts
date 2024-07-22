@@ -1,9 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedEventHistoryErc721ClaimComponentsAt1653616447935 implements MigrationInterface {
+export class SeedClaimTokenErc20EventHistoryComponentsAt1653616447925 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -17,41 +18,29 @@ export class SeedEventHistoryErc721ClaimComponentsAt1653616447935 implements Mig
         token_id,
         amount
       ) VALUES (
-        10302010,
+        10202010,
         'ITEM',
-        10301,
-        103010101,
-        1
+        10201,
+        102010101,
+        '${WeiPerEther.toString()}'
       ), (
-        10302020,
+        10202020,
         'ITEM',
-        10306,
-        103060101,
-        1
+        10204,
+        102040101,
+        '${WeiPerEther.toString()}'
       ), (
-        10302030,
+        10202030,
         'ITEM',
-        10301,
-        103010301,
-        1
+        10280,
+        102800101,
+        '${WeiPerEther.toString()}'
       ), (
-        10302030,
+        10202040,
         'ITEM',
-        10306,
-        103060101,
-        1
-      ), (
-        10302040,
-        'ITEM',
-        10301,
-        103010301,
-        1
-      ), (
-        10302040,
-        'ITEM',
-        10306,
-        103060101,
-        1
+        20201,
+        202010101,
+        '${WeiPerEther.toString()}'
       );
     `);
   }
