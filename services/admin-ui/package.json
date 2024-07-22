@@ -62,7 +62,7 @@
     "@gemunion/traits-v5": "1.0.18",
     "@gemunion/types-coin-gecko": "0.3.2",
     "@gemunion/types-collection": "1.5.17",
-    "@gemunion/yup-rules": "4.2.56",
+    "@gemunion/yup-rules": "4.2.57",
     "@gemunion/yup-rules-eth": "2.1.32",
     "@mui/base": "5.0.0-beta.40",
     "@mui/icons-material": "5.16.4",

@@ -61,7 +61,7 @@
     "@gemunion/types-blockchain": "1.2.13",
     "@gemunion/types-collection": "1.5.17",
     "@gemunion/types-jwt": "0.4.5",
-    "@gemunion/yup-rules": "4.2.56",
+    "@gemunion/yup-rules": "4.2.57",
     "@gemunion/yup-rules-eth": "2.1.32",
     "@mui/icons-material": "5.16.4",
     "@mui/lab": "5.0.0-alpha.172",
