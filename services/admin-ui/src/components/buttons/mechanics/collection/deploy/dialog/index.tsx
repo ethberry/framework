@@ -26,10 +26,10 @@ export const CollectionContractDeployDialog: FC<IErc721CollectionDeployDialogPro
       {...rest}
     >
       <SelectInput name="contractTemplate" options={CollectionContractTemplates} />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <TextInput name="name" required />
+      <TextInput name="symbol" required />
+      <TextInput name="baseTokenURI" required />
+      <CurrencyInput name="royalty" symbol="%" required />
       <NumberInput name="batchSize" />
     </FormDialog>
   );
