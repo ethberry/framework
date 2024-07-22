@@ -5,7 +5,7 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements MigrationInterface {
+export class SeedClaimTokenErc1155EventHistoryAt1653616447950 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -26,7 +26,7 @@ export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements Migr
         created_at,
         updated_at
       ) VALUES (
-        105020100,
+        105020110,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -46,7 +46,7 @@ export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements Migr
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        105020101,
+        105020111,
         '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
         'TransferSingle',
@@ -57,11 +57,11 @@ export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements Migr
           id: "105010101",
           value: "1000",
         })}',
-        105020100,
+        105020110,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        105020200,
+        105020210,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -81,7 +81,7 @@ export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements Migr
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        105020201,
+        105020211,
         '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
         'TransferBatch',
@@ -92,7 +92,7 @@ export class SeedClaimTemplateErc1155EventHistoryAt1653616447950 implements Migr
           ids: ["105040101", "105040102", "105040103"],
           values: ["1000", "1000", "1000"],
         })}',
-        105020200,
+        105020210,
         '${currentDateTime}',
         '${currentDateTime}'
       );

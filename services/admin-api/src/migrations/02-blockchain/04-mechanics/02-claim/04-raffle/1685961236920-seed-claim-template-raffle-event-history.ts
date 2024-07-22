@@ -5,14 +5,14 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTemplateMysteryEventHistoryAt1653616447930 implements MigrationInterface {
+export class SeedClaimTemplateRaffleEventHistoryAt1685961236920 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
     const exchangeAddress = process.env.EXCHANGE_ADDR;
-    const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR;
+    const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -26,7 +26,7 @@ export class SeedClaimTemplateMysteryEventHistoryAt1653616447930 implements Migr
         created_at,
         updated_at
       ) VALUES (
-        103021110,
+        103021120,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -36,8 +36,8 @@ export class SeedClaimTemplateMysteryEventHistoryAt1653616447930 implements Migr
           items: [
             {
               tokenType: 2,
-              token: erc721ContractMysterySimpleAddress,
-              tokenId: "1110101",
+              token: erc721ContractRaffleAddress,
+              tokenId: "121010101",
               amount: "1",
             },
           ],
@@ -46,16 +46,16 @@ export class SeedClaimTemplateMysteryEventHistoryAt1653616447930 implements Migr
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        103021111,
-        '${erc721ContractMysterySimpleAddress}',
+        103021121,
+        '${erc721ContractRaffleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "111010101",
+          tokenId: "121010101",
         })}',
-        103021110,
+        103021120,
         '${currentDateTime}',
         '${currentDateTime}'
       );

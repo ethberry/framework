@@ -27,7 +27,7 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
         created_at,
         updated_at
       ) VALUES (
-        10302010,
+        103020100,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -47,7 +47,7 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302011,
+        103020101,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -56,11 +56,11 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
           to: wallets[0],
           tokenId: "103010101",
         })}',
-        10302010,
+        103020100,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302020,
+        103020200,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -80,7 +80,7 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302021,
+        103020201,
         '${erc721ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -89,11 +89,11 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
           to: wallets[0],
           tokenId: "103060101",
         })}',
-        10302020,
+        103020200,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302030,
+        103020300,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -113,7 +113,7 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302031,
+        103020301,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -122,7 +122,7 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
           to: wallets[0],
           tokenId: "103010101",
         })}',
-        10302030,
+        103020300,
         '${currentDateTime}',
         '${currentDateTime}'
       );

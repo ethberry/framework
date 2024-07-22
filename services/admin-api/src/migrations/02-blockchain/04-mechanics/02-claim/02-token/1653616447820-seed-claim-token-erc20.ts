@@ -18,13 +18,13 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102020201
+        102020211
       ), (
-        102020202
+        102020212
       ), (
-        102020203
+        102020213
       ), (
-        102020204
+        102020214
       );
     `);
 
@@ -33,32 +33,37 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
         token_type,
         contract_id,
         template_id,
+        token_id,
         amount,
         asset_id
       ) VALUES (
         'ERC20',
         10201,
         1020101, -- Space Credits
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}',
-        102020201
+        102020211
       ), (
         'ERC20',
         10204,
         1020401, -- ERC20 (blacklist)
+        102040101, -- ERC20 (blacklist)
         '${WeiPerEther.toString()}',
-        102020202
+        102020212
       ), (
         'ERC20',
         10280,
         1028001, -- Warp Credits
+        102800101, -- Warp Credits
         '${WeiPerEther.toString()}',
-        102020203
+        102020213
       ), (
         'ERC20',
         20201,
         2020101, -- BEP Credits
+        202010101, -- BEP Credits
         '${WeiPerEther.toString()}',
-        102020204
+        102020214
       );
     `);
 
@@ -78,7 +83,7 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       ) VALUES (
         1010201,
         '${wallet}',
-        102020201,
+        102020211,
         'NEW',
         'TOKEN',
         '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
@@ -90,7 +95,7 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       ), (
         1010202,
         '${wallet}',
-        102020202,
+        102020212,
         'NEW',
         'TOKEN',
         '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
@@ -102,7 +107,7 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       ), (
         1010203,
         '${wallet}',
-        102020203,
+        102020213,
         'REDEEMED',
         'TOKEN',
         '0x53aead30f3b57f52c6ea7d23a71f47d3d03811dae35a71fdcee396b70ba8169b073a7c566c978c327db9ded895edd761173708e9ab1e567554b1acdadf11a7df1b',
@@ -114,7 +119,7 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       ), (
         1010204,
         '${wallet}',
-        102020204,
+        102020214,
         'EXPIRED',
         'TOKEN',
         '0xa5eb1c7f0edf69c9bdc89ef28773ecbeb44f0960d7c2d2b13741faee14f6f96931f5cc38d539de4ea48f55c78f4decc39f8d30df0ab21fc4100153c46010747b1c',

@@ -43,16 +43,14 @@ export const ClaimToken: FC = () => {
     empty: {
       account: "",
       item: emptyToken,
-      claimType: ClaimType.TOKEN,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [ClaimStatus.NEW],
     },
-    filter: ({ item, claimType, account, endTimestamp }) => ({
+    filter: ({ item, account, endTimestamp }) => ({
       item: cleanUpAsset(item),
-      claimType,
       account,
       endTimestamp,
     }),
