@@ -10,10 +10,10 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
-import { cleanUpAsset } from "@framework/exchange";
+import { cleanUpAsset, formatItem } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
-import { ClaimStatus, ClaimType } from "@framework/types";
+import { ClaimStatus, ClaimType, TokenType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
@@ -53,7 +53,7 @@ export const ClaimToken: FC = () => {
     },
     search: {
       account: "",
-      claimStatus: [],
+      claimStatus: [ClaimStatus.NEW],
       merchantId: profile.merchantId,
     },
     filter: ({ item, claimType, account, endTimestamp, merchantId }) => ({
@@ -104,7 +104,13 @@ export const ClaimToken: FC = () => {
             <StyledListItem key={claim.id} wrap>
               <ListItemText sx={{ width: 0.6 }}>{claim.account}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
-                {claim.item.components.map(component => component.template?.title).join(", ")}
+                {claim.item.components
+                  .map((component, idx) =>
+                    component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20
+                      ? `${formatItem({ id: idx, components: [component] })}`
+                      : `${component.template?.title} #${component.token?.tokenId}`,
+                  )
+                  .join(", ")}
               </ListItemText>
               <ListActions>
                 <ListAction
@@ -117,7 +123,7 @@ export const ClaimToken: FC = () => {
                 <ListAction
                   onClick={handleDelete(claim)}
                   message="form.buttons.delete"
-                  dataTestId="ClaimEditButton"
+                  dataTestId="ClaimDeleteButton"
                   icon={Delete}
                   disabled={claim.claimStatus !== ClaimStatus.NEW}
                 />

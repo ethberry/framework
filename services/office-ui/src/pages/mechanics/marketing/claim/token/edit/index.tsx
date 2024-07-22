@@ -37,7 +37,7 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId="ClaimEditDialog"
+      testId="ClaimTokenEditDialog"
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
@@ -46,7 +46,7 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC998] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
       <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />
     </FormDialog>
