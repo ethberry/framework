@@ -25,7 +25,7 @@ export const Claim: FC = () => {
     handleChangePage,
     handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: `/claim`,
+    baseUrl: "/claim",
     search: {
       claimStatus: [ClaimStatus.NEW],
       claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],

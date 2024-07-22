@@ -20,11 +20,10 @@ export interface IClaimEditDialogProps {
 export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, claimType, account, merchantId, endTimestamp } = initialValues;
+  const { id, item, account, merchantId, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
-    claimType,
     account,
     merchantId,
     endTimestamp,

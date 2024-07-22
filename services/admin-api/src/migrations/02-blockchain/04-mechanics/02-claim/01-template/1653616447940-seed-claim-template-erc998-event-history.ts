@@ -27,7 +27,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
         created_at,
         updated_at
       ) VALUES (
-        10402010,
+        104020100,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -47,7 +47,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10402011,
+        104020101,
         '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -56,11 +56,11 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           to: wallets[0],
           tokenId: "104010101",
         })}',
-        10402010,
+        104020100,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10402020,
+        104020200,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -80,7 +80,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10402021,
+        104020201,
         '${erc998ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -89,11 +89,11 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           to: wallets[0],
           tokenId: "104060101",
         })}',
-        10402020,
+        104020200,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10402030,
+        104020300,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -113,7 +113,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10402031,
+        104020301,
         '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -122,20 +122,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           to: wallets[0],
           tokenId: "104010101",
         })}',
-        10402030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10402032,
-        '${erc998ContractRandomAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "104060101",
-        })}',
-        10402030,
+        104020300,
         '${currentDateTime}',
         '${currentDateTime}'
       );

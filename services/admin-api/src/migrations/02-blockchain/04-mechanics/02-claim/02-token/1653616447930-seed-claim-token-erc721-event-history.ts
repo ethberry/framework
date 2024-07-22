@@ -1,18 +1,19 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther, ZeroHash } from "ethers";
+import { ZeroAddress, ZeroHash } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTokenErc20EventHistoryAt1653616447920 implements MigrationInterface {
+export class SeedClaimTokenErc721EventHistoryAt1653616447930 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
     const exchangeAddress = process.env.EXCHANGE_ADDR;
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
+    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -26,19 +27,19 @@ export class SeedClaimTokenErc20EventHistoryAt1653616447920 implements Migration
         created_at,
         updated_at
       ) VALUES (
-        102020110,
+        103020110,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: 1,
+          externalId: 3,
           items: [
             {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "1020101",
-              amount: WeiPerEther.toString(),
+              tokenType: 2,
+              token: erc721ContractSimpleAddress,
+              tokenId: "1030101",
+              amount: "1",
             },
           ],
         })}',
@@ -46,32 +47,32 @@ export class SeedClaimTokenErc20EventHistoryAt1653616447920 implements Migration
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102020111,
-        '${erc20TokenSimpleAddress}',
+        103020111,
+        '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: wallets[0],
-          to: wallets[1],
-          value: WeiPerEther.toString(),
+          from: ZeroAddress,
+          to: wallets[0],
+          tokenId: "103010101",
         })}',
-        102020110,
+        103020110,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102020210,
+        103020210,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: 1,
+          externalId: 3,
           items: [
             {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "1020401",
-              amount: WeiPerEther.toString(),
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',
@@ -79,32 +80,32 @@ export class SeedClaimTokenErc20EventHistoryAt1653616447920 implements Migration
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102020211,
-        '${erc20TokenSimpleAddress}',
+        103020211,
+        '${erc721ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: wallets[0],
-          to: wallets[1],
-          value: WeiPerEther.toString(),
+          from: ZeroAddress,
+          to: wallets[0],
+          tokenId: "103060101",
         })}',
-        102020210,
+        103020210,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102020310,
+        103020310,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: 2,
+          externalId: 3,
           items: [
             {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "1028001",
-              amount: WeiPerEther.toString(),
+              tokenType: 2,
+              token: erc721ContractSimpleAddress,
+              tokenId: "1030101",
+              amount: "1",
             },
           ],
         })}',
@@ -112,49 +113,16 @@ export class SeedClaimTokenErc20EventHistoryAt1653616447920 implements Migration
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102020311,
-        '${erc20TokenSimpleAddress}',
+        103020311,
+        '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: wallets[0],
-          to: wallets[1],
-          value: WeiPerEther.toString(),
+          from: ZeroAddress,
+          to: wallets[0],
+          tokenId: "103010101",
         })}',
-        102020310,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        102020410,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          account: wallets[0],
-          externalId: 5,
-          items: [
-            {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "2020101",
-              amount: WeiPerEther.toString(),
-            },
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        102020411,
-        '${erc20TokenSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: wallets[0],
-          to: wallets[1],
-          value: WeiPerEther.toString(),
-        })}',
-        102020410,
+        103020310,
         '${currentDateTime}',
         '${currentDateTime}'
       );

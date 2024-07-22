@@ -47,7 +47,6 @@ export const ClaimToken: FC = () => {
     empty: {
       account: "",
       item: emptyToken,
-      claimType: ClaimType.TOKEN,
       endTimestamp: new Date(0).toISOString(),
       merchantId: profile.merchantId,
     },
@@ -56,9 +55,8 @@ export const ClaimToken: FC = () => {
       claimStatus: [ClaimStatus.NEW],
       merchantId: profile.merchantId,
     },
-    filter: ({ item, claimType, account, endTimestamp, merchantId }) => ({
+    filter: ({ item, account, endTimestamp, merchantId }) => ({
       item: cleanUpAsset(item),
-      claimType,
       account,
       endTimestamp,
       merchantId,

@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
 
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
+export class SeedClaimTokenErc721At1653616447830 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -18,13 +17,11 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102020211
+        102020311
       ), (
-        102020212¡
+        102020312
       ), (
-        102020213
-      ), (
-        102020214
+        102020313
       );
     `);
 
@@ -37,33 +34,26 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
         amount,
         asset_id
       ) VALUES (
-        'ERC20',
-        10201,
-        1020101, -- Space Credits
-        102010101, -- Space Credits
-        '${WeiPerEther.toString()}',
-        102020211
+        'ERC721',
+        10306,
+        1030601, -- Sword
+        103060101, -- Sword
+        '1',
+        102020311
       ), (
-        'ERC20',
-        10204,
-        1020401, -- ERC20 (blacklist)
-        102040101, -- ERC20 (blacklist)
-        '${WeiPerEther.toString()}',
-        102020212
+        'ERC721',
+        10306,
+        1030602, -- Mace
+        103060201, -- Mace
+        '1',
+        102020312
       ), (
-        'ERC20',
-        10280,
-        1028001, -- Warp Credits
-        102800101, -- Warp Credits
-        '${WeiPerEther.toString()}',
-        102020213
-      ), (
-        'ERC20',
-        20201,
-        2020101, -- BEP Credits
-        202010101, -- BEP Credits
-        '${WeiPerEther.toString()}',
-        102020214
+        'ERC721',
+        10306,
+        1030603, -- Axe
+        103060301, -- Axe
+        '1',
+        102020313
       );
     `);
 
@@ -81,9 +71,9 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1010201,
+        1010311,
         '${wallet}',
-        102020211,
+        102020311,
         'NEW',
         'TOKEN',
         '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
@@ -93,21 +83,9 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1010202,
+        1010312,
         '${wallet}',
-        102020212,
-        'NEW',
-        'TOKEN',
-        '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
-        '0xd145bd1283e38b8c089f17fbd60487b2cb5e73f8bd0a357b1d72dee44c421f9e',
-        '${zeroDateTime}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1010203,
-        '${wallet}',
-        102020213,
+        102020312,
         'REDEEMED',
         'TOKEN',
         '0x53aead30f3b57f52c6ea7d23a71f47d3d03811dae35a71fdcee396b70ba8169b073a7c566c978c327db9ded895edd761173708e9ab1e567554b1acdadf11a7df1b',
@@ -117,9 +95,9 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1010204,
+        1010313,
         '${wallet}',
-        102020214,
+        102020313,
         'EXPIRED',
         'TOKEN',
         '0xa5eb1c7f0edf69c9bdc89ef28773ecbeb44f0960d7c2d2b13741faee14f6f96931f5cc38d539de4ea48f55c78f4decc39f8d30df0ab21fc4100153c46010747b1c',

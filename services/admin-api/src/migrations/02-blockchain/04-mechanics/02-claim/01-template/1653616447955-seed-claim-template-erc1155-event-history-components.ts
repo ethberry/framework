@@ -17,25 +17,25 @@ export class SeedClaimTemplateErc1155EventHistoryComponentsAt1653616447955 imple
         token_id,
         amount
       ) VALUES (
-        10502010,
+        105020100,
         'ITEM',
         10501,
         105010101,
         1000
       ), (
-        10502020,
+        105020200,
         'ITEM',
         10504,
         105040101,
         1000
       ), (
-        10502020,
+        105020200,
         'ITEM',
         10504,
         105040201,
         1000
       ), (
-        10502020,
+        105020200,
         'ITEM',
         10504,
         105040301,

@@ -18,25 +18,25 @@ export class SeedClaimTokenErc20EventHistoryComponentsAt1653616447925 implements
         token_id,
         amount
       ) VALUES (
-        10202010,
+        102020110,
         'ITEM',
         10201,
         102010101,
         '${WeiPerEther.toString()}'
       ), (
-        10202020,
+        102020210,
         'ITEM',
         10204,
         102040101,
         '${WeiPerEther.toString()}'
       ), (
-        10202030,
+        102020310,
         'ITEM',
         10280,
         102800101,
         '${WeiPerEther.toString()}'
       ), (
-        10202040,
+        102020410,
         'ITEM',
         20201,
         202010101,

@@ -19,11 +19,10 @@ export interface IClaimEditDialogProps {
 export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, claimType, account, endTimestamp } = initialValues;
+  const { id, item, account, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
-    claimType,
     account,
     endTimestamp,
   };
@@ -38,7 +37,7 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
       testId="ClaimTokenEditDialog"
       {...rest}
     >
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <TokenAssetInput
         multiple
         prefix="item"

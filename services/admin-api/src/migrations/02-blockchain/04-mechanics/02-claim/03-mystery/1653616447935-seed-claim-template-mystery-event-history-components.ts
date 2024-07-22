@@ -17,7 +17,7 @@ export class SeedClaimTemplateMysteryEventHistoryComponentsAt1653616447935 imple
         token_id,
         amount
       ) VALUES (
-        10302110,
+        103021110,
         'ITEM',
         11101,
         111010101,

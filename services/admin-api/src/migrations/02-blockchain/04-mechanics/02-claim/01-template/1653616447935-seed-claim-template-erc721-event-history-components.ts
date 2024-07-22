@@ -17,19 +17,19 @@ export class SeedClaimTemplateErc721EventHistoryComponentsAt1653616447935 implem
         token_id,
         amount
       ) VALUES (
-        10302010,
+        103020100,
         'ITEM',
         10301,
         103010101,
         1
       ), (
-        10302020,
+        103020200,
         'ITEM',
         10306,
         103060101,
         1
       ), (
-        10302030,
+        103020300,
         'ITEM',
         10301,
         103010301,
