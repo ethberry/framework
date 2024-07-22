@@ -4,13 +4,20 @@ import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
+import { ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
 
 export const ChainLinkSection: FC = () => {
-  const { chainId } = useWeb3React();
+  const { chainId = 0 } = useWeb3React();
 
-  if (!(chainId === 10000 || chainId === 10001)) {
+  // This was broken again when ChainLink introduces V2Plus so I decided to disable this block
+  if (process.env.NODE_ENV === NodeEnv.development) {
     return null;
   }
+
+  if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkV2SupportedChains[chainId]) {
+    return null;
+  }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List

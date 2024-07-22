@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,7 +11,7 @@ export class SeedBalanceStakingAt1654751224530 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const stakingAddr = process.env.STAKING_ADDR || wallet;
+    const stakingAddr = process.env.STAKING_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (

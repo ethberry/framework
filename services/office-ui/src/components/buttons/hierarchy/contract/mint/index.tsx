@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
@@ -13,10 +13,10 @@ import ERC20MintABI from "@framework/abis/json/ERC20Blacklist/mint.json";
 import ERC721MintCommonABI from "@framework/abis/json/ERC721Blacklist/mintCommon.json";
 import ERC1155MintABI from "@framework/abis/json/ERC1155Blacklist/mint.json";
 
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../../utils";
+import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IMintButtonProps {
   className?: string;
@@ -36,10 +36,9 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
 
   const { account = "" } = useWeb3React();
 
-  const [hasAccess, setHasAccess] = useState(false);
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, contract?.id);
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
-  const { checkPermissions } = useCheckPermissions();
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -89,18 +88,6 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-        role: AccessControlRoleType.MINTER_ROLE,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   return (
     <Fragment>
       <ListAction
@@ -114,7 +101,7 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
           contractType === TokenType.NATIVE ||
           shouldDisableByContractType(contract) ||
           contractFeatures.includes(ContractFeatures.GENES) ||
-          !hasAccess
+          !hasPermission
         }
         variant={variant}
       />

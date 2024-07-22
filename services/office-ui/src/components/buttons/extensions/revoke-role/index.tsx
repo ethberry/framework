@@ -3,10 +3,11 @@ import { NoAccounts } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractSecurity } from "@framework/types";
+import { AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRevokeRoleButtonProps {
   className?: string;
@@ -25,6 +26,8 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
   } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
+
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleRevokeRole = (): void => {
     setIsRevokeRoleDialogOpen(true);
@@ -50,7 +53,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         message="form.buttons.revokeRole"
         className={className}
         dataTestId="RevokeRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccessControlRevokeRoleDialog

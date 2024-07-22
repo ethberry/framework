@@ -1,11 +1,11 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { FC, Fragment, useState } from "react";
+import { Web3ContextType } from "@web3-react/core";
 import { PlayCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { AccessControlRoleType, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
@@ -14,7 +14,7 @@ import startRoundLotteryRandomABI from "@framework/abis/json/LotteryRandom/start
 import { RaffleStartRoundDialog } from "./round-dialog";
 import type { IRaffleRound } from "./round-dialog";
 import { shouldDisableByContractType } from "../../../../utils";
-import { useCheckPermissions } from "../../../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IRaffleRoundStartButtonProps {
   className?: string;
@@ -34,11 +34,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
     const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
@@ -72,17 +68,6 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
     setIsStartRoundDialogOpen(false);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   // round already started
   if (parameters.roundId) {
     return null;
@@ -96,7 +81,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
         message="pages.raffle.rounds.start"
         className={className}
         dataTestId="RaffleRoundStartButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <RaffleStartRoundDialog

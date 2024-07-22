@@ -11,10 +11,10 @@ export class SeedAccessControlErc1155At1653616447250 implements MigrationInterfa
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
-    const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;
-    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
-    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR;
+    const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR;
+    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (

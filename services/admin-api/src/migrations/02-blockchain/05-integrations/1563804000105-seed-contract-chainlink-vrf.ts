@@ -1,21 +1,27 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    VRF_ADDR: Wallet.createRandom().address.toLowerCase(),
+    LINK_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const vrfAddress = process.env.VRF_ADDR || wallet;
-    const vrfAddressBinance = process.env.VRF_BINANCE_ADDR || wallet;
-    const fromBlock = process.env.STARTING_BLOCK || 1;
-    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 
-    const linkBesuAddr = process.env.LINK_ADDR || wallet;
-    const linkBinanceAddr = process.env.LINK_BINANCE_ADDR || wallet;
+    const vrfAddress = process.env.VRF_ADDR;
+    const linkAddr = process.env.LINK_ADDR;
+
+    const fromBlock = process.env.STARTING_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -38,17 +44,17 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 107},
-        '${vrfAddress.toLowerCase()}',
+        107,
+        '${vrfAddress}',
         '${chainId}',
-        'VRF COORDINATOR',
+        'VRF COORDINATOR (BESU)',
         '${simpleFormatting}',
         '',
         'ChainLink VRF',
         '',
         '',
         '${JSON.stringify({
-          linkAddress: linkBesuAddr.toLowerCase(),
+          linkAddress: linkAddr.toLowerCase(),
         })}',
         'ACTIVE',
         null,
@@ -59,9 +65,9 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 207},
-        '${vrfAddressBinance.toLowerCase()}',
-        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
+        207,
+        '0xc587d9053cd1118f25f645f9e08bb98c9712a4ee',
+        56,
         'VRF COORDINATOR (BNB)',
         '${simpleFormatting}',
         '',
@@ -69,13 +75,97 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: linkBinanceAddr.toLowerCase(),
+          linkAddress: "0x404460c6a5ede2d891e8297795264fde62adbb75",
         })}',
         'ACTIVE',
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlockBinance}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        307,
+        '0x271682deb8c4e0901d1a1550ad2e64d568e69909',
+        1,
+        'VRF COORDINATOR (ETH)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        '${JSON.stringify({
+          linkAddress: "0x514910771af9ca656af840dff83e8264ecf986ca",
+        })}',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        407,
+        '0xae975071be8f8ee67addbc1a82488f1c24858067',
+        137,
+        'VRF COORDINATOR (MATIC)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        '${JSON.stringify({
+          linkAddress: "0xb0897686c545045afc77cf20ec7a532e3120e0f1",
+        })}',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        507,
+        '0x6a2aad07396b36fe02a22b33cf443582f682c82f',
+        97,
+        'VRF COORDINATOR (tBNB)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        '${JSON.stringify({
+          linkAddress: "0x84b9b910527ad5c03a9ca831909e21e236ea7b06",
+        })}',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        607,
+        '0x7e10652cb79ba97bc1d0f38a1e8fad8464a8a908',
+        8002,
+        'VRF COORDINATOR (AMOY)',
+        '${simpleFormatting}',
+        '',
+        'ChainLink VRF',
+        '',
+        '',
+        '${JSON.stringify({
+          linkAddress: "0x0fd9e8d3af1aaee056eb9e802c3a762a667b1904",
+        })}',
+        'ACTIVE',
+        null,
+        '{}',
+        'CHAIN_LINK',
+        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -10,8 +10,7 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
     const subId = process.env.CHAINLINK_SUBSCRIPTION_ID || 1;
 
     if (process.env.NODE_ENV === NodeEnv.production) {
-      // this is commented out while we are on test network
-      // return;
+      return;
     }
 
     await queryRunner.query(`

@@ -1,16 +1,25 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    EXCHANGE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    EXCHANGE_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
 

@@ -1,14 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum } from "class-validator";
 import { Transform } from "class-transformer";
-import { Mixin } from "ts-mixer";
 
-import { AccountDto, AddressDto } from "@gemunion/nest-js-validators";
 import { AccessControlRoleType } from "@framework/types";
 
 import { IAccessControlCheckDto } from "../interfaces";
+import { AccessControlSearchDto } from "./search";
 
-export class AccessControlCheckDto extends Mixin(AccountDto, AddressDto) implements IAccessControlCheckDto {
+export class AccessControlCheckDto extends AccessControlSearchDto implements IAccessControlCheckDto {
   @ApiProperty({
     enum: AccessControlRoleType,
   })

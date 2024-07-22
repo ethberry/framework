@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 
 import { StyledEmptyWrapper } from "../empty-wrapper";
 import { StyledList } from "./styled";
@@ -10,7 +10,7 @@ export interface IStyledListWrapperProps {
   subheader?: ReactNode;
 }
 
-export const StyledListWrapper: FC<PropsWithChildren<IStyledListWrapperProps>> = props => {
+export const StyledListWrapper = (props: PropsWithChildren<IStyledListWrapperProps>) => {
   const { children, subheader, ...rest } = props;
 
   return (

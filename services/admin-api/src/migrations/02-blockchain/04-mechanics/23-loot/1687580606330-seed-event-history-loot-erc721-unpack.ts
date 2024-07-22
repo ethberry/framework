@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress, ZeroHash } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,8 +11,8 @@ export class SeedEventHistoryLootErc721UnpackAt1687580606330 implements Migratio
       return;
     }
 
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractLootSimpleAddress = process.env.ERC721_LOOTBOX_SIMPLE_ADDR || wallet;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
+    const erc721ContractLootSimpleAddress = process.env.ERC721_LOOTBOX_SIMPLE_ADDR;
 
     const now = new Date();
     const currentDateTime = now.toISOString();

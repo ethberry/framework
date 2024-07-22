@@ -1,10 +1,21 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
+
+Object.assign(
+  process.env,
+  {
+    ERC721_MYSTERYBOX_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC721_MYSTERYBOX_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC721_MYSTERYBOX_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+    ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+  },
+  process.env,
+);
 
 export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -13,11 +24,10 @@ export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
-    const erc721ContractMysteryPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
-    const erc721ContractMysteryBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
-    const erc721ContractMysteryBlacklistPausableAddress =
-      process.env.ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR || wallet;
+    const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR;
+    const erc721ContractMysteryPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR;
+    const erc721ContractMysteryBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR;
+    const erc721ContractMysteryBlacklistPausableAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

@@ -3,10 +3,11 @@ import { NoAccounts } from "@mui/icons-material";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractSecurity } from "@framework/types";
+import { AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { AccessControlRenounceRoleDialog } from "./dialog";
 import { shouldDisableByContractType } from "../../../utils";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRenounceRoleButtonProps {
   className?: string;
@@ -25,6 +26,8 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
   } = props;
 
   const [isRenounceRoleDialogOpen, setIsRenounceRoleDialogOpen] = useState(false);
+
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleRenounceRole = (): void => {
     setIsRenounceRoleDialogOpen(true);
@@ -50,7 +53,7 @@ export const RenounceRoleButton: FC<IRenounceRoleButtonProps> = props => {
         message="form.buttons.renounceRole"
         className={className}
         dataTestId="RenounceRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract)}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccessControlRenounceRoleDialog

@@ -2,19 +2,21 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection, CollectionActions } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
 import { TemplateMintButton } from "../../../../../components/buttons";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { CollectionTemplateEditDialog } from "./edit";
 
 export const CollectionTemplate: FC = () => {
@@ -71,6 +73,8 @@ export const CollectionTemplate: FC = () => {
           },
   });
 
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "collection", "collection.template"]} />
@@ -99,32 +103,30 @@ export const CollectionTemplate: FC = () => {
         onRefreshPage={handleRefreshPage}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(template => (
-            <StyledListItem key={template.id} wrap>
-              <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
-              <ListActions dataTestId="TemplateActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(template)}
-                  message="form.buttons.edit"
-                  dataTestId="TemplateEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(template)}
-                  message="form.buttons.delete"
-                  dataTestId="TemplateDeleteButton"
-                  icon={Delete}
-                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
-                />
-                <TemplateMintButton template={template} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(template => (
+          <ListItem key={template.id} wrap account={account} contract={template.contract}>
+            <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
+            <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{template.contract?.title}</ListItemText>
+            <ListActions dataTestId="TemplateActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(template)}
+                message="form.buttons.edit"
+                dataTestId="TemplateEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(template)}
+                message="form.buttons.delete"
+                dataTestId="TemplateDeleteButton"
+                icon={Delete}
+                disabled={template.templateStatus === TemplateStatus.INACTIVE}
+              />
+              <TemplateMintButton template={template} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"
