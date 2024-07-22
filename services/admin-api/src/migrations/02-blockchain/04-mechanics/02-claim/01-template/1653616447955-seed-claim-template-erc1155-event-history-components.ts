@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTemplateErc721EventHistoryComponentsAt1653616447935 implements MigrationInterface {
+export class SeedClaimTemplateErc1155EventHistoryComponentsAt1653616447955 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
@@ -17,23 +17,29 @@ export class SeedClaimTemplateErc721EventHistoryComponentsAt1653616447935 implem
         token_id,
         amount
       ) VALUES (
-        10302010,
+        10502010,
         'ITEM',
-        10301,
-        103010101,
-        1
+        10501,
+        105010101,
+        1000
       ), (
-        10302020,
+        10502020,
         'ITEM',
-        10306,
-        103060101,
-        1
+        10504,
+        105040101,
+        1000
       ), (
-        10302030,
+        10502020,
         'ITEM',
-        10301,
-        103010301,
-        1
+        10504,
+        105040201,
+        1000
+      ), (
+        10502020,
+        'ITEM',
+        10504,
+        105040301,
+        1000
       );
     `);
   }

@@ -107,12 +107,6 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
               tokenId: "1030101",
               amount: "1",
             },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
           ],
         })}',
         null,
@@ -129,71 +123,6 @@ export class SeedClaimTemplateErc721EventHistoryAt1653616447930 implements Migra
           tokenId: "103010101",
         })}',
         10302030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302032,
-        '${erc721ContractRandomAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "103060101",
-        })}',
-        10302030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302040,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          account: wallets[1],
-          externalId: 3,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721ContractSimpleAddress,
-              tokenId: "1030101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302041,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "103010101",
-        })}',
-        10302040,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302042,
-        '${erc721ContractRandomAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "103060101",
-        })}',
-        10302040,
         '${currentDateTime}',
         '${currentDateTime}'
       );

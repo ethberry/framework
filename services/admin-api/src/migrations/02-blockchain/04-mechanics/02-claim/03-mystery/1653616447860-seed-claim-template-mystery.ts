@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimTemplateMysteryBoxAt1653616447860 implements MigrationInterface {
+export class SeedClaimTemplateMysteryAt1653616447860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;

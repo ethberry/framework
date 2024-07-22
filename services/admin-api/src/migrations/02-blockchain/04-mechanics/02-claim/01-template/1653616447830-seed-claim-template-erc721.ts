@@ -41,13 +41,13 @@ export class SeedClaimTemplateErc721At1653616447830 implements MigrationInterfac
       ), (
         'ERC721',
         10306,
-        1030602, -- mace
+        1030602, -- Mace
         '1',
         102020302
       ), (
         'ERC721',
         10306,
-        1030603, -- axe
+        1030603, -- Axe
         '1',
         102020303
       );

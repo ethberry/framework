@@ -34,24 +34,6 @@ export class SeedClaimTemplateErc998EventHistoryComponentsAt1653616447945 implem
         10401,
         104010101,
         1
-      ), (
-        10402030,
-        'ITEM',
-        10406,
-        104060101,
-        1
-      ), (
-        10402040,
-        'ITEM',
-        10401,
-        104010101,
-        1
-      ), (
-        10402040,
-        'ITEM',
-        10406,
-        104060101,
-        1
       );
     `);
   }

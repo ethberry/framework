@@ -17,9 +17,9 @@ export class SeedClaimTemplateErc1155At1653616447850 implements MigrationInterfa
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1020205
+        102020501
       ), (
-        102050002
+        102020502
       );
     `);
 
@@ -35,13 +35,25 @@ export class SeedClaimTemplateErc1155At1653616447850 implements MigrationInterfa
         10501,
         1050101, -- Gold
         1000,
-        1020205
+        102020501
       ), (
         'ERC1155',
-        10501,
-        1050101, -- Gold
+        10504,
+        1050401, -- Healing potion
         1000,
-        102050002
+        102020502
+      ), (
+        'ERC1155',
+        10504,
+        1050402, -- Mana potion
+        1000,
+        102020502
+      ), (
+        'ERC1155',
+        10504,
+        1050403, -- Antidote potion
+        1000,
+        102020502
       );
     `);
 
@@ -61,7 +73,7 @@ export class SeedClaimTemplateErc1155At1653616447850 implements MigrationInterfa
       ) VALUES (
         1010501,
         '${wallet}',
-        1020205,
+        102020501,
         'NEW',
         'TEMPLATE',
         '0xb841fe2c754de1cf18c963271470d4d8f613ec99aed88a3280b428815d04db0c3dc5d37ba055c926c894d29b2ce15956aeb1e52d7dbefbf43924e5109e04f0dd1c',
@@ -73,8 +85,8 @@ export class SeedClaimTemplateErc1155At1653616447850 implements MigrationInterfa
       ), (
         1010502,
         '${wallet}',
-        102050002,
-        'REDEEMED', -- it is actually not redeemed
+        102020502,
+        'REDEEMED',
         'TEMPLATE',
         '0xc1e8ab3604dd9d086054e1cf1a2a7c5a70a5ee3b8ea5234ad245a7be2e371a274830e84e23ae11271e2cfdf0b5b386f0be29a2ed08ade88a650587826fb706511b',
         '0x90b773d416db1a96768036eaa9fd5712e4f21eef2bbdc93f6c508a00db513e96',

@@ -36,7 +36,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           externalId: 3,
           items: [
             {
-              tokenType: 2,
+              tokenType: 3,
               token: erc998ContractSimpleAddress,
               tokenId: "1040101",
               amount: "1",
@@ -69,7 +69,7 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           externalId: 3,
           items: [
             {
-              tokenType: 2,
+              tokenType: 3,
               token: erc998ContractRandomAddress,
               tokenId: "1040601",
               amount: "1",
@@ -102,15 +102,9 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           externalId: 3,
           items: [
             {
-              tokenType: 2,
+              tokenType: 3,
               token: erc998ContractSimpleAddress,
               tokenId: "1040101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc998ContractRandomAddress,
-              tokenId: "1040601",
               amount: "1",
             },
           ],
@@ -142,58 +136,6 @@ export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements Migra
           tokenId: "104060101",
         })}',
         10402030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10402040,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          account: wallets[1],
-          externalId: 3,
-          items: [
-            {
-              tokenType: 2,
-              token: erc998ContractSimpleAddress,
-              tokenId: "1040101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc998ContractRandomAddress,
-              tokenId: "1040601",
-              amount: "1",
-            },
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10402041,
-        '${erc998ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "104010101",
-        })}',
-        10402040,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10402042,
-        '${erc998ContractRandomAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "104060101",
-        })}',
-        10402040,
         '${currentDateTime}',
         '${currentDateTime}'
       );
