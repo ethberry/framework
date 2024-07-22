@@ -85,15 +85,15 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
           <FormattedMessage id="alert.risk" />
         </Alert>
       ) : null}
-      {!id ? <TextInput name="symbol" /> : null}
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      {!id ? <TextInput name="address" /> : null}
-      {!id ? <NumberInput name="decimals" /> : null}
+      <TextInput name="title" required />
+      <RichTextEditor name="description" required />
+      {!id ? <TextInput name="symbol" required /> : null}
+      {!id ? <TextInput name="address" required /> : null}
+      {!id ? <NumberInput name="decimals" required /> : null}
       {id ? (
-        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} required />
       ) : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

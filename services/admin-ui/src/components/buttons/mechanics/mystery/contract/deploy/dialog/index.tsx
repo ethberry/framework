@@ -27,10 +27,10 @@ export const MysteryContractDeployDialog: FC<IMysteryContractDeployDialogProps> 
       {...rest}
     >
       <SelectInput name="contractTemplate" options={MysteryContractTemplates} />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <TextInput name="name" required />
+      <TextInput name="symbol" required />
+      <TextInput name="baseTokenURI" required />
+      <CurrencyInput name="royalty" symbol="%" required />
     </FormDialog>
   );
 };

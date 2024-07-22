@@ -3,12 +3,12 @@ import { IsInt, IsString, Max, MaxLength, Min, MinLength } from "class-validator
 import { Mixin } from "ts-mixer";
 
 import { SearchableDto } from "@gemunion/collection";
-import { AddressDto, ImageUrlOptionalDto } from "@gemunion/nest-js-validators";
-import { IErc20ContractCreateDto } from "@framework/types";
+import { AddressDto, ImageUrlDto } from "@gemunion/nest-js-validators";
 import { symbolMaxLength, symbolMinLength } from "@gemunion/constants";
+import type { IErc20ContractCreateDto } from "@framework/types";
 
 export class Erc20ContractCreateDto
-  extends Mixin(AddressDto, ImageUrlOptionalDto, SearchableDto)
+  extends Mixin(AddressDto, ImageUrlDto, SearchableDto)
   implements IErc20ContractCreateDto
 {
   @ApiProperty()

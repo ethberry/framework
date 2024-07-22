@@ -29,10 +29,11 @@ export const Erc20ContractDeployDialog: FC<IErc20ContractDeployDialogProps> = pr
         name="contractTemplate"
         options={Erc20ContractTemplates}
         disabledOptions={[Erc20ContractTemplates.EXTERNAL]}
+        required
       />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <EthInput name="cap" />
+      <TextInput name="name" required />
+      <TextInput name="symbol" required />
+      <EthInput name="cap" required />
     </FormDialog>
   );
 };
