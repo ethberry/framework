@@ -20,7 +20,7 @@ export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
       ) VALUES (
         102020211
       ), (
-        102020212¡
+        102020212
       ), (
         102020213
       ), (
