@@ -27,7 +27,7 @@ export const Erc1155ContractDeployDialog: FC<IErc1155TokenDeployDialogProps> = p
       {...rest}
     >
       <SelectInput name="contractTemplate" options={Erc1155ContractTemplates} />
-      <TextInput name="baseTokenURI" />
+      <TextInput required name="baseTokenURI" />
       <RoyaltyInput />
     </FormDialog>
   );
