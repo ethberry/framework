@@ -30,6 +30,6 @@ export const RoyaltyInput: FC<IRoyaltyInputProps> = props => {
     case Erc1155ContractTemplates.SOULBOUND:
       return null;
     default:
-      return <CurrencyInput name={name} symbol="%" />;
+      return <CurrencyInput name={name} symbol="%" required />;
   }
 };
