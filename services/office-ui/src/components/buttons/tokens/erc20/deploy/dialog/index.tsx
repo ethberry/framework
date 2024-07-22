@@ -32,7 +32,7 @@ export const Erc20ContractDeployDialog: FC<IErc20ContractDeployDialogProps> = pr
       />
       <TextInput name="name" />
       <TextInput name="symbol" />
-      <EthInput name="cap" />
+      <EthInput name="cap" required />
     </FormDialog>
   );
 };
