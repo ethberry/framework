@@ -37,9 +37,9 @@ export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = 
         readOnly={contractTemplate !== Erc721ContractTemplates.SIMPLE}
         disabledOptions={isTemplateDisabled(chainId)}
       />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
+      <TextInput name="name" required />
+      <TextInput name="symbol" required />
+      <TextInput name="baseTokenURI" required />
       <RoyaltyInput />
     </FormDialog>
   );
