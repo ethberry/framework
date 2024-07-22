@@ -138,7 +138,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1050403,
-        'Antidote',
+        'Antidote potion',
         '${simpleFormatting}',
         '${imagePath}/potion_antidot.png',
         10100050403,

@@ -5,15 +5,15 @@ import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInterface {
+export class SeedClaimTemplateErc998EventHistoryAt1653616447940 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
     const exchangeAddress = process.env.EXCHANGE_ADDR;
-    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR;
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
+    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -27,7 +27,7 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
         created_at,
         updated_at
       ) VALUES (
-        10302010,
+        10402010,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -36,9 +36,9 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
           externalId: 3,
           items: [
             {
-              tokenType: 2,
-              token: erc721ContractSimpleAddress,
-              tokenId: "1030101",
+              tokenType: 3,
+              token: erc998ContractSimpleAddress,
+              tokenId: "1040101",
               amount: "1",
             },
           ],
@@ -47,20 +47,20 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302011,
-        '${erc721ContractSimpleAddress}',
+        10402011,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103010101",
+          tokenId: "104010101",
         })}',
-        10302010,
+        10402010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302020,
+        10402020,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -69,9 +69,9 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
           externalId: 3,
           items: [
             {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
+              tokenType: 3,
+              token: erc998ContractRandomAddress,
+              tokenId: "1040601",
               amount: "1",
             },
           ],
@@ -80,20 +80,20 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302021,
-        '${erc721ContractRandomAddress}',
+        10402021,
+        '${erc998ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103060101",
+          tokenId: "104060101",
         })}',
-        10302020,
+        10402020,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302030,
+        10402030,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Claim',
@@ -102,15 +102,9 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
           externalId: 3,
           items: [
             {
-              tokenType: 2,
-              token: erc721ContractSimpleAddress,
-              tokenId: "1030101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
+              tokenType: 3,
+              token: erc998ContractSimpleAddress,
+              tokenId: "1040101",
               amount: "1",
             },
           ],
@@ -119,81 +113,29 @@ export class SeedEventHistoryErc721ClaimAt1653616447930 implements MigrationInte
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302031,
-        '${erc721ContractSimpleAddress}',
+        10402031,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103010101",
+          tokenId: "104010101",
         })}',
-        10302030,
+        10402030,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10302032,
-        '${erc721ContractRandomAddress}',
+        10402032,
+        '${erc998ContractRandomAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103060101",
+          tokenId: "104060101",
         })}',
-        10302030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302040,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          account: wallets[1],
-          externalId: 3,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721ContractSimpleAddress,
-              tokenId: "1030101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302041,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "103010101",
-        })}',
-        10302040,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10302042,
-        '${erc721ContractRandomAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "103060101",
-        })}',
-        10302040,
+        10402030,
         '${currentDateTime}',
         '${currentDateTime}'
       );

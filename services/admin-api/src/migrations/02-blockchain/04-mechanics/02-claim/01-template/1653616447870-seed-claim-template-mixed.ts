@@ -4,11 +4,12 @@ import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
+export class SeedClaimTemplateMixedAt1653616447870 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
     const currentDateTime = new Date().toISOString();
     const zeroDateTime = new Date(0).toISOString();
 
@@ -16,7 +17,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        102021101
+        102029901
       );
     `);
 
@@ -29,10 +30,22 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        11101,
-        1110101, -- Sword MysteryBox
+        10306,
+        1030601, -- Sword
         '1',
-        102021101
+        102029901
+      ), (
+        'ERC998',
+        10406,
+        1040601, -- Warrior
+        '1',
+        102029901
+      ), (
+        'ERC1155',
+        10501,
+        1050101, -- Gold
+        1000,
+        102029901
       );
     `);
 
@@ -42,6 +55,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         account,
         item_id,
         claim_status,
+        claim_type,
         signature,
         nonce,
         end_timestamp,
@@ -49,12 +63,13 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1021101,
+        1019901,
         '${wallet}',
-        102021101,
+        102029901,
         'NEW',
-        '0x8ec31888371c5ecad6c93ac7c6e4f2519f2bea53231ed5b48be3a5bcd346d6b75a9abaf173dc703b4e3b628d5a8b6e9cd75eebace06b25cf7402bde23af7526e1b',
-        '0xb7a84a4d540ad682fe1f3da89b7255586ddbc299be8e04f7576b1ad985dde16b',
+        'TEMPLATE',
+        '0xcd1b1a4803b8d01757eabff41348275fdda5acf9f45511fd275e5d3076f0169549507eef804244d2a97eade4d93fd20d3f6c5aaaf1deafe97bcd01a4522deb0f1c',
+        '0x01252ba107b2da38c6b1ba1dce277f777daa3f86ef63a32a59904c3db5baedc0',
         '${zeroDateTime}',
         1,
         '${currentDateTime}',

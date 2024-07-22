@@ -34,11 +34,11 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC721:
         return (
           <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}/view`}>
               {name}
             </Link>
             {` - `}
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}/view`}>
               #{tokenId}
             </Link>
           </StyledDataViewAddressLinkWrapper>
@@ -46,11 +46,11 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC998: {
         return (
           <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}/view`}>
               {name}
             </Link>
             {` - `}
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}/view`}>
               #{tokenId}
             </Link>
           </StyledDataViewAddressLinkWrapper>
@@ -59,7 +59,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC1155:
         return (
           <StyledDataViewAddressLinkWrapper key={`${asset.id}${asset.exchangeType}`}>
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}/view`}>
               {name}
             </Link>
             {` - `}
