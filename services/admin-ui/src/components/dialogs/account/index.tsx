@@ -29,7 +29,7 @@ export const AccountDialog: FC<IAccountDialogProps> = props => {
       testId={testId}
       {...rest}
     >
-      <TextInput name="account" />
+      <TextInput name="account" required />
     </FormDialog>
   );
 };

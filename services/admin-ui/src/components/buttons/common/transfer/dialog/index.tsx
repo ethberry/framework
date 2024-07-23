@@ -28,7 +28,7 @@ export const TransferDialog: FC<ITransferDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.transfer"
-      testId="ContractTransferForm"
+      testId="TokenTransferForm"
       {...rest}
     >
       <TokenAssetInput
@@ -39,7 +39,7 @@ export const TransferDialog: FC<ITransferDialogProps> = props => {
           },
         }}
       />
-      <TextInput name="address" />
+      <TextInput name="address" required />
     </FormDialog>
   );
 };

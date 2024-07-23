@@ -24,7 +24,7 @@ export const RaffleScheduleDialog: FC<IRaffleScheduleDialogProps> = props => {
       testId="RaffleScheduleForm"
       {...rest}
     >
-      <SelectInput name="schedule" options={CronExpression} />
+      <SelectInput name="schedule" options={CronExpression} required />
     </FormDialog>
   );
 };

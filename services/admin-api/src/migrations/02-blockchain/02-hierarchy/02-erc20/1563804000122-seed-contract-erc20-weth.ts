@@ -1,20 +1,21 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    WETH_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractErc20WethAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    populate(
+      process.env as any,
+      {
+        WETH_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR;
