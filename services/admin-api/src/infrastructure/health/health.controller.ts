@@ -36,7 +36,7 @@ export class HealthController {
     return this.health.check([
       async (): Promise<HealthIndicatorResult> =>
         this.db.pingCheck("Postgres", {
-          timeout: 600,
+          timeout: 1200,
         }),
       async (): Promise<HealthIndicatorResult> =>
         this.ms.pingCheck("RabbitMQ", {
