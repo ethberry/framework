@@ -1,11 +1,12 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
-import { ClientProxy } from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
+import { ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { CronJob } from "cron";
 import { IsNull, JsonContains, Not } from "typeorm";
 
 import type { ILotteryScheduleUpdateRmq } from "@framework/types";
-import { ContractStatus, CoreEthType, ModuleType, RmqProviderType } from "@framework/types";
+import { ContractStatus, CoreEthType, ModuleType, GemunionSupportedChains } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
@@ -13,14 +14,35 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 export class LotteryRoundServiceRmq {
   constructor(
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
     private readonly schedulerRegistry: SchedulerRegistry,
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    @Inject(RmqProviderType.CORE_ETH_SERVICE)
-    private readonly coreEthServiceProxy: ClientProxy,
-    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
-    private readonly coreEthServiceBinanceProxy: ClientProxy,
   ) {}
+
+  private getClientProxyForChain(chainId: number) {
+    const networkName = Object.keys(GemunionSupportedChains)[Object.values(GemunionSupportedChains).indexOf(chainId)];
+    if (!networkName) {
+      throw new NotFoundException("networkNotFound");
+    }
+
+    const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+    const rmqQueueEthName = this.configService.get<string>(
+      `RMQ_QUEUE_CORE_ETH_${networkName}`,
+      `CORE_ETH_${networkName}`,
+    );
+
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueEthName,
+        queueOptions: {
+          durabl: false,
+        },
+      },
+    });
+  }
 
   public async initSchedule(): Promise<void> {
     const lotteryEntities = await this.contractService.findAll({
@@ -70,9 +92,8 @@ export class LotteryRoundServiceRmq {
       this.loggerService.error(e, LotteryRoundServiceRmq.name);
     } finally {
       const job = new CronJob(dto.schedule, () => {
-        chainId === 56 || chainId === 97
-          ? this.coreEthServiceBinanceProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto)
-          : this.coreEthServiceProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto);
+        const clientProxy = this.getClientProxyForChain(chainId);
+        clientProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto);
       });
       this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
       job.start();
