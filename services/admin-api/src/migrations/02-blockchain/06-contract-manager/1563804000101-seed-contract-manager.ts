@@ -13,16 +13,27 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
       {
         CONTRACT_MANAGER_ADDR: Wallet.createRandom().address.toLowerCase(),
         CONTRACT_MANAGER_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ETH_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
-    const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR;
+
+    const contractManagerGemunionAddress = process.env.CONTRACT_MANAGER_ADDR;
     const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_BINANCE_ADDR;
+    const contractManagerAddressBinanceTest = process.env.CONTRACT_MANAGER_BINANCE_TEST_ADDR;
+    const contractManagerAddressPolygon = process.env.CONTRACT_MANAGER_POLYGON_ADDR;
+    const contractManagerAddressPolygonTest = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
+    const contractManagerAddressMainnet = process.env.CONTRACT_MANAGER_ETH_ADDR;
+
+    const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
+    const fromBlockBinanceTest = process.env.STARTING_BINANCE_TEST_BLOCK || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -44,7 +55,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         updated_at
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 101},
-        '${contractManagerAddress}',
+        '${contractManagerGemunionAddress}',
         '${chainId}',
         'CONTRACT MANAGER',
         '${simpleFormatting}',
@@ -62,8 +73,76 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 201},
         '${contractManagerAddressBinance}',
-        ${process.env.NODE_ENV === NodeEnv.production ? 56 : 97},
+        56,
         'CONTRACT MANAGER (BNB)',
+        '${simpleFormatting}',
+        '',
+        'CONTRACT_MANAGER',
+        '',
+        '',
+        'ACTIVE',
+        '{ALLOWANCE}',
+        'CONTRACT_MANAGER',
+        '${fromBlockBinance}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 301},
+        '${contractManagerAddressMainnet}',
+        1,
+        'CONTRACT MANAGER (ETH)',
+        '${simpleFormatting}',
+        '',
+        'CONTRACT_MANAGER',
+        '',
+        '',
+        'ACTIVE',
+        '{ALLOWANCE}',
+        'CONTRACT_MANAGER',
+        '${fromBlockBinance}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 401},
+        '${contractManagerAddressPolygon}',
+        137,
+        'CONTRACT MANAGER (MATIC)',
+        '${simpleFormatting}',
+        '',
+        'CONTRACT_MANAGER',
+        '',
+        '',
+        'ACTIVE',
+        '{ALLOWANCE}',
+        'CONTRACT_MANAGER',
+        '${fromBlockBinance}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 501},
+        '${contractManagerAddressBinanceTest}',
+        97,
+        'CONTRACT MANAGER (tBNB)',
+        '${simpleFormatting}',
+        '',
+        'CONTRACT_MANAGER',
+        '',
+        '',
+        'ACTIVE',
+        '{ALLOWANCE}',
+        'CONTRACT_MANAGER',
+        '${fromBlockBinanceTest}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 601},
+        '${contractManagerAddressPolygonTest}',
+        80002,
+        'CONTRACT MANAGER (tMATIC)',
         '${simpleFormatting}',
         '',
         'CONTRACT_MANAGER',

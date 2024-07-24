@@ -24,7 +24,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
 
-    const exchangeGemunionBesuAddress = process.env.EXCHANGE_ADDR;
+    const exchangeGemunionAddress = process.env.EXCHANGE_ADDR;
     const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;
     const exchangeAddressBinanceTest = process.env.EXCHANGE_BINANCE_TEST_ADDR;
     const exchangeAddressPolygon = process.env.EXCHANGE_POLYGON_ADDR;
@@ -56,7 +56,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         updated_at
       ) VALUES (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 102},
-        '${exchangeGemunionBesuAddress}',
+        '${exchangeGemunionAddress}',
         '${chainId}',
         'EXCHANGE (BESU)',
         '${simpleFormatting}',
