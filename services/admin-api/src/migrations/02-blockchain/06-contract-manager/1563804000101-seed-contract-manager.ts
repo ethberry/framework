@@ -12,11 +12,11 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
       process.env as any,
       {
         CONTRACT_MANAGER_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_ETH_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
@@ -25,15 +25,18 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || testChainId;
 
     const contractManagerGemunionAddress = process.env.CONTRACT_MANAGER_ADDR;
-    const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_BINANCE_ADDR;
-    const contractManagerAddressBinanceTest = process.env.CONTRACT_MANAGER_BINANCE_TEST_ADDR;
-    const contractManagerAddressPolygon = process.env.CONTRACT_MANAGER_POLYGON_ADDR;
-    const contractManagerAddressPolygonTest = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
-    const contractManagerAddressMainnet = process.env.CONTRACT_MANAGER_ETH_ADDR;
+    const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_ADDR_BINANCE;
+    const contractManagerAddressBinanceTest = process.env.CONTRACT_MANAGER_ADDR_BINANCE_TEST;
+    const contractManagerAddressPolygon = process.env.CONTRACT_MANAGER_ADDR_POLYGON;
+    const contractManagerAddressPolygonTest = process.env.CONTRACT_MANAGER_ADDR_POLYGON_AMOY;
+    const contractManagerAddressMainnet = process.env.CONTRACT_MANAGER_ADDR_ETHEREUM;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
-    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
-    const fromBlockBinanceTest = process.env.STARTING_BINANCE_TEST_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
+    const fromBlockBinanceTest = process.env.STARTING_BLOCK_BINANCE_TEST || 1;
+    const fromBlockPolygon = process.env.STARTING_BLOCK_POLYGON || 1;
+    const fromBlockPolygonAmoy = process.env.STARTING_BLOCK_POLYGON_AMOY || 1;
+    const fromBlockEthereum = process.env.STARTING_BLOCK_ETHEREUM || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -100,7 +103,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         'ACTIVE',
         '{ALLOWANCE}',
         'CONTRACT_MANAGER',
-        '${fromBlockBinance}',
+        '${fromBlockEthereum}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -117,7 +120,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         'ACTIVE',
         '{ALLOWANCE}',
         'CONTRACT_MANAGER',
-        '${fromBlockBinance}',
+        '${fromBlockPolygon}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -151,7 +154,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         'ACTIVE',
         '{ALLOWANCE}',
         'CONTRACT_MANAGER',
-        '${fromBlockBinance}',
+        '${fromBlockPolygonAmoy}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

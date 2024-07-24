@@ -12,11 +12,11 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
       process.env as any,
       {
         EXCHANGE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ETH_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
@@ -25,15 +25,18 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || testChainId;
 
     const exchangeGemunionAddress = process.env.EXCHANGE_ADDR;
-    const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;
-    const exchangeAddressBinanceTest = process.env.EXCHANGE_BINANCE_TEST_ADDR;
-    const exchangeAddressPolygon = process.env.EXCHANGE_POLYGON_ADDR;
-    const exchangeAddressPolygonTest = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
-    const exchangeAddressMainnet = process.env.EXCHANGE_ETH_ADDR;
+    const exchangeAddressBinance = process.env.EXCHANGE_ADDR_BINANCE;
+    const exchangeAddressBinanceTest = process.env.EXCHANGE_ADDR_BINANCE_TEST;
+    const exchangeAddressPolygon = process.env.EXCHANGE_ADDR_POLYGON;
+    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_ADDR_POLYGON_AMOY;
+    const exchangeAddressMainnet = process.env.EXCHANGE_ADDR_ETHEREUM;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
-    const fromBlockBinance = process.env.STARTING_BINANCE_BLOCK || 1;
-    const fromBlockBinanceTest = process.env.STARTING_BINANCE_TEST_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
+    const fromBlockBinanceTest = process.env.STARTING_BLOCK_BINANCE_TEST || 1;
+    const fromBlockPolygon = process.env.STARTING_BLOCK_POLYGON || 1;
+    const fromBlockPolygonAmoy = process.env.STARTING_BLOCK_POLYGON_AMOY || 1;
+    const fromBlockEthereum = process.env.STARTING_BLOCK_ETHEREUM || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -104,7 +107,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         null,
         '{WITHDRAW,ALLOWANCE,REFERRAL}',
         'EXCHANGE',
-        '${fromBlockBinance}',
+        '${fromBlockEthereum}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -122,7 +125,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         null,
         '{WITHDRAW,ALLOWANCE,REFERRAL}',
         'EXCHANGE',
-        '${fromBlockBinance}',
+        '${fromBlockPolygon}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -146,7 +149,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 602},
-        '${exchangeAddressPolygonTest}',
+        '${exchangeAddressPolygonAmoy}',
         80002,
         'EXCHANGE (tMATIC)',
         '${simpleFormatting}',
@@ -158,7 +161,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         null,
         '{WITHDRAW,ALLOWANCE,REFERRAL}',
         'EXCHANGE',
-        '${fromBlockBinanceTest}',
+        '${fromBlockPolygonAmoy}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
