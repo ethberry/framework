@@ -1,23 +1,24 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
-
-Object.assign(
-  process.env,
-  {
-    PONZI_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
 
 export class SeedContractPonziAt1660436477100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
+    populate(
+      process.env as any,
+      {
+        PONZI_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;

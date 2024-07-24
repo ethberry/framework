@@ -1,27 +1,28 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    ERC721_MYSTERYBOX_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC721_MYSTERYBOX_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC721_MYSTERYBOX_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
+    populate(
+      process.env as any,
+      {
+        ERC721_MYSTERYBOX_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC721_MYSTERYBOX_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC721_MYSTERYBOX_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
 
     const currentDateTime = new Date().toISOString();
     const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR;

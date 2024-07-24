@@ -1,26 +1,27 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    VESTING_ADDR: Wallet.createRandom().address.toLowerCase(),
-    VESTING_GRADED_ADDR: Wallet.createRandom().address.toLowerCase(),
-    VESTING_CLIFF_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
+    populate(
+      process.env as any,
+      {
+        VESTING_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VESTING_GRADED_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VESTING_CLIFF_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
 
     const currentDateTime = new Date().toISOString();
     const vestingAddress = process.env.VESTING_ADDR;

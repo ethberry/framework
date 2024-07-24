@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
@@ -7,22 +8,22 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    ERC1155_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC1155_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC1155_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC1155_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
+    populate(
+      process.env as any,
+      {
+        ERC1155_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
 
     const currentDateTime = new Date().toISOString();
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR;

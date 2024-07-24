@@ -7,11 +7,15 @@ export interface IOpenSeaMetadataAttribute {
 
 // https://docs.opensea.io/docs/metadata-standards
 export interface IOpenSeaTokenMetadata {
-  name: string;
-  description: string;
   image: string;
+  image_data?: string;
   external_url: string;
+  description: string;
+  name: string;
   attributes?: Array<IOpenSeaMetadataAttribute>;
+  background_color?: string;
+  animation_url?: string;
+  youtube_url?: string;
 }
 
 // https://docs.opensea.io/docs/contract-level-metadata

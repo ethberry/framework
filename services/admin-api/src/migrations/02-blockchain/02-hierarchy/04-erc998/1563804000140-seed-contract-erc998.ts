@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
@@ -7,29 +8,29 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    ERC998_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_DISCRETE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_RANDOM_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_GENES_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_RENTABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_OWNER_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_OWNER_ERC1155_ADDR: Wallet.createRandom().address.toLowerCase(),
-    ERC998_OWNER_ERC1155_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
+
+    populate(
+      process.env as any,
+      {
+        ERC998_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_DISCRETE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_RANDOM_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_GENES_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_RENTABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC1155_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC1155_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
 
     const currentDateTime = new Date().toISOString();
     const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR;
