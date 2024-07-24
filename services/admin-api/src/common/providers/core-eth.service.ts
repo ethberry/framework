@@ -4,11 +4,11 @@ import { ConfigService } from "@nestjs/config";
 import { RmqProviderType } from "@framework/types";
 
 export const coreEthServiceProviderBesu = {
-  provide: RmqProviderType.CORE_ETH_SERVICE,
+  provide: RmqProviderType.CORE_ETH_SERVICE_GEMUNION,
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueueLogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
+    const rmqQueueLogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth_gemunion");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {

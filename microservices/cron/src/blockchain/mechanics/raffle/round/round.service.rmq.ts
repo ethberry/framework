@@ -29,7 +29,7 @@ export class RaffleRoundServiceRmq {
     const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
     const rmqQueueEthName = this.configService.get<string>(
       `RMQ_QUEUE_CORE_ETH_${networkName}`,
-      `CORE_ETH_${networkName}`,
+      `CORE_ETH_${networkName}`.toLowerCase(),
     );
 
     return ClientProxyFactory.create({

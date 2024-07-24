@@ -29,7 +29,7 @@ export class LotteryRoundServiceRmq {
     const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
     const rmqQueueEthName = this.configService.get<string>(
       `RMQ_QUEUE_CORE_ETH_${networkName}`,
-      `CORE_ETH_${networkName}`,
+      `CORE_ETH_${networkName}`.toLowerCase(),
     );
 
     return ClientProxyFactory.create({
@@ -49,25 +49,22 @@ export class LotteryRoundServiceRmq {
       contractModule: ModuleType.LOTTERY,
       contractStatus: ContractStatus.ACTIVE,
       isPaused: false,
-      contractType: IsNull(), // ?
+      contractType: IsNull(), // Not lottery ticket
       parameters: Not(JsonContains({ schedule: IsNull() })),
     });
 
-    lotteryEntities.map(lottery => {
-      return Object.values(CronExpression).includes(lottery.parameters.schedule as CronExpression)
-        ? this.updateOrCreateRoundCronJob(
-            {
-              address: lottery.address,
-              schedule: lottery.parameters.schedule as CronExpression,
-            },
-            lottery.chainId,
-          )
-        : void 0;
+    lotteryEntities.forEach(lotteryEntity => {
+      this.updateOrCreateRoundCronJob({
+        address: lotteryEntity.address,
+        chainId: lotteryEntity.chainId,
+        schedule: lotteryEntity.parameters.schedule as CronExpression,
+      });
     });
   }
 
   public async updateSchedule(dto: ILotteryScheduleUpdateRmq): Promise<void> {
-    const lotteryEntity = await this.contractService.findOne({ address: dto.address });
+    const { address, chainId, schedule } = dto;
+    const lotteryEntity = await this.contractService.findOne({ address, chainId });
 
     if (!lotteryEntity) {
       throw new NotFoundException("contractNotFound");
@@ -76,28 +73,30 @@ export class LotteryRoundServiceRmq {
     Object.assign(
       lotteryEntity.parameters,
       Object.assign(lotteryEntity.parameters, {
-        schedule: dto.schedule,
+        schedule,
       }),
     );
 
     await lotteryEntity.save();
 
-    this.updateOrCreateRoundCronJob(dto, lotteryEntity.chainId);
+    this.updateOrCreateRoundCronJob(dto);
   }
 
-  public updateOrCreateRoundCronJob(dto: ILotteryScheduleUpdateRmq, chainId: number): void {
+  public updateOrCreateRoundCronJob(dto: ILotteryScheduleUpdateRmq): void {
+    const { address, chainId, schedule } = dto;
     try {
-      this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.address}`);
+      this.schedulerRegistry.deleteCronJob(`lotteryRound_${address}@${chainId}`);
     } catch (e) {
+      // NO_SCHEDULER_FOUND
       this.loggerService.error(e, LotteryRoundServiceRmq.name);
     } finally {
-      const job = new CronJob(dto.schedule, () => {
+      const job = new CronJob(schedule as CronExpression, () => {
         const clientProxy = this.getClientProxyForChain(chainId);
         clientProxy.emit(CoreEthType.START_LOTTERY_ROUND, dto);
       });
-      this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
+      this.schedulerRegistry.addCronJob(`lotteryRound_${address}@${chainId}`, job);
       job.start();
-      this.loggerService.log(JSON.stringify(dto, null, "\t"), LotteryRoundServiceRmq.name);
+      this.loggerService.log(`Updated cron schedule for lottery ${address}@${chainId}`, LotteryRoundServiceRmq.name);
     }
   }
 }

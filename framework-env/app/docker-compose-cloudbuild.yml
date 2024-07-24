@@ -38,9 +38,13 @@ services:
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
       # RMQ-CORE-ETH
-      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH_GEMUNION: "${RMQ_QUEUE_CORE_ETH_GEMUNION}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM: "${RMQ_QUEUE_CORE_ETH_ETHEREUM}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA: "${RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA}"
       RMQ_QUEUE_CORE_ETH_BINANCE: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
       RMQ_QUEUE_CORE_ETH_BINANCE_TEST: "${RMQ_QUEUE_CORE_ETH_BINANCE_TEST}"
+      RMQ_QUEUE_CORE_ETH_POLYGON: "${RMQ_QUEUE_CORE_ETH_POLYGON}"
+      RMQ_QUEUE_CORE_ETH_POLYGON_AMOY: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
       # FE
       ADMIN_FE_URL: "${ADMIN_FE_URL}"
       MARKET_FE_URL: "${MARKET_FE_URL}"
@@ -170,7 +174,13 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
-      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH_GEMUNION: "${RMQ_QUEUE_CORE_ETH_GEMUNION}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM: "${RMQ_QUEUE_CORE_ETH_ETHEREUM}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA: "${RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA}"
+      RMQ_QUEUE_CORE_ETH_BINANCE: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
+      RMQ_QUEUE_CORE_ETH_BINANCE_TEST: "${RMQ_QUEUE_CORE_ETH_BINANCE_TEST}"
+      RMQ_QUEUE_CORE_ETH_POLYGON: "${RMQ_QUEUE_CORE_ETH_POLYGON}"
+      RMQ_QUEUE_CORE_ETH_POLYGON_AMOY: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
       # FE
       OFFICE_FE_URL: "${OFFICE_FE_URL}"
       MARKET_FE_URL: "${MARKET_FE_URL}"
@@ -231,7 +241,7 @@ services:
       RMQ_URL: "${RMQ_URL_ADMIN}"
       RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
-      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_GEMUNION}"
       # FE
       FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
@@ -399,53 +409,7 @@ services:
     ports:
       - "${PORT_RPC_API_POLYGON}:${PORT_RPC_API_POLYGON}"
 
-  #  core-eth-mumbai:
-  #    container_name: core-eth-mumbai
-  #    image: gcr.io/halogen-framing-335807/framework-img:latest
-  #    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
-  #    environment:
-  #      # common
-  #      APP_NAME: "core-eth-mumbai-${NODE_ENV}"
-  #      BASE_MODE: "${BASE_MODE}"
-  #      NODE_ENV: "${NODE_ENV}"
-  #      HOST: "${HOST}"
-  #      PORT: "${PORT_RPC_API_MUMBAI}"
-  #      # admin api
-  #      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
-  #      # GEMUNION
-  #      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
-  #      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
-  #      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
-  #      # RMQ
-  #      RMQ_URL: "${RMQ_URL_ADMIN}"
-  #      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
-  #      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
-  #      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_MUMBAI}"
-  #      # REDIS
-  #      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
-  #      # LOGDNA
-  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-  #      # BLOCKCHAIN
-  #      CHAIN_ID: "${CHAIN_ID_MUMBAI}"
-  #      ACCOUNT: "${ACCOUNT}"
-  #      PRIVATE_KEY: "${PRIVATE_KEY}"
-  #      JSON_RPC_ADDR: "${JSON_RPC_ADDR_POLYGON_AMOY}"
-  #      LATENCY: "${LATENCY_MUMBAI}"
-  #      CRON_SCHEDULE: "${CRON_SCHEDULE_MUMBAI}"
-  #      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_MUMBAI}"
-  #      STARTING_BLOCK: "${STARTING_MUMBAI_BLOCK}"
-  #      # Chain-Link
-  #      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_MUMBAI}"
-  #      # Contracts
-  #    logging:
-  #      driver: "json-file"
-  #      options:
-  #        max-file: "5"   # number of files or file count
-  #        max-size: "100m" # file size
-  #    ports:
-  #      - "${PORT_RPC_API_MUMBAI}:${PORT_RPC_API_MUMBAI}"
-
-  #  core-eth-amoy:
+#  core-eth-amoy:
 #    container_name: core-eth-amoy
 #    image: gcr.io/halogen-framing-335807/framework-img:latest
 #    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
@@ -466,7 +430,7 @@ services:
 #      RMQ_URL: "${RMQ_URL_ADMIN}"
 #      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
 #      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
-#      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_AMOY}"
+#      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
 #      # REDIS
 #      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
 #      # LOGDNA
@@ -582,8 +546,13 @@ services:
       # RMQ
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_CRON: "${RMQ_QUEUE_CRON}"
-      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH}"
+      RMQ_QUEUE_CORE_ETH_GEMUNION: "${RMQ_QUEUE_CORE_ETH_GEMUNION}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM: "${RMQ_QUEUE_CORE_ETH_ETHEREUM}"
+      RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA: "${RMQ_QUEUE_CORE_ETH_ETHEREUM_SEPOLIA}"
       RMQ_QUEUE_CORE_ETH_BINANCE: "${RMQ_QUEUE_CORE_ETH_BINANCE}"
+      RMQ_QUEUE_CORE_ETH_BINANCE_TEST: "${RMQ_QUEUE_CORE_ETH_BINANCE_TEST}"
+      RMQ_QUEUE_CORE_ETH_POLYGON: "${RMQ_QUEUE_CORE_ETH_POLYGON}"
+      RMQ_QUEUE_CORE_ETH_POLYGON_AMOY: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
       # THROTTLE
       THROTTLE_TTL: "${THROTTLE_TTL}"
       THROTTLE_LIMIT: "${THROTTLE_LIMIT}"

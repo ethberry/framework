@@ -22,4 +22,7 @@ export enum GemunionSupportedChains {
 
   OPTIMISM = 10,
   OPTIMISM_SEPOLIA = 11155420,
+
+  IMMUTABLE = 13371,
+  IMMUTABLE_TEST = 13473,
 }

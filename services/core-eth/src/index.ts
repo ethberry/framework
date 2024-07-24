@@ -31,7 +31,7 @@ async function bootstrap(): Promise<void> {
   const configService = app.get(ConfigService);
   const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
+  const rmqQueueEth = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth_gemunion");
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
