@@ -7,7 +7,7 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/draft-js-utils": "1.2.44",
+    "@gemunion/draft-js-utils": "1.2.46",
     "@gemunion/nest-js-guards": "3.1.18",
     "@gemunion/nest-js-module-cache": "3.0.39",
     "@gemunion/nest-js-module-helmet": "4.0.46",
