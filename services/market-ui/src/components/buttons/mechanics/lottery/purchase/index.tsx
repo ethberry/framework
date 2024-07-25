@@ -6,6 +6,7 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { bool36ArrayToByte32 } from "@gemunion/traits-v5";
@@ -25,7 +26,7 @@ export interface ILotteryPurchaseButtonProps {
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const { clearForm, ticketNumbers, round, disabled, className, variant = ListActionVariant.button } = props;
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

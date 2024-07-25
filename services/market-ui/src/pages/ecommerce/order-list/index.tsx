@@ -7,7 +7,7 @@ import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { OrderItem } from "./item";

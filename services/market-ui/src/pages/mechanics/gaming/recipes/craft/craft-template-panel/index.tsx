@@ -9,6 +9,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { formatItem, getEthPrice } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
 import type { IContract, ICraft, ITemplate } from "@framework/types";
@@ -27,7 +28,7 @@ export interface ICraftTemplatePanelProps {
 export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   const { template } = props;
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const [rows, setRows] = useState<ICraft[]>([]);
 

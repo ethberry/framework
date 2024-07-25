@@ -4,6 +4,7 @@ import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { getEthPrice, convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -22,7 +23,7 @@ interface ILootBoxBuyButtonProps {
 export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
   const { className, disabled, lootBox, variant = ListActionVariant.button } = props;
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

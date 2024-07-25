@@ -7,7 +7,7 @@ import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IMerge, IMergeSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 import { FormRefresher } from "../../../../../../components/forms/form-refresher";
 import { MergeItem } from "./item";

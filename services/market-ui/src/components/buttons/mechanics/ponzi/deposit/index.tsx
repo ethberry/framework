@@ -5,6 +5,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
@@ -21,7 +22,7 @@ export interface IPonziDepositButtonProps {
 
 export const PonziDepositButton: FC<IPonziDepositButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaDeposit = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract.address, PonziDepositABI, web3Context.provider?.getSigner());

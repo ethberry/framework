@@ -4,7 +4,7 @@ import { Box, Grid } from "@mui/material";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import type { IMerge } from "@framework/types";
 
 import { MergeItemPanel } from "../merge-item-panel";

@@ -7,7 +7,8 @@ import type { IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import { MetaMaskIcon } from "@gemunion/mui-icons";
-import { TConnectors, useAppSelector } from "@gemunion/redux";
+import { useAppSelector } from "@gemunion/redux";
+import { TConnectors, walletSelectors } from "@gemunion/provider-wallet";
 
 interface IErc20AddToMetamaskButtonProps {
   token: IToken;
@@ -15,7 +16,7 @@ interface IErc20AddToMetamaskButtonProps {
 
 export const Erc20AddToMetamaskButton: FC<IErc20AddToMetamaskButtonProps> = props => {
   const { token } = props;
-  const { activeConnector } = useAppSelector(state => state.wallet);
+  const activeConnector = useAppSelector(walletSelectors.activeConnectorSelector);
 
   const metaFnAdd = useMetamaskValue((web3Context: Web3ContextType) => {
     return web3Context.connector?.provider?.request({

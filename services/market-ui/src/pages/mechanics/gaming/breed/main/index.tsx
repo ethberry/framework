@@ -7,6 +7,7 @@ import { BigNumber, constants, Contract, utils } from "ethers";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -44,7 +45,7 @@ export interface IBreedDto {
 }
 
 export const Breed: FC = () => {
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

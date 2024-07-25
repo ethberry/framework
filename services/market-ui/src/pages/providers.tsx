@@ -3,13 +3,14 @@ import { SnackbarProvider } from "notistack";
 
 import { ApiProviderFirebase } from "@gemunion/provider-api-firebase";
 import { UserProviderFirebase } from "@gemunion/provider-user-firebase";
-import { ThemeProvider } from "@gemunion/provider-theme";
+import { collectionSlice } from "@gemunion/provider-collection";
+import { ThemeProvider, layoutSlice } from "@gemunion/provider-theme";
 import { LicenseProvider } from "@gemunion/provider-license";
-import { LocalizationProvider } from "@gemunion/provider-localization";
+import { LocalizationProvider, localizationSlice } from "@gemunion/provider-localization";
 import { PopupProvider } from "@gemunion/provider-popup";
-import { WalletProvider } from "@gemunion/provider-wallet";
+import { WalletProvider, walletSlice } from "@gemunion/provider-wallet";
 import { PickerProvider } from "@gemunion/provider-picker";
-import { ReduxProvider, store } from "@gemunion/redux";
+import { ReduxProvider, createStore } from "@gemunion/redux";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 
@@ -19,7 +20,7 @@ import { Signal } from "../components/signal";
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
   return (
-    <ReduxProvider store={store}>
+    <ReduxProvider store={createStore([layoutSlice, localizationSlice, walletSlice, collectionSlice])}>
       <ApiProviderFirebase baseUrl={process.env.BE_URL} storageName={ns}>
         <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
           <UserProviderFirebase>
