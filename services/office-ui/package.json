@@ -45,6 +45,7 @@
     "@gemunion/mui-scanner": "1.3.34",
     "@gemunion/popup": "1.0.58",
     "@gemunion/provider-api-firebase": "2.0.82",
+    "@gemunion/provider-collection": "0.0.2",
     "@gemunion/provider-coingecko": "2.0.90",
     "@gemunion/provider-license": "3.0.52",
     "@gemunion/provider-localization": "4.0.33",

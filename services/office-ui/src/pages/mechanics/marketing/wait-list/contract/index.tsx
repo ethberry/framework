@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";

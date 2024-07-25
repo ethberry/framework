@@ -8,7 +8,7 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";

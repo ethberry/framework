@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { useUser } from "@gemunion/provider-user";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
