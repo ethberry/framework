@@ -38,7 +38,7 @@
     "@gemunion/nest-js-utils": "4.2.11",
     "@gemunion/nest-js-validators": "4.0.42",
     "@gemunion/traits-v6": "1.0.18",
-    "@gemunion/types-blockchain": "1.2.14",
+    "@gemunion/types-blockchain": "1.3.0",
     "@gemunion/types-collection": "1.5.17",
     "@gemunion/types-jwt": "0.4.5",
     "@liaoliaots/nestjs-redis": "9.0.5",
