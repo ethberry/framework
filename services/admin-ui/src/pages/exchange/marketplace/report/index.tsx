@@ -12,7 +12,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall, useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatItem } from "@framework/exchange";

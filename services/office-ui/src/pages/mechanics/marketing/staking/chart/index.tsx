@@ -10,7 +10,7 @@ import { StyledEmptyWrapper } from "@framework/styled";
 import type { IStakingChartSearchDto, IToken, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { useUser } from "@gemunion/provider-user";
 import { InputType } from "@gemunion/types-collection";
 

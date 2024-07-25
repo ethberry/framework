@@ -6,7 +6,8 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IPhoto } from "@framework/types";
 import { PhotoStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall, useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 export const Photo: FC = () => {
   const { rows, fetch, isLoading } = useCollection<IPhoto>({

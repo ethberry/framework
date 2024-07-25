@@ -8,7 +8,7 @@ import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyAddress } from "../../../../../components/common/interfaces";

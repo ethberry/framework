@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { ILotteryToken, ILotteryTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 
 import { LotteryRewardButton } from "../../../../../components/buttons";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";

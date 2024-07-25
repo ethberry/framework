@@ -10,7 +10,7 @@ import { StyledEmptyWrapper } from "@framework/styled";
 import type { IPonziChartSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { InputType } from "@gemunion/types-collection";
 
 import { PonziChartSearchForm } from "./form";

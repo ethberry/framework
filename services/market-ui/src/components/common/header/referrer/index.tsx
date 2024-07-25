@@ -4,13 +4,14 @@ import { Link } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { constants } from "ethers";
 
-import { useAppDispatch, useAppSelector, settingsActions } from "@gemunion/redux";
+import { useAppDispatch, useAppSelector } from "@gemunion/redux";
+import { walletSelectors, walletActions } from "@gemunion/provider-wallet";
 
 export const Referrer: FC = () => {
   const [searchParams] = useSearchParams();
 
-  const { referrer } = useAppSelector(state => state.settings);
-  const { setReferrer } = settingsActions;
+  const referrer = useAppSelector<string>(walletSelectors.referrerSelector);
+  const { setReferrer } = walletActions;
   const dispatch = useAppDispatch();
 
   const handleRemoveReferrer = () => {

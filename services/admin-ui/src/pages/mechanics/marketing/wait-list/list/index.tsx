@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";

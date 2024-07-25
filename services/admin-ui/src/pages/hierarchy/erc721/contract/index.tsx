@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { BusinessType, ContractStatus, Erc721ContractFeatures } from "@framework/types";
 import type { IContract, IContractSearchDto } from "@framework/types";

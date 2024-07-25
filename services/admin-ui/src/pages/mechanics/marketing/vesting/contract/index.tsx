@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";

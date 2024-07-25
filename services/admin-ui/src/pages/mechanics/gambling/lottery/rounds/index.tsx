@@ -4,7 +4,7 @@ import { Visibility } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { ILotteryRound } from "@framework/types";

@@ -8,7 +8,7 @@ import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralTree } from "@framework/types";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 import type { IReferralTreeSearchDto } from "./form";
 import { ReferralTreeSearchForm } from "./form";

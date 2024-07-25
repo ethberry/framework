@@ -10,6 +10,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { formatItem } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
 import type { IContract, IDismantle, IToken } from "@framework/types";
@@ -30,7 +31,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const { token } = props;
 
   const navigate = useNavigate();
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
   const [rows, setRows] = useState<IDismantle[]>([]);
 
   const { fn: getDismantleFn, isLoading } = useApiCall(

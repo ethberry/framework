@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IRaffleRound, IRaffleToken, IRaffleTicketTokenSearchDto } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 
 import { RaffleRewardButton } from "../../../../../components/buttons";
 import { RaffleTokenSearchForm } from "./form";

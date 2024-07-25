@@ -7,7 +7,7 @@ import * as Plot from "@observablehq/plot";
 import { utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { InputType } from "@gemunion/types-collection";
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IStakingChartSearchDto, IToken } from "@framework/types";

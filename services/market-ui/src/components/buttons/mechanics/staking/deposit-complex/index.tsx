@@ -9,6 +9,7 @@ import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 
 import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 
@@ -25,7 +26,7 @@ export interface IStakingDepositComplexButtonProps {
 export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> = props => {
   const { className, disabled, rule, variant } = props;
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
   // !!! tokenIds[] must include all deposit tokens !!!

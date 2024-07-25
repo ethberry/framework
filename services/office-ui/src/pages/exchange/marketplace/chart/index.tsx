@@ -9,7 +9,7 @@ import { utils } from "ethers";
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IMarketplaceReportSearchDto, IToken, IUser } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { useUser } from "@gemunion/provider-user";
 
 import { MarketplaceChartSearchForm } from "./form";

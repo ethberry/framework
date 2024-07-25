@@ -3,6 +3,7 @@ import { Sell } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
@@ -22,7 +23,7 @@ interface IOpenSeaSellButtonProps {
 
 export const OpenSeaSellButton: FC<IOpenSeaSellButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
   const { account, chainId = 0 } = useWeb3React();
 
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);

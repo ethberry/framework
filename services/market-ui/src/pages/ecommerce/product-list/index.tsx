@@ -7,7 +7,7 @@ import { stringify } from "qs";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
