@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 // import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";

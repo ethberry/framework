@@ -9,7 +9,8 @@ import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { useAppDispatch, settingsActions } from "@gemunion/redux";
+import { useAppDispatch } from "@gemunion/redux";
+import { setLanguage } from "@gemunion/provider-localization";
 import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 
@@ -23,7 +24,6 @@ export const ProfileGeneral: FC<ITabPanelProps> = props => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const dispatch = useAppDispatch();
-  const { setLanguage } = settingsActions;
 
   const { fn } = useApiCall((_api, values: Partial<IUser>) => {
     return user.setProfile(values).then(() => {

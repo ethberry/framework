@@ -8,7 +8,8 @@ import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall, useCollection } from "@gemunion/react-hooks";
+import { useApiCall } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 // import { formatEther } from "@framework/exchange";
