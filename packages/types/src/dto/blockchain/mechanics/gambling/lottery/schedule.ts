@@ -6,5 +6,6 @@ export interface ILotteryScheduleUpdateDto {
 
 export interface ILotteryScheduleUpdateRmq {
   address: string;
+  chainId: number;
   schedule: CronExpression;
 }

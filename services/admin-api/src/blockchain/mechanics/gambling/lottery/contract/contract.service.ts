@@ -46,6 +46,7 @@ export class LotteryContractService extends ContractService {
     return this.cronServiceProxy
       .emit(CronType.SCHEDULE_LOTTERY_ROUND, {
         address: lotteryEntity.address,
+        chainId: lotteryEntity.chainId,
         schedule: dto.schedule,
       })
       .toPromise();

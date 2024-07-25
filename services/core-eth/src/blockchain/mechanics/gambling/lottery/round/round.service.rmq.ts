@@ -20,8 +20,9 @@ export class LotteryRoundServiceRmq {
   ) {}
 
   public async startRound(dto: ILotteryScheduleUpdateRmq): Promise<void> {
-    const contract = new Contract(dto.address, LotterySol.abi, this.signer);
-    const currentRound = await getCurrentLotteryRound(dto.address, LotterySol.abi, this.jsonRpcProvider);
+    const { address } = dto;
+    const contract = new Contract(address, LotterySol.abi, this.signer);
+    const currentRound = await getCurrentLotteryRound(address, LotterySol.abi, this.jsonRpcProvider);
     this.loggerService.log(JSON.stringify(currentRound, null, "\t"), LotteryRoundServiceRmq.name);
 
     const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;
