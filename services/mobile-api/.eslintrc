@@ -6,18 +6,5 @@
   "parserOptions": {
     "project": "./tsconfig.test.json"
   },
-  "root": true,
-  "rules": {
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/test/**/*.ts",
-          "**/*.seed.service.ts",
-          "**/*.seed.module.ts",
-          "**/*.spec.ts"
-        ]
-      }
-    ]
-  }
+  "root": true
 }

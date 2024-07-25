@@ -17,5 +17,5 @@ export const AmountInput: FC = () => {
     );
   }
 
-  return <EthInput name="amount" units={decimals} symbol="" />;
+  return <EthInput name="amount" units={decimals} symbol="" required />;
 };

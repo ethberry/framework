@@ -3,12 +3,12 @@ import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AddressOptionalDto, ChainIdDto } from "@gemunion/nest-js-validators";
+import { AddressDto, ChainIdDto } from "@gemunion/nest-js-validators";
 import { ListenerType } from "@framework/types";
 
 import { IEthLoggerInOutDto } from "../interfaces";
 
-export class EthLoggerInOutDto extends Mixin(AddressOptionalDto, ChainIdDto) implements IEthLoggerInOutDto {
+export class EthLoggerInOutDto extends Mixin(AddressDto, ChainIdDto) implements IEthLoggerInOutDto {
   @ApiProperty({
     enum: ListenerType,
   })

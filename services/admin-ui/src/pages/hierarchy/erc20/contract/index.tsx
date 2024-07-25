@@ -33,6 +33,7 @@ import { ContractSearchForm } from "../../../../components/forms/contract-search
 import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { Erc20ContractEditDialog } from "./edit";
 
+// comment for recovery code
 export const Erc20Contract: FC = () => {
   const {
     rows,

@@ -1,21 +1,22 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
-Object.assign(
-  process.env,
-  {
-    DISPENSER_ADDR: Wallet.createRandom().address.toLowerCase(),
-    DISPENSER_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
-  },
-  process.env,
-);
-
 export class SeedContractDispenserAt1692165706800 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    populate(
+      process.env as any,
+      {
+        DISPENSER_ADDR: Wallet.createRandom().address.toLowerCase(),
+        DISPENSER_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const dispenserAddr = process.env.DISPENSER_ADDR;

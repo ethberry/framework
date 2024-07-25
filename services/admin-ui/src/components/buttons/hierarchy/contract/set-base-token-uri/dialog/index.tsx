@@ -28,7 +28,7 @@ export const BaseTokenURIEditDialog: FC<IBaseTokenURIEditDialogProps> = props =>
       disabled={false}
       {...rest}
     >
-      <TextInput name="baseTokenURI" />
+      <TextInput name="baseTokenURI" required />
     </FormDialog>
   );
 };

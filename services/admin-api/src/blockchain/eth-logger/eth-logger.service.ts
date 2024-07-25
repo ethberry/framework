@@ -1,36 +1,46 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { ClientProxyFactory, Transport } from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
 
-import { CoreEthType, RmqProviderType } from "@framework/types";
+import { CoreEthType, GemunionSupportedChains } from "@framework/types";
 
 import type { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class EthLoggerService {
-  constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
-    @Inject(RmqProviderType.CORE_ETH_SERVICE)
-    private readonly coreEthServiceBesuProxy: ClientProxy,
-    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE)
-    private readonly coreEthServiceBinanceProxy: ClientProxy,
-    @Inject(RmqProviderType.CORE_ETH_SERVICE_BINANCE_TEST)
-    private readonly coreEthServiceBinanceTestProxy: ClientProxy,
-  ) {}
+  constructor(private readonly configService: ConfigService) {}
+
+  private getClientProxyForChain(chainId: number) {
+    const networkName = Object.keys(GemunionSupportedChains)[Object.values(GemunionSupportedChains).indexOf(chainId)];
+    if (!networkName) {
+      throw new NotFoundException("networkNotFound");
+    }
+
+    const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+    const rmqQueueEthName = this.configService.get<string>(
+      `RMQ_QUEUE_CORE_ETH_${networkName}`,
+      `CORE_ETH_${networkName}`.toLowerCase(),
+    );
+
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [rmqUrl],
+        queue: rmqQueueEthName,
+        queueOptions: {
+          durabl: false,
+        },
+      },
+    });
+  }
 
   public async addListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return dto.chainId === 56
-      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
-      : dto.chainId === 97
-        ? this.coreEthServiceBinanceTestProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise()
-        : this.coreEthServiceBesuProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
+    const clientProxy = this.getClientProxyForChain(dto.chainId);
+    return clientProxy.emit(CoreEthType.ADD_LISTENER, dto).toPromise();
   }
 
   public async removeListener(dto: IEthLoggerInOutDto): Promise<any> {
-    return dto.chainId === 56
-      ? this.coreEthServiceBinanceProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
-      : dto.chainId === 97
-        ? this.coreEthServiceBinanceTestProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise()
-        : this.coreEthServiceBesuProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
+    const clientProxy = this.getClientProxyForChain(dto.chainId);
+    return clientProxy.emit(CoreEthType.REMOVE_LISTENER, dto).toPromise();
   }
 }
