@@ -1,7 +1,8 @@
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
 
-import { Log } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
@@ -22,6 +23,7 @@ import {
 import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -31,6 +33,7 @@ export class AccessControlServiceEth {
     private readonly accessControlService: AccessControlService,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
+    protected readonly configService: ConfigService,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGrantedEvent>, context: Log): Promise<void> {
@@ -60,13 +63,29 @@ export class AccessControlServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: contractEntity.merchant.wallet.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractManagerEntity = await this.contractService.findOne({
+      contractModule: ModuleType.CONTRACT_MANAGER,
+      chainId,
+    });
+    const exchnageEntity = await this.contractService.findOne({
+      contractModule: ModuleType.EXCHANGE,
+      chainId,
+    });
+
+    if (
+      account.toLowerCase() !== contractManagerEntity!.address.toLowerCase() &&
+      account.toLowerCase() !== exchnageEntity!.address.toLowerCase() &&
+      account.toLowerCase() !== ZeroAddress
+    ) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: contractEntity.merchant.wallet.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async roleRevoked(event: ILogEvent<IAccessControlRoleRevokedEvent>, context: Log): Promise<void> {
@@ -112,17 +131,36 @@ export class AccessControlServiceEth {
       }
     }
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: contractEntity.merchant.wallet.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractManagerEntity = await this.contractService.findOne({
+      contractModule: ModuleType.CONTRACT_MANAGER,
+      chainId,
+    });
+    const exchnageEntity = await this.contractService.findOne({
+      contractModule: ModuleType.EXCHANGE,
+      chainId,
+    });
+
+    if (
+      account.toLowerCase() !== contractManagerEntity!.address.toLowerCase() &&
+      account.toLowerCase() !== exchnageEntity!.address.toLowerCase() &&
+      account.toLowerCase() !== ZeroAddress
+    ) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: contractEntity.merchant.wallet.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {
-    const { name } = event;
+    const {
+      name,
+      args: { previousAdminRole },
+    } = event;
     const { address, transactionHash } = context;
 
     const contractEntity = await this.contractService.findOne(
@@ -136,13 +174,29 @@ export class AccessControlServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: contractEntity.merchant.wallet.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const contractManagerEntity = await this.contractService.findOne({
+      contractModule: ModuleType.CONTRACT_MANAGER,
+      chainId,
+    });
+    const exchnageEntity = await this.contractService.findOne({
+      contractModule: ModuleType.EXCHANGE,
+      chainId,
+    });
+
+    if (
+      previousAdminRole.toLowerCase() !== contractManagerEntity!.address.toLowerCase() &&
+      previousAdminRole.toLowerCase() !== exchnageEntity!.address.toLowerCase() &&
+      previousAdminRole.toLowerCase() !== ZeroAddress
+    ) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: contractEntity.merchant.wallet.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async ownershipTransferred(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
