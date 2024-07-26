@@ -23,6 +23,11 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
     const linkAddr = process.env.LINK_ADDR;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
+    const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
+    const fromBlockBinanceTest = process.env.STARTING_BLOCK_BINANCE_TEST || 1;
+    const fromBlockPolygon = process.env.STARTING_BLOCK_POLYGON || 1;
+    const fromBlockPolygonAmoy = process.env.STARTING_BLOCK_POLYGON_AMOY || 1;
+    const fromBlockEthereum = process.env.STARTING_BLOCK_ETHEREUM || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -76,13 +81,13 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: "0x404460c6a5ede2d891e8297795264fde62adbb75",
+          linkAddress: "0x404460c6a5ede2d891e829779526fde62adbb75",
         })}',
         'ACTIVE',
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlock}',
+        '${fromBlockBinance}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -103,7 +108,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlock}',
+        '${fromBlockEthereum}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -124,7 +129,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlock}',
+        '${fromBlockPolygon}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -145,7 +150,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlock}',
+        '${fromBlockBinanceTest}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -166,7 +171,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         null,
         '{}',
         'CHAIN_LINK',
-        '${fromBlock}',
+        '${fromBlockPolygonAmoy}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
