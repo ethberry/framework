@@ -1,16 +1,8 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "uint64",
-        "name": "subId",
-        "type": "uint64"
-      },
-      {
-        "internalType": "address",
-        "name": "consumer",
-        "type": "address"
-      }
+      { "internalType": "uint64", "name": "subId", "type": "uint64" },
+      { "internalType": "address", "name": "consumer", "type": "address" }
     ],
     "name": "addConsumer",
     "outputs": [],

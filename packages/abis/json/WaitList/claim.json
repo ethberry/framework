@@ -1,16 +1,8 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "bytes32[]",
-        "name": "proof",
-        "type": "bytes32[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "externalId",
-        "type": "uint256"
-      }
+      { "internalType": "bytes32[]", "name": "proof", "type": "bytes32[]" },
+      { "internalType": "uint256", "name": "externalId", "type": "uint256" }
     ],
     "name": "claim",
     "outputs": [],

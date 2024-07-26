@@ -5,26 +5,10 @@
         "components": [
           {
             "components": [
-              {
-                "internalType": "enum TokenType",
-                "name": "tokenType",
-                "type": "uint8"
-              },
-              {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              }
+              { "internalType": "enum TokenType", "name": "tokenType", "type": "uint8" },
+              { "internalType": "address", "name": "token", "type": "address" },
+              { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
             ],
             "internalType": "struct Asset[]",
             "name": "deposit",
@@ -32,26 +16,10 @@
           },
           {
             "components": [
-              {
-                "internalType": "enum TokenType",
-                "name": "tokenType",
-                "type": "uint8"
-              },
-              {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              }
+              { "internalType": "enum TokenType", "name": "tokenType", "type": "uint8" },
+              { "internalType": "address", "name": "token", "type": "address" },
+              { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
             ],
             "internalType": "struct Asset[]",
             "name": "reward",
@@ -59,26 +27,10 @@
           },
           {
             "components": [
-              {
-                "internalType": "enum TokenType",
-                "name": "tokenType",
-                "type": "uint8"
-              },
-              {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              }
+              { "internalType": "enum TokenType", "name": "tokenType", "type": "uint8" },
+              { "internalType": "address", "name": "token", "type": "address" },
+              { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
             ],
             "internalType": "struct Asset[][]",
             "name": "content",
@@ -86,41 +38,17 @@
           },
           {
             "components": [
-              {
-                "internalType": "uint256",
-                "name": "penalty",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "period",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "maxStake",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "recurrent",
-                "type": "bool"
-              },
-              {
-                "internalType": "bool",
-                "name": "advance",
-                "type": "bool"
-              }
+              { "internalType": "uint256", "name": "penalty", "type": "uint256" },
+              { "internalType": "uint256", "name": "period", "type": "uint256" },
+              { "internalType": "uint256", "name": "maxStake", "type": "uint256" },
+              { "internalType": "bool", "name": "recurrent", "type": "bool" },
+              { "internalType": "bool", "name": "advance", "type": "bool" }
             ],
             "internalType": "struct IStaking.StakingTerms",
             "name": "terms",
             "type": "tuple"
           },
-          {
-            "internalType": "bool",
-            "name": "active",
-            "type": "bool"
-          }
+          { "internalType": "bool", "name": "active", "type": "bool" }
         ],
         "internalType": "struct IStaking.Rule[]",
         "name": "rules",
