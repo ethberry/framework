@@ -41,7 +41,7 @@ export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
       <TemplateAssetInput
         autoSelect
         multiple
-        prefix="item"
+        prefix="item *"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.RAFFLE] } }}
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
         forceAmount
