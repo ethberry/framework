@@ -13,7 +13,6 @@ import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RenounceRoleABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
-import { useCheckPermissions } from "../../../../../utils/use-check-permissions";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -28,10 +27,6 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
   const { account } = useWeb3React();
-
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { checkPermissions } = useCheckPermissions();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -59,14 +54,6 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   };
 
   useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address: data.address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
     if (account && open) {
       void fn().then((rows: Array<IAccessControl>) => {
         setRows(rows.filter(row => row.account === account));
@@ -96,7 +83,6 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                   message="form.buttons.delete"
                   dataTestId="AccessDeleteButton"
                   icon={Delete}
-                  disabled={!hasAccess}
                 />
               </ListActions>
             </StyledListItem>

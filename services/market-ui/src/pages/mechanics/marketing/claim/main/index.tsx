@@ -4,7 +4,7 @@ import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { formatItem } from "@framework/exchange";
 import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
@@ -25,7 +25,7 @@ export const Claim: FC = () => {
     handleChangePage,
     handleRefreshPage,
   } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: `/claim`,
+    baseUrl: "/claim",
     search: {
       claimStatus: [ClaimStatus.NEW],
       claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],

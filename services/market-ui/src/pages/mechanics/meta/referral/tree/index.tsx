@@ -10,9 +10,9 @@ import { enqueueSnackbar } from "notistack";
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors, useWallet } from "@gemunion/provider-wallet";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { useWallet } from "@gemunion/provider-wallet";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
 import { calculateDepth, emptyRefProgram, getRefLevelShare } from "../../../../../utils/referral";
@@ -38,7 +38,7 @@ export const ReferralTree: FC = () => {
   const clipboard = useClipboard();
   const { formatMessage } = useIntl();
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector<string>(walletSelectors.referrerSelector);
 
   const { isActive, account = "" } = useWeb3React();
 

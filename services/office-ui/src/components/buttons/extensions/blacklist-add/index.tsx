@@ -1,18 +1,18 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOn } from "@mui/icons-material";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import BlacklistABI from "@framework/abis/json/ERC1155Blacklist/blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import { shouldDisableByContractType } from "../../../utils";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IBlacklistButtonProps {
   className?: string;
@@ -32,11 +32,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleBlacklist = (): void => {
     setIsBlacklistDialogOpen(true);
@@ -57,17 +53,6 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
     });
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (!contractFeatures.includes(ContractFeatures.BLACKLIST)) {
     return null;
   }
@@ -80,7 +65,7 @@ export const BlacklistButton: FC<IBlacklistButtonProps> = props => {
         message="form.buttons.blacklist"
         className={className}
         dataTestId="BlacklistButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccountDialog

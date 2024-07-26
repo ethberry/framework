@@ -5,7 +5,7 @@ import { Filter1, Filter2, Filter3, Filter4, FilterList } from "@mui/icons-mater
 import { DataGrid, GridCellParams, useGridApiContext } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { InputType } from "@gemunion/types-collection";
 import { formatEther } from "@framework/exchange";

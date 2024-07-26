@@ -28,7 +28,7 @@ export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
       disabled={false}
       {...rest}
     >
-      <CurrencyInput name="royalty" symbol="%" />
+      <CurrencyInput name="royalty" symbol="%" required />
     </FormDialog>
   );
 };

@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import { StyledEmptyWrapper } from "@framework/styled";
 import { IAssetPromo } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 import { AssetPromoItem } from "./item";
 

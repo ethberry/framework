@@ -1,9 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, imagePath, ns, testChainId } from "@framework/constants";
+import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
@@ -12,11 +14,22 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        ERC1155_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC1155_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
-    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
-    const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;
-    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
-    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR;
+    const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR;
+    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

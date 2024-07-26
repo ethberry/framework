@@ -7,7 +7,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc721TokenViewDialog } from "../../../../hierarchy/erc721/token/view";

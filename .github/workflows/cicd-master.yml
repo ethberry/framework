@@ -27,6 +27,11 @@ jobs:
           --health-retries 5
 
     steps:
+      # SETUP NODE JS VERSION
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
       - name: checkout
         uses: actions/checkout@v4
         with:
@@ -69,8 +74,6 @@ jobs:
           PRIVATE_KEY3: ${{ secrets.PRIVATE_KEY }}
           GEMUNION_PRIVATE_KEY_STAGE: ${{ secrets.PRIVATE_KEY }}
           GEMUNION_PRIVATE_KEY_PROD: ${{ secrets.PRIVATE_KEY }}
-          RINKEBY_RPC_URL: 'http://127.0.0.1:8545/'
-          JSON_RPC_ADDR_GOERLY: 'http://127.0.0.1:8545/'
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
   cloudbuild-deploy:

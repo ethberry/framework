@@ -1,9 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, imagePath, ns, testChainId } from "@framework/constants";
+import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
@@ -12,18 +14,36 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        ERC998_SIMPLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_INACTIVE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_NEW_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_DISCRETE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_RANDOM_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_GENES_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_RENTABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC1155_ADDR: Wallet.createRandom().address.toLowerCase(),
+        ERC998_OWNER_ERC1155_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
-    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
-    const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
-    const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR || wallet;
-    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
-    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
-    const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
-    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
-    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR || wallet;
-    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
+    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR;
+    const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR;
+    const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR;
+    const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR;
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
+    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR;
+    const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR;
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
+    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress, ZeroHash } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,9 +11,9 @@ export class SeedEventHistoryErc721Erc1155CraftAt1687760533510 implements Migrat
       return;
     }
 
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR;
 
     const currentDateTime = new Date().toISOString();
 

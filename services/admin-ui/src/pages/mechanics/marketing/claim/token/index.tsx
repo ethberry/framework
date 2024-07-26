@@ -7,7 +7,7 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { cleanUpAsset, formatItem } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -43,16 +43,14 @@ export const ClaimToken: FC = () => {
     empty: {
       account: "",
       item: emptyToken,
-      claimType: ClaimType.TOKEN,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
-      claimStatus: [],
+      claimStatus: [ClaimStatus.NEW],
     },
-    filter: ({ item, claimType, account, endTimestamp }) => ({
+    filter: ({ item, account, endTimestamp }) => ({
       item: cleanUpAsset(item),
-      claimType,
       account,
       endTimestamp,
     }),

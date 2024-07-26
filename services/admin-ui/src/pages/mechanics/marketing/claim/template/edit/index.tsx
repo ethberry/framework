@@ -19,11 +19,10 @@ export interface IClaimEditDialogProps {
 export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, claimType, account, endTimestamp } = initialValues;
+  const { id, item, account, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
-    claimType,
     account,
     endTimestamp,
   };
@@ -35,16 +34,16 @@ export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId="ClaimEditDialog"
+      testId="ClaimTemplateEditDialog"
       {...rest}
     >
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <TemplateAssetInput
         autoSelect
         multiple
         prefix="item"
-        contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC998] }}
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.RAFFLE] } }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
         forceAmount
       />
       <DateTimeInput name="endTimestamp" format={"dd/LL/yyyy hh:mm a"} />

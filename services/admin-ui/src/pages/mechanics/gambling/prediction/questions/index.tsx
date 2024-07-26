@@ -7,7 +7,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";

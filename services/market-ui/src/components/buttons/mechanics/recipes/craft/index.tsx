@@ -4,6 +4,7 @@ import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import {
   convertDatabaseAssetToChainAsset,
@@ -27,7 +28,7 @@ interface ICraftButtonProps {
 export const CraftButton: FC<ICraftButtonProps> = props => {
   const { className, craft, disabled, variant = ListActionVariant.button } = props;
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithAllowance = useAllowance(
     async (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

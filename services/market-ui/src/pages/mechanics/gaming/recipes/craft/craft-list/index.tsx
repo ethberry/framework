@@ -8,7 +8,7 @@ import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TokenType } from "@gemunion/types-blockchain";
 

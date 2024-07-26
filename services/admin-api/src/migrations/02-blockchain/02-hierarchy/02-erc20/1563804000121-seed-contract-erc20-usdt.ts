@@ -1,16 +1,25 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, imagePath, testChainId } from "@framework/constants";
+import { imagePath, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    populate(
+      process.env as any,
+      {
+        USDT_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const chainId = process.env.CHAIN_ID || testChainId;
-    const usdtAddr = process.env.USDT_ADDR || wallet;
+    const usdtAddr = process.env.USDT_ADDR;
 
     const usdtImgUrl = `${imagePath}/usdt.png`;
 

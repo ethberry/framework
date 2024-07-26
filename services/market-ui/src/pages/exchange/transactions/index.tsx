@@ -17,7 +17,7 @@ import { stringify } from "qs";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { TxHashLink } from "@gemunion/mui-scanner";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import type { IEventHistory, IExchangeLendEvent } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 

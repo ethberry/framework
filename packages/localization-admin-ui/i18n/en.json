@@ -239,6 +239,7 @@
       "STATEHASH": "State Hash",
       "VESTING": "Vesting",
       "VESTING_VOTES": "Vesting + Votes",
+      "VOTES": "Votes",
       "WHITELIST": "Whitelist",
       "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking"
     },

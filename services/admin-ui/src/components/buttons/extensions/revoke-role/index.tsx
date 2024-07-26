@@ -1,14 +1,13 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { NoAccounts } from "@mui/icons-material";
-import { useWeb3React } from "@web3-react/core";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { ContractSecurity } from "@framework/types";
+import { AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlRevokeRoleDialog } from "./dialog";
-import { useCheckPermissions } from "../../../../utils/use-check-permissions";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRevokeRoleButtonProps {
   className?: string;
@@ -28,11 +27,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
 
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const { account = "" } = useWeb3React();
-
-  const { checkPermissions } = useCheckPermissions();
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const handleRevokeRole = (): void => {
     setIsRevokeRoleDialogOpen(true);
@@ -46,17 +41,6 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
     setIsRevokeRoleDialogOpen(false);
   };
 
-  useEffect(() => {
-    if (account) {
-      void checkPermissions({
-        account,
-        address,
-      }).then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
-      });
-    }
-  }, [account]);
-
   if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
     return null;
   }
@@ -69,7 +53,7 @@ export const RevokeRoleButton: FC<IRevokeRoleButtonProps> = props => {
         message="form.buttons.revokeRole"
         className={className}
         dataTestId="RevokeRoleButton"
-        disabled={disabled || shouldDisableByContractType(contract) || !hasAccess}
+        disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
       <AccessControlRevokeRoleDialog

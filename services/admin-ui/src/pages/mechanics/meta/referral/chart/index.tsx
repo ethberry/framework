@@ -7,7 +7,7 @@ import * as Plot from "@observablehq/plot";
 import { BigNumber } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import type { IReferralReportSearchDto, IToken } from "@framework/types";
 
 import { ReferralReportSearchForm } from "./form";

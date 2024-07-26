@@ -6,5 +6,6 @@ export interface IRaffleScheduleUpdateDto {
 
 export interface IRaffleScheduleUpdateRmq {
   address: string;
+  chainId: number;
   schedule: CronExpression;
 }

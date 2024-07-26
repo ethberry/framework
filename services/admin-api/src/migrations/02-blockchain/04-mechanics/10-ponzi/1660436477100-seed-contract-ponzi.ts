@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
@@ -11,10 +12,18 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        PONZI_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const ponziAddr = process.env.PONZI_ADDR || wallet;
+    const ponziAddr = process.env.PONZI_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

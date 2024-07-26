@@ -4,7 +4,8 @@ import { Contract, utils, constants } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@gemunion/provider-user";
-import { useAppDispatch, useAppSelector, walletActions } from "@gemunion/redux";
+import { useAppDispatch, useAppSelector } from "@gemunion/redux";
+import { walletActions, walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import {
@@ -37,7 +38,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const isUserAuthenticated = user.isAuthenticated();
 
   const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
   const dispatch = useAppDispatch();
   const { setIsDialogOpen } = walletActions;
 

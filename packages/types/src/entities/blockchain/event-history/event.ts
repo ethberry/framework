@@ -226,7 +226,7 @@ export enum ContractEventSignature {
   Prize = "Prize(address,uint256,uint256,uint256)",
 
   // MODULE:WRAPPER
-  UnpackWrapper = "UnpackWrapper(uint256)",
+  UnpackWrapper = "UnpackWrapper(address,uint256)",
 
   // MODULE:LOOT
   UnpackLootBox = "UnpackLootBox(address,uint256)",

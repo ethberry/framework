@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { CronExpression } from "@nestjs/schedule";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { wallet } from "@gemunion/constants";
 import { imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { CronExpression, NodeEnv } from "@framework/types";
 
 export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,9 +12,17 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        LOTTERY_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const lotteryAddr = process.env.LOTTERY_ADDR || wallet;
+    const lotteryAddr = process.env.LOTTERY_ADDR;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

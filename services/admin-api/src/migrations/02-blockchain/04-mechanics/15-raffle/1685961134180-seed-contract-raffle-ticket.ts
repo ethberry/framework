@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
-import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
@@ -12,8 +13,16 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        ERC721_RAFFLE_TICKET_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
-    const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR || wallet;
+    const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

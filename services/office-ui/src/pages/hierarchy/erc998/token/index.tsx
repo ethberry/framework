@@ -4,7 +4,7 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { useUser } from "@gemunion/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";

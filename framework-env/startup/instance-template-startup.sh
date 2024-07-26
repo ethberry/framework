@@ -23,7 +23,7 @@ sudo -H -u app docker run --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "/home/app:/home/app" \
     -w="/home/app" \
-    docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d nginx
+    docker/compose -f docker-compose-cloudbuild.yml up -d nginx
 
 sudo sleep 60;
 
@@ -34,5 +34,5 @@ sudo -H -u app docker run --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "/home/app:/home/app" \
     -w="/home/app" \
-    docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d core-eth core-eth-binance core-eth-binance-test core-eth-polygon #    core-eth-amoy
+    docker/compose -f docker-compose-cloudbuild.yml up -d core-eth core-eth-binance core-eth-binance-test core-eth-polygon #    core-eth-amoy
 #select pg_terminate_backend(pid) from pg_stat_activity where datname='framework-development'; drop database "framework-development"; create database "framework-development";

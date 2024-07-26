@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { ContractFeatures, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 

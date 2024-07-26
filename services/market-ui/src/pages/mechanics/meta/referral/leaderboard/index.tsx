@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { formatEther } from "@framework/exchange";

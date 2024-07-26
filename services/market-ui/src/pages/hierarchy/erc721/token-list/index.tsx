@@ -4,7 +4,7 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { ModuleType, TokenType } from "@framework/types";
 import type { IToken, ITokenSearchDto } from "@framework/types";

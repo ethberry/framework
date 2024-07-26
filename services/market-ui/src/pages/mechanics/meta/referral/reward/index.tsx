@@ -12,8 +12,9 @@ import { ClaimStatus } from "@framework/types";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection, useApiCall } from "@gemunion/react-hooks";
-import { useAppDispatch, collectionActions } from "@gemunion/redux";
+import { useApiCall } from "@gemunion/react-hooks";
+import { useCollection, collectionActions } from "@gemunion/provider-collection";
+import { useAppDispatch } from "@gemunion/redux";
 
 export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;

@@ -884,6 +884,11 @@ export class ContractManagerSignService {
           "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json",
           chainId,
         );
+      case Erc20ContractTemplates.VOTES:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Wotes.sol/ERC20Wotes.json",
+          chainId,
+        );
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -930,6 +935,11 @@ export class ContractManagerSignService {
       case Erc721ContractTemplates.SOULBOUND_VOTES:
         return getContractABI(
           "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundWotes.sol/ERC721SoulboundWotes.json",
+          chainId,
+        );
+      case Erc721ContractTemplates.VOTES:
+        return getContractABI(
+          "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Wotes.sol/ERC721Wotes.json",
           chainId,
         );
       case Erc721ContractTemplates.DISCRETE:

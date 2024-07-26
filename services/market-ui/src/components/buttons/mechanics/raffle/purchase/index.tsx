@@ -6,6 +6,7 @@ import { Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
@@ -27,7 +28,7 @@ export interface IRafflePurchaseButtonProps {
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   const { className, disabled, round, variant = ListActionVariant.button } = props;
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWitnAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

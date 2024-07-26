@@ -5,6 +5,7 @@ import { Contract, utils, constants } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
@@ -23,7 +24,7 @@ interface IAchievementRedeemButtonProps {
 
 export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props => {
   const { achievementRule, className, count = { count: 0 }, disabled, variant = ListActionVariant.button } = props;
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const levelsNotRedeemed = achievementRule.levels.filter(lvl => lvl.redemptions?.length === 0);
 

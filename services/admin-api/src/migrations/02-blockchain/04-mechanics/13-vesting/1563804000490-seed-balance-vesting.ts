@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,9 +11,9 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const vestingLinearAddress = process.env.VESTING_ADDR || wallet;
-    const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
-    const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
+    const vestingLinearAddress = process.env.VESTING_ADDR;
+    const vestingGradedAddress = process.env.VESTING_GRADED_ADDR;
+    const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (

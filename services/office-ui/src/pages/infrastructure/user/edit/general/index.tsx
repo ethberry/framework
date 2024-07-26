@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Divider } from "@mui/material";
 import { format, parseISO } from "date-fns";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
@@ -7,9 +6,9 @@ import { useIntl } from "react-intl";
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
+import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import { EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
-// import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 
 export interface IUserGeneralFormProps {
   open: boolean;
@@ -36,11 +35,10 @@ export const UserGeneralForm: FC<IUserGeneralFormProps> = props => {
     <>
       <TextInput name="email" autoComplete="off" onClick={onClick} />
       <TextInput name="displayName" />
-      {/* <SelectInput name="gender" options={EnabledGenders} /> */}
-      {/* <SelectInput name="country" options={EnabledCountries} /> */}
+      <SelectInput name="gender" options={EnabledGenders} />
+      <SelectInput name="country" options={EnabledCountries} />
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
-      <Divider sx={{ my: 2 }} />
       <SelectInput multiple name="userRoles" options={UserRole} disabledOptions={disabledRoles} />
       <SelectInput name="userStatus" options={UserStatus} />
       <TextInput name="comment" multiline />

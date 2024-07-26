@@ -5,7 +5,7 @@ import { stringify } from "qs";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 import { Erc721TemplateListItem } from "../../../hierarchy/erc721/template-list/item";
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";

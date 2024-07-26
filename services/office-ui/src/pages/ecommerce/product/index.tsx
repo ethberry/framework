@@ -12,7 +12,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/react-hooks";
+import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import type { ISearchDto } from "@gemunion/types-collection";
 
 import { EditProductDialog } from "./edit";

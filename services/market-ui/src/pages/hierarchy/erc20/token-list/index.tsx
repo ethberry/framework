@@ -5,7 +5,7 @@ import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IToken, ITokenSearchDto } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/provider-collection";
 
 import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc20CoinsListItem } from "./item";

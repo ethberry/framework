@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { toUtf8Bytes, WeiPerEther, ZeroHash, zeroPadValue } from "ethers";
 
-import { wallet, wallets } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -11,9 +11,9 @@ export class SeedEventHistoryErc721DiscreteAt1687481746310 implements MigrationI
       return;
     }
 
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR || wallet;
+    const exchangeAddress = process.env.EXCHANGE_ADDR;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR;
+    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR;
     const currentDateTime = new Date().toISOString();
     const LEVEL = zeroPadValue(toUtf8Bytes("LEVEL"), 32);
 

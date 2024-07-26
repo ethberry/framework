@@ -34,9 +34,9 @@ export const Erc998ContractDeployDialog: FC<IErc998ContractDeployDialogProps> = 
         options={Erc998ContractTemplates}
         disabledOptions={isTemplateDisabled(chainId)}
       />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
+      <TextInput name="name" required />
+      <TextInput name="symbol" required />
+      <TextInput name="baseTokenURI" required />
       <RoyaltyInput />
     </FormDialog>
   );

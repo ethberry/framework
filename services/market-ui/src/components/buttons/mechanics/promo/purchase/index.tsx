@@ -3,6 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
 import { useAppSelector } from "@gemunion/redux";
+import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import {
@@ -37,7 +38,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
     component => component.contract!.contractModule === ModuleType.MYSTERY,
   );
 
-  const { referrer } = useAppSelector(state => state.settings);
+  const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {

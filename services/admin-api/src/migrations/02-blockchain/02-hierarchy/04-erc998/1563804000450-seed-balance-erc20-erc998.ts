@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
@@ -12,8 +11,8 @@ export class SeedBalanceErc20Erc998At1563804020450 implements MigrationInterface
     }
 
     const currentDateTime = new Date().toISOString();
-    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
-    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (

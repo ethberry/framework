@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
@@ -11,10 +12,18 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        STAKING_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const stakingAddr = process.env.STAKING_ADDR || wallet;
+    const stakingAddr = process.env.STAKING_ADDR;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

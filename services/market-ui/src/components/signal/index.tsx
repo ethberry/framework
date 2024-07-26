@@ -5,7 +5,8 @@ import { io, Socket } from "socket.io-client";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useUser } from "@gemunion/provider-user";
-import { collectionActions, useAppDispatch } from "@gemunion/redux";
+import { useAppDispatch } from "@gemunion/redux";
+import { collectionActions } from "@gemunion/provider-collection";
 import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
 

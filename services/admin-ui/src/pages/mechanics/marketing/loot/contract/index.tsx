@@ -2,12 +2,13 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CollectionActions, useCollection } from "@gemunion/react-hooks";
+import { CollectionActions, useCollection } from "@gemunion/provider-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, LootContractFeatures } from "@framework/types";
 
@@ -33,6 +34,7 @@ import {
   WhitelistButton,
 } from "../../../../../components/buttons";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { LootContractEditDialog } from "./edit";
 
 export const LootContract: FC = () => {
@@ -73,6 +75,9 @@ export const LootContract: FC = () => {
       contractStatus,
     }),
   });
+
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "loot", "loot.contracts"]} />
@@ -92,48 +97,46 @@ export const LootContract: FC = () => {
         onRefreshPage={handleRefreshPage}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(contract => (
-            <StyledListItem key={contract.id}>
-              <ListItemText>{contract.title}</ListItemText>
-              <ListActions dataTestId="LootActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(contract)}
-                  message="form.buttons.edit"
-                  dataTestId="ContractEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  message="form.buttons.delete"
-                  dataTestId="ContractDeleteButton"
-                  icon={Delete}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <TopUpButton contract={contract} />
-                <GrantRoleButton contract={contract} />
-                <RevokeRoleButton contract={contract} />
-                <RenounceRoleButton contract={contract} />
-                <BlacklistButton contract={contract} />
-                <UnBlacklistButton contract={contract} />
-                <WhitelistButton contract={contract} />
-                <UnWhitelistButton contract={contract} />
-                <PauseButton contract={contract} />
-                <UnPauseButton contract={contract} />
-                <LootContractMintButton contract={contract} />
-                <ContractAllowanceButton contract={contract} />
-                <RoyaltyButton contract={contract} />
-                <SetBaseTokenURIButton contract={contract} />
-                <TransferButton contract={contract} />
-                <ChainLinkSetSubscriptionButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(contract => (
+          <ListItem key={contract.id} account={account} contract={contract}>
+            <ListItemText>{contract.title}</ListItemText>
+            <ListActions dataTestId="LootActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(contract)}
+                message="form.buttons.edit"
+                dataTestId="ContractEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(contract)}
+                message="form.buttons.delete"
+                dataTestId="ContractDeleteButton"
+                icon={Delete}
+                disabled={contract.contractStatus === ContractStatus.INACTIVE}
+              />
+              <TopUpButton contract={contract} />
+              <GrantRoleButton contract={contract} />
+              <RevokeRoleButton contract={contract} />
+              <RenounceRoleButton contract={contract} />
+              <BlacklistButton contract={contract} />
+              <UnBlacklistButton contract={contract} />
+              <WhitelistButton contract={contract} />
+              <UnWhitelistButton contract={contract} />
+              <PauseButton contract={contract} />
+              <UnPauseButton contract={contract} />
+              <LootContractMintButton contract={contract} />
+              <ContractAllowanceButton contract={contract} />
+              <RoyaltyButton contract={contract} />
+              <SetBaseTokenURIButton contract={contract} />
+              <TransferButton contract={contract} />
+              <ChainLinkSetSubscriptionButton contract={contract} />
+              <EthListenerAddButton contract={contract} />
+              <EthListenerRemoveButton contract={contract} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"
