@@ -16,7 +16,7 @@
   "devDependencies": {
     "@nestjs/common": "10.3.10",
     "@nestjs/config": "3.2.3",
-    "ethers": "6.13.1"
+    "ethers": "6.13.2"
   },
   "engines": {
     "node": ">=22"
