@@ -3,7 +3,6 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { DiscreteEntity } from "./discrete.entity";
 
@@ -13,7 +12,6 @@ export class DiscreteService {
     @InjectRepository(DiscreteEntity)
     protected readonly discreteEntityRepository: Repository<DiscreteEntity>,
     protected readonly configService: ConfigService,
-    protected readonly assetService: AssetService,
     protected readonly contractService: ContractService,
   ) {}
 
@@ -30,11 +28,6 @@ export class DiscreteService {
         alias: "discrete",
         leftJoinAndSelect: {
           contract: "discrete.contract",
-          // price: "discrete.price",
-          // price_components: "price.components",
-          // price_contract: "price_components.contract",
-          // price_template: "price_components.template",
-          // price_tokens: "price_template.tokens",
         },
       },
     });

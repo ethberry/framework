@@ -35,6 +35,6 @@ import { Erc721TokenLogModule } from "./log/log.module";
   ],
   providers: [signalServiceProvider, Logger, ethersRpcProvider, Erc721TokenServiceEth, Erc721TokenRandomServiceEth],
   controllers: [Erc721TokenControllerEth, Erc721TokenRandomControllerEth],
-  exports: [Erc721TokenServiceEth],
+  exports: [Erc721TokenServiceEth, Erc721TokenRandomServiceEth],
 })
 export class Erc721TokenModule {}

@@ -14,7 +14,6 @@ import type {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
-  ILevelUp,
 } from "@framework/types";
 import { ContractEventType, ContractType } from "@framework/types";
 
@@ -64,11 +63,6 @@ export class Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.transferChild(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.levelUp(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.BatchTransferChild })

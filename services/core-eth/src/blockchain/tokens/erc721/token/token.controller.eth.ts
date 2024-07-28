@@ -8,7 +8,6 @@ import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  ILevelUp,
 } from "@framework/types";
 import { ContractEventType, ContractType } from "@framework/types";
 
@@ -42,10 +41,5 @@ export class Erc721TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.levelUp(event, context);
   }
 }

@@ -4,18 +4,12 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import {
-  AccessControlEventType,
-  AccessListEventType,
-  ContractEventType,
-  ContractType,
-  NodeEnv,
-  TokenType,
-} from "@framework/types";
+
+import { ContractEventType, ContractType, ModuleType, NodeEnv, TokenType } from "@framework/types";
 
 // custom contracts
 import { ABI } from "./interfaces";
-import { Erc998LogService } from "./log.service";
+import { DiscreteLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { getEventsTopics } from "../../../../../common/utils";
@@ -24,55 +18,40 @@ import { getEventsTopics } from "../../../../../common/utils";
   imports: [
     ConfigModule,
     ContractModule,
-    // Erc998 user contracts
+    // Erc721 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const nodeEnv = configService.get<NodeEnv>("NODE_ENV", NodeEnv.development);
+        const erc721Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC721);
         const erc998Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC998);
+        const erc721Collections = await contractService.findAllByType([ModuleType.COLLECTION]);
+        const contractsAdresses = ([] as Array<string>).concat(
+          erc721Contracts.address,
+          erc998Contracts.address,
+          erc721Collections.address,
+        );
+        const unique = [...new Set(contractsAdresses)];
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
 
-        const eventNames = [
-          ContractEventType.Approval,
-          ContractEventType.ApprovalForAll,
-          ContractEventType.BatchReceivedChild,
-          ContractEventType.BatchTransferChild,
-          ContractEventType.DefaultRoyaltyInfo,
-          ContractEventType.MintRandom,
-          ContractEventType.Paused,
-          ContractEventType.ReceivedChild,
-          ContractEventType.SetMaxChild,
-          ContractEventType.TokenRoyaltyInfo,
-          ContractEventType.Transfer,
-          ContractEventType.TransferChild,
-          ContractEventType.UnWhitelistedChild,
-          ContractEventType.UnpackMysteryBox,
-          ContractEventType.Unpaused,
-          ContractEventType.WhitelistedChild,
-          ContractEventType.BaseURIUpdate,
-          AccessControlEventType.RoleGranted,
-          AccessControlEventType.RoleRevoked,
-          AccessControlEventType.RoleAdminChanged,
-          // MODULE:ACCESS_LIST
-          AccessListEventType.Blacklisted,
-          AccessListEventType.UnBlacklisted,
-        ];
+        const eventNames = [ContractEventType.LevelUp];
+
         const topics = getEventsTopics(eventNames);
 
         return {
           contract: {
-            contractType: ContractType.ERC998_TOKEN,
-            contractAddress: erc998Contracts.address,
+            contractType: ContractType.ERC721_TOKEN,
+            contractAddress: unique,
             contractInterface: ABI,
             topics,
           },
           block: {
-            fromBlock: erc998Contracts.fromBlock || startingBlock,
+            fromBlock: erc721Contracts.fromBlock || startingBlock,
             debug: nodeEnv === NodeEnv.development,
             cron,
           },
@@ -80,14 +59,13 @@ import { getEventsTopics } from "../../../../../common/utils";
       },
     }),
   ],
-  providers: [Erc998LogService, Logger],
-  exports: [Erc998LogService],
+  providers: [DiscreteLogService, Logger],
 })
-export class Erc998TokenLogModule implements OnModuleDestroy {
-  constructor(private readonly erc998TokenLogService: Erc998LogService) {}
+export class DiscreteTokenLogModule implements OnModuleDestroy {
+  constructor(private readonly discreteLogService: DiscreteLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<void> {
-    return this.erc998TokenLogService.updateBlock();
+    return this.discreteLogService.updateBlock();
   }
 }

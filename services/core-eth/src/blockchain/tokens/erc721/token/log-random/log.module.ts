@@ -53,7 +53,6 @@ import { getEventsTopics } from "../../../../../common/utils";
           ContractEventType.UnpackMysteryBox,
           ContractEventType.Unpaused,
           ContractEventType.ConsecutiveTransfer,
-          ContractEventType.LevelUp,
           ContractEventType.VrfSubscriptionSet,
           ContractEventType.BaseURIUpdate,
           AccessControlEventType.RoleGranted,
