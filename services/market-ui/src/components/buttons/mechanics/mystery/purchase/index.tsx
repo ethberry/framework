@@ -29,7 +29,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
-      const items = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
+      const content = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
       const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);
 
       return contract.purchaseMystery(
@@ -41,16 +41,14 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
           receiver: mysteryBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        [
-          ...items,
-          {
-            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: mysteryBox.template!.contract!.address,
-            tokenId: mysteryBox.templateId,
-            amount: "1",
-          },
-        ],
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: mysteryBox.template!.contract!.address,
+          tokenId: mysteryBox.templateId,
+          amount: "1",
+        },
         price,
+        content,
         sign.signature,
         {
           value: getEthPrice(mysteryBox.template?.price),

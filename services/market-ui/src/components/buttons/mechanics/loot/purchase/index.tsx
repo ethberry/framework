@@ -29,7 +29,7 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, LootBoxPurchaseABI, web3Context.provider?.getSigner());
 
-      const items = convertDatabaseAssetToChainAsset([...lootBox.item!.components]);
+      const content = convertDatabaseAssetToChainAsset([...lootBox.item!.components]);
       const price = convertDatabaseAssetToChainAsset([...lootBox.template!.price!.components]);
 
       return contract.purchaseLoot(
@@ -41,16 +41,18 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
           receiver: lootBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        [
-          ...items,
-          {
-            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: lootBox.template!.contract!.address,
-            tokenId: lootBox.templateId,
-            amount: "1",
-          },
-        ],
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: lootBox.template!.contract!.address,
+          tokenId: lootBox.templateId,
+          amount: "1",
+        },
         price,
+        content,
+        {
+          min: lootBox.min,
+          max: lootBox.max,
+        },
         sign.signature,
         {
           value: getEthPrice(lootBox.template?.price),

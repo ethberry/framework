@@ -41,6 +41,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
 
+      // TODO use convertDatabaseAssetToChainAsset for price
       return contract.purchase(
         {
           externalId: template.id,

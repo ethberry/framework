@@ -70,23 +70,21 @@ export class LootSignService {
     params: IParams,
     lootBoxEntity: LootBoxEntity,
   ): Promise<string> {
-    const items = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
+    const content = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
     const price = convertDatabaseAssetToChainAsset(lootBoxEntity.template.price.components);
 
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManyToManySignature(
       verifyingContract,
       account,
       params,
-      [
-        ...items,
-        {
-          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-          token: lootBoxEntity.template.contract.address,
-          tokenId: lootBoxEntity.templateId.toString(),
-          amount: "1",
-        },
-      ],
+      {
+        tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+        token: lootBoxEntity.template.contract.address,
+        tokenId: lootBoxEntity.templateId.toString(),
+        amount: "1",
+      },
       price,
+      content,
     );
   }
 }

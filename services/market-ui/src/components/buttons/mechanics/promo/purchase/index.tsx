@@ -8,16 +8,20 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IAssetPromo, IContract, IMysteryBox } from "@framework/types";
+import type { IAssetPromo, IContract, ILootBox, IMysteryBox } from "@framework/types";
+// import type { ITemplate } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import PurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 import PurchaseMysteryABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
 
 import { sorter } from "../../../../../utils/sorter";
+// import { MysteryBoxPurchaseButton } from "../../mystery/purchase";
+// import { LootBoxPurchaseButton } from "../../loot/purchase";
+// import { TemplatePurchaseButton } from "../../../hierarchy";
 
 interface IPromoWithMystery extends IAssetPromo {
-  box?: IMysteryBox;
+  box?: IMysteryBox | ILootBox;
 }
 
 interface IPromoPurchaseButtonProps {
@@ -30,6 +34,19 @@ interface IPromoPurchaseButtonProps {
 export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
   const { className, disabled, promo, variant = ListActionVariant.button } = props;
 
+  // TODO use native buttons
+  // switch (promo.item?.components[0].contract!.contractModule){
+  //   case ModuleType.MYSTERY:
+  //     return <MysteryBoxPurchaseButton mysteryBox={promo.box as IMysteryBox} />
+  //   case ModuleType.LOOT:
+  //     return <LootBoxPurchaseButton lootBox={promo.box as ILootBox} />
+  //   case ModuleType.HIERARCHY:
+  //     return <TemplatePurchaseButton template={promo as ITemplate} />
+  //   default: // RAFFLE
+  //     throw new Error("unsupported token type");
+  // }
+
+  // TODO LootBox
   const mysteryComponents = promo.item?.components.filter(
     component => component.contract!.contractModule === ModuleType.MYSTERY,
   );

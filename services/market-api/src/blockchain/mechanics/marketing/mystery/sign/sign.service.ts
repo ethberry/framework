@@ -70,23 +70,21 @@ export class MysterySignService {
     params: IParams,
     mysteryBoxEntity: MysteryBoxEntity,
   ): Promise<string> {
-    const items = convertDatabaseAssetToChainAsset(mysteryBoxEntity.item.components);
+    const content = convertDatabaseAssetToChainAsset(mysteryBoxEntity.item.components);
     const price = convertDatabaseAssetToChainAsset(mysteryBoxEntity.template.price.components);
 
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManyToManySignature(
       verifyingContract,
       account,
       params,
-      [
-        ...items,
-        {
-          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-          token: mysteryBoxEntity.template.contract.address,
-          tokenId: mysteryBoxEntity.templateId.toString(),
-          amount: "1",
-        },
-      ],
+      {
+        tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+        token: mysteryBoxEntity.template.contract.address,
+        tokenId: mysteryBoxEntity.templateId.toString(),
+        amount: "1",
+      },
       price,
+      content,
     );
   }
 }

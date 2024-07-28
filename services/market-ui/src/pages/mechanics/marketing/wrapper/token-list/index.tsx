@@ -46,7 +46,8 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
   });
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
-    const items = values.item.components.map(component => ({
+    // TODO use convertDatabaseAssetToChainAsset
+    const content = values.item.components.map(component => ({
       tokenType: Object.values(TokenType).indexOf(component.tokenType),
       token: component.contract.address,
       tokenId: component.token.tokenId || 0,
@@ -62,7 +63,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
 
     const contract = new Contract(values.contract.address, MintBoxABI, web3Context.provider?.getSigner());
 
-    return contract.mintBox(web3Context.account, values.templateId, items, { value: totalValue }) as Promise<any>;
+    return contract.mintBox(web3Context.account, values.templateId, content, { value: totalValue }) as Promise<any>;
   });
 
   const handleEditConfirm = async (values: ICreateWrappedToken, _form: any) => {
