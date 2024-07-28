@@ -184,21 +184,21 @@ export class ContractService {
   public async updateLastBlockByTokenTypeRandom(contractType: TokenType, lastBlock: number): Promise<number> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const entity = await this.findOne({
+    const contractEntity = await this.findOne({
       contractType,
       contractModule: ModuleType.HIERARCHY,
       contractFeatures: ArrayOverlap([ContractFeatures.RANDOM, ContractFeatures.GENES]),
       chainId,
     });
 
-    if (entity) {
+    if (contractEntity) {
       await this.update(
         {
-          id: entity.id,
+          id: contractEntity.id,
         },
         { fromBlock: lastBlock + 1 },
       );
-      return entity.fromBlock;
+      return contractEntity.fromBlock;
     }
     return lastBlock;
   }
