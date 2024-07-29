@@ -40,6 +40,7 @@ export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
       <TextInput name="account" required />
       <TemplateAssetInput
         autoSelect
+        required
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.RAFFLE] } }}
