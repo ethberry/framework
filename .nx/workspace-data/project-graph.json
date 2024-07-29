@@ -1,0 +1,3087 @@
+{
+  "nodes": {
+    "@framework/core-contracts": {
+      "name": "@framework/core-contracts",
+      "type": "lib",
+      "data": {
+        "root": "framework-contracts/contracts/core",
+        "sourceRoot": "framework-contracts/contracts/core",
+        "name": "@framework/core-contracts",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": [
+              "build",
+              "chainlink",
+              "chainlink:init",
+              "chainlink:sub",
+              "clean",
+              "coverage",
+              "deploy:mainnet",
+              "flatten",
+              "lint",
+              "prebuild",
+              "prepare:contracts:besu",
+              "prepublish",
+              "solhint",
+              "test"
+            ]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "hardhat compile",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "chainlink": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "chainlink"
+            },
+            "metadata": {
+              "scriptContent": "npm run chainlink:init && npm run chainlink:sub",
+              "runCommand": "npm run chainlink"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "chainlink:init": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "chainlink:init"
+            },
+            "metadata": {
+              "scriptContent": "hardhat run scripts/chainlink/init-chainlink.ts --network besu",
+              "runCommand": "npm run chainlink:init"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "chainlink:sub": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "chainlink:sub"
+            },
+            "metadata": {
+              "scriptContent": "hardhat run scripts/chainlink/sub-chainlink.ts --network besu",
+              "runCommand": "npm run chainlink:sub"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "clean": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "clean"
+            },
+            "metadata": {
+              "scriptContent": "hardhat clean --global",
+              "runCommand": "npm run clean"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "coverage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "coverage"
+            },
+            "metadata": {
+              "scriptContent": "hardhat coverage",
+              "runCommand": "npm run coverage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "deploy:mainnet": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "deploy:mainnet"
+            },
+            "metadata": {
+              "scriptContent": "hardhat --network mainnet deploy",
+              "runCommand": "npm run deploy:mainnet"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "flatten": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "flatten"
+            },
+            "metadata": {
+              "scriptContent": "scripts/flatten.sh",
+              "runCommand": "npm run flatten"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "hardhat clean",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepare:contracts:besu": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepare:contracts:besu"
+            },
+            "metadata": {
+              "scriptContent": "hardhat --network besu run scripts/deploy-dev.ts",
+              "runCommand": "npm run prepare:contracts:besu"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "solhint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "solhint"
+            },
+            "metadata": {
+              "scriptContent": "solhint -f table contracts/**/*.sol --fix --noPrompt",
+              "runCommand": "npm run solhint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "NODE_ENV=test hardhat test --network hardhat",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/localization-market-ui": {
+      "name": "@framework/localization-market-ui",
+      "type": "lib",
+      "data": {
+        "root": "packages/localization-market-ui",
+        "sourceRoot": "packages/localization-market-ui",
+        "name": "@framework/localization-market-ui",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          },
+          "description": "localization for ui"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/localization-office-ui": {
+      "name": "@framework/localization-office-ui",
+      "type": "lib",
+      "data": {
+        "root": "packages/localization-office-ui",
+        "sourceRoot": "packages/localization-office-ui",
+        "name": "@framework/localization-office-ui",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          },
+          "description": "localization for ui"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/localization-admin-ui": {
+      "name": "@framework/localization-admin-ui",
+      "type": "lib",
+      "data": {
+        "root": "packages/localization-admin-ui",
+        "sourceRoot": "packages/localization-admin-ui",
+        "name": "@framework/localization-admin-ui",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          },
+          "description": "localization for ui"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/nest-js-module-exchange-signer": {
+      "name": "@framework/nest-js-module-exchange-signer",
+      "type": "lib",
+      "data": {
+        "root": "packages/exchange-signer",
+        "sourceRoot": "packages/exchange-signer",
+        "name": "@framework/nest-js-module-exchange-signer",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/uniswap-widget": {
+      "name": "@framework/uniswap-widget",
+      "type": "lib",
+      "data": {
+        "root": "packages/uniswap-widget",
+        "sourceRoot": "packages/uniswap-widget",
+        "name": "@framework/uniswap-widget",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepare", "preversion", "test"]
+          },
+          "description": "react uniswap-widget"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepare": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepare"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepare"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^prepare"]
+          },
+          "preversion": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "preversion"
+            },
+            "metadata": {
+              "scriptContent": "npm run build && npm run test",
+              "runCommand": "npm run preversion"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/signal": {
+      "name": "@framework/signal",
+      "type": "lib",
+      "data": {
+        "root": "microservices/signal",
+        "sourceRoot": "microservices/signal",
+        "name": "@framework/signal",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": [
+              "build",
+              "e2e",
+              "lint",
+              "prebuild",
+              "prepublish",
+              "start",
+              "start:prod",
+              "start:stage",
+              "test"
+            ]
+          },
+          "description": "Websocket API responsible for notification about transaction status"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "e2e": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "e2e"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config=test/jest.config.json",
+              "runCommand": "npm run e2e"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/market-api": {
+      "name": "@framework/market-api",
+      "type": "lib",
+      "data": {
+        "root": "services/market-api",
+        "sourceRoot": "services/market-api",
+        "name": "@framework/market-api",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/mobile-api": {
+      "name": "@framework/mobile-api",
+      "type": "lib",
+      "data": {
+        "root": "services/mobile-api",
+        "sourceRoot": "services/mobile-api",
+        "name": "@framework/mobile-api",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          },
+          "description": "mobile api"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/office-api": {
+      "name": "@framework/office-api",
+      "type": "lib",
+      "data": {
+        "root": "services/office-api",
+        "sourceRoot": "services/office-api",
+        "name": "@framework/office-api",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/admin-api": {
+      "name": "@framework/admin-api",
+      "type": "lib",
+      "data": {
+        "root": "services/admin-api",
+        "sourceRoot": "services/admin-api",
+        "name": "@framework/admin-api",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": [
+              "build",
+              "lint",
+              "prebuild",
+              "prepublish",
+              "start",
+              "start:prod",
+              "start:stage",
+              "test",
+              "typeorm"
+            ]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} BUSINESS_TYPE=${BUSINESS_TYPE:=B2B} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "typeorm": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "typeorm"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} ts-node ./node_modules/.bin/typeorm --config src/ormconfig.ts",
+              "runCommand": "npm run typeorm"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/constants": {
+      "name": "@framework/constants",
+      "type": "lib",
+      "data": {
+        "root": "packages/constants",
+        "sourceRoot": "packages/constants",
+        "name": "@framework/constants",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          },
+          "description": "constants for validation on FE and BE"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/cron": {
+      "name": "@framework/cron",
+      "type": "lib",
+      "data": {
+        "root": "microservices/cron",
+        "sourceRoot": "microservices/cron",
+        "name": "@framework/cron",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          },
+          "description": "Cron microservice"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix --ext .ts,.tsx",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/game": {
+      "name": "@framework/game",
+      "type": "lib",
+      "data": {
+        "root": "microservices/game",
+        "sourceRoot": "microservices/game",
+        "name": "@framework/game",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          },
+          "description": "HTTP API for interaction with game server"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix --ext .ts,.tsx",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/json": {
+      "name": "@framework/json",
+      "type": "lib",
+      "data": {
+        "root": "microservices/json",
+        "sourceRoot": "microservices/json",
+        "name": "@framework/json",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          },
+          "description": "HTTP API to retrieve NFT metadata"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix --ext .ts,.tsx",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/market-ui": {
+      "name": "@framework/market-ui",
+      "type": "lib",
+      "data": {
+        "root": "services/market-ui",
+        "sourceRoot": "services/market-ui",
+        "name": "@framework/market-ui",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "postversion", "prebuild", "prepublish", "start", "start:prod", "test"]
+          },
+          "description": "app"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} webpack --config webpack.production.ts",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "postversion": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "postversion"
+            },
+            "metadata": {
+              "scriptContent": "git push && git push --tags",
+              "runCommand": "npm run postversion"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} webpack serve --config webpack.development.ts",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/office-ui": {
+      "name": "@framework/office-ui",
+      "type": "lib",
+      "data": {
+        "root": "services/office-ui",
+        "sourceRoot": "services/office-ui",
+        "name": "@framework/office-ui",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "postversion", "prebuild", "prepublish", "start", "start:prod", "test"]
+          },
+          "description": "app"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} webpack --config webpack.production.ts",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "postversion": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "postversion"
+            },
+            "metadata": {
+              "scriptContent": "git push && git push --tags",
+              "runCommand": "npm run postversion"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} webpack serve --config webpack.development.ts",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@mui/x-license": {
+      "name": "@mui/x-license",
+      "type": "lib",
+      "data": {
+        "root": "packages/x-license",
+        "sourceRoot": "packages/x-license",
+        "name": "@mui/x-license",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          },
+          "description": "MUI X License verification"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint  --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/admin-ui": {
+      "name": "@framework/admin-ui",
+      "type": "lib",
+      "data": {
+        "root": "services/admin-ui",
+        "sourceRoot": "services/admin-ui",
+        "name": "@framework/admin-ui",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "postversion", "prebuild", "prepublish", "start", "start:prod", "test"]
+          },
+          "description": "app"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} webpack --config webpack.production.ts",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "postversion": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "postversion"
+            },
+            "metadata": {
+              "scriptContent": "git push && git push --tags",
+              "runCommand": "npm run postversion"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} webpack serve --config webpack.development.ts",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/core-eth": {
+      "name": "@framework/core-eth",
+      "type": "lib",
+      "data": {
+        "root": "services/core-eth",
+        "sourceRoot": "services/core-eth",
+        "name": "@framework/core-eth",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=development} LOG_MODE=${LOG_MODE:=true} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/eml": {
+      "name": "@framework/eml",
+      "type": "lib",
+      "data": {
+        "root": "microservices/eml",
+        "sourceRoot": "microservices/eml",
+        "name": "@framework/eml",
+        "tags": ["npm:private"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "start", "start:prod", "start:stage", "test"]
+          },
+          "description": "Email microservice"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix --ext .ts,.tsx",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+              "runCommand": "npm run start"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:prod": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:prod"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
+              "runCommand": "npm run start:prod"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "start:stage": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "start:stage"
+            },
+            "metadata": {
+              "scriptContent": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+              "runCommand": "npm run start:stage"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/exchange": {
+      "name": "@framework/exchange",
+      "type": "lib",
+      "data": {
+        "root": "packages/exchange",
+        "sourceRoot": "packages/exchange",
+        "name": "@framework/exchange",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/styled": {
+      "name": "@framework/styled",
+      "type": "lib",
+      "data": {
+        "root": "packages/styled",
+        "sourceRoot": "packages/styled",
+        "name": "@framework/styled",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepare", "preversion", "test"]
+          },
+          "description": "common styled components"
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist/",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepare": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepare"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepare"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^prepare"]
+          },
+          "preversion": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "preversion"
+            },
+            "metadata": {
+              "scriptContent": "npm run build && npm run test",
+              "runCommand": "npm run preversion"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/types": {
+      "name": "@framework/types",
+      "type": "lib",
+      "data": {
+        "root": "packages/types",
+        "sourceRoot": "packages/types",
+        "name": "@framework/types",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "@framework/abis": {
+      "name": "@framework/abis",
+      "type": "lib",
+      "data": {
+        "root": "packages/abis",
+        "sourceRoot": "packages/abis",
+        "name": "@framework/abis",
+        "tags": ["npm:public"],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": ["build", "lint", "prebuild", "prepublish", "test"]
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "tsc",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"]
+          },
+          "lint": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "lint"
+            },
+            "metadata": {
+              "scriptContent": "eslint . --fix",
+              "runCommand": "npm run lint"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prebuild": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prebuild"
+            },
+            "metadata": {
+              "scriptContent": "rimraf dist",
+              "runCommand": "npm run prebuild"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "prepublish": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "prepublish"
+            },
+            "metadata": {
+              "scriptContent": "npm run build",
+              "runCommand": "npm run prepublish"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "test": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "test"
+            },
+            "metadata": {
+              "scriptContent": "exit 0",
+              "runCommand": "npm run test"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": ["^nx-release-publish"],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    }
+  },
+  "externalNodes": {},
+  "dependencies": {
+    "@framework/core-contracts": [],
+    "@framework/localization-market-ui": [
+      {
+        "source": "@framework/localization-market-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      }
+    ],
+    "@framework/localization-office-ui": [
+      {
+        "source": "@framework/localization-office-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      }
+    ],
+    "@framework/localization-admin-ui": [
+      {
+        "source": "@framework/localization-admin-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      }
+    ],
+    "@framework/nest-js-module-exchange-signer": [
+      {
+        "source": "@framework/nest-js-module-exchange-signer",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/uniswap-widget": [],
+    "@framework/signal": [
+      {
+        "source": "@framework/signal",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/signal",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/market-api": [
+      {
+        "source": "@framework/market-api",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-api",
+        "target": "@framework/exchange",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-api",
+        "target": "@framework/nest-js-module-exchange-signer",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-api",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/mobile-api": [
+      {
+        "source": "@framework/mobile-api",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/mobile-api",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/office-api": [
+      {
+        "source": "@framework/office-api",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-api",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-api",
+        "target": "@framework/nest-js-module-exchange-signer",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-api",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/admin-api": [
+      {
+        "source": "@framework/admin-api",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-api",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-api",
+        "target": "@framework/exchange",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-api",
+        "target": "@framework/nest-js-module-exchange-signer",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-api",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/constants": [],
+    "@framework/cron": [
+      {
+        "source": "@framework/cron",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/cron",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/game": [
+      {
+        "source": "@framework/game",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/game",
+        "target": "@framework/nest-js-module-exchange-signer",
+        "type": "static"
+      },
+      {
+        "source": "@framework/game",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/json": [
+      {
+        "source": "@framework/json",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/json",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/market-ui": [
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/abis",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/exchange",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/localization-market-ui",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/styled",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/types",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@framework/uniswap-widget",
+        "type": "static"
+      },
+      {
+        "source": "@framework/market-ui",
+        "target": "@mui/x-license",
+        "type": "static"
+      }
+    ],
+    "@framework/office-ui": [
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/abis",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/exchange",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/localization-office-ui",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/styled",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@framework/types",
+        "type": "static"
+      },
+      {
+        "source": "@framework/office-ui",
+        "target": "@mui/x-license",
+        "type": "static"
+      }
+    ],
+    "@mui/x-license": [],
+    "@framework/admin-ui": [
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/abis",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/exchange",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/localization-admin-ui",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/styled",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@framework/types",
+        "type": "static"
+      },
+      {
+        "source": "@framework/admin-ui",
+        "target": "@mui/x-license",
+        "type": "static"
+      }
+    ],
+    "@framework/core-eth": [
+      {
+        "source": "@framework/core-eth",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/core-eth",
+        "target": "@framework/core-contracts",
+        "type": "static"
+      },
+      {
+        "source": "@framework/core-eth",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/eml": [
+      {
+        "source": "@framework/eml",
+        "target": "@framework/constants",
+        "type": "static"
+      },
+      {
+        "source": "@framework/eml",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/exchange": [
+      {
+        "source": "@framework/exchange",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/styled": [
+      {
+        "source": "@framework/styled",
+        "target": "@framework/types",
+        "type": "static"
+      }
+    ],
+    "@framework/types": [
+      {
+        "source": "@framework/types",
+        "target": "@framework/constants",
+        "type": "static"
+      }
+    ],
+    "@framework/abis": []
+  },
+  "version": "6.0"
+}
