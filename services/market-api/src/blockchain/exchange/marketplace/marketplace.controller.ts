@@ -17,6 +17,7 @@ export class MarketplaceController {
     return this.marketplaceService.sign(dto, userEntity);
   }
 
+  // TODO move to integrations
   @Post("/sell")
   public sell(@Body() dto: SellTokenDto, @User() userEntity: UserEntity): Promise<any> {
     return this.marketplaceService.sell(dto, userEntity);
