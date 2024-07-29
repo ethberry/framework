@@ -37,6 +37,7 @@ export class MarketplaceService {
   ) {}
 
   public async sell(dto: ITokenSellDto, userEntity: UserEntity): Promise<any> {
+    // TODO get chainId and account from userEntity
     const { chainId, account, /* referrer = ZeroAddress, */ tokenId, /* amount, */ price } = dto;
 
     // ITEM FOR SALE
