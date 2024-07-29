@@ -1,12 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "addr", "type": "address" }],
     "name": "unWhitelistChild",
     "outputs": [],
     "stateMutability": "nonpayable",

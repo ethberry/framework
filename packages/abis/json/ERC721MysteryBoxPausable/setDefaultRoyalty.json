@@ -1,16 +1,8 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "royaltyReceiver",
-        "type": "address"
-      },
-      {
-        "internalType": "uint96",
-        "name": "royaltyNumerator",
-        "type": "uint96"
-      }
+      { "internalType": "address", "name": "royaltyReceiver", "type": "address" },
+      { "internalType": "uint96", "name": "royaltyNumerator", "type": "uint96" }
     ],
     "name": "setDefaultRoyalty",
     "outputs": [],

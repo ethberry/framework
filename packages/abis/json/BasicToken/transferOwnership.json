@@ -1,12 +1,7 @@
 [
   {
     "constant": false,
-    "inputs": [
-      {
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
     "payable": false,

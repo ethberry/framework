@@ -1,12 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "to", "type": "address" }],
     "name": "mint",
     "outputs": [],
     "stateMutability": "nonpayable",

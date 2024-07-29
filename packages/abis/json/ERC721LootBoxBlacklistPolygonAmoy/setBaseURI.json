@@ -1,12 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "baseTokenURI",
-        "type": "string"
-      }
-    ],
+    "inputs": [{ "internalType": "string", "name": "baseTokenURI", "type": "string" }],
     "name": "setBaseURI",
     "outputs": [],
     "stateMutability": "nonpayable",

@@ -1,16 +1,8 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "max",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "addr", "type": "address" },
+      { "internalType": "uint256", "name": "max", "type": "uint256" }
     ],
     "name": "whiteListChild",
     "outputs": [],

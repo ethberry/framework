@@ -3,21 +3,9 @@
     "inputs": [
       {
         "components": [
-          {
-            "internalType": "bytes32",
-            "name": "nonce",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes",
-            "name": "bytecode",
-            "type": "bytes"
-          },
-          {
-            "internalType": "uint256",
-            "name": "externalId",
-            "type": "uint256"
-          }
+          { "internalType": "bytes32", "name": "nonce", "type": "bytes32" },
+          { "internalType": "bytes", "name": "bytecode", "type": "bytes" },
+          { "internalType": "uint256", "name": "externalId", "type": "uint256" }
         ],
         "internalType": "struct SignatureValidatorCM.Params",
         "name": "params",
@@ -27,16 +15,8 @@
         "components": [
           {
             "components": [
-              {
-                "internalType": "uint256",
-                "name": "timeLagBeforeRelease",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "commission",
-                "type": "uint256"
-              }
+              { "internalType": "uint256", "name": "timeLagBeforeRelease", "type": "uint256" },
+              { "internalType": "uint256", "name": "commission", "type": "uint256" }
             ],
             "internalType": "struct LotteryFactoryFacet.LotteryConfig",
             "name": "config",
@@ -47,20 +27,10 @@
         "name": "args",
         "type": "tuple"
       },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
-      }
+      { "internalType": "bytes", "name": "signature", "type": "bytes" }
     ],
     "name": "deployLottery",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "function"
   }

@@ -15,7 +15,6 @@ export * from "./exchange/mystery";
 export * from "./exchange/raffle";
 export * from "./exchange/referral";
 export * from "./exchange/rentable";
-export * from "./mechanics/waitlist";
 
 export * from "./extensions/access-control";
 export * from "./extensions/access-list";
@@ -42,5 +41,6 @@ export * from "./mechanics/ponzi";
 export * from "./mechanics/staking";
 export * from "./mechanics/vesting";
 export * from "./mechanics/wrapper";
+export * from "./mechanics/waitlist";
 
 export * from "./event";
