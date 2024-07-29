@@ -32,7 +32,8 @@ export const TransferDialog: FC<ITransferDialogProps> = props => {
       {...rest}
     >
       <TokenAssetInput
-        prefix="token *"
+        prefix="token"
+        required
         contract={{
           data: {
             excludeFeatures: [ContractFeatures.SOULBOUND],
