@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress, keccak256, AbiCoder } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -85,6 +85,7 @@ export class LootSignService {
       },
       price,
       content,
+      keccak256(AbiCoder.defaultAbiCoder().encode(["uint128", "uint128"], [lootBoxEntity.min, lootBoxEntity.max])),
     );
   }
 }

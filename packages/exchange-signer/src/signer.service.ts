@@ -164,6 +164,7 @@ export class SignerService {
     item: IBlockchainAsset,
     price: Array<IBlockchainAsset>,
     content: Array<IBlockchainAsset>,
+    config: string,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -181,6 +182,7 @@ export class SignerService {
           { name: "item", type: "Asset" },
           { name: "price", type: "Asset[]" },
           { name: "content", type: "Asset[]" },
+          { name: "config", type: "bytes32" },
         ],
         Params: [
           { name: "externalId", type: "uint256" },
@@ -204,6 +206,7 @@ export class SignerService {
         item,
         price,
         content,
+        config,
       },
     );
   }
