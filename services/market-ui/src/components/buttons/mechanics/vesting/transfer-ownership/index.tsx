@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import VestingTransferOwnershipABI from "@framework/abis/json/OwnershipFacet/transferOwnership.json";
+import VestingTransferOwnershipABI from "@framework/abis/json/Ownable/transferOwnership.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

@@ -8,8 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "@framework/abis/json/ERC20Blacklist/approve.json";
-import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Blacklist/setApprovalForAll.json";
+import ERC20ApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
+import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 import { shouldDisableByContractType } from "../../../../utils";
 

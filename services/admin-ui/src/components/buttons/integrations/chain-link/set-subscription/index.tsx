@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import setSubscriptionIdERC721GenesBesuABI from "@framework/abis/json/ERC721GenesBesu/setSubscriptionId.json";
+import ERC721RandomGemunionSetSubscriptionIdABI from "@framework/abis/json/ERC721RandomGemunion/setSubscriptionId.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
@@ -35,7 +35,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(address, setSubscriptionIdERC721GenesBesuABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC721RandomGemunionSetSubscriptionIdABI, web3Context.provider?.getSigner());
     return contract.setSubscriptionId(options.vrfSubId) as Promise<void>;
   });
 

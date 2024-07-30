@@ -9,9 +9,9 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import safeTransferFromERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/safeTransferFrom.json";
-import safeTransferFromERC721BlacklistABI from "@framework/abis/json/ERC721Blacklist/safeTransferFrom.json";
-import transferERC20BlacklistABI from "@framework/abis/json/ERC20Blacklist/transfer.json";
+import ERC1155SimpleSafeTransferFromABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
+import ERC721SimpleSafeTransferFromABI from "@framework/abis/json/ERC721Simple/safeTransferFrom.json";
+import ERC20SimpleTransferABI from "@framework/abis/json/ERC20Simple/transfer.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { ITransferDto, TransferDialog } from "./dialog";
@@ -42,17 +42,17 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
         value: asset.amount,
       }) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
-      const contract = new Contract(address, transferERC20BlacklistABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, ERC20SimpleTransferABI, web3Context.provider?.getSigner());
       return contract.transfer(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
-      const contract = new Contract(address, safeTransferFromERC721BlacklistABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, ERC721SimpleSafeTransferFromABI, web3Context.provider?.getSigner());
       return contract["safeTransferFrom(address,address,uint256)"](
         web3Context.account,
         values.address,
         asset.token.tokenId,
       ) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC1155) {
-      const contract = new Contract(address, safeTransferFromERC1155BlacklistABI, web3Context.provider?.getSigner());
+      const contract = new Contract(address, ERC1155SimpleSafeTransferFromABI, web3Context.provider?.getSigner());
       return contract.safeTransferFrom(
         web3Context.account,
         values.address,

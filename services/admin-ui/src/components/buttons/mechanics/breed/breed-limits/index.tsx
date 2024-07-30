@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
 
-import setPregnancyLimitsExchangeBreedFacetABI from "@framework/abis/json/ExchangeBreedFacet/setPregnancyLimits.json";
+import ExchangeBreedFacetSetPregnancyLimitsABI from "@framework/abis/json/ExchangeBreedFacet/setPregnancyLimits.json";
 
 import type { IBreedLimitDto } from "./dialog";
 import { BreedLimitDialog } from "./dialog";
@@ -36,7 +36,7 @@ export const BreedLimitButton: FC<IBreedLimitButtonProps> = props => {
     (values: IBreedLimitDto, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(
         systemContract.address,
-        setPregnancyLimitsExchangeBreedFacetABI,
+        ExchangeBreedFacetSetPregnancyLimitsABI,
         web3Context.provider?.getSigner(),
       );
       return contract.setPregnancyLimits(values.count, values.time, values.maxTime) as Promise<void>;

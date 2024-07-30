@@ -12,7 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import renounceRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
+import AccessControlFacetRenounceRoleABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -38,7 +38,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   );
 
   const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, renounceRoleAccessControlFacetABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, AccessControlFacetRenounceRoleABI, web3Context.provider?.getSigner());
     return contract.renounceRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)

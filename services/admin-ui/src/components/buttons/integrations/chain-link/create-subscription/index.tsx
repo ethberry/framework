@@ -8,7 +8,7 @@ import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
-import createSubscriptionVRFCoordinatorV2MockABI from "@framework/abis/json/VRFCoordinatorV2Mock/createSubscription.json";
+import VRFCoordinatorV2PlusMockCreateSubscriptionABI from "@framework/abis/json/VRFCoordinatorV2PlusMock/createSubscription.json";
 
 export interface IChainLinkSubscriptionCreateButtonProps {
   className?: string;
@@ -26,7 +26,7 @@ export const ChainLinkSubscriptionCreateButton: FC<IChainLinkSubscriptionCreateB
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.address,
-        createSubscriptionVRFCoordinatorV2MockABI,
+        VRFCoordinatorV2PlusMockCreateSubscriptionABI,
         web3Context.provider?.getSigner(),
       );
       return contract.createSubscription() as Promise<void>;

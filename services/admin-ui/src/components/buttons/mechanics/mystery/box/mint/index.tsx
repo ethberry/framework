@@ -8,7 +8,7 @@ import type { IMysteryBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { AccessControlRoleType } from "@framework/types";
-import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721MysteryBoxBlacklist/mintBox.json";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";

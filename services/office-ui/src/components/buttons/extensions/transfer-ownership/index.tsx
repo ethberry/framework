@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { ContractSecurity } from "@framework/types";
 
-import TransferOwnershipABI from "@framework/abis/json/OwnershipFacet/transferOwnership.json";
+import TransferOwnershipABI from "@framework/abis/json/Ownable/transferOwnership.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 

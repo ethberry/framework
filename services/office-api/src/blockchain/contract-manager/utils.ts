@@ -6,8 +6,8 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {
     case 1:
       return "Ethereum";
-    case 5:
-      return "EthereumGoerli";
+    case 11155111:
+      return "EthereumSepolia";
     case 56:
       return "Binance";
     case 97:
@@ -19,11 +19,9 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
     case 42161:
       return "Arbitrum";
     case 10000:
-    case 13377:
       return "Gemunion";
-    case 13378:
     case 10001:
-      return "Besu";
+      return "GemunionBesu";
     default:
       return "";
   }

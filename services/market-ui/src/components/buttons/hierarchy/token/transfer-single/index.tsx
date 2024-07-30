@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
-import ERC1155SafeTransferFromABI from "@framework/abis/json/ERC1155Blacklist/safeTransferFrom.json";
+import ERC1155SafeTransferFromABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
 
 import type { IErc1155TransferDto } from "./dialog";
 import { Erc1155TransferDialog } from "./dialog";

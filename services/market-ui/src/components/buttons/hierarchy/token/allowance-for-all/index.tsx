@@ -9,7 +9,7 @@ import { SystemModuleType } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { InputType } from "@gemunion/types-collection";
 
-import SetApprovalForAllABI from "@framework/abis/json/ERC1155Blacklist/setApprovalForAll.json";
+import SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 import { AllowanceForAllDialog } from "./dialog";
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
-import setBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
+import ERC721SimpleSetBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
 
 import { shouldDisableByContractType } from "../../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
@@ -43,7 +43,7 @@ export const SetBaseTokenURIButton: FC<ISetBaseTokenURIButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IBaseTokenURIDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, setBaseURIABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC721SimpleSetBaseURIABI, web3Context.provider?.getSigner());
     return contract.setBaseURI(values.baseTokenURI) as Promise<void>;
   });
 

@@ -8,7 +8,7 @@ import type { IPonziDeposit } from "@framework/types";
 import { PonziDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "@framework/abis/json/ReentrancyStakingReward/receiveReward.json";
+import ReceiveRewardABI from "@framework/abis/json/Staking/receiveReward.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 

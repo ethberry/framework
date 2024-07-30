@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { AccessControlRoleType, TokenType } from "@framework/types";
 
-import StakingWithdrawABI from "@framework/abis/json/ReentrancyStakingReward/withdrawBalance.json";
+import withdrawStakingRewardABI from "@framework/abis/json/Staking/withdrawBalance.json";
 import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IStakingWithdrawButtonProps {
@@ -24,7 +24,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, 0);
 
   const metaWithdraw = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
+    const contract = new Contract(balance.account, withdrawStakingRewardABI, web3Context.provider?.getSigner());
 
     return contract.withdrawBalance({
       tokenType: Object.keys(TokenType).indexOf(balance.token!.template!.contract!.contractType!),
