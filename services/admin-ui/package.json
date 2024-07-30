@@ -60,7 +60,7 @@
     "@gemunion/react-hooks": "2.0.35",
     "@gemunion/react-hooks-eth": "1.5.51",
     "@gemunion/redux": "0.3.29",
-    "@gemunion/traits-v5": "1.0.19",
+    "@gemunion/traits-v5": "1.0.20",
     "@gemunion/types-coin-gecko": "0.3.2",
     "@gemunion/types-collection": "1.5.17",
     "@gemunion/yup-rules": "4.2.60",
