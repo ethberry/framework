@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
@@ -28,7 +28,7 @@ export const ChainLinkSetSubscriptionDialog: FC<IChainLinkSubscriptionDialogProp
       testId="ChainLinkSetSubscriptionDialog"
       {...rest}
     >
-      <NumberInput name="vrfSubId" />
+      <TextInput name="vrfSubId" />
     </FormDialog>
   );
 };

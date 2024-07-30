@@ -34,7 +34,6 @@ export const getContractABI = (path: string, chainId: bigint | number) => {
   const isRandom =
     path.includes("Random") ||
     path.includes("Genes") ||
-    path.includes("Mystery") ||
     path.includes("Loot") ||
     path.includes("Lottery") ||
     path.includes("Raffle");
