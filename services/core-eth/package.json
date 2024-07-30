@@ -7,11 +7,11 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
-    "@gemunion/traits-v6": "1.0.20",
+    "@gemunion/traits-v6": "1.0.21",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.3.22",
     "@gemunion/constants": "0.12.16",
-    "@gemunion/contracts-utils": "5.0.41",
+    "@gemunion/contracts-utils": "5.0.42",
     "@gemunion/draft-js-utils": "1.2.47",
     "@gemunion/nest-js-guards": "3.1.18",
     "@gemunion/nest-js-module-ethers-gcp": "6.1.19",
