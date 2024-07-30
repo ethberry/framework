@@ -330,7 +330,7 @@ export enum ContractEventSignature {
   ReferralBonus = "ReferralBonus(address,address,uint256)",
 
   // MODULE:CHAINLINKV2
-  RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)",
+  RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint256,uint16,uint32,uint32,bytes,address)",
   RandomnessRequestId = "RandomnessRequestId(bytes32,address)",
   SubscriptionConsumerAdded = "SubscriptionConsumerAdded(uint64,address)",
   SubscriptionCreated = "SubscriptionCreated(uint64,address)",

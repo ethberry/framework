@@ -9,10 +9,8 @@ export enum ChainLinkEventType {
   SubscriptionConsumerAdded = "SubscriptionConsumerAdded",
 }
 
-// event RandomWordsRequested(bytes32 indexed keyHash,uint256 requestId,uint256 preSeed,uint64 indexed subId,uint16 minimumRequestConfirmations,uint32 callbackGasLimit,uint32 numWords,address indexed sender);
-// event SubscriptionCreated(uint64 indexed subId, address owner);
 export enum ChainLinkEventSignatures {
-  RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)",
+  RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint256,uint16,uint32,uint32,bytes,address)",
   SubscriptionCreated = "SubscriptionCreated(uint64,address)",
   SubscriptionConsumerAdded = "SubscriptionConsumerAdded(uint64,address)",
 }
@@ -31,5 +29,6 @@ export interface IChainLinkRandomWordsRequestedEvent {
   minimumRequestConfirmations: string;
   callbackGasLimit: string;
   numWords: string;
+  extraArgs: string;
   sender: string;
 }
