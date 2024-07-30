@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
-import revokeRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
+import AccessControlFacetRevokeRoleABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
@@ -42,7 +42,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   );
 
   const metaRevokeRole = useMetamask((values: IAccessControlWithRelations, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, revokeRoleAccessControlFacetABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, AccessControlFacetRevokeRoleABI, web3Context.provider?.getSigner());
     return contract.revokeRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)

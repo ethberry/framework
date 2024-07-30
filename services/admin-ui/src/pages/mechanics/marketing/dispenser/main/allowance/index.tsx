@@ -9,8 +9,8 @@ import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import approveERC20BlacklistABI from "@framework/abis/json/ERC20Blacklist/approve.json";
-import setApprovalForAllERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/setApprovalForAll.json";
+import approveERC20BlacklistABI from "@framework/abis/json/ERC20Simple/approve.json";
+import setApprovalForAllERC1155BlacklistABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
-import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721MysteryBoxBlacklist/mintBox.json";
+import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
-import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxBlacklist/mintBox.json";
+import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintLootBoxDto } from "./dialog";

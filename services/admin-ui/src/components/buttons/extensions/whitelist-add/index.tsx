@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
-import whitelistERC20WhitelistABI from "@framework/abis/json/ERC20Whitelist/whitelist.json";
+import ERC20WhitelistWhitelistABI from "@framework/abis/json/ERC20Whitelist/whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 import { shouldDisableByContractType } from "../../utils";
@@ -43,7 +43,7 @@ export const WhitelistButton: FC<IWhitelistButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, whitelistERC20WhitelistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC20WhitelistWhitelistABI, web3Context.provider?.getSigner());
     return contract.whitelist(values.account) as Promise<void>;
   });
 

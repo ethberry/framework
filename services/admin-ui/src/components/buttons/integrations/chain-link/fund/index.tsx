@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
-import transferAndCallERC677ABI from "@framework/abis/json/ERC677/transferAndCall.json";
+import ERC677TransferAndCallABI from "@framework/abis/json/ERC677/transferAndCall.json";
 
 export interface IChainLinkFundButtonProps {
   subscriptionId: number;
@@ -33,7 +33,7 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        transferAndCallERC677ABI,
+        ERC677TransferAndCallABI,
         web3Context.provider?.getSigner(),
       );
       const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);

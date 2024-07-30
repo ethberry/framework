@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenStatus } from "@framework/types";
 
-import ERC20TransferFromABI from "@framework/abis/json/ERC20/transfer.json";
+import ERC20TransferFromABI from "@framework/abis/json/ERC20Simple/transfer.json";
 import { TransferDialog, ITransferDto } from "../../../../dialogs/transfer";
 
 interface IErc20TransferButtonProps {

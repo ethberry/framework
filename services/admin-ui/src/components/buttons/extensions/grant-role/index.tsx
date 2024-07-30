@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
-import grantRoleAccessControlFacetABI from "@framework/abis/json/AccessControlFacet/grantRole.json";
+import AccessControlFacetGrantRoleABI from "@framework/abis/json/AccessControlFacet/grantRole.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
@@ -43,7 +43,7 @@ export const GrantRoleButton: FC<IGrantRoleButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, grantRoleAccessControlFacetABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, AccessControlFacetGrantRoleABI, web3Context.provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 
