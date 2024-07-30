@@ -1,0 +1,1 @@
+[{"inputs":[],"name":"createSubscription","outputs":[{"internalType":"uint256","name":"subId","type":"uint256"}],"stateMutability":"nonpayable","type":"function"}]

@@ -9,9 +9,9 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20MintABI from "@framework/abis/json/ERC20Blacklist/mint.json";
-import ERC721MintCommonABI from "@framework/abis/json/ERC721Blacklist/mintCommon.json";
-import ERC1155MintABI from "@framework/abis/json/ERC1155Blacklist/mint.json";
+import ERC20MintABI from "@framework/abis/json/ERC20Simple/mint.json";
+import ERC721MintCommonABI from "@framework/abis/json/ERC721Simple/mintCommon.json";
+import ERC1155MintABI from "@framework/abis/json/ERC1155Simple/mint.json";
 
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";

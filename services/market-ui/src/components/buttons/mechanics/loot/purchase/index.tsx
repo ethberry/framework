@@ -11,7 +11,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ILootBox } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import LootBoxPurchaseABI from "@framework/abis/json/ExchangeLootBoxFacet/purchaseLoot.json";
+import ExchangeLootBoxFacetPurchaseLootABI from "@framework/abis/json/ExchangeLootBoxFacet/purchaseLoot.json";
 
 interface ILootBoxBuyButtonProps {
   className?: string;
@@ -27,7 +27,11 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, LootBoxPurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeLootBoxFacetPurchaseLootABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const items = convertDatabaseAssetToChainAsset([...lootBox.item!.components]);
       const price = convertDatabaseAssetToChainAsset([...lootBox.template!.price!.components]);

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import topUpExchangeMockFacetABI from "@framework/abis/json/ExchangeMockFacet/topUp.json";
+import topUpABI from "@framework/abis/json/TopUp/topUp.json";
 
 import { shouldDisableByContractType } from "../../../utils";
 import type { ITopUpDto } from "./dialog";
@@ -35,7 +35,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
 
   const metaFn = useMetamask((values: ITopUpDto, web3Context: Web3ContextType) => {
     const asset = values.token.components[0];
-    const contract = new Contract(address, topUpExchangeMockFacetABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, topUpABI, web3Context.provider?.getSigner());
     if (asset.tokenType === TokenType.NATIVE) {
       return contract.topUp(
         [

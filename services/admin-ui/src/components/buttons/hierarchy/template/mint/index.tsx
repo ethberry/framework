@@ -9,9 +9,9 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
-import mintERC20BlacklistABI from "@framework/abis/json/ERC20Blacklist/mint.json";
-import mintCommonERC721BlacklistABI from "@framework/abis/json/ERC721Blacklist/mintCommon.json";
-import mintERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/mint.json";
+import ERC20SimpleMintABI from "@framework/abis/json/ERC20Simple/mint.json";
+import ERC721SimpleMintCommonABI from "@framework/abis/json/ERC721Simple/mintCommon.json";
+import ERC1155SimpleMintABI from "@framework/abis/json/ERC1155Simple/mint.json";
 
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
@@ -54,21 +54,21 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         templateComponent.contract.address,
-        mintERC20BlacklistABI,
+        ERC20SimpleMintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.contract.address,
-        mintCommonERC721BlacklistABI,
+        ERC721SimpleMintCommonABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         templateComponent.contract.address,
-        mintERC1155BlacklistABI,
+        ERC1155SimpleMintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(

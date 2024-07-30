@@ -11,7 +11,7 @@ import { SystemModuleType } from "@framework/types";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
-import balanceOfBasicTokenABI from "@framework/abis/json/BasicToken/balanceOf.json";
+import ERC20SimpleBalanceOfABI from "@framework/abis/json/ERC20Simple/balanceOf.json";
 
 export interface IChainLinkFundDto {
   subscriptionId: number;
@@ -33,7 +33,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        balanceOfBasicTokenABI,
+        ERC20SimpleBalanceOfABI,
         web3Context.provider?.getSigner(),
       );
       const value = await contract.callStatic.balanceOf(web3Context.account);

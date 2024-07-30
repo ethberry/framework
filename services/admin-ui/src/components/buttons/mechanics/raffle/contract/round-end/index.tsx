@@ -8,7 +8,7 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import RafflesEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
+import RafflesEndRoundABI from "@framework/abis/json/RaffleRandom/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import { useSetButtonPermission } from "../../../../../../shared";

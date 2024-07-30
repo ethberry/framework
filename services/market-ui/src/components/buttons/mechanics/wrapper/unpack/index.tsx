@@ -6,7 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import UnpackABI from "@framework/abis/json/WrapperMock/unpack.json";
+import UnpackABI from "@framework/abis/json/ERC721Wrapper/unpack.json";
 
 export interface IWrapperUnpackButtonProps {
   className?: string;

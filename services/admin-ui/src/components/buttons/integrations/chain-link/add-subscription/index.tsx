@@ -9,7 +9,7 @@ import { SystemModuleType } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
-import addConsumerVRFCoordinatorV2MockABI from "@framework/abis/json/VRFCoordinatorV2Mock/addConsumer.json";
+import VRFCoordinatorV2PlusMockAddConsumerABI from "@framework/abis/json/VRFCoordinatorV2PlusMock/addConsumer.json";
 
 export interface IChainLinkAddConsumerButtonProps {
   className?: string;
@@ -30,7 +30,7 @@ export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = 
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.address,
-        addConsumerVRFCoordinatorV2MockABI,
+        VRFCoordinatorV2PlusMockAddConsumerABI,
         web3Context.provider?.getSigner(),
       );
       const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);

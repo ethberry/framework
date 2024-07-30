@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-import unBlacklistERC1155BlacklistABI from "@framework/abis/json/ERC1155Blacklist/unBlacklist.json";
+import ERC1155BlacklistUnBlacklistABI from "@framework/abis/json/ERC1155Blacklist/unBlacklist.json";
 
 export interface IAccessListUnBlacklistDialogProps {
   open: boolean;
@@ -34,7 +34,7 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
   );
 
   const metaUnBlacklist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, unBlacklistERC1155BlacklistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, ERC1155BlacklistUnBlacklistABI, web3Context.provider?.getSigner());
     return contract.unBlacklist(values.account) as Promise<void>;
   });
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, TokenType } from "@framework/types";
 
-import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxBlacklist/mintBox.json";
+import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
