@@ -17,7 +17,6 @@
     "@framework/localization-market-ui": "0.0.1",
     "@framework/styled": "0.0.1",
     "@framework/types": "0.0.1",
-    "@framework/uniswap-widget": "0.0.1",
     "@gemunion/common-pages": "11.0.116",
     "@gemunion/constants": "0.12.16",
     "@gemunion/draft-js-utils": "1.2.47",
