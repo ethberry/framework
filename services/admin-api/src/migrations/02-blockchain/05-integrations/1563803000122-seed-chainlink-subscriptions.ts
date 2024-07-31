@@ -29,7 +29,7 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
       ), (
         1,
         '13377',
-        1,
+        '64541714375761429755009333354096544764394708868196927991401616871837126426370n',
         '${currentDateTime}',
         '${currentDateTime}'
       );

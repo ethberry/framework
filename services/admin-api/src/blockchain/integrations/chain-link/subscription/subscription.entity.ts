@@ -13,8 +13,8 @@ export class ChainLinkSubscriptionEntity extends IdDateBaseEntity implements ICh
   @Column({ type: "int" })
   public chainId: number;
 
-  @Column({ type: "int" })
-  public vrfSubId: number;
+  @Column({ type: "varchar" })
+  public vrfSubId: string;
 
   @JoinColumn()
   @ManyToOne(_type => MerchantEntity, merchant => merchant.chainLinkSubscriptions)

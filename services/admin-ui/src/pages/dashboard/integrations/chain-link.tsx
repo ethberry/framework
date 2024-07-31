@@ -10,9 +10,9 @@ export const ChainLinkSection: FC = () => {
   const { chainId = 0 } = useWeb3React();
 
   // This was broken again when ChainLink introduces V2Plus so I decided to disable this block
-  if (process.env.NODE_ENV === NodeEnv.development) {
-    return null;
-  }
+  // if (process.env.NODE_ENV === NodeEnv.development) {
+  //   return null;
+  // }
 
   if (process.env.NODE_ENV === NodeEnv.production && !ChainLinkV2SupportedChains[chainId]) {
     return null;

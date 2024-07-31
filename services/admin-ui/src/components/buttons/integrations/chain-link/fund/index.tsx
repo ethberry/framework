@@ -12,7 +12,7 @@ import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import ERC677TransferAndCallABI from "@framework/abis/json/ERC677/transferAndCall.json";
 
 export interface IChainLinkFundButtonProps {
-  subscriptionId: number;
+  subscriptionId: string;
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;

@@ -3,7 +3,6 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { FormWatcher } from "@gemunion/mui-form";
 import { DateInput } from "@gemunion/mui-inputs-picker";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -61,7 +60,6 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       testId="AchievementRuleEditForm"
       {...rest}
     >
-      <FormWatcher />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <ContractInput

@@ -90,6 +90,7 @@
       "CountExceed": "The count exceeds the limit",
       "Expired": "The item has expired",
       "ExpiredSignature": "The signature has expired",
+      "InvalidSubscription": "Invalid VRF Subscription",
       "LimitExceed": "The limit has been exceeded",
       "MethodNotSupported": "The method is not supported",
       "NotActive": "The item is not active",
