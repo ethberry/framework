@@ -17,7 +17,7 @@ export const RaffleListItem: FC<IRaffleListItemProps> = props => {
 
   return (
     <StyledCard>
-      <CardActionArea component={RouterLink} to={`/raffle/contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/raffle/contracts/${contract.id}/view`}>
         <CardHeader title={contract.title} />
         <StyledCardMedia image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>
