@@ -37,7 +37,7 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
 
       const amount = BigNumber.from(item.amount)
         .mul(`${whole}${decimals}`) // multipler (multiplier * 10 ** decimals)
-        .div(BigNumber.from(10).pow(decimals.length)) // div 10 ** decimals 
+        .div(BigNumber.from(10).pow(decimals.length)) // div 10 ** decimals
         .toString();
 
       return {
@@ -69,7 +69,10 @@ export interface ITemplateToAssetProps {
   amount: BigNumberish;
 }
 
-export const convertTemplateToChainAsset = (template?: ITemplateToAssetProps, amount: BigNumberish = 1n) => {
+export const convertTemplateToChainAsset = (
+  template?: ITemplateToAssetProps,
+  amount: BigNumberish = "1" as BigNumberish,
+) => {
   let tokenId;
 
   if (template === undefined) {
