@@ -1,26 +1,29 @@
 import { NotFoundException } from "@nestjs/common";
 
+import { Networks } from "@gemunion/types-blockchain";
 import { ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
 
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {
-    case 1:
+    case Networks.ETHEREUM:
       return "Ethereum";
-    case 11155111:
+    case Networks.ETHEREUM_SEPOLIA:
       return "EthereumSepolia";
-    case 56:
+    case Networks.BINANCE:
       return "Binance";
-    case 97:
+    case Networks.BINANCE_TEST:
       return "BinanceTestnet";
-    case 137:
+    case Networks.POLYGON:
       return "Polygon";
-    case 80002:
+    case Networks.POLYGON_AMOY:
       return "PolygonAmoy";
-    case 42161:
+    case Networks.ARBITRUM:
       return "Arbitrum";
-    case 10000:
+    case Networks.ARBITRUM_SEPOLIA:
+      return "ArbitrumSepolia";
+    case Networks.GEMUNION:
       return "Gemunion";
-    case 10001:
+    case Networks.GEMUNION_BESU:
       return "GemunionBesu";
     default:
       return "";
