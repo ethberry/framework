@@ -1,4 +1,4 @@
-import { Contract, hexlify, randomBytes, Wallet } from "ethers";
+import { Contract, hexlify, randomBytes, Wallet, ZeroAddress } from "ethers";
 
 import VrfV2Sol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
 
@@ -9,6 +9,7 @@ export interface IVrfRandomWordsFulfill {
   callbackGasLimit: string;
   numWords: string;
   keyHash: string;
+  extraArgs: string;
 }
 
 export const callRandom = async function (
@@ -16,33 +17,57 @@ export const callRandom = async function (
   vrfData: IVrfRandomWordsFulfill,
   provider: Wallet,
 ): Promise<string> {
-  const { requestId, keyHash, subId, callbackGasLimit, numWords, sender } = vrfData;
-  const randomness = hexlify(randomBytes(32));
-  const blockNum = await provider.provider?.getBlock("latest");
+  const { requestId, keyHash, subId, callbackGasLimit, numWords, sender, extraArgs } = vrfData;
+  // TODO random from randomBytes
+  // const randomness = hexlify(randomBytes(32));
+  const randomness = 32n;
+  const block = await provider.provider?.getBlock("latest");
   // hexlify(toUtf8Bytes('<YOUR_STRING>'));
-  const randomCallData = {
-    requestId: BigInt(requestId),
-    keyHash,
-    randomness,
-    blockNum: blockNum!.number,
-    subId: BigInt(subId),
-    callbackGasLimit: BigInt(callbackGasLimit),
-    numWords: BigInt(numWords),
-    sender,
+
+  // struct Proof {
+  //   uint256[2] pk;
+  //   uint256[2] gamma;
+  //   uint256 c;
+  //   uint256 s;
+  //   uint256 seed;
+  //   address uWitness;
+  //   uint256[2] cGammaWitness;
+  //   uint256[2] sHashWitness;
+  //   uint256 zInv;
+  // }
+
+  const proof = {
+    pk: [0, 0],
+    gamma: [0, 0],
+    c: 0,
+    s: 0,
+    seed: randomness, // random number
+    uWitness: ZeroAddress,
+    cGammaWitness: [0, 0],
+    sHashWitness: [0, 0],
+    zInv: requestId, // requestId
   };
+
+  const rndReq = {
+    blockNum: block!.number,
+    subId,
+    callbackGasLimit,
+    numWords,
+    sender,
+    extraArgs,
+  };
+
+  console.log("proof", proof);
+  console.log("rndReq", rndReq);
 
   const contract = new Contract(vrfAddr, VrfV2Sol.abi, provider);
   const trx = await contract.fulfillRandomWords(
-    randomCallData.requestId,
-    randomCallData.keyHash,
-    randomCallData.randomness,
-    {
-      blockNum: randomCallData.blockNum,
-      subId: randomCallData.subId,
-      callbackGasLimit: randomCallData.callbackGasLimit,
-      numWords: randomCallData.numWords,
-      sender: randomCallData.sender,
-    },
+    // Proof
+    proof,
+    // RequestCommitmentV2Plus
+    rndReq,
+    // onlyPremium
+    false,
     { gasLimit: 800000 },
   );
   return trx.hash as string;

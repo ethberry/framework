@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { Subscriptions } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract } from "ethers";
+import { Contract, BigNumber } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
@@ -36,7 +36,12 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
     const contract = new Contract(address, ERC721RandomGemunionSetSubscriptionIdABI, web3Context.provider?.getSigner());
-    return contract.setSubscriptionId(BigInt(options.vrfSubId)) as Promise<void>; // V2PLUS
+    console.log("options.vrfSubId", options.vrfSubId);
+    console.log("BigInt.vrfSubId", BigInt(options.vrfSubId.substring(0, options.vrfSubId.length - 1)));
+    const uintSub = BigInt(options.vrfSubId.substring(0, options.vrfSubId.length - 1));
+    // BigInt(str.substring(0,str.length-1))
+    // console.log("BigNumber", BigNumber.from(options.vrfSubId.));
+    return contract.setSubscriptionId(uintSub) as Promise<void>; // V2PLUS
   });
 
   if (
@@ -76,7 +81,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         onConfirm={handleSetSubscriptionConfirm}
         open={isSetSubscriptionDialogOpen}
         initialValues={{
-          vrfSubId: 0,
+          vrfSubId: "0n",
         }}
       />
     </Fragment>
