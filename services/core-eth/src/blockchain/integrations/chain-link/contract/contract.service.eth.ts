@@ -27,7 +27,7 @@ export class ChainLinkContractServiceEth {
 
   public async randomRequest(event: ILogEvent<IChainLinkRandomWordsRequestedEvent>, context: Log): Promise<void> {
     const {
-      args: { requestId, sender, subId, callbackGasLimit, numWords, keyHash, extraArgs },
+      args: { requestId, sender, subId, callbackGasLimit, numWords, extraArgs, keyHash },
     } = event;
 
     await this.eventHistoryService.updateHistory(event, context);
