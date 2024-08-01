@@ -29,7 +29,6 @@ export const lotteryRoutes: Array<RouteObject> = [
         path: "/lottery/ticket/tokens",
         children: [
           { index: true, element: <LotteryTicketTokenList /> },
-
           { path: "/lottery/ticket/tokens/:id/:action", element: <LotteryTicketTokenList /> },
         ],
       },
