@@ -29,13 +29,7 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
 
 export const getContractABI = (path: string, chainId: bigint | number) => {
   let fixedPath = path;
-  const isRandom =
-    path.includes("Random") ||
-    path.includes("Genes") ||
-    path.includes("Loot") ||
-    path.includes("Lottery") ||
-    path.includes("Raffle");
-
+  const isRandom = path.includes("Random") || path.includes("Genes") || path.includes("Loot");
   if (isRandom) {
     const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
     if (process.env.NODE_ENV === NodeEnv.production && !isSupported) {

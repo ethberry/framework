@@ -66,7 +66,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       return metaFnWitnAllowance(
         {
           contract: systemContract.address,
-          assets: [price[0]],
+          assets: price,
         },
         web3Context,
         sign,
