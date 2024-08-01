@@ -51,7 +51,7 @@ export const ChainLink: FC = () => {
     consumers: [""],
   });
   const [currentBalance, setCurrentBalance] = useState<string>("0");
-  const [currentSubscription, setCurrentSubscription] = useState<number>(0);
+  const [currentSubscription, setCurrentSubscription] = useState<string>("0");
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
@@ -129,14 +129,13 @@ export const ChainLink: FC = () => {
           sub.merchant.wallet === account ? account.toLowerCase() : account && sub.chainId === profile.chainId,
         );
         setMerchantSubscriptions(filtered);
-        setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
+        // setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
       });
     }
     if (!merchantSubscriptions || !account) {
-      return;
     }
-    void metaFnSubData(currentSubscription).then(setSubData);
-    void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
+    // void metaFnSubData(currentSubscription).then(setSubData);
+    // void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);
   }, [account, currentSubscription]);
 
   const columns = [

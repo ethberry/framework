@@ -1,6 +1,12 @@
 [
   {
-    "inputs": [{ "internalType": "uint256", "name": "subId", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "subId",
+        "type": "uint256"
+      }
+    ],
     "name": "setSubscriptionId",
     "outputs": [],
     "stateMutability": "nonpayable",

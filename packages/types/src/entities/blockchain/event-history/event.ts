@@ -334,7 +334,8 @@ export enum ContractEventSignature {
   RandomnessRequestId = "RandomnessRequestId(bytes32,address)",
   SubscriptionConsumerAdded = "SubscriptionConsumerAdded(uint64,address)",
   SubscriptionCreated = "SubscriptionCreated(uint64,address)",
-  VrfSubscriptionSet = "VrfSubscriptionSet(uint64)",
+
+  VrfSubscriptionSet = "VrfSubscriptionSet(uint256)",
 
   // MODULE:ECOMMERCE
   EcommercePurchase = "EcommercePurchase(??)",

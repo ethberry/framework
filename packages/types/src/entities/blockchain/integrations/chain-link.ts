@@ -8,7 +8,7 @@ export interface IChainLinkRandomRequestEvent {
 
 export interface IChainLinkSubscription extends IIdDateBase {
   chainId: number;
-  vrfSubId: number;
+  vrfSubId: string;
   merchantId: number;
   merchant: IMerchant;
 }

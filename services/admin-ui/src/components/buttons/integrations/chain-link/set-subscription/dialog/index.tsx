@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import { validationSchema } from "./validation";
+// import { validationSchema } from "./validation";
 
 export interface IChainLinkVrfSubscriptionDto {
   vrfSubId: number;
@@ -23,7 +23,7 @@ export const ChainLinkSetSubscriptionDialog: FC<IChainLinkSubscriptionDialogProp
     <FormDialog
       disabled={false}
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message="dialogs.vrfSetSub"
       testId="ChainLinkSetSubscriptionDialog"
       {...rest}

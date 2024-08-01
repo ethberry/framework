@@ -15,7 +15,7 @@ export interface IChainLinkAddConsumerButtonProps {
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
-  subscriptionId: number;
+  subscriptionId: string;
   contractId?: number;
 }
 
@@ -33,7 +33,11 @@ export const ChainLinkAddConsumerButton: FC<IChainLinkAddConsumerButtonProps> = 
         VRFCoordinatorV2PlusMockAddConsumerABI,
         web3Context.provider?.getSigner(),
       );
-      const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.vrfSubId)), 32);
+      const subId = utils.hexZeroPad(
+        utils.hexlify(BigNumber.from(values.vrfSubId.substring(0, values.vrfSubId.length - 1))),
+        32,
+      );
+      console.log("subId", subId);
       return contract.addConsumer(subId, values.address) as Promise<void>;
     },
   );

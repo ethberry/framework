@@ -22,7 +22,7 @@ export class CreateChainLinkSubscriptions1563803000121 implements MigrationInter
         },
         {
           name: "vrf_sub_id",
-          type: "int",
+          type: "varchar",
         },
         {
           name: "created_at",
