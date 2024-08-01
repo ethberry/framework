@@ -6,7 +6,7 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 // import { validationSchema } from "./validation";
 
 export interface IChainLinkVrfSubscriptionDto {
-  vrfSubId: number;
+  vrfSubId: string;
 }
 
 export interface IChainLinkSubscriptionDialogProps {

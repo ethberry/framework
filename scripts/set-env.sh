@@ -24,6 +24,7 @@ echo $CONTRACT_MANAGER_ADDR
 echo "\033[34mSetting-Up env files in the services folders...\n\033[0m"
 echo STARTING_BLOCK=$STARTING_BLOCK
 touch ./services/admin-api/.env.$WMODE
+echo CHAINLINK_SUBSCRIPTION_ID=$CHAINLINK_SUBSCRIPTION_ID >>./services/admin-api/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/admin-api/.env.$WMODE
 echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/admin-api/.env.$WMODE
 echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/admin-api/.env.$WMODE

@@ -1122,22 +1122,22 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case LootContractTemplates.SIMPLE:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxSimple.sol/ERC721LootBoxSimple.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/random/ERC721LootBoxSimple.sol/ERC721LootBoxSimple.json",
           chainId,
         );
       case LootContractTemplates.PAUSABLE:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxPausable.sol/ERC721LootBoxPausable.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/random/ERC721LootBoxPausable.sol/ERC721LootBoxPausable.json",
           chainId,
         );
       case LootContractTemplates.BLACKLIST:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxBlacklist.sol/ERC721LootBoxBlacklist.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/random/ERC721LootBoxBlacklist.sol/ERC721LootBoxBlacklist.json",
           chainId,
         );
       case LootContractTemplates.BLACKLIST_PAUSABLE:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/ERC721LootBoxBlacklistPausable.sol/ERC721LootBoxBlacklistPausable.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/LootBox/random/ERC721LootBoxBlacklistPausable.sol/ERC721LootBoxBlacklistPausable.json",
           chainId,
         );
       default:

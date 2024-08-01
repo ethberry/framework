@@ -1,4 +1,4 @@
-import { Contract, hexlify, randomBytes, Wallet, ZeroAddress } from "ethers";
+import { Contract, randomBytes, Wallet, ZeroAddress } from "ethers";
 
 import VrfV2Sol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
 
@@ -17,10 +17,13 @@ export const callRandom = async function (
   vrfData: IVrfRandomWordsFulfill,
   provider: Wallet,
 ): Promise<string> {
-  const { requestId, keyHash, subId, callbackGasLimit, numWords, sender, extraArgs } = vrfData;
-  // TODO random from randomBytes
-  // const randomness = hexlify(randomBytes(32));
-  const randomness = 32n;
+  const { requestId, subId, callbackGasLimit, numWords, sender, extraArgs } = vrfData;
+
+  const generatedRandomBytes = randomBytes(32);
+  const randomness = BigInt("0x" + Buffer.from(generatedRandomBytes).toString("hex"));
+
+  console.log("randomness", randomness);
+
   const block = await provider.provider?.getBlock("latest");
   // hexlify(toUtf8Bytes('<YOUR_STRING>'));
 

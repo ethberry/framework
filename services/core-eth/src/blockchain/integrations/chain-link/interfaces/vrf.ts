@@ -26,6 +26,19 @@ export interface IChainLinkRandomRequestEvent {
   _sender: string;
 }
 
+// V2PLUS
+// event RandomWordsRequested(
+//   bytes32 indexed keyHash,
+//   uint256 requestId,
+//   uint256 preSeed,
+//   uint256 indexed subId,
+//   uint16 minimumRequestConfirmations,
+//   uint32 callbackGasLimit,
+//   uint32 numWords,
+//   bytes extraArgs,
+//   address indexed sender
+// );
+
 export interface IChainLinkRandomWordsRequestedEvent {
   keyHash: string;
   requestId: string;
