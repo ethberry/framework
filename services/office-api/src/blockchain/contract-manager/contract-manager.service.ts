@@ -90,17 +90,19 @@ export class ContractManagerService {
     contractModule: ModuleType,
     contractType: TokenType | null,
   ): Promise<void> {
-    const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
-    const count = await this.contractService.count({
-      contractModule,
-      contractType: contractType || IsNull(),
-      merchantId: userEntity.merchantId,
-    });
-
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
 
-    if (businessType === BusinessType.B2B && count >= limit) {
-      throw new PaymentRequiredException("paymentRequired");
+    if (businessType === BusinessType.B2B) {
+      const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+      const count = await this.contractService.count({
+        contractModule,
+        contractType: contractType || IsNull(),
+        merchantId: userEntity.merchantId,
+      });
+
+      if (count >= limit) {
+        throw new PaymentRequiredException("paymentRequired");
+      }
     }
   }
 }
