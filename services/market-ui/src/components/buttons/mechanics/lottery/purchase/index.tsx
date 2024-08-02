@@ -60,7 +60,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             value: getEthPrice(round.price),
           },
         )
-        .then(clearForm) as Promise<void>;
+        .finally(clearForm) as Promise<void>;
     },
   );
 

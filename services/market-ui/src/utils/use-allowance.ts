@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { enqueueSnackbar } from "notistack";
 
 import { TokenType } from "@gemunion/types-blockchain";
-import { BigNumber, BigNumberish, Contract } from "ethers";
+import { BigNumber, BigNumberish, Contract, ContractTransaction } from "ethers";
 
 import ERC20AllowanceABI from "@framework/abis/allowance/ERC20.json";
 import ERC721IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC721.json";
@@ -44,7 +44,8 @@ export const useAllowance = (
 
         if (!hasAllowance) {
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          await approveTokens(params.contract, asset, web3Context);
+          const tx = await approveTokens(params.contract, asset, web3Context);
+          await tx.wait();
         }
       } catch (e) {
         if (error) {
@@ -123,19 +124,19 @@ export const approveTokens = async (contract: string, asset: IAsset, web3Context
   // ERC20
   if (tokenType === TokenType.ERC20) {
     const contractErc20 = new Contract(token, ERC20ApproveABI, web3Context.provider?.getSigner());
-    await contractErc20.approve(contract, amount);
+    return contractErc20.approve(contract, amount) as ContractTransaction;
   }
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
     const contractErc721 = new Contract(token, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
-    await contractErc721.setApprovalForAll(contract, true);
+    return contractErc721.setApprovalForAll(contract, true) as ContractTransaction;
   }
 
   // ERC1155
   else if (tokenType === TokenType.ERC1155) {
     const contractErc1155 = new Contract(token, ERC1155SetApprovalForAllABI, web3Context.provider?.getSigner());
-    await contractErc1155.setApprovalForAll(contract, true);
+    return contractErc1155.setApprovalForAll(contract, true) as ContractTransaction;
   }
 
   // Unknown Token Type
