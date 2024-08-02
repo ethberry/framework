@@ -1,10 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { PaymentRequiredException } from "@gemunion/nest-js-utils";
-import { BusinessType, IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
+import { IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import type { IContractManagerCreateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -19,7 +18,6 @@ export class ContractManagerService {
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
     private readonly planService: RatePlanService,
     private readonly contractService: ContractService,
-    protected readonly configService: ConfigService,
   ) {}
 
   public async search(dto: Partial<IContractManagerSearchDto>): Promise<[Array<ContractManagerEntity>, number]> {
@@ -90,19 +88,15 @@ export class ContractManagerService {
     contractModule: ModuleType,
     contractType: TokenType | null,
   ): Promise<void> {
-    const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
+    const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+    const count = await this.contractService.count({
+      contractModule,
+      contractType: contractType || IsNull(),
+      merchantId: userEntity.merchantId,
+    });
 
-    if (businessType === BusinessType.B2B) {
-      const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
-      const count = await this.contractService.count({
-        contractModule,
-        contractType: contractType || IsNull(),
-        merchantId: userEntity.merchantId,
-      });
-
-      if (count >= limit) {
-        throw new PaymentRequiredException("paymentRequired");
-      }
+    if (count >= limit) {
+      throw new PaymentRequiredException("paymentRequired");
     }
   }
 }
