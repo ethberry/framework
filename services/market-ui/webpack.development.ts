@@ -30,6 +30,7 @@ const config: Configuration = {
     modules: ["node_modules"],
     fallback: {
       path: require.resolve("path-browserify"),
+      "process/browser": require.resolve("process/browser"),
     },
     symlinks: false,
   },
