@@ -6,16 +6,17 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@gemunion/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
-  convertTemplateToChainAsset,
   getEthPrice,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
+
 import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMysteryBoxBuyButtonProps {
@@ -34,8 +35,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
-      const items = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
-      const mysteryItem = convertTemplateToChainAsset(mysteryBox.template);
+      const content = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
       const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);
 
       return contract.purchaseMystery(
@@ -47,8 +47,14 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
           receiver: mysteryBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        [...items, mysteryItem],
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: mysteryBox.template!.contract!.address,
+          tokenId: mysteryBox.templateId,
+          amount: "1",
+        },
         price,
+        content,
         sign.signature,
         {
           value: getEthPrice(mysteryBox.template?.price),

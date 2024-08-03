@@ -24,6 +24,7 @@ export class TokenController {
         ModuleType.HIERARCHY,
         ModuleType.COLLECTION,
         ModuleType.MYSTERY,
+        ModuleType.LOOT,
         ModuleType.WRAPPER,
         ModuleType.LOTTERY,
         ModuleType.RAFFLE,

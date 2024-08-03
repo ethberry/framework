@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress, keccak256, AbiCoder } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -70,23 +70,22 @@ export class LootSignService {
     params: IParams,
     lootBoxEntity: LootBoxEntity,
   ): Promise<string> {
-    const items = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
+    const content = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
     const price = convertDatabaseAssetToChainAsset(lootBoxEntity.template.price.components);
 
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManyToManySignature(
       verifyingContract,
       account,
       params,
-      [
-        ...items,
-        {
-          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-          token: lootBoxEntity.template.contract.address,
-          tokenId: lootBoxEntity.templateId.toString(),
-          amount: "1",
-        },
-      ],
+      {
+        tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+        token: lootBoxEntity.template.contract.address,
+        tokenId: lootBoxEntity.templateId.toString(),
+        amount: "1",
+      },
       price,
+      content,
+      keccak256(AbiCoder.defaultAbiCoder().encode(["uint128", "uint128"], [lootBoxEntity.min, lootBoxEntity.max])),
     );
   }
 }

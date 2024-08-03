@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, constants, Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@gemunion/types-blockchain";
 import {
   getEthPrice,
   convertDatabaseAssetToChainAsset,
-  convertTemplateToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -38,10 +38,8 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
         ExchangeLootBoxFacetPurchaseLootABI,
         web3Context.provider?.getSigner(),
       );
-      const items = convertDatabaseAssetToChainAsset(lootBox.item!.components);
-      const lootItem = convertTemplateToChainAsset(lootBox.template);
-      const price = convertDatabaseAssetToChainAsset(lootBox.template!.price!.components);
-
+      const content = convertDatabaseAssetToChainAsset([...lootBox.item!.components]);
+      const price = convertDatabaseAssetToChainAsset([...lootBox.template!.price!.components]);
       return contract.purchaseLoot(
         {
           externalId: lootBox.id,
@@ -51,9 +49,18 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
           receiver: lootBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        [...items, lootItem],
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: lootBox.template!.contract!.address,
+          tokenId: lootBox.templateId,
+          amount: "1",
+        },
         price,
-        { min: lootBox.min, max: lootBox.max },
+        content,
+        {
+          min: lootBox.min,
+          max: lootBox.max,
+        },
         sign.signature,
         {
           value: getEthPrice(lootBox.template?.price),

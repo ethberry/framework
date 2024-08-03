@@ -38,26 +38,26 @@ export class SeedEventHistoryLootErc721PurchaseAt1687580606310 implements Migrat
         '${JSON.stringify({
           account: wallets[0],
           externalId: "1120101",
-          item: [
-            {
-              tokenType: 2,
-              token: erc721ContractLootSimpleAddress,
-              tokenId: "1120101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootSimpleAddress,
+            tokenId: "1120101",
+            amount: "1",
+          },
           price: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
               tokenId: "1020101",
               amount: WeiPerEther.toString(),
+            },
+          ],
+          content: [
+            {
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',
@@ -98,26 +98,26 @@ export class SeedEventHistoryLootErc721PurchaseAt1687580606310 implements Migrat
         '${JSON.stringify({
           account: wallets[0],
           externalId: "1120101",
-          item: [
-            {
-              tokenType: 2,
-              token: erc721ContractLootSimpleAddress,
-              tokenId: "1120101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootSimpleAddress,
+            tokenId: "1120101",
+            amount: "1",
+          },
           price: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
               tokenId: "1020101",
               amount: WeiPerEther.toString(),
+            },
+          ],
+          content: [
+            {
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',
@@ -158,26 +158,26 @@ export class SeedEventHistoryLootErc721PurchaseAt1687580606310 implements Migrat
         '${JSON.stringify({
           account: wallets[0],
           externalId: "1120101",
-          item: [
-            {
-              tokenType: 2,
-              token: erc721ContractLootSimpleAddress,
-              tokenId: "1120101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootSimpleAddress,
+            tokenId: "1120101",
+            amount: "1",
+          },
           price: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
               tokenId: "1020101",
               amount: WeiPerEther.toString(),
+            },
+          ],
+          content: [
+            {
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',
@@ -218,26 +218,26 @@ export class SeedEventHistoryLootErc721PurchaseAt1687580606310 implements Migrat
         '${JSON.stringify({
           account: wallets[1],
           externalId: "1120101",
-          item: [
-            {
-              tokenType: 2,
-              token: erc721ContractLootSimpleAddress,
-              tokenId: "1120101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootSimpleAddress,
+            tokenId: "1120101",
+            amount: "1",
+          },
           price: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
               tokenId: "1020101",
               amount: WeiPerEther.toString(),
+            },
+          ],
+          content: [
+            {
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',
@@ -278,26 +278,26 @@ export class SeedEventHistoryLootErc721PurchaseAt1687580606310 implements Migrat
         '${JSON.stringify({
           account: wallets[2],
           externalId: "1120101",
-          item: [
-            {
-              tokenType: 2,
-              token: erc721ContractLootSimpleAddress,
-              tokenId: "1120101",
-              amount: "1",
-            },
-            {
-              tokenType: 2,
-              token: erc721ContractRandomAddress,
-              tokenId: "1030601",
-              amount: "1",
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootSimpleAddress,
+            tokenId: "1120101",
+            amount: "1",
+          },
           price: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
               tokenId: "1020101",
               amount: WeiPerEther.toString(),
+            },
+          ],
+          content: [
+            {
+              tokenType: 2,
+              token: erc721ContractRandomAddress,
+              tokenId: "1030601",
+              amount: "1",
             },
           ],
         })}',

@@ -9,6 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetComponent, IContract } from "@framework/types";
 import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";
 import { TokenType } from "@framework/types";
+
 import TopUpABI from "@framework/abis/json/TopUp/topUp.json";
 
 import { TopUpDialog } from "./dialog";
