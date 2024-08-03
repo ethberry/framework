@@ -15,7 +15,7 @@ export const LotteryListItem: FC<ILotteryListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/lottery/contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/lottery/contracts/${contract.id}/view`}>
         <CardHeader title={contract.title} />
         <StyledCardMedia image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>

@@ -6,7 +6,8 @@ import { BigNumber, constants, Contract } from "ethers";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract } from "@framework/types";
+import type { IAssetComponent, IContract } from "@framework/types";
+import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";
 import { TokenType } from "@framework/types";
 
 import TopUpABI from "@framework/abis/json/TopUp/topUp.json";
@@ -14,6 +15,7 @@ import TopUpABI from "@framework/abis/json/TopUp/topUp.json";
 import { TopUpDialog } from "./dialog";
 import type { ITopUpDto } from "./dialog";
 import { shouldDisableByContractType } from "../../../../utils";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface ITopUpButtonProps {
   className?: string;
@@ -33,9 +35,10 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
 
   const [isTopUpDialogOpen, setIsTopUpDialogOpen] = useState(false);
 
-  const metaFn = useMetamask((values: ITopUpDto, web3Context: Web3ContextType) => {
-    const asset = values.token.components[0];
+  const metaFnWithAllowance = useAllowance((web3Context: Web3ContextType, values: ITopUpDto) => {
     const contract = new Contract(address, TopUpABI, web3Context.provider?.getSigner());
+    const asset = values.token.components[0];
+
     if (asset.tokenType === TokenType.NATIVE) {
       return contract.topUp(
         [
@@ -49,7 +52,6 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
         { value: BigNumber.from(asset.amount) },
       ) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
-      // const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
       return contract.topUp([
         {
           tokenType: 1,
@@ -61,6 +63,18 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
     } else {
       throw new Error("unsupported token type");
     }
+  });
+
+  const metaFn = useMetamask((values: ITopUpDto, web3Context: Web3ContextType) => {
+    const assets = convertDatabaseAssetToTokenTypeAsset(values.token.components as unknown as Array<IAssetComponent>);
+    return metaFnWithAllowance(
+      {
+        contract: values.address,
+        assets,
+      },
+      web3Context,
+      values,
+    );
   });
 
   const handleTopUp = () => {

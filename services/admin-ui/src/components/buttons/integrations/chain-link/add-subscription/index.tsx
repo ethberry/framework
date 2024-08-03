@@ -15,7 +15,7 @@ export interface IChainLinkAddConsumerButtonProps {
   className?: string;
   disabled?: boolean;
   variant?: ListActionVariant;
-  subscriptionId: number;
+  subscriptionId: string;
   contractId?: number;
 }
 

@@ -4,10 +4,10 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { VrfSubInput } from "./sub-input";
 import { VrfConsumerInput } from "./contract-input";
-import { validationSchema } from "./validation";
+// import { validationSchema } from "./validation";
 
 export interface IChainLinkVrfSubscriptionDto {
-  vrfSubId: number;
+  vrfSubId: string;
   address: string;
   contractId?: number;
   subId?: number;
@@ -27,7 +27,7 @@ export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> 
     <FormDialog
       disabled={false}
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message="dialogs.vrfConsumer"
       testId="VrfConsumerForm"
       {...rest}

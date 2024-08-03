@@ -7,12 +7,16 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import RafflePurchaseABI from "@framework/abis/json/ExchangeRaffleFacet/purchaseRaffle.json";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IRafflePurchaseButtonProps {
   className?: string;
@@ -26,9 +30,11 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
 
   const referrer = useAppSelector(walletSelectors.referrerSelector);
 
-  const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWitnAllowance = useAllowance(
+    (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, RafflePurchaseABI, web3Context.provider?.getSigner());
+
+      const price = convertDatabaseAssetToChainAsset(round.price?.components);
 
       return contract.purchaseRaffle(
         {
@@ -45,17 +51,27 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
           tokenId: "0",
           amount: "1",
         },
-        round.price?.components.map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract?.address,
-          tokenId: component.template?.tokens![0].tokenId,
-          amount: component.amount,
-        }))[0],
+        price[0],
         sign.signature,
         {
           value: getEthPrice(round.price),
         },
       ) as Promise<void>;
+    },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
+      return metaFnWitnAllowance(
+        {
+          contract: systemContract.address,
+          assets: price,
+        },
+        web3Context,
+        sign,
+        systemContract,
+      );
     },
     // { error: false },
   );

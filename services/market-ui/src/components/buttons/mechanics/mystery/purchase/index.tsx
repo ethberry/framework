@@ -6,12 +6,17 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { convertDatabaseAssetToChainAsset, getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
-import { TokenType } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMysteryBoxBuyButtonProps {
   className?: string;
@@ -25,8 +30,8 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
 
   const referrer = useAppSelector(walletSelectors.referrerSelector);
 
-  const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
       const content = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
@@ -55,7 +60,18 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
         },
       ) as Promise<void>;
     },
-    // { error: false },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const price = convertDatabaseAssetToTokenTypeAsset(mysteryBox.template!.price!.components);
+      return metaFnWithAllowance(
+        { contract: systemContract.address, assets: price },
+        web3Context,
+        sign,
+        systemContract,
+      );
+    },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

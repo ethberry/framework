@@ -3,8 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { PaymentRequiredException } from "@gemunion/nest-js-utils";
-import type { IContractManagerSearchDto } from "@framework/types";
-import { ModuleType, TokenType } from "@framework/types";
+import { IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import type { IContractManagerCreateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";

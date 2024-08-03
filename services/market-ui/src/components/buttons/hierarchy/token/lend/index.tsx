@@ -4,16 +4,21 @@ import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import TemplateLendABI from "@framework/abis/json/ExchangeRentableFacet/lend.json";
 
-import { sorter } from "../../../../../utils/sorter";
 import type { ILendDto } from "./dialog";
 import { LendDialog } from "./dialog";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface ITokenLendButtonProps {
   className?: string;
@@ -26,8 +31,8 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
   const [isLendTokenDialogOpen, setIsLendTokenDialogOpen] = useState(false);
 
-  const metaFnWithSign = useServerSignature(
-    (values: ILendDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, values: ILendDto, sign: IServerSignature, systemContract: IContract) => {
       const timeEnd = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(utils.hexlify(timeEnd), 32);
 
@@ -41,32 +46,36 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         receiver: token.template?.contract?.merchant!.wallet,
         referrer: values.account,
       };
-      const item = {
-        tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),
-        token: token.template!.contract?.address,
-        tokenId: token.tokenId,
-        amount: 1,
-      };
+      const item = convertTemplateToChainAsset(token.template, 1);
 
       const rentRule = token.template?.contract?.rent
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
         : [];
 
-      const price = rentRule
-        ? rentRule[0].price?.components.sort(sorter("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            // pass templateId instead of tokenId = 0
-            tokenId:
-              component.template!.tokens![0].tokenId === "0"
-                ? component.template!.tokens![0].templateId
-                : component.template!.tokens![0].tokenId,
-            amount: component.amount,
-          }))
-        : []; // Zero price for free rent
+      const price = convertDatabaseAssetToChainAsset(rentRule ? rentRule[0].price?.components : []);
+
+      // TODO - test
       return contract.lend(params, item, price, sign.signature, {
         value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
+    },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (values: ILendDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const rentRule = token.template?.contract?.rent
+        ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
+        : [];
+
+      const price = convertDatabaseAssetToTokenTypeAsset(rentRule ? rentRule[0].price?.components : []);
+
+      return metaFnWithAllowance(
+        { contract: systemContract.address, assets: price },
+        web3Context,
+        values,
+        sign,
+        systemContract,
+      );
     },
     // { error: false },
   );

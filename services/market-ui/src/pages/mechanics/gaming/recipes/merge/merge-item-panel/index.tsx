@@ -8,7 +8,6 @@ import type { IMerge } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { MergeButton } from "../../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface IMergeItemPanelProps {
@@ -42,7 +41,6 @@ export const MergeItemPanel: FC<IMergeItemPanelProps> = props => {
       </CardContent>
       <CardActions>
         <MergeButton merge={merge} />
-        <AllowanceButton isSmall={true} />
       </CardActions>
     </Card>
   );

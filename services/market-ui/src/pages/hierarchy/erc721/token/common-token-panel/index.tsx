@@ -7,8 +7,6 @@ import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { Erc721TransferButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../exchange/wallet/allowance";
-import { computeTokenAsset } from "../../../../../utils/token";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTokenPanelProps {
@@ -40,9 +38,6 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>
             <Erc721TransferButton token={token} />
-          </Grid>
-          <Grid item xs={12}>
-            <AllowanceButton token={computeTokenAsset(token)} contract={token.template?.contract} />
           </Grid>
         </Grid>
       </CardActions>

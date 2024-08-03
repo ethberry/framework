@@ -10,7 +10,6 @@ import { LotteryPurchaseButton } from "../../../../../../components/buttons";
 import { emptyLotteryRound } from "../../../../../../components/common/interfaces";
 import { InfoPopover } from "../../../../../../components/popover";
 import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
-import { AllowanceButton } from "./allowance";
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 
 const maxNumbers = 6;
@@ -101,8 +100,6 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
               ) : null}
             </StyledTypography>
           </InfoPopover>
-
-          <AllowanceButton contract={contract} />
 
           <LotteryPurchaseButton
             round={round}

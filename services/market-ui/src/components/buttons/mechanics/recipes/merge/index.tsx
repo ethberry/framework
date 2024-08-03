@@ -7,15 +7,14 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { getEthPrice } from "@framework/exchange";
+import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset, sortArrObj } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IMerge } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { IContract, IMerge, TokenType } from "@framework/types";
 
 import MergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
-import { sorter } from "../../../../../utils/sorter";
 import { MergeDialog, IMergeDto } from "./dialog";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMergeButtonProps {
   className?: string;
@@ -31,14 +30,24 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
   const referrer = useAppSelector(walletSelectors.referrerSelector);
 
-  const metaFnWithSign = useServerSignature(
-    (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, values: IMergeDto, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MergeABI, web3Context.provider?.getSigner());
 
       const encodedTemplateId = utils.hexZeroPad(
         BigNumber.from(merge.price?.components[0].templateId || 0).toHexString(),
         32,
       );
+
+      const items = convertDatabaseAssetToChainAsset(merge.item?.components);
+
+      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el => ({
+        tokenId: el.tokenId,
+        tokenType: Object.values(TokenType).indexOf(el.template?.contract?.contractType!),
+        token: el.template?.contract?.address,
+        amount: "1",
+      }));
+
       return contract.merge(
         {
           externalId: merge.id,
@@ -48,28 +57,27 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
           receiver: merge.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        merge.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId:
-            component.contract!.contractType === TokenType.ERC1155
-              ? component.template!.tokens![0].tokenId
-              : (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        })),
-        values.tokenEntities?.sort(sorter("tokenId")).map(token => ({
-          tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),
-          token: token.template!.contract!.address,
-          tokenId: token.tokenId,
-          amount: "1",
-        })),
+        items,
+        price,
         sign.signature,
-        {
-          value: getEthPrice(merge.price),
-        },
       ) as Promise<void>;
     },
-    // { error: false },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    async (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el =>
+        convertTemplateToTokenTypeAsset(el.template),
+      );
+
+      return metaFnWithAllowance(
+        { contract: systemContract.address, assets: price },
+        web3Context,
+        values,
+        sign,
+        systemContract,
+      );
+    },
   );
 
   const metaFn = useMetamask((values: IMergeDto, web3Context: Web3ContextType) => {

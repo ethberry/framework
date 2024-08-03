@@ -43,8 +43,7 @@ import { ChainLinkSubscriptionModule } from "../../subscription/subscription.mod
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
         const subscriptions = await chainLinkSubscriptionService.findAll({ chainId, vrfSubId: Not(IsNull()) });
-        const subIds = subscriptions.map(sub => zeroPadValue(toBeHex(sub.vrfSubId), 32));
-
+        const subIds = subscriptions.map(sub => zeroPadValue(toBeHex(BigInt(sub.vrfSubId)), 32));
         // search for all RandomWordsRequested from all registered Subscriptions for current chainId
         const topics = [
           [keccak256It(ChainLinkEventSignatures.RandomWordsRequested as string)],

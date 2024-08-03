@@ -44,7 +44,7 @@ export class ChainLinkSubscriptionServiceEth {
     if (merchant) {
       await this.eventHistoryService.updateHistory(event, context);
       const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-      await this.chainLinkSubscriptionService.create({ merchant, chainId, vrfSubId: Number(subId) });
+      await this.chainLinkSubscriptionService.create({ merchant, chainId, vrfSubId: subId });
 
       await this.signalClientProxy
         .emit(SignalEventType.TRANSACTION_HASH, {

@@ -7,8 +7,7 @@ import type { IMerge, IMergeSignDto, IToken } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { TokenMergeInput } from "../../../../../inputs/merge-token";
-import { AllowanceForAllButton } from "../../../../hierarchy/token/allowance-for-all";
-import { Root, StyledAlert, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";
+import { Root, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";
 import { validationSchema } from "./validation";
 
 export interface IMergeDto extends Pick<IMergeSignDto, "tokenIds"> {
@@ -58,16 +57,6 @@ export const MergeDialog: FC<IMergeDialogProps> = props => {
             })}
           </StyledCard>
         </StyledCardWrapper>
-        <StyledAlert
-          severity="warning"
-          action={
-            merge.price?.components[0].contract ? (
-              <AllowanceForAllButton contract={merge.price.components[0].contract} />
-            ) : null
-          }
-        >
-          <FormattedMessage id="alert.approve" />
-        </StyledAlert>
         <TokenMergeInput merge={merge} />
       </Root>
     </FormDialog>
