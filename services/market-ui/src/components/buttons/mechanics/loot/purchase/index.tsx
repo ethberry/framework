@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, constants, Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@gemunion/types-blockchain";
 import {
   getEthPrice,
   convertDatabaseAssetToChainAsset,
-  convertTemplateToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";

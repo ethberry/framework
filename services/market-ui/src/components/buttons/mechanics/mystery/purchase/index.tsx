@@ -6,16 +6,17 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { TokenType } from "@gemunion/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
-  convertTemplateToChainAsset,
   getEthPrice,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
+
 import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMysteryBoxBuyButtonProps {
