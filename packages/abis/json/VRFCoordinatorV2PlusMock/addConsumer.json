@@ -1,16 +1,8 @@
 [
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "subId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "consumer",
-        "type": "address"
-      }
+      { "internalType": "uint256", "name": "subId", "type": "uint256" },
+      { "internalType": "address", "name": "consumer", "type": "address" }
     ],
     "name": "addConsumer",
     "outputs": [],

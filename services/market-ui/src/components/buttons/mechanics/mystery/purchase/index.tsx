@@ -67,7 +67,6 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
         systemContract,
       );
     },
-    // { error: false },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

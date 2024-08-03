@@ -10,7 +10,7 @@ import ERC721IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC721.j
 import ERC1155IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC1155.json";
 
 import ERC20ApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
-import ERC721SetApprovalForAllABI from "@framework/abis/json/ERC721Simple/approve.json";
+import ERC721SetApprovalForAllABI from "@framework/abis/json/ERC721Simple/setApprovalForAll.json";
 import ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 // Where to import IAsset?
@@ -25,40 +25,6 @@ export interface IUseAllowanceOptionsParams {
   contract: string;
   assets: IAsset[];
 }
-
-export const useAllowance = (
-  fn: (web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>,
-  options: { error?: boolean; success?: boolean } = {},
-): ((params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
-  const { error = true } = options;
-  const { formatMessage } = useIntl();
-
-  return async (params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    const assets = groupAssetsByContract(params.assets); // Combine(ERC20) or Remove dublications by tokenAddress
-
-    for (const asset of assets) {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        const hasAllowance = await checkAllowance(params.contract, asset, web3Context);
-
-        if (!hasAllowance) {
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          const tx = await approveTokens(params.contract, asset, web3Context);
-          await tx.wait();
-        }
-      } catch (e) {
-        if (error) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.insufficientAllowance" }), { variant: "error" });
-          console.error(`[allowance error] ${formatMessage({ id: "snackbar.insufficientAllowance" })}`, e);
-          return null;
-        }
-        throw new Error(e);
-      }
-    }
-    return fn(web3Context, ...args);
-  };
-};
 
 export const groupAssetsByContract = (assets: IAsset[]) => {
   const grouped: Record<string, IAsset> = {};
@@ -103,13 +69,13 @@ export const checkAllowance = async (contract: string, asset: IAsset, web3Contex
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
     const contractErc721 = new Contract(token, ERC721IsApprovedForAllABI, web3Context.provider?.getSigner());
-    return (await contractErc721.isApprovedForAll(web3Context.account, contract)) as boolean;
+    return contractErc721.isApprovedForAll(web3Context.account, contract) as boolean;
   }
 
   // ERC1155
   else if (tokenType === TokenType.ERC1155) {
     const contractErc1155 = new Contract(token, ERC1155IsApprovedForAllABI, web3Context.provider?.getSigner());
-    return (await contractErc1155.isApprovedForAll(web3Context.account, contract)) as boolean;
+    return contractErc1155.isApprovedForAll(web3Context.account, contract) as boolean;
   }
 
   // UNKNOWN TOKEN TYPE
@@ -143,4 +109,35 @@ export const approveTokens = async (contract: string, asset: IAsset, web3Context
   else {
     throw new Error("unsupported token type");
   }
+};
+
+export const useAllowance = (
+  fn: (web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>,
+  options: { error?: boolean; success?: boolean } = {},
+): ((params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
+  const { error = true } = options;
+  const { formatMessage } = useIntl();
+
+  return async (params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => {
+    const assets = groupAssetsByContract(params.assets); // Combine(ERC20) or Remove dublications by tokenAddress
+
+    for (const asset of assets) {
+      try {
+        const hasAllowance = await checkAllowance(params.contract, asset, web3Context);
+
+        if (!hasAllowance) {
+          const tx = await approveTokens(params.contract, asset, web3Context);
+          await tx.wait();
+        }
+      } catch (e) {
+        if (error) {
+          enqueueSnackbar(formatMessage({ id: "snackbar.insufficientAllowance" }), { variant: "error" });
+          console.error(`[allowance error] ${formatMessage({ id: "snackbar.insufficientAllowance" })}`, e);
+          return null;
+        }
+        throw new Error(e);
+      }
+    }
+    return fn(web3Context, ...args);
+  };
 };

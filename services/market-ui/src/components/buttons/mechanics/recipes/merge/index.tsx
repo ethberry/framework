@@ -7,15 +7,9 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import {
-  convertDatabaseAssetToChainAsset,
-  convertTemplateToTokenTypeAsset,
-  convertTemplateToChainAsset,
-  getEthPrice,
-  sortArrObj,
-} from "@framework/exchange";
+import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset, sortArrObj } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, IMerge } from "@framework/types";
+import { IContract, IMerge, TokenType } from "@framework/types";
 
 import MergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
@@ -46,9 +40,13 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
       );
 
       const items = convertDatabaseAssetToChainAsset(merge.item?.components);
-      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el =>
-        convertTemplateToChainAsset(el.template),
-      );
+
+      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el => ({
+        tokenId: el.tokenId,
+        tokenType: Object.values(TokenType).indexOf(el.template?.contract?.contractType!),
+        token: el.template?.contract?.address,
+        amount: "1",
+      }));
 
       return contract.merge(
         {
@@ -62,9 +60,6 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         items,
         price,
         sign.signature,
-        {
-          value: getEthPrice(merge.price),
-        },
       ) as Promise<void>;
     },
   );
@@ -83,7 +78,6 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         systemContract,
       );
     },
-    // { error: false },
   );
 
   const metaFn = useMetamask((values: IMergeDto, web3Context: Web3ContextType) => {
