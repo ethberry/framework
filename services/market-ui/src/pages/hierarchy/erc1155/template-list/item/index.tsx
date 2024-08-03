@@ -8,7 +8,6 @@ import type { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../exchange/wallet/allowance";
 
 interface IErc1155TemplateListItemProps {
   template: ITemplate;
@@ -35,7 +34,6 @@ export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props 
         <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
           <Grid item xs={12} alignItems="center">
             <TemplatePurchaseButton template={template} />
-            <AllowanceButton token={template.price} isSmall isExchange />
           </Grid>
         </Grid>
       </CardActions>

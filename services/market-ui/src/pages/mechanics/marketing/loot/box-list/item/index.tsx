@@ -8,7 +8,6 @@ import type { ILootBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { LootBoxPurchaseButton } from "../../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 
 interface ILootBoxListItemProps {
   lootBox: ILootBox;
@@ -35,7 +34,6 @@ export const LootBoxListItem: FC<ILootBoxListItemProps> = props => {
         <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
           <Grid item xs={12} alignItems="center">
             <LootBoxPurchaseButton lootBox={lootBox} />
-            <AllowanceButton token={lootBox.template?.price} isSmall isExchange />
           </Grid>
         </Grid>
       </CardActions>
