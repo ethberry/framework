@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { PaymentRequiredException } from "@gemunion/nest-js-utils";
-import { ModuleType, TokenType } from "@framework/types";
+import { BusinessType, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { RatePlanService } from "../../infrastructure/rate-plan/rate-plan.service";
@@ -17,6 +18,7 @@ export class ContractManagerService {
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
     private readonly planService: RatePlanService,
     private readonly contractService: ContractService,
+    protected readonly configService: ConfigService,
   ) {}
 
   public findOne(
@@ -31,16 +33,19 @@ export class ContractManagerService {
     contractModule: ModuleType,
     contractType: TokenType | null,
   ): Promise<void> {
-    const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+    const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
 
-    const count = await this.contractService.count({
-      contractModule,
-      contractType: contractType || IsNull(),
-      merchantId: userEntity.merchantId,
-    });
+    if (businessType === BusinessType.B2B) {
+      const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+      const count = await this.contractService.count({
+        contractModule,
+        contractType: contractType || IsNull(),
+        merchantId: userEntity.merchantId,
+      });
 
-    if (count >= limit) {
-      throw new PaymentRequiredException("paymentRequired");
+      if (count >= limit) {
+        throw new PaymentRequiredException("paymentRequired");
+      }
     }
   }
 }
