@@ -40,13 +40,21 @@ export class SeedEventHistoryLootMixedPurchaseAt1687580606610 implements Migrati
         '${JSON.stringify({
           account: wallets[0],
           externalId: "1120601",
-          item: [
+          item: {
+            tokenType: 2,
+            token: erc721ContractLootBlacklistPausableAddress,
+            tokenId: "1120601",
+            amount: "1",
+          },
+          price: [
             {
-              tokenType: 2,
-              token: erc721ContractLootBlacklistPausableAddress,
-              tokenId: "1120601",
-              amount: "1",
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
             },
+          ],
+          content: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
@@ -70,14 +78,6 @@ export class SeedEventHistoryLootMixedPurchaseAt1687580606610 implements Migrati
               token: erc1155ContractSimpleAddress,
               tokenId: "1050101",
               amount: "1000",
-            },
-          ],
-          price: [
-            {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "1020101",
-              amount: WeiPerEther.toString(),
             },
           ],
         })}',

@@ -296,7 +296,7 @@ export enum ContractEventSignature {
   PurchaseLootBox = "PurchaseLootBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:MYSTERY
   // event PurchaseMysteryBox(address account, uint256 externalId, Asset[] items, Asset[] price);
-  PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
+  PurchaseMysteryBox = "PurchaseMysteryBox(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   // MODULE:DISCRETE
   // event Upgrade(address account, uint256 externalId, Asset item, Asset[] price, bytes32 attribute, uint256 level);
   Upgrade = "Upgrade(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[],bytes32,uint256)",

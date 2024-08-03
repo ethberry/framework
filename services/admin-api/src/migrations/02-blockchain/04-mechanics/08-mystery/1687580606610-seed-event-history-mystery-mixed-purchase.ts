@@ -40,13 +40,21 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
         '${JSON.stringify({
           account: wallets[0],
           externalId: "1110601",
-          item: [
+          item: {
+            tokenType: 2,
+            token: erc721ContractMysteryBlacklistPausableAddress,
+            tokenId: "1110601",
+            amount: "1",
+          },
+          price: [
             {
-              tokenType: 2,
-              token: erc721ContractMysteryBlacklistPausableAddress,
-              tokenId: "1110601",
-              amount: "1",
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
             },
+          ],
+          content: [
             {
               tokenType: 1,
               token: erc20TokenSimpleAddress,
@@ -70,14 +78,6 @@ export class SeedEventHistoryMysteryMixedPurchaseAt1687580606610 implements Migr
               token: erc1155ContractSimpleAddress,
               tokenId: "1050101",
               amount: "1000",
-            },
-          ],
-          price: [
-            {
-              tokenType: 1,
-              token: erc20TokenSimpleAddress,
-              tokenId: "1020101",
-              amount: WeiPerEther.toString(),
             },
           ],
         })}',

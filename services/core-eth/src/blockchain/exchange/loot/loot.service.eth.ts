@@ -24,13 +24,13 @@ export class ExchangeLootServiceEth {
   public async log(event: ILogEvent<IExchangePurchaseLootBoxEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { account, items, price },
+      args: { account, item, price },
     } = event;
     const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const assets = await this.assetService.saveAssetHistory(history, [items[items.length - 1]], price);
+    const assets = await this.assetService.saveAssetHistory(history, [item], price);
 
     await this.notificatorService.purchaseLoot({
       ...assets,
