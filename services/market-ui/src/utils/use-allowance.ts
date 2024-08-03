@@ -5,9 +5,9 @@ import { enqueueSnackbar } from "notistack";
 import { TokenType } from "@gemunion/types-blockchain";
 import { BigNumber, BigNumberish, Contract, ContractTransaction } from "ethers";
 
-import ERC20AllowanceABI from "@framework/abis/allowance/ERC20.json";
-import ERC721IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC721.json";
-import ERC1155IsApprovedForAllABI from "@framework/abis/isApprovedForAll/ERC1155.json";
+import ERC20AllowanceABI from "@framework/abis/json/ERC20Simple/allowance.json";
+import ERC721IsApprovedForAllABI from "@framework/abis/json/ERC721Simple/isApprovedForAll.json";
+import ERC1155IsApprovedForAllABI from "@framework/abis/json/ERC1155Simple/isApprovedForAll.json";
 
 import ERC20ApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
 import ERC721SetApprovalForAllABI from "@framework/abis/json/ERC721Simple/setApprovalForAll.json";

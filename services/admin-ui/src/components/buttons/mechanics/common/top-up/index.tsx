@@ -36,7 +36,6 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const [isTopUpDialogOpen, setIsTopUpDialogOpen] = useState(false);
 
   const metaFnWithAllowance = useAllowance((web3Context: Web3ContextType, values: ITopUpDto) => {
-    const contract = new Contract(address, topUpABI, web3Context.provider?.getSigner());
     const asset = values.token.components[0];
     const contract = new Contract(address, topUpABI, web3Context.provider?.getSigner());
     if (asset.tokenType === TokenType.NATIVE) {
