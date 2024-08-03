@@ -8,7 +8,6 @@ import type { ICraft } from "@framework/types";
 
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { CraftButton } from "../../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftItemPanelProps {
@@ -45,7 +44,6 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
       </CardContent>
       <CardActions>
         <CraftButton craft={craft} />
-        <AllowanceButton isSmall={true} />
       </CardActions>
     </Card>
   );

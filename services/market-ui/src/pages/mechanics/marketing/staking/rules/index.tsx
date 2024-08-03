@@ -21,7 +21,7 @@ import {
   StakingRewardTokenType,
 } from "@framework/types";
 
-import { StakingAllowanceButton, StakingDepositButton } from "../../../../../components/buttons";
+import { StakingDepositButton } from "../../../../../components/buttons";
 import { emptyContract } from "../../../../../components/common/interfaces";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { normalizeDuration } from "../../../../../utils/time";
@@ -206,7 +206,6 @@ export const StakingRules: FC = () => {
                       </StyledTableContainer>
                     </StyledCardContent>
                     <StyledCardActions>
-                      <StakingAllowanceButton rule={rule} />
                       <StakingDepositButton rule={rule} />
                       <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
                     </StyledCardActions>
