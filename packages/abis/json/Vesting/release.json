@@ -1,1 +1,10 @@
-[{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"release","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"release","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+[
+  {
+    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
+    "name": "release",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "release", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
+]

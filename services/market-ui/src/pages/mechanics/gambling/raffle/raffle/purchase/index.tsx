@@ -9,7 +9,6 @@ import type { IContract, IRaffleRound } from "@framework/types";
 import { RafflePurchaseButton } from "../../../../../../components/buttons";
 import { emptyRaffleRound } from "../../../../../../components/common/interfaces";
 import { InfoPopover } from "../../../../../../components/popover";
-import { AllowanceButton } from "./allowance";
 import { StyledTypography } from "./styled";
 
 interface IRafflePurchaseProps {
@@ -74,8 +73,6 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
               )}
             </StyledTypography>
           </InfoPopover>
-
-          <AllowanceButton contract={contract} />
 
           <RafflePurchaseButton round={round} />
         </PageHeader>

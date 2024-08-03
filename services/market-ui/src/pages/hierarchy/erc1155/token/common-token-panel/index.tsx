@@ -6,8 +6,6 @@ import { formatItemHtmlList } from "@framework/exchange";
 import type { IBalance, IToken } from "@framework/types";
 
 import { Erc1155TransferButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "../../../../exchange/wallet/allowance";
-import { computeTokenAsset } from "../../../../../utils/token";
 import { StyledCard, StyledList, StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICommonTokenPanelProps {
@@ -39,9 +37,6 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>
             <Erc1155TransferButton token={token} />
-          </Grid>
-          <Grid item xs={12}>
-            <AllowanceButton token={computeTokenAsset(token)} />
           </Grid>
         </Grid>
       </CardActions>

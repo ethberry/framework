@@ -36,7 +36,9 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
     const contract = new Contract(address, ERC721RandomGemunionSetSubscriptionIdABI, web3Context.provider?.getSigner());
-    return contract.setSubscriptionId(options.vrfSubId) as Promise<void>;
+
+    const uintSub = BigInt(options.vrfSubId.substring(0, options.vrfSubId.length));
+    return contract.setSubscriptionId(uintSub) as Promise<void>; // V2PLUS
   });
 
   if (
@@ -76,7 +78,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         onConfirm={handleSetSubscriptionConfirm}
         open={isSetSubscriptionDialogOpen}
         initialValues={{
-          vrfSubId: 0,
+          vrfSubId: "0n",
         }}
       />
     </Fragment>

@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 import ERC20SimpleBalanceOfABI from "@framework/abis/json/ERC20Simple/balanceOf.json";
 
 export interface IChainLinkFundDto {
-  subscriptionId: number;
+  subscriptionId: string;
   amount: string;
 }
 

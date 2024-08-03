@@ -8,7 +8,6 @@ import type { IMysteryBox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryBoxPurchaseButton } from "../../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 
 interface IMysteryBoxListItemProps {
   mysteryBox: IMysteryBox;
@@ -35,7 +34,6 @@ export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
         <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
           <Grid item xs={12} alignItems="center">
             <MysteryBoxPurchaseButton mysteryBox={mysteryBox} />
-            <AllowanceButton token={mysteryBox.template?.price} isSmall isExchange />
           </Grid>
         </Grid>
       </CardActions>

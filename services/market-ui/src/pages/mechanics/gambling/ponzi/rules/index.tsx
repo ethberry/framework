@@ -13,7 +13,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
-import { PonziAllowanceButton, PonziDepositButton } from "../../../../../components/buttons";
+import { PonziDepositButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { PonziViewDialog } from "./view";
 
@@ -103,7 +103,6 @@ export const PonziRules: FC = () => {
             <StyledListItem key={rule.id}>
               <ListItemText>{rule.title}</ListItemText>
               <ListActions>
-                <PonziAllowanceButton rule={rule} />
                 <PonziDepositButton rule={rule} />
                 <ListAction onClick={handleView(rule)} message="form.tips.view" icon={Visibility} />
               </ListActions>

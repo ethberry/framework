@@ -11,7 +11,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { formatItem } from "@framework/exchange";
+import { convertDatabaseAssetToTokenTypeAsset, formatItem } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
 import type { IContract, IDismantle, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -19,9 +19,9 @@ import { TokenType } from "@framework/types";
 import DismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
 
 import { sorter } from "../../../../../../utils/sorter";
-import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { getDismantleMultiplier } from "./utils";
-import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
+import { StyledCard } from "./styled";
+import { useAllowance } from "../../../../../../utils/use-allowance";
 
 export interface IDismantleTokenPanelProps {
   token: IToken;
@@ -50,8 +50,8 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     setRows(json.rows);
   };
 
-  const metaFnWithSign = useServerSignature(
-    (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, values: IDismantle, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, DismantleABI, web3Context.provider?.getSigner());
 
       return contract.dismantle(
@@ -80,19 +80,28 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           ).amount.toString(),
         })),
         // PRICE token to dismantle
-        values.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(sorter("tokenId")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: token.tokenId,
           amount: component.amount,
         }))[0],
         sign.signature,
-        // { dismantle cost not implemented
-        //   value: getEthPrice(dismantle.item),
-        // },
       ) as Promise<void>;
     },
-    // { error: false },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const assets = convertDatabaseAssetToTokenTypeAsset(values.price!.components);
+      return metaFnWithAllowance(
+        { contract: systemContract.address, assets },
+        web3Context,
+        values,
+        sign,
+        systemContract,
+      );
+    },
   );
 
   const metaFn = useMetamask((values: IDismantle, web3Context: Web3ContextType) => {
@@ -135,12 +144,6 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   return (
     <StyledCard>
       <CardContent>
-        <StyledToolbar disableGutters>
-          <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.dismantle" />
-          </StyledTypography>
-          <AllowanceInfoPopover />
-        </StyledToolbar>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(dismantle => {
             const { multiplier } = getDismantleMultiplier(

@@ -1,1 +1,15 @@
-[{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}],"name":"transferAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+[
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "to", "type": "address" },
+      { "name": "value", "type": "uint256" },
+      { "name": "data", "type": "bytes" }
+    ],
+    "name": "transferAndCall",
+    "outputs": [{ "name": "success", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

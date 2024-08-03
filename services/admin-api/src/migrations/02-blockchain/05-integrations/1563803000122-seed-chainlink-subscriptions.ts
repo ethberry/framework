@@ -8,7 +8,6 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const subId = process.env.CHAINLINK_SUBSCRIPTION_ID || 1;
-
     if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
@@ -23,13 +22,13 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
       ) VALUES (
         1,
         '${chainId}',
-        '${subId}',
+        '${BigInt(subId)}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         '13377',
-        1,
+        '${BigInt(subId)}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

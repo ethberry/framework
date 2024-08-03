@@ -3,7 +3,7 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { getEthPrice } from "@framework/exchange";
+import { convertDatabaseAssetToTokenTypeAsset, getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
@@ -15,6 +15,7 @@ import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 
 import type { IStakingDepositDto } from "./dialog";
 import { StakingDepositDialog } from "./dialog";
+import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IStakingDepositComplexButtonProps {
   className?: string;
@@ -29,20 +30,36 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
-  // !!! tokenIds[] must include all deposit tokens !!!
+
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, rule: IStakingRule, values: IStakingDepositDto) => {
+      // !!! tokenIds[] must include all deposit tokens !!!
+      const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
+      const params = {
+        externalId: rule.externalId,
+        expiresAt: 0,
+        nonce: utils.formatBytes32String("nonce"),
+        extra: utils.formatBytes32String("0x"),
+        receiver: constants.AddressZero,
+        referrer,
+      };
+      return contract.deposit(params, values.tokenIds, {
+        value: getEthPrice(rule.deposit),
+      }) as Promise<void>;
+    },
+  );
+
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
-    const params = {
-      externalId: rule.externalId,
-      expiresAt: 0,
-      nonce: utils.formatBytes32String("nonce"),
-      extra: utils.formatBytes32String("0x"),
-      receiver: constants.AddressZero,
-      referrer,
-    };
-    return contract.deposit(params, values.tokenIds, {
-      value: getEthPrice(rule.deposit),
-    }) as Promise<void>;
+    const price = convertDatabaseAssetToTokenTypeAsset(values.deposit);
+    return metaFnWithAllowance(
+      {
+        contract: rule.contract!.address,
+        assets: price,
+      },
+      web3Context,
+      rule,
+      values,
+    );
   });
 
   const handleDeposit = () => {

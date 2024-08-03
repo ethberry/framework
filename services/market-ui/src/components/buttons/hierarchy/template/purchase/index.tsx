@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
-import { BigNumber, Contract, utils, constants } from "ethers";
+import { Contract, utils, constants } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@gemunion/provider-user";
@@ -8,14 +8,19 @@ import { useAppDispatch, useAppSelector } from "@gemunion/redux";
 import { walletActions, walletSelectors } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { getEthPrice } from "@framework/exchange";
+import {
+  convertDatabaseAssetToChainAsset,
+  convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
+  getEthPrice,
+} from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import TemplatePurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
-import { sorter } from "../../../../../utils/sorter";
+import { useAllowance } from "../../../../../utils/use-allowance";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
@@ -37,9 +42,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const dispatch = useAppDispatch();
   const { setIsDialogOpen } = walletActions;
 
-  const metaFnWithSign = useServerSignature(
-    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+  const metaFnWithAllowance = useAllowance(
+    (web3Context: Web3ContextType, values: IAmountDto, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
+
+      const item = convertTemplateToChainAsset(template, values.amount);
+      const price = convertDatabaseAssetToChainAsset(template.price?.components, { multiplier: values.amount });
 
       return contract.purchase(
         {
@@ -50,23 +58,31 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           receiver: template.contract!.merchant!.wallet,
           referrer: referrer || constants.AddressZero,
         },
-        {
-          tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
-          token: template.contract?.address,
-          tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
-          amount: values.amount || 1,
-        },
-        template.price?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: BigNumber.from(component.amount).mul(BigNumber.from(values.amount)).toString(),
-        })),
+        item,
+        price,
         sign.signature,
         {
           value: getEthPrice(template.price).mul(values.amount),
         },
       ) as Promise<void>;
+    },
+  );
+
+  const metaFnWithSign = useServerSignature(
+    (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const assets = convertDatabaseAssetToTokenTypeAsset(template.price?.components, {
+        multiplier: values.amount,
+      });
+      return metaFnWithAllowance(
+        {
+          contract: systemContract.address,
+          assets,
+        },
+        web3Context,
+        values,
+        sign,
+        systemContract,
+      );
     },
   );
 

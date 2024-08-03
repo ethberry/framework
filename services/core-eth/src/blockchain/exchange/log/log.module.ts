@@ -63,6 +63,8 @@ import { getEventsTopics } from "../../../common/utils";
           ExchangeEventType.Dismantle,
           // MODULE:MYSTERYBOX
           ExchangeEventType.PurchaseMysteryBox,
+          // MODULE:LOOTBOX
+          ExchangeEventType.PurchaseLootBox,
           // MODULE:REFERRAL
           ReferralProgramEventType.ReferralEvent,
           ReferralProgramEventType.ReferralProgram,

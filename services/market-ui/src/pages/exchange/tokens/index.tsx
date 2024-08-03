@@ -53,6 +53,7 @@ export const MyTokensList: FC<IMyTokenListProps> = props => {
         contractModule={[
           ModuleType.HIERARCHY,
           ModuleType.MYSTERY,
+          ModuleType.LOOT,
           ModuleType.COLLECTION,
           ModuleType.LOTTERY,
           ModuleType.RAFFLE,
