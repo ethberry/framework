@@ -121,12 +121,12 @@ import {
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
   CreateGameBalance1686896594700,
-  CreateLootbox1653616447910,
+  CreateLootBox1653616447910,
   CreateLotteryRoundAggregationAt1660436476130,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
   CreateMerge1697979517000,
-  CreateMysterybox1653616447910,
+  CreateMysteryBox1653616447910,
   CreateNetwork1563803000060,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
@@ -624,7 +624,7 @@ const config: PostgresConnectionOptions = {
     SeedClaimVestingAt1687835680100,
 
     // MODULE MYSTERY
-    CreateMysterybox1653616447910,
+    CreateMysteryBox1653616447910,
     SeedContractMysteryAt1563804001160,
     SeedTemplateMysteryAt1563804001260,
     SeedTokenMysteryAt1563804001360,
@@ -643,7 +643,7 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640,
 
     // MODULE LOOT
-    CreateLootbox1653616447910,
+    CreateLootBox1653616447910,
     SeedContractLootAt1563804001160,
     SeedTemplateLootAt1563804001260,
     SeedTokenLootAt1563804001360,
