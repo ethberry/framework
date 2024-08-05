@@ -34,7 +34,7 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1130101,
+        1140101,
         'Wrapper',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,7 +42,7 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
         0,
         4,
         'ACTIVE',
-        11301,
+        11401,
         '${currentDateTime}',
         '${currentDateTime}'
       );

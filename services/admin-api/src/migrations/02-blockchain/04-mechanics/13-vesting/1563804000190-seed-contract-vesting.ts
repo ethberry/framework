@@ -51,7 +51,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1901,
+        11301,
         '${vestingAddress}',
         '${chainId}',
         'VESTING #1',
@@ -75,7 +75,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1902,
+        11302,
         '${vestingGradedAddress}',
         '${chainId}',
         'VESTING #2',
@@ -99,7 +99,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1903,
+        11303,
         '${vestingCliffAddress}',
         '${chainId}',
         'VESTING #3',
