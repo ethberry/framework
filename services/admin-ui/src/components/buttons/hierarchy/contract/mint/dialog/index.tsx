@@ -34,7 +34,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       testId="MintForm"
       {...rest}
     >
-      <TemplateAssetInput autoSelect allowEmpty prefix="template" tokenType={{ disabledOptions }} />
+      <TemplateAssetInput autoSelect allowEmpty required prefix="template" tokenType={{ disabledOptions }} />
       <TextInput name="account" required />
     </FormDialog>
   );
