@@ -47,7 +47,6 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <RichTextEditor name="description" />
       <NumberInput name="amount" />
       <TemplateAssetInput
-        allowEmpty
         autoSelect
         multiple
         prefix="reward"

@@ -79,7 +79,6 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
-            allowEmpty
             autoSelect
             prefix="price"
             tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}

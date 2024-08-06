@@ -88,7 +88,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
-            allowEmpty
             autoSelect
             multiple
             prefix="reward"
