@@ -31,7 +31,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} required />
-      <ComboEntityInput name="address" controller="contracts" targetId="address" freeSolo />
+      <ComboEntityInput name="address" controller="contracts" targetId="address" freeSolo required />
     </FormDialog>
   );
 };
