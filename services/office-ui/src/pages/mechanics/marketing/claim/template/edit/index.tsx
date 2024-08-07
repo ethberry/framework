@@ -40,8 +40,9 @@ export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="item"

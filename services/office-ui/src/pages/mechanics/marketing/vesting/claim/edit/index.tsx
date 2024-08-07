@@ -37,6 +37,7 @@ export const VestingClaimEditDialog: FC<IClaimEditDialogProps> = props => {
     >
       <VestingParametersInput prefix="parameters" />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="item"

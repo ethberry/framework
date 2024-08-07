@@ -59,9 +59,10 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
         }}
         readOnly={!!id}
       />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateInput
+        required
         autoSelect
         multiple
         prefix="price"
@@ -70,14 +71,13 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
         }}
         contract={{
           data: {
-            // includeExternalContracts: true,
             contractStatus: [ContractStatus.ACTIVE],
           },
         }}
       />
-      <NumberInput name="amount" />
+      <NumberInput name="amount" required />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

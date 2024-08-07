@@ -28,6 +28,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
 
   return (
     <EntityInput
+      required
       name={name}
       controller="contracts"
       multiple={multiple}

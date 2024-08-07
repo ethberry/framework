@@ -66,8 +66,9 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <TokenAssetInput
+        required
         multiple
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
