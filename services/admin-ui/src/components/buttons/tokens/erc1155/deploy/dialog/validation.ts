@@ -1,7 +1,8 @@
-import { object, string } from "yup";
-import { currencyValidationSchema } from "@gemunion/yup-rules";
+import { object } from "yup";
+
+import { currencyValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
-  baseTokenURI: string().required("form.validations.valueMissing"),
+  baseTokenURI: urlValidationSchema,
   royalty: currencyValidationSchema.max(10000, "form.validations.rangeOverflow"),
 });
