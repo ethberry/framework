@@ -37,10 +37,16 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <TextInput name="title" />
+      <TextInput name="title" required />
       {id ? <SelectInput name="rentStatus" options={RentRuleStatus} disabledOptions={[RentRuleStatus.NEW]} /> : null}
-      <EntityInput name="contractId" controller="contracts" data={{ contractFeatures: [ContractFeatures.RENTABLE] }} />
+      <EntityInput
+        required
+        name="contractId"
+        controller="contracts"
+        data={{ contractFeatures: [ContractFeatures.RENTABLE] }}
+      />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="price"

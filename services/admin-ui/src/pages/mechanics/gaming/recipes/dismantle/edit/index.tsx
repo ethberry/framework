@@ -48,6 +48,7 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
         <FormattedMessage id="alert.dismantlePrice" />
       </Alert>
       <TemplateAssetInput
+        required
         autoSelect
         prefix="price"
         contract={{
@@ -62,6 +63,7 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
         <FormattedMessage id="alert.dismantleItem" />
       </Alert>
       <TemplateAssetInput
+        required
         autoSelect
         prefix="item"
         contract={{

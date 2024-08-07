@@ -37,6 +37,7 @@ export const MintLootBoxDialog: FC<IMintLootBoxDialogProps> = props => {
       {...rest}
     >
       <EntityInput
+        required
         name="contractId"
         controller="contracts"
         data={{
@@ -47,7 +48,7 @@ export const MintLootBoxDialog: FC<IMintLootBoxDialogProps> = props => {
         disableClear
       />
       <LootBoxInput />
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <BoxContent />
     </FormDialog>
   );

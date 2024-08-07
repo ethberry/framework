@@ -43,6 +43,7 @@ export const MergeEditDialog: FC<IMergeEditDialogProps> = props => {
         <FormattedMessage id="alert.mergePrice" />
       </Alert>
       <TemplateAssetInput
+        required
         disableClear={false}
         prefix="price"
         contract={{
@@ -59,6 +60,7 @@ export const MergeEditDialog: FC<IMergeEditDialogProps> = props => {
         <FormattedMessage id="alert.mergeItem" />
       </Alert>
       <TemplateAssetInput
+        required
         autoSelect
         prefix="item"
         contract={{
