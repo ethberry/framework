@@ -21,6 +21,7 @@ export const LootBoxInput: FC = () => {
 
   return (
     <EntityInput
+      required
       name="lootId"
       controller="loot/boxes"
       onChange={handleChange}

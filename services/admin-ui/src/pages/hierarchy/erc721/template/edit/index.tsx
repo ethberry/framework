@@ -44,6 +44,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       {...rest}
     >
       <EntityInput
+        required
         name="contractId"
         controller="contracts"
         data={{
@@ -52,9 +53,10 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         }}
         readOnly={!!id}
       />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="price"
@@ -69,9 +71,9 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
           },
         }}
       />
-      <NumberInput name="amount" />
+      <NumberInput required name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput required name="imageUrl" />
     </FormDialog>
   );
 };

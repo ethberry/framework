@@ -44,6 +44,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput
+        required
         name="template.contractId"
         controller="contracts"
         data={{
@@ -52,9 +53,10 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         }}
         readOnly={!!id}
       />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="item"
@@ -70,6 +72,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         readOnly={!!id}
       />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="template.price"
@@ -82,7 +85,7 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         }}
       />
       {id ? <SelectInput name="mysteryBoxStatus" options={MysteryBoxStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

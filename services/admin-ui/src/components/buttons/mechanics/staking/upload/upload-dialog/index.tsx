@@ -65,7 +65,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
             autoSelect
             multiple
             prefix="deposit"
-            allowEmpty={true}
             disableClear={false}
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
@@ -77,7 +76,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
             multiple
             prefix="reward"
             readOnly={readOnly}
-            allowEmpty={true}
             disableClear={false}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />

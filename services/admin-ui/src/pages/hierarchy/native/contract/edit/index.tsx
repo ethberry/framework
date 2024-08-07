@@ -45,9 +45,9 @@ export const NativeTokenEditDialog: FC<INativeTokenEditDialogProps> = props => {
       action={id ? <BlockchainInfoPopover symbol={symbol} decimals={decimals} chainId={chainId} /> : null}
       {...rest}
     >
-      <TextInput name="symbol" />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="symbol" required />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       {id ? (
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}

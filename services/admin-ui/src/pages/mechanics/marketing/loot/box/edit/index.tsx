@@ -55,11 +55,12 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
         }}
         readOnly={!!id}
       />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <MinInput />
       <MaxInput />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="item"
@@ -72,6 +73,7 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
         forceAmount
       />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="template.price"
@@ -84,7 +86,7 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
         }}
       />
       {id ? <SelectInput name="lootBoxStatus" options={LootBoxStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

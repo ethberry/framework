@@ -8,6 +8,7 @@ export interface ITemplateInputProps {
   prefix: string;
   autoSelect?: boolean;
   multiple?: boolean;
+  required?: boolean;
   tokenType?: {
     disabledOptions?: Array<TokenType>;
   };
@@ -28,13 +29,14 @@ export interface ITemplateInputProps {
 }
 
 export const TemplateInput: FC<ITemplateInputProps> = props => {
-  const { autoSelect, multiple, prefix, tokenType, contract, template, readOnly } = props;
+  const { autoSelect, multiple, required, prefix, tokenType, contract, template, readOnly } = props;
   const merchantId = useWatch({ name: "merchantId" });
 
   return (
     <TemplateAssetInput
       autoSelect={autoSelect}
       multiple={multiple}
+      required={required}
       prefix={prefix}
       tokenType={tokenType}
       contract={{

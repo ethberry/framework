@@ -74,13 +74,13 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
           <FormattedMessage id="alert.risk" />
         </Alert>
       ) : null}
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       {!id ? <TextInput name="address" /> : null}
       {id ? (
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

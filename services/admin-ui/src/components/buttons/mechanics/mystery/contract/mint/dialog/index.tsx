@@ -37,6 +37,7 @@ export const MintMysteryBoxDialog: FC<IMintMysteryBoxDialogProps> = props => {
       {...rest}
     >
       <EntityInput
+        required
         name="contractId"
         controller="contracts"
         data={{
@@ -47,7 +48,7 @@ export const MintMysteryBoxDialog: FC<IMintMysteryBoxDialogProps> = props => {
         disableClear
       />
       <MysteryBoxInput />
-      <TextInput name="account" />
+      <TextInput name="account" required />
       <BoxContent />
     </FormDialog>
   );

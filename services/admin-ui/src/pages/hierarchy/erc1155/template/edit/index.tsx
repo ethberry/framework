@@ -43,9 +43,10 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
       testId="Erc1155TemplateEditForm"
       {...rest}
     >
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateAssetInput
+        required
         autoSelect
         multiple
         prefix="price"
@@ -59,9 +60,10 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
           },
         }}
       />
-      <NumberInput name="amount" />
+      <NumberInput name="amount" required />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
+        required
         name="contractId"
         controller="contracts"
         data={{
@@ -70,7 +72,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
         }}
         readOnly={!!id}
       />
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

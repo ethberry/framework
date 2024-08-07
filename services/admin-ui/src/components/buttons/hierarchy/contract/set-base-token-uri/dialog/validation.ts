@@ -1,5 +1,7 @@
-import { object, string } from "yup";
+import { object } from "yup";
+
+import { urlValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
-  baseTokenURI: string().required("form.validations.valueMissing"),
+  baseTokenURI: urlValidationSchema,
 });

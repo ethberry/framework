@@ -66,9 +66,10 @@ export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         }}
         readOnly={!!id}
       />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" required />
+      <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateInput
+        required
         autoSelect
         multiple
         prefix="item"
@@ -83,6 +84,7 @@ export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         readOnly={!!id}
       />
       <TemplateInput
+        required
         autoSelect
         multiple
         prefix="template.price"
@@ -95,7 +97,7 @@ export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
         }}
       />
       {id ? <SelectInput name="mysteryBoxStatus" options={MysteryBoxStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" required />
     </FormDialog>
   );
 };

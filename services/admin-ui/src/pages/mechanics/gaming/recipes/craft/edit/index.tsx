@@ -43,6 +43,7 @@ export const CraftEditDialog: FC<ICraftEditDialogProps> = props => {
         <FormattedMessage id="alert.craftItem" />
       </Alert>
       <TemplateAssetInput
+        required
         autoSelect
         prefix="item"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
@@ -53,6 +54,7 @@ export const CraftEditDialog: FC<ICraftEditDialogProps> = props => {
         <FormattedMessage id="alert.craftPrice" />
       </Alert>
       <TemplateAssetInput
+        required
         autoSelect
         prefix="price"
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}

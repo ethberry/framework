@@ -21,6 +21,7 @@ export const MysteryBoxInput: FC = () => {
 
   return (
     <EntityInput
+      required
       name="mysteryId"
       controller="mystery/boxes"
       onChange={handleChange}
