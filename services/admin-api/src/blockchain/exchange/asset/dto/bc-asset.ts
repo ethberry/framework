@@ -47,7 +47,7 @@ export class BlockChainAssetTokenDto extends BlockChainAssetTemplateDto implemen
     }),
   )
   @decorate(Transform(({ value }) => value as TokenType))
-  @Validate(ForbidEnumValues, [TokenType.NATIVE])
+  @decorate(Validate(ForbidEnumValues, [TokenType.NATIVE]))
   @decorate(IsEnum(TokenType, { message: "badInput" }))
   public tokenType: TokenType;
 
