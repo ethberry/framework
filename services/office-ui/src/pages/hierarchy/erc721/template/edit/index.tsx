@@ -51,6 +51,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     >
       <EntityInput name="merchantId" controller="merchants" />
       <ContractInput
+        required
         name="contractId"
         data={{
           contractType: [TokenType.ERC721],

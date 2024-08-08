@@ -51,6 +51,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
     >
       <EntityInput name="merchantId" controller="merchants" />
       <ContractInput
+        required
         name="contractId"
         data={{
           contractType: [TokenType.ERC1155],

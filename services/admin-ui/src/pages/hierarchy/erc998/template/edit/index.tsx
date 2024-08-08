@@ -50,6 +50,7 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
         data={{
           contractType: [TokenType.ERC998],
           contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
         }}
         readOnly={!!id}
       />
@@ -61,7 +62,7 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
         multiple
         prefix="price"
         tokenType={{
-          disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
         }}
         contract={{
           data: {

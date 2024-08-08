@@ -8,6 +8,7 @@ interface IContractInputProps {
   name: string;
   multiple?: boolean;
   readOnly?: boolean;
+  required?: boolean;
   data?: {
     contractType?: Array<TokenType>;
     contractStatus?: Array<ContractStatus>;
@@ -17,7 +18,7 @@ interface IContractInputProps {
 }
 
 export const ContractInput: FC<IContractInputProps> = props => {
-  const { name, data = {}, multiple, readOnly } = props;
+  const { name, data = {}, required, multiple, readOnly } = props;
 
   const form = useFormContext();
   const merchantId = useWatch({ name: "merchantId" });
@@ -28,7 +29,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
 
   return (
     <EntityInput
-      required
+      required={required}
       name={name}
       controller="contracts"
       multiple={multiple}

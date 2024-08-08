@@ -43,6 +43,17 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
       testId="Erc1155TemplateEditForm"
       {...rest}
     >
+      <EntityInput
+        required
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractType: [TokenType.ERC1155],
+          contractModule: [ModuleType.HIERARCHY],
+          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+        }}
+        readOnly={!!id}
+      />
       <TextInput name="title" required />
       <RichTextEditor name="description" InputLabelProps={{ required: true }} />
       <TemplateAssetInput
@@ -51,7 +62,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
         multiple
         prefix="price"
         tokenType={{
-          disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
         }}
         contract={{
           data: {
@@ -62,16 +73,6 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
       />
       <NumberInput name="amount" required />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
-      <EntityInput
-        required
-        name="contractId"
-        controller="contracts"
-        data={{
-          contractType: [TokenType.ERC1155],
-          contractModule: [ModuleType.HIERARCHY],
-        }}
-        readOnly={!!id}
-      />
       <AvatarInput name="imageUrl" required />
     </FormDialog>
   );

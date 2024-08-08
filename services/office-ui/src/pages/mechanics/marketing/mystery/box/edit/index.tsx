@@ -58,6 +58,7 @@ export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
     >
       <EntityInput name="merchantId" controller="merchants" />
       <ContractInput
+        required
         name="contractId"
         data={{
           contractType: [TokenType.ERC721],
