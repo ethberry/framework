@@ -25,7 +25,7 @@ export class BlockChainAssetTemplateDto extends BlockChainAssetDto implements IB
     }),
   )
   @decorate(Transform(({ value }) => value as TokenType))
-  @Validate(ForbidEnumValues, [TokenType.NATIVE, TokenType.ERC20])
+  @decorate(Validate(ForbidEnumValues, [TokenType.NATIVE, TokenType.ERC20]))
   @decorate(IsEnum(TokenType, { message: "badInput" }))
   public tokenType: TokenType;
 
