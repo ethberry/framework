@@ -1,19 +1,12 @@
 import { FC, Fragment, useState } from "react";
-import { Hidden, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { addMonths, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection, CollectionActions } from "@gemunion/provider-collection";
 import { AddressLink } from "@gemunion/mui-scanner";
-import {
-  ListAction,
-  ListActions,
-  StyledListItem,
-  StyledListItemText,
-  StyledListWrapper,
-  StyledPagination,
-} from "@framework/styled";
+import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../../components/buttons";
@@ -81,9 +74,6 @@ export const Vesting: FC = () => {
                     )
                   : ""}
               </ListItemText>
-              <Hidden mdDown>
-                <StyledListItemText>{vesting.contractFeatures.join(", ")}</StyledListItemText>
-              </Hidden>
               <ListActions>
                 <ListAction
                   onClick={handleWithdraw(vesting)}

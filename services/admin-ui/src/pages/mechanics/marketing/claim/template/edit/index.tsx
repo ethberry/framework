@@ -39,7 +39,6 @@ export const ClaimTemplateEditDialog: FC<IClaimEditDialogProps> = props => {
     >
       <TextInput name="account" required />
       <TemplateAssetInput
-        required
         autoSelect
         required
         multiple
