@@ -72,4 +72,4 @@ const createClaimRowDto = (forbiddenTokens: Array<TokenType>, claimVariant: Clai
 };
 
 export const AllInsteadNativeDto = createClaimRowDto([TokenType.NATIVE], ClaimVariant.TOKEN);
-export const AllIncludesCoinDto = createClaimRowDto([TokenType.NATIVE, TokenType.ERC20], ClaimVariant.TEMPLATE);
+export const AllInsteadCoinDto = createClaimRowDto([TokenType.NATIVE, TokenType.ERC20], ClaimVariant.TEMPLATE);

@@ -1,15 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
-import { Mixin } from "ts-mixer";
 
-import { AccountDto } from "@gemunion/nest-js-validators";
 import { ClaimType } from "@framework/types";
 import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
 
-import { BlockChainAssetTemplateDto } from "../../../../../exchange/asset/dto";
+import { AllInsteadCoinDto } from "../../claim.common.dto";
 
-export class ClaimTemplateRowDto extends Mixin(BlockChainAssetTemplateDto, AccountDto) implements IClaimTemplateRowDto {
+export class ClaimTemplateRowDto extends AllInsteadCoinDto implements IClaimTemplateRowDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
