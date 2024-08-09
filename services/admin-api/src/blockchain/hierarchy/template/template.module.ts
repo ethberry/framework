@@ -8,13 +8,11 @@ import { TokenModule } from "../token/token.module";
 import { AssetModule } from "../../exchange/asset/asset.module";
 import { ContractModule } from "../contract/contract.module";
 import { TemplateDeleteModule } from "./template.delete.module";
-import { MysteryBoxModule } from "../../mechanics/marketing/mystery/box/box.module";
 
 @Module({
   imports: [
     TokenModule,
     forwardRef(() => AssetModule),
-    MysteryBoxModule,
     ContractModule,
     TypeOrmModule.forFeature([TemplateEntity]),
     TemplateDeleteModule,

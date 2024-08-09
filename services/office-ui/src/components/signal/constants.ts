@@ -1,4 +1,4 @@
-import { ContractEventSignature } from "@framework/types";
+import type { ContractEventSignature } from "@framework/types";
 
 export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature, string>> = {
   // DEPLOY

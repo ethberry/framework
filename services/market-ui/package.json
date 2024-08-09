@@ -12,7 +12,6 @@
     "@emotion/styled": "11.13.0",
     "@framework/abis": "0.0.1",
     "@framework/constants": "0.0.1",
-    "@framework/core-contracts": "0.0.1",
     "@framework/exchange": "0.0.1",
     "@framework/localization-market-ui": "0.0.1",
     "@framework/styled": "0.0.1",
