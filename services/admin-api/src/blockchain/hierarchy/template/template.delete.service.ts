@@ -18,6 +18,7 @@ import { RentService } from "../../mechanics/gaming/rent/rent.service";
 import { WaitListListService } from "../../mechanics/marketing/wait-list/list/list.service";
 import { StakingRulesService } from "../../mechanics/marketing/staking/rules/rules.service";
 import { PonziRulesService } from "../../mechanics/gambling/ponzi/rules/rules.service";
+import { LootBoxService } from "../../mechanics/marketing/loot/box/box.service";
 
 @Injectable()
 export class TemplateDeleteService {
@@ -27,6 +28,7 @@ export class TemplateDeleteService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly mysteryBoxService: MysteryBoxService,
+    protected readonly lootBoxService: LootBoxService,
     protected readonly claimTemplateService: ClaimTemplateService,
     protected readonly craftService: CraftService,
     protected readonly mergeService: MergeService,
@@ -78,7 +80,7 @@ export class TemplateDeleteService {
     });
 
     return Promise.allSettled([
-      // Delete use in mechanics
+      // Delete templates used in mechanics
       this.craftService.deactivateCrafts(assets),
       this.mergeService.deactivateMerge(assets),
       this.dismantleService.deactivateDismantle(assets),
@@ -88,6 +90,7 @@ export class TemplateDeleteService {
       this.stakingRulesService.deactivateStakingRules(assets),
       this.ponziRulesService.deactivatePonziRules(assets),
       this.mysteryBoxService.deactivateBoxes(assets),
+      this.lootBoxService.deactivateBoxes(assets),
       this.claimTemplateService.deactivateClaims(assets),
     ]);
   }

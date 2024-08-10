@@ -25,7 +25,7 @@ import { LootBoxAutocompleteDto } from "./dto/autocomplete";
 @ApiBearerAuth()
 @Controller("/loot/boxes")
 export class LootBoxController {
-  constructor(private readonly lootboxService: LootBoxService) {}
+  constructor(private readonly lootBoxService: LootBoxService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
@@ -33,7 +33,7 @@ export class LootBoxController {
     @Query() dto: LootBoxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<LootBoxEntity>, number]> {
-    return this.lootboxService.search(dto, userEntity);
+    return this.lootBoxService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
@@ -41,7 +41,7 @@ export class LootBoxController {
     @Query() dto: LootBoxAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<LootBoxEntity>> {
-    return this.lootboxService.autocomplete(dto, userEntity);
+    return this.lootBoxService.autocomplete(dto, userEntity);
   }
 
   @Put("/:id")
@@ -50,23 +50,23 @@ export class LootBoxController {
     @Body() dto: LootBoxUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<LootBoxEntity> {
-    return this.lootboxService.updateAll({ id }, dto, userEntity);
+    return this.lootBoxService.updateAll({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<LootBoxEntity | null> {
-    return this.lootboxService.findOneWithRelations({ id });
+    return this.lootBoxService.findOneWithRelations({ id });
   }
 
   @Post("/")
   public create(@Body() dto: LootBoxCreateDto, @User() userEntity: UserEntity): Promise<LootBoxEntity> {
-    return this.lootboxService.create(dto, userEntity);
+    return this.lootBoxService.create(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.lootboxService.delete({ id }, userEntity);
+    await this.lootBoxService.delete({ id }, userEntity);
   }
 }

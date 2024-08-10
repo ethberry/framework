@@ -7,6 +7,7 @@ export * from "./1563804001160-seed-contract-mystery";
 export * from "./1563804001260-seed-template-mystery";
 export * from "./1563804001360-seed-token-mystery";
 export * from "./1563804001460-seed-balance-mystery";
+export * from "./1663804100790-seed-access-control-mystery";
 export * from "./1687580606310-seed-event-history-mystery-erc721-purchase";
 export * from "./1687580606320-seed-event-history-mystery-erc721-purchase-components";
 export * from "./1687580606330-seed-event-history-mystery-erc721-unpack";

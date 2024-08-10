@@ -25,7 +25,7 @@ import { MysteryBoxAutocompleteDto } from "./dto/autocomplete";
 @ApiBearerAuth()
 @Controller("/mystery/boxes")
 export class MysteryBoxController {
-  constructor(private readonly mysteryboxService: MysteryBoxService) {}
+  constructor(private readonly mysteryBoxService: MysteryBoxService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
@@ -33,7 +33,7 @@ export class MysteryBoxController {
     @Query() dto: MysteryBoxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    return this.mysteryboxService.search(dto, userEntity);
+    return this.mysteryBoxService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
@@ -41,7 +41,7 @@ export class MysteryBoxController {
     @Query() dto: MysteryBoxAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryboxService.autocomplete(dto, userEntity);
+    return this.mysteryBoxService.autocomplete(dto, userEntity);
   }
 
   @Put("/:id")
@@ -50,23 +50,23 @@ export class MysteryBoxController {
     @Body() dto: MysteryBoxUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.updateAll({ id }, dto, userEntity);
+    return this.mysteryBoxService.updateAll({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<MysteryBoxEntity | null> {
-    return this.mysteryboxService.findOneWithRelations({ id });
+    return this.mysteryBoxService.findOneWithRelations({ id });
   }
 
   @Post("/")
   public create(@Body() dto: MysteryBoxCreateDto, @User() userEntity: UserEntity): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.create(dto, userEntity);
+    return this.mysteryBoxService.create(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.mysteryboxService.delete({ id }, userEntity);
+    await this.mysteryBoxService.delete({ id }, userEntity);
   }
 }

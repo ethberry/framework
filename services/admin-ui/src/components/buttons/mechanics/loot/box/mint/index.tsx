@@ -7,11 +7,12 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
-
+import { AccessControlRoleType } from "@framework/types";
 import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";
+import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface ILootBoxMintButtonProps {
   className?: string;
@@ -31,6 +32,8 @@ export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
   const { account = "" } = useWeb3React();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
+
+  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.MINTER_ROLE, template?.contract?.id);
 
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
@@ -64,7 +67,7 @@ export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
         message="form.buttons.mintToken"
         className={className}
         dataTestId="LootBoxMintButton"
-        disabled={disabled}
+        disabled={disabled || !hasPermission}
         variant={variant}
       />
       <LootBoxMintDialog

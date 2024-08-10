@@ -2,7 +2,6 @@ import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 // for some reason TemplateDeleteService should go before MysteryBoxModule
-import { TemplateDeleteService } from "./template.delete.service";
 import { AssetModule } from "../../exchange/asset/asset.module";
 import { MysteryBoxModule } from "../../mechanics/marketing/mystery/box/box.module";
 import { ClaimTemplateModule } from "../../mechanics/marketing/claim/template/template.module";
@@ -14,6 +13,8 @@ import { WaitListListModule } from "../../mechanics/marketing/wait-list/list/lis
 import { RentModule } from "../../mechanics/gaming/rent/rent.module";
 import { StakingRulesModule } from "../../mechanics/marketing/staking/rules/rules.module";
 import { PonziRulesModule } from "../../mechanics/gambling/ponzi/rules/rules.module";
+import { LootBoxModule } from "../../mechanics/marketing/loot/box/box.module";
+import { TemplateDeleteService } from "./template.delete.service";
 import { TokenModule } from "../token/token.module";
 import { TemplateEntity } from "./template.entity";
 
@@ -22,6 +23,7 @@ import { TemplateEntity } from "./template.entity";
     TokenModule,
     forwardRef(() => AssetModule),
     forwardRef(() => MysteryBoxModule),
+    forwardRef(() => LootBoxModule),
     forwardRef(() => CraftModule),
     forwardRef(() => MergeModule),
     forwardRef(() => DismantleModule),
