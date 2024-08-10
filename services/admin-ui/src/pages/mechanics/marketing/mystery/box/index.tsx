@@ -20,7 +20,7 @@ import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 import { MysteryBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
-import { MysteryboxEditDialog } from "./edit";
+import { MysteryBoxEditDialog } from "./edit";
 
 export const MysteryBox: FC = () => {
   const {
@@ -157,7 +157,7 @@ export const MysteryBox: FC = () => {
         initialValues={selected}
       />
 
-      <MysteryboxEditDialog
+      <MysteryBoxEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={action === CollectionActions.edit}

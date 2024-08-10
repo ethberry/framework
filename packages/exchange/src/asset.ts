@@ -33,6 +33,7 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
         tokenId = (item.templateId || 0).toString();
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
       const [whole = "", decimals = ""] = multiplier.toString().split(".");
 
       const amount = BigNumber.from(item.amount)

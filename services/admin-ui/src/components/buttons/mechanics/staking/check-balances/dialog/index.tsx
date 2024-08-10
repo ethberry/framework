@@ -9,7 +9,7 @@ import { formatEther } from "@framework/exchange";
 import { ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 
-import { TopUpButton } from "../../../common/top-up";
+import { TopUpButton } from "../../../../common/top-up";
 
 export interface IStakingDepositBalanceCheck {
   token: IToken;

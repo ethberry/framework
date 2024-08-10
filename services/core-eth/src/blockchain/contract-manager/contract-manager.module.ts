@@ -6,11 +6,7 @@ import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp
 
 import { UserModule } from "../../infrastructure/user/user.module";
 import { VestingModule } from "../mechanics/marketing/vesting/vesting.module";
-import { Erc20TokenLogModule } from "../tokens/erc20/token/log/log.module";
-import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
-import { Erc998TokenLogModule } from "../tokens/erc998/token/log/log.module";
-import { Erc1155TokenLogModule } from "../tokens/erc1155/token/log/log.module";
-import { VestingLogModule } from "../mechanics/marketing/vesting/log/vesting.log.module";
+
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
@@ -25,6 +21,11 @@ import { ContractManagerControllerEth } from "./contract-manager.controller.eth"
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
 import { signalServiceProvider } from "../../common/providers";
+import { Erc20TokenLogModule } from "../tokens/erc20/token/log/log.module";
+import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
+import { Erc998TokenLogModule } from "../tokens/erc998/token/log/log.module";
+import { Erc1155TokenLogModule } from "../tokens/erc1155/token/log/log.module";
+import { VestingLogModule } from "../mechanics/marketing/vesting/log/vesting.log.module";
 import { MysteryLogModule } from "../mechanics/marketing/mystery/box/log/log.module";
 import { PonziLogModule } from "../mechanics/gambling/ponzi/log/log.module";
 import { StakingLogModule } from "../mechanics/marketing/staking/log/log.module";
@@ -83,4 +84,4 @@ import { LootLogModule } from "../mechanics/marketing/loot/box/log/log.module";
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],
   exports: [ContractManagerServiceEth, ContractManagerServiceRmq],
 })
-export class ContractManagerModuleEth {}
+export class ContractManagerModule {}

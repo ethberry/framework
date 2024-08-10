@@ -15,9 +15,11 @@ import VestingFactoryFacetSol from "@framework/core-contracts/artifacts/contract
 import WaitListFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/WaitListFactoryFacet.sol/WaitListFactoryFacet.json";
 import PaymentSplitterFactoryFacet from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PaymentSplitterFactoryFacet.sol/PaymentSplitterFactoryFacet.json";
 
+// TODO simplify
 export const ABI = new Interface([
   ...new Set(
-    CollectionFactoryFacetSol.abi
+    ([] as Array<any>)
+      .concat(CollectionFactoryFacetSol.abi)
       .concat(ERC20FactoryFacetSol.abi)
       .concat(ERC721FactoryFacetSol.abi)
       .concat(ERC998FactoryFacetSol.abi)

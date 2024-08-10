@@ -10,7 +10,7 @@ import { ContractFeatures, ModuleType } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
 import { TokenTraitsView } from "../../../traits";
-import { MysteryboxContent } from "../../../mysterybox-content";
+import { MysteryBoxContent } from "../../../mysterybox-content";
 import { TokenUserMetadataView } from "../../../user-metadata";
 
 export interface IErc721ViewDialogProps {
@@ -83,7 +83,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 </TableCell>
                 <TableCell align="right">
                   {/* @ts-ignore */}
-                  <MysteryboxContent mysteryBox={template.box} />
+                  <MysteryBoxContent mysteryBox={template.box} />
                 </TableCell>
               </TableRow>
             ) : null}

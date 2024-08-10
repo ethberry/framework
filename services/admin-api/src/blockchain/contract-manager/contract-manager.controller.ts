@@ -4,32 +4,28 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractManagerSignService } from "./contract-manager.sign.service";
-import { ContractManagerService } from "./contract-manager.service";
 import {
   Erc1155ContractDeployDto,
   Erc20ContractDeployDto,
   Erc721CollectionDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
+  LootContractDeployDto,
   LotteryContractDeployDto,
   MysteryContractDeployDto,
+  PaymentSplitterContractDeployDto,
   PonziContractDeployDto,
   PredictionContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
 } from "./dto";
-import { UserEntity } from "../../infrastructure/user/user.entity";
-import { PaymentSplitterContractDeployDto } from "./dto/payment-splitter";
-import { LootContractDeployDto } from "./dto/loot";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
 export class ContractManagerController {
-  constructor(
-    private readonly contractManagerSignService: ContractManagerSignService,
-    private readonly contractManagerService: ContractManagerService,
-  ) {}
+  constructor(private readonly contractManagerSignService: ContractManagerSignService) {}
 
   @Post("/erc20")
   public erc20Token(@Body() dto: Erc20ContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {

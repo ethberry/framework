@@ -25,14 +25,14 @@ export const keccak256It = function (value: string): string {
 
 export const getEventsTopics = function (
   events: Array<
+    | ContractManagerEventType
+    | ExchangeEventType
     | ContractEventType
     | AccessControlEventType
     | Erc4907EventType
     | LotteryEventType
     | RaffleEventType
-    | ExchangeEventType
     | AccessListEventType
-    | ContractManagerEventType
     | ReferralProgramEventType
     | Erc1363EventType
     | StakingEventType

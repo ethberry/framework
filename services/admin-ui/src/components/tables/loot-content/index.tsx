@@ -3,14 +3,14 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { formatEther } from "@framework/exchange";
-import type { IMysteryBox } from "@framework/types";
+import type { ILootBox } from "@framework/types";
 
-export interface IMysteryboxContentProps {
-  mysteryBox: IMysteryBox;
+export interface ILootBoxContentProps {
+  lootBox: ILootBox;
 }
 
-export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
-  const { mysteryBox } = props;
+export const LootBoxContent: FC<ILootBoxContentProps> = props => {
+  const { lootBox } = props;
 
   return (
     <Paper elevation={1} sx={{ mt: 1, p: 2 }}>
@@ -31,7 +31,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
           </Typography>
         </Grid>
       </Grid>
-      {mysteryBox.item!.components.map(component => (
+      {lootBox.item!.components.map(component => (
         <Grid key={component.id} container>
           <Grid xs={4} item>
             {component.tokenType}

@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
-import { CommonContractInput } from "../../../../../inputs/common-contract";
+import { CommonContractInput } from "../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 

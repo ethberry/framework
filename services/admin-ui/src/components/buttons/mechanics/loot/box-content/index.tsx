@@ -5,7 +5,7 @@ import { useWatch } from "react-hook-form";
 
 import type { ILootBox } from "@framework/types";
 
-import { LootboxContent } from "../../../../tables/lootbox-content";
+import { LootBoxContent } from "../../../../tables/loot-content";
 
 export const BoxContent: FC = () => {
   const lootBox: ILootBox | undefined = useWatch({ name: "lootBox" });
@@ -19,7 +19,7 @@ export const BoxContent: FC = () => {
       <Typography variant="h6">
         <FormattedMessage id="pages.loot.boxContent.title" />
       </Typography>
-      <LootboxContent lootBox={lootBox} />
+      <LootBoxContent lootBox={lootBox} />
     </Box>
   );
 };

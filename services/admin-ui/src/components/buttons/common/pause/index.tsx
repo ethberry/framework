@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PlayCircleOutline } from "@mui/icons-material";
+import { PauseCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
@@ -8,19 +8,19 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
-import unpausePausableABI from "@framework/abis/json/Pausable/unpause.json";
+import PauseABI from "@framework/abis/json/Pausable/pause.json";
 
-import { shouldDisableByContractType } from "../../../utils";
-import { useSetButtonPermission } from "../../../../../shared";
+import { shouldDisableByContractType } from "../../utils";
+import { useSetButtonPermission } from "../../../../shared";
 
-export interface IUnPauseButtonProps {
+export interface IPauseButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
+export const PauseButton: FC<IPauseButtonProps> = props => {
   const {
     className,
     contract,
@@ -31,26 +31,26 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
 
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
 
-  const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, unpausePausableABI, web3Context.provider?.getSigner());
-    return contract.unpause() as Promise<void>;
+  const metaPause = useMetamask((web3Context: Web3ContextType) => {
+    const contract = new Contract(address, PauseABI, web3Context.provider?.getSigner());
+    return contract.pause() as Promise<void>;
   });
 
-  const handleUnPause = () => {
-    return metaUnPause();
+  const handlePause = () => {
+    return metaPause();
   };
 
-  if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || !isPaused) {
+  if (!contractFeatures.includes(ContractFeatures.PAUSABLE) || isPaused) {
     return null;
   }
 
   return (
     <ListAction
-      onClick={handleUnPause}
-      icon={PlayCircleOutline}
-      message="form.buttons.unpause"
+      onClick={handlePause}
+      icon={PauseCircleOutline}
+      message="form.buttons.pause"
       className={className}
-      dataTestId="UnPauseButton"
+      dataTestId="PauseButton"
       disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
       variant={variant}
     />

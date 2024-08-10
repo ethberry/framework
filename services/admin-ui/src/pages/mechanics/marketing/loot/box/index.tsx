@@ -20,7 +20,7 @@ import { ModuleType, LootBoxStatus, TokenType } from "@framework/types";
 import { LootBoxMintButton } from "../../../../../components/buttons";
 import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
-import { LootboxEditDialog } from "./edit";
+import { LootBoxEditDialog } from "./edit";
 
 export const LootBox: FC = () => {
   const {
@@ -154,7 +154,7 @@ export const LootBox: FC = () => {
         initialValues={selected}
       />
 
-      <LootboxEditDialog
+      <LootBoxEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={action === CollectionActions.edit}

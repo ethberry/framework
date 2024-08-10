@@ -12,14 +12,14 @@ import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../../../components/forms/template-search/contract-input";
 import { TemplateInput } from "../../../../../../components/inputs/template-asset";
 
-export interface IMysteryboxEditDialogProps {
+export interface IMysteryBoxEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IMysteryBox>, form: any) => Promise<void>;
   initialValues: IMysteryBox;
 }
 
-export const MysteryBoxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
+export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const {

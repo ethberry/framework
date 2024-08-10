@@ -5,7 +5,7 @@ import { useWatch } from "react-hook-form";
 
 import type { IMysteryBox } from "@framework/types";
 
-import { MysteryboxContent } from "../../../../tables/mysterybox-content";
+import { MysteryBoxContent } from "../../../../tables/mystery-content";
 
 export const BoxContent: FC = () => {
   const mysteryBox: IMysteryBox | undefined = useWatch({ name: "mysteryBox" });
@@ -19,7 +19,7 @@ export const BoxContent: FC = () => {
       <Typography variant="h6">
         <FormattedMessage id="pages.mystery.boxContent.title" />
       </Typography>
-      <MysteryboxContent mysteryBox={mysteryBox} />
+      <MysteryBoxContent mysteryBox={mysteryBox} />
     </Box>
   );
 };

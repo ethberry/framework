@@ -4,7 +4,7 @@ import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 
-import { CommonContractInput } from "../../../../../inputs/common-contract";
+import { CommonContractInput } from "../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";
 

@@ -109,6 +109,7 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByErc721ContractTemplates(dto, userEntity.chainId);
 
+    // TODO this 'if' should not be here
     const moduleType =
       dto.contractTemplate === Erc721ContractTemplates.LOTTERY
         ? ModuleType.LOTTERY

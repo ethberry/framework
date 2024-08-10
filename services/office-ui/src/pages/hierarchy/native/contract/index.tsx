@@ -22,7 +22,6 @@ import {
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import {
   AllowanceButton,
-  BlacklistButton,
   EthListenerAddButton,
   EthListenerRemoveButton,
   GrantRoleButton,
@@ -31,9 +30,6 @@ import {
   RevokeRoleButton,
   RoyaltyButton,
   TransferButton,
-  UnBlacklistButton,
-  UnWhitelistButton,
-  WhitelistButton,
 } from "../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { NativeTokenEditDialog } from "./edit";
@@ -129,10 +125,6 @@ export const NativeContract: FC = () => {
               <GrantRoleButton contract={contract} disabled={true} />
               <RevokeRoleButton contract={contract} disabled={true} />
               <RenounceRoleButton contract={contract} disabled={true} />
-              <BlacklistButton contract={contract} disabled={true} />
-              <UnBlacklistButton contract={contract} disabled={true} />
-              <WhitelistButton contract={contract} disabled={true} />
-              <UnWhitelistButton contract={contract} disabled={true} />
               <ContractMintButton contract={contract} disabled={true} />
               <AllowanceButton contract={contract} disabled={true} />
               <TransferButton contract={contract} disabled={true} />

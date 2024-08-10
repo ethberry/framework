@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { MonetizationOn } from "@mui/icons-material";
+import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract } from "ethers";
 
@@ -7,15 +7,15 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetComponent, IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
 import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";
+import { TokenType } from "@framework/types";
 
-import topUpABI from "@framework/abis/json/TopUp/topUp.json";
+import TopUpABI from "@framework/abis/json/TopUp/topUp.json";
 
-import { shouldDisableByContractType } from "../../../utils";
-import type { ITopUpDto } from "./dialog";
 import { TopUpDialog } from "./dialog";
-import { useAllowance } from "../../../../../utils/use-allowance";
+import type { ITopUpDto } from "./dialog";
+import { shouldDisableByContractType } from "../../../utils";
+import { useAllowance } from "../../../../utils/use-allowance";
 
 export interface ITopUpButtonProps {
   className?: string;
@@ -36,8 +36,9 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const [isTopUpDialogOpen, setIsTopUpDialogOpen] = useState(false);
 
   const metaFnWithAllowance = useAllowance((web3Context: Web3ContextType, values: ITopUpDto) => {
+    const contract = new Contract(address, TopUpABI, web3Context.provider?.getSigner());
     const asset = values.token.components[0];
-    const contract = new Contract(address, topUpABI, web3Context.provider?.getSigner());
+
     if (asset.tokenType === TokenType.NATIVE) {
       return contract.topUp(
         [
@@ -93,7 +94,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
     <Fragment>
       <ListAction
         onClick={handleTopUp}
-        icon={MonetizationOn}
+        icon={AddCircleOutline}
         message="form.buttons.topUp"
         className={className}
         dataTestId="TopUpButton"

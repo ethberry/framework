@@ -7,7 +7,7 @@ import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { FormAlert } from "../../../../../forms/form-alert";
+import { FormAlert } from "../../../../forms/form-alert";
 
 export interface ITopUpDto {
   token: ITokenAsset;

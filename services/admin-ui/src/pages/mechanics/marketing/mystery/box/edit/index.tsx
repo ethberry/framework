@@ -11,14 +11,14 @@ import type { IMysteryBox } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IMysteryboxEditDialogProps {
+export interface IMysteryBoxEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IMysteryBox>, form: any) => Promise<void>;
   initialValues: IMysteryBox;
 }
 
-export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
+export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, item, imageUrl, mysteryBoxStatus, template } = initialValues;

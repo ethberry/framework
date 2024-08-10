@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { ContractManagerModuleEth } from "./contract-manager/contract-manager.module.eth";
+import { ContractManagerModule } from "./contract-manager/contract-manager.module";
 import { ExchangeModule } from "./exchange/exchange.module";
 import { ExtensionsModule } from "./extensions/extensions.module";
 import { HierarchyModule } from "./hierarchy/hierarchy.module";
@@ -11,7 +11,7 @@ import { TransactionModule } from "./transaction/transaction.module";
 
 @Module({
   imports: [
-    ContractManagerModuleEth,
+    ContractManagerModule,
     ExchangeModule,
     ExtensionsModule,
     HierarchyModule,

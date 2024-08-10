@@ -10,7 +10,7 @@ export interface IMysteryboxContentProps {
   mysteryBox?: IMysteryBox;
 }
 
-export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
+export const MysteryBoxContent: FC<IMysteryboxContentProps> = props => {
   const { mysteryBox } = props;
 
   if (!mysteryBox) {

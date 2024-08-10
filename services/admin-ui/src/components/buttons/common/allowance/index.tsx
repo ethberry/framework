@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import approveERC20BlacklistABI from "@framework/abis/json/ERC20Simple/approve.json";
 import setApprovalForAllERC1155BlacklistABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import type { IAllowanceDto } from "./dialog";
 import { AllowanceDialog } from "./dialog";
 

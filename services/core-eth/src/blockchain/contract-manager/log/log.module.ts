@@ -35,11 +35,11 @@ import { getEventsTopics } from "../../../common/utils";
         const fromBlock = contractManagerEntity.fromBlock || startingBlock;
 
         const eventNames = [
-          ContractManagerEventType.VestingDeployed,
           ContractManagerEventType.ERC20TokenDeployed,
           ContractManagerEventType.ERC721TokenDeployed,
           ContractManagerEventType.ERC998TokenDeployed,
           ContractManagerEventType.ERC1155TokenDeployed,
+          ContractManagerEventType.VestingDeployed,
           ContractManagerEventType.MysteryBoxDeployed,
           ContractManagerEventType.LootBoxDeployed,
           ContractManagerEventType.CollectionDeployed,

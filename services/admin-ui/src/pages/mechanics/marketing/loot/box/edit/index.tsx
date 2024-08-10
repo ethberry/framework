@@ -12,14 +12,14 @@ import { validationSchema } from "./validation";
 import { MaxInput } from "./max-input";
 import { MinInput } from "./min-input";
 
-export interface ILootboxEditDialogProps {
+export interface ILootBoxEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<ILootBox>, form: any) => Promise<void>;
   initialValues: ILootBox;
 }
 
-export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
+export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, item, imageUrl, lootBoxStatus, template, min, max } = initialValues;
