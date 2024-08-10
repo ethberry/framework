@@ -126,8 +126,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2B}:${PORT_ADMIN_API_B2B}"
@@ -241,8 +241,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API_B2C}:${PORT_ADMIN_API_B2C}"
@@ -296,8 +296,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # market-api_B2B
       - "${PORT_MARKET_API_B2B}:${PORT_MARKET_API_B2B}"
@@ -351,8 +351,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # market-api_B2C
       - "${PORT_MARKET_API_B2C}:${PORT_MARKET_API_B2C}"
@@ -404,8 +404,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # office-api
       - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
@@ -452,8 +452,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
@@ -499,8 +499,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       - "${PORT_RPC_API_TELOS_TEST}:${PORT_RPC_API_TELOS_TEST}"
 
@@ -546,8 +546,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
 
@@ -593,8 +593,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       - "${PORT_RPC_API_MANTA_TEST}:${PORT_RPC_API_MANTA_TEST}"
 
@@ -638,8 +638,8 @@ services:
   #    logging:
   #      driver: "json-file"
   #      options:
-  #        max-file: "5"   # number of files or file count
-  #        max-size: "100m" # file size
+  #        max-file: "1"   # number of files or file count
+  #        max-size: "50m" # file size
   #    ports:
   #      - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
   #
@@ -682,8 +682,8 @@ services:
   #    logging:
   #      driver: "json-file"
   #      options:
-  #        max-file: "5"   # number of files or file count
-  #        max-size: "100m" # file size
+  #        max-file: "1"   # number of files or file count
+  #        max-size: "50m" # file size
   #    ports:
   #      - "${PORT_RPC_API_POLYGON}:${PORT_RPC_API_POLYGON}"
 
@@ -720,8 +720,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # admin-api
       - "${PORT_JSON_API}:${PORT_JSON_API}"
@@ -757,8 +757,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
@@ -792,8 +792,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # cron-api
       - "${PORT_CRON_API}:${PORT_CRON_API}"
@@ -837,8 +837,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     volumes:
       - static-signal-ui:/home/node/framework/node_modules/@socket.io/admin-ui/ui/dist/
     ports:
@@ -869,8 +869,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "50m" # file size
     ports:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
