@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
-import unpausePausableABI from "@framework/abis/json/Pausable/unpause.json";
+import PausableUnpauseABI from "@framework/abis/json/Pausable/unpause.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
@@ -32,7 +32,7 @@ export const UnPauseButton: FC<IUnPauseButtonProps> = props => {
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.PAUSER_ROLE, contract?.id);
 
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, unpausePausableABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, PausableUnpauseABI, web3Context.provider?.getSigner());
     return contract.unpause() as Promise<void>;
   });
 

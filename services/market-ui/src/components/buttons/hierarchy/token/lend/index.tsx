@@ -14,7 +14,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import TemplateLendABI from "@framework/abis/json/ExchangeRentableFacet/lend.json";
+import ExchangeRentableFacetLendABI from "@framework/abis/json/ExchangeRentableFacet/lend.json";
 
 import type { ILendDto } from "./dialog";
 import { LendDialog } from "./dialog";
@@ -36,7 +36,11 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       const timeEnd = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(utils.hexlify(timeEnd), 32);
 
-      const contract = new Contract(systemContract.address, TemplateLendABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeRentableFacetLendABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const params = {
         externalId: values.rentRule, // DB rent rule id

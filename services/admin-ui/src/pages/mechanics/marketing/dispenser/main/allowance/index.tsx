@@ -9,8 +9,8 @@ import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import approveERC20BlacklistABI from "@framework/abis/json/ERC20Simple/approve.json";
-import setApprovalForAllERC1155BlacklistABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
+import ERC20SimpleApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
+import ERC1155SimpleSetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -35,23 +35,19 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
     (values: IAllowanceDto, web3Context: Web3ContextType, systemContract: IContract) => {
       const { amount, contract } = values;
       if (contract.contractType === TokenType.ERC20) {
-        const contractErc20 = new Contract(
-          contract.address,
-          approveERC20BlacklistABI,
-          web3Context.provider?.getSigner(),
-        );
+        const contractErc20 = new Contract(contract.address, ERC20SimpleApproveABI, web3Context.provider?.getSigner());
         return contractErc20.approve(systemContract.address, amount) as Promise<void>;
       } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
         const contractErc721 = new Contract(
           contract.address,
-          setApprovalForAllERC1155BlacklistABI,
+          ERC1155SimpleSetApprovalForAllABI,
           web3Context.provider?.getSigner(),
         );
         return contractErc721.setApprovalForAll(systemContract.address, true) as Promise<void>;
       } else if (contract.contractType === TokenType.ERC1155) {
         const contractErc1155 = new Contract(
           contract.address,
-          setApprovalForAllERC1155BlacklistABI,
+          ERC1155SimpleSetApprovalForAllABI,
           web3Context.provider?.getSigner(),
         );
         return contractErc1155.setApprovalForAll(systemContract.address, true) as Promise<void>;

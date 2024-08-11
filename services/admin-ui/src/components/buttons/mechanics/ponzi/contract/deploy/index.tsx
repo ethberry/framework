@@ -9,7 +9,7 @@ import type { IContract, IPonziContractDeployDto, IUser } from "@framework/types
 import { PonziContractTemplates } from "@framework/types";
 
 import { PonziContractDeployDialog } from "./dialog";
-import deployPonziFactoryFacetABI from "@framework/abis/json/PonziFactoryFacet/deployPonzi.json";
+import PonziFactoryFacetDeployPonziABI from "@framework/abis/json/PonziFactoryFacet/deployPonzi.json";
 
 export interface IPonziContractDeployButtonProps {
   className?: string;
@@ -27,7 +27,7 @@ export const PonziContractDeployButton: FC<IPonziContractDeployButtonProps> = pr
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployPonziFactoryFacetABI,
+        PonziFactoryFacetDeployPonziABI,
         web3Context.provider?.getSigner(),
       );
 

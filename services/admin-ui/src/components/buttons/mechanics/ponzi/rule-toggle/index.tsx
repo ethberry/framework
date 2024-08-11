@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
-import updateRulePonziABI from "@framework/abis/json/Ponzi/updateRule.json";
+import PonziUpdateRuleABI from "@framework/abis/json/Ponzi/updateRule.json";
 
 export interface IPonziToggleRuleButtonProps {
   className?: string;
@@ -21,7 +21,7 @@ export const PonziToggleRuleButton: FC<IPonziToggleRuleButtonProps> = props => {
 
   const metaToggleRule = useMetamask((rule: IPonziRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.ponziRuleStatus !== PonziRuleStatus.ACTIVE;
-    const contract = new Contract(rule.contract.address, updateRulePonziABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PonziUpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId || 0, ruleStatus) as Promise<void>;
   });
 

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ICollectionContractDeployDto, IContract, IUser } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 
-import deployCollectionCollectionFactoryFacetABI from "@framework/abis/json/CollectionFactoryFacet/deployCollection.json";
+import CollectionFactoryFacetDeployCollectionABI from "@framework/abis/json/CollectionFactoryFacet/deployCollection.json";
 
 import { CollectionContractDeployDialog } from "./dialog";
 
@@ -32,7 +32,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployCollectionCollectionFactoryFacetABI,
+        CollectionFactoryFacetDeployCollectionABI,
         web3Context.provider?.getSigner(),
       );
 

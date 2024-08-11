@@ -11,7 +11,7 @@ import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/t
 
 import { StakingRuleUploadDialog } from "./upload-dialog";
 import { sorter } from "../../../../../utils/sorter";
-import setRulesStakingABI from "@framework/abis/json/Staking/setRules.json";
+import StakingSetRulesABI from "@framework/abis/json/Staking/setRules.json";
 
 export interface IStakingRuleCreateButtonProps {
   className?: string;
@@ -70,7 +70,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
       },
       active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract!.address, setRulesStakingABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 

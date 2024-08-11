@@ -8,7 +8,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionResult } from "@framework/types";
-import setDefaultRoyaltyERC1155BlacklistABI from "@framework/abis/json/ERC1155Simple/setDefaultRoyalty.json";
+import ERC721SimpleSetDefaultRoyaltyABI from "@framework/abis/json/ERC721Simple/setDefaultRoyalty.json";
 
 import { validationSchema } from "./validation";
 
@@ -25,7 +25,7 @@ export const PredictionResultDialog: FC<IPredictionQuestionViewDialogProps> = pr
   const metaFn = useMetamask((values: IPredictionQuestion, web3Context: Web3ContextType) => {
     const contract = new Contract(
       "values.contract.address",
-      setDefaultRoyaltyERC1155BlacklistABI,
+      ERC721SimpleSetDefaultRoyaltyABI,
       web3Context.provider?.getSigner(),
     );
     return contract.resolve(values.id, values.questionResult) as Promise<void>;

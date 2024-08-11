@@ -9,7 +9,7 @@ import type { IContract, IStakingContractDeployDto, IUser } from "@framework/typ
 import { StakingContractTemplates } from "@framework/types";
 
 import { StakingDeployDialog } from "./dialog";
-import deployStakingStakingFactoryFacetABI from "@framework/abis/json/StakingFactoryFacet/deployStaking.json";
+import StakingFactoryFacetDeployStakingABI from "@framework/abis/json/StakingFactoryFacet/deployStaking.json";
 
 export interface IStakingDeployButtonProps {
   className?: string;
@@ -27,7 +27,7 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployStakingStakingFactoryFacetABI,
+        StakingFactoryFacetDeployStakingABI,
         web3Context.provider?.getSigner(),
       );
 

@@ -8,7 +8,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListItem } from "@framework/types";
 
-import ClaimABI from "@framework/abis/json/WaitList/claim.json";
+import WaitListClaimABI from "@framework/abis/json/WaitList/claim.json";
 
 export interface IWaitListClaimButtonProps {
   className?: string;
@@ -36,7 +36,7 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
 
   const metaWaitList = useMetamask((web3Context: Web3ContextType) => {
     return fn(null as unknown as any, listId).then((proof: { proof: Array<string> }) => {
-      const contract = new Contract(list!.contract.address, ClaimABI, web3Context.provider?.getSigner());
+      const contract = new Contract(list!.contract.address, WaitListClaimABI, web3Context.provider?.getSigner());
       return contract.claim(proof.proof, listId) as Promise<void>;
     });
   });

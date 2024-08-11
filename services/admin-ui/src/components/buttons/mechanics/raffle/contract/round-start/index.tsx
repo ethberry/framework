@@ -9,7 +9,7 @@ import { AccessControlRoleType, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
-import startRoundLotteryRandomABI from "@framework/abis/json/RaffleRandom/startRound.json";
+import RaffleRandomStartRoundABI from "@framework/abis/json/RaffleRandom/startRound.json";
 
 import { RaffleStartRoundDialog } from "./round-dialog";
 import type { IRaffleRound } from "./round-dialog";
@@ -37,7 +37,7 @@ export const RaffleRoundStartButton: FC<IRaffleRoundStartButtonProps> = props =>
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
 
   const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, startRoundLotteryRandomABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, RaffleRandomStartRoundABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),

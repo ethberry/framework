@@ -7,7 +7,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType, TokenStatus } from "@framework/types";
 
-import UnpackABI from "@framework/abis/json/ERC721MysteryBoxSimple/unpack.json";
+import ERC721MysteryBoxSimpleUnpackABI from "@framework/abis/json/ERC721MysteryBoxSimple/unpack.json";
 
 export interface IMysteryUnpackButtonProps {
   className?: string;
@@ -21,7 +21,11 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
   const { className, disabled, onRefreshPage = () => {}, token, variant = ListActionVariant.button } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(token.template!.contract!.address, UnpackABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      token.template!.contract!.address,
+      ERC721MysteryBoxSimpleUnpackABI,
+      web3Context.provider?.getSigner(),
+    );
     return contract.unpack(token.tokenId) as Promise<void>;
   });
 

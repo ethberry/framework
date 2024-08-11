@@ -15,7 +15,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IContract, IBalance, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import releaseVestingABI from "@framework/abis/json/Vesting/release.json";
+import VestingReleaseABI from "@framework/abis/json/Vesting/release.json";
 
 export interface IPaymentSplitterBalanceDialogProps {
   open: boolean;
@@ -44,7 +44,7 @@ export const PaymentSplitterBalanceDialog: FC<IPaymentSplitterBalanceDialogProps
   );
 
   const metaWithdraw = useMetamask(async (values: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, releaseVestingABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, VestingReleaseABI, web3Context.provider?.getSigner());
 
     const tokenType = values.token!.template!.contract!.contractType;
     const token = values.token!.template!.contract!.address;

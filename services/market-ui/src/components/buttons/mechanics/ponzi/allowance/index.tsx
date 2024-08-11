@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import AllowanceABI from "@framework/abis/json/ERC20Simple/approve.json";
+import ERC20SimpleApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -36,7 +36,7 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
     if (rule.deposit?.components[0].tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         rule.deposit?.components[0].contract!.address,
-        AllowanceABI,
+        ERC20SimpleApproveABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.approve(rule.contract.address, values.amount) as Promise<any>;

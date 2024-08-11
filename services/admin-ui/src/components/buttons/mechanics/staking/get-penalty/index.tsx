@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import getPenaltyStakingABI from "@framework/abis/json/Staking/getPenalty.json";
+import StakingGetPenaltyABI from "@framework/abis/json/Staking/getPenalty.json";
 
 export interface IStakingPenaltyBalanceButtonProps {
   balance: IBalance;
@@ -22,7 +22,7 @@ export const StakingGetPenaltyBalanceButton: FC<IStakingPenaltyBalanceButtonProp
 
   const metaGetPenalty = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(balance.account, getPenaltyStakingABI, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, StakingGetPenaltyABI, web3Context.provider?.getSigner());
       return contract.getPenalty(balance.token!.template!.contract!.address, balance.token!.tokenId) as Promise<any>;
     },
     { success: false },

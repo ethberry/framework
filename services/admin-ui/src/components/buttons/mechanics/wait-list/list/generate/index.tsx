@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { AccessControlRoleType, ContractStatus, TokenType } from "@framework/types";
 
-import setRewardWaitListABI from "@framework/abis/json/WaitList/setReward.json";
+import WaitListSetRewardABI from "@framework/abis/json/WaitList/setReward.json";
 
 import { useSetButtonPermission } from "../../../../../../shared";
 
@@ -46,7 +46,7 @@ export const WaitListListGenerateButton: FC<IWailtListListGenerateButtonProps> =
   );
 
   const metaFn = useMetamask((result: IWaitListList, web3Context: Web3ContextType) => {
-    const contract = new Contract(result.contract.address, setRewardWaitListABI, web3Context.provider?.getSigner());
+    const contract = new Contract(result.contract.address, WaitListSetRewardABI, web3Context.provider?.getSigner());
 
     return contract.setReward(
       {

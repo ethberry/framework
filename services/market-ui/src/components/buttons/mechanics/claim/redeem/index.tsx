@@ -8,8 +8,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
 import { ClaimStatus, SystemModuleType, TokenType, ClaimType } from "@framework/types";
 
-import ClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
-import SpendABI from "@framework/abis/json/ExchangeClaimFacet/spend.json";
+import ExchangeClaimFacetClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
+import ExchangeClaimFacetSpendABI from "@framework/abis/json/ExchangeClaimFacet/spend.json";
 
 import { sorter } from "../../../../../utils/sorter";
 
@@ -27,7 +27,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
     (values: IClaim, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(
         systemContract.address,
-        claim.claimType === ClaimType.TOKEN ? SpendABI : ClaimABI,
+        claim.claimType === ClaimType.TOKEN ? ExchangeClaimFacetSpendABI : ExchangeClaimFacetClaimABI,
         web3Context.provider?.getSigner(),
       );
 

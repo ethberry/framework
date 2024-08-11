@@ -10,7 +10,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IPonziRule, TokenType } from "@framework/types";
 
 import { PonziRuleUploadDialog } from "./upload-dialog";
-import setRulesPonziABI from "@framework/abis/json/Ponzi/setRules.json";
+import PonziSetRulesABI from "@framework/abis/json/Ponzi/setRules.json";
 
 export interface IPonziRuleCreateButtonProps {
   className?: string;
@@ -68,7 +68,7 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
       },
       active: true, // todo add var in interface
     };
-    const contract = new Contract(rule.contract.address, setRulesPonziABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PonziSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([ponziRule]) as Promise<void>;
   });
 

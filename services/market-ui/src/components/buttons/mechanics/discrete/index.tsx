@@ -14,7 +14,7 @@ import {
   convertTemplateToChainAsset,
 } from "@framework/exchange";
 
-import UpgradeABI from "@framework/abis/json/ExchangeGradeFacet/upgrade.json";
+import ExchangeGradeFacetUpgradeABI from "@framework/abis/json/ExchangeGradeFacet/upgrade.json";
 
 import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
@@ -52,7 +52,11 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         multiplier: getMultiplier(level, discrete),
       });
 
-      const contract = new Contract(systemContract.address, UpgradeABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeGradeFacetUpgradeABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.upgrade(
         {

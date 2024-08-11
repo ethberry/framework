@@ -9,7 +9,7 @@ import { SystemModuleType } from "@framework/types";
 import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
 import { InputType } from "@gemunion/types-collection";
 
-import SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
+import ERC1155SimpleSetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 import { AllowanceForAllDialog } from "./dialog";
 
@@ -35,7 +35,11 @@ export const AllowanceForAllButton: FC<IAllowanceForAllButtonProps> = props => {
 
   const metaFnWithContract = useSystemContract<IContract, SystemModuleType>(
     (_values: null, web3Context: Web3ContextType, systemContract: IContract) => {
-      const tokenContract = new Contract(contract.address, SetApprovalForAllABI, web3Context.provider?.getSigner());
+      const tokenContract = new Contract(
+        contract.address,
+        ERC1155SimpleSetApprovalForAllABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return tokenContract.setApprovalForAll(systemContract.address, true) as Promise<void>;
     },

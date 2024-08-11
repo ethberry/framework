@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
-import mintBoxERC721MysteryBoxBlacklistABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
+import ERC721MysteryBoxSimpleMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
@@ -48,7 +48,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
   const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
     const contractMysteryBox = new Contract(
       address,
-      mintBoxERC721MysteryBoxBlacklistABI,
+      ERC721MysteryBoxSimpleMintBoxABI,
       web3Context.provider?.getSigner(),
     );
     const items = convertDatabaseAssetToChainAsset(values.mysteryBox!.item!.components);

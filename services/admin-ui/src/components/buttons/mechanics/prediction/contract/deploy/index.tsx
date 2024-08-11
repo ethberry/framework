@@ -9,7 +9,7 @@ import type { IContract, IPredictionContractDeployDto, IUser } from "@framework/
 import { PredictionContractTemplates } from "@framework/types";
 
 import { PredictionContractDeployDialog } from "./dialog";
-import deployPredictionFactoryFacetABI from "@framework/abis/json/PredictionFactoryFacet/deployPrediction.json";
+import PredictionFactoryFacetDeployPredictionABI from "@framework/abis/json/PredictionFactoryFacet/deployPrediction.json";
 
 export interface IPredictionContractDeployButtonProps {
   className?: string;
@@ -27,7 +27,7 @@ export const PredictionContractDeployButton: FC<IPredictionContractDeployButtonP
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployPredictionFactoryFacetABI,
+        PredictionFactoryFacetDeployPredictionABI,
         web3Context.provider?.getSigner(),
       );
 

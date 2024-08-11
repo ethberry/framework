@@ -18,7 +18,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
-import TemplatePurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
+import ExchangePurchaseFacetPurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
 import { useAllowance } from "../../../../../utils/use-allowance";
 import { AmountDialog, IAmountDto } from "./dialog";
@@ -44,7 +44,11 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, values: IAmountDto, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, TemplatePurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangePurchaseFacetPurchaseABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const item = convertTemplateToChainAsset(template, values.amount);
       const price = convertDatabaseAssetToChainAsset(template.price?.components, { multiplier: values.amount });

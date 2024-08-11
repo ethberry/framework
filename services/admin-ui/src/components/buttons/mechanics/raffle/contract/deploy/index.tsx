@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleContractDeployDto, IUser } from "@framework/types";
 
 import { RaffleContractDeployDialog } from "./dialog";
-import deployRaffleRaffleFactoryFacetABI from "@framework/abis/json/RaffleFactoryFacet/deployRaffle.json";
+import RaffleFactoryFacetDeployRaffleABI from "@framework/abis/json/RaffleFactoryFacet/deployRaffle.json";
 
 export interface IRaffleContractDeployButtonProps {
   className?: string;
@@ -26,7 +26,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployRaffleRaffleFactoryFacetABI,
+        RaffleFactoryFacetDeployRaffleABI,
         web3Context.provider?.getSigner(),
       );
 

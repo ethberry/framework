@@ -14,7 +14,7 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICraft } from "@framework/types";
 
-import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
+import ExchangeCraftFacetCraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
 import { useAllowance } from "../../../../../utils/use-allowance";
 
@@ -32,7 +32,11 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
   const metaFnWithAllowance = useAllowance(
     async (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeCraftFacetCraftABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const items = convertDatabaseAssetToChainAsset(craft.item?.components);
       const price = convertDatabaseAssetToChainAsset(craft.price?.components);

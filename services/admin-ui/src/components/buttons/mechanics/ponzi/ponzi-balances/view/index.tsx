@@ -12,7 +12,7 @@ import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 
-import withdrawTokenPonziABI from "@framework/abis/json/Ponzi/withdrawToken.json";
+import PonziWithdrawTokenABI from "@framework/abis/json/Ponzi/withdrawToken.json";
 
 import { emptyBalance } from "../../../../../common/interfaces";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
@@ -41,7 +41,7 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
   );
 
   const metaWithdraw = useMetamask(async (values: IBalance, withdrawAmount: string, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, withdrawTokenPonziABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, PonziWithdrawTokenABI, web3Context.provider?.getSigner());
     // return contract.withdrawToken(values.token!.template!.contract!.address, values.amount) as Promise<void>;
     const token = values.token!.template!.contract!.address;
     // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction

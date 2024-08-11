@@ -11,7 +11,7 @@ import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset, sort
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IContract, IMerge, TokenType } from "@framework/types";
 
-import MergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
+import ExchangeMergeFacetMergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
 import { MergeDialog, IMergeDto } from "./dialog";
 import { useAllowance } from "../../../../../utils/use-allowance";
@@ -32,7 +32,11 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, values: IMergeDto, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, MergeABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeMergeFacetMergeABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const encodedTemplateId = utils.hexZeroPad(
         BigNumber.from(merge.price?.components[0].templateId || 0).toHexString(),
@@ -43,7 +47,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
       const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el => ({
         tokenId: el.tokenId,
-        tokenType: Object.values(TokenType).indexOf(el.template?.contract?.contractType!),
+        tokenType: Object.values(TokenType).indexOf(el.template!.contract!.contractType!),
         token: el.template?.contract?.address,
         amount: "1",
       }));

@@ -13,12 +13,12 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { CompositionStatus, IBalance, IToken, TokenType } from "@framework/types";
 
-import safeTransferChildABI from "@framework/abis/json/ERC998Simple/safeTransferChild.json";
-import safeTransferFrom1155ABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
-import safeTransferFrom721ABI from "@framework/abis/json/ERC721Simple/safeTransferFrom.json";
-import safeTransferFromERC1155ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/safeTransferFromERC1155.json";
-import transferERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/transferERC20.json";
-import getERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/getERC20.json";
+import ERC998SimpleSafeTransferChildABI from "@framework/abis/json/ERC998Simple/safeTransferChild.json";
+import ERC1155SimpleSafeTransferFrom1155ABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
+import ERC721SimpleSafeTransferFrom721ABI from "@framework/abis/json/ERC721Simple/safeTransferFrom.json";
+import ERC998ERC1155ERC20EnumSafeTransferFromERC1155ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/safeTransferFromERC1155.json";
+import ERC998ERC1155ERC20EnumTransferERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/transferERC20.json";
+import ERC998ERC1155ERC20EnumGetERC20ABI from "@framework/abis/json/ERC998ERC1155ERC20Enum/getERC20.json";
 
 import { formatTokenTitle } from "../../../../../utils/token";
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
@@ -42,12 +42,13 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
   const { formatMessage } = useIntl();
 
   // combine all function's abi
-  const ERC998ABI = safeTransferFromERC1155ABI
-    .concat(transferERC20ABI)
-    .concat(getERC20ABI)
-    .concat(safeTransferChildABI)
-    .concat(safeTransferFrom1155ABI)
-    .concat(safeTransferFrom721ABI);
+  const ERC998ABI = ([] as Array<any>)
+    .concat(ERC721SimpleSafeTransferFrom721ABI)
+    .concat(ERC998ERC1155ERC20EnumSafeTransferFromERC1155ABI)
+    .concat(ERC998ERC1155ERC20EnumTransferERC20ABI)
+    .concat(ERC998ERC1155ERC20EnumGetERC20ABI)
+    .concat(ERC998SimpleSafeTransferChildABI)
+    .concat(ERC1155SimpleSafeTransferFrom1155ABI);
 
   const metaComposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
@@ -151,7 +152,6 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
   };
 
   const handleAlert = (_event: ChangeEvent<unknown>, _option: any): void => {
-    // TODO show lLert composition inactive
     enqueueSnackbar(formatMessage({ id: "form.hints.compositionInactive" }), { variant: "error" });
   };
 

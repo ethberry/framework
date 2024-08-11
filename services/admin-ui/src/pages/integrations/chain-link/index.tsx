@@ -11,8 +11,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { formatEther } from "@framework/exchange";
 import type { IChainLinkSubscription, IContract, IUser } from "@framework/types";
 import { SystemModuleType, UserRole } from "@framework/types";
-import getSubscriptionVRFCoordinatorV2PlusMockABI from "@framework/abis/json/VRFCoordinatorV2PlusMock/getSubscription.json";
-import balanceOfBasicTokenABI from "@framework/abis/json/ERC20Simple/balanceOf.json";
+import VRFCoordinatorV2PlusMockGetSubscriptionABI from "@framework/abis/json/VRFCoordinatorV2PlusMock/getSubscription.json";
+import ERC20SimpleBalanceOf from "@framework/abis/json/ERC20Simple/balanceOf.json";
 
 import {
   ChainLinkAddConsumerButton,
@@ -72,7 +72,7 @@ export const ChainLink: FC = () => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(
         systemContract.parameters.linkAddress.toString(),
-        balanceOfBasicTokenABI,
+        ERC20SimpleBalanceOf,
         web3Context.provider?.getSigner(),
       );
 
@@ -89,7 +89,7 @@ export const ChainLink: FC = () => {
     async (subscriptionId: number, web3Context: Web3ContextType, systemContract: IContract) => {
       const contract = new Contract(
         systemContract.address,
-        getSubscriptionVRFCoordinatorV2PlusMockABI,
+        VRFCoordinatorV2PlusMockGetSubscriptionABI,
         web3Context.provider?.getSigner(),
       );
       if ((await contract.provider.getCode(contract.address)) !== "0x") {

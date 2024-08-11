@@ -8,7 +8,7 @@ import type { ILootBox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { AccessControlRoleType } from "@framework/types";
-import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
+import ERC721LootBoxSimpleMintBoxABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";
@@ -46,7 +46,7 @@ export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
   const metaFn = useMetamask((values: IMintLootBoxDto, web3Context: Web3ContextType) => {
     const contractLootbox = new Contract(
       template!.contract!.address,
-      mintBoxERC721LootBoxBlacklistABI,
+      ERC721LootBoxSimpleMintBoxABI,
       web3Context.provider?.getSigner(),
     );
     const items = convertDatabaseAssetToChainAsset(values.lootBox!.item!.components);

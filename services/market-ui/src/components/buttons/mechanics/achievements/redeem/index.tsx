@@ -11,7 +11,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
+import ExchangeClaimFacetClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
 import { sorter } from "../../../../../utils/sorter";
 
 interface IAchievementRedeemButtonProps {
@@ -48,7 +48,11 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, ClaimABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeClaimFacetClaimABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.claim(
         {

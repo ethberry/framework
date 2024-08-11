@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IPaymentSplitterContractDeployDto, IUser } from "@framework/types";
 
 import { PaymentSplitterContractDeployDialog } from "./dialog";
-import deployPaymentSplitterPaymentSplitterFactoryFacetABI from "@framework/abis/json/PaymentSplitterFactoryFacet/deployPaymentSplitter.json";
+import PaymentSplitterFactoryFacetDeployPaymentSplitterABI from "@framework/abis/json/PaymentSplitterFactoryFacet/deployPaymentSplitter.json";
 
 export interface IPaymentSplitterContractDeployButtonProps {
   className?: string;
@@ -26,7 +26,7 @@ export const PaymentSplitterContractDeployButton: FC<IPaymentSplitterContractDep
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployPaymentSplitterPaymentSplitterFactoryFacetABI,
+        PaymentSplitterFactoryFacetDeployPaymentSplitterABI,
         web3Context.provider?.getSigner(),
       );
 

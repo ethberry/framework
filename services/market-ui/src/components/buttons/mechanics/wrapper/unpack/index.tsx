@@ -6,7 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import UnpackABI from "@framework/abis/json/ERC721Wrapper/unpack.json";
+import ERC721WrapperUnpackABI from "@framework/abis/json/ERC721Wrapper/unpack.json";
 
 export interface IWrapperUnpackButtonProps {
   className?: string;
@@ -19,7 +19,11 @@ export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(token.template!.contract!.address, UnpackABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      token.template!.contract!.address,
+      ERC721WrapperUnpackABI,
+      web3Context.provider?.getSigner(),
+    );
     return contract.unpack(token.tokenId) as Promise<void>;
   });
 

@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import releaseVestingABI from "@framework/abis/json/Vesting/release.json";
+import VestingReleaseABI from "@framework/abis/json/Vesting/release.json";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;
@@ -21,7 +21,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   const { balance, className, disabled, variant } = props;
 
   const metaRelease = useMetamask(async (vesting: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.account, releaseVestingABI, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.account, VestingReleaseABI, web3Context.provider?.getSigner());
     if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
       return contract["release(address)"](balance.token?.template.contract.address) as Promise<any>;
     } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {
