@@ -29,15 +29,15 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
-    queryBuilder.leftJoinAndSelect("box.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("box.content", "content");
+    queryBuilder.leftJoinAndSelect("content.components", "content_components");
+    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
 
     queryBuilder.leftJoinAndSelect(
-      "item_template.tokens",
-      "item_tokens",
-      "item_contract.contractType IN(:...tokenTypes)",
+      "content_template.tokens",
+      "content_tokens",
+      "content_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
@@ -141,14 +141,14 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
-    queryBuilder.leftJoinAndSelect("box.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("box.content", "content");
+    queryBuilder.leftJoinAndSelect("content.components", "content_components");
+    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
+    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
     queryBuilder.leftJoinAndSelect(
-      "item_template.tokens",
-      "item_tokens",
-      "item_contract.contractType IN(:...tokenTypes)",
+      "content_template.tokens",
+      "content_tokens",
+      "content_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 

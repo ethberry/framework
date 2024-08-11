@@ -33,10 +33,10 @@ export class MysteryTokenService extends TokenService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
     queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
-    queryBuilder.leftJoinAndSelect("box.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("box.content", "content");
+    queryBuilder.leftJoinAndSelect("content.components", "content_components");
+    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 

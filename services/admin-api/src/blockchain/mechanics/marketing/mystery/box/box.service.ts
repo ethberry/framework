@@ -53,10 +53,10 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.leftJoinAndSelect("box.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("box.content", "content");
+    queryBuilder.leftJoinAndSelect("content.components", "content_components");
+    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
+    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -64,8 +64,10 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
-    // item or price template must be active
-    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    // content or price template must be active
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
     queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (query) {
@@ -151,23 +153,30 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    // item
-    queryBuilder.leftJoinAndSelect("box.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "components");
-    queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("components.template", "item_template");
 
-    queryBuilder.leftJoinAndSelect("item_template.tokens", "token", "item_contract.contractType = :contractType", {
-      contractType: TokenType.ERC1155,
-    });
-    // price
+    queryBuilder.leftJoinAndSelect("box.content", "content");
+    queryBuilder.leftJoinAndSelect("content.components", "components");
+    queryBuilder.leftJoinAndSelect("components.contract", "content_contract");
+    queryBuilder.leftJoinAndSelect("components.template", "content_template");
+
+    queryBuilder.leftJoinAndSelect(
+      "content_template.tokens",
+      "token",
+      "content_contract.contractType = :contractType",
+      {
+        contractType: TokenType.ERC1155,
+      },
+    );
+
     // queryBuilder.leftJoinAndSelect("box.price", "price");
     // queryBuilder.leftJoinAndSelect("price.components", "price_components");
     // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // item or price template must be active
-    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    // content or price template must be active
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
     // queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
@@ -211,10 +220,10 @@ export class MysteryBoxService {
         alias: "box",
         leftJoinAndSelect: {
           template: "box.template",
-          item: "box.item",
-          item_components: "item.components",
-          item_contract: "item_components.contract",
-          item_template: "item_components.template",
+          content: "box.content",
+          content_components: "content.components",
+          content_contract: "content_components.contract",
+          content_template: "content_components.template",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
@@ -240,8 +249,8 @@ export class MysteryBoxService {
         leftJoinAndSelect: {
           template: "box.template",
           contract: "template.contract",
-          item: "box.item",
-          item_components: "item.components",
+          content: "box.content",
+          content_components: "content.components",
           price: "template.price",
           price_components: "price.components",
         },
@@ -289,7 +298,7 @@ export class MysteryBoxService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    // Check contract of each item for Random feature,
+    // Check contract of each content for Random feature,
     const validationErrors: Array<INestedProperty> = [];
     for (const [index, component] of content.components.entries()) {
       const tokenContract = await this.contractService.findOneOrFail({ id: component.contractId });
@@ -303,7 +312,7 @@ export class MysteryBoxService {
     }
 
     if (validationErrors.length) {
-      throw new BadRequestException(createNestedValidationError(dto, "item.components", validationErrors));
+      throw new BadRequestException(createNestedValidationError(dto, "content.components", validationErrors));
     }
 
     const priceEntity = await this.assetService.create();
