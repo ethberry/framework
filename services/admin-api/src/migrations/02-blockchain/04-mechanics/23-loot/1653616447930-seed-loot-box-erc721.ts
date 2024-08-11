@@ -113,7 +113,7 @@ export class SeedLootBoxErc721At1653616447930 implements MigrationInterface {
         title,
         description,
         image_url,
-        item_id,
+        content_id,
         template_id,
         loot_box_status,
         min,

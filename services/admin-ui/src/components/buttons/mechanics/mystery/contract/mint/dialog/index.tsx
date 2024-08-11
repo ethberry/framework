@@ -24,7 +24,7 @@ export interface IMintMysteryBoxDialogProps {
   initialValues: IMintMysteryBoxDto;
 }
 
-export const MintMysteryBoxDialog: FC<IMintMysteryBoxDialogProps> = props => {
+export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (

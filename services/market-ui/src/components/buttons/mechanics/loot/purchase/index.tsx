@@ -38,7 +38,7 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
         ExchangeLootBoxFacetPurchaseLootABI,
         web3Context.provider?.getSigner(),
       );
-      const content = convertDatabaseAssetToChainAsset([...lootBox.item!.components]);
+      const content = convertDatabaseAssetToChainAsset([...lootBox.content!.components]);
       const price = convertDatabaseAssetToChainAsset([...lootBox.template!.price!.components]);
       return contract.purchaseLoot(
         {

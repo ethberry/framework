@@ -22,18 +22,18 @@ export interface ILootBoxEditDialogProps {
 export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, imageUrl, lootBoxStatus, template, min, max } = initialValues;
+  const { id, title, description, content, imageUrl, lootBoxStatus, template, min, max } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
-    item,
+    content,
     imageUrl,
     lootBoxStatus,
     template,
     min: min || 1,
-    max: max || item?.components.length || 1,
+    max: max || content?.components.length || 1,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -63,7 +63,7 @@ export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
         required
         autoSelect
         multiple
-        prefix="item"
+        prefix="content"
         contract={{
           data: {
             contractModule: [ModuleType.HIERARCHY],
@@ -71,6 +71,7 @@ export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
           },
         }}
         forceAmount
+        readOnly={!!id}
       />
       <TemplateAssetInput
         required

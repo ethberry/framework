@@ -47,7 +47,7 @@ export const MysteryBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyItem,
+      content: emptyItem,
       template: {
         price: emptyPrice,
       } as ITemplate,
@@ -57,12 +57,13 @@ export const MysteryBox: FC = () => {
       mysteryBoxStatus: [MysteryBoxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, template, title, description, imageUrl, item, mysteryBoxStatus }) =>
+    filter: ({ id, template, title, description, imageUrl, content, mysteryBoxStatus }) =>
       id
         ? {
             title,
             description,
             imageUrl,
+            content: cleanUpAsset(content),
             price: cleanUpAsset(template?.price),
             mysteryBoxStatus,
           }
@@ -71,7 +72,7 @@ export const MysteryBox: FC = () => {
             title,
             description,
             imageUrl,
-            item: cleanUpAsset(item),
+            content: cleanUpAsset(content),
             price: cleanUpAsset(template?.price),
           },
   });

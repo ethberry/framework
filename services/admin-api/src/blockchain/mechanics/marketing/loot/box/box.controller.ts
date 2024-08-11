@@ -50,7 +50,7 @@ export class LootBoxController {
     @Body() dto: LootBoxUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<LootBoxEntity> {
-    return this.lootBoxService.updateAll({ id }, dto, userEntity);
+    return this.lootBoxService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

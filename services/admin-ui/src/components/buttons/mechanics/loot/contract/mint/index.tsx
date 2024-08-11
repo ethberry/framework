@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
-import mintBoxERC721LootBoxBlacklistABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
+import ERC721LootBoxSimpleMintBoxABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintLootBoxDto } from "./dialog";
@@ -43,9 +43,9 @@ export const LootContractMintButton: FC<ILootContractMintButtonProps> = props =>
   };
 
   const metaFn = useMetamask((values: IMintLootBoxDto, web3Context: Web3ContextType) => {
-    const contractLootBox = new Contract(address, mintBoxERC721LootBoxBlacklistABI, web3Context.provider?.getSigner());
-    const items = convertDatabaseAssetToChainAsset(values.lootBox!.item!.components);
-    return contractLootBox.mintBox(values.account, values.lootBox!.templateId, items) as Promise<any>;
+    const contractLootBox = new Contract(address, ERC721LootBoxSimpleMintBoxABI, web3Context.provider?.getSigner());
+    const content = convertDatabaseAssetToChainAsset(values.lootBox!.content!.components);
+    return contractLootBox.mintBox(values.account, values.lootBox!.templateId, content) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintLootBoxDto): Promise<void> => {

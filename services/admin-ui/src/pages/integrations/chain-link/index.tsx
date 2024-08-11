@@ -44,13 +44,13 @@ export const ChainLink: FC = () => {
 
   const [merchantSubscriptions, setMerchantSubscriptions] = useState<Array<IChainLinkSubscription> | null>(null);
 
-  const [subData, setSubData] = useState<IVrfSubscriptionData>({
+  const [subData, _setSubData] = useState<IVrfSubscriptionData>({
     owner: "",
     balance: 0,
     reqCount: 0,
     consumers: [""],
   });
-  const [currentBalance, setCurrentBalance] = useState<string>("0");
+  const [currentBalance, _setCurrentBalance] = useState<string>("0");
   const [currentSubscription, setCurrentSubscription] = useState<string>("0");
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
@@ -108,14 +108,14 @@ export const ChainLink: FC = () => {
     { success: false },
   );
 
-  const metaFnBalanceData = useMetamaskValue(
+  const _metaFnBalanceData = useMetamaskValue(
     (values: any, web3Context: Web3ContextType) => {
       return getAccountBalance(SystemModuleType.CHAIN_LINK, values, web3Context);
     },
     { success: false },
   );
 
-  const metaFnSubData = useMetamaskValue(
+  const _metaFnSubData = useMetamaskValue(
     (values: any, web3Context: Web3ContextType) => {
       return getSubscriptionData(SystemModuleType.CHAIN_LINK, values, web3Context);
     },
@@ -131,8 +131,6 @@ export const ChainLink: FC = () => {
         setMerchantSubscriptions(filtered);
         // setCurrentSubscription(filtered && filtered.length > 0 ? filtered[0].vrfSubId : 0);
       });
-    }
-    if (!merchantSubscriptions || !account) {
     }
     // void metaFnSubData(currentSubscription).then(setSubData);
     // void metaFnBalanceData({ decimals: 18, symbol: "LINK" }).then(setCurrentBalance);

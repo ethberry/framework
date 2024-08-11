@@ -6,7 +6,7 @@ import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 export const validationSchema = object().shape({
   title: titleValidationSchema,
   description: draftValidationSchema,
-  item: templateAssetValidationSchema,
+  content: templateAssetValidationSchema,
   price: templateAssetValidationSchema,
   imageUrl: urlValidationSchema,
 });

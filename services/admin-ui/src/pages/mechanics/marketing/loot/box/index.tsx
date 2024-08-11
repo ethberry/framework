@@ -47,7 +47,7 @@ export const LootBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyItem,
+      content: emptyItem,
       template: {
         price: emptyPrice,
       } as ITemplate,
@@ -57,13 +57,13 @@ export const LootBox: FC = () => {
       lootBoxStatus: [LootBoxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, template, title, description, imageUrl, item, lootBoxStatus, min, max }) =>
+    filter: ({ id, template, title, description, imageUrl, content, lootBoxStatus, min, max }) =>
       id
         ? {
             title,
             description,
             imageUrl,
-            item: cleanUpAsset(item),
+            content: cleanUpAsset(content),
             price: cleanUpAsset(template?.price),
             lootBoxStatus,
             min,
@@ -74,7 +74,7 @@ export const LootBox: FC = () => {
             title,
             description,
             imageUrl,
-            item: cleanUpAsset(item),
+            content: cleanUpAsset(content),
             price: cleanUpAsset(template?.price),
             min,
             max,

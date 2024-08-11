@@ -15,10 +15,10 @@ export class LootBoxEntity extends SearchableEntity implements ILootBox {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public item: AssetEntity;
+  public content: AssetEntity;
 
   @Column({ type: "int" })
-  public itemId: number;
+  public contentId: number;
 
   @Column({
     type: "enum",

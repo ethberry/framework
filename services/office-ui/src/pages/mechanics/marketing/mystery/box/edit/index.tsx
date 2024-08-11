@@ -26,7 +26,7 @@ export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
     id,
     title,
     description,
-    item,
+    content,
     imageUrl,
     mysteryBoxStatus,
     template,
@@ -39,7 +39,7 @@ export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
     id,
     title,
     description,
-    item,
+    content,
     imageUrl,
     mysteryBoxStatus,
     template,
@@ -73,7 +73,7 @@ export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
         required
         autoSelect
         multiple
-        prefix="item"
+        prefix="content"
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] }}
         contract={{
           data: {

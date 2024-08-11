@@ -50,7 +50,7 @@ export class MysteryBoxController {
     @Body() dto: MysteryBoxUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
-    return this.mysteryBoxService.updateAll({ id }, dto, userEntity);
+    return this.mysteryBoxService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

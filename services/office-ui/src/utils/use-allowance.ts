@@ -124,19 +124,19 @@ export const approveTokens = async (contract: string, asset: IAsset, web3Context
   // ERC20
   if (tokenType === TokenType.ERC20) {
     const contractErc20 = new Contract(token, ERC20ApproveABI, web3Context.provider?.getSigner());
-    return contractErc20.approve(contract, amount) as ContractTransaction;
+    return contractErc20.approve(contract, amount) as Promise<ContractTransaction>;
   }
 
   // ERC721 & ERC998
   else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
     const contractErc721 = new Contract(token, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
-    return contractErc721.setApprovalForAll(contract, true) as ContractTransaction;
+    return contractErc721.setApprovalForAll(contract, true) as Promise<ContractTransaction>;
   }
 
   // ERC1155
   else if (tokenType === TokenType.ERC1155) {
     const contractErc1155 = new Contract(token, ERC1155SetApprovalForAllABI, web3Context.provider?.getSigner());
-    return contractErc1155.setApprovalForAll(contract, true) as ContractTransaction;
+    return contractErc1155.setApprovalForAll(contract, true) as Promise<ContractTransaction>;
   }
 
   // Unknown Token Type

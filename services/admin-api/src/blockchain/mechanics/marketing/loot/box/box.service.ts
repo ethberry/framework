@@ -1,15 +1,6 @@
 import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import {
-  Brackets,
-  DeleteResult,
-  FindManyOptions,
-  FindOneOptions,
-  FindOptionsWhere,
-  In,
-  Repository,
-  UpdateResult,
-} from "typeorm";
+import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ILootBoxAutocompleteDto, ILootBoxSearchDto } from "@framework/types";
 import { LootBoxStatus, TemplateStatus, TokenType } from "@framework/types";
@@ -19,11 +10,11 @@ import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import type { ILootBoxCreateDto, ILootBoxUpdateDto } from "./interfaces";
-import { LootBoxEntity } from "./box.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ClaimTemplateService } from "../../claim/template/template.service";
 import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
+import type { ILootBoxCreateDto, ILootBoxUpdateDto } from "./interfaces";
+import { LootBoxEntity } from "./box.entity";
 
 @Injectable()
 export class LootBoxService {
@@ -227,12 +218,12 @@ export class LootBoxService {
     });
   }
 
-  public async updateAll(
+  public async update(
     where: FindOptionsWhere<LootBoxEntity>,
     dto: Partial<ILootBoxUpdateDto>,
     userEntity: UserEntity,
   ): Promise<LootBoxEntity> {
-    const { price, item, ...rest } = dto;
+    const { price, content, ...rest } = dto;
 
     const lootBoxEntity = await this.findOne(where, {
       join: {
@@ -260,11 +251,10 @@ export class LootBoxService {
       await this.assetService.update(lootBoxEntity.template.price, price, userEntity);
     }
 
-    if (item) {
-      await this.assetService.update(lootBoxEntity.item, item, userEntity);
+    if (content) {
+      await this.assetService.update(lootBoxEntity.content, content, userEntity);
     }
 
-    // SYNC UPDATE TEMPLATE
     const { title, description, imageUrl } = rest;
     await this.templateService.update({ id: lootBoxEntity.templateId }, { title, description, imageUrl }, userEntity);
 
@@ -274,7 +264,7 @@ export class LootBoxService {
   }
 
   public async create(dto: ILootBoxCreateDto, userEntity: UserEntity): Promise<LootBoxEntity> {
-    const { price, item, contractId } = dto;
+    const { price, content, contractId } = dto;
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
@@ -289,10 +279,8 @@ export class LootBoxService {
     const priceEntity = await this.assetService.create();
     await this.assetService.update(priceEntity, price, userEntity);
 
-    const itemEntity = await this.assetService.create();
-    await this.assetService.update(itemEntity, item, userEntity);
-
-    Object.assign(dto, { price: priceEntity, item: itemEntity });
+    const contentEntity = await this.assetService.create();
+    await this.assetService.update(contentEntity, content, userEntity);
 
     const templateEntity = await this.templateService.create({
       title: dto.title,
@@ -303,11 +291,13 @@ export class LootBoxService {
       contractId: contractEntity.id,
     });
 
-    return this.lootBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
-  }
-
-  public async update(where: FindOptionsWhere<LootBoxEntity>, dto: Partial<ILootBoxUpdateDto>): Promise<UpdateResult> {
-    return this.lootBoxEntityRepository.update(where, dto);
+    return this.lootBoxEntityRepository
+      .create({
+        ...dto,
+        content: contentEntity,
+        template: templateEntity,
+      })
+      .save();
   }
 
   public async delete(where: FindOptionsWhere<LootBoxEntity>, userEntity: UserEntity): Promise<LootBoxEntity> {
@@ -341,7 +331,7 @@ export class LootBoxService {
     const lootBoxEntities = await this.lootBoxEntityRepository.find({
       where: [
         {
-          item: In(assets.map(asset => asset.id)),
+          content: In(assets.map(asset => asset.id)),
         },
         {
           template: {
@@ -355,7 +345,7 @@ export class LootBoxService {
       await this.templateDeleteService.deactivateTemplate(lootBoxEntity.template);
     }
 
-    await this.claimTemplateService.deactivateClaims(lootBoxEntities.map(lootBoxEntity => lootBoxEntity.item));
+    await this.claimTemplateService.deactivateClaims(lootBoxEntities.map(lootBoxEntity => lootBoxEntity.content));
 
     return await this.lootBoxEntityRepository.delete({
       id: In(lootBoxEntities.map(lootBoxEntity => lootBoxEntity.id)),

@@ -32,7 +32,7 @@ export class CreateLootBox1653616447910 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "item_id",
+          name: "content_id",
           type: "bigint",
         },
         {
@@ -63,7 +63,7 @@ export class CreateLootBox1653616447910 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["item_id"],
+          columnNames: ["content_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",

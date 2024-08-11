@@ -41,7 +41,7 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
         title,
         description,
         image_url,
-        item_id,
+        content_id,
         template_id,
         mystery_box_status,
         created_at,
