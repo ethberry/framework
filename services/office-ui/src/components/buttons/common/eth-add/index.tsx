@@ -7,8 +7,8 @@ import type { IContract } from "@framework/types";
 import { NodeEnv, TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
+import { shouldDisableByContractType } from "../../utils";
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
 
 export interface IEthListenerAddButtonProps {
   className?: string;

@@ -12,10 +12,10 @@ import { TokenType } from "@framework/types";
 
 import TopUpABI from "@framework/abis/json/TopUp/topUp.json";
 
+import { useAllowance } from "../../../../utils/use-allowance";
+import { shouldDisableByContractType } from "../../utils";
 import { TopUpDialog } from "./dialog";
 import type { ITopUpDto } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
-import { useAllowance } from "../../../../utils/use-allowance";
 
 export interface ITopUpButtonProps {
   className?: string;

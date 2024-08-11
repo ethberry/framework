@@ -13,8 +13,8 @@ import ERC20TransferABI from "@framework/abis/json/ERC20Simple/transfer.json";
 import ERC721SafeTransferFromABI from "@framework/abis/json/ERC721Simple/safeTransferFrom.json";
 import ERC1155SafeTransferFromABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
 
+import { shouldDisableByContractType } from "../../utils";
 import { ITransferDto, TransferDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
 
 export interface ITransferButtonProps {
   className?: string;

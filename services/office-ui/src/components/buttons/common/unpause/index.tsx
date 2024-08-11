@@ -9,7 +9,8 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import PauseABI from "@framework/abis/json/Pausable/pause.json";
-import { shouldDisableByContractType } from "../../../utils";
+
+import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IUnPauseButtonProps {

@@ -5,8 +5,8 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
+import { shouldDisableByContractType } from "../../utils";
 import { AccessListUnBlacklistDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IUnBlacklistButtonProps {

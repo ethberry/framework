@@ -11,7 +11,7 @@ import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "
 import GrantRoleABI from "@framework/abis/json/AccessControlFacet/grantRole.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IGrantRoleButtonProps {

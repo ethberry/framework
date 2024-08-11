@@ -6,7 +6,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ICollectionUploadDto, IContract } from "@framework/types";
 
 import { CollectionUploadDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../../utils";
+import { shouldDisableByContractType } from "../../../utils";
 
 export interface ICollectionUploadButtonProps {
   className?: string;

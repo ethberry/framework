@@ -11,7 +11,7 @@ import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 import WhitelistABI from "@framework/abis/json/ERC20Whitelist/whitelist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IWhitelistButtonProps {

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc998ContractDeployDto, IUser } from "@framework/types";
 import { Erc998ContractTemplates } from "@framework/types";
 
-import deployERC998TokenERC998FactoryFacetABI from "@framework/abis/json/ERC998FactoryFacet/deployERC998Token.json";
+import ERC998FactoryFacetDeployERC998TokenABI from "@framework/abis/json/ERC998FactoryFacet/deployERC998Token.json";
 
 import { Erc998ContractDeployDialog } from "./dialog";
 
@@ -32,7 +32,7 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployERC998TokenERC998FactoryFacetABI,
+        ERC998FactoryFacetDeployERC998TokenABI,
         web3Context.provider?.getSigner(),
       );
 

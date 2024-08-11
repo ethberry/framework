@@ -9,6 +9,7 @@ import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
 import ERC20SimpleApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
+import ERC721SimpleSetApprovalForAllABI from "@framework/abis/json/ERC721Simple/setApprovalForAll.json";
 import ERC1155SimpleSetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 
 import { shouldDisableByContractType } from "../../../utils";
@@ -45,11 +46,7 @@ export const ContractAllowanceButton: FC<IContractAllowanceButtonProps> = props 
       const contractErc20 = new Contract(address, ERC20SimpleApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, values.amount) as Promise<any>;
     } else if (contractType === TokenType.ERC721 || contractType === TokenType.ERC998) {
-      const contractErc721 = new Contract(
-        address,
-        ERC1155SimpleSetApprovalForAllABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contractErc721 = new Contract(address, ERC721SimpleSetApprovalForAllABI, web3Context.provider?.getSigner());
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
     } else if (contractType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(

@@ -15,7 +15,7 @@ import ERC1155MintABI from "@framework/abis/json/ERC1155Simple/mint.json";
 
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../../utils";
+import { shouldDisableByContractType } from "../../../utils";
 import { useSetButtonPermission } from "../../../../../shared";
 
 export interface IMintButtonProps {

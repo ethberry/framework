@@ -6,7 +6,7 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures } from "@framework/types";
 
 import { AccessListUnWhitelistDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IUnWhitelistButtonProps {

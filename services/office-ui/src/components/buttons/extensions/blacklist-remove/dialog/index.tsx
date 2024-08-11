@@ -11,7 +11,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
 
-import UnBlacklistABI from "@framework/abis/json/ERC1155Blacklist/unBlacklist.json";
+import ERC20BlacklistUnBlacklistABI from "@framework/abis/json/ERC20Blacklist/unBlacklist.json";
 
 export interface IAccessListUnBlacklistDialogProps {
   open: boolean;
@@ -35,7 +35,7 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
   );
 
   const metaUnBlacklist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, UnBlacklistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, ERC20BlacklistUnBlacklistABI, web3Context.provider?.getSigner());
     return contract.unBlacklist(values.account) as Promise<void>;
   });
 
@@ -59,12 +59,7 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
             <StyledListItem key={access.id}>
               <ListItemText>{access.account}</ListItemText>
               <ListActions>
-                <ListAction
-                  onClick={handleUnBlacklist(access)}
-                  message="form.buttons.delete"
-                  dataTestId="AccessDeleteButton"
-                  icon={Delete}
-                />
+                <ListAction onClick={handleUnBlacklist(access)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </StyledListItem>
           ))}

@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc721ContractDeployDto, IUser } from "@framework/types";
 import { Erc721ContractTemplates } from "@framework/types";
 
-import deployERC721TokenERC721FactoryFacetABI from "@framework/abis/json/ERC721FactoryFacet/deployERC721Token.json";
+import ERC721FactoryFacetDeployERC721TokenABI from "@framework/abis/json/ERC721FactoryFacet/deployERC721Token.json";
 
 import { Erc721ContractDeployDialog } from "./dialog";
 
@@ -38,7 +38,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         systemContract.address,
-        deployERC721TokenERC721FactoryFacetABI,
+        ERC721FactoryFacetDeployERC721TokenABI,
         web3Context.provider?.getSigner(),
       );
 

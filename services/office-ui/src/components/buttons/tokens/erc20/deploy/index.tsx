@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc20TokenDeployDto, IUser } from "@framework/types";
 import { Erc20ContractTemplates } from "@framework/types";
 
-import DeployERC20TokenABI from "@framework/abis/json/ERC20FactoryFacet/deployERC20Token.json";
+import ERC20FactoryFacetDeployERC20TokenABI from "@framework/abis/json/ERC20FactoryFacet/deployERC20Token.json";
 
 import { Erc20ContractDeployDialog } from "./dialog";
 
@@ -26,7 +26,11 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc20TokenDeployDto, web3Context, sign, systemContract: IContract) => {
       const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(systemContract.address, DeployERC20TokenABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ERC20FactoryFacetDeployERC20TokenABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployERC20Token(
         {

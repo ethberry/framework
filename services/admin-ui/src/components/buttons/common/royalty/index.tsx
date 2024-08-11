@@ -8,12 +8,12 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20SimpleSimpleSetDefaultRoyaltyERC1155ABI from "@framework/abis/json/ERC1155Simple/setDefaultRoyalty.json";
+import ERC721SimpleSetDefaultRoyalty from "@framework/abis/json/ERC721Simple/setDefaultRoyalty.json";
 
+import { useSetButtonPermission } from "../../../../shared";
 import { shouldDisableByContractType } from "../../utils";
 import type { IRoyaltyDto } from "./dialog";
 import { RoyaltyEditDialog } from "./dialog";
-import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRoyaltyButtonProps {
   className?: string;
@@ -44,11 +44,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      address,
-      ERC20SimpleSimpleSetDefaultRoyaltyERC1155ABI,
-      web3Context.provider?.getSigner(),
-    );
+    const contract = new Contract(address, ERC721SimpleSetDefaultRoyalty, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 

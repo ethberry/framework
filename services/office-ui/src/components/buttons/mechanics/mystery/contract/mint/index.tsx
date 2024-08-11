@@ -12,7 +12,7 @@ import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintB
 
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../../../utils";
+import { shouldDisableByContractType } from "../../../../utils";
 import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IMysteryContractMintButtonProps {

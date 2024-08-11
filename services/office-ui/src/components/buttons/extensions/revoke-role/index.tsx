@@ -6,7 +6,7 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import { useSetButtonPermission } from "../../../../shared";
 
 export interface IRevokeRoleButtonProps {
