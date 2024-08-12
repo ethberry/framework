@@ -37,7 +37,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.allowance"
       testId="AllowanceForm"
-      disabled={false}
       {...rest}
     >
       <AllowanceContractInput
