@@ -17,7 +17,7 @@ export const LootBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: {
+      content: {
         id: 0,
         components: [],
       },

@@ -3,16 +3,17 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootBox } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { AccessControlRoleType } from "@framework/types";
+
 import ERC721LootBoxSimpleMintBoxABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
+import { useSetButtonPermission } from "../../../../../../shared";
 import type { IMintLootBoxDto } from "./dialog";
 import { LootBoxMintDialog } from "./dialog";
-import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface ILootBoxMintButtonProps {
   className?: string;
@@ -49,7 +50,7 @@ export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
       ERC721LootBoxSimpleMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    const items = convertDatabaseAssetToChainAsset(values.lootBox!.item!.components);
+    const items = convertDatabaseAssetToChainAsset(values.lootBox!.content!.components);
     return contractLootbox.mintBox(values.account, values.lootBox!.templateId, items) as Promise<any>;
   });
 

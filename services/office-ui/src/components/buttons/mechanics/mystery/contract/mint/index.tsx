@@ -5,15 +5,16 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleType, TokenType } from "@framework/types";
+import { AccessControlRoleType } from "@framework/types";
 
-import MysteryMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
+import ERC721MysteryBoxSimpleMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
+import { useSetButtonPermission } from "../../../../../../shared";
+import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
 import { MysteryBoxMintDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../../utils";
-import { useSetButtonPermission } from "../../../../../../shared";
 
 export interface IMysteryContractMintButtonProps {
   className?: string;
@@ -46,15 +47,13 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
   };
 
   const metaFn = useMetamask((values: IMintMysteryBoxDto, web3Context: Web3ContextType) => {
-    const contractMysteryBox = new Contract(address, MysteryMintBoxABI, web3Context.provider?.getSigner());
-    const items = values.mysteryBox!.item!.components.map(item => ({
-      tokenType: Object.values(TokenType).indexOf(item.tokenType),
-      token: item.contract!.address,
-      tokenId: item.templateId,
-      amount: item.amount,
-    }));
-
-    return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
+    const contractMysteryBox = new Contract(
+      address,
+      ERC721MysteryBoxSimpleMintBoxABI,
+      web3Context.provider?.getSigner(),
+    );
+    const content = convertDatabaseAssetToChainAsset(values.mysteryBox!.content!.components);
+    return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, content) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintMysteryBoxDto): Promise<void> => {

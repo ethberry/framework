@@ -11,7 +11,8 @@ export enum LootBoxStatus {
 
 export interface ILootBox extends ISearchable {
   imageUrl: string;
-  item?: IAsset;
+  contentId: number;
+  content?: IAsset;
   templateId: number;
   template?: ITemplate;
   tokens?: Array<IToken>;

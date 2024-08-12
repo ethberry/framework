@@ -43,7 +43,7 @@ export const LootBoxContent: FC<ILootBoxContentProps> = props => {
             </Typography>
           </Grid>
         </Grid>
-        {lootBox.item?.components.map(component => (
+        {lootBox.content?.components.map(component => (
           <Grid key={component.id} container>
             <Grid xs={4} item>
               {component.tokenType}

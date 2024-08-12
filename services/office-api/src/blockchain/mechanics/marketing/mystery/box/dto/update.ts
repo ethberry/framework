@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { MysteryBoxStatus } from "@framework/types";
 
 import type { IMysteryBoxUpdateDto } from "../interfaces";
-import { SemiCoinDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto, NftDto } from "@gemunion/nest-js-validators";
 
 export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @ApiPropertyOptional()
@@ -17,6 +17,13 @@ export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @IsOptional()
   @IsJSON({ message: "patternMismatch" })
   public description: string;
+
+  @ApiPropertyOptional({
+    type: NftDto,
+  })
+  @ValidateNested()
+  @Type(() => NftDto)
+  public content: InstanceType<typeof NftDto>;
 
   @ApiPropertyOptional({
     type: SemiCoinDto,

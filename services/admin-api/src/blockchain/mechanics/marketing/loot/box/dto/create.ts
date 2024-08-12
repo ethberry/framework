@@ -14,7 +14,7 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
   })
   @ValidateNested()
   @Type(() => NotNativeDto)
-  public item: InstanceType<typeof NotNativeDto>;
+  public content: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty({
     type: SemiCoinDto,

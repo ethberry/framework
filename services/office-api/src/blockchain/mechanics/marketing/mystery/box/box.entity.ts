@@ -15,7 +15,10 @@ export class MysteryBoxEntity extends SearchableEntity implements IMysteryBox {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public item: AssetEntity;
+  public content: AssetEntity;
+
+  @Column({ type: "int" })
+  public contentId: number;
 
   @Column({
     type: "enum",

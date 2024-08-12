@@ -8,12 +8,13 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
+
 import ERC721MysteryBoxSimpleMintBoxABI from "@framework/abis/json/ERC721MysteryBoxSimple/mintBox.json";
 
+import { useSetButtonPermission } from "../../../../../../shared";
 import { shouldDisableByContractType } from "../../../../utils";
 import type { IMintMysteryBoxDto } from "./dialog";
-import { MintMysteryBoxDialog } from "./dialog";
-import { useSetButtonPermission } from "../../../../../../shared";
+import { MysteryBoxMintDialog } from "./dialog";
 
 export interface IMysteryContractMintButtonProps {
   className?: string;
@@ -51,9 +52,8 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
       ERC721MysteryBoxSimpleMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    const items = convertDatabaseAssetToChainAsset(values.mysteryBox!.item!.components);
-
-    return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, items) as Promise<any>;
+    const content = convertDatabaseAssetToChainAsset(values.mysteryBox!.content!.components);
+    return contractMysteryBox.mintBox(values.account, values.mysteryBox!.templateId, content) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintMysteryBoxDto): Promise<void> => {
@@ -73,7 +73,7 @@ export const MysteryContractMintButton: FC<IMysteryContractMintButtonProps> = pr
         disabled={disabled || shouldDisableByContractType(contract) || !hasPermission}
         variant={variant}
       />
-      <MintMysteryBoxDialog
+      <MysteryBoxMintDialog
         onCancel={handleMintTokenCancel}
         onConfirm={handleMintTokenConfirmed}
         open={isMintTokenDialogOpen}

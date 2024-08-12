@@ -13,7 +13,7 @@ export class MysteryBoxCreateDto extends SearchableDto implements IMysteryBoxCre
   })
   @ValidateNested()
   @Type(() => NftDto)
-  public item: InstanceType<typeof NftDto>;
+  public content: InstanceType<typeof NftDto>;
 
   @ApiProperty({
     type: SemiCoinDto,

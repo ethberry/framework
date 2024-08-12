@@ -13,7 +13,7 @@ import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { ModuleType, TokenType } from "@framework/types";
 import type { IToken, ITokenSearchDto } from "@framework/types";
 
-import MintBoxABI from "@framework/abis/json/ERC721Wrapper/mintBox.json";
+import ERC721WrapperMintBoxABI from "@framework/abis/json/ERC721Wrapper/mintBox.json";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { WrapperEditDialog } from "./edit";
@@ -61,7 +61,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
       return token;
     });
 
-    const contract = new Contract(values.contract.address, MintBoxABI, web3Context.provider?.getSigner());
+    const contract = new Contract(values.contract.address, ERC721WrapperMintBoxABI, web3Context.provider?.getSigner());
 
     return contract.mintBox(web3Context.account, values.templateId, content, { value: totalValue }) as Promise<any>;
   });

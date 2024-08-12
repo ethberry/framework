@@ -25,7 +25,7 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => NotNativeDto)
-  public item: InstanceType<typeof NotNativeDto>;
+  public content: InstanceType<typeof NotNativeDto>;
 
   @ApiPropertyOptional({
     type: SemiCoinDto,

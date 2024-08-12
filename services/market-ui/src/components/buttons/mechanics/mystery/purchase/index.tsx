@@ -35,7 +35,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
 
-      const content = convertDatabaseAssetToChainAsset(mysteryBox.item!.components);
+      const content = convertDatabaseAssetToChainAsset(mysteryBox.content!.components);
       const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);
 
       return contract.purchaseMystery(

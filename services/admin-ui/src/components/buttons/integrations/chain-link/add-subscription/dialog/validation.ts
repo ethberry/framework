@@ -1,4 +1,4 @@
-import { object, number } from "yup";
+import { object } from "yup";
 
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
