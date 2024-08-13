@@ -30,7 +30,7 @@ export const LootTokenPanel: FC<ILootTokenPanelProps> = props => {
           </StyledTypography>
         </StyledToolbar>
         {/* @ts-ignore */}
-        <StyledList component="ul">{formatItemHtmlList(token.template?.box?.item)}</StyledList>
+        <StyledList component="ul">{formatItemHtmlList(token.template?.box?.content)}</StyledList>
       </CardContent>
 
       <CardActions>

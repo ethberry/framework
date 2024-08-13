@@ -10,7 +10,7 @@ import { MysteryboxContent } from "../../../../tables/mysterybox-content";
 export const BoxContent: FC = () => {
   const mysteryBox: IMysteryBox | undefined = useWatch({ name: "mysteryBox" });
 
-  if (!mysteryBox || !mysteryBox.item?.components?.length) {
+  if (!mysteryBox || !mysteryBox.content?.components?.length) {
     return null;
   }
 

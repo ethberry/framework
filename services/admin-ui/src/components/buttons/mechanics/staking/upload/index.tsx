@@ -86,7 +86,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
           // MODULE:MYSTERYBOX
           if (mysteryBox) {
             content.push(
-              (mysteryBox as IMysteryBox).item!.components.map(component => ({
+              (mysteryBox as IMysteryBox).content!.components.map(component => ({
                 tokenType: Object.values(TokenType).indexOf(component.tokenType),
                 token: component.contract!.address,
                 tokenId: component.templateId || 0,

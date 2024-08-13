@@ -70,7 +70,7 @@ export class LootSignService {
     params: IParams,
     lootBoxEntity: LootBoxEntity,
   ): Promise<string> {
-    const content = convertDatabaseAssetToChainAsset(lootBoxEntity.item.components);
+    const content = convertDatabaseAssetToChainAsset(lootBoxEntity.content.components);
     const price = convertDatabaseAssetToChainAsset(lootBoxEntity.template.price.components);
 
     return this.signerService.getOneToManyToManySignature(

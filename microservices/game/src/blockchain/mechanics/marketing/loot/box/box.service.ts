@@ -1,12 +1,13 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
+import { defaultChainId } from "@framework/constants";
 import type { ILootBoxSearchDto } from "@framework/types";
-import { ContractStatus, LootBoxStatus, ModuleType, TokenType } from "@framework/types";
+import { ContractStatus, LootBoxStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { LootBoxEntity } from "./box.entity";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class LootBoxService {
@@ -17,9 +18,9 @@ export class LootBoxService {
 
   public async search(
     dto: Partial<ILootBoxSearchDto>,
-    merchantEntity: MerchantEntity,
+    userEntity?: UserEntity,
   ): Promise<[Array<LootBoxEntity>, number]> {
-    const { query, contractIds, minPrice, maxPrice, chainId, skip, take } = dto;
+    const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.lootBoxEntityRepository.createQueryBuilder("box");
 
@@ -53,24 +54,29 @@ export class LootBoxService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("contract.merchantId = :merchantId", {
-      merchantId: merchantEntity.id,
-    });
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType: TokenType.ERC721,
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule: ModuleType.LOOT,
     });
+
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
+      chainId: userEntity?.chainId || Number(defaultChainId),
     });
+
     queryBuilder.andWhere("box.lootBoxStatus = :lootBoxStatus", {
       lootBoxStatus: LootBoxStatus.ACTIVE,
     });
+
+    // content or price template must be active
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -163,40 +169,21 @@ export class LootBoxService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
-
     queryBuilder.andWhere("box.id = :id", {
       id: where.id,
     });
 
+    // content or price template must be active
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
+    queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+
     return queryBuilder.getOne();
   }
 
-  public async findOneWithRelationsOrFail(
-    where: FindOptionsWhere<LootBoxEntity>,
-    merchantEntity: MerchantEntity,
-  ): Promise<LootBoxEntity> {
-    const lootBoxEntity = await this.findOneWithRelations(where);
-
-    if (!lootBoxEntity) {
-      throw new NotFoundException("lootBoxNotFound");
-    }
-
-    if (lootBoxEntity.template.contract.merchantId !== merchantEntity.id) {
-      throw new ForbiddenException("insufficientPermissions");
-    }
-
-    return lootBoxEntity;
-  }
-
-  public async autocomplete(merchantEntity: MerchantEntity): Promise<Array<LootBoxEntity>> {
+  public async autocomplete(): Promise<Array<LootBoxEntity>> {
     return this.lootBoxEntityRepository.find({
-      where: {
-        template: {
-          contract: {
-            merchantId: merchantEntity.id,
-          },
-        },
-      },
       select: {
         id: true,
         title: true,
