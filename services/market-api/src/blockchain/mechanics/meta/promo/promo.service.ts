@@ -216,7 +216,7 @@ export class AssetPromoService {
           account,
           params,
           [
-            ...assetPromoEntity.box!.item.components.sort(sorter("id")).map(component => ({
+            ...assetPromoEntity.box!.content.components.sort(sorter("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract.address,
               // tokenId: component.templateId || 0,

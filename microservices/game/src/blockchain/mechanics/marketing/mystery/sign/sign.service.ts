@@ -74,7 +74,7 @@ export class MysterySignService {
       account,
       params,
       [
-        ...mysteryBoxEntity.item.components.sort(sorter("id")).map(component => ({
+        ...mysteryBoxEntity.content.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
           // tokenId: (component.templateId || 0).toString(), // suppression types check with 0

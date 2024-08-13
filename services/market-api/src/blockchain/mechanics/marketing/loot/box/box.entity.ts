@@ -5,8 +5,8 @@ import type { ILootBox } from "@framework/types";
 import { LootBoxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "loot_box" })
 export class LootBoxEntity extends SearchableEntity implements ILootBox {
@@ -15,7 +15,10 @@ export class LootBoxEntity extends SearchableEntity implements ILootBox {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public item: AssetEntity;
+  public content: AssetEntity;
+
+  @Column({ type: "int" })
+  public contentId: number;
 
   @Column({
     type: "enum",

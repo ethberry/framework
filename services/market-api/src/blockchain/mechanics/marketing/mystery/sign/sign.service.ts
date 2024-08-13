@@ -70,7 +70,7 @@ export class MysterySignService {
     params: IParams,
     mysteryBoxEntity: MysteryBoxEntity,
   ): Promise<string> {
-    const content = convertDatabaseAssetToChainAsset(mysteryBoxEntity.item.components);
+    const content = convertDatabaseAssetToChainAsset(mysteryBoxEntity.content.components);
     const price = convertDatabaseAssetToChainAsset(mysteryBoxEntity.template.price.components);
 
     return this.signerService.getOneToManyToManySignature(

@@ -64,9 +64,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -126,9 +124,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -182,9 +178,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -239,9 +233,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -292,9 +284,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -350,9 +340,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -414,9 +402,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -488,9 +474,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -541,9 +525,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -588,9 +570,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -636,9 +616,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -677,9 +655,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -718,9 +694,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -770,9 +744,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {
@@ -822,9 +794,7 @@ export class ContractManagerSignService {
         chainId: userEntity.chainId,
         verifyingContract: await this.contractService
           .findOneOrFail({ contractModule: ModuleType.CONTRACT_MANAGER, chainId: userEntity.chainId })
-          .then(res => {
-            return res.address;
-          }),
+          .then(({ address }) => address),
       },
       // Types
       {

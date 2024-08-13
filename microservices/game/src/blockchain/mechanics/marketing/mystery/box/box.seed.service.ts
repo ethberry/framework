@@ -170,7 +170,7 @@ export class MysteryBoxSeedService {
       .create(
         generateTestMysteryBox({
           template: template2,
-          item: asset1,
+          content: asset1,
         }),
       )
       .save();
@@ -179,7 +179,7 @@ export class MysteryBoxSeedService {
       .create(
         generateTestMysteryBox({
           template: template4,
-          item: asset2,
+          content: asset2,
         }),
       )
       .save();

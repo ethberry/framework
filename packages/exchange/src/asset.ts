@@ -21,16 +21,21 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
     .sort(sorter(sortBy))
     .map(item => {
       let tokenId;
-      if (item?.contract?.contractType === TokenType.ERC1155) {
+      if (item?.contract?.contractType === TokenType.NATIVE || item?.contract?.contractType === TokenType.ERC20) {
+        tokenId = "0";
+      } else if (
+        item?.contract?.contractType === TokenType.ERC721 ||
+        item?.contract?.contractType === TokenType.ERC998
+      ) {
+        tokenId = (item.templateId || 0).toString();
+      } else if (item?.contract?.contractType === TokenType.ERC1155) {
         tokenId = item.template?.tokens?.[0]?.tokenId;
         if (!tokenId) {
-          // tokenId for ERC1155 notFound. You rather forget to leftAndJoin Tokens for ERC1155 (API)
-          throw new Error();
+          // tokenId for ERC1155 notFound. You most likely forget to leftAndJoin Tokens for ERC1155
+          throw new Error("blockchainError");
         }
-      } else if ([TokenType.NATIVE, TokenType.ERC20].includes(item?.contract?.contractType as TokenType)) {
-        tokenId = "0";
       } else {
-        tokenId = (item.templateId || 0).toString();
+        throw new Error("blockchainError");
       }
 
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
@@ -43,7 +48,7 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
 
       return {
         tokenType: Object.values(TokenType).indexOf(item.tokenType),
-        token: item.contract!.address,
+        token: item.contract.address,
         tokenId,
         amount,
       };
@@ -80,21 +85,26 @@ export const convertTemplateToChainAsset = (
     throw new Error("blockchainError");
   }
 
-  if (template?.contract?.contractType === TokenType.ERC1155) {
+  if (template?.contract?.contractType === TokenType.NATIVE || template?.contract?.contractType === TokenType.ERC20) {
+    tokenId = "0";
+  } else if (
+    template?.contract?.contractType === TokenType.ERC721 ||
+    template?.contract?.contractType === TokenType.ERC998
+  ) {
+    tokenId = (template.id || 0).toString();
+  } else if (template?.contract?.contractType === TokenType.ERC1155) {
     tokenId = template?.tokens?.[0]?.tokenId;
     if (!tokenId) {
-      // tokenId for ERC1155 notFound. You rather forget to leftAndJoin Tokens for ERC1155 (API)
+      // tokenId for ERC1155 notFound. You most likely forget to leftAndJoin Tokens for ERC1155
       throw new Error();
     }
-  } else if ([TokenType.NATIVE, TokenType.ERC20].includes(template?.contract?.contractType as TokenType)) {
-    tokenId = "0";
   } else {
-    tokenId = (template.id || 0).toString();
+    throw new Error("blockchainError");
   }
 
   return {
-    tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
-    token: template.contract!.address,
+    tokenType: Object.values(TokenType).indexOf(template.contract.contractType),
+    token: template.contract.address,
     tokenId,
     amount,
   };

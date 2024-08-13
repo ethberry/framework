@@ -14,11 +14,11 @@ export const formatUnitsR = (value: BigNumberish, decimals: string | BigNumberis
     .toString();
 };
 
-export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDecimalDigits?: number): string => {
+export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDecimalDigits?: number) => {
   return `${currency} ${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
 };
 
-export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number): string[] => {
+export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number) => {
   if (!asset || !asset.components) {
     return [];
   }
@@ -51,11 +51,11 @@ export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number)
     .filter(Boolean);
 };
 
-export const formatItem = (asset?: IPartialAsset, maxDecimalDigits?: number): string => {
+export const formatItem = (asset?: IPartialAsset, maxDecimalDigits?: number) => {
   return formatItemCore(asset, maxDecimalDigits).join(", ");
 };
 
-export const formatItemMuiList = (asset?: IAsset, maxDecimalDigits?: number): any => {
+export const formatItemMuiList = (asset?: IAsset, maxDecimalDigits?: number) => {
   return formatItemCore(asset, maxDecimalDigits).map((item, index) => (
     <ListItem key={index}>
       <ListItemText primary={item} />
@@ -63,11 +63,11 @@ export const formatItemMuiList = (asset?: IAsset, maxDecimalDigits?: number): an
   ));
 };
 
-export const formatItemHtmlList = (asset?: IAsset, maxDecimalDigits?: number): any => {
+export const formatItemHtmlList = (asset?: IAsset, maxDecimalDigits?: number) => {
   return formatItemCore(asset, maxDecimalDigits).map((item, index) => <li key={index}>{item}</li>);
 };
 
-export const formatPenalty = (penalty?: number): number => {
+export const formatPenalty = (penalty?: number) => {
   return penalty ? +(penalty / 100).toFixed(2) : 0;
 };
 
@@ -81,7 +81,7 @@ export const getEthPrice = (asset?: IAsset) => {
   return total || BigNumber.from(0);
 };
 
-export const formatPriceHistory = (components?: Array<IAssetComponentHistory>): string => {
+export const formatPriceHistory = (components?: Array<IAssetComponentHistory>) => {
   return (
     components
       ?.map(component => {

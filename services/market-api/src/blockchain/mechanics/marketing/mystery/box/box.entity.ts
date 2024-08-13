@@ -5,8 +5,8 @@ import type { IMysteryBox } from "@framework/types";
 import { MysteryBoxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import { TemplateEntity } from "../../../../hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "mystery_box" })
 export class MysteryBoxEntity extends SearchableEntity implements IMysteryBox {
@@ -15,7 +15,10 @@ export class MysteryBoxEntity extends SearchableEntity implements IMysteryBox {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public item: AssetEntity;
+  public content: AssetEntity;
+
+  @Column({ type: "int" })
+  public contentId: number;
 
   @Column({
     type: "enum",

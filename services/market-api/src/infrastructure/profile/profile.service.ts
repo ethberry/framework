@@ -1,4 +1,4 @@
-import { Inject, BadRequestException, ConflictException, Injectable } from "@nestjs/common";
+import { Inject, BadRequestException, ConflictException, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Not } from "typeorm";
 import { app } from "firebase-admin";
 
@@ -16,17 +16,20 @@ export class ProfileService {
   constructor(
     @Inject(APP_PROVIDER)
     private readonly admin: app.App,
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     private readonly metamaskService: MetamaskService,
     private readonly userService: UserService,
   ) {}
 
   public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
+    const { email } = dto;
     // UPDATE FIREBASE USER EMAIL
-    if (dto.email && dto.email.toString() !== userEntity.email.toLowerCase()) {
+    if (email && email.toString() !== userEntity.email.toLowerCase()) {
       try {
-        await this.admin.auth().updateUser(userEntity.sub, { email: dto.email });
+        await this.admin.auth().updateUser(userEntity.sub, { email });
       } catch (err) {
-        console.error(err.errorInfo, "firebase.updateUser");
+        this.loggerService.error(err, ProfileService.name);
       }
     }
 

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import admin from "firebase-admin";
 
 import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
@@ -14,6 +14,7 @@ import { APP_PROVIDER } from "../auth/auth.constants";
 @Module({
   imports: [AddressModule, UserModule, MetamaskModule],
   providers: [
+    Logger,
     ProfileService,
     {
       provide: APP_PROVIDER,
