@@ -6,7 +6,7 @@ import { wallet } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -44,7 +44,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
     const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
     const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

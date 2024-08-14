@@ -3,12 +3,12 @@ import { ZeroAddress } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId, imagePath } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

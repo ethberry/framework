@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,7 +22,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
 
     const exchangeGemunionAddress = process.env.EXCHANGE_ADDR;
     const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;

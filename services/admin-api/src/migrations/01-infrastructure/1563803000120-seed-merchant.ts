@@ -3,12 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallets } from "@gemunion/constants";
 import { imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedMerchant1563803000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = BigInt(process.env.CHAIN_ID || testChainId);
+    const chainId = BigInt(process.env.CHAIN_ID_BESU || testChainId);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.merchant (

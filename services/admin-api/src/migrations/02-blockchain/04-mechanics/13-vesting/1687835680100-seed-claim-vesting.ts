@@ -3,7 +3,7 @@ import { WeiPerEther, ZeroHash } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 // TODO should we import it from @framework/abis ?
 import vestingJSON from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";

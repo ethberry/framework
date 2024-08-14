@@ -3,7 +3,7 @@ import { Tab } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { ProfileAddresses } from "./adresses";

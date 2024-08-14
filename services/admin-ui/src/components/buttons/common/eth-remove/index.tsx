@@ -1,10 +1,11 @@
 import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOff } from "@mui/icons-material";
 
+import { NodeEnv } from "@gemunion/constants";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { NodeEnv, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { getListenerType } from "../../../../utils/listener-type";
 import { shouldDisableByContractType } from "../../utils";

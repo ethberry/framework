@@ -3,7 +3,7 @@ import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper 
 import { CarRental } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export const RentSection: FC = () => {
   const isProd = process.env.NODE_ENV === NodeEnv.production;

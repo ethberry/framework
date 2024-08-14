@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

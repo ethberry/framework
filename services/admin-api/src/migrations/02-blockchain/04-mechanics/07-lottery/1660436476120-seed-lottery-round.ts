@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   const numbers: Array<boolean> = new Array(36).fill(false);

@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -21,7 +21,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const waitListAddr = process.env.WAIT_LIST_ADDR;
 

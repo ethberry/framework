@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, imagePath } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc1155DumbWayToDieAt1563804000151 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

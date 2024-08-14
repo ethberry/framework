@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedAccessListErc998At1653616447340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

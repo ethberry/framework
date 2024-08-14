@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv, TokenMetadata } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export class SeedTokenLootAt1563804001360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

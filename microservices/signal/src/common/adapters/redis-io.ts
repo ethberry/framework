@@ -7,7 +7,7 @@ import { createAdapter } from "@socket.io/redis-adapter";
 import { Redis } from "ioredis";
 import passport from "passport";
 
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 const adapter = (middleware: Handler) => (socket: any, next: NextFunction) => {
   middleware(socket.request, socket.request.res || {}, next);

@@ -11,16 +11,32 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
       process.env as any,
       {
         VRF_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VRF_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VRF_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VRF_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
+        VRF_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
         LINK_ADDR: Wallet.createRandom().address.toLowerCase(),
+        LINK_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        LINK_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
+        LINK_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
+        LINK_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
 
     const vrfAddress = process.env.VRF_ADDR;
+    const vrfAddressB = process.env.VRF_BINANCE_ADDR;
+    const vrfAddressBt = process.env.VRF_BINANCE_TEST_ADDR;
+    const vrfAddressP = process.env.VRF_POLYGON_ADDR;
+    const vrfAddressPa = process.env.VRF_POLYGON_AMOY_ADDR;
     const linkAddr = process.env.LINK_ADDR;
+    const linkAddrB = process.env.LINK_BINANCE_ADDR;
+    const linkAddrBt = process.env.LINK_BINANCE_TEST_ADDR;
+    const linkAddrP = process.env.LINK_POLYGON_ADDR;
+    const linkAddrPa = process.env.LINK_POLYGON_AMOY_ADDR;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
@@ -72,7 +88,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}'
       ), (
         207,
-        '0xc587d9053cd1118f25f645f9e08bb98c9712a4ee',
+        '${vrfAddressB}',
         56,
         'VRF COORDINATOR (BNB)',
         '${simpleFormatting}',
@@ -81,7 +97,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: "0x404460c6a5ede2d891e829779526fde62adbb75",
+          linkAddress: `${linkAddrB}`,
         })}',
         'ACTIVE',
         null,
@@ -114,7 +130,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}'
       ), (
         407,
-        '0xae975071be8f8ee67addbc1a82488f1c24858067',
+        '${vrfAddressP}',
         137,
         'VRF COORDINATOR (MATIC)',
         '${simpleFormatting}',
@@ -123,7 +139,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: "0xb0897686c545045afc77cf20ec7a532e3120e0f1",
+          linkAddress: `${linkAddrP}`,
         })}',
         'ACTIVE',
         null,
@@ -135,7 +151,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}'
       ), (
         507,
-        '0x6a2aad07396b36fe02a22b33cf443582f682c82f',
+        '${vrfAddressBt}',
         97,
         'VRF COORDINATOR (tBNB)',
         '${simpleFormatting}',
@@ -144,7 +160,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: "0x84b9b910527ad5c03a9ca831909e21e236ea7b06",
+          linkAddress: `${linkAddrBt}`,
         })}',
         'ACTIVE',
         null,
@@ -156,7 +172,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}'
       ), (
         607,
-        '0x7e10652cb79ba97bc1d0f38a1e8fad8464a8a908',
+        '${vrfAddressPa}',
         8002,
         'VRF COORDINATOR (AMOY)',
         '${simpleFormatting}',
@@ -165,7 +181,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '',
         '',
         '${JSON.stringify({
-          linkAddress: "0x0fd9e8d3af1aaee056eb9e802c3a762a667b1904",
+          linkAddress: `${linkAddrPa}`,
         })}',
         'ACTIVE',
         null,

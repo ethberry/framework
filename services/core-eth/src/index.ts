@@ -8,7 +8,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 import { Log } from "ethers";
 
 import { companyName } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { AppModule } from "./app.module";
 
