@@ -3,7 +3,7 @@ import { toUtf8Bytes, WeiPerEther, ZeroHash, zeroPadValue } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedEventHistoryErc721DiscreteAt1687481746310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedCraftErc1155Erc1155RecipesAt1653616448020 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

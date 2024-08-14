@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-// import { NodeEnv } from "@framework/types";
+// import { NodeEnv } from "@gemunion/constants";
 
 // contract-manager
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";

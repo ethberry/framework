@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedClaimTokenErc20At1653616447820 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

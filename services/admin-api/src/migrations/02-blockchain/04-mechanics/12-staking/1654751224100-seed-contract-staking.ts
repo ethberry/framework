@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

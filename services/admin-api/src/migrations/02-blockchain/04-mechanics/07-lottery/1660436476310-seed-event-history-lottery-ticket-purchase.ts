@@ -4,7 +4,7 @@ import { subDays } from "date-fns";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

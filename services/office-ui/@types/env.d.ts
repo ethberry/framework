@@ -1,4 +1,4 @@
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 declare global {
   namespace NodeJS {

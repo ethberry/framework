@@ -5,7 +5,7 @@ import { populate } from "dotenv";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractLootAt1563804001160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

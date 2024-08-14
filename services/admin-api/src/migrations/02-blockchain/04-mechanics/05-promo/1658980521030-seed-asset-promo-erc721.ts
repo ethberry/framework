@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 import { subMonths } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedAssetPromoErc721At1658980521030 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

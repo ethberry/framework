@@ -4,7 +4,7 @@ import { subDays } from "date-fns";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

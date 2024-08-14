@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
