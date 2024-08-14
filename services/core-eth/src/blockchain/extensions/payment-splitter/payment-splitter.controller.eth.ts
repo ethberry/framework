@@ -38,7 +38,7 @@ export class PaymentSplitterControllerEth {
     },
     {
       contractType: ContractType.EXCHANGE,
-      eventName: ExchangeEventType.PaymentEthReceived,
+      eventName: ExchangeEventType.PaymentReceived,
     },
     {
       contractType: ContractType.PONZI,
@@ -46,11 +46,11 @@ export class PaymentSplitterControllerEth {
     },
     {
       contractType: ContractType.LOTTERY,
-      eventName: ExchangeEventType.PaymentEthReceived,
+      eventName: ExchangeEventType.PaymentReceived,
     },
     {
       contractType: ContractType.RAFFLE,
-      eventName: ExchangeEventType.PaymentEthReceived,
+      eventName: ExchangeEventType.PaymentReceived,
     },
   ])
   public addEth(@Payload() event: ILogEvent<IExchangePaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {

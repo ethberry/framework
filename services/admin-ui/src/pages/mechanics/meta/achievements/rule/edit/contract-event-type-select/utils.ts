@@ -118,7 +118,7 @@ export enum ContractLotteryEventType {
   RoundFinalized = "RoundFinalized",
   Prize = "Prize",
   Released = "Released",
-  PaymentEthReceived = "PaymentEthReceived",
+  PaymentReceived = "PaymentReceived",
 }
 
 export const getLotteryEventType = (contract: IContract): Record<string, string> => {

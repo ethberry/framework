@@ -44,7 +44,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           VestingEventType.ERC20Released,
           VestingEventType.EtherReleased,
           // VestingEventType.EtherReceived,
-          VestingEventType.PaymentEthReceived,
+          VestingEventType.PaymentReceived,
           // MODULE:ACCESS_CONTROL
           AccessControlEventType.OwnershipTransferred,
           // MODULE:ERC1363

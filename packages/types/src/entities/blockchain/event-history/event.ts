@@ -149,10 +149,8 @@ export enum ContractEventType {
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",
-  ERC20PaymentReleased = "ERC20PaymentReleased",
   PaymentReceived = "PaymentReceived",
-  PaymentEthReceived = "PaymentEthReceived",
-  PaymentEthSent = "PaymentEthSent",
+  ERC20PaymentReleased = "ERC20PaymentReleased",
 
   // MODULE:CHAINLINK
   RandomnessRequest = "RandomnessRequest",
@@ -318,10 +316,8 @@ export enum ContractEventSignature {
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded(address,uint256)",
   PaymentReleased = "PaymentReleased(address,uint256)",
-  ERC20PaymentReleased = "ERC20PaymentReleased(address,address,uint256)",
   PaymentReceived = "PaymentReceived(address,uint256)",
-  PaymentEthReceived = "PaymentEthReceived(address,uint256)",
-  PaymentEthSent = "PaymentEthSent(address,uint256)",
+  ERC20PaymentReleased = "ERC20PaymentReleased(address,address,uint256)",
 
   // MODULE:PONZI
   RuleCreatedP = "RuleCreatedP(uint256,((uint8,address,uint256,uint256),(uint8,address,uint256,uint256),(uint256,uint256,uint256),bool))",

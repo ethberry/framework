@@ -100,9 +100,8 @@
       "SignerMissingRole": "الواقع يفتقد دورًا",
       "TemplateZero": "القالب صفر",
       "UnsupportedTokenType": "نوع الرمز المميز غير مدعوم",
-      "WrongAmount": "الكمية خاطئة",
-      "WrongRule": "القاعدة خاطئة",
-      "WrongStake": "الحصة خاطئة",
+      "RuleNotExist": "القاعدة خاطئة",
+      "StakeNotExist": "الحصة خاطئة",
       "WrongToken": "الرمز المميز خاطئ",
       "ZeroBalance": "الرصيد صفر"
     },

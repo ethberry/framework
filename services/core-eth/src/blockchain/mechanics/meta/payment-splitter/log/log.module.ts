@@ -35,8 +35,8 @@ import { getEventsTopics } from "../../../../../common/utils";
 
         const eventNames = [
           PonziEventType.ERC20PaymentReleased,
-          PonziEventType.PaymentEthReceived,
-          PonziEventType.PaymentEthSent,
+          PonziEventType.PaymentReceived,
+          PonziEventType.PaymentReleased,
           PonziEventType.PayeeAdded,
           PonziEventType.PaymentReleased,
           PonziEventType.PaymentReceived,

@@ -50,7 +50,7 @@ import { getEventsTopics } from "../../../../../common/utils";
           AccessControlEventType.RoleAdminChanged,
           AccessControlEventType.RoleGranted,
           AccessControlEventType.RoleRevoked,
-          ExchangeEventType.PaymentEthReceived,
+          ExchangeEventType.PaymentReceived,
           ContractEventType.VrfSubscriptionSet,
         ];
         const topics = getEventsTopics(eventNames);

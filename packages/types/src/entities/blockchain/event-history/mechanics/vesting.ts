@@ -1,7 +1,7 @@
 export enum VestingEventType {
   EtherReleased = "EtherReleased",
   ERC20Released = "ERC20Released",
-  PaymentEthReceived = "PaymentEthReceived",
+  PaymentReceived = "PaymentReceived",
 }
 
 export interface IVestingEtherReleasedEvent {

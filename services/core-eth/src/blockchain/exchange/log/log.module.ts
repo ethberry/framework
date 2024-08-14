@@ -50,8 +50,8 @@ import { getEventsTopics } from "../../../common/utils";
           ContractEventType.Unpaused,
           // MODULE:CORE
           ExchangeEventType.Purchase,
-          ExchangeEventType.PaymentEthReceived,
-          ExchangeEventType.PaymentEthSent,
+          ExchangeEventType.PaymentReceived,
+          ExchangeEventType.PaymentReleased,
           // MODULE:RENTABLE
           ExchangeEventType.Lend,
           // MODULE:CLAIM

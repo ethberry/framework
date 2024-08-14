@@ -101,8 +101,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'PaymentReleased',
        'ERC20PaymentReleased',
        'PaymentReceived',
-       'PaymentEthReceived',
-       'PaymentEthSent',
+       'PaymentReceived',
+       'PaymentReleased',
       --MODULE:CHAIN_LINK V2
        'RandomWordsRequested',
        'SubscriptionCreated',

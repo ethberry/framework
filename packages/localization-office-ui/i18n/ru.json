@@ -100,9 +100,8 @@
       "SignerMissingRole": "Подписант не имеет роли",
       "TemplateZero": "Шаблон равен нулю",
       "UnsupportedTokenType": "Тип токена не поддерживается",
-      "WrongAmount": "Сумма неверна",
-      "WrongRule": "Правило неверно",
-      "WrongStake": "Ставка неверна",
+      "RuleNotExist": "Правило неверно",
+      "StakeNotExist": "Ставка неверна",
       "WrongToken": "Токен неверен",
       "ZeroBalance": "Баланс равен нулю"
     },

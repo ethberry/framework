@@ -29,7 +29,7 @@ export class VestingControllerEth {
     return this.vestingServiceEth.ethReleased(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.PaymentEthReceived })
+  @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.PaymentReceived })
   public ethReceived(@Payload() event: ILogEvent<IVestingEtherReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.vestingServiceEth.ethReceived(event, context);
   }

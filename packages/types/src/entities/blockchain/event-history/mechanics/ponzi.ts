@@ -13,8 +13,6 @@ export enum PonziEventType {
   PaymentReleased = "PaymentReleased",
   ERC20PaymentReleased = "ERC20PaymentReleased",
   PaymentReceived = "PaymentReceived",
-  PaymentEthReceived = "PaymentEthReceived",
-  PaymentEthSent = "PaymentEthSent",
 }
 
 export interface IWithdrawTokenEvent {

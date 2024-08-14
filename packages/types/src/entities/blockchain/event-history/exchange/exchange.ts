@@ -37,10 +37,8 @@ export enum ExchangeEventType {
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",
-  ERC20PaymentReleased = "ERC20PaymentReleased",
   PaymentReceived = "PaymentReceived",
-  PaymentEthReceived = "PaymentEthReceived",
-  PaymentEthSent = "PaymentEthSent",
+  ERC20PaymentReleased = "ERC20PaymentReleased",
 }
 
 // MODULE:WALLET
