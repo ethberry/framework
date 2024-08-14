@@ -18,7 +18,7 @@ export class SeedContractErc20UsdtAt1563804000121 implements MigrationInterface 
 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const usdtAddr = process.env.USDT_ADDR;
 
     const usdtImgUrl = `${imagePath}/usdt.png`;

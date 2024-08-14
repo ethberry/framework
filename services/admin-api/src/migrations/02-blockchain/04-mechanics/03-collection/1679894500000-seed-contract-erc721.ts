@@ -23,7 +23,7 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
 
     const currentDateTime = new Date().toISOString();
     const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

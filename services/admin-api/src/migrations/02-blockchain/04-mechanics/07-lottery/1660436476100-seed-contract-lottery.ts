@@ -21,7 +21,7 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const lotteryAddr = process.env.LOTTERY_ADDR;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

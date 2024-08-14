@@ -29,7 +29,7 @@ export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
     const erc721ContractMysteryPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR;
     const erc721ContractMysteryBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR;
     const erc721ContractMysteryBlacklistPausableAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

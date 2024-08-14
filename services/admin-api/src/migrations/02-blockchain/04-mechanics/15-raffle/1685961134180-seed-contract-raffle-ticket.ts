@@ -23,7 +23,7 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
 
     const currentDateTime = new Date().toISOString();
     const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

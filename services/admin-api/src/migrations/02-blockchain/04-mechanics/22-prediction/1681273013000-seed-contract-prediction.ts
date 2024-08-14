@@ -21,7 +21,7 @@ export class SeedContractPredictionAt1681273013000 implements MigrationInterface
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const predictionAddr = process.env.PREDICTION_ADDR;
 
