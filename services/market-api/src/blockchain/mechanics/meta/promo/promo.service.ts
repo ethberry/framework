@@ -54,7 +54,7 @@ export class AssetPromoService {
       `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
     );
 
-    queryBuilder.leftJoinAndSelect("box.item", "box_item");
+    queryBuilder.leftJoinAndSelect("box.content", "box_item");
     queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
     queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
     queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");
@@ -120,7 +120,7 @@ export class AssetPromoService {
       `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
     );
 
-    queryBuilder.leftJoinAndSelect("box.item", "box_item");
+    queryBuilder.leftJoinAndSelect("box.content", "box_item");
     queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
     queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
     queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");

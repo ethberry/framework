@@ -66,7 +66,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
         web3Context.provider?.getSigner(),
       );
 
-      const items = convertDatabaseAssetToChainAsset(promo.box?.item?.components);
+      const items = convertDatabaseAssetToChainAsset(promo.box?.content?.components);
       const promoItem = convertDatabaseAssetToChainAsset(promo.item?.components);
       const price = convertDatabaseAssetToChainAsset(promo.price?.components);
 

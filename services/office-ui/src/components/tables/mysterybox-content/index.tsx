@@ -31,7 +31,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
           </Typography>
         </Grid>
       </Grid>
-      {mysteryBox.item!.components.map(component => (
+      {mysteryBox.content!.components.map(component => (
         <Grid key={component.id} container>
           <Grid xs={4} item>
             {component.tokenType}

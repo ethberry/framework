@@ -10,7 +10,7 @@ import { LootBoxContent } from "../../../../tables/loot-content";
 export const BoxContent: FC = () => {
   const lootBox: ILootBox | undefined = useWatch({ name: "lootBox" });
 
-  if (!lootBox || !lootBox.item?.components?.length) {
+  if (!lootBox || !lootBox.content?.components?.length) {
     return null;
   }
 
