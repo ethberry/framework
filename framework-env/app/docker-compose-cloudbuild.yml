@@ -71,9 +71,17 @@ services:
       STARTING_BLOCK: "${STARTING_BLOCK}"
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      CONTRACT_MANAGER_BINANCE_ADDR: "${CONTRACT_MANAGER_BINANCE_ADDR}"
+      CONTRACT_MANAGER_BINANCE_TEST_ADDR: "${CONTRACT_MANAGER_BINANCE_TEST_ADDR}"
+      CONTRACT_MANAGER_POLYGON_ADDR: "${CONTRACT_MANAGER_POLYGON_ADDR}"
+      CONTRACT_MANAGER_POLYGON_AMOY_ADDR: "${CONTRACT_MANAGER_POLYGON_AMOY_ADDR}"
+      CONTRACT_MANAGER_ETHEREUM_ADDR: "${CONTRACT_MANAGER_ETHEREUM_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      EXCHANGE_ADDR_BINANCE: "${EXCHANGE_ADDR_BINANCE}"
-      EXCHANGE_ADDR_BINANCE_TEST: "${EXCHANGE_ADDR_BINANCE_TEST}"
+      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+      EXCHANGE_BINANCE_TEST_ADDR: "${EXCHANGE_BINANCE_TEST_ADDR}"
+      EXCHANGE_ETHEREUM_ADDR: "${EXCHANGE_ETHEREUM_ADDR}"
+      EXCHANGE_POLYGON_ADDR: "${EXCHANGE_POLYGON_ADDR}"
+      EXCHANGE_POLYGON_AMOY_ADDR: "${EXCHANGE_POLYGON_AMOY_ADDR}"
       DISPENSER_ADDR: "${DISPENSER_ADDR}"
       # DEV
       LINK_ADDR: "${LINK_ADDR}"
@@ -81,8 +89,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # admin-api
       - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
@@ -141,8 +149,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
@@ -208,8 +216,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # office-api
       - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
@@ -261,8 +269,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
@@ -309,8 +317,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       - "${PORT_RPC_API_BINANCE}:${PORT_RPC_API_BINANCE}"
 
@@ -357,8 +365,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       - "${PORT_RPC_API_BINANCE_TEST}:${PORT_RPC_API_BINANCE_TEST}"
 
@@ -404,56 +412,56 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       - "${PORT_RPC_API_POLYGON}:${PORT_RPC_API_POLYGON}"
 
-#  core-eth-amoy:
-#    container_name: core-eth-amoy
-#    image: gcr.io/halogen-framing-335807/framework-img:latest
-#    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
-#    environment:
-#      # common
-#      APP_NAME: "core-eth-amoy-${NODE_ENV}"
-#      BASE_MODE: "${BASE_MODE}"
-#      NODE_ENV: "${NODE_ENV}"
-#      HOST: "${HOST}"
-#      PORT: "${PORT_RPC_API_AMOY}"
-#      # admin api
-#      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
-#      # GEMUNION
-#      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
-#      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
-#      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
-#      # RMQ
-#      RMQ_URL: "${RMQ_URL_ADMIN}"
-#      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
-#      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
-#      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
-#      # REDIS
-#      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
-#      # LOGDNA
-#      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
-#      # BLOCKCHAIN
-#      CHAIN_ID: "${CHAIN_ID_AMOY}"
-#      ACCOUNT: "${ACCOUNT}"
-#      PRIVATE_KEY: "${PRIVATE_KEY}"
-#      JSON_RPC_ADDR: "${JSON_RPC_ADDR_AMOY}"
-#      LATENCY: "${LATENCY_AMOY}"
-#      CRON_SCHEDULE: "${CRON_SCHEDULE_AMOY}"
-#      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_AMOY}"
-#      STARTING_BLOCK: "${STARTING_BLOCK_POLYGON_AMOY}"
-#      # Chain-Link
-#      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_AMOY}"
-#      # Contracts
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-file: "5"   # number of files or file count
-#        max-size: "100m" # file size
-#    ports:
-#      - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
+  #  core-eth-amoy:
+  #    container_name: core-eth-amoy
+  #    image: gcr.io/halogen-framing-335807/framework-img:latest
+  #    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+  #    environment:
+  #      # common
+  #      APP_NAME: "core-eth-amoy-${NODE_ENV}"
+  #      BASE_MODE: "${BASE_MODE}"
+  #      NODE_ENV: "${NODE_ENV}"
+  #      HOST: "${HOST}"
+  #      PORT: "${PORT_RPC_API_AMOY}"
+  #      # admin api
+  #      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+  #      # GEMUNION
+  #      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+  #      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+  #      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+  #      # RMQ
+  #      RMQ_URL: "${RMQ_URL_ADMIN}"
+  #      RMQ_URL_MERCHANT: "${RMQ_URL_MERCHANT}"
+  #      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+  #      RMQ_QUEUE_CORE_ETH: "${RMQ_QUEUE_CORE_ETH_POLYGON_AMOY}"
+  #      # REDIS
+  #      REDIS_WS_URL: "${REDIS_WS_URL_ETH}"
+  #      # LOGDNA
+  #      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+  #      # BLOCKCHAIN
+  #      CHAIN_ID: "${CHAIN_ID_AMOY}"
+  #      ACCOUNT: "${ACCOUNT}"
+  #      PRIVATE_KEY: "${PRIVATE_KEY}"
+  #      JSON_RPC_ADDR: "${JSON_RPC_ADDR_AMOY}"
+  #      LATENCY: "${LATENCY_AMOY}"
+  #      CRON_SCHEDULE: "${CRON_SCHEDULE_AMOY}"
+  #      REDIS_QUEUE_NAME: "${REDIS_QUEUE_NAME_AMOY}"
+  #      STARTING_BLOCK: "${STARTING_BLOCK_POLYGON_AMOY}"
+  #      # Chain-Link
+  #      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID_AMOY}"
+  #      # Contracts
+  #    logging:
+  #      driver: "json-file"
+  #      options:
+  #        max-file: "1"   # number of files or file count
+  #        max-size: "1m" # file size
+  #    ports:
+  #      - "${PORT_RPC_API_AMOY}:${PORT_RPC_API_AMOY}"
 
   json-api:
     container_name: json-api
@@ -486,8 +494,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # admin-api
       - "${PORT_JSON_API}:${PORT_JSON_API}"
@@ -522,8 +530,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
@@ -606,8 +614,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # signal-api
       - "${PORT_SIGNAL_API}:${PORT_SIGNAL_API}"
@@ -637,8 +645,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     ports:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
@@ -676,8 +684,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
-        max-size: "100m" # file size
+        max-file: "1"   # number of files or file count
+        max-size: "1m" # file size
     depends_on:
       - admin-api
       - market-api

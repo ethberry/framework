@@ -6,7 +6,7 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
-import { NodeEnv } from "@framework/types";
+import { BusinessType, NodeEnv } from "@framework/types";
 
 import { AppModule } from "./app.module";
 
@@ -51,6 +51,9 @@ async function bootstrap(): Promise<void> {
 
   await app.listen(port, host, () => {
     console.info(`API server is running on http://${host}:${port}`);
+    console.info("NODE_ENV", process.env.NODE_ENV);
+    console.info("LOG_MODE", process.env.LOG_MODE === "true");
+    console.info("BUSINESS_TYPE B2B", process.env.BUSINESS_TYPE === BusinessType.B2B);
   });
 }
 

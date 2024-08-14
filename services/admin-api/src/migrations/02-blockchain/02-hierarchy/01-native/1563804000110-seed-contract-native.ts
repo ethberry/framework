@@ -119,6 +119,42 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ),(
+        ${process.env.NODE_ENV === NodeEnv.production ? 6 : 50101},
+        '${ZeroAddress}',
+        80002,
+        'Native token (Amoy)',
+        '${simpleFormatting}',
+        '${imagePath}/polygon.png',
+        'Matic',
+        'MATIC',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'NATIVE',
+        '{EXTERNAL}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        ${process.env.NODE_ENV === NodeEnv.production ? 7 : 60101},
+        '${ZeroAddress}',
+        56,
+        'Native token (BNBt)',
+        '${simpleFormatting}',
+        '${imagePath}/bnb.png',
+        'Binance-testnet',
+        'BNB',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'NATIVE',
+        '{EXTERNAL}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
 

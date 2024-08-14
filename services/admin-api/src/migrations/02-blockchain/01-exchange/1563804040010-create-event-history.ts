@@ -98,9 +98,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'BatchMetadataUpdate',
       --MODULE:PAYMENT_SPLITTER
        'PayeeAdded',
-       'PaymentReleased',
        'ERC20PaymentReleased',
-       'PaymentReceived',
        'PaymentReceived',
        'PaymentReleased',
       --MODULE:CHAIN_LINK V2
