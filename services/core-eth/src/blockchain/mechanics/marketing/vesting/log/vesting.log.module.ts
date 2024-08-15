@@ -5,14 +5,8 @@ import { CronExpression } from "@nestjs/schedule";
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
-import {
-  AccessControlEventType,
-  ContractType,
-  Erc1363EventType,
-  ModuleType,
-  NodeEnv,
-  VestingEventType,
-} from "@framework/types";
+import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";

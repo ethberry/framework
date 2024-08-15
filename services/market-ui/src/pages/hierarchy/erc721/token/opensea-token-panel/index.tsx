@@ -4,7 +4,8 @@ import { useWeb3React } from "@web3-react/core";
 import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IToken } from "@framework/types";
-import { OpenSea16SupportedChains, NodeEnv } from "@framework/types";
+import { OpenSea16SupportedChains } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { StyledCard, StyledToolbar, StyledTypography } from "../common-token-panel/styled";
 import { OpenSeaSellButton } from "../../../../../components/buttons";

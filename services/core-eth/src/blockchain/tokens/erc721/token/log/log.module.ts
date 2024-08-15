@@ -12,9 +12,9 @@ import {
   ContractType,
   Erc4907EventType,
   ModuleType,
-  NodeEnv,
   TokenType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 // custom contracts
 import { ABI } from "./interfaces";

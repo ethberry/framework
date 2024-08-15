@@ -10,9 +10,9 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
-  NodeEnv,
   WaitListEventType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

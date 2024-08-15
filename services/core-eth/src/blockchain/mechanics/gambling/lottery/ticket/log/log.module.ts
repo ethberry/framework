@@ -5,7 +5,9 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
+
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { ContractModule } from "../../../../../hierarchy/contract/contract.module";

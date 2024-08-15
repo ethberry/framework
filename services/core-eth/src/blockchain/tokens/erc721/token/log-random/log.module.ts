@@ -12,10 +12,9 @@ import {
   ContractFeatures,
   ContractType,
   Erc4907EventType,
-  NodeEnv,
   TokenType,
 } from "@framework/types";
-
+import { NodeEnv } from "@gemunion/constants";
 // custom contracts
 import { ABIRandom } from "./interfaces";
 import { Erc721TokenRandomLogService } from "./log.service";

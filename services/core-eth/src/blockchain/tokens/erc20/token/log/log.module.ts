@@ -9,9 +9,9 @@ import {
   AccessListEventType,
   ContractEventType,
   ContractType,
-  NodeEnv,
   TokenType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { ABI } from "./interfaces";
 

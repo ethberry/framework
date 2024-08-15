@@ -5,7 +5,8 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType, NodeEnv } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Wrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

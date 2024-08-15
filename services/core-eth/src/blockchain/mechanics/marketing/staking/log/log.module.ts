@@ -10,10 +10,10 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
-  NodeEnv,
   ReferralProgramEventType,
   StakingEventType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

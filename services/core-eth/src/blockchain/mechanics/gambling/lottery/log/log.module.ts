@@ -13,8 +13,8 @@ import {
   ExchangeEventType,
   LotteryEventType,
   ModuleType,
-  NodeEnv,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
