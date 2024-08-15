@@ -50,7 +50,6 @@ jobs:
           GITHUBUSER: ${{ secrets.GITHUBUSER }}
           GITHUBEMAIL: ${{ secrets.GITHUBEMAIL }}
 
-
       - name: Authenticate check via npm
         run: npm whoami --registry=https://npm.pkg.github.com/
 
