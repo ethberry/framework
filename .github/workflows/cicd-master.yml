@@ -54,6 +54,9 @@ jobs:
       - name: Authenticate check via npm
         run: npm whoami --registry=https://npm.pkg.github.com/
 
+      - name: Checkout framework-contracts
+        run: git clone https://github.com/Gemunion/framework-contracts.git
+
       - name: Install Packages
         run: npm i
 
