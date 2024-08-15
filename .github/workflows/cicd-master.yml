@@ -35,7 +35,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'true'
           ref: ${{ github.head_ref }}
 
       - name: Authenticate Registry & Configure Git User
