@@ -11,8 +11,8 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
-  NodeEnv,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
 

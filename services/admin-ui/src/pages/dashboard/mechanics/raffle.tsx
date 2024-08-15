@@ -5,7 +5,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { ChainLinkV2SupportedChains, NodeEnv } from "@framework/types";
+import { ChainLinkV2SupportedChains } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export const RaffleSection: FC = () => {
   const { chainId = 0 } = useWeb3React();

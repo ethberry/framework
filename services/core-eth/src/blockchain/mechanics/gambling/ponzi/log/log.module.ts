@@ -9,10 +9,10 @@ import {
   ContractEventType,
   ContractType,
   ModuleType,
-  NodeEnv,
   PonziEventType,
   ReferralProgramEventType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 // custom contracts
 import { ABI } from "./interfaces";

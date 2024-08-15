@@ -4,7 +4,8 @@ import { CronExpression } from "@nestjs/schedule";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { ContractType, ModuleType, NodeEnv, PonziEventType } from "@framework/types";
+import { ContractType, ModuleType, PonziEventType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 // custom contracts
 import { ABI } from "./interfaces";

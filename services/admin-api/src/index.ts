@@ -6,7 +6,8 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
-import { BusinessType, NodeEnv } from "@framework/types";
+import { BusinessType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { AppModule } from "./app.module";
 

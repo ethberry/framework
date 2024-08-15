@@ -7,7 +7,8 @@ import { IsNull, Not } from "typeorm";
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { ModuleType, NodeEnv } from "@framework/types";
+import { ModuleType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkType } from "../../interfaces";
 import { ChainLinkLogService } from "./log.service";

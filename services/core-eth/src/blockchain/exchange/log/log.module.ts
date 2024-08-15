@@ -12,9 +12,9 @@ import {
   Erc1363EventType,
   ExchangeEventType,
   ModuleType,
-  NodeEnv,
   ReferralProgramEventType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 import { ExchangeLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";

@@ -7,7 +7,8 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
-import { BusinessType, ChainLinkV2SupportedChains, NodeEnv, RatePlanType } from "@framework/types";
+import { BusinessType, ChainLinkV2SupportedChains, RatePlanType } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 export const LootSection: FC = () => {
   const { profile } = useUser<IUser>();

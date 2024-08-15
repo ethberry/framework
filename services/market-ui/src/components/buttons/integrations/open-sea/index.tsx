@@ -10,7 +10,8 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
-import { ContractFeatures, NodeEnv, OpenSea16SupportedChains, TokenStatus } from "@framework/types";
+import { ContractFeatures, OpenSea16SupportedChains, TokenStatus } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import type { ISellDto } from "./dialog";
 import { SellDialog } from "./dialog";
 

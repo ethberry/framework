@@ -10,9 +10,9 @@ import {
   ContractEventType,
   ContractFeatures,
   ContractType,
-  NodeEnv,
   TokenType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 
 // custom contracts
 import { ABIRandom } from "./interfaces";

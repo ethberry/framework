@@ -12,9 +12,9 @@ import {
   ContractType,
   ExchangeEventType,
   ModuleType,
-  NodeEnv,
   RaffleEventType,
 } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

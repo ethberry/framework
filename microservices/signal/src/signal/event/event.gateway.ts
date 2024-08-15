@@ -16,7 +16,8 @@ import { instrument } from "@socket.io/admin-ui";
 import { User } from "@gemunion/nest-js-utils";
 import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
 import { FirebaseWsGuard } from "@gemunion/nest-js-guards-ws";
-import { SignalEventType, NodeEnv } from "@framework/types";
+import { NodeEnv } from "@gemunion/constants";
+import { SignalEventType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
