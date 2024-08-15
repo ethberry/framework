@@ -5,8 +5,7 @@ steps:
     args:
       - -c
       - |
-        git config -f .gitmodules https://github.com/Gemunion/framework-contracts.git
-        git submodule update --init
+        git clone https://github.com/Gemunion/framework-contracts.git
   # Download .env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/staging/app/.env", ".env"]
