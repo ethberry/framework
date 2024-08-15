@@ -28,8 +28,8 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;
     const exchangeAddressBinanceTest = process.env.EXCHANGE_BINANCE_TEST_ADDR;
     const exchangeAddressMainnet = process.env.EXCHANGE_ETHEREUM_ADDR;
-    const exchangeAddressPolygon = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
-    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_POLYGON_ADDR;
+    const exchangeAddressPolygon = process.env.EXCHANGE_POLYGON_ADDR;
+    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
