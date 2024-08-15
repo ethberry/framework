@@ -7,7 +7,6 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/provider-collection";
 
-import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc20CoinsListItem } from "./item";
 
 export interface IErc20CoinsListProps {
@@ -17,10 +16,7 @@ export interface IErc20CoinsListProps {
 export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, handleSearch, handleChangePage, handleRefreshPage } = useCollection<
-    IToken,
-    ITokenSearchDto
-  >({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc20/coins",
     search: {
       query: "",
@@ -34,9 +30,7 @@ export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
 
       <PageHeader message="pages.erc20.coins.title" />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSearch} testId="CoinsSearchForm">
-        <FormRefresher onRefreshPage={handleRefreshPage} />
-      </CommonSearchForm>
+      <CommonSearchForm initialValues={search} onSubmit={handleSearch} testId="CoinsSearchForm" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

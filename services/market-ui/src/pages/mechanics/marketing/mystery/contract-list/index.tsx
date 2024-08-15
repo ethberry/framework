@@ -11,24 +11,14 @@ import { useCollection } from "@gemunion/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { MysteryContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
 export const MysteryContractList: FC = () => {
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleChangePage,
-    handleRefreshPage,
-    handleSearch,
-    handleToggleFilters,
-  } = useCollection<IContract, ISearchDto>({
-    baseUrl: "/mystery/contracts",
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleChangePage, handleSearch, handleToggleFilters } =
+    useCollection<IContract, ISearchDto>({
+      baseUrl: "/mystery/contracts",
+    });
 
   return (
     <Fragment>
@@ -46,7 +36,6 @@ export const MysteryContractList: FC = () => {
         open={isFiltersOpen}
         testId="WaitListListSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <EntityInput name="merchantId" controller="merchants" />

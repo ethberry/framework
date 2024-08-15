@@ -13,21 +13,12 @@ import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { RentTokenListItem } from "./item";
 
 export const Rent: FC = () => {
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/rent/tokens",
-    search: {},
-    redirect: (_, search) => `/rent?${stringify(search)}`,
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/rent/tokens",
+      search: {},
+      redirect: (_, search) => `/rent?${stringify(search)}`,
+    });
 
   return (
     <Fragment>
@@ -46,7 +37,6 @@ export const Rent: FC = () => {
         contractType={[TokenType.ERC721, TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
         contractFeatures={[ContractFeatures.RENTABLE]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

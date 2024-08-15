@@ -30,7 +30,6 @@ export const PaymentSplitterContracts: FC = () => {
     handleViewCancel,
     handleChangePage,
     handleViewConfirm,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/payment-splitter/contracts",
     empty: {
@@ -71,7 +70,6 @@ export const PaymentSplitterContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -53,7 +53,6 @@ export const MysteryContract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/mystery/contracts",
     empty: {
@@ -92,7 +91,6 @@ export const MysteryContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={MysteryContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

@@ -27,7 +27,6 @@ export const MysteryToken: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/mystery/tokens",
     empty: {
@@ -58,7 +57,6 @@ export const MysteryToken: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.MYSTERY]}
         contractType={[TokenType.ERC721]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -35,7 +35,6 @@ export const MarketplaceReport: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePaginationModel,
-    handleRefreshPage,
   } = useCollection<IMarketplaceReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
@@ -123,7 +122,7 @@ export const MarketplaceReport: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button startIcon={<CloudDownload />} onClick={handleExport}>
+        <Button startIcon={<CloudDownload />} onClick={void handleExport}>
           <FormattedMessage id="form.buttons.export" />
         </Button>
       </PageHeader>
@@ -133,7 +132,6 @@ export const MarketplaceReport: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
       />
 
       <DataGridPremium

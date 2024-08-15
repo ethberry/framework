@@ -23,26 +23,17 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/erc721/templates",
-    embedded,
-    search: {
-      query: "",
-      contractIds: embedded ? [~~id!] : [],
-      minPrice: constants.Zero.toString(),
-      maxPrice: constants.WeiPerEther.mul(1000).toString(),
-    },
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<ITemplate, ITemplateSearchDto>({
+      baseUrl: "/erc721/templates",
+      embedded,
+      search: {
+        query: "",
+        contractIds: embedded ? [~~id!] : [],
+        minPrice: constants.Zero.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
+      },
+    });
 
   return (
     <Fragment>
@@ -60,7 +51,6 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.HIERARCHY]}
-        onRefreshPage={handleRefreshPage}
         embedded={embedded}
       />
 

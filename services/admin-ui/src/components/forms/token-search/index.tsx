@@ -7,7 +7,6 @@ import { ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-import { FormRefresher } from "../form-refresher";
 import { TemplateInput } from "./template-input";
 
 interface ITokenSearchFormProps {
@@ -16,11 +15,10 @@ interface ITokenSearchFormProps {
   open: boolean;
   contractType: Array<TokenType>;
   contractModule: Array<ModuleType>;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType, contractModule, onRefreshPage } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule } = props;
 
   const { query, tokenStatus, contractIds, templateIds, tokenId, metadata } = initialValues;
   const fixedValues = {
@@ -46,7 +44,6 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       showPrompt={false}
       testId="TokenSearchForm"
     >
-      <FormRefresher onRefreshPage={onRefreshPage} />
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

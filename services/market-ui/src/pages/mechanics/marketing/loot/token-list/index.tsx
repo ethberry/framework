@@ -19,20 +19,11 @@ export interface ILootTokenListProps {
 export const LootTokenList: FC<ILootTokenListProps> = props => {
   const { embedded } = props;
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/loot/tokens",
-    embedded,
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/loot/tokens",
+      embedded,
+    });
 
   return (
     <Fragment>
@@ -50,7 +41,6 @@ export const LootTokenList: FC<ILootTokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.LOOT]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

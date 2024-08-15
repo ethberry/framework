@@ -38,7 +38,6 @@ export const Erc1155Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-    handleRefreshPage,
   } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc1155/templates",
     empty: {
@@ -79,7 +78,6 @@ export const Erc1155Template: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC1155]}
         contractModule={[ModuleType.HIERARCHY]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

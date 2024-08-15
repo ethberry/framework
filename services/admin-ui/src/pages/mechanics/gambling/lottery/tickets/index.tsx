@@ -48,7 +48,6 @@ export const LotteryTicketContracts: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/lottery/ticket/contracts",
     empty: {
@@ -87,7 +86,6 @@ export const LotteryTicketContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

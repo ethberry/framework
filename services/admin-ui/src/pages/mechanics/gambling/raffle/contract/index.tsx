@@ -87,7 +87,6 @@ export const RaffleContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
       />
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
         {rows.map(contract => (

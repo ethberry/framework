@@ -14,23 +14,14 @@ import { ClaimRedeemButton, VestingDeployButton } from "../../../../../component
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleSearch,
-    handleToggleFilters,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IClaim, IClaimSearchDto>({
-    baseUrl: "/claim",
-    search: {
-      claimStatus: [ClaimStatus.NEW],
-      claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
-    },
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleToggleFilters, handleChangePage } =
+    useCollection<IClaim, IClaimSearchDto>({
+      baseUrl: "/claim",
+      search: {
+        claimStatus: [ClaimStatus.NEW],
+        claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
+      },
+    });
 
   return (
     <Fragment>
@@ -41,12 +32,7 @@ export const Claim: FC = () => {
         </Button>
       </PageHeader>
 
-      <ClaimSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        onRefreshPage={handleRefreshPage}
-      />
+      <ClaimSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>

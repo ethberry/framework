@@ -6,25 +6,21 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { FormRefresher } from "../form-refresher";
-
 interface IContractSearchFormProps {
   onSubmit: (values: IContractSearchDto) => Promise<void>;
   initialValues: IContractSearchDto;
   open: boolean;
   contractFeaturesOptions: Record<string, string>;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractFeaturesOptions, onRefreshPage } = props;
+  const { onSubmit, initialValues, open, contractFeaturesOptions } = props;
 
   const { query, contractStatus, contractFeatures } = initialValues;
   const fixedValues = { query, contractStatus, contractFeatures };
 
   return (
     <CommonSearchForm initialValues={fixedValues} onSubmit={onSubmit} open={open} testId="ContractSearchForm">
-      <FormRefresher onRefreshPage={onRefreshPage} />
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <SelectInput name="contractStatus" options={ContractStatus} multiple />

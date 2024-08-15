@@ -43,7 +43,6 @@ export const PredictionContract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/prediction/contracts",
     empty: {
@@ -82,7 +81,6 @@ export const PredictionContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={PredictionContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

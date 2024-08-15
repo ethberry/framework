@@ -8,7 +8,6 @@ import { useCollection } from "@gemunion/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 
-import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { ContractListItem } from "./item";
 import { StyledGrid } from "./styled";
 
@@ -21,10 +20,7 @@ export const ContractList: FC<IContractListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, handleChangePage, handleRefreshPage } = useCollection<
-    IContract,
-    IContractSearchDto
-  >({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/contracts",
     embedded,
     search: {
@@ -58,8 +54,6 @@ export const ContractList: FC<IContractListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-
-      <FormRefresher onRefreshPage={handleRefreshPage} />
     </Fragment>
   );
 };

@@ -12,27 +12,17 @@ import { useCollection } from "@gemunion/provider-collection";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TokenType } from "@gemunion/types-blockchain";
 
-import { FormRefresher } from "../../../../../../components/forms/form-refresher";
 import { CraftItem } from "./item";
 
 export const CraftList: FC = () => {
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-    handleToggleFilters,
-  } = useCollection<ICraft, ICraftSearchDto>({
-    baseUrl: "/recipes/craft",
-    search: {
-      query: "",
-      contractId: void 0,
-    },
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleSearch, handleChangePage, handleToggleFilters } =
+    useCollection<ICraft, ICraftSearchDto>({
+      baseUrl: "/recipes/craft",
+      search: {
+        query: "",
+        contractId: void 0,
+      },
+    });
 
   return (
     <Fragment>
@@ -45,7 +35,6 @@ export const CraftList: FC = () => {
       </PageHeader>
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="CraftSearchForm">
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <EntityInput

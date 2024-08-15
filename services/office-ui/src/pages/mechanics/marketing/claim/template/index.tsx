@@ -16,7 +16,6 @@ import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../../components/buttons";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { ClaimTemplateEditDialog } from "./edit";
 
@@ -87,7 +86,6 @@ export const ClaimTemplate: FC = () => {
         name="account"
         testId="ClaimSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SearchMerchantInput disableClear />

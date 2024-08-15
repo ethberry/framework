@@ -5,8 +5,6 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import { FormRefresher } from "../../../../../../components/forms/form-refresher";
-
 export interface IReferralTreeSearchDto extends ISearchDto {
   referral: string;
   wallet: string;
@@ -18,11 +16,10 @@ interface IReferralTreeSearchFormProps {
   onSubmit: (values: IReferralTreeSearchDto) => Promise<void>;
   initialValues: IReferralTreeSearchDto;
   open: boolean;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const ReferralTreeSearchForm: FC<IReferralTreeSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, onRefreshPage } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const { query, referral, wallet, merchantIds, level } = initialValues;
   const fixedValues = {
@@ -35,7 +32,6 @@ export const ReferralTreeSearchForm: FC<IReferralTreeSearchFormProps> = props =>
 
   return (
     <CommonSearchForm initialValues={fixedValues} onSubmit={onSubmit} open={open} testId="RefTreeSearchForm">
-      <FormRefresher onRefreshPage={onRefreshPage} />
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

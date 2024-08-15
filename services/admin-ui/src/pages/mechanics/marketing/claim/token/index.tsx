@@ -15,7 +15,6 @@ import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType, TokenType } from "@framework/types";
 
 import { ClaimUploadButton } from "../../../../../components/buttons";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { ClaimTokenEditDialog } from "./edit";
 
 export const ClaimToken: FC = () => {
@@ -78,7 +77,6 @@ export const ClaimToken: FC = () => {
         name="account"
         testId="ClaimSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />

@@ -50,7 +50,6 @@ export const Erc1155Contract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc1155/contracts",
     empty: {
@@ -105,7 +104,6 @@ export const Erc1155Contract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={Erc1155ContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

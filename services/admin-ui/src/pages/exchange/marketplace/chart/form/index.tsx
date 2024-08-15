@@ -8,17 +8,15 @@ import type { IMarketplaceReportSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { TemplateInput } from "../../../../../components/inputs/template";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 
 interface IMarketplaceChartSearchFormProps {
   onSubmit: (values: IMarketplaceReportSearchDto) => Promise<void>;
-  onRefreshPage: () => Promise<void>;
   initialValues: IMarketplaceReportSearchDto;
   open: boolean;
 }
 
 export const MarketplaceChartSearchForm: FC<IMarketplaceChartSearchFormProps> = props => {
-  const { onSubmit, onRefreshPage, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const { startTimestamp, endTimestamp, contractIds, templateIds } = initialValues;
   const fixedValues = { startTimestamp, endTimestamp, contractIds, templateIds };
@@ -31,7 +29,6 @@ export const MarketplaceChartSearchForm: FC<IMarketplaceChartSearchFormProps> = 
       showPrompt={false}
       testId="MarketplaceChartSearchForm"
     >
-      <FormRefresher onRefreshPage={onRefreshPage} />
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>

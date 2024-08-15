@@ -48,7 +48,6 @@ export const RaffleTicketContracts: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/raffle/ticket/contracts",
     empty: {
@@ -87,7 +86,6 @@ export const RaffleTicketContracts: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={{}}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
