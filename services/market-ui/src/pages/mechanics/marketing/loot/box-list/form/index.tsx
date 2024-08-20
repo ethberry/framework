@@ -12,7 +12,6 @@ interface ILootboxSearchFormProps {
   initialValues: ILootBoxSearchDto;
   open: boolean;
   embedded?: boolean;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const LootBoxSearchForm: FC<ILootboxSearchFormProps> = props => {

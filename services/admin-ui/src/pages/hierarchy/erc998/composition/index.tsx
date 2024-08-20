@@ -17,7 +17,6 @@ import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import ERC998SimpleUnWhitelistChildABI from "@framework/abis/json/ERC998Simple/unWhitelistChild.json";
 import ERC998SimpleWhiteListChildABI from "@framework/abis/json/ERC998Simple/whiteListChild.json";
 
-import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 
@@ -36,7 +35,6 @@ export const Erc998Composition: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IComposition, ICompositionSearchDto>({
     baseUrl: "/erc998/composition",
     empty: {
@@ -132,7 +130,6 @@ export const Erc998Composition: FC = () => {
         open={isFiltersOpen}
         testId="Erc998CompositionSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput

@@ -16,7 +16,6 @@ import type { IComposition, ICompositionSearchDto, IUser } from "@framework/type
 
 import ERC998WhitelistChildABI from "@framework/abis/json/ERC998Simple/whiteListChild.json";
 
-import { FormRefresher } from "../../../../components/forms/form-refresher";
 import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
 import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
 import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
@@ -39,7 +38,6 @@ export const Erc998Composition: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IComposition, ICompositionSearchDto>({
     baseUrl: "/erc998/composition",
     empty: {
@@ -136,7 +134,6 @@ export const Erc998Composition: FC = () => {
         open={isFiltersOpen}
         testId="Erc998CompositionSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SearchMerchantInput disableClear />

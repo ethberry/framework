@@ -15,7 +15,6 @@ import { useCollection, CollectionActions } from "@gemunion/provider-collection"
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { AchievementLevelEditDialog } from "./edit";
 
 export const emptyAchievementRule = {
@@ -41,7 +40,6 @@ export const AchievementLevels: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IAchievementLevel, IAchievementLevelSearchDto>({
     baseUrl: "/achievements/levels",
     empty: {
@@ -113,7 +111,6 @@ export const AchievementLevels: FC = () => {
         open={isFiltersOpen}
         testId="AchievementLevelSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <EntityInput name="achievementRuleIds" controller="achievements/rules" multiple />

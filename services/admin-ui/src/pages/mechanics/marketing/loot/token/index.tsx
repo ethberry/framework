@@ -27,7 +27,6 @@ export const LootToken: FC = () => {
     handleViewConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/loot/tokens",
     empty: {
@@ -58,7 +57,6 @@ export const LootToken: FC = () => {
         open={isFiltersOpen}
         contractModule={[ModuleType.LOOT]}
         contractType={[TokenType.ERC721]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

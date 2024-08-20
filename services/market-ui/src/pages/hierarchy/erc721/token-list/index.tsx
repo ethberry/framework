@@ -19,20 +19,11 @@ export interface IErc721TokenListProps {
 export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
   const { embedded } = props;
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc721/tokens",
-    embedded,
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/erc721/tokens",
+      embedded,
+    });
 
   return (
     <Fragment>
@@ -50,7 +41,6 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.HIERARCHY]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -55,7 +55,6 @@ export const LootContract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/loot/contracts",
     empty: {
@@ -94,7 +93,6 @@ export const LootContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={LootContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

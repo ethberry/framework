@@ -14,7 +14,6 @@ import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { PonziDepositButton } from "../../../../../components/buttons";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { PonziViewDialog } from "./view";
 
 export const PonziRules: FC = () => {
@@ -32,7 +31,6 @@ export const PonziRules: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IPonziRule, IPonziRuleSearchDto>({
     baseUrl: "/ponzi/rules",
     empty: {
@@ -74,7 +72,6 @@ export const PonziRules: FC = () => {
         open={isFiltersOpen}
         testId="PonziRuleSearchForm"
       >
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput

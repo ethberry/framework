@@ -22,26 +22,17 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleRefreshPage,
-    handleChangePage,
-  } = useCollection<IMysteryBox, IMysteryBoxSearchDto>({
-    baseUrl: "/mystery/boxes",
-    embedded,
-    search: {
-      query: "",
-      contractIds: embedded ? [~~id!] : [],
-      minPrice: constants.Zero.toString(),
-      maxPrice: constants.WeiPerEther.mul(1000).toString(),
-    },
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IMysteryBox, IMysteryBoxSearchDto>({
+      baseUrl: "/mystery/boxes",
+      embedded,
+      search: {
+        query: "",
+        contractIds: embedded ? [~~id!] : [],
+        minPrice: constants.Zero.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
+      },
+    });
 
   return (
     <Fragment>
@@ -53,13 +44,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         </Button>
       </PageHeader>
 
-      <MysteryBoxSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        embedded={embedded}
-        onRefreshPage={handleRefreshPage}
-      />
+      <MysteryBoxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

@@ -39,7 +39,6 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/wrapper-tokens",
     embedded,
@@ -89,7 +88,6 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.WRAPPER]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

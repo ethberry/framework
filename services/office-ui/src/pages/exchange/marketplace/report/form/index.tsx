@@ -6,7 +6,6 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 
 import { TemplateInput } from "../../../../../components/inputs/template";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { SearchMerchantContractsInput } from "../../../../../components/inputs/search-merchant-contracts";
 
@@ -15,11 +14,10 @@ interface IContractSearchFormProps {
   initialValues: IMarketplaceReportSearchDto;
   open: boolean;
   contractFeaturesOptions: Record<string, string>;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const MarketplaceReportSearchForm: FC<IContractSearchFormProps> = props => {
-  const { onSubmit, onRefreshPage, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   return (
     <CommonSearchForm
@@ -28,7 +26,6 @@ export const MarketplaceReportSearchForm: FC<IContractSearchFormProps> = props =
       open={open}
       testId="MarketplaceReportSearchForm"
     >
-      <FormRefresher onRefreshPage={onRefreshPage} />
       <Grid container spacing={2} alignItems="flex-end">
         <Grid item xs={12}>
           <SearchMerchantInput />

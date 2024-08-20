@@ -18,7 +18,6 @@ import type { ILootBox, ILootBoxSearchDto, ITemplate } from "@framework/types";
 import { ModuleType, LootBoxStatus, TokenType } from "@framework/types";
 
 import { LootBoxMintButton } from "../../../../../components/buttons";
-import { FormRefresher } from "../../../../../components/forms/form-refresher";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { LootBoxEditDialog } from "./edit";
 
@@ -41,7 +40,6 @@ export const LootBox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-    handleRefreshPage,
   } = useCollection<ILootBox, ILootBoxSearchDto>({
     baseUrl: "/loot/boxes",
     empty: {
@@ -97,7 +95,6 @@ export const LootBox: FC = () => {
       </PageHeader>
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} testId="LootboxSearchForm">
-        <FormRefresher onRefreshPage={handleRefreshPage} />
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput

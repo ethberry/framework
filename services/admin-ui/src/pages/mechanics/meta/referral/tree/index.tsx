@@ -22,7 +22,6 @@ export const ReferralTree: FC = () => {
     isFiltersOpen,
     handleToggleFilters,
     handleSearch,
-    handleRefreshPage,
     handleChangePaginationModel,
   } = useCollection<IReferralTree, IReferralTreeSearchDto>({
     baseUrl: "/referral/tree",
@@ -84,12 +83,7 @@ export const ReferralTree: FC = () => {
         </Button>
       </PageHeader>
 
-      <ReferralTreeSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        onRefreshPage={handleRefreshPage}
-      />
+      <ReferralTreeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledEmptyWrapper count={rows.length} isLoading={isLoading}>

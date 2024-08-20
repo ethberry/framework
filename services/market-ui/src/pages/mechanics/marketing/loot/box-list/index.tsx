@@ -22,26 +22,17 @@ export const LootBoxList: FC<ILootboxListProps> = props => {
 
   const { id } = useParams<{ id: string }>();
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleRefreshPage,
-    handleChangePage,
-  } = useCollection<ILootBox, ILootBoxSearchDto>({
-    baseUrl: "/loot/boxes",
-    embedded,
-    search: {
-      query: "",
-      contractIds: embedded ? [~~id!] : [],
-      minPrice: constants.Zero.toString(),
-      maxPrice: constants.WeiPerEther.mul(1000).toString(),
-    },
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<ILootBox, ILootBoxSearchDto>({
+      baseUrl: "/loot/boxes",
+      embedded,
+      search: {
+        query: "",
+        contractIds: embedded ? [~~id!] : [],
+        minPrice: constants.Zero.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
+      },
+    });
 
   return (
     <Fragment>
@@ -53,13 +44,7 @@ export const LootBoxList: FC<ILootboxListProps> = props => {
         </Button>
       </PageHeader>
 
-      <LootBoxSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        embedded={embedded}
-        onRefreshPage={handleRefreshPage}
-      />
+      <LootBoxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

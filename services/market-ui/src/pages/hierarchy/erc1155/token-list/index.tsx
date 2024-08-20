@@ -19,20 +19,11 @@ export interface ITokenListProps {
 export const Erc1155TokenList: FC<ITokenListProps> = props => {
   const { embedded } = props;
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc1155/tokens",
-    embedded,
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/erc1155/tokens",
+      embedded,
+    });
 
   return (
     <Fragment>
@@ -50,7 +41,6 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC1155]}
         contractModule={[ModuleType.HIERARCHY]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -91,7 +91,6 @@ export const CollectionContract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={CollectionContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

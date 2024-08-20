@@ -19,20 +19,11 @@ export interface IMysteryTokenListProps {
 export const MysteryTokenList: FC<IMysteryTokenListProps> = props => {
   const { embedded } = props;
 
-  const {
-    rows,
-    count,
-    search,
-    isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    handleSearch,
-    handleChangePage,
-    handleRefreshPage,
-  } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/mystery/tokens",
-    embedded,
-  });
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/mystery/tokens",
+      embedded,
+    });
 
   return (
     <Fragment>
@@ -50,7 +41,6 @@ export const MysteryTokenList: FC<IMysteryTokenListProps> = props => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
         contractModule={[ModuleType.MYSTERY]}
-        onRefreshPage={handleRefreshPage}
       />
 
       <ProgressOverlay isLoading={isLoading}>

@@ -53,7 +53,6 @@ export const Erc20Contract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleRefreshPage,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc20/contracts",
     empty: {
@@ -114,7 +113,6 @@ export const Erc20Contract: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractFeaturesOptions={Erc20ContractFeatures}
-        onRefreshPage={handleRefreshPage}
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>

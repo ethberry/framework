@@ -36,7 +36,6 @@ export const MyTransactions: FC = () => {
     handleSearch,
     handleToggleFilters,
     handleChangePaginationModel,
-    handleRefreshPage,
     handleChangeSortModel,
   } = useCollection<IEventHistory, IEventSearchDto>({
     search: {
@@ -109,12 +108,7 @@ export const MyTransactions: FC = () => {
         </Button>
       </PageHeader>
 
-      <TransactionSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        onRefreshPage={handleRefreshPage}
-      />
+      <TransactionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledDataGridPremium
