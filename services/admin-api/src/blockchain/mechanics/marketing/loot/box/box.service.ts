@@ -12,6 +12,7 @@ import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhe
 import type { ILootBoxAutocompleteDto, ILootBoxSearchDto } from "@framework/types";
 import { LootBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -22,7 +23,6 @@ import { ClaimTemplateService } from "../../claim/template/template.service";
 import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
 import type { ILootBoxCreateDto, ILootBoxUpdateDto } from "./interfaces";
 import { LootBoxEntity } from "./box.entity";
-import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 
 @Injectable()
 export class LootBoxService {
