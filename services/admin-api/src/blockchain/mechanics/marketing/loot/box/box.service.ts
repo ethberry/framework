@@ -1,10 +1,18 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ILootBoxAutocompleteDto, ILootBoxSearchDto } from "@framework/types";
 import { LootBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -56,7 +64,9 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     // item or price template must be active
-    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
     queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (query) {
@@ -254,6 +264,26 @@ export class LootBoxService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    const { max, min } = rest;
+
+    if (max && content && max > content.components.length) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+      );
+    }
+
+    if (min && content && content.components.length > min) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
+    }
+
+    if (min && max && min > max) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
+    }
+
     if (price) {
       await this.assetService.update(lootBoxEntity.template.price, price, userEntity);
     }
@@ -271,7 +301,7 @@ export class LootBoxService {
   }
 
   public async create(dto: ILootBoxCreateDto, userEntity: UserEntity): Promise<LootBoxEntity> {
-    const { price, content, contractId } = dto;
+    const { price, content, contractId, min, max } = dto;
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
@@ -281,6 +311,24 @@ export class LootBoxService {
 
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (max > content.components.length) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+      );
+    }
+
+    if (content.components.length > min) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
+    }
+
+    if (min > max) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
     }
 
     const priceEntity = await this.assetService.create();

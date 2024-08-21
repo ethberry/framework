@@ -6,7 +6,6 @@ import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
 import { LootBoxStatus } from "@framework/types";
 
 import type { ILootBoxUpdateDto } from "../interfaces";
-import { MaxPropertyValue } from "../../../../../../common/decorators";
 
 export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   @ApiPropertyOptional()
@@ -49,11 +48,9 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
   @ApiPropertyOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  @MaxPropertyValue(["max"], { message: "maxMaxValue" })
   public min: number;
 
   @ApiPropertyOptional()
   @IsInt({ message: "typeMismatch" })
-  @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }

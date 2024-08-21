@@ -1,11 +1,25 @@
 import { FC, useEffect } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch, UseFormTrigger } from "react-hook-form";
 
 import { NumberInput } from "@gemunion/mui-inputs-core";
 
 export interface IMinInputProps {
   name?: string;
 }
+
+const changeMinByMaxAndTriggerMin = (
+  maxValue: number,
+  trigger?: UseFormTrigger<{ min: number; [key: string]: any }>,
+) => {
+  /** set min value 1 if max value less than 3 **/
+  if (maxValue < 3) {
+    if (trigger) {
+      void trigger("min");
+    }
+    return 1;
+  }
+  return maxValue - 1;
+};
 
 export const MinInput: FC<IMinInputProps> = props => {
   const { name = "min" } = props;
@@ -18,16 +32,17 @@ export const MinInput: FC<IMinInputProps> = props => {
   useEffect(() => {
     // maxValue can be ""
     if (typeof maxValue !== "string" && minValue >= maxValue) {
-      form.setValue(name, maxValue - 1);
+      form.setValue(name, changeMinByMaxAndTriggerMin(maxValue, form.trigger));
     }
   }, [maxValue]);
 
   return (
     <NumberInput
+      required
       name={name}
       inputProps={{
         min: 1,
-        max: maxValue - 1,
+        max: changeMinByMaxAndTriggerMin(maxValue),
       }}
     />
   );

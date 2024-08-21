@@ -1041,8 +1041,6 @@
       "customError": "???",
       "duplicate": "{label} already in use",
       "invalidJSON": "Invalid JSON",
-      "maxItemLength": "Value must not be greater than the length of 'Item' assets",
-      "maxMaxValue": "Value must not be greater than 'maximum' field",
       "maxPropertyValue": "{label} exeed the maximum value",
       "patternMismatch": "{label} does not match expected pattern",
       "randomFeature": "{label} requires random feature",

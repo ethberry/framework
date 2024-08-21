@@ -12,22 +12,26 @@ export const MaxInput: FC<IMaxInputProps> = props => {
   const { name = "max" } = props;
 
   const maxValue: number = useWatch({ name });
-  const item: IAsset = useWatch({ name: "item" });
+  const content: IAsset = useWatch({ name: "content" });
 
   const form = useFormContext<any>();
 
   useEffect(() => {
-    if (maxValue > item.components.length) {
-      form.setValue(name, item.components.length);
+    if (maxValue > content.components.length) {
+      form.setValue(name, content.components.length);
     }
-  }, [item.components.length]);
+    if (form.formState.errors[name] && maxValue <= content.components.length) {
+      form.clearErrors(name);
+    }
+  }, [content.components.length]);
 
   return (
     <NumberInput
+      required
       name={name}
       inputProps={{
-        min: 1,
-        max: item.components.length,
+        min: 2,
+        max: content.components.length || 2,
       }}
     />
   );
