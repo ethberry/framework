@@ -1086,7 +1086,7 @@ export class ContractManagerSignService {
     }
   }
 
-  // MODULE:Loot
+  // MODULE:LOOT
   public getBytecodeByLootContractTemplates(dto: ILootContractDeployDto, chainId: number) {
     const { contractTemplate } = dto;
 
