@@ -56,7 +56,9 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     // item or price template must be active
-    queryBuilder.andWhere("item_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
     queryBuilder.andWhere("price_template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (query) {

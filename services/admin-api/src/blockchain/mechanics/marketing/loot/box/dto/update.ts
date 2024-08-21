@@ -54,6 +54,6 @@ export class LootBoxUpdateDto implements ILootBoxUpdateDto {
 
   @ApiPropertyOptional()
   @IsInt({ message: "typeMismatch" })
-  @MaxPropertyValue(["item", "components", "length"], { message: "maxItemLength" })
+  @MaxPropertyValue(["content", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }
