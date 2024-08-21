@@ -13,7 +13,7 @@ declare global {
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
-      CHAIN_ID: string;
+      CHAIN_ID_GEMUNION_BESU: string;
       WAIT_LIST_ADDR: string;
       LOTTERY_ADDR: string;
 

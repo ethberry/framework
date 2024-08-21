@@ -1216,7 +1216,7 @@ export class ContractManagerSignService {
     }
   }
 
-  // MODULE:WAITLIST
+  // MODULE:PREDICTION
   public getBytecodeByPredictionContractTemplate(_dto: IPredictionContractDeployDto, chainId: number) {
     return getContractABI(
       "@framework/core-contracts/artifacts/contracts/Mechanics/Prediction/Prediction.sol/Prediction.json",

@@ -2,11 +2,10 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
-import { wallet } from "@gemunion/constants";
+import { wallet, NodeEnv } from "@gemunion/constants";
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -30,7 +29,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR;
     const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR;
-    const chainId = process.env.CHAIN_ID_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

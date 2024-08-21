@@ -25,7 +25,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     const vrfAddress = process.env.VRF_ADDR;
     const vrfAddressB = process.env.VRF_BINANCE_ADDR;

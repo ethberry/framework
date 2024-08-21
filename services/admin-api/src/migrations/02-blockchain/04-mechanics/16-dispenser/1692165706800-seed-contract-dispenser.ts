@@ -18,7 +18,7 @@ export class SeedContractDispenserAt1692165706800 implements MigrationInterface 
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const dispenserAddr = process.env.DISPENSER_ADDR;
     const dispenserAddrBinance = process.env.DISPENSER_BINANCE_ADDR;
     const fromBlock = process.env.STARTING_BLOCK || 0;
