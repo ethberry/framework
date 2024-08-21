@@ -32,19 +32,17 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
 };
 
 export const getContractABI = (path: string, chainId: bigint | number) => {
-  let fixedPath = path;
-  const isRandom =
-    path.includes("Random") || path.includes("Genes") || path.includes("Mystery") || path.includes("Loot");
-
-  if (isRandom) {
-    const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
-    if (process.env.NODE_ENV === NodeEnv.production && !isSupported) {
-      throw new NotFoundException("randomNotSupported", chainId.toString());
-    }
-
-    const suffix = chainIdToSuffix(chainId);
-    fixedPath = path.replace(".sol", `${suffix}.sol`).replace(".json", `${suffix}.json`);
+  const isRandom = path.includes("Random") || path.includes("Genes") || path.includes("Loot");
+  if (!isRandom) {
+    return import(path);
   }
 
+  const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
+  if (process.env.NODE_ENV === NodeEnv.production && !isSupported) {
+    throw new NotFoundException("randomNotSupported", chainId.toString());
+  }
+
+  const suffix = chainIdToSuffix(chainId);
+  const fixedPath = path.replace(".sol", `${suffix}.sol`).replace(".json", `${suffix}.json`);
   return import(fixedPath);
 };
