@@ -12,5 +12,6 @@ export const StyledCardContent = styled(CardContent)({
 });
 
 export const StyledImage = styled(Box)({
+  objectFit: "cover",
   width: "100%",
 }) as typeof Box;

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC } from "react";
 import { Card } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -25,7 +25,6 @@ export interface ITokenInputProps {
 
 export const TokenInput: FC<ITokenInputProps> = props => {
   const { prefix, tokenType, index, name = "tokenId", data, readOnly, disableClear = false } = props;
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const form = useFormContext<any>();
 
@@ -40,8 +39,6 @@ export const TokenInput: FC<ITokenInputProps> = props => {
     form.setValue(`tokenIds[${index}]`, option?.id ? ~~option.id : 0, { shouldDirty: true });
   };
 
-  const handleImageLoading = () => setIsImageLoaded(true);
-
   switch (tokenType) {
     case TokenType.ERC721:
     case TokenType.ERC998:
@@ -50,6 +47,13 @@ export const TokenInput: FC<ITokenInputProps> = props => {
     case TokenType.ERC20:
       return (
         <Card>
+          <StyledCardContent>
+            <StyledImage
+              component="img"
+              src={asset?.template?.imageUrl || "/logo.png"}
+              alt={asset?.template?.title || "TEMPLATE IMAGE"}
+            />
+          </StyledCardContent>
           <StyledCardActions>
             <EntityInput
               name={`${prefix}.${name}`}
@@ -63,16 +67,6 @@ export const TokenInput: FC<ITokenInputProps> = props => {
               disableClear={readOnly || disableClear}
             />
           </StyledCardActions>
-          {asset?.template?.imageUrl ? (
-            <StyledCardContent sx={{ display: isImageLoaded ? "block" : "none" }}>
-              <StyledImage
-                component="img"
-                src={asset.template.imageUrl}
-                alt={asset.template.title}
-                onLoad={handleImageLoading}
-              />
-            </StyledCardContent>
-          ) : null}
         </Card>
       );
     default:
