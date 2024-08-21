@@ -264,17 +264,31 @@ export class LootBoxService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
+    const { max, min } = rest;
+
+    if (max && content && max > content.components.length) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+      );
+    }
+
+    if (min && content && content.components.length > min) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
+    }
+
+    if (min && max && min > max) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+      );
+    }
+
     if (price) {
       await this.assetService.update(lootBoxEntity.template.price, price, userEntity);
     }
 
     if (content) {
-      const { max } = rest;
-      if (max && max > content.components.length) {
-        throw new BadRequestException(
-          createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "maxItemLength" } }]),
-        );
-      }
       await this.assetService.update(lootBoxEntity.content, content, userEntity);
     }
 
@@ -287,7 +301,7 @@ export class LootBoxService {
   }
 
   public async create(dto: ILootBoxCreateDto, userEntity: UserEntity): Promise<LootBoxEntity> {
-    const { price, content, contractId, max } = dto;
+    const { price, content, contractId, min, max } = dto;
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
@@ -302,6 +316,12 @@ export class LootBoxService {
     if (max > content.components.length) {
       throw new BadRequestException(
         createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "maxItemLength" } }]),
+      );
+    }
+
+    if (min > max) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "maxMaxValue" } }]),
       );
     }
 

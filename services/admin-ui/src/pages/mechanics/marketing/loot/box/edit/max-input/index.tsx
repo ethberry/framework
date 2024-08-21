@@ -30,8 +30,8 @@ export const MaxInput: FC<IMaxInputProps> = props => {
       required
       name={name}
       inputProps={{
-        min: 1,
-        max: content.components.length || 1,
+        min: 2,
+        max: content.components.length || 2,
       }}
     />
   );

@@ -33,7 +33,7 @@ export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
     lootBoxStatus,
     template,
     min: min || 1,
-    max: max || content?.components.length || 1,
+    max: max || content?.components.length || 2,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";

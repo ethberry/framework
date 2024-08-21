@@ -11,7 +11,8 @@ const changeMinByMaxAndTriggerMin = (
   maxValue: number,
   trigger?: UseFormTrigger<{ min: number; [key: string]: any }>,
 ) => {
-  if (maxValue < 2) {
+  /** set min value 1 if max value less than 3 **/
+  if (maxValue < 3) {
     if (trigger) {
       void trigger("min");
     }
