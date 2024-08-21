@@ -7,7 +7,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 
 import { ContractEntity } from "./contract.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { generateTestContract, generateTestUser, generateTestMerchant } from "../../../test";
+import { generateTestContract, generateTestMerchant, generateTestUser } from "../../../test";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Injectable()
@@ -22,17 +22,13 @@ export class ContractSeedService {
   ) {}
 
   public async setup(): Promise<any> {
-    let merchant1 = await this.merchantEntityRepository.findOne({ where: { wallet: wallets[0] } });
-
-    if (!merchant1) {
-      merchant1 = await this.merchantEntityRepository
-        .create(
-          generateTestMerchant({
-            wallet: wallets[0],
-          }),
-        )
-        .save();
-    }
+    const merchant1 = await this.merchantEntityRepository
+      .create(
+        generateTestMerchant({
+          wallet: wallets[0],
+        }),
+      )
+      .save();
 
     const user1 = await this.userEntityRepository
       .create(
@@ -41,6 +37,7 @@ export class ContractSeedService {
         }),
       )
       .save();
+
     const contract1 = await this.contractEntityRepository
       .create(
         generateTestContract({
