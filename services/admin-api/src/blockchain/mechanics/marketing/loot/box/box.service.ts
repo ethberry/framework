@@ -315,13 +315,19 @@ export class LootBoxService {
 
     if (max > content.components.length) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "maxItemLength" } }]),
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+      );
+    }
+
+    if (content.components.length > min) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
       );
     }
 
     if (min > max) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "maxMaxValue" } }]),
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
       );
     }
 

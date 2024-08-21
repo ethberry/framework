@@ -13,7 +13,7 @@ export const validationSchema = object().shape({
     .typeError("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow")
     .required("form.validations.valueMissing")
-    .test("min_should_be_less_than_max", "form.validations.maxMaxValue", function (value) {
+    .test("min_should_be_less_than_max", "form.validations.rangeOverflow", function (value) {
       const { max } = this.parent;
       return !!value && value <= max;
     })
@@ -23,7 +23,7 @@ export const validationSchema = object().shape({
     }),
   max: number()
     .typeError("form.validations.badInput")
-    .test("max_should_be_more_than_min", "form.validations.minMinValue", function (value) {
+    .test("max_should_be_more_than_min", "form.validations.rangeUnderflow", function (value) {
       const { min } = this.parent;
       return !!value && value >= min;
     })
