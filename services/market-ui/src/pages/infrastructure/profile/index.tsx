@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Fragment, useState } from "react";
+import { ChangeEvent, FC, Fragment } from "react";
 import { Tab } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
@@ -17,10 +17,7 @@ export const Profile: FC = () => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
 
-  const [value, setValue] = useState(tab);
-
   const handleChange = (_event: ChangeEvent<any>, newValue: ProfileTabs): void => {
-    setValue(newValue);
     navigate(`/profile/${newValue === ProfileTabs.general ? "" : newValue}`);
   };
 
@@ -30,16 +27,16 @@ export const Profile: FC = () => {
     <Fragment>
       <PageHeader message="pages.profile.title" />
 
-      <StyledTabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+      <StyledTabs value={tab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
         {Object.values(ProfileTabs).map(tab =>
           shouldHideAddress && tab === ProfileTabs.addresses ? null : (
             <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
           ),
         )}
       </StyledTabs>
-      <ProfileGeneral open={value === ProfileTabs.general} />
-      {!shouldHideAddress ? <ProfileAddresses open={value === ProfileTabs.addresses} /> : null}
-      <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
+      <ProfileGeneral open={tab === ProfileTabs.general} />
+      {!shouldHideAddress ? <ProfileAddresses open={tab === ProfileTabs.addresses} /> : null}
+      <ProfileSubscriptions open={tab === ProfileTabs.subscriptions} />
     </Fragment>
   );
 };
