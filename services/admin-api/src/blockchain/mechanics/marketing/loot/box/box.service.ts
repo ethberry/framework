@@ -1,4 +1,11 @@
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
@@ -15,6 +22,7 @@ import { ClaimTemplateService } from "../../claim/template/template.service";
 import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
 import type { ILootBoxCreateDto, ILootBoxUpdateDto } from "./interfaces";
 import { LootBoxEntity } from "./box.entity";
+import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 
 @Injectable()
 export class LootBoxService {
@@ -261,6 +269,12 @@ export class LootBoxService {
     }
 
     if (content) {
+      const { max } = rest;
+      if (max && max > content.components.length) {
+        throw new BadRequestException(
+          createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "maxItemLength" } }]),
+        );
+      }
       await this.assetService.update(lootBoxEntity.content, content, userEntity);
     }
 
@@ -273,7 +287,7 @@ export class LootBoxService {
   }
 
   public async create(dto: ILootBoxCreateDto, userEntity: UserEntity): Promise<LootBoxEntity> {
-    const { price, content, contractId } = dto;
+    const { price, content, contractId, max } = dto;
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
@@ -283,6 +297,12 @@ export class LootBoxService {
 
     if (contractEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (max > content.components.length) {
+      throw new BadRequestException(
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "maxItemLength" } }]),
+      );
     }
 
     const priceEntity = await this.assetService.create();

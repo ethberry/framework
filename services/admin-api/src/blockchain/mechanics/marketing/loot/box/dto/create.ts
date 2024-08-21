@@ -47,6 +47,5 @@ export class LootBoxCreateDto extends SearchableDto implements ILootBoxCreateDto
     type: Number,
   })
   @IsInt({ message: "typeMismatch" })
-  @MaxPropertyValue(["content", "components", "length"], { message: "maxItemLength" })
   public max: number;
 }
