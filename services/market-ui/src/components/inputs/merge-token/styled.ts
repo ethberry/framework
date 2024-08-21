@@ -5,7 +5,7 @@ export const Root = styled(Grid)(({ theme }) => ({
   marginTop: theme.spacing(2),
   width: "100%",
   display: "flex",
-  alignItems: "flex-start",
+  alignItems: "center",
   justifyContent: "center",
   flexWrap: "wrap",
   gap: 2,
