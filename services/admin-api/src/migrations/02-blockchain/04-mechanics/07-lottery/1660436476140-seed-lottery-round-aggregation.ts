@@ -6,7 +6,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -263,8 +263,6 @@ export class SeedLotteryRoundAggregationAt1660436476140 implements MigrationInte
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.lottery_round_aggregation_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

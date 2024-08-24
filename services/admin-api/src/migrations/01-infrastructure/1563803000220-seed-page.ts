@@ -1,10 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class SeedPage1563803000220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

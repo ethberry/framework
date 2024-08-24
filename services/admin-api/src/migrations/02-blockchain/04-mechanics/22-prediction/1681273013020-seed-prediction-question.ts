@@ -6,7 +6,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -79,8 +79,6 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.achievement_rule_id_seq', 5000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

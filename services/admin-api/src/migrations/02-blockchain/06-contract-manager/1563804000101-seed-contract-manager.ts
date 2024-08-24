@@ -8,28 +8,32 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     populate(
       process.env as any,
       {
         CONTRACT_MANAGER_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
-        CONTRACT_MANAGER_ETHEREUM_ADDR: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     const contractManagerGemunionAddress = process.env.CONTRACT_MANAGER_ADDR;
-    const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_BINANCE_ADDR;
-    const contractManagerAddressBinanceTest = process.env.CONTRACT_MANAGER_BINANCE_TEST_ADDR;
-    const contractManagerAddressPolygon = process.env.CONTRACT_MANAGER_POLYGON_ADDR;
-    const contractManagerAddressPolygonTest = process.env.CONTRACT_MANAGER_POLYGON_AMOY_ADDR;
-    const contractManagerAddressMainnet = process.env.CONTRACT_MANAGER_ETHEREUM_ADDR;
+    const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_ADDR_BINANCE;
+    const contractManagerAddressBinanceTest = process.env.CONTRACT_MANAGER_ADDR_BINANCE_TEST;
+    const contractManagerAddressPolygon = process.env.CONTRACT_MANAGER_ADDR_POLYGON;
+    const contractManagerAddressPolygonTest = process.env.CONTRACT_MANAGER_ADDR_POLYGON_AMOY;
+    const contractManagerAddressMainnet = process.env.CONTRACT_MANAGER_ADDR_ETHEREUM;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;

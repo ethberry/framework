@@ -3,10 +3,15 @@ import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { NodeEnv } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     populate(
       process.env as any,
       {
@@ -25,7 +30,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     const vrfAddress = process.env.VRF_ADDR;
     const vrfAddressB = process.env.VRF_BINANCE_ADDR;

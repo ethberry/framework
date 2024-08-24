@@ -15,7 +15,7 @@ const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 
 export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -113,8 +113,6 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.lottery_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

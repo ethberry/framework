@@ -6,7 +6,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

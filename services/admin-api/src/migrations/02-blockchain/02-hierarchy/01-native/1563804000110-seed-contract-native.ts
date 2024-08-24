@@ -7,8 +7,12 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -140,7 +144,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         ${process.env.NODE_ENV === NodeEnv.production ? 7 : 60101},
         '${ZeroAddress}',
-        56,
+        97,
         'Native token (BNBt)',
         '${simpleFormatting}',
         '${imagePath}/bnb.png',

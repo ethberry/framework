@@ -8,7 +8,7 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -26,7 +26,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
     const vestingAddress = process.env.VESTING_ADDR;
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

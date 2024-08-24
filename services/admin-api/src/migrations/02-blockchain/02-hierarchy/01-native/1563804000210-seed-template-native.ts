@@ -9,6 +9,10 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,

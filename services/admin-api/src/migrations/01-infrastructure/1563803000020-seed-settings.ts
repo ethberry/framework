@@ -1,10 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { loremIpsum } from "@gemunion/constants";
+import { loremIpsum, NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class SeedSettings1563803000020 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.settings (
         key,

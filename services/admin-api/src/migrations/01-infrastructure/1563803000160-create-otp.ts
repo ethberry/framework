@@ -1,9 +1,14 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class CreateOtp1563803000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.otp_type_enum AS ENUM (
         'EMAIL',

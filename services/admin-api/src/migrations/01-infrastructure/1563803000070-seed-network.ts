@@ -1,9 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, networks } from "@framework/constants";
+import { NodeEnv } from "@gemunion/constants";
+import { networks, ns } from "@framework/constants";
 
 export class SeedNetwork1563803000070 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.network (
         chain_id,

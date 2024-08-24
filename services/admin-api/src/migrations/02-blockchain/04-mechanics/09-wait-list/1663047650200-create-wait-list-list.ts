@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class CreateWaitListList1663047650200 implements MigrationInterface {
@@ -64,6 +65,10 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
 
     await queryRunner.query(`SELECT setval('${ns}.wait_list_list_id_seq', 10000, true);`);
   }

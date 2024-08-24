@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
@@ -80,6 +81,12 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.raffle_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

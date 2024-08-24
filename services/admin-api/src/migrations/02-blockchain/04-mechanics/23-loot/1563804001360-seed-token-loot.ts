@@ -7,7 +7,7 @@ import { TokenMetadata } from "@framework/types";
 
 export class SeedTokenLootAt1563804001360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

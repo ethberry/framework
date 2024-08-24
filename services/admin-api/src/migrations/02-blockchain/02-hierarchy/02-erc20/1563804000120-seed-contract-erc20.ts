@@ -8,7 +8,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -30,7 +30,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR;
     const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR;
     const erc20TokenWhiteListAddress = process.env.ERC20_WHITELIST_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

@@ -1,12 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallets } from "@gemunion/constants";
+import { wallets, NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedBalanceErc721LootAt1563804001460 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

@@ -6,6 +6,10 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
@@ -24,7 +28,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 1021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 41 : 1021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -32,11 +36,11 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 10218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 41 : 10218},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 2021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 42 : 2021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -44,11 +48,11 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 20218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 42 : 20218},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 3021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 43 : 3021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -56,11 +60,11 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 30218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 43 : 30218},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 4021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 44 : 4021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -68,11 +72,11 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 40218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 44 : 40218},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 5021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 45 : 5021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -80,11 +84,11 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 50218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 45 : 50218},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 6021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 46 : 6021801},
         'LINK',
         '${simpleFormatting}',
         '${linkImgUrl}',
@@ -92,7 +96,7 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 60218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 46 : 60218},
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -5,7 +5,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedDismantleErc1155Erc155RecipesAt1693120862550 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

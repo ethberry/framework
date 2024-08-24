@@ -5,7 +5,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedClaimTemplateErc721EventHistoryComponentsAt1653616447935 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

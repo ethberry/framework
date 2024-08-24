@@ -46,7 +46,7 @@ export class CreateBreed1663047650400 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

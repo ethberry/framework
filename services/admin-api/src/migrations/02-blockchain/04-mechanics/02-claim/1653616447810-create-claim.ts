@@ -112,7 +112,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       EXECUTE PROCEDURE update_expired_claims();
     `);
 
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

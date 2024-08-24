@@ -8,6 +8,10 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc20WethAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     populate(
       process.env as any,
       {
@@ -19,7 +23,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const wethImgUrl = `${imagePath}/WETHlogo.png`;
 
     await queryRunner.query(`

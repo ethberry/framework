@@ -6,8 +6,12 @@ import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedMerchant1563803000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
-    const chainId = BigInt(process.env.CHAIN_ID_GEMUNION_BESU) || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.merchant (

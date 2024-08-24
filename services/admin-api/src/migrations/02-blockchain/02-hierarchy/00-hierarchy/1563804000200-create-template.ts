@@ -89,9 +89,11 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    await queryRunner.query(
-      `SELECT setval('${ns}.template_id_seq', ${process.env.NODE_ENV === NodeEnv.production ? 50 : 500000}, true);`,
-    );
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 500000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

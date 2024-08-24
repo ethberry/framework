@@ -3,33 +3,37 @@ import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@gemunion/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     populate(
       process.env as any,
       {
         EXCHANGE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_BINANCE_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_BINANCE_TEST_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ETHEREUM_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_POLYGON_ADDR: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_POLYGON_AMOY_ADDR: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
 
     const exchangeGemunionAddress = process.env.EXCHANGE_ADDR;
-    const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR;
-    const exchangeAddressBinanceTest = process.env.EXCHANGE_BINANCE_TEST_ADDR;
-    const exchangeAddressMainnet = process.env.EXCHANGE_ETHEREUM_ADDR;
-    const exchangeAddressPolygon = process.env.EXCHANGE_POLYGON_ADDR;
-    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_POLYGON_AMOY_ADDR;
+    const exchangeAddressBinance = process.env.EXCHANGE_ADDR_BINANCE;
+    const exchangeAddressBinanceTest = process.env.EXCHANGE_ADDR_BINANCE_TEST;
+    const exchangeAddressPolygon = process.env.EXCHANGE_ADDR_POLYGON;
+    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_ADDR_POLYGON_AMOY;
+    const exchangeAddressMainnet = process.env.EXCHANGE_ADDR_ETHEREUM;
 
     const fromBlock = process.env.STARTING_BLOCK || 1;
     const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;

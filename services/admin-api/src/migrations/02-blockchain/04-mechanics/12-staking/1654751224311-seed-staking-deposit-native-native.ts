@@ -1,13 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
-import { wallets } from "@gemunion/constants";
+import { wallets, NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedStakingDepositNativeNativeAt1654751224311 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 

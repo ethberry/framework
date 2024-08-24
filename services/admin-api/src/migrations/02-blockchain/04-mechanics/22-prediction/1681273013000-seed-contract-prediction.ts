@@ -8,7 +8,7 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractPredictionAt1681273013000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === NodeEnv.production) {
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
       return;
     }
 
@@ -21,7 +21,7 @@ export class SeedContractPredictionAt1681273013000 implements MigrationInterface
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const predictionAddr = process.env.PREDICTION_ADDR;
 

@@ -1,4 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
+import { NodeEnv } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
 export class CreatePredictionQuestion1681273013010 implements MigrationInterface {
@@ -105,6 +107,12 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
     });
 
     await queryRunner.createTable(table, true);
+
+    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.prediction_rule_id_seq', 5000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

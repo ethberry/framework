@@ -5,6 +5,10 @@ import { NodeEnv } from "@gemunion/constants";
 
 export class SeedTokenErc20LinkAt1563804000324 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === NodeEnv.test) {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
@@ -19,57 +23,57 @@ export class SeedTokenErc20LinkAt1563804000324 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 102180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 41 : 102180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 33 : 1021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 41 : 1021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 202180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 42 : 202180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 34 : 2021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 42 : 2021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 302180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 43 : 302180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 35 : 3021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 43 : 3021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 402180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 44 : 402180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 36 : 4021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 44 : 4021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 502180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 45 : 502180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 37 : 5021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 45 : 5021801},
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 602180101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 46 : 602180101},
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        ${process.env.NODE_ENV === NodeEnv.production ? 67 : 6021801},
+        ${process.env.NODE_ENV === NodeEnv.production ? 46 : 6021801},
         '${currentDateTime}',
         '${currentDateTime}'
       );
