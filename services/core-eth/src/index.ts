@@ -5,21 +5,11 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
-import { Log } from "ethers";
 
 import { companyName } from "@framework/constants";
 import { NodeEnv } from "@gemunion/constants";
 
 import { AppModule } from "./app.module";
-
-export interface IRedisJob {
-  id: string;
-  data: {
-    route: string;
-    decoded: any;
-    context: Log;
-  };
-}
 
 let app: NestExpressApplication;
 
