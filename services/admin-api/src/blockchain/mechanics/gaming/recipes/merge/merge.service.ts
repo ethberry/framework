@@ -192,7 +192,7 @@ export class MergeService {
       ],
     });
 
-    return await this.mergeEntityRepository.delete({
+    return this.mergeEntityRepository.delete({
       id: In(mergeEntities.map(m => m.id)),
     });
   }

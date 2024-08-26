@@ -33,7 +33,7 @@ export class StakingContractServiceCron {
 
     await Promise.allSettled(
       allStakingContracts.map(async staking => {
-        return await this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
+        return this.stakingDepositServiceEth.checkStakingDepositBalance(staking);
       }),
     ).then(res =>
       res.forEach(value => {

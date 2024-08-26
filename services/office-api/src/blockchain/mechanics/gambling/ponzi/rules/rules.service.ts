@@ -193,7 +193,7 @@ export class PonziRulesService {
       ],
     });
 
-    return await this.ponziRuleEntityRepository.delete({
+    return this.ponziRuleEntityRepository.delete({
       id: In(rulesEntities.map(r => r.id)),
     });
   }

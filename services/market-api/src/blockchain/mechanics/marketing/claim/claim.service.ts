@@ -130,7 +130,7 @@ export class ClaimService {
     itemId: number,
     claimType: ClaimType,
   ): Promise<ClaimEntity> {
-    return await this.claimEntityRepository
+    return this.claimEntityRepository
       .create({
         account,
         itemId,

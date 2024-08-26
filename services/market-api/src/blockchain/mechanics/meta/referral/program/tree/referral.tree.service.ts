@@ -85,6 +85,6 @@ export class ReferralTreeService {
 
     queryBuilder.groupBy("merchant.id, merchant.title");
 
-    return await queryBuilder.getRawMany();
+    return queryBuilder.getRawMany();
   }
 }

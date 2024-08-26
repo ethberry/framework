@@ -103,6 +103,6 @@ export class TransactionService {
       "transactions.logIndex": "ASC",
     });
 
-    return await queryBuilder.getMany();
+    return queryBuilder.getMany();
   }
 }

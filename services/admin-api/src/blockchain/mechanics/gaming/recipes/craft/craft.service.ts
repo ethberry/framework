@@ -199,7 +199,7 @@ export class CraftService {
       ],
     });
 
-    return await this.craftEntityRepository.delete({
+    return this.craftEntityRepository.delete({
       id: In(craftEntities.map(cr => cr.id)),
     });
   }

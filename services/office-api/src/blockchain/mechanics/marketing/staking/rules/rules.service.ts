@@ -225,7 +225,7 @@ export class StakingRulesService {
       ],
     });
 
-    return await this.stakingRuleEntityRepository.delete({
+    return this.stakingRuleEntityRepository.delete({
       id: In(rulesEntities.map(r => r.id)),
     });
   }

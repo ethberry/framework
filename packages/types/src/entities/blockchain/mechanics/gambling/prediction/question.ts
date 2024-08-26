@@ -10,10 +10,11 @@ export enum PredictionQuestionStatus {
 }
 
 export enum PredictionQuestionResult {
-  YES = "YES",
-  NO = "NO",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
   DRAW = "DRAW",
-  TECH = "TECH",
+  ERROR = "ERROR",
+  EXPIRED = "EXPIRED",
 }
 
 export interface IPredictionQuestion extends ISearchable {

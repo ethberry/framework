@@ -110,7 +110,7 @@ export class LotteryRoundService {
   }
 
   public async statistic(roundId: number): Promise<LotteryRoundEntity | null> {
-    return await this.findOne(
+    return this.findOne(
       { id: roundId },
       {
         relations: {

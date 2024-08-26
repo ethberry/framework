@@ -188,7 +188,7 @@ export class DismantleService {
       ],
     });
 
-    return await this.dismantleEntityRepository.delete({
+    return this.dismantleEntityRepository.delete({
       id: In(dismantleEntities.map(m => m.id)),
     });
   }

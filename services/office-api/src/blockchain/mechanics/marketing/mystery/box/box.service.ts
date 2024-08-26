@@ -382,7 +382,7 @@ export class MysteryBoxService {
       mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.content),
     );
 
-    return await this.mysteryBoxEntityRepository.delete({
+    return this.mysteryBoxEntityRepository.delete({
       id: In(mysteryBoxEntities.map(mysteryBoxEntity => mysteryBoxEntity.id)),
     });
   }

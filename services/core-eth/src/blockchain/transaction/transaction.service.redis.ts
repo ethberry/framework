@@ -50,7 +50,7 @@ export class TransactionServiceRedis {
 
       const { route, decoded, context, contractType } = job.data;
       const { transactionHash, blockNumber, transactionIndex, logIndex } = context;
-      return await this.transactionService.create({
+      return this.transactionService.create({
         chainId,
         transactionHash,
         contractType,

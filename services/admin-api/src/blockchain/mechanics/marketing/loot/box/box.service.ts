@@ -402,7 +402,7 @@ export class LootBoxService {
 
     await this.claimTemplateService.deactivateClaims(lootBoxEntities.map(lootBoxEntity => lootBoxEntity.content));
 
-    return await this.lootBoxEntityRepository.delete({
+    return this.lootBoxEntityRepository.delete({
       id: In(lootBoxEntities.map(lootBoxEntity => lootBoxEntity.id)),
     });
   }

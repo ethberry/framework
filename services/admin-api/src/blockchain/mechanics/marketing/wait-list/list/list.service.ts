@@ -298,7 +298,7 @@ export class WaitListListService {
       },
     });
 
-    return await this.waitListListEntityRepository.delete({
+    return this.waitListListEntityRepository.delete({
       id: In(waitListEntities.map(w => w.id)),
     });
   }

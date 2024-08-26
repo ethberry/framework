@@ -168,7 +168,7 @@ export class DiscreteService {
       },
     });
 
-    return await this.discreteEntityRepository.delete({
+    return this.discreteEntityRepository.delete({
       id: In(discreteEntities.map(g => g.id)),
     });
   }

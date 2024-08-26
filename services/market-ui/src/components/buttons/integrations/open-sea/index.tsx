@@ -70,7 +70,7 @@ export const OpenSeaSellButton: FC<IOpenSeaSellButtonProps> = props => {
   const handleSellConfirm = async (values: ISellDto, form: any) => {
     return fn(form, values)
       .then(async resp => {
-        return await metaFn(resp);
+        return metaFn(resp);
       })
       .finally(() => {
         setIsSellDialogOpen(false);

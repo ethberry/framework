@@ -145,7 +145,7 @@ export class RentService {
       },
     });
 
-    return await this.rentEntityRepository.delete({
+    return this.rentEntityRepository.delete({
       id: In(rentEntities.map(r => r.id)),
     });
   }

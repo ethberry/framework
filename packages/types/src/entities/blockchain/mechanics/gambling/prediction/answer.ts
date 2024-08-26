@@ -3,8 +3,8 @@ import type { IUser } from "../../../../infrastructure";
 import type { IPredictionQuestion } from "./question";
 
 export enum PredictionAnswer {
-  YES = "YES",
-  NO = "NO",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
 }
 
 export interface IPredictionAnswer extends IIdDateBase {

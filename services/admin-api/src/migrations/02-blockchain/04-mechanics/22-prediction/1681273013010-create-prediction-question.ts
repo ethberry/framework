@@ -14,10 +14,11 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.prediction_question_result_enum AS ENUM (
-        'YES',
-        'NO',
+        'LEFT',
+        'RIGHT',
         'DRAW',
-        'TECH'
+        'ERROR',
+        'EXPIRED'
       );
     `);
 

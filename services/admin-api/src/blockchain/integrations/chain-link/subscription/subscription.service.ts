@@ -29,7 +29,7 @@ export class ChainLinkSubscriptionService {
   public async autocomplete(userEntity: UserEntity): Promise<Array<ChainLinkSubscriptionEntity>> {
     const { chainId, merchantId } = userEntity;
 
-    return await this.chainLinkSubscriptionEntityRepository.find({
+    return this.chainLinkSubscriptionEntityRepository.find({
       where: { chainId, merchantId },
       select: {
         id: true,
