@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { wallet, NodeEnv } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { imagePath, ns, testChainId } from "@framework/constants";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -28,6 +28,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
+    const vestingImgUrl = `${imagePath}/hourglass.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -55,7 +56,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${chainId}',
         'VESTING #1',
         '${simpleFormatting}',
-        '',
+        '${vestingImgUrl}',
         'Vesting',
         '',
         '',
@@ -79,7 +80,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${chainId}',
         'VESTING #2',
         '${simpleFormatting}',
-        '',
+        '${vestingImgUrl}',
         'Vesting',
         '',
         '',
@@ -103,7 +104,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${chainId}',
         'VESTING #3',
         '${simpleFormatting}',
-        '',
+        '${vestingImgUrl}',
         'Vesting',
         '',
         '',

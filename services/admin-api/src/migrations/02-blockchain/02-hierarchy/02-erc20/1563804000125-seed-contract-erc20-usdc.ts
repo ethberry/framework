@@ -24,7 +24,7 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const usdcAddr = process.env.USDC_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
-    const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
+    const linkImgUrl = `${imagePath}/usdc.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

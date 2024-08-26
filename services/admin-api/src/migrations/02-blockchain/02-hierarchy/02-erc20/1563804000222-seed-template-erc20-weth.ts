@@ -11,7 +11,7 @@ export class SeedTemplateErc20WethAt1563804000222 implements MigrationInterface 
     }
 
     const currentDateTime = new Date().toISOString();
-    const wethImgUrl = `${imagePath}/WETHlogo.png`;
+    const wethImgUrl = `${imagePath}/weth.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (

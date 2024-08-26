@@ -24,7 +24,7 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const wethAddr = process.env.WETH_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
-    const wethImgUrl = `${imagePath}/WETHlogo.png`;
+    const wethImgUrl = `${imagePath}/weth.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
