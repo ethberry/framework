@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet, ZeroAddress } from "ethers";
 import { populate } from "dotenv";
 
+import { NodeEnv } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,9 +22,9 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const usdcAddr = process.env.USDC_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
-    const linkImgUrl = `${imagePath}/usdc.png`;
+    const usdcAddr = process.env.USDC_ADDR;
+    const usdcImgUrl = `${imagePath}/usdc.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -52,9 +52,9 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         '${chainId}',
         'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',
@@ -69,11 +69,11 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 52 : 20219},
         '${ZeroAddress}',
         56,
-        'LINK',
+        'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',
@@ -88,11 +88,11 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 53 : 30219},
         '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         1,
-        'LINK',
+        'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',
@@ -107,11 +107,11 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 54 : 40219},
         '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359',
         137,
-        'LINK',
+        'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',
@@ -126,11 +126,11 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 55 : 50219},
         '${ZeroAddress}',
         97,
-        'LINK',
+        'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',
@@ -145,11 +145,11 @@ export class SeedContractErc20UsdcAt1563804000125 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 56 : 60219},
         '${ZeroAddress}',
         80002,
-        'LINK',
+        'USDC',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         'USD Coin',
-        'LINK',
+        'USDC',
         18,
         0,
         '',

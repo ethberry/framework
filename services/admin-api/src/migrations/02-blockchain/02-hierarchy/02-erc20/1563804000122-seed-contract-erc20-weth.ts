@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
+import { NodeEnv } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc20WethAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,8 +22,8 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const wethAddr = process.env.WETH_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const wethAddr = process.env.WETH_ADDR;
     const wethImgUrl = `${imagePath}/weth.png`;
 
     await queryRunner.query(`

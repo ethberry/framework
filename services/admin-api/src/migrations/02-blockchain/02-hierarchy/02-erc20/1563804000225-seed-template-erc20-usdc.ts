@@ -11,8 +11,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
     }
 
     const currentDateTime = new Date().toISOString();
-
-    const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
+    const usdcImgUrl = `${imagePath}/usdc.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -31,7 +30,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 51 : 1021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',
@@ -43,7 +42,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 52 : 2021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',
@@ -55,7 +54,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 53 : 3021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',
@@ -67,7 +66,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 54 : 4021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',
@@ -79,7 +78,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 55 : 5021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',
@@ -91,7 +90,7 @@ export class SeedTemplateErc20UsdcAt1563804000225 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 56 : 6021901},
         'LINK',
         '${simpleFormatting}',
-        '${linkImgUrl}',
+        '${usdcImgUrl}',
         null,
         0,
         '100000000000',

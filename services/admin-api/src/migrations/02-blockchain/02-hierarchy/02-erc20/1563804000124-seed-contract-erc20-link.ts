@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
+import { NodeEnv } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
 
 export class SeedContractErc20LinkAt1563804000124 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,8 +22,8 @@ export class SeedContractErc20LinkAt1563804000124 implements MigrationInterface 
 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const linkAddr = process.env.LINK_ADDR;
     const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const linkAddr = process.env.LINK_ADDR;
     const linkImgUrl = `${imagePath}/chainlink.png`;
 
     await queryRunner.query(`

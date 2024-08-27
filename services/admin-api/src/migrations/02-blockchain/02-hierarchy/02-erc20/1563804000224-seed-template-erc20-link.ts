@@ -11,7 +11,6 @@ export class SeedTemplateErc20LinkAt1563804000224 implements MigrationInterface 
     }
 
     const currentDateTime = new Date().toISOString();
-
     const linkImgUrl = `${imagePath}/chainlink-coin-icon.png`;
 
     await queryRunner.query(`

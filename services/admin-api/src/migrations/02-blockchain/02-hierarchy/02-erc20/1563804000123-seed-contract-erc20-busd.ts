@@ -1,8 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { Wallet } from "ethers";
+import { populate } from "dotenv";
 
-import { NodeEnv, wallet } from "@gemunion/constants";
+import { NodeEnv } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { imagePath, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -10,10 +12,19 @@ export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface 
       return;
     }
 
+    populate(
+      process.env as any,
+      {
+        BUSD_ADDR: Wallet.createRandom().address.toLowerCase(),
+      },
+      process.env as any,
+    );
+
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const busdAddr = process.env.BUSD_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const busdAddr = process.env.BUSD_ADDR;
+    const busdImgUrl = `${imagePath}/binance.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -41,7 +52,7 @@ export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface 
         '${chainId}',
         'BUSD',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${busdImgUrl}',
         'Biance USD',
         'BUSD',
         18,
@@ -60,7 +71,7 @@ export class SeedContractErc20BusdAt1563804000123 implements MigrationInterface 
         56,
         'BUSD',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${busdImgUrl}',
         'Biance USD',
         'BUSD',
         18,

@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { NodeEnv } from "@gemunion/constants";
-import { ns } from "@framework/constants";
+import { imagePath, ns } from "@framework/constants";
 
 export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -11,6 +11,7 @@ export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface 
     }
 
     const currentDateTime = new Date().toISOString();
+    const busdImgUrl = `${imagePath}/binance.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -29,7 +30,7 @@ export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 31 : 1021701},
         'BUSD',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${busdImgUrl}',
         null,
         0,
         '31000000000000000000000000',
@@ -41,7 +42,7 @@ export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface 
         ${process.env.NODE_ENV === NodeEnv.production ? 32 : 2021701},
         'BUSD',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        '${busdImgUrl}',
         null,
         0,
         '31000000000000000000000000',
