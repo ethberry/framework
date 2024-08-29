@@ -11,7 +11,7 @@ export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface 
     }
 
     const currentDateTime = new Date().toISOString();
-    const busdImgUrl = `${imagePath}/binance.png`;
+    const busdImgUrl = `${imagePath}/busd.png`;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
