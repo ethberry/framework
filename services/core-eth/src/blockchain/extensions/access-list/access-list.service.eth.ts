@@ -92,6 +92,7 @@ export class AccessListServiceEth {
     const {
       args: { account },
     } = event;
+    const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -99,5 +100,13 @@ export class AccessListServiceEth {
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.contractService.getMerchantWalletByContract(address.toLowerCase()),
+        transactionHash,
+        transactionType: event.name,
+      })
+      .toPromise();
   }
 }
