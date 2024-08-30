@@ -74,7 +74,7 @@ export class SeedPredictionQuestion1681273013020 implements MigrationInterface {
          '${currentDateTime}',
          0,
         'ACTIVE',
-        'YES',
+        'LEFT',
         '${currentDateTime}',
         '${currentDateTime}'
       );

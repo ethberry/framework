@@ -113,7 +113,7 @@ export class CreatePredictionQuestion1681273013010 implements MigrationInterface
       return;
     }
 
-    await queryRunner.query(`SELECT setval('${ns}.prediction_rule_id_seq', 5000, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.prediction_question_id_seq', 5000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
