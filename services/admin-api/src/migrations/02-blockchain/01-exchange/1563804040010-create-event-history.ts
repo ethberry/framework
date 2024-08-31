@@ -79,6 +79,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'Claim',
       --MODULE:CRAFT
        'Craft',
+       'Dismantle',
+       'Merge',
       --MODULE:RENTABLE
        'UpdateUser',
        'Lend',
