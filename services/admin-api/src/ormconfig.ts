@@ -168,7 +168,9 @@ import {
   SeedAccessControlErc721At1653616447230,
   SeedAccessControlErc998At1653616447240,
   SeedAccessControlLootAt1663804100790,
+  SeedAccessControlLotteryAt1660436476330,
   SeedAccessControlMysteryAt1663804100790,
+  SeedAccessControlRaffleAt1685961136330,
   SeedAccessListErc1155At1653616447350,
   SeedAccessListErc20At1653616447320,
   SeedAccessListErc721At1653616447330,
@@ -766,6 +768,7 @@ const config: PostgresConnectionOptions = {
     SeedLotteryRoundAggregationAt1660436476140,
     SeedEventHistoryLotteryTicketPurchaseAt1660436476310,
     SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
+    SeedAccessControlLotteryAt1660436476330,
 
     // RAFFLE
     SeedContractRaffleAt1685961136100,
@@ -777,6 +780,7 @@ const config: PostgresConnectionOptions = {
     SeedRaffleRoundAt1685961136120,
     SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
     SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
+    SeedAccessControlRaffleAt1685961136330,
 
     // PONZI
     SeedContractPonziAt1660436477100,

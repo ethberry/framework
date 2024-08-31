@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useCallback } from "react";
 import { Grid } from "@mui/material";
 
-import { ContractFeatures, IAsset, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, IAsset, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
@@ -73,16 +73,30 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
           <TemplateAssetInput
             autoSelect
             prefix="ticket"
-            tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC998, TokenType.ERC1155] }}
-            contract={{ data: { contractModule: [ModuleType.RAFFLE] } }}
+            tokenType={{
+              disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC998, TokenType.ERC1155],
+            }}
+            contract={{
+              data: {
+                contractModule: [ModuleType.RAFFLE],
+                contractStatus: [ContractStatus.ACTIVE],
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
             autoSelect
             prefix="price"
-            tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
-            contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+            tokenType={{
+              disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+            }}
+            contract={{
+              data: {
+                contractModule: [ModuleType.HIERARCHY],
+                contractStatus: [ContractStatus.ACTIVE],
+              },
+            }}
           />
         </Grid>
       </Grid>

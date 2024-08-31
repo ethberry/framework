@@ -9,3 +9,4 @@ export * from "./1660436476130-create-lottery-round-aggregation";
 export * from "./1660436476140-seed-lottery-round-aggregation";
 export * from "./1660436476310-seed-event-history-lottery-ticket-purchase";
 export * from "./1660436476320-seed-event-history-lottery-ticket-purchase-components";
+export * from "./1660436476330-seed-access-control-lottery";
