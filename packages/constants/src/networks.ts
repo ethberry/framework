@@ -15,18 +15,6 @@ export const networks = {
       decimals: 18,
     },
   },
-  "5": {
-    order: 2,
-    chainName: "Ethereum Goerly",
-    chainId: 5,
-    rpcUrls: ["https://rpc.goerli.mudit.blog"],
-    blockExplorerUrls: ["https://goerli.etherscan.io"],
-    nativeCurrency: {
-      name: "ETH",
-      symbol: "ETH",
-      decimals: 18,
-    },
-  },
   "11155111": {
     order: 9,
     chainName: "Ethereum Sepolia",
