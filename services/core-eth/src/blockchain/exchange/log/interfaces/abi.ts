@@ -5,7 +5,9 @@ import ExchangeClaimFacetSol from "@framework/core-contracts/artifacts/contracts
 import ExchangeCraftFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeCraftFacet.sol/ExchangeCraftFacet.json";
 import ExchangeDismantleFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeDismantleFacet.sol/ExchangeDismantleFacet.json";
 import ExchangeGradeFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeGradeFacet.sol/ExchangeGradeFacet.json";
+import ExchangeLootBoxFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeLootBoxFacet.sol/ExchangeLootBoxFacet.json";
 import ExchangeLotteryFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeLotteryFacet.sol/ExchangeLotteryFacet.json";
+import ExchangeMergeFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeMergeFacet.sol/ExchangeMergeFacet.json";
 import ExchangeMysteryBoxFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeMysteryBoxFacet.sol/ExchangeMysteryBoxFacet.json";
 import ExchangePurchaseFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangePurchaseFacet.sol/ExchangePurchaseFacet.json";
 import ExchangeRaffleFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeRaffleFacet.sol/ExchangeRaffleFacet.json";
@@ -14,12 +16,15 @@ import ExchangeUtilsSol from "@framework/core-contracts/artifacts/contracts/Exch
 
 export const ABIExchange = new Interface([
   ...new Set(
-    ExchangeBreedFacetSol.abi
+    ([] as Array<any>)
+      .concat(ExchangeBreedFacetSol.abi)
       .concat(ExchangeClaimFacetSol.abi)
       .concat(ExchangeCraftFacetSol.abi)
       .concat(ExchangeDismantleFacetSol.abi)
       .concat(ExchangeGradeFacetSol.abi)
+      .concat(ExchangeLootBoxFacetSol.abi)
       .concat(ExchangeLotteryFacetSol.abi)
+      .concat(ExchangeMergeFacetSol.abi)
       .concat(ExchangeMysteryBoxFacetSol.abi)
       .concat(ExchangePurchaseFacetSol.abi)
       .concat(ExchangeRaffleFacetSol.abi)
