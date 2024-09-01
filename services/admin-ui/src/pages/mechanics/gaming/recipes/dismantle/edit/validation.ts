@@ -14,12 +14,12 @@ export const validationSchema = object().shape({
     then: () =>
       mixed<DismantleStrategy>().oneOf(Object.values(DismantleStrategy)).required("form.validations.valueMissing"),
   }),
-  rarityMultiplier: number().when("dismantleStrategy", {
-    is: (dismantleStrategy: DismantleStrategy) => dismantleStrategy === DismantleStrategy.EXPONENTIAL,
-    then: () =>
-      number()
-        .required("form.validations.valueMissing")
-        .integer("form.validations.badInput")
-        .min(1, "form.validations.rangeUnderflow"),
-  }),
+  // rarityMultiplier: number().when("dismantleStrategy", {
+  //   is: (dismantleStrategy: DismantleStrategy) => dismantleStrategy === DismantleStrategy.EXPONENTIAL,
+  //   then: () =>
+  //     number()
+  //       .required("form.validations.valueMissing")
+  //       .integer("form.validations.badInput")
+  //       .min(1, "form.validations.rangeUnderflow"),
+  // }),
 });
