@@ -51,6 +51,8 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         referrer: values.account,
       };
       const item = convertTemplateToChainAsset(token.template, 1);
+      // set real token Id
+      item.tokenId = token.tokenId;
 
       const rentRule = token.template?.contract?.rent
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)

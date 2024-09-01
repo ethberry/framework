@@ -18,7 +18,7 @@ export const MergeItem: FC<IMergeItemProps> = props => {
   const { merge } = props;
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/recipes/merge/${merge.id}`}>
+      <CardActionArea component={RouterLink} to={`/recipes/merge/${merge.id}/view`}>
         <CardHeader
           action={<MergeIngredients merge={merge} />}
           title={formatItem(merge.item)}

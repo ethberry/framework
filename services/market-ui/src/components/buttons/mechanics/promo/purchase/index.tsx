@@ -14,13 +14,12 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, ILootBox, IMysteryBox } from "@framework/types";
 // import type { ITemplate } from "@framework/types";
-import { ModuleType, TokenType } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import PurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 import PurchaseMysteryABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
 
 import { useAllowance } from "../../../../../utils/use-allowance";
-import { sorter } from "../../../../../utils/sorter";
 // import { MysteryBoxPurchaseButton } from "../../mystery/purchase";
 // import { LootBoxPurchaseButton } from "../../loot/purchase";
 // import { TemplatePurchaseButton } from "../../../hierarchy";
