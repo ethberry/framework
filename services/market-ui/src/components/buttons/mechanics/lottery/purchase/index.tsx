@@ -69,7 +69,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
 
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         sign,
         systemContract,

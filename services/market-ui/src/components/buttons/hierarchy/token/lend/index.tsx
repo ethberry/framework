@@ -76,7 +76,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       const price = convertDatabaseAssetToTokenTypeAsset(rentRule ? rentRule[0].price?.components : []);
 
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         values,
         sign,

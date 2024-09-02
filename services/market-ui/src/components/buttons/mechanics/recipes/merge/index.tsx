@@ -75,7 +75,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
       );
 
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         values,
         sign,

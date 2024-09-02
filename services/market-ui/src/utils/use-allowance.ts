@@ -26,30 +26,38 @@ export interface IUseAllowanceOptionsParams {
   assets: IAsset[];
 }
 
-export const groupAssetsByContract = (assets: IAsset[]) => {
-  const grouped: Record<string, IAsset> = {};
+export const groupAssetsByContract = (params: Array<IUseAllowanceOptionsParams>) => {
+  const result: Record<string, Array<IAsset>> = {};
 
-  for (const asset of assets) {
-    const { token, tokenType, amount } = asset;
+  for (const param of params) {
+    const grouped: Record<string, IAsset> = {};
 
-    // If the token doesn't exist in the group, add it.
-    if (!grouped[token]) {
-      grouped[token] = asset;
-    } else {
-      // Dublication of the token
-      if (tokenType === TokenType.ERC20 && amount /* amount can be undefined */) {
-        // If the token is ERC20, combine amount.
-        const updatedAmount = BigNumber.from(grouped[token].amount).add(amount);
-        grouped[token].amount = updatedAmount;
+    for (const asset of param.assets) {
+      const { token, tokenType, amount } = asset;
+
+      // If the token doesn't exist in the group, add it.
+      if (!grouped[token]) {
+        grouped[token] = asset;
       } else {
-        // If the Token Is 721 / 998 / 1155
-        // We just have to skip, for dublicated transactions
-        // Skip...
+        // Dublication of the token
+        if (tokenType === TokenType.ERC20 && amount /* amount can be undefined */) {
+          // If the token is ERC20, combine amount.
+          const updatedAmount = BigNumber.from(grouped[token].amount).add(amount);
+          grouped[token].amount = updatedAmount;
+        } else {
+          // If the Token Is 721 / 998 / 1155
+          // We just have to skip, for dublicated transactions
+          // Skip...
+        }
       }
+    }
+
+    if (!result[param.contract]) {
+      result[param.contract] = Object.values(grouped);
     }
   }
 
-  return Object.values(grouped);
+  return result;
 };
 
 export const checkAllowance = async (contract: string, asset: IAsset, web3Context: Web3ContextType) => {
@@ -114,28 +122,30 @@ export const approveTokens = async (contract: string, asset: IAsset, web3Context
 export const useAllowance = (
   fn: (web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>,
   options: { error?: boolean; success?: boolean } = {},
-): ((params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
+): ((params: Array<IUseAllowanceOptionsParams>, web3Context: Web3ContextType, ...args: Array<any>) => Promise<any>) => {
   const { error = true } = options;
   const { formatMessage } = useIntl();
 
-  return async (params: IUseAllowanceOptionsParams, web3Context: Web3ContextType, ...args: Array<any>) => {
-    const assets = groupAssetsByContract(params.assets); // Combine(ERC20) or Remove dublications by tokenAddress
+  return async (params: Array<IUseAllowanceOptionsParams>, web3Context: Web3ContextType, ...args: Array<any>) => {
+    const groupedAssets = groupAssetsByContract(params); // Combine(ERC20) or Remove dublications by tokenAddress
 
-    for (const asset of assets) {
-      try {
-        const hasAllowance = await checkAllowance(params.contract, asset, web3Context);
+    for (const [contract, assets] of Object.entries(groupedAssets)) {
+      for (const asset of assets) {
+        try {
+          const hasAllowance = await checkAllowance(contract, asset, web3Context);
 
-        if (!hasAllowance) {
-          const tx = await approveTokens(params.contract, asset, web3Context);
-          await tx.wait();
+          if (!hasAllowance) {
+            const tx = await approveTokens(contract, asset, web3Context);
+            await tx.wait();
+          }
+        } catch (e) {
+          if (error) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.insufficientAllowance" }), { variant: "error" });
+            console.error(`[allowance error] ${formatMessage({ id: "snackbar.insufficientAllowance" })}`, e);
+            return null;
+          }
+          throw new Error(e);
         }
-      } catch (e) {
-        if (error) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.insufficientAllowance" }), { variant: "error" });
-          console.error(`[allowance error] ${formatMessage({ id: "snackbar.insufficientAllowance" })}`, e);
-          return null;
-        }
-        throw new Error(e);
       }
     }
     return fn(web3Context, ...args);

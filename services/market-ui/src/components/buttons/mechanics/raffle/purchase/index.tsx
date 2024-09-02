@@ -64,10 +64,12 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
       return metaFnWitnAllowance(
-        {
-          contract: systemContract.address,
-          assets: price,
-        },
+        [
+          {
+            contract: systemContract.address,
+            assets: price,
+          },
+        ],
         web3Context,
         sign,
         systemContract,
