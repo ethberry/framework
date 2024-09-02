@@ -40,9 +40,9 @@ export const Dismantle: FC = () => {
     empty: {
       price: getEmptyTemplate(TokenType.ERC721),
       item: getEmptyTemplate(TokenType.ERC1155),
-      rarityMultiplier: 0,
       dismantleStatus: DismantleStatus.ACTIVE,
       dismantleStrategy: DismantleStrategy.FLAT,
+      rarityMultiplier: 0,
     },
     search: {
       query: "",
