@@ -7,7 +7,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
@@ -22,7 +22,6 @@ import type { IContract, IDismantle, IToken } from "@framework/types";
 import DismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
 import { getDismantleMultiplier } from "./utils";
 import { StyledCard } from "./styled";
-import { useAllowance } from "../../../../../../utils/use-allowance";
 import { StyledToolbar, StyledTypography } from "../../../../../hierarchy/erc721/token/common-token-panel/styled";
 
 export interface IDismantleTokenPanelProps {

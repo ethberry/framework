@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
@@ -15,8 +15,6 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ICraft } from "@framework/types";
 
 import ExchangeCraftFacetCraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
-
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface ICraftButtonProps {
   className?: string;

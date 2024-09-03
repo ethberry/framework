@@ -7,10 +7,9 @@ import { convertDatabaseAssetToTokenTypeAsset, getEthPrice } from "@framework/ex
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IStakingDepositSimpleButtonProps {
   className?: string;

@@ -4,7 +4,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract } from "ethers";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetComponent, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -15,7 +15,6 @@ import TopUpTopUpABI from "@framework/abis/json/TopUp/topUp.json";
 import { shouldDisableByContractType } from "../../utils";
 import type { ITopUpDto } from "./dialog";
 import { TopUpDialog } from "./dialog";
-import { useAllowance } from "../../../../utils/use-allowance";
 
 export interface ITopUpButtonProps {
   className?: string;
@@ -67,10 +66,12 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const metaFn = useMetamask((values: ITopUpDto, web3Context: Web3ContextType) => {
     const assets = convertDatabaseAssetToTokenTypeAsset(values.token.components as unknown as Array<IAssetComponent>);
     return metaFnWithAllowance(
-      {
-        contract: values.address,
-        assets,
-      },
+      [
+        {
+          contract: values.address,
+          assets,
+        },
+      ],
       web3Context,
       values,
     );

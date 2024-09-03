@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { TokenType } from "@gemunion/types-blockchain";
 import {
   getEthPrice,
@@ -16,8 +16,6 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, ILootBox } from "@framework/types";
 
 import ExchangeLootBoxFacetPurchaseLootABI from "@framework/abis/json/ExchangeLootBoxFacet/purchaseLoot.json";
-
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface ILootBoxBuyButtonProps {
   className?: string;

@@ -6,7 +6,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import { useUser } from "@gemunion/provider-user";
 import { useAppDispatch, useAppSelector } from "@gemunion/redux";
 import { walletActions, walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
@@ -20,7 +20,6 @@ import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 
 import ExchangePurchaseFacetPurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
-import { useAllowance } from "../../../../../utils/use-allowance";
 import { AmountDialog, IAmountDto } from "./dialog";
 
 interface ITemplatePurchaseButtonProps {
