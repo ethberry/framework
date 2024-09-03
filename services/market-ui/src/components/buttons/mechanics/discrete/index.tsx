@@ -4,7 +4,7 @@ import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IDiscrete, IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
@@ -19,7 +19,6 @@ import ExchangeGradeFacetUpgradeABI from "@framework/abis/json/ExchangeGradeFace
 import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
 import { UpgradeDialog } from "./dialog";
-import { useAllowance } from "../../../../utils/use-allowance";
 
 interface IUpgradeButtonProps {
   className?: string;
@@ -95,7 +94,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           });
 
           return metaFnWithAllowance(
-            { contract: systemContract.address, assets: price },
+            [{ contract: systemContract.address, assets: price }],
             web3Context,
             values,
             discrete,

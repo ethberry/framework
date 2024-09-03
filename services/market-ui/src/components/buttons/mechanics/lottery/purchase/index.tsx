@@ -4,7 +4,7 @@ import { Casino } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import {
@@ -17,7 +17,6 @@ import { bool36ArrayToByte32 } from "@gemunion/traits-v5";
 import type { IContract, ILotteryRound } from "@framework/types";
 
 import LotteryPurchaseABI from "@framework/abis/json/ExchangeLotteryFacet/purchaseLottery.json";
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;
@@ -69,7 +68,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
 
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         sign,
         systemContract,

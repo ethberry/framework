@@ -4,7 +4,7 @@ import { Casino } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import {
@@ -16,7 +16,6 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
 
 import RafflePurchaseABI from "@framework/abis/json/ExchangeRaffleFacet/purchaseRaffle.json";
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IRafflePurchaseButtonProps {
   className?: string;
@@ -64,10 +63,12 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
       return metaFnWitnAllowance(
-        {
-          contract: systemContract.address,
-          assets: price,
-        },
+        [
+          {
+            contract: systemContract.address,
+            assets: price,
+          },
+        ],
         web3Context,
         sign,
         systemContract,

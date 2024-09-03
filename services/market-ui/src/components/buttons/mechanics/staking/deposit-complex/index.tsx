@@ -7,7 +7,7 @@ import { convertDatabaseAssetToTokenTypeAsset, getEthPrice } from "@framework/ex
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask } from "@gemunion/react-hooks-eth";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 
@@ -15,7 +15,6 @@ import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 
 import type { IStakingDepositDto } from "./dialog";
 import { StakingDepositDialog } from "./dialog";
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 export interface IStakingDepositComplexButtonProps {
   className?: string;
@@ -52,10 +51,12 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const price = convertDatabaseAssetToTokenTypeAsset(values.deposit);
     return metaFnWithAllowance(
-      {
-        contract: rule.contract!.address,
-        assets: price,
-      },
+      [
+        {
+          contract: rule.contract!.address,
+          assets: price,
+        },
+      ],
       web3Context,
       rule,
       values,

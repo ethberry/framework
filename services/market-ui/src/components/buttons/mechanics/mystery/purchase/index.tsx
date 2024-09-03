@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { TokenType } from "@gemunion/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
@@ -16,8 +16,6 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 
 import MysteryBoxPurchaseABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
-
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMysteryBoxBuyButtonProps {
   className?: string;
@@ -67,7 +65,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const price = convertDatabaseAssetToTokenTypeAsset(mysteryBox.template!.price!.components);
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         sign,
         systemContract,

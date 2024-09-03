@@ -6,7 +6,7 @@ import { BigNumber, constants, Contract, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset, sortArrObj } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IContract, IMerge, TokenType } from "@framework/types";
@@ -14,7 +14,6 @@ import { IContract, IMerge, TokenType } from "@framework/types";
 import ExchangeMergeFacetMergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
 import { MergeDialog, IMergeDto } from "./dialog";
-import { useAllowance } from "../../../../../utils/use-allowance";
 
 interface IMergeButtonProps {
   className?: string;
@@ -75,7 +74,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
       );
 
       return metaFnWithAllowance(
-        { contract: systemContract.address, assets: price },
+        [{ contract: systemContract.address, assets: price }],
         web3Context,
         values,
         sign,
