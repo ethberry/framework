@@ -34,6 +34,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
     chainId,
     contractFeatures,
   } = initialValues;
+
   const fixedValues = {
     id,
     title,
@@ -45,7 +46,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
-  // there is no exception for merchantId=1, to create token use office
+  // to create token use office
   if (!id && process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
   }

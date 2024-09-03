@@ -217,7 +217,7 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         10
       ), (
         'GOLD',
-        'MYSTERY',
+        'LOOT',
         'ERC721',
         10
       ), (

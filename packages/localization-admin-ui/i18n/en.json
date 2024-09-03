@@ -1498,6 +1498,15 @@
       }
     },
     "ratePlan": {
+      "bronze": {
+        "title": "BRONZE"
+      },
+      "silver": {
+        "title": "SILVER"
+      },
+      "gold": {
+        "title": "GOLD"
+      },
       "alwaysIncluded": {
         "dispenser": "Mass. token transfer",
         "history": "Transaction history",
@@ -1505,63 +1514,46 @@
         "openSea": "OpenSea integration",
         "title": "Always included"
       },
-      "bronze": {
-        "claim": "Claim",
-        "craft": "Craft",
-        "discrete": "Grade",
-        "disperse": "Mass transact",
-        "erc1155": "5 ERC1155 contracts",
-        "erc20": "5 ERC20 contract",
-        "erc721": "5 ERC721 contracts",
-        "erc998": "0 ERC998 contracts",
-        "loot": "0 Loot boxes",
-        "mystery": "0 Mystery boxes",
-        "raffle": "Raffle",
-        "staking": "Staking",
-        "title": "Bronze",
-        "vesting": "100 vesting contracts",
-        "waitList": "Wait list"
+      "hierarchy": {
+        "native": "Native token",
+        "erc1155": "ERC1155 contracts",
+        "erc20": "ERC20 contract",
+        "erc721": "ERC721 contracts",
+        "erc998": "ERC998 contracts"
+      },
+      "wait_list": {
+        "undefined": "Wait list"
+      },
+      "vesting": {
+        "undefined": "Vesting"
+      },
+      "loot": {
+        "erc721": "Loot box"
+      },
+      "mystery": {
+        "erc721": "Mystery box"
+      },
+      "raffle": {
+        "undefined": "Raffle"
+      },
+      "lottery": {
+        "undefined": "Lottery"
+      },
+      "collection": {
+        "erc721": "Collectible"
+      },
+      "staking": {
+        "undefined": "Staking"
+      },
+      "payment_splitter": {
+        "undefined": "Payment splitter"
       },
       "contactViaTelegram": "Contact via Telegram",
-      "gold": {
-        "claim": "Claim",
-        "craft": "Craft",
-        "discrete": "Grade",
-        "disperse": "Mass transact",
-        "erc1155": "25 ERC1155 contracts",
-        "erc20": "25 ERC20 contract",
-        "erc721": "25 ERC721 contracts",
-        "erc998": "5 ERC998 contract",
-        "loot": "10 Loot boxes",
-        "mystery": "10 Mystery boxes",
-        "raffle": "Raffle",
-        "staking": "Staking",
-        "title": "Gold",
-        "vesting": "500 vesting contracts",
-        "waitList": "Wait list"
-      },
       "month": "month",
       "onDemand": {
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "On demand",
-        "waitList": "Wait list"
-      },
-      "silver": {
-        "claim": "Claim",
-        "craft": "Craft",
-        "discrete": "Grade",
-        "disperse": "Mass transact",
-        "erc1155": "10 ERC1155 contracts",
-        "erc20": "10 ERC20 contract",
-        "erc721": "10 ERC721 contracts",
-        "erc998": "0 ERC998 contracts",
-        "loot": "Loot boxes",
-        "mystery": "Mystery boxes",
-        "raffle": "Raffle",
-        "staking": "Staking",
-        "title": "Silver",
-        "vesting": "300 vesting contracts",
         "waitList": "Wait list"
       },
       "title": "Rate plans"

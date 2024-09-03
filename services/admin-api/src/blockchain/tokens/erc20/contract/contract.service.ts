@@ -1,9 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
-import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
 import { BusinessType, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -37,7 +36,7 @@ export class Erc20ContractService extends ContractService {
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
     // there is no exception for merchantId=1, to create token use office
     if (businessType === BusinessType.B2B) {
-      throw new PaymentRequiredException("paymentRequired");
+      throw new BadRequestException("actionNotAllowed");
     }
 
     const contractEntity = await this.contractEntityRepository

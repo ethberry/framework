@@ -1,10 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractSearchDto, INativeContractCreateDto } from "@framework/types";
 import { BusinessType, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -38,7 +37,7 @@ export class NativeContractService extends ContractService {
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
     // there is no exception for merchantId=1, to create token use office
     if (businessType === BusinessType.B2B) {
-      throw new PaymentRequiredException("paymentRequired");
+      throw new BadRequestException("paymentRequired");
     }
 
     const contractEntity = await this.contractEntityRepository

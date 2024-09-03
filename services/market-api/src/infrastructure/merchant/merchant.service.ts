@@ -1,8 +1,8 @@
-import { ConflictException, NotFoundException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MerchantStatus } from "@framework/types";
+import { MerchantStatus, RatePlanType } from "@framework/types";
 import type { ISearchDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../user/user.entity";
@@ -92,6 +92,7 @@ export class MerchantService {
     const merchantEntity = await this.merchantEntityRepository
       .create({
         ...dto,
+        ratePlan: RatePlanType.GOLD,
         users: [userEntity],
       })
       .save();

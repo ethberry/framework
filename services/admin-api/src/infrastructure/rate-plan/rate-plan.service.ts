@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { ModuleType, TokenType } from "@framework/types";
 
@@ -11,14 +11,21 @@ import { RatePlanEntity } from "./rate-plan.entity";
 export class RatePlanService {
   constructor(
     @InjectRepository(RatePlanEntity)
-    private readonly stakingDepositEntityRepository: Repository<RatePlanEntity>,
+    private readonly ratePlanEntityRepository: Repository<RatePlanEntity>,
   ) {}
+
+  public findAll(
+    where: FindOptionsWhere<RatePlanEntity>,
+    options?: FindManyOptions<RatePlanEntity>,
+  ): Promise<[Array<RatePlanEntity>, number]> {
+    return this.ratePlanEntityRepository.findAndCount({ where, ...options });
+  }
 
   public findOne(
     where: FindOptionsWhere<RatePlanEntity>,
     options?: FindOneOptions<RatePlanEntity>,
   ): Promise<RatePlanEntity | null> {
-    return this.stakingDepositEntityRepository.findOne({ where, ...options });
+    return this.ratePlanEntityRepository.findOne({ where, ...options });
   }
 
   public async getPlanLimits(
@@ -31,10 +38,6 @@ export class RatePlanService {
       contractType: contractType || IsNull(),
       ratePlan: userEntity.merchant.ratePlan,
     }).then(rateLimitEntity => {
-      if (userEntity.merchantId === 1) {
-        // TODO get it from settings
-        return 1e6;
-      }
       if (!rateLimitEntity) {
         return 0;
       }

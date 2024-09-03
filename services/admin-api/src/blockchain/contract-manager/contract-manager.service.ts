@@ -43,7 +43,7 @@ export class ContractManagerService {
         merchantId: userEntity.merchantId,
       });
 
-      if (count >= limit) {
+      if (limit && count >= limit) {
         throw new PaymentRequiredException("paymentRequired");
       }
     }

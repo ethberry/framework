@@ -6,9 +6,9 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { useUser } from "@gemunion/provider-user";
+import { NodeEnv } from "@gemunion/constants";
 import type { IUser } from "@framework/types";
 import { BusinessType, ChainLinkV2SupportedChains, RatePlanType } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
 
 export const LootSection: FC = () => {
   const { profile } = useUser<IUser>();

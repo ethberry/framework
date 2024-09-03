@@ -41,6 +41,6 @@ export class RatePlanService {
     _contractType: TokenType | null,
   ): Promise<number> {
     // always allow to deploy from office
-    return Promise.resolve(1e6);
+    return Promise.resolve(0);
   }
 }

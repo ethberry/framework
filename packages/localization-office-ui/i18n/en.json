@@ -97,11 +97,11 @@
       "NotComplete": "The operation is not complete",
       "NotExist": "The item does not exist",
       "RefProgramSet": "The referral program is set",
+      "RuleNotExist": "The rule is wrong",
       "SignerMissingRole": "The signer is missing a role",
+      "StakeNotExist": "The stake is wrong",
       "TemplateZero": "The template is zero",
       "UnsupportedTokenType": "The token type is not supported",
-      "RuleNotExist": "The rule is wrong",
-      "StakeNotExist": "The stake is wrong",
       "WrongToken": "The token is wrong",
       "ZeroBalance": "The balance is zero"
     },
@@ -150,20 +150,24 @@
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
+      "LINEAR_REFERRAL": "Linear Referral",
       "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
       "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
-      "LINEAR_REFERRAL": "Linear Referral",
       "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
-      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
-      "WHITELIST": "Whitelist"
+      "WHITELIST": "Whitelist",
+      "WITHDRAW_ALLOWANCE_REFERRAL": "Simple Staking"
+    },
+    "discreteStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "durationUnit": {
       "DAY": "Day",
@@ -187,10 +191,6 @@
     "gender": {
       "FEMALE": "Female",
       "MALE": "Male"
-    },
-    "discreteStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
     },
     "language": {
       "AR": "\uD83C\uDDE6\uD83C\uDDEA اللغة العربية",
@@ -247,8 +247,8 @@
     },
     "ratePlan": {
       "BRONZE": "BRONZE",
-      "SILVER": "SILVER",
-      "GOLD": "GOLD"
+      "GOLD": "GOLD",
+      "SILVER": "SILVER"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -290,11 +290,11 @@
       "NONE": "None"
     },
     "userRoles": {
-      "SUPER": "SUPER",
       "ADMIN": "ADMIN",
-      "OWNER": "OWNER",
+      "CUSTOMER": "CUSTOMER",
       "MANAGER": "MANAGER",
-      "CUSTOMER": "CUSTOMER"
+      "OWNER": "OWNER",
+      "SUPER": "SUPER"
     },
     "userStatus": {
       "ACTIVE": "Active",
@@ -425,6 +425,8 @@
       "decimals": "Decimals",
       "deposit": "Deposit",
       "description": "Description",
+      "discreteStatus": "Status",
+      "discreteStrategy": "Grade strategy",
       "dismantleStatus": "Status",
       "dismantleStrategy": "Strategy",
       "displayName": "Display name",
@@ -440,8 +442,6 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "discreteStatus": "Status",
-      "discreteStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
@@ -501,8 +501,9 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "random": "Random",
-      "ratePlan": "Rate Plan",
       "rarityMultiplier": "Rarity multiplier X.YY%",
+      "ratePlan": "Rate Plan",
+      "ratePlanId": "Rate plan",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -590,6 +591,8 @@
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "contractModule": "HIERARCHY",
+      "contractType": "N/A",
       "count": "0",
       "country": "Germany",
       "createdAt": "now",
@@ -640,6 +643,7 @@
       "query": "Search...",
       "rarity": "Legendary",
       "rarityMultiplier": "0",
+      "ratePlanId": "0",
       "recipient": "Recipient",
       "roundIds": "Round",
       "royalty": "1",
@@ -716,10 +720,10 @@
       "template": {
         "title": "Claim Templates"
       },
+      "title": "Claim",
       "token": {
         "title": "Claim Tokens"
-      },
-      "title": "Claim"
+      }
     },
     "dashboard": {
       "exchange": {
@@ -766,8 +770,8 @@
       },
       "mechanics": {
         "claim": "Claim",
-        "dispenser": "Dispenser",
         "discrete": "Grade",
+        "dispenser": "Dispenser",
         "mystery": "Mystery",
         "ponzi": "Ponzi",
         "promo": "Promo",
@@ -777,6 +781,9 @@
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "discrete": {
+      "title": "Grade Rules"
     },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens.",
@@ -832,9 +839,6 @@
       "tokens": {
         "title": "ERC998 Tokens"
       }
-    },
-    "discrete": {
-      "title": "Grade Rules"
     },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
@@ -925,12 +929,6 @@
         "empty": "You don't have any addresses yet",
         "inactive": "inactive"
       },
-      "tabs": {
-        "addresses": "Addresses",
-        "general": "General",
-        "subscriptions": "Subscriptions",
-        "settings": "Settings"
-      },
       "settings": {
         "wallet": {
           "attach": "Attach",
@@ -938,6 +936,12 @@
           "detach": "Detach",
           "title": "My wallet"
         }
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "settings": "Settings",
+        "subscriptions": "Subscriptions"
       },
       "title": "Profile"
     },
@@ -1045,8 +1049,8 @@
     "web3NotDetected": "Web3 not detected"
   },
   "socket": {
-    "connected": "WebSocket connection ON",
     "connect_failed": "WebSocket connection failed",
+    "connected": "WebSocket connection ON",
     "error": "WebSocket connection Error"
   }
 }
