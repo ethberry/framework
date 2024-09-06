@@ -62,12 +62,10 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const price = convertDatabaseAssetToTokenTypeAsset(craft.price?.components);
       return metaFnWithAllowance(
-        [
-          {
-            contract: systemContract.address,
-            assets: price,
-          },
-        ],
+        {
+          contract: systemContract.address,
+          assets: price,
+        },
         web3Context,
         sign,
         systemContract,

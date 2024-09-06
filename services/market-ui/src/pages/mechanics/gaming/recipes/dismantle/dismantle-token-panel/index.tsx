@@ -82,7 +82,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     (values: IDismantle, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const assets = convertDatabaseAssetToTokenTypeAsset(values.price!.components);
       return metaFnWithAllowance(
-        [{ contract: systemContract.address, assets }],
+        { contract: systemContract.address, assets },
         web3Context,
         values,
         sign,

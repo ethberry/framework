@@ -94,7 +94,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           });
 
           return metaFnWithAllowance(
-            [{ contract: systemContract.address, assets: price }],
+            { contract: systemContract.address, assets: price },
             web3Context,
             values,
             discrete,

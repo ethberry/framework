@@ -108,12 +108,10 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const price = convertDatabaseAssetToTokenTypeAsset(promo.price?.components);
       return metaFnWithAllowance(
-        [
-          {
-            contract: systemContract.address,
-            assets: price,
-          },
-        ],
+        {
+          contract: systemContract.address,
+          assets: price,
+        },
         web3Context,
         sign,
         systemContract,

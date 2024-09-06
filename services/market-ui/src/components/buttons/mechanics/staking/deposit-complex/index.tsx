@@ -51,12 +51,10 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const price = convertDatabaseAssetToTokenTypeAsset(values.deposit);
     return metaFnWithAllowance(
-      [
-        {
-          contract: rule.contract!.address,
-          assets: price,
-        },
-      ],
+      {
+        contract: rule.contract!.address,
+        assets: price,
+      },
       web3Context,
       rule,
       values,

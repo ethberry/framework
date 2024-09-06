@@ -77,12 +77,10 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         multiplier: values.amount,
       });
       return metaFnWithAllowance(
-        [
-          {
-            contract: systemContract.address,
-            assets,
-          },
-        ],
+        {
+          contract: systemContract.address,
+          assets,
+        },
         web3Context,
         values,
         sign,
