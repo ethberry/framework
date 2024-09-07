@@ -66,12 +66,10 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
   const metaFn = useMetamask((values: ITopUpDto, web3Context: Web3ContextType) => {
     const assets = convertDatabaseAssetToTokenTypeAsset(values.token.components as unknown as Array<IAssetComponent>);
     return metaFnWithAllowance(
-      [
-        {
-          contract: values.address,
-          assets,
-        },
-      ],
+      {
+        contract: values.address,
+        assets,
+      },
       web3Context,
       values,
     );

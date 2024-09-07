@@ -7,7 +7,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
-import type { IAssetComponent, IClaim } from "@framework/types";
+import type { IClaim } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";
 
@@ -39,14 +39,12 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
   });
 
   const metaFn = useMetamask((values: IClaim, form: any, web3Context: Web3ContextType) => {
-    const assets = convertDatabaseAssetToTokenTypeAsset(values.item.components as unknown as Array<IAssetComponent>);
+    const assets = convertDatabaseAssetToTokenTypeAsset(values.item.components);
     return metaFnWithAllowance(
-      [
-        {
-          contract: values.account,
-          assets,
-        },
-      ],
+      {
+        contract: values.account,
+        assets,
+      },
       web3Context,
       values,
       form,
