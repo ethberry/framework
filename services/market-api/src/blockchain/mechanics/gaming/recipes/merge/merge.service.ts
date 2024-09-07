@@ -12,13 +12,13 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
-import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MergeEntity } from "./merge.entity";
-import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class MergeService {
@@ -174,9 +174,6 @@ export class MergeService {
     }
 
     const priceTemplateId = recipeTmplIds.length > 0 ? BigInt(recipeTmplIds[0] || 0) : 0n;
-
-    // todo next mechanic Fuze? =)
-    // const rarity = Number(tokenEntities.metadata.RARITY) || 1;
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
