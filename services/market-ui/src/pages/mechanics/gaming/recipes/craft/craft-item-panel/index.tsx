@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
-import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
+import { Card, CardActions, CardContent, List, ListItemButton, ListItemText } from "@mui/material";
 
 import { formatEther } from "@framework/exchange";
 import type { ICraft } from "@framework/types";
@@ -28,9 +28,8 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
         </StyledToolbar>
         <List>
           {craft.price?.components.map((component, i) => (
-            <ListItem
+            <ListItemButton
               key={component.id || i}
-              button
               component={RouterLink}
               to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
             >
@@ -38,7 +37,7 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
                 {component.template!.title}{" "}
                 {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
               </ListItemText>
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </CardContent>
