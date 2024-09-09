@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
-import { Card, CardActions, CardContent, List, ListItem, ListItemText } from "@mui/material";
+import { Card, CardActions, CardContent, List, ListItemButton, ListItemText } from "@mui/material";
 
 import { formatItem } from "@framework/exchange";
 import type { IMerge } from "@framework/types";
@@ -28,14 +28,13 @@ export const MergeItemPanel: FC<IMergeItemPanelProps> = props => {
         </StyledToolbar>
         <List>
           {merge.price?.components.map((component, i) => (
-            <ListItem
+            <ListItemButton
               key={component.id || i}
-              button
               component={RouterLink}
               to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId}`}
             >
               <ListItemText>{formatItem({ id: i, components: [component] })}</ListItemText>
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </CardContent>
